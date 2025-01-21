@@ -5,15 +5,15 @@ import dataclasses
 import pytest
 from frozendict import frozendict
 
-from randovania.game_description.pickup.ammo_pickup import AMMO_PICKUP_CATEGORY, AmmoPickupDefinition
 from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY, PickupCategory
+from randovania.game_description.pickup.pickup_definition.ammo_pickup import AMMO_PICKUP_CATEGORY, AmmoPickupDefinition
+from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
 from randovania.game_description.pickup.pickup_entry import (
     PickupEntry,
     PickupGeneratorParams,
     PickupModel,
     ResourceLock,
 )
-from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.games.prime2.patcher import echoes_items

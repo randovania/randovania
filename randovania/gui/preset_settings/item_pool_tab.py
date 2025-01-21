@@ -27,10 +27,10 @@ from randovania.layout.exceptions import InvalidConfiguration
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
     from randovania.game_description.pickup.pickup_category import PickupCategory
     from randovania.game_description.pickup.pickup_database import PickupDatabase
-    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.game_description.pickup.pickup_definition.ammo_pickup import AmmoPickupDefinition
+    from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.gui.lib.window_manager import WindowManager

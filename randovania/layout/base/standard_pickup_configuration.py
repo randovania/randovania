@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.pickup.pickup_category import PickupCategory
-    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
 
 T = TypeVar("T")
 

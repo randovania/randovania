@@ -11,8 +11,8 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.pickup.ammo_pickup import AMMO_PICKUP_CATEGORY
 from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY
+from randovania.game_description.pickup.pickup_definition.ammo_pickup import AMMO_PICKUP_CATEGORY
 from randovania.game_description.pickup.pickup_entry import (
     ConditionalResources,
     PickupEntry,

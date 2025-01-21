@@ -16,6 +16,8 @@ if typing.TYPE_CHECKING:
 
 T = typing.TypeVar("T")
 
+EXCLUDE_DEFAULT = {"exclude_if_default": True}
+
 
 def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.Any:
     type_ = type_lib.resolve_optional(type_)[0]
@@ -114,11 +116,15 @@ def _encode_value(value: typing.Any) -> typing.Any:
         return value
 
 
+def _field_storage_keyfunc(field: dataclasses.Field) -> int:
+    return field.metadata.get("storage_order", 0)
+
+
 class JsonDataclass:
     @property
     def as_json(self: DataclassInstance) -> dict:
         result = {}
-        for field in dataclasses.fields(self):
+        for field in sorted(dataclasses.fields(self), key=_field_storage_keyfunc):
             if not field.init or field.metadata.get("init_from_extra"):
                 continue
             value = getattr(self, field.name)

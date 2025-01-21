@@ -4,9 +4,9 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 from randovania.game_description.pickup import pickup_migration
-from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
-from randovania.game_description.pickup.pickup_category import GENERIC_KEY_CATEGORY, PickupCategory
-from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+from randovania.game_description.pickup.pickup_category import PickupCategory
+from randovania.game_description.pickup.pickup_definition.ammo_pickup import AmmoPickupDefinition
+from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
 
 if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
@@ -39,7 +39,10 @@ def read_database(database_data: dict, game: RandovaniaGame) -> PickupDatabase:
 
     generated_pickups = {
         group_name: StandardPickupDefinition.from_json_with_categories(
-            pickup.pop("name_template"), game, pickup_categories, pickup, default_category=GENERIC_KEY_CATEGORY
+            pickup.pop("name_template"),
+            game,
+            pickup_categories,
+            pickup,
         )
         for group_name, pickup in database_data["generated_pickups"].items()
     }

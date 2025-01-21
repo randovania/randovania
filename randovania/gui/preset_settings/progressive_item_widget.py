@@ -10,7 +10,7 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
 if TYPE_CHECKING:
     from collections.abc import Iterable
 
-    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
 

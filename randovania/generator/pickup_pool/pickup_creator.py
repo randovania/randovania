@@ -14,8 +14,8 @@ if TYPE_CHECKING:
     from typing import Any
 
     from randovania.game.game_enum import RandovaniaGame
-    from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
-    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.game_description.pickup.pickup_definition.ammo_pickup import AmmoPickupDefinition
+    from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.layout.base.standard_pickup_state import StandardPickupState

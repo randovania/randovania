@@ -24,7 +24,7 @@ from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.pickup.pickup_category import GENERIC_KEY_CATEGORY, PickupCategory
 from randovania.game_description.pickup.pickup_database import PickupDatabase
-from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
