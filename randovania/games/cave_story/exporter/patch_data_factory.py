@@ -106,7 +106,7 @@ class CSPatchDataFactory(PatchDataFactory):
                 "Nothing",
                 PickupModel(RandovaniaGame.CAVE_STORY, "Nothing"),
                 USELESS_PICKUP_CATEGORY,
-                USELESS_PICKUP_CATEGORY,
+                frozenset(),
                 (),
                 generator_params=PickupGeneratorParams(
                     preferred_location_category=LocationCategory.MAJOR,  # TODO

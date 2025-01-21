@@ -37,7 +37,7 @@ def test_assign_pool_results_predetermined(fusion_game_description, fusion_confi
     )
 
     # Assert
-    shuffled_metroids = [pickup for pickup in pool_results.to_place if pickup.pickup_category.name == "InfantMetroid"]
+    shuffled_metroids = [pickup for pickup in pool_results.to_place if pickup.gui_category.name == "InfantMetroid"]
 
     assert result.starting_equipment == pool_results.starting
     assert {index for index, entry in result.pickup_assignment.items() if "Infant Metroid" in entry.pickup.name} == {
@@ -69,7 +69,7 @@ def test_assign_pool_results_prefer_anywhere(fusion_game_description, fusion_con
     )
 
     # Assert
-    shuffled_metroids = [pickup for pickup in pool_results.to_place if pickup.pickup_category.name == "InfantMetroid"]
+    shuffled_metroids = [pickup for pickup in pool_results.to_place if pickup.gui_category.name == "InfantMetroid"]
 
     assert pool_results.to_place == initial_starting_place
     assert len(shuffled_metroids) == artifacts.placed_artifacts

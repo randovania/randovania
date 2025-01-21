@@ -34,7 +34,8 @@ def read_database(database_data: dict, game: RandovaniaGame) -> PickupDatabase:
     pickup_migration.migrate_current(database_data, game)
 
     pickup_categories = {
-        name: PickupCategory.from_json(name, category) for name, category in database_data["pickup_categories"].items()
+        name: PickupCategory.from_json(category, name=name)
+        for name, category in database_data["pickup_categories"].items()
     }
 
     generated_pickups = {

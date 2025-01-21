@@ -150,8 +150,8 @@ def _make_pickup(pickup_category: PickupCategory, generator_params: PickupGenera
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
-        pickup_category=pickup_category,
-        broad_category=pickup_category,
+        gui_category=pickup_category,
+        hint_features=frozenset((pickup_category,)),
         progression=(),
         generator_params=generator_params,
     )

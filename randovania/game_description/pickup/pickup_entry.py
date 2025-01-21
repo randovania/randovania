@@ -74,8 +74,8 @@ class PickupGeneratorParams:
 class PickupEntry:
     name: str
     model: PickupModel
-    pickup_category: PickupCategory
-    broad_category: PickupCategory
+    gui_category: PickupCategory
+    hint_features: frozenset[PickupCategory]
     progression: tuple[tuple[ItemResourceInfo, int], ...]
     generator_params: PickupGeneratorParams
     extra_resources: ResourceGainTuple = ()
@@ -183,3 +183,6 @@ class PickupEntry:
     def all_resources(self) -> Iterator[ResourceQuantity]:
         yield from self.progression
         yield from self.extra_resources
+
+    def has_hint_feature(self, feature_name: str) -> bool:
+        return feature_name in {f.name for f in self.hint_features}

@@ -87,7 +87,7 @@ def test_emit_world_pickups_update_one_action(
         "A",
         PickupModel(echoes_resource_database.game_enum, "AmmoModel"),
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=progression,
         generator_params=default_generator_params,
     )
@@ -162,7 +162,7 @@ def test_game_session_collect_pickup_for_self(
         "A",
         1,
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=((echoes_resource_database.item[0], 1),),
         generator_params=default_generator_params,
     )

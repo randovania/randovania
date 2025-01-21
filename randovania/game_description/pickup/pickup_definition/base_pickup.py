@@ -30,7 +30,7 @@ class BasePickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
     Used in the GUI for visually grouping pickups with the same precise category.
     """
 
-    hint_features: tuple[PickupCategory, ...] = dataclasses.field(metadata={"init_from_extra": True})
+    hint_features: frozenset[PickupCategory] = dataclasses.field(metadata={"init_from_extra": True})
     """Defines which features this pickup can be referred to with by hints."""
 
     model_name: str = dataclasses.field(metadata={"storage_order": BASE_METADATA_STORAGE_ORDER})
@@ -95,7 +95,7 @@ class BasePickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
         value: dict,
     ) -> Self:
         gui_category = pickup_categories[value["gui_category"]]
-        features = tuple(pickup_categories[category] for category in value["hint_features"])
+        features = frozenset(pickup_categories[category] for category in value["hint_features"])
         return cls.from_json(
             value,
             game=game,
@@ -108,6 +108,6 @@ class BasePickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
     def as_json(self) -> dict:
         return {
             "gui_category": self.gui_category.name,
-            "hint_features": [feature.name for feature in self.hint_features],
+            "hint_features": sorted(feature.name for feature in self.hint_features),
             **super().as_json,
         }

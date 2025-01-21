@@ -104,7 +104,7 @@ class StandardPickupConfiguration(BitPackValue):
 
         # default_items
         for category, default in self.default_pickups.items():
-            all_standard = [pickup for pickup in reference.pickups_state.keys() if pickup.pickup_category == category]
+            all_standard = [pickup for pickup in reference.pickups_state.keys() if pickup.gui_category == category]
             yield from bitpacking.pack_array_element(default, all_standard)
 
         # random starting items
@@ -130,7 +130,7 @@ class StandardPickupConfiguration(BitPackValue):
         # default_pickups
         default_pickups = {}
         for category in reference.default_pickups.keys():
-            all_standard = [pickup for pickup in reference.pickups_state.keys() if pickup.pickup_category == category]
+            all_standard = [pickup for pickup in reference.pickups_state.keys() if pickup.gui_category == category]
             default_pickups[category] = decoder.decode_element(all_standard)
 
         # random starting items

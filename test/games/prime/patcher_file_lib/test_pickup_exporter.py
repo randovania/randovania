@@ -66,7 +66,7 @@ def test_calculate_hud_text(order: tuple[str, str], generic_pickup_category, def
         "A",
         PickupModel(game, "1"),
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=(((resource_a, 1),)),
         generator_params=default_generator_params,
     )
@@ -74,7 +74,7 @@ def test_calculate_hud_text(order: tuple[str, str], generic_pickup_category, def
         "Y",
         PickupModel(game, "2"),
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=(
             (resource_b, 1),
             (resource_a, 5),
@@ -85,7 +85,7 @@ def test_calculate_hud_text(order: tuple[str, str], generic_pickup_category, def
         "Z",
         PickupModel(game, "2"),
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=(
             (resource_a, 1),
             (resource_b, 5),
@@ -145,7 +145,7 @@ def test_create_pickup_list(
         "P-A",
         model_1,
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=((resource_a, 1),),
         generator_params=default_generator_params,
     )
@@ -153,7 +153,7 @@ def test_create_pickup_list(
         "P-B",
         model_2,
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=((resource_b, 1), (resource_a, 5)),
         generator_params=default_generator_params,
     )
@@ -161,7 +161,7 @@ def test_create_pickup_list(
         "P-C",
         model_2,
         AMMO_PICKUP_CATEGORY,
-        generic_pickup_category,
+        frozenset((AMMO_PICKUP_CATEGORY,)),
         progression=(),
         extra_resources=((resource_a, 1), (resource_c, -3)),
         unlocks_resource=True,
@@ -172,7 +172,7 @@ def test_create_pickup_list(
         "P-D",
         model_2,
         AMMO_PICKUP_CATEGORY,
-        generic_pickup_category,
+        frozenset((AMMO_PICKUP_CATEGORY,)),
         progression=(),
         extra_resources=((resource_b, 2), (resource_a, 1)),
         unlocks_resource=True,
@@ -183,7 +183,7 @@ def test_create_pickup_list(
         "P-E",
         model_3,
         AMMO_PICKUP_CATEGORY,
-        generic_pickup_category,
+        frozenset((AMMO_PICKUP_CATEGORY,)),
         progression=(),
         extra_resources=((resource_c, -3),),
         unlocks_resource=True,
@@ -195,7 +195,7 @@ def test_create_pickup_list(
         "P-Useless",
         model_0,
         USELESS_PICKUP_CATEGORY,
-        USELESS_PICKUP_CATEGORY,
+        frozenset((USELESS_PICKUP_CATEGORY,)),
         progression=((useless_resource, 1),),
         generator_params=default_generator_params,
     )
@@ -381,7 +381,7 @@ def test_create_pickup_list_random_data_source(
         "A",
         model_1,
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=(),
         generator_params=default_generator_params,
     )
@@ -389,7 +389,7 @@ def test_create_pickup_list_random_data_source(
         "B",
         model_2,
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=((resource_b, 1), (resource_b, 1)),
         generator_params=default_generator_params,
     )
@@ -397,7 +397,7 @@ def test_create_pickup_list_random_data_source(
         "C",
         model_2,
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=(),
         generator_params=default_generator_params,
     )
@@ -405,7 +405,7 @@ def test_create_pickup_list_random_data_source(
         "Useless",
         useless_model,
         USELESS_PICKUP_CATEGORY,
-        USELESS_PICKUP_CATEGORY,
+        frozenset((USELESS_PICKUP_CATEGORY,)),
         progression=(),
         generator_params=default_generator_params,
     )
@@ -583,7 +583,7 @@ def pickup_for_create_pickup_data(generic_pickup_category, default_generator_par
         "Cake",
         PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "theModel"),
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=(
             (resource_a, 1),
             (resource_b, 1),

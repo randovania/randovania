@@ -1,36 +1,28 @@
 from __future__ import annotations
 
 import dataclasses
+from typing import NamedTuple
 
-from randovania.lib import frozen_lib
+from randovania.bitpacking.json_dataclass import EXCLUDE_DEFAULT, JsonDataclass
+
+
+class HintDetails(NamedTuple):
+    determiner: str
+    description: str
 
 
 @dataclasses.dataclass(frozen=True, order=True)
-class PickupCategory:
-    name: str
+class PickupCategory(JsonDataclass):
+    name: str = dataclasses.field(metadata={"init_from_extra": True})
     long_name: str
-    hint_details: tuple[str, str]
+    hint_details: HintDetails = dataclasses.field(metadata={"store_named_tuple_without_names": True})
+
+    is_broad_category: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
+    """Used for Echoes Flying Ing Cache hints"""
 
     def __post_init__(self) -> None:
         assert self.name, "Name must not be empty"
         assert self.long_name, "Long name must not be empty"
-        assert len(self.hint_details) == 2, "Hint details must be 2 elements"
-
-    @classmethod
-    def from_json(cls, name: str, value: dict) -> PickupCategory:
-        return cls(
-            name=name,
-            long_name=value["long_name"],
-            hint_details=frozen_lib.wrap(value["hint_details"]),
-        )
-
-    @property
-    def as_json(self) -> dict:
-        result = {
-            "long_name": self.long_name,
-            "hint_details": frozen_lib.unwrap(self.hint_details),
-        }
-        return result
 
     @property
     def general_details(self) -> tuple[str, str]:
@@ -42,6 +34,12 @@ USELESS_PICKUP_CATEGORY = PickupCategory(
     name="useless",
     long_name="Useless",
     hint_details=("an ", "Energy Transfer Module"),
+    is_broad_category=True,
 )
 
-GENERIC_KEY_CATEGORY = PickupCategory(name="key", long_name="Key", hint_details=("a ", "key"))
+GENERIC_KEY_CATEGORY = PickupCategory(
+    name="key",
+    long_name="Key",
+    hint_details=("a ", "key"),
+    is_broad_category=True,
+)

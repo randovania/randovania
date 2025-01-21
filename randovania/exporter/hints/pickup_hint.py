@@ -92,8 +92,8 @@ def create_pickup_hint(
                     game=RandovaniaGame.METROID_PRIME_ECHOES,
                     name="EnergyTransferModule",
                 ),
-                pickup_category=USELESS_PICKUP_CATEGORY,
-                broad_category=USELESS_PICKUP_CATEGORY,
+                gui_category=USELESS_PICKUP_CATEGORY,
+                hint_features=frozenset((USELESS_PICKUP_CATEGORY,)),
                 generator_params=PickupGeneratorParams(
                     preferred_location_category=LocationCategory.MAJOR,
                 ),
@@ -103,13 +103,14 @@ def create_pickup_hint(
         )
 
     if precision is HintItemPrecision.GENERAL_CATEGORY:
-        details = target.pickup.pickup_category.general_details
+        details = target.pickup.gui_category.general_details
 
     elif precision is HintItemPrecision.PRECISE_CATEGORY:
-        details = target.pickup.pickup_category.hint_details
+        details = target.pickup.gui_category.hint_details
 
     elif precision is HintItemPrecision.BROAD_CATEGORY:
-        details = target.pickup.broad_category.hint_details
+        broad = next(category for category in target.pickup.hint_features if category.is_broad_category)
+        details = broad.hint_details
 
     elif precision is HintItemPrecision.DETAILED:
         details = _calculate_determiner(pickup_assignment, target.pickup, region_list), target.pickup.name

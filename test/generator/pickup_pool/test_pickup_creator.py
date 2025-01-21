@@ -38,8 +38,13 @@ def test_create_pickup_for(echoes_resource_database, generic_pickup_category):
     standard_pickup = StandardPickupDefinition(
         game=echoes_resource_database.game_enum,
         name="The Item",
-        pickup_category=less_generic_pickup_category,
-        broad_category=generic_pickup_category,
+        gui_category=less_generic_pickup_category,
+        hint_features=frozenset(
+            (
+                generic_pickup_category,
+                less_generic_pickup_category,
+            )
+        ),
         model_name="SuperModel",
         offworld_models=frozendict({}),
         progression=("DarkVisor", "MorphBall", "Bombs"),
@@ -74,8 +79,13 @@ def test_create_pickup_for(echoes_resource_database, generic_pickup_category):
             (item_c, 1),
         ),
         extra_resources=extra_resources,
-        pickup_category=less_generic_pickup_category,
-        broad_category=generic_pickup_category,
+        gui_category=less_generic_pickup_category,
+        hint_features=frozenset(
+            (
+                generic_pickup_category,
+                less_generic_pickup_category,
+            )
+        ),
         respects_lock=False,
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,
@@ -126,8 +136,14 @@ def test_create_missile_launcher(
             (echoes_resource_database.get_item(echoes_items.PERCENTAGE), 1),
         ),
         model=PickupModel(echoes_resource_database.game_enum, "MissileLauncher"),
-        pickup_category=echoes_pickup_database.pickup_categories["missile"],
-        broad_category=echoes_pickup_database.pickup_categories["missile_related"],
+        gui_category=echoes_pickup_database.pickup_categories["missile"],
+        hint_features=frozenset(
+            (
+                echoes_pickup_database.pickup_categories["major"],
+                echoes_pickup_database.pickup_categories["missile"],
+                echoes_pickup_database.pickup_categories["missile_related"],
+            )
+        ),
         generator_params=default_generator_params,
         resource_lock=ResourceLock(
             locked_by=missile_launcher,
@@ -180,8 +196,14 @@ def test_create_seeker_launcher(
             (echoes_resource_database.get_item(echoes_items.PERCENTAGE), 1),
         ),
         model=PickupModel(echoes_resource_database.game_enum, "SeekerLauncher"),
-        pickup_category=echoes_pickup_database.pickup_categories["missile"],
-        broad_category=echoes_pickup_database.pickup_categories["missile_related"],
+        gui_category=echoes_pickup_database.pickup_categories["missile"],
+        hint_features=frozenset(
+            (
+                echoes_pickup_database.pickup_categories["missile"],
+                echoes_pickup_database.pickup_categories["missile_related"],
+                echoes_pickup_database.pickup_categories["major"],
+            )
+        ),
         respects_lock=ammo_requires_main_item,
         resource_lock=ResourceLock(
             locked_by=missile_launcher,
@@ -203,7 +225,13 @@ def test_create_ammo_expansion(requires_main_item: bool, echoes_pickup_database,
         game=echoes_resource_database.game_enum,
         name="The Item",
         items=("Missile",),
-        broad_category=USELESS_PICKUP_CATEGORY,
+        gui_category=AMMO_PICKUP_CATEGORY,
+        hint_features=frozenset(
+            (
+                USELESS_PICKUP_CATEGORY,
+                AMMO_PICKUP_CATEGORY,
+            )
+        ),
         unlocked_by="MissileLauncher",
         temporary="Temporary1",
         model_name="AmmoModel",
@@ -221,8 +249,13 @@ def test_create_ammo_expansion(requires_main_item: bool, echoes_pickup_database,
         model=PickupModel(echoes_resource_database.game_enum, "AmmoModel"),
         progression=(),
         extra_resources=((ammo_a, ammo_count[0]),),
-        pickup_category=AMMO_PICKUP_CATEGORY,
-        broad_category=USELESS_PICKUP_CATEGORY,
+        gui_category=AMMO_PICKUP_CATEGORY,
+        hint_features=frozenset(
+            (
+                USELESS_PICKUP_CATEGORY,
+                AMMO_PICKUP_CATEGORY,
+            )
+        ),
         respects_lock=requires_main_item,
         resource_lock=ResourceLock(
             locked_by=primary_a,
@@ -235,6 +268,8 @@ def test_create_ammo_expansion(requires_main_item: bool, echoes_pickup_database,
             probability_multiplier=2.0,
             index_age_impact=1.0,
         ),
+        show_in_credits_spoiler=False,
+        is_expansion=True,
     )
 
 

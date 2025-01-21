@@ -130,8 +130,8 @@ def test_victory_condition_for_pickup_placement(
                 game=blank_game_description.game,
                 name="EnergyTransferModule",
             ),
-            pickup_category=blank_pickup_database.pickup_categories["gear"],
-            broad_category=blank_pickup_database.pickup_categories["gear"],
+            gui_category=blank_pickup_database.pickup_categories["gear"],
+            hint_features=frozenset((blank_pickup_database.pickup_categories["gear"],)),
             progression=(
                 (
                     ItemResourceInfo(
@@ -153,8 +153,8 @@ def test_victory_condition_for_pickup_placement(
                 game=blank_game_description.game,
                 name="EnergyTransferModule",
             ),
-            pickup_category=blank_pickup_database.pickup_categories["ammo"],
-            broad_category=blank_pickup_database.pickup_categories["ammo"],
+            gui_category=blank_pickup_database.pickup_categories["ammo"],
+            hint_features=frozenset((blank_pickup_database.pickup_categories["ammo"],)),
             progression=(
                 (
                     ItemResourceInfo(

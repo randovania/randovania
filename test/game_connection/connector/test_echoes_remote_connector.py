@@ -293,7 +293,7 @@ async def test_patches_for_pickup(
         "Pickup",
         MagicMock(),
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=(),
         generator_params=default_generator_params,
         extra_resources=(

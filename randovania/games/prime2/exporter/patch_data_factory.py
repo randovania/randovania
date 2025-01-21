@@ -1057,8 +1057,8 @@ def create_echoes_useless_pickup(resource_database: ResourceDatabase) -> PickupE
             game=resource_database.game_enum,
             name=echoes_items.USELESS_PICKUP_MODEL,
         ),
-        pickup_category=pickup_category.USELESS_PICKUP_CATEGORY,
-        broad_category=pickup_category.USELESS_PICKUP_CATEGORY,
+        gui_category=pickup_category.USELESS_PICKUP_CATEGORY,
+        hint_features=frozenset(),
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,  # TODO
         ),

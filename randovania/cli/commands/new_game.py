@@ -263,6 +263,7 @@ def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
             name="ammo-based",
             long_name="Ammo-Based",
             hint_details=("an ", "ammo-based item"),
+            is_broad_category=True,
         ),
     }
     pickup_db = PickupDatabase(
@@ -271,8 +272,8 @@ def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
             "Victory Key": StandardPickupDefinition(
                 game=game_enum,
                 name="Victory Key",
-                pickup_category=GENERIC_KEY_CATEGORY,
-                broad_category=GENERIC_KEY_CATEGORY,
+                gui_category=GENERIC_KEY_CATEGORY,
+                hint_features=frozenset(GENERIC_KEY_CATEGORY),
                 model_name="VictoryKey",
                 offworld_models=frozendict(),
                 progression=("VictoryKey",),
@@ -284,8 +285,11 @@ def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
             "Powerful Weapon": StandardPickupDefinition(
                 game=game_enum,
                 name="Powerful Weapon",
-                pickup_category=pickup_categories["weapon"],
-                broad_category=pickup_categories["ammo-based"],
+                gui_category=pickup_categories["weapon"],
+                hint_features=frozenset(
+                    pickup_categories["weapon"],
+                    pickup_categories["ammo-based"],
+                ),
                 model_name="Powerful",
                 offworld_models=frozendict(),
                 progression=("Weapon",),

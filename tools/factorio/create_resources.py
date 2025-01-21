@@ -273,7 +273,7 @@ def create_pickups(techs_raw: dict, existing_pickup_ids: dict[str, int], tech_cs
 
             result[pickup_name] = {
                 "pickup_category": data["category"],
-                "broad_category": data["category"],
+                "hint_features": [data["category"]],
                 "model_name": icon,
                 "offworld_models": {},
                 "progression": [tech_name],

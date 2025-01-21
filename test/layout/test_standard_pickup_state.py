@@ -56,8 +56,8 @@ def standard_pickup_state(request, echoes_pickup_database, generic_pickup_catego
     pickup = StandardPickupDefinition(
         game=RandovaniaGame.METROID_PRIME_ECHOES,
         name="Item Name",
-        pickup_category=generic_pickup_category,
-        broad_category=generic_pickup_category,
+        gui_category=generic_pickup_category,
+        hint_features=frozenset((generic_pickup_category,)),
         model_name="Model Name",
         offworld_models=frozendict(),
         progression=(request.param.get("progression", "Power"),),

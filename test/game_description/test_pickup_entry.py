@@ -15,8 +15,8 @@ def test_extra_resources_maximum(generic_pickup_category, default_generator_para
         PickupEntry(
             name="broken",
             model=PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "Nothing"),
-            pickup_category=generic_pickup_category,
-            broad_category=generic_pickup_category,
+            gui_category=generic_pickup_category,
+            hint_features=frozenset((generic_pickup_category,)),
             progression=(),
             extra_resources=((item, 5),),
             generator_params=default_generator_params,

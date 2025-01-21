@@ -314,8 +314,14 @@ def blank_pickup(
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
-        pickup_category=echoes_pickup_database.pickup_categories["suit"],
-        broad_category=echoes_pickup_database.pickup_categories["life_support"],
+        gui_category=echoes_pickup_database.pickup_categories["suit"],
+        hint_features=frozenset(
+            (
+                echoes_pickup_database.pickup_categories["suit"],
+                echoes_pickup_database.pickup_categories["life_support"],
+                echoes_pickup_database.pickup_categories["major"],
+            )
+        ),
         progression=(),
         generator_params=default_generator_params,
         resource_lock=None,
@@ -332,8 +338,13 @@ def dread_spider_pickup(default_generator_params: PickupGeneratorParams) -> Pick
             game=RandovaniaGame.METROID_DREAD,
             name="powerup_spidermagnet",
         ),
-        pickup_category=dread_pickup_database.pickup_categories["misc"],
-        broad_category=dread_pickup_database.pickup_categories["misc"],
+        gui_category=dread_pickup_database.pickup_categories["misc"],
+        hint_features=frozenset(
+            (
+                dread_pickup_database.pickup_categories["misc"],
+                dread_pickup_database.pickup_categories["major"],
+            )
+        ),
         progression=(
             (
                 ItemResourceInfo(
@@ -361,8 +372,13 @@ def msr_ice_beam_pickup(default_generator_params: PickupGeneratorParams) -> Pick
             game=RandovaniaGame.METROID_SAMUS_RETURNS,
             name="powerup_icebeam",
         ),
-        pickup_category=msr_pickup_database.pickup_categories["misc"],
-        broad_category=msr_pickup_database.pickup_categories["misc"],
+        gui_category=msr_pickup_database.pickup_categories["misc"],
+        hint_features=frozenset(
+            (
+                msr_pickup_database.pickup_categories["misc"],
+                msr_pickup_database.pickup_categories["major"],
+            )
+        ),
         progression=(
             (
                 ItemResourceInfo(
@@ -390,8 +406,14 @@ def am2r_varia_pickup(default_generator_params: PickupGeneratorParams) -> Pickup
             game=RandovaniaGame.AM2R,
             name="sItemVariaSuit",
         ),
-        pickup_category=am2r_pickup_database.pickup_categories["suit"],
-        broad_category=am2r_pickup_database.pickup_categories["life_support"],
+        gui_category=am2r_pickup_database.pickup_categories["suit"],
+        hint_features=frozenset(
+            (
+                am2r_pickup_database.pickup_categories["suit"],
+                am2r_pickup_database.pickup_categories["life_support"],
+                am2r_pickup_database.pickup_categories["major"],
+            )
+        ),
         progression=(
             (
                 ItemResourceInfo(
@@ -418,8 +440,8 @@ def cs_panties_pickup(default_generator_params: PickupGeneratorParams) -> Pickup
             game=RandovaniaGame.CAVE_STORY,
             name="",
         ),
-        pickup_category=cs_pickup_database.pickup_categories["useless"],
-        broad_category=cs_pickup_database.pickup_categories["useless"],
+        gui_category=cs_pickup_database.pickup_categories["useless"],
+        hint_features=frozenset((cs_pickup_database.pickup_categories["useless"],)),
         progression=(
             (
                 ItemResourceInfo(

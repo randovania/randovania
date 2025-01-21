@@ -112,8 +112,8 @@ class BitPackPickupEntry:
         yield from bitpacking.encode_string(self.value.name)
         yield from self.value.model.game.bit_pack_encode({})
         yield from bitpacking.encode_string(self.value.model.name)
-        yield from _encode_pickup_category(self.value.pickup_category)
-        yield from _encode_pickup_category(self.value.broad_category)
+        yield from _encode_pickup_category(self.value.gui_category)
+        yield from bitpacking.encode_tuple(tuple(sorted(self.value.hint_features)), _encode_pickup_category)
         yield from bitpacking.encode_tuple(self.value.progression, helper.encode_resource_quantity)
         yield from bitpacking.encode_tuple(self.value.extra_resources, helper.encode_resource_quantity)
         yield from bitpacking.encode_bool(self.value.unlocks_resource)
@@ -142,7 +142,7 @@ class BitPackPickupEntry:
             name=bitpacking.decode_string(decoder),
         )
         pickup_category = _decode_pickup_category(decoder)
-        broad_category = _decode_pickup_category(decoder)
+        hint_features = frozenset(bitpacking.decode_tuple(decoder, _decode_pickup_category))
         progression = bitpacking.decode_tuple(decoder, helper.decode_resource_quantity)
         extra_resources = bitpacking.decode_tuple(decoder, helper.decode_resource_quantity)
         unlocks_resource = bitpacking.decode_bool(decoder)
@@ -162,8 +162,8 @@ class BitPackPickupEntry:
         return PickupEntry(
             name=name,
             model=model,
-            pickup_category=pickup_category,
-            broad_category=broad_category,
+            gui_category=pickup_category,
+            hint_features=hint_features,
             progression=progression,
             extra_resources=extra_resources,
             unlocks_resource=unlocks_resource,
