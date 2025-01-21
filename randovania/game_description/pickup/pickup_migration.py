@@ -97,24 +97,89 @@ def _migrate_v9(pickup_data: dict, game: RandovaniaGame) -> None:
 def _migrate_v10(pickup_data: dict, game: RandovaniaGame) -> None:
     categories = pickup_data["pickup_categories"]
 
+    no_global_categories = {
+        RandovaniaGame.BLANK,
+        RandovaniaGame.CAVE_STORY,
+        RandovaniaGame.FACTORIO,
+    }
+
+    if game not in no_global_categories:
+        categories.update(
+            {
+                "major": {"long_name": "Major Item", "hint_details": ["a ", "major item"]},
+                "expansion": {"long_name": "Expansion", "hint_details": ["an ", "expansion"]},
+            }
+        )
+
+    def add_generic_key_category() -> None:
+        categories["key"] = {"long_name": "Key", "hint_details": ["a ", "key"]}
+
+    def update_broad_category(category: str) -> None:
+        categories[category]["is_broad_category"] = True
+
     for pickup in pickup_data["standard_pickups"].values():
+        assert isinstance(pickup, dict)
+
+        update_broad_category(pickup["broad_category"])
+
         category = categories[pickup["pickup_category"]]
+        pickup["gui_category"] = pickup["pickup_category"]
         pickup["show_in_credits_spoiler"] = category["hinted_as_major"]
 
+        hint_features = set()
+        hint_features.add(pickup.pop("pickup_category"))
+        hint_features.add(pickup.pop("broad_category"))
+        if game not in no_global_categories:
+            hint_features.add("major")
+        pickup["hint_features"] = sorted(hint_features)
+
     for pickup in pickup_data["generated_pickups"].values():
+        assert isinstance(pickup, dict)
+
         pickup["show_in_credits_spoiler"] = True
-        pickup["is_key"] = True
+
+        hint_features = set()
+
+        if "pickup_category" in pickup:
+            hint_features.add(pickup["pickup_category"])
+        else:
+            add_generic_key_category()
+            pickup["pickup_category"] = "key"
+        pickup["gui_category"] = pickup.pop("pickup_category")
+
+        if "broad_category" in pickup:
+            update_broad_category(pickup["broad_category"])
+            hint_features.add(pickup.pop("broad_category"))
+        else:
+            add_generic_key_category()
+            update_broad_category("key")
+            hint_features.add("key")
+
+        pickup["hint_features"] = sorted(hint_features)
+
+    broad_to_category = {
+        "beam_related": "beam",
+        "morph_ball_related": "morph_ball",
+        "missile_related": "missile",
+    }
+
+    for pickup in pickup_data["ammo_pickups"].values():
+        assert isinstance(pickup, dict)
+
+        update_broad_category(pickup["broad_category"])
+
+        hint_features = set()
+        hint_features.add(pickup["broad_category"])
+        if game not in no_global_categories:
+            hint_features.add("expansion")
+        pickup["hint_features"] = sorted(hint_features)
+
+        pickup["gui_category"] = broad_to_category.get(pickup["broad_category"], pickup["broad_category"])
+        pickup.pop("broad_category", None)
 
     for category in categories.values():
         category.pop("hinted_as_major", None)
         category.pop("is_key", None)
-
-
-# broad_to_category = {
-#     "beam_related": "beam",
-#     "morph_ball_related": "morph_ball",
-#     "missile_related": "missile",
-# }
 
 
 _MIGRATIONS = [
@@ -126,8 +191,8 @@ _MIGRATIONS = [
     _migrate_v6,
     _migrate_v7,
     _migrate_v8,
-    _migrate_v9,
-    _migrate_v10,
+    _migrate_v9,  # add generated_pickups
+    _migrate_v10,  # move category fields to pickup and add hint_features
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -27,7 +27,8 @@ class AmmoPickupDefinition(JsonDataclass):
     offworld_models: frozendict[RandovaniaGame, str]
     items: tuple[str, ...]
     preferred_location_category: LocationCategory
-    broad_category: PickupCategory = dataclasses.field(metadata={"init_from_extra": True})
+    gui_category: PickupCategory = dataclasses.field(metadata={"init_from_extra": True})
+    hint_features: tuple[PickupCategory, ...] = dataclasses.field(metadata={"init_from_extra": True})
     additional_resources: frozendict[str, int] = dataclasses.field(default_factory=frozendict, metadata=EXCLUDE_DEFAULT)
     unlocked_by: str | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
     temporary: str | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
@@ -54,25 +55,29 @@ class AmmoPickupDefinition(JsonDataclass):
 
     @classmethod
     def from_json_with_categories(
-        cls, name: str, game: RandovaniaGame, pickup_categories: dict[str, PickupCategory], value: dict
+        cls,
+        name: str,
+        game: RandovaniaGame,
+        pickup_categories: dict[str, PickupCategory],
+        value: dict,
     ) -> Self:
+        gui_category = pickup_categories[value["gui_category"]]
+        features = tuple(pickup_categories[category] for category in value["hint_features"])
         return cls.from_json(
             value,
             game=game,
             name=name,
-            broad_category=pickup_categories[value["broad_category"]],
+            gui_category=gui_category,
+            hint_features=features,
         )
 
     @property
     def as_json(self) -> dict:
         return {
-            "broad_category": self.broad_category.name,
+            "gui_category": self.gui_category.name,
+            "hint_features": [feature.name for feature in self.hint_features],
             **super().as_json,
         }
-
-    @property
-    def pickup_category(self) -> PickupCategory:
-        return AMMO_PICKUP_CATEGORY
 
     def create_resource_lock(self, resource_database: ResourceDatabase) -> ResourceLock | None:
         if self.unlocked_by is not None:

@@ -9,7 +9,7 @@ from frozendict import frozendict
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.pickup.pickup_category import GENERIC_KEY_CATEGORY, PickupCategory
+from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.layout.base.standard_pickup_state import StandardPickupStateCase
@@ -25,14 +25,13 @@ class StandardPickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
     name: str = dataclasses.field(metadata={"init_from_extra": True})
     """The name of the pickup."""
 
-    pickup_category: PickupCategory = dataclasses.field(metadata={"init_from_extra": True})
+    gui_category: PickupCategory = dataclasses.field(metadata={"init_from_extra": True})
     """
-    The precise category for this pickup. Used in the GUI for visually grouping pickups with the same precise
-    category, and for when this pickup is referenced by a precise hint.
+    Used in the GUI for visually grouping pickups with the same precise category.
     """
 
-    broad_category: PickupCategory = dataclasses.field(metadata={"init_from_extra": True})
-    """The broad category for this pickup. Used for when this pickup is referenced by a broad hint."""
+    hint_features: tuple[PickupCategory, ...] = dataclasses.field(metadata={"init_from_extra": True})
+    """Defines which features this pickup can be referred to with by hints."""
 
     model_name: str
     """The name of the model that should be used by default for this pickup."""
@@ -136,28 +135,24 @@ class StandardPickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
         game: RandovaniaGame,
         pickup_categories: dict[str, PickupCategory],
         value: dict,
-        *,
-        default_category: PickupCategory | None = None,
     ) -> Self:
-        pickup_category = pickup_categories.get(value.get("pickup_category", ""), default_category)
-        broad_category = pickup_categories.get(value.get("broad_category", ""), default_category)
+        gui_category = pickup_categories[value["gui_category"]]
+        features = tuple(pickup_categories[category] for category in value["hint_features"])
         return cls.from_json(
             value,
             game=game,
             name=name,
-            pickup_category=pickup_category,
-            broad_category=broad_category,
+            gui_category=gui_category,
+            hint_features=features,
         )
 
     @property
     def as_json(self) -> dict:
-        data = {}
-        if self.pickup_category is not GENERIC_KEY_CATEGORY:
-            data["pickup_category"] = self.pickup_category.name
-        if self.broad_category is not GENERIC_KEY_CATEGORY:
-            data["broad_category"] = self.broad_category.name
-        data.update(super().as_json)
-        return data
+        return {
+            "gui_category": self.gui_category.name,
+            "hint_features": [feature.name for feature in self.hint_features],
+            **super().as_json,
+        }
 
     @property
     def count_for_shuffled_case(self) -> int:
