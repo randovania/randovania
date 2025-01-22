@@ -1123,15 +1123,13 @@ Extra - room_id: [38]
   * Extra - room: 38
   * Extra - blockx: 53
   * Extra - blocky: 10
-  > Beside Door
-      Wall Jump (Beginner) or Enabled Generator Workaround
+  > Next to Pickup
+      Trivial
 
 > Door to Crew Quarters East; Heals? False
   * Layers: default
   * L0 Hatch to Crew Quarters East/Door to Arachnus Arena
   * Extra - door_idx: (88,)
-  > Arena
-      Enabled Generator Workaround
   > Beside Door
       Trivial
 
@@ -1154,10 +1152,8 @@ Extra - room_id: [38]
   * Layers: default
   * Open Passage to The Attic/Other to Arachnus Arena
   * Extra - door_idx: (200,)
-  > Beside Door
-      All of the following:
-          Missiles
-          Wall Jump (Beginner) or Enabled Generator Workaround
+  > Next to Pickup
+      Missiles
 
 > Event - Arachnus; Heals? False
   * Layers: default
@@ -1190,18 +1186,23 @@ Extra - room_id: [38]
 
 > Beside Door; Heals? False
   * Layers: default
-  * FIXME: The connections to return back here technically arent trivial, but are
-currently assumed until a few generator issues have been figured out.
-  > Pickup (Energy Tank)
-      Trivial
   > Door to Crew Quarters East
       After Boss Arachnus Defeated
   > Other to Concourse Ventilation
       Morph Ball and Screw Attack
+  > Next to Pickup
+      Trivial
+
+> Next to Pickup; Heals? False
+  * Layers: default
+  > Pickup (Energy Tank)
+      Trivial
   > Other to The Attic
       Missiles
   > Arena
       Trivial
+  > Beside Door
+      Wall Jump (Beginner)
 
 ----------------
 Operations Deck Data Room
