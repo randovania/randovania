@@ -277,6 +277,22 @@ class FusionPatchDataFactory(PatchDataFactory):
                 credits_array.append({"LineType": "White1", "Text": location["Area"], "BlankLines": 1})
         return credits_array
 
+    def _create_nav_locks(self) -> dict:
+        locks = {
+            "MainDeckWest": "RED",
+            "MainDeckEast": "BLUE",
+            "OperationsDeck": "GREY",
+            "Sector1Entrance": "GREEN",
+            "Sector2Entrance": "GREEN",
+            "Sector3Entrance": "YELLOW",
+            "Sector4Entrance": "YELLOW",
+            "Sector5Entrance": "RED",
+            "Sector6Entrance": "RED",
+            "AuxiliaryPower": "OPEN",
+            "RestrictedLabs": "OPEN",
+        }
+        return locks
+
     def create_useless_pickup(self) -> PickupEntry:
         """Used for any location with no PickupEntry assigned to it."""
         return pickup_creator.create_nothing_pickup(
@@ -302,6 +318,7 @@ class FusionPatchDataFactory(PatchDataFactory):
             "DoorLocks": self._create_door_locks(),
             "Palettes": self._create_palette(),
             "NavigationText": self._create_nav_text(),
+            "NavStationLocks": self._create_nav_locks(),
             "CreditsText": self._create_credits_text(),
             "DisableDemos": True,
             "AntiSoftlockRoomEdits": self.configuration.anti_softlock,
