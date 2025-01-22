@@ -17,6 +17,9 @@ class BaseCosmeticPatchesDialog(QtWidgets.QDialog):
     cancel_button: QtWidgets.QPushButton
     reset_button: QtWidgets.QPushButton
 
+    def __init__(self, parent: QtWidgets.QWidget | None, current: BaseCosmeticPatches):
+        super().__init__(parent)
+
     def connect_signals(self) -> None:
         self.accept_button.clicked.connect(self.accept)
         self.cancel_button.clicked.connect(self.reject)
