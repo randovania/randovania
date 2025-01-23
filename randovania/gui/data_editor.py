@@ -38,6 +38,7 @@ from randovania.games import default_data
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
 from randovania.gui.docks.connection_filtering_widget import ConnectionFilteringWidget
+from randovania.gui.docks.hint_feature_database_editor import HintFeatureDatabaseEditor
 from randovania.gui.docks.resource_database_editor import ResourceDatabaseEditor
 from randovania.gui.generated.data_editor_ui import Ui_DataEditorWindow
 from randovania.gui.lib import async_dialog, signal_handling
@@ -51,6 +52,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.resources.resource_info import ResourceInfo
 
 SHOW_REGION_MIN_MAX_SPINNER = False
@@ -181,6 +183,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         _, self.original_game_description = data_reader.decode_data_with_region_reader(data)
         self.resource_database = self.original_game_description.resource_database
+        self.hint_features = self.original_game_description.hint_feature_database
 
         self.update_game(self.original_game_description)
 
@@ -189,6 +192,12 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.resource_editor.features() & ~QtWidgets.QDockWidget.DockWidgetFeature.DockWidgetClosable
         )
         self.tabifyDockWidget(self.points_of_interest_dock, self.resource_editor)
+
+        self.hint_feature_editor = HintFeatureDatabaseEditor(self, self.hint_features)
+        self.hint_feature_editor.setFeatures(
+            self.hint_feature_editor.features() & ~QtWidgets.QDockWidget.DockWidgetFeature.DockWidgetClosable
+        )
+        self.tabifyDockWidget(self.points_of_interest_dock, self.hint_feature_editor)
 
         self.connection_filters = ConnectionFilteringWidget(self, self.original_game_description)
         self.connection_filters.setFeatures(
@@ -199,6 +208,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.points_of_interest_dock.raise_()
 
         self.resource_editor.ResourceChanged.connect(self._on_resource_changed)
+        self.hint_feature_editor.HintFeatureChanged.connect(self._on_hint_feature_changed)
         self.connection_filters.FiltersUpdated.connect(self._on_filters_changed)
 
         if self.game_description.game in {
@@ -861,6 +871,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
                     if node.event.short_name == resource.short_name:
                         self.replace_node_with(area, node, dataclasses.replace(node, event=resource))
+
+    def _on_hint_feature_changed(self, feature: HintFeature) -> None:
+        pass
 
     def _on_filters_changed(self) -> None:
         if self.edit_mode:
