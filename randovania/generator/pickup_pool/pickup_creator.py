@@ -4,8 +4,7 @@ from typing import TYPE_CHECKING
 
 from frozendict import frozendict
 
-from randovania.game_description import default_database
-from randovania.game_description.pickup import pickup_category
+from randovania.game_description import default_database, hint_features
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
 
@@ -161,6 +160,14 @@ def create_generated_pickup(
     )
 
 
+USELESS_PICKUP_CATEGORY = hint_features.HintFeature(
+    name="useless",
+    long_name="Useless",
+    hint_details=("an ", "Energy Transfer Module"),
+    is_broad_category=True,
+)
+
+
 def create_nothing_pickup(resource_database: ResourceDatabase, model_name: str = "Nothing") -> PickupEntry:
     """
     Creates a Nothing pickup.
@@ -175,7 +182,7 @@ def create_nothing_pickup(resource_database: ResourceDatabase, model_name: str =
             game=resource_database.game_enum,
             name=model_name,
         ),
-        gui_category=pickup_category.USELESS_PICKUP_CATEGORY,
+        gui_category=USELESS_PICKUP_CATEGORY,
         hint_features=frozenset(),
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,  # TODO
@@ -199,7 +206,7 @@ def create_visual_nothing(game: RandovaniaGame, model_name: str, pickup_name: st
             game=game,
             name=model_name,
         ),
-        gui_category=pickup_category.USELESS_PICKUP_CATEGORY,
+        gui_category=USELESS_PICKUP_CATEGORY,
         hint_features=frozenset(),
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,  # TODO

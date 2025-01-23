@@ -28,7 +28,7 @@ from randovania.generator.filler import runner
 from randovania.generator.generator import create_player_pool
 
 if TYPE_CHECKING:
-    from randovania.game_description.pickup.pickup_category import PickupCategory
+    from randovania.game_description.hint_features import HintFeature
 
 
 async def test_run_filler(
@@ -143,7 +143,7 @@ def test_add_hints_precision(empty_patches):
     }
 
 
-def _make_pickup(pickup_category: PickupCategory, generator_params: PickupGeneratorParams):
+def _make_pickup(pickup_category: HintFeature, generator_params: PickupGeneratorParams):
     return PickupEntry(
         name="Pickup",
         model=PickupModel(

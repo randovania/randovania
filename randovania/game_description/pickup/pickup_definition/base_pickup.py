@@ -6,7 +6,7 @@ from frozendict import frozendict
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.pickup.pickup_category import PickupCategory
+from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.resources.location_category import LocationCategory
 
 # how to order json-encoded fields
@@ -25,12 +25,12 @@ class BasePickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
     name: str = dataclasses.field(metadata={"init_from_extra": True})
     """The name of the pickup."""
 
-    gui_category: PickupCategory = dataclasses.field(metadata={"init_from_extra": True})
+    gui_category: HintFeature = dataclasses.field(metadata={"init_from_extra": True})
     """
     Used in the GUI for visually grouping pickups with the same precise category.
     """
 
-    hint_features: frozenset[PickupCategory] = dataclasses.field(metadata={"init_from_extra": True})
+    hint_features: frozenset[HintFeature] = dataclasses.field(metadata={"init_from_extra": True})
     """Defines which features this pickup can be referred to with by hints."""
 
     model_name: str = dataclasses.field(metadata={"storage_order": BASE_METADATA_STORAGE_ORDER})
@@ -91,7 +91,7 @@ class BasePickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
         cls,
         name: str,
         game: RandovaniaGame,
-        pickup_categories: dict[str, PickupCategory],
+        pickup_categories: dict[str, HintFeature],
         value: dict,
     ) -> Self:
         gui_category = pickup_categories[value["gui_category"]]

@@ -17,9 +17,6 @@ from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.pickup import pickup_category
-from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
-from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.common import elevators
 from randovania.games.prime2.exporter import hints
@@ -42,6 +39,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
@@ -1050,18 +1048,14 @@ def create_echoes_useless_pickup(resource_database: ResourceDatabase) -> PickupE
     :param resource_database:
     :return:
     """
-    return PickupEntry(
+    etm = pickup_creator.create_nothing_pickup(
+        resource_database,
+        echoes_items.USELESS_PICKUP_MODEL,
+    )
+    return dataclasses.replace(
+        etm,
         name="Energy Transfer Module",
         progression=((resource_database.get_item(echoes_items.USELESS_PICKUP_ITEM), 1),),
-        model=PickupModel(
-            game=resource_database.game_enum,
-            name=echoes_items.USELESS_PICKUP_MODEL,
-        ),
-        gui_category=pickup_category.USELESS_PICKUP_CATEGORY,
-        hint_features=frozenset(),
-        generator_params=PickupGeneratorParams(
-            preferred_location_category=LocationCategory.MAJOR,  # TODO
-        ),
     )
 
 

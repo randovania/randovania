@@ -5,7 +5,6 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 from randovania.bitpacking.json_dataclass import EXCLUDE_DEFAULT
-from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.pickup.pickup_definition.base_pickup import (
     ADDITIONAL_RESOURCES_STORAGE_ORDER,
     GENERATOR_PARAMS_STORAGE_ORDER,
@@ -87,10 +86,3 @@ class AmmoPickupDefinition(BasePickupDefinition):
                 temporary_item=resource_database.get_item(self.temporary),
             )
         return None
-
-
-AMMO_PICKUP_CATEGORY = PickupCategory(
-    name="expansion",
-    long_name="Expansion",
-    hint_details=("an ", "expansion"),
-)

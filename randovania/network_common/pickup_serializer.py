@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackFloat
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.pickup.pickup_category import PickupCategory
+from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.pickup.pickup_entry import (
     PickupEntry,
     PickupGeneratorParams,
@@ -82,15 +82,15 @@ class DatabaseBitPackHelper:
 
 
 # Item categories encoding & decoding
-def _encode_pickup_category(category: PickupCategory):
+def _encode_pickup_category(category: HintFeature):
     yield from bitpacking.encode_string(category.name)
     yield from bitpacking.encode_string(category.long_name)
     yield from bitpacking.encode_string(category.hint_details[0])
     yield from bitpacking.encode_string(category.hint_details[1])
 
 
-def _decode_pickup_category(decoder: BitPackDecoder) -> PickupCategory:
-    return PickupCategory(
+def _decode_pickup_category(decoder: BitPackDecoder) -> HintFeature:
+    return HintFeature(
         name=bitpacking.decode_string(decoder),
         long_name=bitpacking.decode_string(decoder),
         hint_details=(bitpacking.decode_string(decoder), bitpacking.decode_string(decoder)),

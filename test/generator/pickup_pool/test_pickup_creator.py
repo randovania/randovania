@@ -5,8 +5,8 @@ import dataclasses
 import pytest
 from frozendict import frozendict
 
-from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY, PickupCategory
-from randovania.game_description.pickup.pickup_definition.ammo_pickup import AMMO_PICKUP_CATEGORY, AmmoPickupDefinition
+from randovania.game_description.hint_features import HintFeature
+from randovania.game_description.pickup.pickup_definition.ammo_pickup import AmmoPickupDefinition
 from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
 from randovania.game_description.pickup.pickup_entry import (
     PickupEntry,
@@ -29,7 +29,7 @@ def test_create_pickup_for(echoes_resource_database, generic_pickup_category):
     ammo_a = echoes_resource_database.get_item("EnergyTank")
     ammo_b = echoes_resource_database.get_item("DarkAmmo")
 
-    less_generic_pickup_category = PickupCategory(
+    less_generic_pickup_category = HintFeature(
         name="the_category",
         long_name="The Category",
         hint_details=("a ", " wonderful item"),
@@ -215,7 +215,9 @@ def test_create_seeker_launcher(
 
 
 @pytest.mark.parametrize("requires_main_item", [False, True])
-def test_create_ammo_expansion(requires_main_item: bool, echoes_pickup_database, echoes_resource_database):
+def test_create_ammo_expansion(
+    requires_main_item: bool, ammo_pickup_category, useless_pickup_category, echoes_resource_database
+):
     # Setup
     primary_a = echoes_resource_database.get_item("MissileLauncher")
     ammo_a = echoes_resource_database.get_item("Missile")
@@ -225,11 +227,11 @@ def test_create_ammo_expansion(requires_main_item: bool, echoes_pickup_database,
         game=echoes_resource_database.game_enum,
         name="The Item",
         items=("Missile",),
-        gui_category=AMMO_PICKUP_CATEGORY,
+        gui_category=ammo_pickup_category,
         hint_features=frozenset(
             (
-                USELESS_PICKUP_CATEGORY,
-                AMMO_PICKUP_CATEGORY,
+                useless_pickup_category,
+                ammo_pickup_category,
             )
         ),
         unlocked_by="MissileLauncher",
@@ -249,11 +251,11 @@ def test_create_ammo_expansion(requires_main_item: bool, echoes_pickup_database,
         model=PickupModel(echoes_resource_database.game_enum, "AmmoModel"),
         progression=(),
         extra_resources=((ammo_a, ammo_count[0]),),
-        gui_category=AMMO_PICKUP_CATEGORY,
+        gui_category=ammo_pickup_category,
         hint_features=frozenset(
             (
-                USELESS_PICKUP_CATEGORY,
-                AMMO_PICKUP_CATEGORY,
+                useless_pickup_category,
+                ammo_pickup_category,
             )
         ),
         respects_lock=requires_main_item,

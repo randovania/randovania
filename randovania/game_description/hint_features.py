@@ -12,7 +12,7 @@ class HintDetails(NamedTuple):
 
 
 @dataclasses.dataclass(frozen=True, order=True)
-class PickupCategory(JsonDataclass):
+class HintFeature(JsonDataclass):
     name: str = dataclasses.field(metadata={"init_from_extra": True})
     long_name: str
     hint_details: HintDetails = dataclasses.field(metadata={"store_named_tuple_without_names": True})
@@ -28,18 +28,3 @@ class PickupCategory(JsonDataclass):
     def general_details(self) -> tuple[str, str]:
         # FIXME
         return "an ", "item"
-
-
-USELESS_PICKUP_CATEGORY = PickupCategory(
-    name="useless",
-    long_name="Useless",
-    hint_details=("an ", "Energy Transfer Module"),
-    is_broad_category=True,
-)
-
-GENERIC_KEY_CATEGORY = PickupCategory(
-    name="key",
-    long_name="Key",
-    hint_details=("a ", "key"),
-    is_broad_category=True,
-)

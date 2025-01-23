@@ -22,7 +22,7 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.pickup.pickup_category import GENERIC_KEY_CATEGORY, PickupCategory
+from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.pickup.pickup_database import PickupDatabase
 from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
 from randovania.game_description.requirements.base import Requirement
@@ -254,15 +254,21 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
 
 def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
     pickup_categories = {
-        "weapon": PickupCategory(
+        "weapon": HintFeature(
             name="weapon",
             long_name="Weapon",
             hint_details=("a ", "weapon"),
         ),
-        "ammo-based": PickupCategory(
+        "ammo-based": HintFeature(
             name="ammo-based",
             long_name="Ammo-Based",
             hint_details=("an ", "ammo-based item"),
+            is_broad_category=True,
+        ),
+        "key": HintFeature(
+            name="key",
+            long_name="Key",
+            hint_details=("a ", "key"),
             is_broad_category=True,
         ),
     }
@@ -272,8 +278,8 @@ def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
             "Victory Key": StandardPickupDefinition(
                 game=game_enum,
                 name="Victory Key",
-                gui_category=GENERIC_KEY_CATEGORY,
-                hint_features=frozenset(GENERIC_KEY_CATEGORY),
+                gui_category="key",
+                hint_features=frozenset(("key",)),
                 model_name="VictoryKey",
                 offworld_models=frozendict(),
                 progression=("VictoryKey",),
@@ -287,8 +293,10 @@ def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
                 name="Powerful Weapon",
                 gui_category=pickup_categories["weapon"],
                 hint_features=frozenset(
-                    pickup_categories["weapon"],
-                    pickup_categories["ammo-based"],
+                    (
+                        pickup_categories["weapon"],
+                        pickup_categories["ammo-based"],
+                    )
                 ),
                 model_name="Powerful",
                 offworld_models=frozendict(),

@@ -8,13 +8,12 @@ from randovania.exporter.hints.determiner import Determiner
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.hint import HintItemPrecision
-from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY
-from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
-from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
     from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.interface_common.players_configuration import PlayersConfiguration
 
 _DET_AN = [
@@ -85,19 +84,8 @@ def create_pickup_hint(
     if target is None:
         # FIXME: adjust per game
         target = PickupTarget(
-            pickup=PickupEntry(
-                name="Energy Transfer Module",
-                progression=(),
-                model=PickupModel(
-                    game=RandovaniaGame.METROID_PRIME_ECHOES,
-                    name="EnergyTransferModule",
-                ),
-                gui_category=USELESS_PICKUP_CATEGORY,
-                hint_features=frozenset((USELESS_PICKUP_CATEGORY,)),
-                generator_params=PickupGeneratorParams(
-                    preferred_location_category=LocationCategory.MAJOR,
-                ),
-                show_in_credits_spoiler=False,
+            pickup=pickup_creator.create_visual_nothing(
+                RandovaniaGame.METROID_PRIME_ECHOES, "EnergyTransferModule", "Energy Transfer Module"
             ),
             player=players_config.player_index,
         )
