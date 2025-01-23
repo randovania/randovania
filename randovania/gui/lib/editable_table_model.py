@@ -29,7 +29,7 @@ class FieldDefinition:
     from_qt: typing.Callable[[typing.Any], tuple[bool, typing.Any]] = _unmodified_from_qt
 
 
-class GenericTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
+class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
     def __init__(self):
         super().__init__()
         self.allow_edits = True

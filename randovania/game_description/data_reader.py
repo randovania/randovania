@@ -364,7 +364,7 @@ class RegionReader:
                     **generic_args,
                     pickup_index=PickupIndex(data["pickup_index"]),
                     location_category=LocationCategory(data["location_category"]),
-                    hint_features=frozenset(data["hint_features"]),
+                    hint_features=frozenset(self.hint_feature_database[feature] for feature in data["hint_features"]),
                 )
 
             elif node_type == "event":

@@ -19,7 +19,7 @@ from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.resource_database_editor_ui import Ui_ResourceDatabaseEditor
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.connections_visualizer import create_tree_items_for_requirement
-from randovania.gui.lib.generic_table_model import FieldDefinition, GenericTableModel
+from randovania.gui.lib.editable_table_model import EditableTableModel, FieldDefinition
 from randovania.lib import frozen_lib
 
 if typing.TYPE_CHECKING:
@@ -44,7 +44,7 @@ GENERIC_FIELDS = [
 ]
 
 
-class ResourceDatabaseGenericModel(GenericTableModel[ResourceInfo]):
+class ResourceDatabaseGenericModel(EditableTableModel[ResourceInfo]):
     def __init__(self, db: ResourceDatabase, resource_type: ResourceType):
         super().__init__()
         self.db = db

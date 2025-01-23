@@ -3,10 +3,10 @@ from PySide6 import QtCore, QtWidgets
 from randovania.game_description.hint_features import HintDetails, HintFeature
 from randovania.gui.generated.hint_feature_database_editor_ui import Ui_HintFeatureDatabaseEditor
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
-from randovania.gui.lib.generic_table_model import FieldDefinition, GenericTableModel
+from randovania.gui.lib.editable_table_model import EditableTableModel, FieldDefinition
 
 
-class HintFeatureDatabaseModel(GenericTableModel[HintFeature]):
+class HintFeatureDatabaseModel(EditableTableModel[HintFeature]):
     def __init__(self, db: dict[str, HintFeature]):
         super().__init__()
         self.db = db

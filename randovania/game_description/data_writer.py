@@ -300,7 +300,7 @@ def write_node(node: Node) -> dict:
         data.update(common_fields)
         data["pickup_index"] = node.pickup_index.index
         data["location_category"] = node.location_category.value
-        data["hint_features"] = sorted(node.hint_features)
+        data["hint_features"] = [ft.as_json for ft in sorted(node.hint_features)]
 
     elif isinstance(node, EventNode):
         data["node_type"] = "event"
