@@ -222,6 +222,7 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
         game=game_enum,
         dock_weakness_database=dock_weakness_database,
         resource_database=resource_database,
+        hint_feature_database={},
         layers=("default",),
         victory_condition=ResourceRequirement.simple(items[1]),
         starting_location=intro_node.identifier,
