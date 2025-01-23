@@ -170,6 +170,7 @@ def test_create_pickup_list(
         unlocks_resource=True,
         resource_lock=ResourceLock(resource_a, resource_a, useless_resource),
         generator_params=default_generator_params,
+        is_expansion=True,
     )
     pickup_d = PickupEntry(
         "P-D",
@@ -181,6 +182,7 @@ def test_create_pickup_list(
         unlocks_resource=True,
         resource_lock=ResourceLock(resource_a, resource_a, useless_resource),
         generator_params=default_generator_params,
+        is_expansion=True,
     )
     pickup_e = PickupEntry(
         "P-E",
@@ -192,6 +194,7 @@ def test_create_pickup_list(
         unlocks_resource=True,
         resource_lock=ResourceLock(resource_c, resource_c, useless_resource),
         generator_params=default_generator_params,
+        is_expansion=True,
     )
 
     useless_pickup = PickupEntry(

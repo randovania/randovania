@@ -275,12 +275,13 @@ def test_create_message_for_hint_dark_temple_no_keys(empty_patches, players_conf
     assert result == "The keys to &push;&main-color=#FF6705B3;Dark Torvus Temple&pop; are nowhere to be found."
 
 
+# @pytest.mark.skip
 @pytest.mark.parametrize(
     "item",
     [
         (HintItemPrecision.DETAILED, "The", "&push;&main-color=#FF6705B3;Blank Pickup&pop;"),
         (HintItemPrecision.PRECISE_CATEGORY, "A", "&push;&main-color=#FF6705B3;suit&pop;"),
-        (HintItemPrecision.GENERAL_CATEGORY, "A", "&push;&main-color=#FF6705B3;major upgrade&pop;"),
+        (HintItemPrecision.GENERAL_CATEGORY, "An", "&push;&main-color=#FF6705B3;item&pop;"),
         (HintItemPrecision.BROAD_CATEGORY, "A", "&push;&main-color=#FF6705B3;life support system&pop;"),
     ],
 )
@@ -332,6 +333,7 @@ def test_create_hints_item_location(echoes_game_patches, blank_pickup, item, loc
     assert result == [{"asset_id": asset_id, "strings": [message, "", message]}]
 
 
+# @pytest.mark.skip
 @pytest.mark.parametrize(
     "pickup_index_and_guardian",
     [
@@ -345,7 +347,7 @@ def test_create_hints_item_location(echoes_game_patches, blank_pickup, item, loc
     [
         (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Blank Pickup&pop;"),
         (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;suit&pop;"),
-        (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
+        (HintItemPrecision.GENERAL_CATEGORY, "an &push;&main-color=#FF6705B3;item&pop;"),
         (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
     ],
 )
@@ -385,12 +387,13 @@ def test_create_hints_guardians(
     assert result == [{"asset_id": asset_id, "strings": [message, "", message]}]
 
 
+# @pytest.mark.skip
 @pytest.mark.parametrize(
     "item",
     [
         (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Blank Pickup&pop;"),
         (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;suit&pop;"),
-        (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
+        (HintItemPrecision.GENERAL_CATEGORY, "an &push;&main-color=#FF6705B3;item&pop;"),
         (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
     ],
 )

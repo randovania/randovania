@@ -183,7 +183,7 @@ def create_nothing_pickup(resource_database: ResourceDatabase, model_name: str =
             name=model_name,
         ),
         gui_category=USELESS_PICKUP_CATEGORY,
-        hint_features=frozenset(),
+        hint_features=frozenset((USELESS_PICKUP_CATEGORY,)),
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,  # TODO
         ),
@@ -207,7 +207,7 @@ def create_visual_nothing(game: RandovaniaGame, model_name: str, pickup_name: st
             name=model_name,
         ),
         gui_category=USELESS_PICKUP_CATEGORY,
-        hint_features=frozenset(),
+        hint_features=frozenset((USELESS_PICKUP_CATEGORY,)),
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,  # TODO
         ),

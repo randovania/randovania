@@ -46,6 +46,13 @@ sample_data = {
         },
         "dock_rando": {"force_change_two_way": False, "resolver_attempts": 200, "to_shuffle_proportion": 1.0},
     },
+    "hint_feature_database": {
+        "key": {
+            "long_name": "Key",
+            "hint_details": ["a ", "key"],
+            "is_broad_category": True,
+        }
+    },
     "used_trick_levels": {},
     "flatten_to_set_on_patch": False,
     "regions": [],

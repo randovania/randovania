@@ -257,9 +257,9 @@ ConstructNode = NodeAdapter(
 
 ConstructArea = Struct(
     default_node=OptionalValue(String),
+    hint_features=OptionalValue(PrefixedArray(VarInt, String)),
     extra=JsonEncodedValue,
     nodes=ConstructDict(ConstructNode),
-    hint_features=PrefixedArray(VarInt, String),
 )
 
 ConstructRegion = Struct(
