@@ -1760,7 +1760,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Deal with water",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1774,7 +1774,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Damage Reqs",
+                                                        "comment": "Damage Run",
                                                         "items": [
                                                             {
                                                                 "type": "or",
@@ -1787,13 +1787,8 @@
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "GravitySuit",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
+                                                                                        "type": "template",
+                                                                                        "data": "Have Any Suit Upgrade"
                                                                                     },
                                                                                     {
                                                                                         "type": "resource",
@@ -1854,7 +1849,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get through blocks",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -2021,7 +2016,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Damage Reqs",
+                                                        "comment": "Damage Run",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2189,7 +2184,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Reach blocks via PBs",
+                                                                    "comment": "Reach blocks via PBs. Let crab crawl to top of bomb blocks, freeze there, lay PB, refreeze when its falling down.",
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
@@ -2469,7 +2464,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Damage Reqs",
+                                                        "comment": "Damage Run",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -4587,81 +4582,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ChargeBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Have Any Beam Upgrade"
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 10,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Use Power Bombs"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PowerBombs",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can Kill Tough Underwater Beam-Resistant Enemy"
                                     },
                                     {
                                         "type": "resource",
@@ -6292,7 +6214,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Damage Reqs",
+                                            "comment": "Damage Run",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -6314,13 +6236,8 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "GravitySuit",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Have Any Suit Upgrade"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -6499,7 +6416,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Damage Reqs",
+                                                        "comment": "Damage Run",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -6521,13 +6438,8 @@
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "GravitySuit",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
+                                                                                        "type": "template",
+                                                                                        "data": "Have Any Suit Upgrade"
                                                                                     },
                                                                                     {
                                                                                         "type": "resource",
@@ -6772,7 +6684,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Damage Reqs",
+                                            "comment": "Damage Run",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -6794,13 +6706,8 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "GravitySuit",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Have Any Suit Upgrade"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -6859,7 +6766,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Damage Reqs",
+                                                                    "comment": "Damage Run",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -6871,13 +6778,8 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "GravitySuit",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Have Any Suit Upgrade"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -6930,6 +6832,15 @@
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "GravitySuit",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
                                                                         }
                                                                     ]
                                                                 }
@@ -6978,7 +6889,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Damage Reqs",
+                                                        "comment": "Damage Run",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -9638,13 +9549,8 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "GravitySuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Have Any Suit Upgrade"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -9716,7 +9622,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Damage Reqs",
+                                            "comment": "Damage Run",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -9738,13 +9644,8 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "GravitySuit",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Have Any Suit Upgrade"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -9826,7 +9727,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Damage Reqs",
+                                            "comment": "Damage Run",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -9848,13 +9749,8 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "GravitySuit",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Have Any Suit Upgrade"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -10553,13 +10449,8 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "GravitySuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Have Any Suit Upgrade"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -10584,7 +10475,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://youtu.be/5cASpPGdiig",
+                                                        "comment": "WJ+HJ: https://youtu.be/5cASpPGdiig",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -10694,7 +10585,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Damage Reqs",
+                                                        "comment": "Damage Run",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -10716,13 +10607,8 @@
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "GravitySuit",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
+                                                                                        "type": "template",
+                                                                                        "data": "Have Any Suit Upgrade"
                                                                                     },
                                                                                     {
                                                                                         "type": "resource",
@@ -10887,7 +10773,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Damage Reqs",
+                                                        "comment": "Damage Run",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -10909,13 +10795,8 @@
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "GravitySuit",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
+                                                                                        "type": "template",
+                                                                                        "data": "Have Any Suit Upgrade"
                                                                                     },
                                                                                     {
                                                                                         "type": "resource",
@@ -11040,7 +10921,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Damage Reqs",
+                                                        "comment": "Damage Run",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -11062,13 +10943,8 @@
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "GravitySuit",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
+                                                                                        "type": "template",
+                                                                                        "data": "Have Any Suit Upgrade"
                                                                                     },
                                                                                     {
                                                                                         "type": "resource",
@@ -14182,12 +14058,29 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "MorphBall",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": "Either move to the Scizers or precisely shoot from the outside",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "MorphBall",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
@@ -14259,7 +14152,7 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "Missiles",
-                                                        "amount": 1,
+                                                        "amount": 5,
                                                         "negate": false
                                                     }
                                                 }
