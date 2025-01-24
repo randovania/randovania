@@ -44,6 +44,18 @@ _ALTERNATIVE_MODELS = {
     PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_SPIN"): ["powerup_doublejump", "powerup_spacejump"],
 }
 
+_SCENARIO_IDS = {
+    "artaria": "s010_cave",
+    "cataris": "s020_magma",
+    "dairon": "s030_baselab",
+    "burenia": "s040_aqua",
+    "ghavoran": "s050_forest",
+    "elun": "s060_quarantine",
+    "ferenia": "s070_basesanc",
+    "hanubia": "s080_shipyard",
+    "itorash": "s090_skybase",
+}
+
 
 def get_item_id_for_item(item: ItemResourceInfo) -> str:
     if "item_capacity_id" in item.extra:
@@ -486,6 +498,16 @@ class DreadPatchDataFactory(PatchDataFactory):
             }
         ]
 
+    def _light_patches(self):
+        config = self.configuration.disabled_lights.as_json
+        patches = []
+
+        for region, is_disabled in config.items():
+            if is_disabled:
+                patches.append({"scenario": _SCENARIO_IDS[region], "actor_layer": "rLightsLayer", "method": "all"})
+
+        return patches
+
     def create_memo_data(self) -> dict:
         """Used to generate pickup collection messages."""
         tank = self.configuration.energy_per_tank
@@ -564,6 +586,9 @@ class DreadPatchDataFactory(PatchDataFactory):
             "tile_group_patches": self._tilegroup_patches(),
             "new_spawn_points": list(self.new_spawn_points.values()),
             "objective": self._objective_patches(),
+            "mass_delete_actors": {
+                "to_remove": self._light_patches(),
+            },
             "layout_uuid": str(self.players_config.get_own_uuid()),
         }
 
