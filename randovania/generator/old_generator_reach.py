@@ -146,7 +146,7 @@ class OldGeneratorReach(GeneratorReach):
                 resource_nodes_to_check.add(path.node.node_index)
 
             for target_node, requirement_set in self._potential_nodes_from(path.node):
-                if requirement_set.satisfied(context, self._state.energy):
+                if requirement_set.satisfied(context, self._state.health_for_damage_requirements):
                     # print("* Queue path to", self.game.region_list.node_name(target_node))
                     paths_to_check.append(GraphPath(path.node, target_node, requirement_set))
                 else:
@@ -160,7 +160,7 @@ class OldGeneratorReach(GeneratorReach):
             assert isinstance(node, ResourceNode)
 
             requirement = node.requirement_to_collect()
-            if not requirement.satisfied(context, self._state.energy):
+            if not requirement.satisfied(context, self._state.health_for_damage_requirements):
                 self._uncollectable_nodes[node_index] = requirement.patch_requirements(1.0, context).as_set(context)
 
         # print("!! _expand_graph finished. Has {} edges".format(sum(1 for _ in self._digraph.edges_data())))
@@ -266,9 +266,7 @@ class OldGeneratorReach(GeneratorReach):
     def nodes(self) -> Iterator[Node]:
         for i, node in enumerate(typing.cast(tuple[Node, ...], self.all_nodes)):
             if i in self._digraph:
-                # entries in all_nodes can be None, but never for an index that's in _digraph
-                # We'd do `assert node is not None`, but we're skipping that here for speed
-                yield node  # type: ignore
+                yield node
 
     @property
     def safe_nodes(self) -> Iterator[Node]:
@@ -277,8 +275,7 @@ class OldGeneratorReach(GeneratorReach):
 
         all_nodes = typing.cast(tuple[Node, ...], self.all_nodes)
         for i in self._safe_nodes.as_list:
-            # safe disclaimer as `nodes`
-            yield all_nodes[i]  # type: ignore
+            yield all_nodes[i]
 
     def is_safe_node(self, node: Node) -> bool:
         node_index = node.node_index
@@ -318,7 +315,7 @@ class OldGeneratorReach(GeneratorReach):
         # Check if we can expand the corners of our graph
         # TODO: check if expensive. We filter by only nodes that depends on a new resource
         for edge, requirement in self._unreachable_paths.items():
-            if requirement.satisfied(self._state.node_context(), self._state.energy):
+            if requirement.satisfied(self._state.node_context(), self._state.health_for_damage_requirements):
                 from_index, to_index = edge
                 paths_to_check.append(GraphPath(all_nodes[from_index], all_nodes[to_index], requirement))
                 edges_to_remove.append(edge)
@@ -327,7 +324,7 @@ class OldGeneratorReach(GeneratorReach):
             del self._unreachable_paths[edge]
 
         for node_index, requirement in list(self._uncollectable_nodes.items()):
-            if requirement.satisfied(self._state.node_context(), self._state.energy):
+            if requirement.satisfied(self._state.node_context(), self._state.health_for_damage_requirements):
                 del self._uncollectable_nodes[node_index]
 
         self._expand_graph(paths_to_check)
@@ -344,7 +341,7 @@ class OldGeneratorReach(GeneratorReach):
             edges_to_remove = []
             for source, target, requirement in self._digraph.edges_data():
                 if not new_dangerous_resources.isdisjoint(requirement.dangerous_resources):
-                    if not requirement.satisfied(new_state.node_context(), new_state.energy):
+                    if not requirement.satisfied(new_state.node_context(), new_state.health_for_damage_requirements):
                         edges_to_remove.append((source, target))
 
             for edge in edges_to_remove:
@@ -377,4 +374,6 @@ class OldGeneratorReach(GeneratorReach):
 
     def victory_condition_satisfied(self) -> bool:
         context = self._state.node_context()
-        return self.game.victory_condition_as_set(context).satisfied(context, self._state.energy)
+        return self.game.victory_condition_as_set(context).satisfied(
+            context, self._state.health_for_damage_requirements
+        )

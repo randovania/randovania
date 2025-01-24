@@ -946,15 +946,23 @@ Extra - asset_id: collision_camera_012
   * Extra - left_shield_def: actordef:actors/props/db_hdoor_b1_001/charclasses/db_hdoor_b1_001.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Ledge before Slide Jump
+  > Door to Transport to Artaria
       All of the following:
           Morph Ball
           Any of the following:
               Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 400
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 450
           Any of the following:
               Use Spin Boost
-              Slide and Slide Jump (Intermediate)
+              All of the following:
+                  Slide
+                  Any of the following:
+                      Slide Jump (Advanced)
+                      All of the following:
+                          Slide Jump (Intermediate)
+                          Any of the following:
+                              Flash Shift
+                              Cross Bomb and Movement (Beginner)
   > Upper Left Alcove
       All of the following:
           Morph Ball and After Dairon - Early Grapple Grapple Block Left
@@ -991,6 +999,13 @@ Extra - asset_id: collision_camera_012
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Early Grapple Access
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Varia Suit
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 450
+          Flash Shift or Movement (Beginner) or Use Spin Boost
   > Pickup (Missile Tank Tunnel)
       All of the following:
           Morph Ball and After Dairon - Early Grapple Grapple Block Right
@@ -1003,13 +1018,6 @@ Extra - asset_id: collision_camera_012
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-  > Ledge before Slide Jump
-      All of the following:
-          Morph Ball
-          Flash Shift or Lay Cross Bomb or Use Spin Boost
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
   > Lava Floor with Gravity Suit
       Gravity Suit and Morph Ball
 
@@ -1028,25 +1036,6 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Door to Transport to Artaria
       Trivial
-
-> Ledge before Slide Jump; Heals? False
-  * Layers: default
-  > Door to Early Grapple Access
-      All of the following:
-          Morph Ball
-          Flash Shift or Movement (Beginner) or Use Spin Boost
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 400
-  > Door to Transport to Artaria
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Flash Shift or Lay Cross Bomb or Use Spin Boost
-              Slide and Slide Jump (Beginner)
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
 
 > Upper Left Alcove; Heals? False
   * Layers: default
@@ -1078,10 +1067,6 @@ Extra - asset_id: collision_camera_012
   > Door to Transport to Artaria
       All of the following:
           Gravity Suit and Morph Ball
-          Speed Booster or Simple IBJ or Use Spin Boost
-  > Ledge before Slide Jump
-      All of the following:
-          Gravity Suit
           Speed Booster or Simple IBJ or Use Spin Boost
 
 ----------------
@@ -1813,23 +1798,13 @@ Extra - asset_id: collision_camera_025
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Freezer Center
-      Any of the following:
-          Gravity Suit or Before Dairon - Power Switch 2
-          Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
+      Trivial
   > Beside the Blob
-      All of the following:
-          After Dairon - Freezer Right Blob
-          Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
+      After Dairon - Freezer Right Blob
   > Event - Right Blob, Above
-      All of the following:
-          Any of the following:
-              Wave Beam
-              Pseudo-Wave Beam (Beginner) and Shoot Diffusion Beam
-          Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
+      Any of the following:
+          Wave Beam
+          Pseudo-Wave Beam (Beginner) and Shoot Diffusion Beam
 
 > Door to Power Switch 2; Heals? False
   * Layers: default
@@ -1841,15 +1816,9 @@ Extra - asset_id: collision_camera_025
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Freezer Center
-      Any of the following:
-          Gravity Suit or Before Dairon - Power Switch 2
-          Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
+      Trivial
   > Beside the Blob
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
+      Morph Ball
 
 > Door to Energy Recharge Station West (Upper); Heals? False
   * Layers: default
@@ -1884,8 +1853,9 @@ Extra - asset_id: collision_camera_025
       All of the following:
           Morph Ball
           Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
+              Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
+              Before Dairon - Power Switch 2 and Enabled Highly Dangerous Logic
 
 > Pickup (Missile Tank - Upper); Heals? False
   * Layers: default
@@ -1896,8 +1866,9 @@ Extra - asset_id: collision_camera_025
       All of the following:
           Morph Ball or After Dairon - Freezer Hidden Blob
           Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
+              Gravity Suit
               Heat/Cold Runs (Beginner) and Cold Damage ≥ 20
+              Before Dairon - Power Switch 2 and Enabled Highly Dangerous Logic
 
 > Event - Hidden Blob, Inside; Heals? False
   * Layers: default
@@ -1921,13 +1892,15 @@ Extra - asset_id: collision_camera_025
       All of the following:
           Morph Ball
           Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
+              Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
+              Before Dairon - Power Switch 2 and Enabled Highly Dangerous Logic
   > Freezer Navigation
       All of the following:
           Screw Attack and Speed Booster
           Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
+              Gravity Suit
+              Before Dairon - Power Switch 2 and Enabled Highly Dangerous Logic
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 130
 
 > Event - Hidden Blob, Outside; Heals? False
@@ -1939,53 +1912,33 @@ Extra - asset_id: collision_camera_025
 > Freezer Center; Heals? False
   * Layers: default
   > Door to Map Station
-      All of the following:
-          Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 150
-          Any of the following:
-              Space Jump or Speed Booster or Simple IBJ
-              All of the following:
-                  Wall Jump (Beginner)
-                  Flash Shift or Use Spin Boost
-              Morph Ball and Single-wall Wall Jump (Intermediate)
+      Any of the following:
+          Space Jump or Speed Booster or Simple IBJ
+          All of the following:
+              Wall Jump (Beginner)
+              Flash Shift or Use Spin Boost
+          Morph Ball and Single-wall Wall Jump (Intermediate)
   > Door to Power Switch 2
       Any of the following:
-          Gravity Suit
+          Gravity Suit or Spider Magnet or Speed Booster or Use Spin Boost
+          Grapple Beam and Grapple Movement (Beginner)
+          Flash Shift and Wall Jump (Beginner)
           All of the following:
-              Before Dairon - Power Switch 2
-              Any of the following:
-                  Spider Magnet or Speed Booster or Use Spin Boost
-                  Grapple Beam and Grapple Movement (Beginner)
-                  Flash Shift and Wall Jump (Beginner)
-                  All of the following:
-                      Lay Cross Bomb
-                      Movement (Intermediate) or Water Bomb Jump (Beginner)
-                  Water Bomb Jump (Intermediate) and Lay Normal Bomb
-          Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
+              Lay Cross Bomb
+              Movement (Intermediate) or Water Bomb Jump (Beginner)
+          Water Bomb Jump (Intermediate) and Lay Normal Bomb
+          After Dairon - Power Switch 2 and Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
   > Freezer Navigation
       After Dairon - Power Switch 2 or Enabled Highly Dangerous Logic
 
 > Beside the Blob; Heals? False
   * Layers: default
   > Door to Map Station
-      All of the following:
-          After Dairon - Freezer Right Blob
-          Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
+      After Dairon - Freezer Right Blob
   > Door to Power Switch 2
-      All of the following:
-          Can Slide
-          Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
+      Can Slide
   > Event - Right Blob, Below
-      All of the following:
-          Shoot Beam
-          Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
+      Shoot Beam
 
 > Event - Right Blob, Above; Heals? False
   * Layers: default
@@ -2003,17 +1956,21 @@ while disabled
       All of the following:
           Screw Attack and Speed Booster and Speed Booster Conservation (Beginner)
           Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
+              Gravity Suit
+              Before Dairon - Power Switch 2 and Enabled Highly Dangerous Logic
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 150
   > Event - Hidden Blob, Outside
       Wave Beam and Knowledge (Intermediate)
   > Freezer Center
-      After Dairon - Power Switch 2 or Enabled Highly Dangerous Logic
+      Any of the following:
+          Gravity Suit
+          Before Dairon - Power Switch 2 and Enabled Highly Dangerous Logic
   > Event - Freezer Speed Blocks Destroyed
       All of the following:
           Speed Booster
           Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
+              Gravity Suit
+              Before Dairon - Power Switch 2 and Enabled Highly Dangerous Logic
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
           Any of the following:
               Speed Booster Conservation (Intermediate)
@@ -2022,7 +1979,8 @@ while disabled
       All of the following:
           Morph Ball and After Dairon - Freezer Hidden Blob
           Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
+              Gravity Suit
+              Before Dairon - Power Switch 2 and Enabled Highly Dangerous Logic
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
 
 > Event - Freezer Speed Blocks Destroyed; Heals? False
@@ -2039,13 +1997,15 @@ while disabled
       All of the following:
           After Dairon - Freezer Speed Blocks Destroyed
           Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
+              Gravity Suit
+              Before Dairon - Power Switch 2 and Enabled Highly Dangerous Logic
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
   > Left Blob Alcove
       All of the following:
           Morph Ball and After Dairon - Freezer Speed Blocks Destroyed and After Dairon - Freezer Hidden Blob
           Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
+              Gravity Suit
+              Before Dairon - Power Switch 2 and Enabled Highly Dangerous Logic
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 120
 
 > Left Blob Alcove; Heals? False
@@ -2056,19 +2016,22 @@ while disabled
       All of the following:
           After Dairon - Freezer Hidden Blob or Can Slide
           Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
+              Gravity Suit
+              Before Dairon - Power Switch 2 and Enabled Highly Dangerous Logic
               Heat/Cold Runs (Beginner) and Cold Damage ≥ 30
   > Event - Hidden Blob, Inside
       All of the following:
           Lay Small Bomb or Shoot Beam
           Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
+              Gravity Suit
+              Before Dairon - Power Switch 2 and Enabled Highly Dangerous Logic
               Heat/Cold Runs (Beginner) and Cold Damage ≥ 30
   > Freezer Navigation
       All of the following:
           Morph Ball and After Dairon - Freezer Hidden Blob
           Any of the following:
-              Gravity Suit or Before Dairon - Power Switch 2
+              Gravity Suit
+              Before Dairon - Power Switch 2 and Enabled Highly Dangerous Logic
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
 
 ----------------

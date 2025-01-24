@@ -12,10 +12,11 @@ from randovania.game_description.resources.inventory import Inventory, Inventory
 if TYPE_CHECKING:
     from open_prime_rando.dol_patching.corruption.dol_patches import CorruptionDolVersion
 
-    from randovania.game_connection.connector.remote_connector import PickupEntryWithOwner
+    from randovania.game_connection.connector.prime_remote_connector import PickupPatches
     from randovania.game_description.db.region import Region
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.network_common.remote_pickup import RemotePickup
 
 
 def format_received_item(item_name: str, player_name: str) -> str:
@@ -44,13 +45,13 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
     def __init__(self, version: CorruptionDolVersion, executor: MemoryOperationExecutor):
         super().__init__(version, executor)
 
-    def _asset_id_format(self):
+    def _asset_id_format(self) -> str:
         return ">Q"
 
     @property
     def multiworld_magic_item(self) -> ItemResourceInfo:
         # TODO
-        return None
+        raise NotImplementedError
 
     async def current_game_status(self) -> tuple[bool, Region | None]:
         """
@@ -91,18 +92,14 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
         self,
         items: list[ItemResourceInfo],
     ) -> list[MemoryOperation]:
-        player_state_pointer = (
-            int.from_bytes(
-                await self.executor.perform_single_memory_operation(
-                    MemoryOperation(
-                        address=self.version.game_state_pointer,
-                        read_byte_count=4,
-                    )
-                ),
-                "big",
+        op = await self.executor.perform_single_memory_operation(
+            MemoryOperation(
+                address=self.version.game_state_pointer,
+                read_byte_count=4,
             )
-            + 36
         )
+        assert op is not None
+        player_state_pointer = int.from_bytes(op, "big") + 36
 
         return [
             MemoryOperation(
@@ -113,7 +110,7 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
             for item in items
         ]
 
-    async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory):
+    async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory) -> PickupPatches:
         item_name, resources_to_give = self._resources_to_give_for_pickup(pickup, inventory)
 
         self.logger.debug(f"Resource changes for {pickup.name} from {provider_name}: {resources_to_give}")
@@ -134,7 +131,7 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
     async def receive_remote_pickups(
         self,
         inventory: Inventory,
-        remote_pickups: tuple[PickupEntryWithOwner, ...],
+        remote_pickups: tuple[RemotePickup, ...],
     ) -> bool:
         # Not yet implemented
         return False

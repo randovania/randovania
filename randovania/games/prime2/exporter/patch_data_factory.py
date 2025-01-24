@@ -465,7 +465,7 @@ def _akul_testament_string_patch(namer: HintNamer) -> list[dict[str, typing.Any]
     ]
 
     title = "Metroid Prime 2: Echoes Randomizer Tournament"
-    champs = [f'{champ["title"]}\n{namer.format_player(champ["name"], with_color=True)}' for champ in raw_champs]
+    champs = [f"{champ['title']}\n{namer.format_player(champ['name'], with_color=True)}" for champ in raw_champs]
 
     return [
         {
@@ -993,16 +993,24 @@ def echoes_pickup_details_to_patcher(
         assert item is not None
         return item
 
-    return {
-        "pickup_index": details.index.index,
-        "resources": _create_pickup_resources_for(details.conditional_resources[0].resources + multiworld_tuple),
-        "conditional_resources": [
+    conditional_resources = []
+    if not details.is_for_remote_player:
+        conditional_resources = [
             {
                 "item": item_id_for_item_resource(_assert_item_exists(conditional.item)),
                 "resources": _create_pickup_resources_for(conditional.resources + multiworld_tuple),
             }
             for conditional in details.conditional_resources[1:]
-        ],
+        ]
+
+    return {
+        "pickup_index": details.index.index,
+        "resources": _create_pickup_resources_for(
+            (details.conditional_resources[0].resources + multiworld_tuple)
+            if not details.is_for_remote_player
+            else multiworld_tuple
+        ),
+        "conditional_resources": conditional_resources,
         "convert": [
             {
                 "from_item": item_id_for_item_resource(conversion.source),

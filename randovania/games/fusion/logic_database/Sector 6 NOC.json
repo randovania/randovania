@@ -500,7 +500,8 @@
                 "map_name": "Sector 61",
                 "room_id": [
                     1
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Entrance Recharge Room": {
@@ -1710,23 +1711,6 @@
                                                             }
                                                         ]
                                                     }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Varia Core removes the Blue-X",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "events",
-                                                                    "name": "VariaCore-X",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
                                                 }
                                             ]
                                         }
@@ -1831,7 +1815,7 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Nocturnal Access": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -1842,6 +1826,58 @@
                                             "name": "ScrewAttack",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "VariaSuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoosts",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 70,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2374,23 +2410,6 @@
                                                             }
                                                         ]
                                                     }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Varia Core removes the Blue-X",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "events",
-                                                                    "name": "VariaCore-X",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
                                                 }
                                             ]
                                         }
@@ -2579,23 +2598,6 @@
                                                                     "type": "tricks",
                                                                     "name": "Combat",
                                                                     "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Varia Core removes the Blue-X",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "events",
-                                                                    "name": "VariaCore-X",
-                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -3356,31 +3358,39 @@
                             }
                         },
                         "Door to Big Shell 2": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Strategically cross the shot blocks: https://youtu.be/AiYGhtYXWGI",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Strategically cross the shot blocks: https://youtu.be/AiYGhtYXWGI",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -3423,17 +3433,110 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Data Access": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "Shot blocks will not respawn after they are broken",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MorphBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Power Bombs"
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "VariaSuit",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "damage",
+                                                                                            "name": "ColdDamage",
+                                                                                            "amount": 432,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "DamageBoosts",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -3496,7 +3599,8 @@
                 "map_name": "Sector 611",
                 "room_id": [
                     11
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Blue X Blockade": {
@@ -4321,23 +4425,6 @@
                                                                     "type": "tricks",
                                                                     "name": "Movement",
                                                                     "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Varia Core removes the Blue-X",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "events",
-                                                                    "name": "VariaCore-X",
-                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -6492,7 +6579,8 @@
                 "map_name": "Sector 621",
                 "room_id": [
                     21
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Neglected Shaft": {
@@ -6690,7 +6778,8 @@
                 "map_name": "Sector 623",
                 "room_id": [
                     23
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Cavern Save Access": {
@@ -7420,7 +7509,8 @@
                 "map_name": "Sector 629",
                 "room_id": [
                     29
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Entrance Lobby": {
@@ -8699,7 +8789,8 @@
                 "map_name": "Sector 635",
                 "room_id": [
                     35
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Twin Caverns East": {

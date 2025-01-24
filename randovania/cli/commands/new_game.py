@@ -22,7 +22,7 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.pickup.pickup_category import PickupCategory
+from randovania.game_description.pickup.pickup_category import GENERIC_KEY_CATEGORY, PickupCategory
 from randovania.game_description.pickup.pickup_database import PickupDatabase
 from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.game_description.requirements.base import Requirement
@@ -269,6 +269,19 @@ def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
     }
     pickup_db = PickupDatabase(
         pickup_categories=pickup_categories,
+        generated_pickups={
+            "Victory Key": StandardPickupDefinition(
+                game=game_enum,
+                name="Victory Key",
+                pickup_category=GENERIC_KEY_CATEGORY,
+                broad_category=GENERIC_KEY_CATEGORY,
+                model_name="VictoryKey",
+                offworld_models=frozendict(),
+                progression=("VictoryKey",),
+                preferred_location_category=LocationCategory.MAJOR,
+                probability_offset=0.25,
+            ),
+        },
         standard_pickups={
             "Powerful Weapon": StandardPickupDefinition(
                 game=game_enum,

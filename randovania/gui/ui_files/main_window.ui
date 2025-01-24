@@ -27,6 +27,15 @@
     </size>
    </property>
    <layout class="QVBoxLayout" name="root_layout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item>
      <widget class="QTabWidget" name="main_tab_widget">
       <property name="currentIndex">
@@ -127,7 +136,6 @@
           <property name="font">
            <font>
             <pointsize>14</pointsize>
-            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -141,7 +149,6 @@
           <property name="font">
            <font>
             <pointsize>12</pointsize>
-            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -181,7 +188,6 @@
           <property name="font">
            <font>
             <pointsize>12</pointsize>
-            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -220,8 +226,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>670</width>
-          <height>392</height>
+          <width>664</width>
+          <height>411</height>
          </rect>
         </property>
        </widget>
@@ -467,7 +473,7 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
      <x>0</x>
      <y>0</y>
      <width>688</width>
-     <height>30</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_open">
@@ -512,9 +518,20 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
      <addaction name="menu_action_timeout_generation_after_a_time_limit"/>
      <addaction name="menu_action_generate_in_another_process"/>
     </widget>
+    <widget class="QMenu" name="menu_alert_when_generation_completes">
+     <property name="title">
+      <string>Alert When Generation Completes</string>
+     </property>
+     <property name="toolTipsVisible">
+      <bool>false</bool>
+     </property>
+     <addaction name="menu_action_audible_generation_alert"/>
+     <addaction name="menu_action_visual_generation_alert"/>
+    </widget>
     <addaction name="menu_action_dark_mode"/>
     <addaction name="menu_action_show_multiworld_banner"/>
     <addaction name="menu_action_experimental_settings"/>
+    <addaction name="menu_alert_when_generation_completes"/>
     <addaction name="menu_action_automatic_reporting"/>
     <addaction name="separator"/>
     <addaction name="separator"/>
@@ -651,6 +668,28 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
   <action name="menu_action_verify_installation">
    <property name="text">
     <string>Verify installation</string>
+   </property>
+  </action>
+  <action name="menu_action_audible_generation_alert">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Audible Sound Alert</string>
+   </property>
+  </action>
+  <action name="menu_action_visual_generation_alert">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Visual Taskbar Alert</string>
    </property>
   </action>
  </widget>

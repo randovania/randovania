@@ -5,22 +5,182 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.7.x] - 2024-12-??
+## [8.9.x] - 2025-02-??
 
-- Changed: Add confirmation dialog when deleting a world in Multiworld.
+- Added: It is now possible to focus the game images in the "Games" tab via a Keyboard.
+- Added: Experimental option under Generation -> Logic Settings that makes an early check if the game is unbeatable due to options such as starting location, transports etc.
+- Changed: Wording on the Door Locks preset tab to be clearer.
+- Changed: The main Randovania window now doesn't have an unnecessary border.
+- Changed: The highlighted button in the cosmetic options is now `Accept` instead of `Reset to Defaults`.
+- Changed: Node details in the Data Visualizer now have word wrap.
 
-### Door Lock Randomizer
-- Added: Experimental option that changes Door Lock Rando so that when determining which types a door can be randomized into, the algorithm searches for either side of the door using the resolver. This means some doors are more likely to have locks on them. Generation will also be faster.
+### AM2R
+
+#### Logic Database
+
+##### Main Caves
+
+- Added: Mining Facility Alpha Nest Access now has a Spider Ball method of crossing the room from either side.
+- Added: Mining Facility Gamma Nest Access now has a Spider Ball method of crossing the room from either side.
+
+##### Area 5 Tower Exterior
+
+- Added: Tower Exterior Spider Ball Clip added to traverse from Next to Teleporter to Pickup (Super Missile Tank Bottom).
 
 ### Metroid Dread
 
 #### Logic Database
+
+- Fixed: A typo in the event name Artaria - Prepare Speedboost in Map Station has been changed from Prepare Speeboost in Map Station.
+- Changed: Various locations listed below are altered in ways that improve the quality of generation and resolution. What is and isn't in logic should remain unchanged.
+
+##### Artaria
+
+- Added: It is now logical to blow up the Proto EMMI blob in Melee tutorial from the right, with Wave Beam, Diffusion beam or a Pseudo Wave Beam (Intermediate) using Morph Ball, Wide Beam and Charge Beam.
+- Changed: The logic surrounding the Single Use Slide in EMMI Zone Dome now makes it so that the event nodes remain logically accessible after collecting the event.
+- Changed: It is now logical to go back to the event node for blowing up the Proto EMMI Blob from the right.
+
+##### Cataris
+
+- Changed: It is now considered logical to go back into Kraid's area using the normal entrance after defeating Kraid, if all the blobs necessary to go around have been blown up.
+
+##### Dairon
+
+- Changed: The logic in the Freezer is changed so that traversing the right part of the room ignores the dangerousness of turning on the Freezer generator. Meanwhile, all connections in the left part of the room that can be used before turning on the generator now require Highly Dangerous Logic.
+
+##### Ghavoran
+
+- Changed: It is now logical to go back to the event node for flipping the Super Missile Rotatable from the tunnel under it.
+- Changed: It is now logical to go back to the event node for lowering the Super Missile Spider Magnet from the tunnel under it.
+
+### Metroid Prime 2: Echoes
+
+- Changed: Double Damage is now classified as a Beam instead of a Suit.
+- Fixed: Typo in the Differences tab.
+
+### Metroid: Samus Returns
+
+- Changed: The hinted item after collecting the last required DNA is now dependent on the final boss. The Baby Metroid is hinted for Proteus Ridley, the Ice Beam for Metroid Queen and the Bomb for Diggernaut.
+- Fixed: Prevented the block with a hidden item in Area 4 Central Caves - Transit Tunnel from being destroyed from another area, causing the item disappear.
+- Fixed: Incorrect rotation of a progressive item if the previous stage of the progressive item was received without leaving the area.
+- Fixed: Once you have collected all Metroid DNA, when traveling from Surface West to Surface East, a message will always appear asking if you want to fight Proteus Ridley or not. Canceling the message will load Surface East like normal. This is to prevent Surface East from being potentially inaccessible if the only entry point is from Surface West.
+
+#### Logic Database
+
+##### Area 4 Central Caverns
+
+- Added: Transport to Area 3 and Crystal Mines: A beginner Spider Ball Clip to reach the elevator to Crystal Mines from the bottom Chozo Seal with Space Jump.
+
+## [8.8.0] - 2025-01-02
+
+- Added: Experimental preset option to place all majors or pickups logically. This makes sure pickups that are not required can be collected.
+- Fixed: The map tracker no longer opens if the starting location prompt was cancelled.
+
+### Metroid Prime
+
+- Changed: The refill pickups don't show the irrelevant explanation about how much underlying ammo will be provided.
+
+#### Logic Database
+
+##### Tallon Overworld
+
+- Fixed: Artifact Temple - Using the Artifact Temple Transport now expects Ridley to be defeated first.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Error when splitting or unsplitting Beam Ammo Expansions when there are a total 0 Beam Ammo expansions.
+
+### Metroid: Samus Returns
+
+#### Logic Database
+
+##### Area 2 Dam Exterior
+
+- Added: Spike Ravine - Collecting the pickup from below with High Jump Boots, Super Jump (Expert), and Unmorph Extend (Advanced).
+
+##### Area 5 Tower Exterior
+
+- Fixed: Starting in Screw Attack Chamber now places Samus in the correct room.
+
+## [8.7.1] - 2024-12-05
+
+### Cave Story
+
+- Fixed: Curly's item in Plantation is now always sent in multiworld
+- Changed: Loading a save in Jail no. 1 will now remove the block if the chest has been opened
+- Changed: The helper block in Grasstown to return from east to west has been lowered by one block to make the jump easier
+- Fixed: The helper block in Grasstown always spawns when it is supposed to
+- Fixed: Freeware no longer crashes when alt-tabbing in fullscreen mode
+- Fixed: Teleporter icons in Arthur's House now always appear in the correct order
+- Fixed: Music randomization in Outer Wall now works regardless of which way you entered the room
+- Added: Ikuyo and kl3cks7r have been added to the ingame credits
+
+## [8.7.0] - 2024-12-02
+
+- Added: When exporting a game fails, for certain cases Randovania will now verify your input files for bad files. This is supported by Metroid Prime and Metroid Prime 2: Echoes.
+- Added: Drag and dropping a preset file into the main window now imports it.
+- Added: Options to alert the user via flashing the taskbar/playing a sound when generation completes in the Preferences menu.
+- Added: Show confirmation dialog when deleting a world in Multiworld.
+- Added: Show confirmation dialog when closing the main window or multiplayer session window while generation is in progress.
+- Fixed: When editing the preset description after another change in a preset, the cursor position is now retained.
+- Fixed: Closing the multiplayer session window while generation is in progress will now abort the generation.
+
+### Door Lock Randomizer
+
+- Added: Experimental option that changes Door Lock Rando so that when determining which types a door can be randomized into, the algorithm searches for either side of the door using the resolver. This means some doors are more likely to have locks on them. Generation will also be faster.
+
+### AM2R
+
+- Changed: DNA hints are now sorted. If the DNA is for your own world, it is sorted based on the region, otherwise alphabetically based on the World name.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Burenia
+
+- Added: In Main Hub Tower Bottom: Get from Water Space Jump Platform to Alcove Across Grapple Block with just Gravity Suit and Movement (Beginner).
+- Added: In Main Hub Tower Bottom: Get from Alcove Across Grapple Block to Door to Energy Recharge South with Gravity Suit, Morph Ball and Single-wall Wall Jump (Intermediate).
+
+##### Dairon
+
+- Changed: In Early Grapple Room: The second Slide Jump has been upgraded from Beginner to Advanced.
+- Changed: In Early Grapple Room: Using Cross Bomb to cross the right gap is now under Movement (Beginner).
+- Changed: In Early Grapple Room: It is now logical to get from the Door to Transport to Artaria to Door to Early Grapple Access by using just Movement (Beginner) to jump off the slope and into the tunnel, then jump into the tunnel at the end.
 
 ##### Ferenia
 
 - Added: Wall Jump (Beginner) to get from Cold Room (Storm Missile Gate) to Wave Beam Tutorial.
 - Changed: Opening the Storm Missile Gate in Cold Room now requires Screw Attack.
 - Changed: Getting back to the door to Energy Recharge Station after opening the Storm missile Gate now accounts for needing two units of Power Bomb ammo.
+
+### Metroid Prime
+
+- Added: A feature that removes the Boost Ball bars obstacle in Tallon Overworld's Great Tree Hall, allowing free movement between the lower and upper levels of the room.
+- Changed: Damage Reduction for Starter Preset and Moderate Challenge is now set to Additive.
+- Changed: Missile Blast Shields have received some Quality of Life changes: they now automatically open the door when broken, even from behind, as well as being two-way if the opposite side was a normal door.
+- Fixed: Setting Screen Brightness in the cosmetic settings mismatching with what appears in-game.
+
+#### Logic Database
+
+- Changed: The Varia-only heat reduction is now done via a miscellaneous resource rather than being patched at runtime.
+- Changed: Going through Morph Ball Doors doesn't require the ability to shoot a beam anymore.
+
+##### Tallon Overworld
+
+- Added: Reverse Frigate now requires Knowledge (Beginner) in every room where the door usually requires activating Thermal Conduits from the other side.
+
+### Metroid Prime 2: Echoes
+
+- Removed: The "Fewest Changes" preset was removed.
+
+#### Logic Database
+
+- Fixed: All Seeker Doors without Seekers tricks have been moved into the dock override section thus allowing the corresponding doors to get shuffled in door type rando. To find the requirements of a seeker skip, look in the description of the corresponding dock node in the data visualiser.
+
+### Metroid: Samus Returns
+
+- Fixed: When Arachnus is configured to be the final boss, logic now requires collecting all DNA.
 
 ## [8.6.1] - 2024-11-03
 
@@ -101,7 +261,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The trick to pull the Grapple Block in Energy Recharge Station (Gate) using only Normal Bombs to break the Bomb Blocks has been upgraded to Movement (Advanced).
 
 ### Metroid Prime
-
 - Added: The Data Visualizer now shows an Area View.
 - Changed: Artifact, Phazon Suit, and Missile Expansion generation weights adjusted resulting in more even item-location probability distribution.
 

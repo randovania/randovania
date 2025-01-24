@@ -361,7 +361,8 @@
                 "map_name": "Sector 31",
                 "room_id": [
                     1
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Entrance Recharge Room": {
@@ -965,13 +966,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
                                     },
                                     {
                                         "type": "or",
@@ -983,10 +979,6 @@
                                                     "data": {
                                                         "comment": "Need a bounce item to reach top tunnel",
                                                         "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Use Any Bombs"
-                                                            },
                                                             {
                                                                 "type": "template",
                                                                 "data": "Can Bounce in Ball"
@@ -1007,10 +999,6 @@
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Use Power Bombs"
                                                             }
                                                         ]
                                                     }
@@ -1474,6 +1462,27 @@
                                     {
                                         "type": "template",
                                         "data": "Can Use Any Bombs"
+                                    }
+                                ]
+                            }
+                        },
+                        "Other to Namihe's Lair": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Break Single Bomb Blocks"
                                     }
                                 ]
                             }
@@ -2864,18 +2873,26 @@
                                         "data": "Can Kill Tough Beam-Resistant Enemy"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": "Damageless: https://youtu.be/Uh3011dLFT4",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Damage boost through sidehoppers",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3020,18 +3037,26 @@
                                         "data": "Can Kill Tough Beam-Resistant Enemy"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": "Damageless: https://youtu.be/hTpd4NYrqiA",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Damage boost through sidehoppers",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4321,7 +4346,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Jump Extend SWJ Method",
+                                                        "comment": "Kill Funes, SWJ on right wall and jump extend to the left: https://youtu.be/oIyLsGRcNj4",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -6479,7 +6504,7 @@
                         "Event - B.O.X.": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: xbox kills box",
                                 "items": [
                                     {
                                         "type": "or",
@@ -7084,7 +7109,8 @@
                 "map_name": "Sector 326",
                 "room_id": [
                     26
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Entrance Save Room": {
@@ -8414,6 +8440,57 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Account for Door Lock Rando",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "DoorLockRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "L0Locks",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "If Door Lock Rando you may be forced to do the spark from the shortcut, the SA blocks do not reform",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -8764,7 +8841,8 @@
                 "map_name": "Sector 331",
                 "room_id": [
                     31
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Data Save Room": {
@@ -8886,7 +8964,8 @@
                 "map_name": "Sector 332",
                 "room_id": [
                     32
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to B.O.X. Access": {
@@ -10032,18 +10111,26 @@
                                         "data": "Can Kill Tough Beam-Resistant Enemy"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": "Damageless: https://youtu.be/_3o2ESgGXjg",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Damage boost through sidehoppers",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -10112,18 +10199,26 @@
                                         "data": "Can Kill Tough Beam-Resistant Enemy"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": "Damageless: https://youtu.be/cYxWd3P7R5c",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Damage boost through sidehoppers",
                                             "items": [
                                                 {
                                                     "type": "resource",

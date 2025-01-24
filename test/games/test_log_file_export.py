@@ -38,6 +38,7 @@ def test_layout_patch_data_export(
     test_files_dir: TestFilesDir,
     layout_name: str,
     world_index: int,
+    is_coop: bool,
 ) -> None:
     monkeypatch.setattr(randovania, "VERSION", "1.2.3")
 
@@ -59,7 +60,9 @@ def test_layout_patch_data_export(
     factory = game_enum.patch_data_factory(
         description=layout,
         players_config=PlayersConfiguration(
-            player_index=world_index, player_names={i: f"World {i + 1}" for i in range(layout.world_count)}
+            player_index=world_index,
+            player_names={i: f"World {i + 1}" for i in range(layout.world_count)},
+            is_coop=is_coop,
         ),
         cosmetic_patches=cosmetic_patches,
     )
@@ -80,7 +83,7 @@ def _get_world_count(file_path: Path) -> int:
 def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
     log_dir = Path(__file__).parents[1].joinpath("test_files", "log_files")
 
-    layout_names = [
+    solo_names = [
         # Cross Game Multis
         "multi-cs+dread+prime1+prime2.rdvgame",
         "multi-am2r+cs+dread+prime1+prime2.rdvgame",
@@ -103,6 +106,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "factorio/starter_preset.rdvgame",
         # Fusion
         "fusion/starter_preset.rdvgame",
+        "fusion/short_intro.rdvgame",
         # Dread
         "dread/starter_preset.rdvgame",  # starter preset
         "dread/crazy_settings.rdvgame",  # crazy settings
@@ -120,18 +124,29 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "prime1_crazy_seed_one_way_door.rdvgame",  # same as above but 1-way doors
         "prime1_refills.rdvgame",  # Refill items + custom artifact count
         # Samus Returns
-        "samus_returns/starter_preset.rdvgame",  # starter preset
-        "samus_returns/start_inventory.rdvgame",  # test for starting inventory and export ids
+        "samus_returns/arachnus_boss_start_inventory.rdvgame",  # arachnus final boss + starting inventory + export ids
+        "samus_returns/diggernaut_boss_free_placement_dna.rdvgame",  # diggernaut final boss + 7/15 dna anywhere
         "samus_returns/door_lock.rdvgame",  # starter preset + door lock
         "samus_returns/door_lock_access_open.rdvgame",  # door lock + access open doors
-        "samus_returns/custom_required_dna.rdvgame",  # custom required dna 20/30
-        "samus_returns/custom_final_boss_free_placement_dna.rdvgame",  # diggernaut final boss + 7/15 dna anywhere
+        "samus_returns/queen_boss_custom_required_dna.rdvgame",  # quuen final boss + custom required dna 20/30
+        "samus_returns/starter_preset.rdvgame",  # starter preset
         # Super Metroid
         "sdm_test_game.rdvgame",
     ]
+
+    coop_names = [
+        "multi_coop_am2r+bdg+cs+dread+prime1+echoes+msr.rdvgame",
+    ]
+
+    layout_names = solo_names + coop_names
+
     layouts = {layout_name: _get_world_count(log_dir.joinpath(layout_name)) for layout_name in layout_names}
 
     metafunc.parametrize(
-        ["layout_name", "world_index"],
-        [(layout_name, world) for layout_name, world_count in layouts.items() for world in range(world_count)],
+        ["layout_name", "world_index", "is_coop"],
+        [
+            (layout_name, world, layout_name in coop_names)
+            for layout_name, world_count in layouts.items()
+            for world in range(world_count)
+        ],
     )

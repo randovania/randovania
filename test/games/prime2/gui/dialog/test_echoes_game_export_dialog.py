@@ -240,6 +240,6 @@ async def test_handle_unable_to_export(skip_qtbot, tmp_path: Path, mocker: pytes
     mock_message_box.assert_awaited_once_with(
         None,
         QtWidgets.QMessageBox.Icon.Critical,
-        "Error during exporting",
+        "Unable to export",
         "I dunno, something broke",
     )

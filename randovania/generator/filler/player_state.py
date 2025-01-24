@@ -40,7 +40,7 @@ class PlayerState:
     game: GameDescription
     pickups_left: list[PickupEntry]
     configuration: FillerConfiguration
-    pickup_index_considered_count: collections.defaultdict[PickupIndex, int]
+    pickup_index_ages: collections.defaultdict[PickupIndex, float]
     hint_seen_count: collections.defaultdict[NodeIdentifier, int]
     hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]]
     event_seen_count: dict[ResourceInfo, int]
@@ -67,7 +67,7 @@ class PlayerState:
         self.pickups_left = pickups_left
         self.configuration = configuration
 
-        self.pickup_index_considered_count = collections.defaultdict(int)
+        self.pickup_index_ages = collections.defaultdict(float)
         self.hint_seen_count = collections.defaultdict(int)
         self.event_seen_count = collections.defaultdict(int)
         self.hint_initial_pickups = {}
@@ -104,8 +104,8 @@ class PlayerState:
 
     def _log_new_pickup_index(self) -> None:
         for index in self.reach.state.collected_pickup_indices:
-            if index not in self.pickup_index_considered_count:
-                self.pickup_index_considered_count[index] = 0
+            if index not in self.pickup_index_ages:
+                self.pickup_index_ages[index] = 0.0
                 filler_logging.print_new_pickup_index(self, index)
 
     def _calculate_potential_actions(self) -> None:
@@ -141,7 +141,9 @@ class PlayerState:
 
     def victory_condition_satisfied(self) -> bool:
         context = self.reach.state.node_context()
-        return self.game.victory_condition_as_set(context).satisfied(context, self.reach.state.energy)
+        return self.game.victory_condition_as_set(context).satisfied(
+            context, self.reach.state.health_for_damage_requirements
+        )
 
     def assign_pickup(self, pickup_index: PickupIndex, target: PickupTarget) -> None:
         self.num_assigned_pickups += 1
@@ -173,7 +175,11 @@ class PlayerState:
         for node, requirement in self.reach.unreachable_nodes_with_requirements().items():
             for alternative in requirement.alternatives:
                 if any(
-                    r.negate or (r.resource.resource_type != ResourceType.ITEM and not r.satisfied(ctx, s.energy))
+                    r.negate
+                    or (
+                        r.resource.resource_type != ResourceType.ITEM
+                        and not r.satisfied(ctx, s.health_for_damage_requirements)
+                    )
                     for r in alternative.values()
                 ):
                     continue
@@ -182,7 +188,11 @@ class PlayerState:
                     "* {}: {}".format(
                         wl.node_name(node, with_region=True),
                         " and ".join(
-                            sorted(r.pretty_text for r in alternative.values() if not r.satisfied(ctx, s.energy))
+                            sorted(
+                                r.pretty_text
+                                for r in alternative.values()
+                                if not r.satisfied(ctx, s.health_for_damage_requirements)
+                            )
                         ),
                     )
                 )

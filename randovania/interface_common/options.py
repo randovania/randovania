@@ -3,20 +3,22 @@ from __future__ import annotations
 import dataclasses
 import json
 import uuid
-from distutils.version import StrictVersion
 from enum import Enum
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import TYPE_CHECKING, TypeVar
 
+import randovania
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
-from randovania.interface_common import persisted_options, update_checker
-from randovania.lib import migration_lib
+from randovania.interface_common import persisted_options
+from randovania.lib import migration_lib, version_lib
 
 if TYPE_CHECKING:
     from collections.abc import Callable
     from pathlib import Path
+    from typing import Any, Self
 
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+    from randovania.lib.json_lib import JsonObject
 
 T = TypeVar("T")
 
@@ -108,22 +110,23 @@ class PerGameOptions:
     cosmetic_patches: BaseCosmeticPatches
 
     @property
-    def as_json(self):
+    def as_json(self) -> JsonObject:
         return {
             "cosmetic_patches": self.cosmetic_patches.as_json,
         }
 
     @classmethod
-    def default_for_game(cls, game: RandovaniaGame) -> PerGameOptions:
+    def default_for_game(cls, game: RandovaniaGame) -> Self:
         return cls(cosmetic_patches=game.data.layout.cosmetic_patches())
 
     @classmethod
-    def from_json(cls, value: dict) -> PerGameOptions:
+    def from_json(cls, value: JsonObject) -> Self:
         raise NotImplementedError
 
 
 _SERIALIZER_FOR_FIELD = {
-    "last_changelog_displayed": Serializer(identity, str),
+    "last_changelog_displayed": Serializer(str, version_lib.parse_string),
+    "last_changelog_displayed_dev": Serializer(str, version_lib.parse_string),
     "advanced_validate_seed_after": Serializer(identity, bool),
     "advanced_timeout_during_generation": Serializer(identity, bool),
     "advanced_generate_in_another_process": Serializer(identity, bool),
@@ -131,6 +134,8 @@ _SERIALIZER_FOR_FIELD = {
     "dark_mode": Serializer(identity, bool),
     "show_multiworld_banner": Serializer(identity, bool),
     "experimental_settings": Serializer(identity, bool),
+    "audible_generation_alert": Serializer(identity, bool),
+    "visual_generation_alert": Serializer(identity, bool),
     "allow_crash_reporting": Serializer(identity, bool),
     "use_user_for_crash_reporting": Serializer(identity, bool),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
@@ -192,7 +197,8 @@ class Options:
     _nested_autosave_level: int = 0
     _is_dirty: bool = False
 
-    _last_changelog_displayed: str
+    _last_changelog_displayed: version_lib.Version
+    _last_changelog_displayed_dev: version_lib.Version
     _advanced_validate_seed_after: bool | None = None
     _advanced_timeout_during_generation: bool | None = None
     _advanced_generate_in_another_process: bool | None = None
@@ -200,6 +206,8 @@ class Options:
     _dark_mode: bool | None = None
     _show_multiworld_banner: bool | None = None
     _experimental_settings: bool | None = None
+    _audible_generation_alert: bool | None = None
+    _visual_generation_alert: bool | None = None
     _allow_crash_reporting: bool | None = None
     _use_user_for_crash_reporting: bool | None = None
     _displayed_alerts: set[InfoAlert] | None = None
@@ -211,7 +219,7 @@ class Options:
     def __init__(self, data_dir: Path, user_dir: Path | None = None):
         self._data_dir = data_dir
         self._user_dir = user_dir or data_dir
-        self._last_changelog_displayed = str(update_checker.strict_current_version())
+        self._raw_set_last_changelog_displayed(version_lib.current_version())
 
         for game in RandovaniaGame.all_games():
             self._set_field(f"game_{game.value}", None)
@@ -346,7 +354,7 @@ class Options:
     def reset_to_defaults(self):
         self._check_editable_and_mark_dirty()
         for field_name in _SERIALIZER_FOR_FIELD.keys():
-            if field_name == "last_changelog_displayed":
+            if field_name.startswith("last_changelog_displayed"):
                 continue
             self._set_field(field_name, None)
 
@@ -381,14 +389,23 @@ class Options:
 
     # Access to Direct fields
     @property
-    def last_changelog_displayed(self) -> StrictVersion:
-        return StrictVersion(self._last_changelog_displayed)
+    def last_changelog_displayed(self) -> version_lib.Version:
+        if randovania.is_dev_version():
+            return self._last_changelog_displayed_dev
+        else:
+            return self._last_changelog_displayed
 
     @last_changelog_displayed.setter
-    def last_changelog_displayed(self, value: StrictVersion):
+    def last_changelog_displayed(self, value: version_lib.Version):
         if value != self.last_changelog_displayed:
             self._check_editable_and_mark_dirty()
-            self._last_changelog_displayed = str(value)
+            self._raw_set_last_changelog_displayed(value)
+
+    def _raw_set_last_changelog_displayed(self, version: version_lib.Version) -> None:
+        if randovania.is_dev_version():
+            self._last_changelog_displayed_dev = version
+        else:
+            self._last_changelog_displayed = version
 
     @property
     def auto_save_spoiler(self) -> bool:
@@ -421,6 +438,22 @@ class Options:
     @experimental_settings.setter
     def experimental_settings(self, value: bool):
         self._edit_field("experimental_settings", value)
+
+    @property
+    def audible_generation_alert(self) -> bool:
+        return _return_with_default(self._audible_generation_alert, lambda: True)
+
+    @audible_generation_alert.setter
+    def audible_generation_alert(self, value: bool):
+        self._edit_field("audible_generation_alert", value)
+
+    @property
+    def visual_generation_alert(self) -> bool:
+        return _return_with_default(self._visual_generation_alert, lambda: True)
+
+    @visual_generation_alert.setter
+    def visual_generation_alert(self, value: bool):
+        self._edit_field("visual_generation_alert", value)
 
     @property
     def allow_crash_reporting(self) -> bool:

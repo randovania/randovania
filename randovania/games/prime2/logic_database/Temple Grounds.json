@@ -1559,7 +1559,7 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "description": "https://youtu.be/Myr8MRM5ZDc?list=PLPFZVy8SRe3tAkQMzVw8vWt_w_AF2_l91&t=24",
+                    "description": "<https://youtu.be/Myr8MRM5ZDc&t=24>",
                     "layers": [
                         "default"
                     ],
@@ -2496,7 +2496,7 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "description": "https://www.youtube.com/watch?v=Tb0XJ6Y5WH4&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=32",
+                    "description": "https://www.youtube.com/watch?v=Tb0XJ6Y5WH4",
                     "layers": [
                         "default"
                     ],
@@ -8974,7 +8974,7 @@
                     "node_type": "dock",
                     "heal": true,
                     "coordinates": null,
-                    "description": "https://youtu.be/Myr8MRM5ZDc?list=PLPFZVy8SRe3tAkQMzVw8vWt_w_AF2_l91&t=62",
+                    "description": "<https://www.youtube.com/watch?v=6Ks1mKF1Jgw>",
                     "layers": [
                         "default"
                     ],
@@ -8993,39 +8993,85 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": {
-                        "type": "or",
+                        "type": "and",
                         "data": {
                             "comment": null,
                             "items": [
                                 {
-                                    "type": "template",
-                                    "data": "Destroy Seeker Locks"
-                                },
-                                {
-                                    "type": "and",
+                                    "type": "or",
                                     "data": {
                                         "comment": null,
                                         "items": [
                                             {
                                                 "type": "template",
-                                                "data": "Use Screw Attack (Space Jump)"
+                                                "data": "Destroy Seeker Locks"
                                             },
+                                            {
+                                                "type": "and",
+                                                "data": {
+                                                    "comment": null,
+                                                    "items": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Use Screw Attack (Space Jump)"
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": "items",
+                                                                "name": "Missile",
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": "tricks",
+                                                                "name": "SeekerlessLocks",
+                                                                "amount": 4,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "or",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
                                             {
                                                 "type": "resource",
                                                 "data": {
-                                                    "type": "items",
-                                                    "name": "Missile",
-                                                    "amount": 2,
+                                                    "type": "damage",
+                                                    "name": "DarkWorld1",
+                                                    "amount": 75,
                                                     "negate": false
                                                 }
                                             },
                                             {
-                                                "type": "resource",
+                                                "type": "and",
                                                 "data": {
-                                                    "type": "tricks",
-                                                    "name": "SeekerlessLocks",
-                                                    "amount": 5,
-                                                    "negate": false
+                                                    "comment": null,
+                                                    "items": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": "damage",
+                                                                "name": "DarkWorld1",
+                                                                "amount": 60,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Activate Safe Zone"
+                                                        }
+                                                    ]
                                                 }
                                             }
                                         ]
@@ -9249,70 +9295,6 @@
                                                         "name": "DarkWorld1",
                                                         "amount": 25,
                                                         "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "https://www.youtube.com/watch?v=4eNjVcIpQHA",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SeekerlessLocks",
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "DarkWorld1",
-                                                                    "amount": 75,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Activate Safe Zone"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "damage",
-                                                                                "name": "DarkWorld1",
-                                                                                "amount": 60,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
                                                     }
                                                 }
                                             ]
@@ -11120,7 +11102,7 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "description": "https://www.youtube.com/watch?v=_mSQ-ckqaA8&list=PLZkUEWCHwYRyXIU-to88js2M6mEOBoHUy&index=62",
+                    "description": "<https://youtu.be/_mSQ-ckqaA8>",
                     "layers": [
                         "default"
                     ],
@@ -11139,42 +11121,59 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": {
-                        "type": "or",
+                        "type": "and",
                         "data": {
                             "comment": null,
                             "items": [
                                 {
-                                    "type": "template",
-                                    "data": "Destroy Seeker Locks"
-                                },
-                                {
-                                    "type": "and",
+                                    "type": "or",
                                     "data": {
                                         "comment": null,
                                         "items": [
                                             {
                                                 "type": "template",
-                                                "data": "Use Screw Attack (Space Jump)"
+                                                "data": "Destroy Seeker Locks"
                                             },
                                             {
-                                                "type": "resource",
+                                                "type": "and",
                                                 "data": {
-                                                    "type": "items",
-                                                    "name": "Missile",
-                                                    "amount": 1,
-                                                    "negate": false
-                                                }
-                                            },
-                                            {
-                                                "type": "resource",
-                                                "data": {
-                                                    "type": "tricks",
-                                                    "name": "SeekerlessLocks",
-                                                    "amount": 4,
-                                                    "negate": false
+                                                    "comment": null,
+                                                    "items": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Use Screw Attack (Space Jump)"
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": "items",
+                                                                "name": "Missile",
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": "tricks",
+                                                                "name": "SeekerlessLocks",
+                                                                "amount": 4,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
                                                 }
                                             }
                                         ]
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "damage",
+                                        "name": "DarkWorld1",
+                                        "amount": 40,
+                                        "negate": false
                                     }
                                 }
                             ]
@@ -11230,41 +11229,6 @@
                                             "name": "DarkWorld1",
                                             "amount": 10,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "https://www.youtube.com/watch?v=kkEVvbdof8U",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SeekerlessLocks",
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "DarkWorld1",
-                                                        "amount": 40,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                }
-                                            ]
                                         }
                                     }
                                 ]
@@ -18011,41 +17975,6 @@
                                             "amount": 60,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "https://www.youtube.com/watch?v=cqF7NN7d5h0",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SeekerlessLocks",
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "DarkWorld1",
-                                                        "amount": 90,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -18324,7 +18253,7 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "description": "https://www.youtube.com/watch?v=_ZB9NSBnIrs&list=PLZkUEWCHwYRyXIU-to88js2M6mEOBoHUy&index=2",
+                    "description": "<https://youtu.be/_ZB9NSBnIrs>",
                     "layers": [
                         "default"
                     ],
@@ -18343,42 +18272,59 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": {
-                        "type": "or",
+                        "type": "and",
                         "data": {
                             "comment": null,
                             "items": [
                                 {
-                                    "type": "template",
-                                    "data": "Destroy Seeker Locks"
-                                },
-                                {
-                                    "type": "and",
+                                    "type": "or",
                                     "data": {
                                         "comment": null,
                                         "items": [
                                             {
                                                 "type": "template",
-                                                "data": "Use Screw Attack (Space Jump)"
+                                                "data": "Destroy Seeker Locks"
                                             },
                                             {
-                                                "type": "resource",
+                                                "type": "and",
                                                 "data": {
-                                                    "type": "items",
-                                                    "name": "Missile",
-                                                    "amount": 2,
-                                                    "negate": false
-                                                }
-                                            },
-                                            {
-                                                "type": "resource",
-                                                "data": {
-                                                    "type": "tricks",
-                                                    "name": "SeekerlessLocks",
-                                                    "amount": 4,
-                                                    "negate": false
+                                                    "comment": null,
+                                                    "items": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Use Screw Attack (Space Jump)"
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": "items",
+                                                                "name": "Missile",
+                                                                "amount": 2,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": "tricks",
+                                                                "name": "SeekerlessLocks",
+                                                                "amount": 4,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
                                                 }
                                             }
                                         ]
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "damage",
+                                        "name": "DarkWorld1",
+                                        "amount": 90,
+                                        "negate": false
                                     }
                                 }
                             ]
@@ -18833,7 +18779,7 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "description": "https://www.youtube.com/watch?v=L0ULmh5YmFg",
+                    "description": "<https://www.youtube.com/watch?v=L0ULmh5YmFg>",
                     "layers": [
                         "default"
                     ],
@@ -18852,42 +18798,59 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": {
-                        "type": "or",
+                        "type": "and",
                         "data": {
                             "comment": null,
                             "items": [
                                 {
-                                    "type": "template",
-                                    "data": "Destroy Seeker Locks"
-                                },
-                                {
-                                    "type": "and",
+                                    "type": "or",
                                     "data": {
                                         "comment": null,
                                         "items": [
                                             {
                                                 "type": "template",
-                                                "data": "Use Screw Attack (Space Jump)"
+                                                "data": "Destroy Seeker Locks"
                                             },
                                             {
-                                                "type": "resource",
+                                                "type": "and",
                                                 "data": {
-                                                    "type": "items",
-                                                    "name": "Missile",
-                                                    "amount": 1,
-                                                    "negate": false
-                                                }
-                                            },
-                                            {
-                                                "type": "resource",
-                                                "data": {
-                                                    "type": "tricks",
-                                                    "name": "SeekerlessLocks",
-                                                    "amount": 4,
-                                                    "negate": false
+                                                    "comment": null,
+                                                    "items": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Use Screw Attack (Space Jump)"
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": "items",
+                                                                "name": "Missile",
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": "tricks",
+                                                                "name": "SeekerlessLocks",
+                                                                "amount": 4,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
                                                 }
                                             }
                                         ]
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "damage",
+                                        "name": "DarkWorld1",
+                                        "amount": 40,
+                                        "negate": false
                                     }
                                 }
                             ]
@@ -18912,7 +18875,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://www.youtube.com/watch?v=RfWnxL7HI1Y&list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&index=24",
+                                            "comment": "https://youtu.be/RfWnxL7HI1Y",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -19123,7 +19086,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://www.youtube.com/watch?v=RfWnxL7HI1Y",
+                                            "comment": "https://youtu.be/RfWnxL7HI1Y",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -19137,7 +19100,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Energy for Ingstorm",
                                                         "items": [
                                                             {
                                                                 "type": "and",
@@ -19287,7 +19250,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Energy for area before Ingstorm",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -19296,41 +19259,6 @@
                                                                     "name": "DarkWorld1",
                                                                     "amount": 20,
                                                                     "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "https://www.youtube.com/watch?v=L0ULmh5YmFg",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "SeekerlessLocks",
-                                                                                "amount": 4,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "damage",
-                                                                                "name": "DarkWorld1",
-                                                                                "amount": 40,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "misc",
-                                                                                "name": "DoorRando",
-                                                                                "amount": 1,
-                                                                                "negate": true
-                                                                            }
-                                                                        }
-                                                                    ]
                                                                 }
                                                             }
                                                         ]

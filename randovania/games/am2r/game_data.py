@@ -9,6 +9,7 @@ import randovania.game.gui
 import randovania.game.layout
 import randovania.game.web_info
 from randovania.games.am2r import layout
+from randovania.games.am2r.db_integrity import find_am2r_db_errors
 
 if TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExporter
@@ -167,4 +168,5 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     exporter=_exporter,
     multiple_start_nodes_per_area=False,
     defaults_available_in_game_sessions=True,
+    logic_db_integrity=find_am2r_db_errors,
 )

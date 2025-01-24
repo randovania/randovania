@@ -11,7 +11,6 @@ from retro_data_structures.game_check import Game as RDSGame
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.remote_connector import (
-    PickupEntryWithOwner,
     PlayerLocationEvent,
     RemoteConnector,
 )
@@ -29,18 +28,22 @@ from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.lib.infinite_timer import InfiniteTimer
 
 if TYPE_CHECKING:
-    from ppc_asm import assembler
+    from ppc_asm import assembler  # type: ignore[import-untyped]
 
     from randovania.game_description.db.region import Region
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.network_common.remote_pickup import RemotePickup
+
+    PatchInstructions = list[assembler.BaseInstruction]
+    PickupPatches = tuple[list[PatchInstructions], str]
 
 
 @dataclasses.dataclass(frozen=True)
 class DolRemotePatch:
     memory_operations: list[MemoryOperation]
-    instructions: list[assembler.BaseInstruction]
+    instructions: PatchInstructions
 
 
 _RDS_TO_RDV_GAME = {
@@ -56,9 +59,9 @@ class PrimeRemoteConnector(RemoteConnector):
     _last_message_size: int = 0
     _last_emitted_region: Region | None = None
     executor: MemoryOperationExecutor
-    remote_pickups: tuple[PickupEntryWithOwner, ...]
+    remote_pickups: tuple[RemotePickup, ...]
     message_cooldown: float = 0.0
-    last_inventory: Inventory = {}
+    last_inventory = Inventory.empty()
     _dt: float = 2.5
 
     def __init__(self, version: all_prime_dol_patches.BasePrimeDolVersion, executor: MemoryOperationExecutor):
@@ -69,7 +72,7 @@ class PrimeRemoteConnector(RemoteConnector):
         self.version = version
         self.game = default_database.game_description_for(_RDS_TO_RDV_GAME[version.game])
         self.remote_pickups = ()
-        self.pending_messages = []
+        self.pending_messages: list[str] = []
 
         self._timer = InfiniteTimer(self.update, self._dt)
 
@@ -77,16 +80,19 @@ class PrimeRemoteConnector(RemoteConnector):
     def game_enum(self) -> RandovaniaGame:
         return self.game.game
 
-    def description(self):
+    def description(self) -> str:
         return f"{self.game_enum.long_name}: {self.version.description}"
 
     async def check_for_world_uid(self) -> bool:
         """Returns True if the accessible memory matches the version of this connector."""
         operation = MemoryOperation(self.version.build_string_address, read_byte_count=len(self.version.build_string))
         build_string = await self.executor.perform_single_memory_operation(operation)
+
+        assert build_string is not None
         world_uid = build_string[6 : 6 + 16]
         expected = bytearray(self.version.build_string)
         expected[6 : 6 + 16] = world_uid
+
         if build_string == expected:
             if build_string == self.version.build_string:
                 # Game exported with old version, act as if it's invalid uuid
@@ -97,7 +103,7 @@ class PrimeRemoteConnector(RemoteConnector):
         else:
             return False
 
-    def _asset_id_format(self):
+    def _asset_id_format(self) -> str:
         """struct.unpack format string for decoding an asset id"""
         raise NotImplementedError
 
@@ -105,6 +111,7 @@ class PrimeRemoteConnector(RemoteConnector):
         for region in self.game.region_list.regions:
             if region.extra["asset_id"] == asset_id:
                 return region
+        return None
 
     def _current_status_world(self, world_asset_id: bytes | None, vtable_bytes: bytes | None) -> Region | None:
         """
@@ -169,6 +176,7 @@ class PrimeRemoteConnector(RemoteConnector):
 
         memory_ops = await self._memory_op_for_items([multiworld_magic_item])
         op_result = await self.executor.perform_single_memory_operation(*memory_ops)
+        assert op_result is not None
 
         magic_inv = InventoryItem(*struct.unpack(">II", op_result))
         if magic_inv.amount > 0:
@@ -193,7 +201,7 @@ class PrimeRemoteConnector(RemoteConnector):
     async def receive_remote_pickups(
         self,
         inventory: Inventory,
-        remote_pickups: tuple[PickupEntryWithOwner, ...],
+        remote_pickups: tuple[RemotePickup, ...],
     ) -> bool:
         """Returns true if an operation was sent."""
 
@@ -203,7 +211,7 @@ class PrimeRemoteConnector(RemoteConnector):
         if magic_inv is None or magic_inv.amount > 0 or magic_inv.capacity >= len(remote_pickups) or in_cooldown:
             return False
 
-        provider_name, pickup = remote_pickups[magic_inv.capacity]
+        provider_name, pickup, coop_location = remote_pickups[magic_inv.capacity]
         item_patches, message = await self._patches_for_pickup(provider_name, pickup, inventory)
         self.logger.info(f"{len(remote_pickups)} permanent pickups, magic {magic_inv.capacity}. Next pickup: {message}")
 
@@ -269,7 +277,7 @@ class PrimeRemoteConnector(RemoteConnector):
             and not pickup.unlocks_resource
             and (pickup.resource_lock is not None and inventory_resources[pickup.resource_lock.locked_by] == 0)
         ):
-            pickup_resources = list(pickup.resource_lock.convert_gain(conditional.resources))
+            pickup_resources = tuple(pickup.resource_lock.convert_gain(conditional.resources))
             item_name = f"Locked {item_name}"
         else:
             pickup_resources = conditional.resources
@@ -280,9 +288,7 @@ class PrimeRemoteConnector(RemoteConnector):
 
         return item_name, resources_to_give
 
-    async def _patches_for_pickup(
-        self, provider_name: str, pickup: PickupEntry, inventory: Inventory
-    ) -> tuple[list[list[assembler.BaseInstruction]], str]:
+    async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory) -> PickupPatches:
         raise NotImplementedError
 
     def _write_string_to_game_buffer(self, message: str) -> MemoryOperation:
@@ -310,7 +316,7 @@ class PrimeRemoteConnector(RemoteConnector):
             all_prime_dol_patches.call_display_hud_patch(self.version.string_display),
         )
 
-    async def update(self):
+    async def update(self) -> None:
         try:
             if isinstance(self.executor, DolphinExecutor):
                 current_uid = self._layout_uuid
@@ -345,7 +351,7 @@ class PrimeRemoteConnector(RemoteConnector):
                 self.logger.info("Finishing connector")
                 self._timer.stop()
 
-    async def update_current_inventory(self):
+    async def update_current_inventory(self) -> None:
         new_inventory = await self.get_inventory()
         if new_inventory != self.last_inventory:
             self.InventoryUpdated.emit(new_inventory)
@@ -361,7 +367,7 @@ class PrimeRemoteConnector(RemoteConnector):
         else:
             return await self.receive_remote_pickups(self.last_inventory, self.remote_pickups)
 
-    async def _send_next_pending_message(self):
+    async def _send_next_pending_message(self) -> bool:
         if not self.pending_messages or self.message_cooldown > 0.0:
             return False
 
@@ -370,22 +376,22 @@ class PrimeRemoteConnector(RemoteConnector):
         self.message_cooldown = 4.0
         return True
 
-    async def display_arbitrary_message(self, message: str):
+    async def display_arbitrary_message(self, message: str) -> None:
         self.pending_messages.append(message)
 
-    async def set_remote_pickups(self, remote_pickups: tuple[PickupEntryWithOwner, ...]):
+    async def set_remote_pickups(self, remote_pickups: tuple[RemotePickup, ...]) -> None:
         """
         Sets the list of remote pickups that must be sent to the game.
         :param remote_pickups: Ordered list of pickups sent from other players, with the name of the player.
         """
         self.remote_pickups = remote_pickups
 
-    async def force_finish(self):
+    async def force_finish(self) -> None:
         self._timer.stop()
         self.executor.disconnect()
 
     def is_disconnected(self) -> bool:
         return not self.executor.is_connected()
 
-    def start_updates(self):
+    def start_updates(self) -> None:
         self._timer.start()

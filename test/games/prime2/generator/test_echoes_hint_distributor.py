@@ -7,12 +7,13 @@ import pytest
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.hint import (
-    Hint,
     HintDarkTemple,
     HintItemPrecision,
     HintLocationPrecision,
-    HintType,
+    JokeHint,
+    LocationHint,
     PrecisionPair,
+    RedTempleHint,
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
@@ -28,22 +29,19 @@ async def test_add_default_hints_to_patches(echoes_game_description, empty_patch
     hint_distributor = EchoesHintDistributor()
 
     def _light_suit_location_hint(number: int):
-        return Hint(
-            HintType.LOCATION,
+        return LocationHint(
             PrecisionPair(HintLocationPrecision.LIGHT_SUIT_LOCATION, HintItemPrecision.DETAILED, include_owner=False),
             PickupIndex(number),
         )
 
     def _guardian_hint(number: int):
-        return Hint(
-            HintType.LOCATION,
+        return LocationHint(
             PrecisionPair(HintLocationPrecision.GUARDIAN, HintItemPrecision.DETAILED, include_owner=False),
             PickupIndex(number),
         )
 
     def _keybearer_hint(number: int):
-        return Hint(
-            HintType.LOCATION,
+        return LocationHint(
             PrecisionPair(HintLocationPrecision.KEYBEARER, HintItemPrecision.BROAD_CATEGORY, include_owner=True),
             PickupIndex(number),
         )
@@ -68,18 +66,12 @@ async def test_add_default_hints_to_patches(echoes_game_description, empty_patch
         "Sanctuary Fortress/Watch Station/Lore Scan": _guardian_hint(79),
         "Sanctuary Fortress/Main Research/Lore Scan": _guardian_hint(115),
         # Dark Temple hints
-        "Sanctuary Fortress/Hall of Combat Mastery/Lore Scan": Hint(
-            HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.AGON_WASTES
-        ),
-        "Sanctuary Fortress/Sanctuary Entrance/Lore Scan": Hint(
-            HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.TORVUS_BOG
-        ),
-        "Torvus Bog/Catacombs/Lore Scan": Hint(
-            HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.SANCTUARY_FORTRESS
-        ),
+        "Sanctuary Fortress/Hall of Combat Mastery/Lore Scan": RedTempleHint(dark_temple=HintDarkTemple.AGON_WASTES),
+        "Sanctuary Fortress/Sanctuary Entrance/Lore Scan": RedTempleHint(dark_temple=HintDarkTemple.TORVUS_BOG),
+        "Torvus Bog/Catacombs/Lore Scan": RedTempleHint(dark_temple=HintDarkTemple.SANCTUARY_FORTRESS),
         # Jokes
-        "Torvus Bog/Gathering Hall/Lore Scan": Hint(HintType.JOKE, None),
-        "Torvus Bog/Training Chamber/Lore Scan": Hint(HintType.JOKE, None),
+        "Torvus Bog/Gathering Hall/Lore Scan": JokeHint(),
+        "Torvus Bog/Training Chamber/Lore Scan": JokeHint(),
     }
     expected = {NodeIdentifier.from_string(ident_s): hint for ident_s, hint in expected.items()}
 

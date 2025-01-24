@@ -79,7 +79,7 @@ def create_app():
     app.config["GUEST_KEY"] = configuration["guest_secret"].encode("ascii") if "guest_secret" in configuration else None
     app.config["DISCORD_CLIENT_ID"] = configuration["discord_client_id"]
     app.config["DISCORD_CLIENT_SECRET"] = configuration["server_config"]["discord_client_secret"]
-    app.config["DISCORD_REDIRECT_URI"] = f'{configuration["server_address"]}/login_callback'
+    app.config["DISCORD_REDIRECT_URI"] = f"{configuration['server_address']}/login_callback"
     app.config["FERNET_KEY"] = configuration["server_config"]["fernet_key"].encode("ascii")
     app.config["ENFORCE_ROLE"] = configuration["server_config"].get("enforce_role")
     version_checking = client_check.ClientVersionCheck(configuration["server_config"]["client_version_checking"])

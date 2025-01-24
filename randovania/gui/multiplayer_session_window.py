@@ -10,6 +10,7 @@ from typing import TYPE_CHECKING, Self
 from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncClose, asyncSlot
 
+import randovania
 from randovania import monitoring
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
@@ -19,6 +20,7 @@ from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.multiplayer_session_ui import Ui_MultiplayerSessionWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, layout_loader, model_lib
+from randovania.gui.lib.async_dialog import StandardButton
 from randovania.gui.lib.background_task_mixin import BackgroundTaskInProgressError, BackgroundTaskMixin
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
@@ -195,7 +197,6 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.tab_audit.sortByColumn(2, QtCore.Qt.SortOrder.AscendingOrder)
 
         self.history_item_model = HistoryItemModel(self, self._last_actions)
-        # self.history_item_model.setHorizontalHeaderLabels(["Provider", "Receiver", "Pickup", "Location", "Time"])
         self.history_item_proxy = HistoryFilterModel(self)
         self.history_item_proxy.setSourceModel(self.history_item_model)
         self.history_view.setModel(self.history_item_proxy)
@@ -259,6 +260,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.copy_permalink_button.clicked.connect(self.copy_permalink)
         self.view_game_details_button.clicked.connect(self.view_game_details)
         self.everyone_can_claim_check.clicked.connect(self._on_everyone_can_claim_check)
+        self.allow_coop_check.clicked.connect(self._on_allow_coop_check)
 
         # Background Tasks
         self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
@@ -307,6 +309,19 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
     @asyncClose
     async def closeEvent(self, event: QtGui.QCloseEvent):
+        if self.has_background_process:
+            event.ignore()
+            result = await async_dialog.warning(
+                self,
+                "Confirm close window",
+                "Are you sure you want to close this window?\nClosing this window will abort current tasks.",
+                buttons=async_dialog.StandardButton.Yes | async_dialog.StandardButton.No,
+                default_button=async_dialog.StandardButton.No,
+            )
+            if result != StandardButton.Yes:
+                return
+            event.accept()
+        self.stop_background_process()
         return await self._on_close_event(event)
 
     async def _on_close_event(self, event: QtGui.QCloseEvent):
@@ -345,6 +360,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.advanced_options_tool.setEnabled(session.users[self.network_client.current_user.id].admin)
         # self.customize_user_preferences_button.setEnabled(self.current_player_game is not None)
 
+        not_genned_yet = self._session.game_details is None and self._session.generation_in_progress is None
+
         self.setWindowTitle(f"Multiworld Session: {self._session.name}")
         self.users_widget.update_state(self._session)
         self.sync_background_process_to_session()
@@ -354,6 +371,12 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.update_multiworld_client_status()
         self.everyone_can_claim_check.setChecked(session.allow_everyone_claim_world)
         self.everyone_can_claim_check.setEnabled(self.users_widget.is_admin())
+        self.allow_coop_check.setChecked(session.allow_coop)
+        self.allow_coop_check.setEnabled(self.users_widget.is_admin() and not_genned_yet)
+        self.allow_coop_check.setText(
+            "Enable Co-Op" + ("" if not_genned_yet else " (can only be changed before generation)")
+        )
+        self.allow_coop_check.setVisible(randovania.is_dev_version())
 
     @asyncSlot(MultiplayerSessionActions)
     async def on_actions_update(self, actions: MultiplayerSessionActions):
@@ -447,6 +470,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 self.export_game_button.setMenu(None)
             else:
                 self.export_game_button.setEnabled(False)
+
+            # FIXME: this triggers on every meta update as opposed to just when the generation status gets updated
+            # common_qt_lib.alert_user_on_generation(self, self._options)
 
     def _describe_action(self, action: MultiplayerSessionAction):
         # get_world can fail if the session meta is not up-to-date
@@ -612,8 +638,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     async def clear_generated_game(self):
         if self._last_actions.actions:
             warning = (
-                "<b>all progress in this session is permanently lost</b>."
-                "<br /><br />Are you sure you wish to continue?"
+                "<b>all progress in this session is permanently lost</b>.<br /><br />Are you sure you wish to continue?"
             )
             icon = QtWidgets.QMessageBox.Icon.Critical
         else:
@@ -740,6 +765,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 self.update_progress("Finished generating, uploading...", 100)
                 await uploader(layout)
                 self.update_progress("Uploaded!", 100)
+                common_qt_lib.alert_user_on_generation(self, self._options)
 
                 if layout.has_spoiler:
                     last_multiplayer.unlink()
@@ -750,6 +776,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             except AnyNetworkError:
                 # We're interested in catching generation failures.
                 # Let network errors be handled by who called us, which will be captured by handle_network_errors
+
+                # Alert the user who gens on errors, since 'update_game_tab' doesn't show gen errors to other clients
+                common_qt_lib.alert_user_on_generation(self, self._options)
                 raise
 
             except Exception as e:
@@ -757,6 +786,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                     e,
                     self.update_progress,
                 )
+                # Alert the user who gens on errors, since 'update_game_tab' doesn't show gen errors to other clients
+                common_qt_lib.alert_user_on_generation(self, self._options)
 
             finally:
                 self._generating_game = False
@@ -886,6 +917,47 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     @asyncSlot()
     async def _on_everyone_can_claim_check(self):
         await self.game_session_api.set_everyone_can_claim(self.everyone_can_claim_check.isChecked())
+
+    @asyncSlot()
+    async def _on_allow_coop_check(self):
+        if self.allow_coop_check.isChecked():
+            await async_dialog.message_box(
+                self,
+                QtWidgets.QMessageBox.Icon.Information,
+                "Information",
+                (
+                    "Co-op is still in the testing period and may have issues.\nFor Prime 1 and Echoes in particular, "
+                    "please ensure that Randovania is always connected to the game before you collect items, as "
+                    "otherwise they will be lost permanently!"
+                ),
+            )
+        else:
+            world_users = collections.defaultdict(list)
+            for user in self._session.users.values():
+                for world in user.worlds:
+                    world_users[world].append(user)
+
+            if any(len(users) > 1 for users in world_users.values()):
+                result = await async_dialog.message_box(
+                    self,
+                    QtWidgets.QMessageBox.Icon.Question,
+                    "Worlds assigned to multiple users",
+                    (
+                        "There are still worlds left which are claimed by multiple users at the same time.\n"
+                        "Do you want to unclaim those worlds from all users and continue?"
+                    ),
+                    QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
+                    QtWidgets.QMessageBox.StandardButton.No,
+                )
+                if result == QtWidgets.QMessageBox.StandardButton.No:
+                    return
+
+            for world, users in world_users.items():
+                if len(users) > 1:
+                    for user in users:
+                        await self.game_session_api.unclaim_world(world, user.id)
+
+        await self.game_session_api.set_allow_coop(self.allow_coop_check.isChecked())
 
     @asyncSlot()
     async def game_export_listener(self, world_id: uuid.UUID, patch_data: dict):

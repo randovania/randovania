@@ -8,6 +8,7 @@ import randovania.game.generator
 import randovania.game.gui
 import randovania.game.layout
 from randovania.games.fusion import layout
+from randovania.games.fusion.db_integrity import find_fusion_db_errors
 from randovania.games.fusion.layout.preset_describer import FusionPresetDescriber
 
 if typing.TYPE_CHECKING:
@@ -104,4 +105,5 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     multiple_start_nodes_per_area=True,
+    logic_db_integrity=find_fusion_db_errors,
 )

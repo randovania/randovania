@@ -3109,12 +3109,29 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Knowledge",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranSupersRotatable",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -15499,7 +15516,17 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Event - Lower Spider Magnet Platform": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "GhavoraSupersMagnetPlatformLowered",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Tunnel to Flipper Room (Cannon)": {
                     "node_type": "dock",

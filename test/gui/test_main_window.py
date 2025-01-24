@@ -22,9 +22,13 @@ from randovania.gui.widgets.reporting_optout_widget import ReportingOptOutWidget
 from randovania.interface_common.options import Options
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
+from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.multiplayer_session import MultiplayerSessionEntry
 
 if TYPE_CHECKING:
+    import pytest_mock
+    from conftest import TestFilesDir
+
     from randovania.interface_common.preset_manager import PresetManager
 
 
@@ -87,22 +91,23 @@ def test_drop_event_layout(default_main_window):
     default_main_window.RequestOpenLayoutSignal.emit(Path("/my/path.rdvgame"))
 
 
-#
-# async def test_drop_event_preset(default_main_window):
-#     await default_main_window._initialize_post_show_body()
-#
-#     mock_url = MagicMock()
-#     mock_url.toLocalFile.return_value = "/my/path.rdvpreset"
-#     event = MagicMock()
-#     event.mimeData.return_value.urls.return_value = [mock_url]
-#     default_main_window.tab_create_seed.import_preset_file = MagicMock()
-#
-#     # Run
-#     default_main_window.dropEvent(event)
-#
-#     # Assert
-#     default_main_window.tab_create_seed.import_preset_file(Path("/my/path.rdvpreset"))
-#     assert default_main_window.main_tab_widget.currentWidget() == default_main_window.tab_create_seed
+async def test_drop_event_preset(default_main_window) -> None:
+    await default_main_window._initialize_post_show_body()
+
+    mock_url = MagicMock()
+    mock_url.toLocalFile.return_value = "/my/path.rdvpreset"
+    event = MagicMock()
+    event.mimeData.return_value.urls.return_value = [mock_url]
+    default_main_window.import_preset_file = MagicMock()
+    default_main_window.import_preset_file.return_value.game = RandovaniaGame.BLANK
+
+    # Run
+    default_main_window.dropEvent(event)
+
+    # Assert
+    default_main_window.import_preset_file.assert_called_once_with(Path("/my/path.rdvpreset"))
+    assert default_main_window.main_tab_widget.currentWidget() == default_main_window.tab_game_details
+    assert default_main_window.tab_game_details._pending_current_game == RandovaniaGame.BLANK
 
 
 async def test_browse_racetime(default_main_window, mocker):
@@ -323,3 +328,79 @@ async def test_existing_game_session_window(default_main_window, has_closed: boo
     else:
         mock_return.activateWindow.assert_called_once()
     assert default_main_window.opened_session_windows[session_entry.id] == mock_return
+
+
+def test_import_preset_file_success(default_main_window: MainWindow, test_files_dir: TestFilesDir) -> None:
+    new_preset = default_main_window.import_preset_file(
+        test_files_dir.joinpath("presets", "fewest_changes_v1.rdvpreset")
+    )
+    assert new_preset.game == RandovaniaGame.METROID_PRIME_ECHOES
+    assert default_main_window.preset_manager.preset_for_uuid(new_preset.uuid) is new_preset
+    assert default_main_window._options.selected_preset_uuid_for(RandovaniaGame.METROID_PRIME_ECHOES) == new_preset.uuid
+
+
+def test_import_preset_file_not_json(
+    default_main_window: MainWindow, tmp_path: Path, mocker: pytest_mock.MockFixture
+) -> None:
+    # Setup
+    mock_critical = mocker.patch("PySide6.QtWidgets.QMessageBox.critical")
+    bad_path = tmp_path.joinpath("bad_file.txt")
+    bad_path.write_text("hi")
+
+    # Run
+    new_preset = default_main_window.import_preset_file(bad_path)
+
+    # Assert
+    assert new_preset is None
+    mock_critical.assert_called_once_with(
+        default_main_window, "Error loading preset", f"The file at '{bad_path}' contains an invalid preset."
+    )
+
+
+def test_import_preset_file_dev_game(
+    default_main_window: MainWindow, test_files_dir, mocker: pytest_mock.MockFixture
+) -> None:
+    # Setup
+    mock_critical = mocker.patch("PySide6.QtWidgets.QMessageBox.critical")
+    mocker.patch("randovania.game.development_state.DevelopmentState.can_view", return_value=False)
+
+    # Run
+    new_preset = default_main_window.import_preset_file(
+        test_files_dir.joinpath("presets", "fewest_changes_v1.rdvpreset")
+    )
+
+    # Assert
+    assert new_preset is None
+    mock_critical.assert_called_once_with(
+        default_main_window,
+        "Error loading preset",
+        "The new preset 'Fewest Changes' is for game 'Metroid Prime 2: Echoes', "
+        "which is incompatible with this version of Randovania.",
+    )
+
+
+def test_import_preset_file_duplicate_id_cancel(
+    default_main_window: MainWindow,
+    test_files_dir,
+    mocker: pytest_mock.MockFixture,
+) -> None:
+    # Setup
+    standard_button = QtWidgets.QMessageBox.StandardButton
+    mock_warning = mocker.patch("PySide6.QtWidgets.QMessageBox.warning", return_value=standard_button.Cancel)
+    preset_path = test_files_dir.joinpath("presets", "echoes-v44-migration-preset.rdvpreset")
+
+    default_main_window.preset_manager.add_new_preset(VersionedPreset.from_file_sync(preset_path))
+
+    # Run
+    new_preset = default_main_window.import_preset_file(preset_path)
+
+    # Assert
+    assert new_preset is None
+    mock_warning.assert_called_once_with(
+        default_main_window,
+        "Preset ID conflict",
+        "The new preset 'Teleportal Fest' for 'Metroid Prime 2: Echoes' has the same "
+        "ID as existing 'Teleportal Fest'. Do you want to overwrite it?",
+        standard_button.Yes | standard_button.No | standard_button.Cancel,
+        standard_button.Cancel,
+    )

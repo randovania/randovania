@@ -2,22 +2,24 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
-from randovania.resolver.bootstrap import Bootstrap, EnergyConfig
+from randovania.resolver.bootstrap import Bootstrap
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.damage_state import DamageState
 
 
 def is_puppy_node(node: PickupNode, config: BaseConfiguration) -> bool:
@@ -53,9 +55,14 @@ class CSBootstrap(Bootstrap):
         for resource in resource_database.version:
             yield resource, 1 if resource.long_name == "Freeware" else 0
 
-    def energy_config(self, configuration: BaseConfiguration) -> EnergyConfig:
+    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
         assert isinstance(configuration, CSConfiguration)
-        return EnergyConfig(configuration.starting_hp, 1)
+        return EnergyTankDamageState(
+            configuration.starting_hp,
+            1,
+            game.resource_database,
+            game.region_list,
+        )
 
     def assign_pool_results(self, rng: Random, patches: GamePatches, results: PoolResults) -> GamePatches:
         configuration = patches.configuration
@@ -74,10 +81,8 @@ class CSBootstrap(Bootstrap):
 
         # puppies
         if not configuration.puppies_anywhere:
-            pickup_database = default_database.pickup_database_for_game(patches.game.game)
-            puppies_category = pickup_database.pickup_categories["puppies"]
             locations = self.all_preplaced_item_locations(patches.game, patches.configuration, is_puppy_node)
-            self.pre_place_items(rng, locations, results, puppies_category)
+            self.pre_place_items(rng, locations, results, "puppies", patches.game.game)
 
         # weapon to break blocks in first cave (do it this way to ensure a particular distribution chance)
         if patches.starting_location.area in {"Start Point", "First Cave", "Hermit Gunsmith"}:

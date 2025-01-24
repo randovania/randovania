@@ -3,19 +3,21 @@ from __future__ import annotations
 import dataclasses
 from typing import TYPE_CHECKING
 
-from randovania.games.fusion.generator.pool_creator import INFANT_METROID_CATEGORY
 from randovania.games.fusion.layout import FusionConfiguration
-from randovania.resolver.bootstrap import MetroidBootstrap
+from randovania.resolver.bootstrap import Bootstrap
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.damage_state import DamageState
 
 
 def is_metroid_location(node: PickupNode, config: BaseConfiguration) -> bool:
@@ -26,7 +28,16 @@ def is_metroid_location(node: PickupNode, config: BaseConfiguration) -> bool:
     return artifact_config.prefer_bosses and index in _boss_indices
 
 
-class FusionBootstrap(MetroidBootstrap):
+class FusionBootstrap(Bootstrap):
+    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
+        assert isinstance(configuration, FusionConfiguration)
+        return EnergyTankDamageState(
+            configuration.energy_per_tank - 1,
+            configuration.energy_per_tank,
+            game.resource_database,
+            game.region_list,
+        )
+
     def _get_enabled_misc_resources(
         self, configuration: BaseConfiguration, resource_database: ResourceDatabase
     ) -> set[str]:
@@ -60,5 +71,5 @@ class FusionBootstrap(MetroidBootstrap):
             return super().assign_pool_results(rng, patches, pool_results)
 
         locations = self.all_preplaced_item_locations(patches.game, patches.configuration, is_metroid_location)
-        self.pre_place_items(rng, locations, pool_results, INFANT_METROID_CATEGORY)
+        self.pre_place_items(rng, locations, pool_results, "InfantMetroid", patches.game.game)
         return super().assign_pool_results(rng, patches, pool_results)

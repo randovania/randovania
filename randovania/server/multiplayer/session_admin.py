@@ -427,6 +427,9 @@ def admin_session(sa: ServerApp, session_id: int, action: str, *args):
     elif action == SessionAdminGlobalAction.CREATE_PATCHER_FILE:
         return _create_patcher_file(sa, session, *args)
 
+    elif action == SessionAdminGlobalAction.SET_ALLOW_COOP:
+        _set_allow_coop(sa, session, *args)
+
     elif action == SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM:
         _set_allow_everyone_claim(sa, session, *args)
 
@@ -490,7 +493,7 @@ def _claim_world(sa: ServerApp, session: MultiplayerSession, user_id: int, world
 
 
 def _unclaim_world(sa: ServerApp, session: MultiplayerSession, user_id: int, world_uid: uuid.UUID):
-    if not session.allow_everyone_claim_world:
+    if sa.get_current_user().id != user_id and not session.allow_everyone_claim_world:
         verify_has_admin(sa, session.id, None)
 
     world = World.get_by_uuid(world_uid)
@@ -542,6 +545,24 @@ def _set_allow_everyone_claim(sa: ServerApp, session: MultiplayerSession, new_st
         session.save()
 
 
+def _set_allow_coop(sa: ServerApp, session: MultiplayerSession, new_state: bool) -> None:
+    """Sets the Co-Op state of the given session to the desired state."""
+    verify_has_admin(sa, session.id, None)
+
+    if not new_state:
+        for generic_world in session.worlds:
+            if len(generic_world.associations) >= 2:
+                raise error.InvalidActionError(
+                    "Can only disable coop, if a world isn't associated to multiple users at once."
+                )
+
+    with database.db.atomic():
+        session.allow_coop = new_state
+        new_operation = "Allowing" if session.allow_coop else "Disallowing"
+        session_common.add_audit_entry(sa, session, f"{new_operation} coop for the session.")
+        session.save()
+
+
 def _create_patcher_file(sa: ServerApp, session: MultiplayerSession, world_uid: str, cosmetic_json: dict):
     player_names = {}
     uuids = {}
@@ -564,6 +585,7 @@ def _create_patcher_file(sa: ServerApp, session: MultiplayerSession, world_uid: 
         player_names=player_names,
         uuids=uuids,
         session_name=session.name,
+        is_coop=session.allow_coop,
     )
     preset = layout_description.get_preset(players_config.player_index)
     cosmetic_patches = preset.game.data.layout.cosmetic_patches.from_json(cosmetic_json)

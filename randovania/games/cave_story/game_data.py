@@ -1,5 +1,12 @@
 from __future__ import annotations
 
+import typing
+
+if typing.TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExporter
+    from randovania.exporter.patch_data_factory import PatchDataFactory
+    from randovania.interface_common.options import PerGameOptions
+
 import randovania.game.data
 import randovania.game.development_state
 import randovania.game.generator
@@ -14,13 +21,13 @@ from randovania.games.cave_story.layout.preset_describer import (
 )
 
 
-def _options():
+def _options() -> type[PerGameOptions]:
     from randovania.games.cave_story.exporter.options import CSPerGameOptions
 
     return CSPerGameOptions
 
 
-def _gui():
+def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.cave_story import gui
     from randovania.games.cave_story.layout import progressive_items
 
@@ -34,7 +41,7 @@ def _gui():
     )
 
 
-def _generator():
+def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.cave_story.generator.bootstrap import CSBootstrap
     from randovania.games.cave_story.generator.hint_distributor import CSHintDistributor
     from randovania.games.cave_story.generator.pool_creator import pool_creator
@@ -50,13 +57,13 @@ def _generator():
     )
 
 
-def _patch_data_factory():
+def _patch_data_factory() -> type[PatchDataFactory]:
     from randovania.games.cave_story.exporter.patch_data_factory import CSPatchDataFactory
 
     return CSPatchDataFactory
 
 
-def _exporter():
+def _exporter() -> GameExporter:
     from randovania.games.cave_story.exporter.game_exporter import CSGameExporter
 
     return CSGameExporter()

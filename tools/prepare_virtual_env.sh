@@ -3,6 +3,17 @@
 set -e -x
 cd -- "$( dirname -- "${BASH_SOURCE[0]}" )/.."
 
+if [ ! -d "./.git" ]; then
+    echo ""
+    echo "Downloading Randovania via the \"Download ZIP\" button in GitHub is not supported."
+    echo ""
+    echo "Please follow the instructions in the README:"
+    echo "  https://github.com/randovania/randovania/blob/main/README.md#installation"
+    echo ""
+    read -p "Press enter to exit."
+    exit
+fi
+
 python3.12 tools/check_py_version.py
 
 python3.12 -m venv venv
