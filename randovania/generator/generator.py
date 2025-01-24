@@ -62,9 +62,7 @@ def _validate_pickup_pool_size(
 
 
 async def check_if_beatable(patches: GamePatches, pool: PoolResults) -> bool:
-    patches = patches.assign_extra_starting_pickups(itertools.chain(pool.starting, pool.to_place)).assign_own_pickups(
-        pool.assignment.items()
-    )
+    patches = patches.assign_extra_starting_pickups(itertools.chain(pool.starting, pool.to_place))
 
     state, logic = resolver.setup_resolver(patches.configuration, patches)
 
@@ -108,10 +106,11 @@ async def create_player_pool(
         )
 
         pool_results = pool_creator.calculate_pool_results(configuration, game)
-        if configuration.check_if_beatable_after_base_patches and not await check_if_beatable(patches, pool_results):
-            continue
 
         patches = game_generator.bootstrap.assign_pool_results(rng, patches, pool_results)
+
+        if configuration.check_if_beatable_after_base_patches and not await check_if_beatable(patches, pool_results):
+            continue
 
         return PlayerPool(
             game=game,
