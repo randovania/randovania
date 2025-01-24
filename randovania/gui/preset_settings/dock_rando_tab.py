@@ -13,7 +13,7 @@ from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Iterable
 
     from randovania.game_description.db.dock import DockRandoParams, DockType, DockWeakness
     from randovania.game_description.game_description import GameDescription
@@ -34,6 +34,7 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
             self.mode_combo.addItem(mode.long_name, mode)
 
         signal_handling.on_combo(self.mode_combo, self._on_mode_changed)
+        signal_handling.on_checked(self.two_sided_door_search_check, self._persist_two_sided_door_lock_search)
 
         # Types
         self.type_checks = {}
@@ -48,11 +49,18 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
     def header_name(cls) -> str | None:
         return None
 
+    @property
+    def experimental_settings(self) -> Iterable[QtWidgets.QWidget]:
+        yield self.two_sided_door_search_line
+        yield self.two_sided_door_search_label
+        yield self.two_sided_door_search_check
+
     def on_preset_changed(self, preset: Preset):
         dock_rando = preset.configuration.dock_rando
         signal_handling.set_combo_with_value(self.mode_combo, dock_rando.mode)
         self.mode_description.setText(dock_rando.mode.description)
 
+        self.two_sided_door_search_check.setChecked(preset.configuration.two_sided_door_lock_search)
         self.multiworld_label.setVisible(len(dock_rando.settings_incompatible_with_multiworld()) > 0)
         self.line.setVisible(self.multiworld_label.isVisible())
         self.dock_types_group.setVisible(dock_rando.mode != DockRandoMode.VANILLA)
@@ -138,3 +146,7 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
     def _on_mode_changed(self, value: DockRandoMode):
         with self._editor as editor:
             editor.dock_rando_configuration = dataclasses.replace(editor.dock_rando_configuration, mode=value)
+
+    def _persist_two_sided_door_lock_search(self, value: bool):
+        with self._editor as editor:
+            editor.set_configuration_field("two_sided_door_lock_search", value)

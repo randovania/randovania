@@ -14,7 +14,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
 
     return [
-        PresetLocationPool,
         PresetItemPool,
+        PresetLocationPool,
         PresetFactorioPatches,
     ]

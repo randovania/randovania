@@ -220,7 +220,7 @@
                 }
             },
             "L0Locks": {
-                "long_name": "Level 0 Locks",
+                "long_name": "Level 0 Keycard",
                 "max_capacity": 1,
                 "extra": {
                     "item": "Level0",
@@ -229,7 +229,7 @@
                 }
             },
             "L1Locks": {
-                "long_name": "Level 1 Locks",
+                "long_name": "Level 1 Keycard",
                 "max_capacity": 1,
                 "extra": {
                     "item": "Level1",
@@ -238,7 +238,7 @@
                 }
             },
             "L2Locks": {
-                "long_name": "Level 2 Locks",
+                "long_name": "Level 2 Keycard",
                 "max_capacity": 1,
                 "extra": {
                     "item": "Level2",
@@ -247,7 +247,7 @@
                 }
             },
             "L3Locks": {
-                "long_name": "Level 3 Locks",
+                "long_name": "Level 3 Keycard",
                 "max_capacity": 1,
                 "extra": {
                     "item": "Level3",
@@ -256,7 +256,7 @@
                 }
             },
             "L4Locks": {
-                "long_name": "Level 4 Locks",
+                "long_name": "Level 4 Keycard",
                 "max_capacity": 1,
                 "extra": {
                     "item": "Level4",
@@ -745,6 +745,10 @@
             },
             "MenuMod": {
                 "long_name": "Equipment Manipulation",
+                "extra": {}
+            },
+            "CanSWJ": {
+                "long_name": "Single Wall Jumping Physics",
                 "extra": {}
             }
         },
@@ -1325,7 +1329,17 @@
                                 "type": "or",
                                 "data": {
                                     "comment": null,
-                                    "items": []
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "misc",
+                                                "name": "CanSWJ",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         ]
@@ -2244,6 +2258,123 @@
                                             }
                                         }
                                     ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Kill Tough Underwater Beam-Resistant Enemy": {
+                "display_name": "Can Kill Tough Underwater Beam-Resistant Enemy",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missiles",
+                                    "amount": 10,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "GravitySuit",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "ScrewAttack",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "ChargeBeam",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Have Any Beam Upgrade"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "PowerBombs",
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Can Use Power Bombs"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Have Any Suit Upgrade": {
+                "display_name": "Have Any Suit Upgrade",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "VariaSuit",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "GravitySuit",
+                                    "amount": 1,
+                                    "negate": false
                                 }
                             }
                         ]

@@ -11,7 +11,8 @@
                 "room_id": [
                     0,
                     63
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Docking Bay Access": {
@@ -70,24 +71,127 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Weapon Requirements - TODO: more beams",
+                                            "comment": "Weapon Requirements",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "WideBeam",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "Trickless",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "WideBeam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PlasmaBeam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": "Easy 1 Beam methods",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "WideBeam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "PlasmaBeam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Harder 1 Beam methods",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "IceBeam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "ChargeBeam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "WaveBeam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -103,7 +207,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "NormalDamage",
-                                                        "amount": 1000,
+                                                        "amount": 500,
                                                         "negate": false
                                                     }
                                                 },
@@ -112,7 +216,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
-                                                        "amount": 5,
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 },
@@ -127,58 +231,6 @@
                                                                     "type": "tricks",
                                                                     "name": "Combat",
                                                                     "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "NormalDamage",
-                                                                    "amount": 800,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "NormalDamage",
-                                                                    "amount": 600,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -204,7 +256,33 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Combat",
-                                                                    "amount": 4,
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "NormalDamage",
+                                                                    "amount": 200,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -948,7 +1026,8 @@
                 "map_name": "Main Deck8",
                 "room_id": [
                     8
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Concourse": {
@@ -1366,7 +1445,8 @@
                 "map_name": "Main Deck11",
                 "room_id": [
                     11
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Elevator to Central Hub": {
@@ -2161,12 +2241,20 @@
                                             "comment": "Health Requirements",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 5,
-                                                        "negate": false
+                                                        "comment": "Hitless: https://youtu.be/W5S4xK5cV-Q",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -2721,6 +2809,64 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Can Freeze Enemies With Any Weapon"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Kill Funes and then SWJ up",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Screw Single Walljump"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Habitation Deck (Upper)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Kill Funes and then SWJ up",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Screw Single Walljump"
                                                 }
                                             ]
                                         }
@@ -5822,7 +5968,8 @@
                 "map_name": "Main Deck33",
                 "room_id": [
                     33
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Hornoad Hallway": {
@@ -6547,7 +6694,8 @@
                 "map_name": "Main Deck37",
                 "room_id": [
                     37
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Crew Quarters East": {
@@ -7488,7 +7636,8 @@
                 "map_name": "Main Deck44",
                 "room_id": [
                     44
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Operations Deck Recharge Room": {
@@ -8338,20 +8487,37 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Having only one beam makes this harder to hit / have only one attempt",
                                                         "items": [
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "Having only one beam makes this harder to hit / have only one attempt",
+                                                                    "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "items",
-                                                                                "name": "ChargeBeam",
-                                                                                "amount": 1,
-                                                                                "negate": false
+                                                                                "comment": "If you only have charge, you need to have access to the other side",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "ChargeBeam",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "events",
+                                                                                            "name": "ReactorControl",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         },
                                                                         {
@@ -8858,7 +9024,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
-                                                        "amount": 2,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -10148,7 +10314,8 @@
                 "map_name": "Main Deck58",
                 "room_id": [
                     58
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Central Reactor Core": {
@@ -10547,7 +10714,8 @@
                 "map_name": "Main Deck64",
                 "room_id": [
                     64
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Back Door to Sector 6 (NOC)": {
@@ -12016,7 +12184,8 @@
                 "map_name": "Main Deck81",
                 "room_id": [
                     81
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Operations Deck": {
@@ -12505,7 +12674,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": "Yakuza - TODO: what about plasma?",
+                                                        "comment": "Yakuza (500HP first phase, 500HP second phase)",
                                                         "items": [
                                                             {
                                                                 "type": "and",
@@ -12540,33 +12709,12 @@
                                                                                         "data": {
                                                                                             "type": "tricks",
                                                                                             "name": "Combat",
-                                                                                            "amount": 1,
+                                                                                            "amount": 2,
                                                                                             "negate": false
                                                                                         }
                                                                                     }
                                                                                 ]
                                                                             }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Missiles",
-                                                                                "amount": 25,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "45 DMG Missiles"
                                                                         }
                                                                     ]
                                                                 }
@@ -12587,7 +12735,7 @@
                                                                         },
                                                                         {
                                                                             "type": "template",
-                                                                            "data": "30 DMG Missiles"
+                                                                            "data": "45 DMG Missiles"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -12611,7 +12759,37 @@
                                                                             "data": {
                                                                                 "type": "items",
                                                                                 "name": "Missiles",
-                                                                                "amount": 55,
+                                                                                "amount": 50,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "30 DMG Missiles"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Missiles",
+                                                                                "amount": 65,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -12624,7 +12802,7 @@
                                                                             "data": {
                                                                                 "type": "tricks",
                                                                                 "name": "Combat",
-                                                                                "amount": 2,
+                                                                                "amount": 4,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -12654,7 +12832,7 @@
                                                                             "data": {
                                                                                 "type": "tricks",
                                                                                 "name": "Combat",
-                                                                                "amount": 4,
+                                                                                "amount": 5,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -12734,6 +12912,32 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Dodging",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "MorphBall",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -12757,7 +12961,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "NormalDamage",
-                                                        "amount": 800,
+                                                        "amount": 550,
                                                         "negate": false
                                                     }
                                                 },
@@ -12771,7 +12975,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "NormalDamage",
-                                                                    "amount": 700,
+                                                                    "amount": 450,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -12797,7 +13001,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "NormalDamage",
-                                                                    "amount": 600,
+                                                                    "amount": 350,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -12823,7 +13027,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "NormalDamage",
-                                                                    "amount": 400,
+                                                                    "amount": 250,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -12849,7 +13053,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "NormalDamage",
-                                                                    "amount": 200,
+                                                                    "amount": 150,
                                                                     "negate": false
                                                                 }
                                                             },

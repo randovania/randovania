@@ -49,7 +49,7 @@
            <string>TextLabel</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignCenter</set>
+           <set>Qt::AlignmentFlag::AlignCenter</set>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -68,7 +68,7 @@
            <string>&lt;Game not generated&gt;</string>
           </property>
           <property name="textInteractionFlags">
-           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+           <set>Qt::TextInteractionFlag::LinksAccessibleByMouse|Qt::TextInteractionFlag::TextSelectableByMouse</set>
           </property>
          </widget>
         </item>
@@ -109,20 +109,6 @@
            <string>Session Administration</string>
           </property>
           <layout class="QGridLayout" name="session_admin_layout">
-           <item row="0" column="0">
-            <widget class="QPushButton" name="view_game_details_button">
-             <property name="text">
-              <string>View Spoiler</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QPushButton" name="copy_permalink_button">
-             <property name="text">
-              <string>Copy Permalink</string>
-             </property>
-            </widget>
-           </item>
            <item row="1" column="1">
             <widget class="QPushButton" name="advanced_options_tool">
              <property name="sizePolicy">
@@ -136,10 +122,24 @@
              </property>
             </widget>
            </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="copy_permalink_button">
+             <property name="text">
+              <string>Copy Permalink</string>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="1">
             <widget class="QPushButton" name="session_visibility_button">
              <property name="text">
               <string>Start</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QPushButton" name="view_game_details_button">
+             <property name="text">
+              <string>View Spoiler</string>
              </property>
             </widget>
            </item>
@@ -150,13 +150,20 @@
              </property>
             </widget>
            </item>
+           <item row="3" column="0">
+            <widget class="QCheckBox" name="allow_coop_check">
+             <property name="text">
+              <string>Enable Co-Op</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
         </item>
         <item row="3" column="0" colspan="2">
          <spacer name="verticalSpacer">
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Orientation::Vertical</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -199,7 +206,7 @@
               <string/>
              </property>
              <property name="textFormat">
-              <enum>Qt::MarkdownText</enum>
+              <enum>Qt::TextFormat::MarkdownText</enum>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -263,7 +270,7 @@
         <item>
          <widget class="QTableView" name="history_view">
           <property name="editTriggers">
-           <set>QAbstractItemView::NoEditTriggers</set>
+           <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
           </property>
           <property name="sortingEnabled">
            <bool>true</bool>
@@ -274,7 +281,7 @@
       </widget>
       <widget class="QTableView" name="tab_audit">
        <property name="editTriggers">
-        <set>QAbstractItemView::NoEditTriggers</set>
+        <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
        </property>
        <property name="sortingEnabled">
         <bool>true</bool>
@@ -296,10 +303,16 @@
       <property name="text">
        <string/>
       </property>
+      <property name="textFormat">
+       <enum>Qt::TextFormat::MarkdownText</enum>
+      </property>
       <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
       </property>
       <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+      <property name="openExternalLinks">
        <bool>true</bool>
       </property>
      </widget>
@@ -339,7 +352,7 @@
      <x>0</x>
      <y>0</y>
      <width>773</width>
-     <height>17</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

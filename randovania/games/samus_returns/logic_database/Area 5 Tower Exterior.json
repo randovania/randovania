@@ -1929,13 +1929,8 @@
                                                                 "data": "Lay Bomb"
                                                             },
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spring",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Use Spring Ball"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -2289,13 +2284,8 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Spring",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
+                                                                                        "type": "template",
+                                                                                        "data": "Use Spring Ball"
                                                                                     }
                                                                                 ]
                                                                             }
@@ -2329,6 +2319,49 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
+                        "Pickup (Super Missile Tank Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Spider Ball Clip on teleporter and do full spin jump to the left - https://youtu.be/ivMAaSUWJkk",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SpiderClip",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "OoB",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Teleporter": {
                             "type": "and",
                             "data": {
@@ -2504,7 +2537,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://youtu.be/olF7Zn1G8xU",
+                                            "comment": "Ice Clip: https://youtu.be/olF7Zn1G8xU",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2599,6 +2632,15 @@
                                                                 }
                                                             }
                                                         ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "OoB",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -3836,13 +3878,8 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spider",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Use Spider Ball"
                                                             },
                                                             {
                                                                 "type": "and",
@@ -4101,6 +4138,15 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "OoB",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -4168,7 +4214,7 @@
                         "default"
                     ],
                     "extra": {
-                        "start_point_actor_name": "ST_SG_Zeta_001"
+                        "start_point_actor_name": "ST_CheckPoint_005"
                     },
                     "valid_starting_location": true,
                     "connections": {

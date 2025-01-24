@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import typing
 from typing import TYPE_CHECKING, TypeVar
 
 from randovania.game.game_enum import RandovaniaGame
@@ -497,9 +498,8 @@ def read_used_trick_levels(
 
 
 def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescription]:
-    data = game_migration.migrate_to_current(data)
-
     game = RandovaniaGame(data["game"])
+    data = game_migration.migrate_to_current(data, game)
 
     resource_database = read_resource_database(game, data["resource_database"])
     dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
@@ -539,7 +539,7 @@ def read_split_file(dir_path: Path) -> dict:
         # This code runs before we can run old data migration, so we need to handle this difference here
         key_name = "worlds"
 
-    regions = data.pop(key_name)
+    regions = typing.cast(list[str], data.pop(key_name))
 
     data[key_name] = [
         json_lib.read_path(dir_path.joinpath(region_file_name), raise_on_duplicate_keys=True)

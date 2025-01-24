@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 class PrimeConnectorBuilder(ConnectorBuilder):
     _last_status_message: str | None = None
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.logger = logging.getLogger(type(self).__name__)
 
@@ -86,7 +86,7 @@ class PrimeConnectorBuilder(ConnectorBuilder):
             try:
                 is_version = await connector.check_for_world_uid()
             except (RuntimeError, MemoryOperationException) as e:
-                self._status_message(e)
+                self._status_message(str(e))
                 executor.disconnect()
                 return None
 
@@ -99,7 +99,7 @@ class PrimeConnectorBuilder(ConnectorBuilder):
         executor.disconnect()
         return None
 
-    def _status_message(self, msg: str, log: bool = True):
+    def _status_message(self, msg: str, log: bool = True) -> None:
         self._last_status_message = msg
         if log:
             self.logger.info(msg)

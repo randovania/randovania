@@ -307,8 +307,11 @@ def _determine_valid_weaknesses(
                 weakness: 1.0
                 for weakness in sorted(dock_type_state.can_change_to.difference(exclusions))
                 if (
-                    weakness.requirement.satisfied(ctx, state.energy)
-                    and (weakness.lock is None or weakness.lock.requirement.satisfied(ctx, state.energy))
+                    weakness.requirement.satisfied(ctx, state.health_for_damage_requirements)
+                    and (
+                        weakness.lock is None
+                        or weakness.lock.requirement.satisfied(ctx, state.health_for_damage_requirements)
+                    )
                 )
             }
         )

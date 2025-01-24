@@ -10,10 +10,10 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources import search
 from randovania.game_description.resources.damage_reduction import DamageReduction
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.games.prime2.generator.pickup_pool import sky_temple_keys
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
-from randovania.resolver.bootstrap import MetroidBootstrap
+from randovania.resolver.bootstrap import Bootstrap
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
     from random import Random
@@ -25,6 +25,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.damage_state import DamageState
 
 
 def is_boss_location(node: PickupNode, config: BaseConfiguration) -> bool:
@@ -38,7 +39,16 @@ def is_boss_location(node: PickupNode, config: BaseConfiguration) -> bool:
     return False
 
 
-class EchoesBootstrap(MetroidBootstrap):
+class EchoesBootstrap(Bootstrap):
+    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
+        assert isinstance(configuration, EchoesConfiguration)
+        return EnergyTankDamageState(
+            configuration.energy_per_tank - 1,
+            configuration.energy_per_tank,
+            game.resource_database,
+            game.region_list,
+        )
+
     def event_resources_for_configuration(
         self,
         configuration: BaseConfiguration,
@@ -104,7 +114,7 @@ class EchoesBootstrap(MetroidBootstrap):
 
         if mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
             locations = self.all_preplaced_item_locations(patches.game, patches.configuration, is_boss_location)
-            self.pre_place_items(rng, locations, pool_results, sky_temple_keys.SKY_TEMPLE_KEY_CATEGORY)
+            self.pre_place_items(rng, locations, pool_results, "sky_temple_key", patches.game.game)
 
         return super().assign_pool_results(rng, patches, pool_results)
 

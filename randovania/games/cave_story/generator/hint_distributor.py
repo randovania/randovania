@@ -4,9 +4,9 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision, PrecisionPair
+from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision, LocationHint, PrecisionPair
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
-from randovania.generator.hint_distributor import HintDistributor, HintTargetPrecision
+from randovania.generator.hint_distributor import HintDistributor, HintProvider, HintTargetPrecision
 
 if TYPE_CHECKING:
     from random import Random
@@ -27,7 +27,7 @@ class CSHintDistributor(HintDistributor):
     async def get_specific_pickup_precision_pair_overrides(
         self, patches: GamePatches, prefill: PreFillParams
     ) -> dict[NodeIdentifier, PrecisionPair]:
-        def p(loc):
+        def p(loc: HintLocationPrecision) -> PrecisionPair:
             return PrecisionPair(loc, HintItemPrecision.DETAILED, False)
 
         c = NodeIdentifier.create
@@ -53,9 +53,9 @@ class CSHintDistributor(HintDistributor):
             if patches.starting_location.area != "Start Point":
                 items_with_hint.append("Arthur's Key")
 
-            already_hinted_indices = [hint.target for hint in patches.hints.values() if hint.target is not None]
+            already_hinted_indices = [hint.target for hint in patches.hints.values() if isinstance(hint, LocationHint)]
             indices_with_hint = [
-                (node.pickup_index, HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED)
+                (node.pickup_index, PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, False))
                 for node in patches.game.region_list.iterate_nodes()
                 if isinstance(node, PickupNode)
                 and node.pickup_index not in already_hinted_indices
@@ -78,7 +78,7 @@ class CSHintDistributor(HintDistributor):
 
         return hints
 
-    def _get_relative_hint_providers(self):
+    def _get_relative_hint_providers(self) -> list[HintProvider]:
         return []
 
     async def assign_precision_to_hints(

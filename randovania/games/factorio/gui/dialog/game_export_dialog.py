@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import platform
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -11,12 +12,26 @@ from randovania.games.factorio.gui.generated.factorio_game_export_dialog_ui impo
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     add_field_validation,
+    is_directory_validator,
     prompt_for_output_directory,
     spoiler_path_for_directory,
 )
+from randovania.lib import windows_lib
 
 if TYPE_CHECKING:
     from randovania.interface_common.options import Options, PerGameOptions
+
+
+def get_global_user_data_dir() -> Path:
+    match platform.system():
+        case "Windows":
+            return windows_lib.get_appdata().joinpath("Factorio")
+        case "Darwin":
+            return Path("~/Library/Application Support/factorio")
+        case "Linux":
+            return Path("~/.factorio")
+        case _:
+            raise RuntimeError("Unsupported platform")
 
 
 class FactorioGameExportDialog(GameExportDialog, Ui_FactorioGameExportDialog):
@@ -34,15 +49,18 @@ class FactorioGameExportDialog(GameExportDialog, Ui_FactorioGameExportDialog):
         assert isinstance(per_game, FactorioPerGameOptions)
 
         # Output
+        self.use_default_button.clicked.connect(self._on_use_default_button)
         self.output_file_button.clicked.connect(self._on_output_file_button)
 
         if per_game.output_path is not None:
             self.output_file_edit.setText(str(per_game.output_path))
+        else:
+            self._on_use_default_button()
 
         add_field_validation(
             accept_button=self.accept_button,
             fields={
-                self.output_file_edit: lambda: not (self.output_file.is_dir()),
+                self.output_file_edit: lambda: is_directory_validator(self.output_file_edit),
             },
         )
 
@@ -55,8 +73,12 @@ class FactorioGameExportDialog(GameExportDialog, Ui_FactorioGameExportDialog):
     def auto_save_spoiler(self) -> bool:
         return self.auto_save_spoiler_check.isChecked()
 
+    def _on_use_default_button(self) -> None:
+        global_dir = get_global_user_data_dir()
+        self.output_file_edit.setText(str(global_dir.joinpath("mods")))
+
     # Output File
-    def _on_output_file_button(self):
+    def _on_output_file_button(self) -> None:
         output_dir = prompt_for_output_directory(self, "Factorio Mod", self.output_file_edit)
         if output_dir is not None:
             self.output_file_edit.setText(str(output_dir))

@@ -1,13 +1,11 @@
 import logging
 import uuid
 from collections import defaultdict
-from typing import TYPE_CHECKING
 
 from qasync import asyncSlot
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.remote_connector import (
-    PickupEntryWithOwner,
     PlayerLocationEvent,
     RemoteConnector,
 )
@@ -17,9 +15,7 @@ from randovania.game_description.db.region import Region
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.am2r.layout import progressive_items
-
-if TYPE_CHECKING:
-    from randovania.game_description.pickup.pickup_entry import PickupEntry
+from randovania.network_common.remote_pickup import RemotePickup
 
 
 class AM2RRemoteConnector(RemoteConnector):
@@ -61,7 +57,7 @@ class AM2RRemoteConnector(RemoteConnector):
 
     # Reset all values on init, disconnect or after switching back to main menu
     def reset_values(self) -> None:
-        self.remote_pickups: tuple[tuple[str, PickupEntry], ...] = ()
+        self.remote_pickups: tuple[RemotePickup, ...] = ()
         self.last_inventory = Inventory.empty()
         self.in_cooldown = True
         self.received_pickups: int | None = None
@@ -98,7 +94,7 @@ class AM2RRemoteConnector(RemoteConnector):
         )
         self.PlayerLocationChanged.emit(PlayerLocationEvent(self.current_region, None))
 
-    def new_collected_locations_received(self, new_indices: str) -> None:
+    def new_collected_locations_received(self, new_indices_response: str) -> None:
         """
         __Collected locations implementation detail:__
         The game keeps track of which locations it collected, in a big string, with the format `locations:XX,YY,ZZ...`,
@@ -106,7 +102,7 @@ class AM2RRemoteConnector(RemoteConnector):
         Also, this string is saved to the save file.
         The game sends that string to RDV, where we then loop through it, and mark every index as collected.
 
-        :param new_indices: A string from the game with the format `locations:XX,YY,ZZ...`.
+        :param new_indices_response: A string from the game with the format `locations:XX,YY,ZZ...`.
         """
         if self.current_region is None:
             return
@@ -114,20 +110,28 @@ class AM2RRemoteConnector(RemoteConnector):
         locations = set()
         start_of_indices = "locations:"
 
-        if not new_indices.startswith(start_of_indices):
-            self.logger.warning("Unknown response: %s", new_indices)
+        if not new_indices_response.startswith(start_of_indices):
+            self.logger.warning("Unknown response: %s", new_indices_response)
             return
 
-        for index in new_indices[len(start_of_indices) :].split(","):
+        indices_list = new_indices_response[len(start_of_indices) :].split(",")
+        if not indices_list[-1].strip():
+            indices_list.pop()  # Last element is empty, so preemptively remove to avoid warnings later
+
+        for index in indices_list:
             if not index.isdigit():
-                self.logger.warning("Response should contain a digit, but instead contains '%s'", index)
+                self.logger.warning(
+                    "Response should contain a digit, but instead contains '%s'. Original message: '%s'",
+                    index,
+                    new_indices_response,
+                )
                 continue
             locations.add(PickupIndex(int(index)))
 
         for location in locations:
             self.PickupIndexCollected.emit(location)
 
-    def new_inventory_received(self, new_inventory: str) -> None:
+    def new_inventory_received(self, new_inventory_response: str) -> None:
         """
         __New inventory implementation detail:__
         The game keeps track of which items it collected in a big string with the format
@@ -142,28 +146,39 @@ class AM2RRemoteConnector(RemoteConnector):
         Regarding ammo and progressives: for some reason, we need here the name of the ammo, and not the name of the
         expansions. I.e. for `Missile Expansions`, we need `Missiles`. So there's a lookup dict here to adjust for them.
 
-        :param new_inventory: A string from the game with the format `items:XA|XB,YA|YB,ZA|ZB...`.
+        :param new_inventory_response: A string from the game with the format `items:XA|XB,YA|YB,ZA|ZB...`.
         """
         if self.current_region is None:
             return
 
-        inventory_dict = defaultdict(int)
+        inventory_dict: dict[str, int] = defaultdict(int)
         start_of_inventory = "items:"
 
-        if not new_inventory.startswith(start_of_inventory):
-            self.logger.warning("Unknown response: %s", new_inventory)
+        if not new_inventory_response.startswith(start_of_inventory):
+            self.logger.warning("Unknown response: %s", new_inventory_response)
             return
 
-        for position in new_inventory[len(start_of_inventory) :].split(","):
+        inventory_list = new_inventory_response[len(start_of_inventory) :].split(",")
+        if inventory_list[-1].strip():
+            inventory_list.pop()  # Last element is empty, so preemptively remove to avoid warnings later
+
+        for position in inventory_list:
             if not position:
                 continue
             if "|" not in position:
-                self.logger.warning("Response should contain a '|', but it doesn't")
+                self.logger.warning(
+                    "Response should contain a '|', but it doesn't. Original response: %s", new_inventory_response
+                )
                 continue
-            (item_name, quantity) = position.split("|", 1)
-            if not quantity.isdigit():
-                self.logger.warning("Response should contain a digit, but instead contains '%s'", position)
+            (item_name, q) = position.split("|", 1)
+            if not q.isdigit():
+                self.logger.warning(
+                    "Response should contain a digit, but instead contains '%s'. Original response: %s",
+                    position,
+                    new_inventory_response,
+                )
                 continue
+            quantity = int(q)
 
             # Ammo is sent twice by the game: once as actual ammo, once as expansion. Let's ignore the expansions.
             item_name_replacement = {
@@ -178,7 +193,7 @@ class AM2RRemoteConnector(RemoteConnector):
 
             # If our item name is in the lookup dict, we replace it. If it isn't, we keep it as is
             item_name = item_name_replacement.get(item_name, item_name)
-            inventory_dict[item_name] += int(quantity)
+            inventory_dict[item_name] += quantity
 
         # The game sends the name of the progressive items, not the underlying items.
         # Since progressives are not resources in the DB, we need to handle them correctly and give the actual items.
@@ -215,7 +230,7 @@ class AM2RRemoteConnector(RemoteConnector):
         self.received_pickups = new_recv_as_int
         await self.receive_remote_pickups()
 
-    async def set_remote_pickups(self, remote_pickups: tuple[PickupEntryWithOwner, ...]) -> None:
+    async def set_remote_pickups(self, remote_pickups: tuple[RemotePickup, ...]) -> None:
         self.remote_pickups = remote_pickups
         await self.receive_remote_pickups()
 
@@ -236,7 +251,7 @@ class AM2RRemoteConnector(RemoteConnector):
 
         # Mark as cooldown, and send provider, item name, model name and quantity to game
         self.in_cooldown = True
-        provider_name, pickup = remote_pickups[num_pickups]
+        provider_name, pickup, coop_location = remote_pickups[num_pickups]
         name, model = pickup.name, pickup.model.name
         # For some reason, the resources here are sorted differently to the patch data factory.
         # There we want the first entry, here we want the last.

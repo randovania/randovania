@@ -30,7 +30,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory):
     def _create_pickups_dict(self, pickup_list: list[ExportedPickupDetails], _rng: Random) -> dict:
         pickup_map_dict = {}
         for pickup in pickup_list:
-            quantity = pickup.conditional_resources[0].resources[0][1] if not pickup.other_player else 0
+            quantity = pickup.conditional_resources[0].resources[0][1] if not pickup.is_for_remote_player else 0
             object_id = str(self.game.region_list.node_from_pickup_index(pickup.index).extra["object_id"])
             res_lock = pickup.original_pickup.resource_lock
             text_index = (
@@ -44,7 +44,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory):
             )
 
             pickup_type = "Nothing"
-            if not pickup.other_player:
+            if not pickup.is_for_remote_player:
                 if pickup.original_pickup.name.startswith("Tourian Key"):
                     pickup_type = "Tourian Key"
                 else:

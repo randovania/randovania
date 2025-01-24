@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import datetime
 import functools
 import logging
 import uuid
@@ -20,12 +21,14 @@ from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.interface_common.options import InfoAlert, Options
 from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import (
     MAX_WORLD_NAME_LENGTH,
     WORLD_NAME_RE,
     MultiplayerSessionEntry,
     MultiplayerUser,
     MultiplayerWorld,
+    UserID,
     UserWorldDetail,
 )
 
@@ -72,13 +75,16 @@ class WorldWidgetEntry:
     item: QtWidgets.QTreeWidgetItem
     preset_menu: QtWidgets.QMenu
 
-    def update(self, world_details: MultiplayerWorld, detail: UserWorldDetail | None):
+    def update(self, world_details: MultiplayerWorld, detail: UserWorldDetail):
         self.item.setText(0, world_details.name)
         self.item.setText(1, world_details.preset.game.long_name)
-        self.item.setText(2, detail.connection_state.pretty_text if detail is not None else "Abandoned")
+        self.item.setText(2, detail.connection_state.pretty_text)
         self.preset_menu.setTitle(f"Preset: {world_details.preset.name}")
 
-        if detail is not None:
+        if (
+            detail.connection_state != GameConnectionStatus.Unclaimed
+            and detail.connection_state != GameConnectionStatus.Empty
+        ):
             self.item.setText(4, "Last Activity:")
             self.item.setTextAlignment(4, QtCore.Qt.AlignmentFlag.AlignRight | QtCore.Qt.AlignmentFlag.AlignCenter)
             self.item.setData(
@@ -94,8 +100,11 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
     _last_session: MultiplayerSessionEntry | None = None
     _session: MultiplayerSessionEntry
-    _user_widgets: dict[int, UserWidgetEntry]
-    _world_widgets: dict[uuid.UUID, WorldWidgetEntry]
+    _user_widgets: dict[UserID, UserWidgetEntry]
+    _world_widgets: dict[tuple[UserID, uuid.UUID], WorldWidgetEntry]  # (user id, world UUID): worldWidgetEntry
+
+    UNCLAIMED_PSEUDO_USER_ID = -1
+    ALL_WORLDS_PSEUDO_USER_ID = -2
 
     def __init__(self, options: Options, window_manager: WindowManager, session_api: MultiplayerSessionApi):
         super().__init__()
@@ -131,6 +140,8 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         you = session.users.get(self.your_id)
         return [
             you is not None and you.admin,
+            session.allow_coop,
+            session.allow_everyone_claim_world,
             [(user.id, user.name, list(user.worlds.keys())) for user in session.users_list],
             [w.id for w in session.worlds],
             session.generation_in_progress,
@@ -269,8 +280,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 self,
                 QtWidgets.QMessageBox.Icon.Information,
                 "Multiworld FAQ",
-                "Have you read the Multiworld FAQ?\n"
-                "It can be found in the main Randovania window → Help → Multiworld",
+                "Have you read the Multiworld FAQ?\nIt can be found in the main Randovania window → Help → Multiworld",
             )
             options.mark_alert_as_displayed(InfoAlert.MULTIWORLD_FAQ)
 
@@ -334,6 +344,9 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     def _create_world_item(
         self, world_id: uuid.UUID, parent: QtWidgets.QTreeWidgetItem, owner: int | None
     ) -> WorldWidgetEntry:
+        def is_valid_owner(owner: int) -> bool:
+            return owner is not None and owner >= 0
+
         in_generation = self._session.generation_in_progress is not None
         has_layout = self._session.game_details is not None
         can_change_preset = not has_layout and not in_generation
@@ -371,19 +384,42 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                     world_menu.addAction("Connect via debug connector"), self._register_debug_connector, world_id
                 )
 
-        if self.is_admin() or self._session.allow_everyone_claim_world:
-            if owner is None:
-                world_menu.addSeparator()
+        if self.is_admin() or self._session.allow_everyone_claim_world or owner == self.your_id:
+
+            def create_claim_for_each_player_entry() -> None:
+                claim_menu = world_menu.addMenu("Claim for")
+                for p in self._session.users.values():
+                    connect_to(claim_menu.addAction(p.name), self._world_claim_with, world_id, p.id)
+
+            def create_claim_for_yourself_entry() -> None:
                 connect_to(world_menu.addAction("Claim for yourself"), self._world_claim_with, world_id, self.your_id)
 
-                if self.is_admin():
-                    claim_menu = world_menu.addMenu("Claim for")
-                    for p in self._session.users.values():
-                        connect_to(claim_menu.addAction(p.name), self._world_claim_with, world_id, p.id)
+            def create_unclaim_entry(menu_caption: str) -> None:
+                connect_to(world_menu.addAction(menu_caption), self._world_unclaim, world_id, owner)
 
-            else:
+            if not is_valid_owner(owner) and (self.is_admin() or self._session.allow_everyone_claim_world):
+                if self._session.users[self.your_id].worlds.get(world_id):
+                    world_menu.addSeparator()
+                    create_unclaim_entry("Unclaim from yourself")
+                else:
+                    world_menu.addSeparator()
+                    create_claim_for_yourself_entry()
+
+                if self.is_admin():
+                    create_claim_for_each_player_entry()
+
+            elif is_valid_owner(owner) and (
+                self.is_admin()
+                or (self._session.allow_everyone_claim_world and not self._session.allow_coop)
+                or owner == self.your_id
+            ):
+                text = "Unclaim"
+                if owner == self.your_id:
+                    text += " from yourself"
+                else:
+                    text += " from this user"
                 world_menu.addSeparator()
-                connect_to(world_menu.addAction("Unclaim"), self._world_unclaim, world_id, owner)
+                create_unclaim_entry(text)
 
         if owner == self.your_id or self.is_admin():
             world_menu.addSeparator()
@@ -392,7 +428,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             delete_action.setEnabled(can_change_preset)
             connect_to(delete_action, self._world_delete, world_id)
 
-        if owner is not None:
+        if is_valid_owner(owner):
             world_menu.addSeparator()
             connect_to(world_menu.addAction("Watch inventory"), self._watch_inventory, world_id, owner)
 
@@ -400,11 +436,11 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
         self.setItemWidget(world_item, 3, world_tool)
 
-        self._world_widgets[world_id] = WorldWidgetEntry(
+        self._world_widgets[(owner, world_id)] = WorldWidgetEntry(
             item=world_item,
             preset_menu=preset_menu,
         )
-        return self._world_widgets[world_id]
+        return self._world_widgets[(owner, world_id)]
 
     def _create_all_widgets_from_scratch(self):
         self.clear()
@@ -459,16 +495,28 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             self._user_widgets[user.id].update(user)
 
         unclaimed_worlds = set(world_by_id.keys()) - used_worlds
+
         if unclaimed_worlds:
             unclaimed_world_item = QtWidgets.QTreeWidgetItem(self)
             unclaimed_world_item.setExpanded(True)
-            unclaimed_world_item.setText(0, "Unclaimed Games")
+            unclaimed_world_item.setText(0, "Unclaimed Worlds")
 
             for world_uid, world in world_by_id.items():
                 if world_uid in unclaimed_worlds:
-                    self._create_world_item(world_uid, unclaimed_world_item, None).update(
+                    self._create_world_item(world_uid, unclaimed_world_item, self.UNCLAIMED_PSEUDO_USER_ID).update(
                         world_by_id[world_uid],
-                        None,
+                        UserWorldDetail(GameConnectionStatus.Unclaimed, datetime.datetime.min),
+                    )
+
+        if self._session.allow_coop:
+            total_world_item = QtWidgets.QTreeWidgetItem(self)
+            total_world_item.setExpanded(True)
+            total_world_item.setText(0, "All Worlds")
+            for world_uid, world in world_by_id.items():
+                if world_uid in world_by_id.keys():
+                    self._create_world_item(world_uid, total_world_item, self.ALL_WORLDS_PSEUDO_USER_ID).update(
+                        world_by_id[world_uid],
+                        UserWorldDetail(GameConnectionStatus.Empty, datetime.datetime.min),
                     )
 
         self.resizeColumnToContents(0)
@@ -484,12 +532,21 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             return self._create_all_widgets_from_scratch()
 
         logger.info("Lightweight widget update")
-        world_states = {}
 
         for user in session.users_list:
             self._user_widgets[user.id].update(user)
             for world_id, state in user.worlds.items():
-                world_states[world_id] = state
+                self._world_widgets[user.id, world_id].update(session.get_world(world_id), state)
 
-        for world in session.worlds:
-            self._world_widgets[world.id].update(world, world_states.get(world.id))
+        for pseudo_user in [self.UNCLAIMED_PSEUDO_USER_ID, self.ALL_WORLDS_PSEUDO_USER_ID]:
+            for world in self._session.worlds:
+                if self._world_widgets.get((pseudo_user, world.id), None) is not None:
+                    self._world_widgets[pseudo_user, world.id].update(
+                        session.get_world(world.id),
+                        UserWorldDetail(
+                            GameConnectionStatus.Unclaimed
+                            if pseudo_user == self.UNCLAIMED_PSEUDO_USER_ID
+                            else GameConnectionStatus.Empty,
+                            datetime.datetime.min,
+                        ),
+                    )

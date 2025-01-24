@@ -82,7 +82,7 @@ class PatchDataFactory:
         }
         return game_data
 
-    def create_memo_data(self) -> dict:
+    def create_memo_data(self) -> dict[str, str]:
         """Used to generate pickup collection messages."""
         return pickup_exporter.GenericAcquiredMemo()
 
@@ -92,7 +92,7 @@ class PatchDataFactory:
 
     def create_visual_nothing(self) -> PickupEntry:
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
-        return pickup_creator.create_visual_nothing(self.game_enum())
+        raise NotImplementedError
 
     def export_pickup_list(self) -> list[pickup_exporter.ExportedPickupDetails]:
         """

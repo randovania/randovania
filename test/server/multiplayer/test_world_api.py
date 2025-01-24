@@ -109,7 +109,13 @@ def test_emit_world_pickups_update_one_action(
         "world_pickups_update",
         {
             "game": "prime2",
-            "pickups": [{"provider_name": "World 2", "pickup": result}],
+            "pickups": [
+                {
+                    "provider_name": "World 2",
+                    "pickup": result,
+                    "coop_location": None,
+                }
+            ],
             "world": "1179c986-758a-4170-9b07-fe4541d78db0",
         },
         room="world-1179c986-758a-4170-9b07-fe4541d78db0",

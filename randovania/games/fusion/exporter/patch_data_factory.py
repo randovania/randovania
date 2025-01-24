@@ -10,7 +10,7 @@ from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.hint_node import HintNode
-from randovania.games.fusion.exporter.hint_namer import FusionHintNamer
+from randovania.games.fusion.exporter.hint_namer import FusionColor, FusionHintNamer, colorize_text
 from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
@@ -36,7 +36,7 @@ class FusionPatchDataFactory(PatchDataFactory):
             is_major = False
             if "source" in node.extra:
                 is_major = True
-            if not pickup.other_player and pickup.conditional_resources[0].resources:
+            if not pickup.is_for_remote_player and pickup.conditional_resources[0].resources:
                 resource = pickup.conditional_resources[0].resources[-1][0].extra["item"]
             else:
                 resource = "None"
@@ -95,7 +95,7 @@ class FusionPatchDataFactory(PatchDataFactory):
                 continue
             # Special Case for E-Tanks
             elif category == "Energy":
-                starting_dict[category] += self.configuration.energy_per_tank
+                starting_dict[category] += self.configuration.energy_per_tank * quantity
                 continue
             # Normal Case
             starting_dict[category].append(item.extra["StartingItemName"])
@@ -193,27 +193,45 @@ class FusionPatchDataFactory(PatchDataFactory):
             self.patches.configuration, self.patches.game, self.patches
         )
         starting_items_text = (
-            "HQ has provided you with the following starting items: " + ", ".join(starting_items_list) + ". "
-            if len(starting_items_list) > 0
-            else ""
+            f"Starting items: {(', '.join(starting_items_list))}. "
+            if self.configuration.short_intro_text
+            else f"HQ has provided you with the following starting items: {(', '.join(starting_items_list))}. "
         )
+        if len(starting_items_list) == 0:
+            starting_items_text = ""
         metroid_location_text = "anywhere" if self.configuration.artifacts.prefer_anywhere else "at bosses"
+        long_intro = (
+            f"{starting_items_text}Your objective is as follows: the {colorize_text(FusionColor.YELLOW, 'SA-X', True)} "
+            f"has discovered and destroyed a top secret {colorize_text(FusionColor.YELLOW, 'Metroid', True)} "
+            f"breeding facility. It released {self.configuration.artifacts.placed_artifacts} "
+            "infant Metroids into the station. "
+            f"Initial scans indicate that they are hiding {metroid_location_text}. "
+            f"Find and capture {self.configuration.artifacts.required_artifacts} of them, "
+            "to lure out the SA-X. "
+            "Then initiate the station's self-destruct sequence. "
+            f"Uplink at {colorize_text(FusionColor.PINK, 'Navigation Rooms', True)} along the way. "
+            "I can scan the station for useful equipment from there.[OBJECTIVE]Good. Move out."
+        )
+        short_intro = (
+            f"{starting_items_text}"
+            f"{
+                (
+                    (
+                        f'Gather {self.configuration.artifacts.required_artifacts}/'
+                        f'{self.configuration.artifacts.placed_artifacts} Infant Metroids hiding '
+                        f'{metroid_location_text} to lure out the '
+                        f'{colorize_text(FusionColor.YELLOW, "SA-X", True)} and prepare for battle.'
+                    )
+                    if self.configuration.artifacts.required_artifacts > 0
+                    else f'Equip yourself to battle the {colorize_text(FusionColor.YELLOW, "SA-X", True)}.'
+                )
+            }"
+        )
         for lang in hint_lang_list:
             nav_text_json[lang] = {
                 "NavigationTerminals": hints,
                 "ShipText": {
-                    "InitialText": (
-                        f"{starting_items_text}Your objective is as follows: the [COLOR=3]SA-X[/COLOR] "
-                        f"has discovered and destroyed a top secret [COLOR=3]Metroid[/COLOR] breeding facility. "
-                        f"It released {self.configuration.artifacts.placed_artifacts} "
-                        "infant Metroids into the station. "
-                        f"Initial scans indicate that they are hiding {metroid_location_text}. "
-                        f"Find and capture {self.configuration.artifacts.required_artifacts} of them, "
-                        "to lure out the SA-X. "
-                        "Then initiate the station's self-destruct sequence. "
-                        "Uplink at [COLOR=2]Navigation Rooms[/COLOR] along the way. "
-                        "I can scan the station for useful equipment from there.[OBJECTIVE]Good. Move out."
-                    ),
+                    "InitialText": short_intro if self.configuration.short_intro_text else long_intro,
                     "ConfirmText": "Any Objections, Lady?",
                 },
             }
@@ -259,6 +277,22 @@ class FusionPatchDataFactory(PatchDataFactory):
                 credits_array.append({"LineType": "White1", "Text": location["Area"], "BlankLines": 1})
         return credits_array
 
+    def _create_nav_locks(self) -> dict:
+        locks = {
+            "MainDeckWest": "RED",
+            "MainDeckEast": "BLUE",
+            "OperationsDeck": "GREY",
+            "Sector1Entrance": "GREEN",
+            "Sector2Entrance": "GREEN",
+            "Sector3Entrance": "YELLOW",
+            "Sector4Entrance": "YELLOW",
+            "Sector5Entrance": "RED",
+            "Sector6Entrance": "RED",
+            "AuxiliaryPower": "OPEN",
+            "RestrictedLabs": "OPEN",
+        }
+        return locks
+
     def create_useless_pickup(self) -> PickupEntry:
         """Used for any location with no PickupEntry assigned to it."""
         return pickup_creator.create_nothing_pickup(
@@ -284,6 +318,7 @@ class FusionPatchDataFactory(PatchDataFactory):
             "DoorLocks": self._create_door_locks(),
             "Palettes": self._create_palette(),
             "NavigationText": self._create_nav_text(),
+            "NavStationLocks": self._create_nav_locks(),
             "CreditsText": self._create_credits_text(),
             "DisableDemos": True,
             "AntiSoftlockRoomEdits": self.configuration.anti_softlock,

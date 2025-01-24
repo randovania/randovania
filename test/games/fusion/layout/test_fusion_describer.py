@@ -50,6 +50,6 @@ def test_fusion_format_params(artifacts):
             else [metroids_where]
         ),
         "Hints": ["Metroid Hint: Area and room", "Charge Beam Hint: Area only"],
-        "Item Pool": [f"Size: {115+artifacts.placed_artifacts} of 120", "Vanilla starting items"],
+        "Item Pool": [f"Size: {115 + artifacts.placed_artifacts} of 120", "Vanilla starting items"],
         "Logic Settings": ["All tricks disabled"],
     }

@@ -106,10 +106,13 @@ def admin_session(user: User, session_id: int) -> ResponseReturnValue:
                 association.connection_state.pretty_text,
                 ", ".join(inventory),
                 MultiplayerMembership.get_by_ids(association.user_id, session_id).admin,
+                "<a href='{link}'>Download</a>".format(
+                    link=flask.url_for("download_world_preset", world_id=association.world_id)
+                ),
             ]
         )
 
-    header = ["User", "World", "Game", "Connection State", "Inventory", "Is Admin?"]
+    header = ["User", "World", "Game", "Connection State", "Inventory", "Is Admin?", "Preset"]
     table = "<table border='1'><tr>{}</tr>{}</table>".format(
         "".join(f"<th>{h}</th>" for h in header),
         "".join("<tr>{}</tr>".format("".join(f"<td>{h}</td>" for h in r)) for r in rows),
@@ -150,6 +153,22 @@ def download_session_spoiler(user: User, session_id: int) -> ResponseReturnValue
     return response
 
 
+def download_world_preset(user: User, world_id: int) -> ResponseReturnValue:
+    try:
+        world = World.get_by_id(world_id)
+    except World.DoesNotExist:
+        return "World not found", 404
+
+    try:
+        session: MultiplayerSession = MultiplayerSession.get_by_id(world.session_id)
+    except MultiplayerSession.DoesNotExist:
+        return "Session not found", 404
+
+    response = flask.make_response(world.preset)
+    response.headers["Content-Disposition"] = f"attachment; filename={session.name} - {world.name}.rdvpreset"
+    return response
+
+
 def delete_session(user: User, session_id: int) -> ResponseReturnValue:
     if flask.request.method == "GET":
         return '<form method="POST"><input type="submit" value="Confirm delete"></form>'
@@ -170,3 +189,4 @@ def setup_app(sa: ServerApp):
     sa.route_with_user("/session/<session_id>", need_admin=True)(admin_session)
     sa.route_with_user("/session/<session_id>/rdvgame", need_admin=True)(download_session_spoiler)
     sa.route_with_user("/session/<session_id>/delete", methods=["GET", "POST"], need_admin=True)(delete_session)
+    sa.route_with_user("/world/<world_id>/rdvpreset", need_admin=True)(download_world_preset)

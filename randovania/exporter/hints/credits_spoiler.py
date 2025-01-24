@@ -50,7 +50,7 @@ def get_locations_for_major_pickups_and_keys(
 
 
 def starting_pickups_with_count(patches: GamePatches) -> dict[PickupEntry, int]:
-    result = collections.defaultdict(int)
+    result: dict[PickupEntry, int] = collections.defaultdict(int)
 
     if not isinstance(patches.starting_equipment, list):
         return {}
@@ -76,7 +76,7 @@ def generic_credits(
         pickup.name: index for index, pickup in enumerate(standard_pickup_configuration.pickups_state.keys())
     }
 
-    def sort_pickup(p: PickupEntry):
+    def sort_pickup(p: PickupEntry) -> tuple[float, str]:
         return major_pickup_name_order.get(p.name, math.inf), p.name
 
     details = get_locations_for_major_pickups_and_keys(all_patches, players_config)

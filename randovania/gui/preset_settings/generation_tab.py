@@ -8,6 +8,7 @@ from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
+from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 
 if TYPE_CHECKING:
@@ -35,8 +36,9 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         signal_handling.on_checked(self.check_major_minor, self._persist_major_minor)
         signal_handling.on_checked(self.local_first_progression_check, self._persist_local_first_progression)
 
-        # Door Lock
-        signal_handling.on_checked(self.two_sided_door_search_check, self._persist_two_sided_door_lock_search)
+        for i, logical_placement_mode in enumerate(LogicalPickupPlacementConfiguration):
+            self.logical_pickup_placement_combo.setItemData(i, logical_placement_mode)
+        signal_handling.on_combo(self.logical_pickup_placement_combo, self._on_logical_pickup_placement_mode_changed)
 
         # Logic Settings
         self.dangerous_combo.setItemData(0, LayoutLogicalResourceAction.RANDOMLY)
@@ -60,7 +62,6 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
             self.check_if_beatable_after_base_patches_check,
             self._persist_bool_layout_field("check_if_beatable_after_base_patches"),
         )
-        self.check_if_beatable_after_base_patches_check.setVisible(False)  # broken, hide it
 
         # Damage strictness
         self.damage_strictness_combo.setItemData(0, LayoutDamageStrictness.STRICT)
@@ -77,17 +78,14 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         layout = preset.configuration
 
         self.local_first_progression_check.setChecked(layout.first_progression_must_be_local)
-        self.two_sided_door_search_check.setChecked(layout.two_sided_door_lock_search)
         self.check_major_minor.setChecked(
             layout.available_locations.randomization_mode == RandomizationMode.MAJOR_MINOR_SPLIT
         )
 
+        signal_handling.set_combo_with_value(self.logical_pickup_placement_combo, layout.logical_pickup_placement)
+
         self.trick_level_minimal_logic_check.setChecked(layout.trick_level.minimal_logic)
         signal_handling.set_combo_with_value(self.dangerous_combo, layout.logical_resource_action)
-
-        self.check_if_beatable_after_base_patches_check.setChecked(
-            layout.check_if_beatable_after_base_patches and False  # always disable it when changing from the UI
-        )
 
         signal_handling.set_combo_with_value(self.damage_strictness_combo, preset.configuration.damage_strictness)
 
@@ -110,7 +108,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
     @property
     def experimental_settings(self) -> Iterable[QtWidgets.QWidget]:
         # Always hidden right now
-        # yield self.check_if_beatable_after_base_patches_check
+        yield self.check_if_beatable_after_base_patches_check
         yield self.local_first_progression_check
         yield self.local_first_progression_label
         yield self.dangerous_combo
@@ -119,9 +117,10 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         yield self.line_2
         yield self.experimental_generator_line
         yield self.minimal_logic_line
-        yield self.door_lock_group
-        yield self.two_sided_door_search_label
-        yield self.two_sided_door_search_check
+        yield self.logical_pickup_placement_line
+        yield self.logical_pickup_placement_combo
+        yield self.logical_pickup_placement_label
+        yield self.logical_pickup_placement_description
 
     def _persist_major_minor(self, value: bool):
         mode = RandomizationMode.MAJOR_MINOR_SPLIT if value else RandomizationMode.FULL
@@ -132,9 +131,9 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         with self._editor as editor:
             editor.set_configuration_field("first_progression_must_be_local", value)
 
-    def _persist_two_sided_door_lock_search(self, value: bool):
+    def _persist_logical_pickup_placement(self, value: LogicalPickupPlacementConfiguration):
         with self._editor as editor:
-            editor.set_configuration_field("two_sided_door_lock_search", value)
+            editor.set_configuration_field("logical_pickup_placement", value)
 
     def _on_dangerous_changed(self, value: LayoutLogicalResourceAction):
         with self._editor as editor:
@@ -149,3 +148,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
     def _on_update_damage_strictness(self, new_index: int):
         with self._editor as editor:
             editor.layout_configuration_damage_strictness = self.damage_strictness_combo.currentData()
+
+    def _on_logical_pickup_placement_mode_changed(self, logical_placement_config: LogicalPickupPlacementConfiguration):
+        self._persist_logical_pickup_placement(logical_placement_config)
+        self.logical_pickup_placement_description.setText(logical_placement_config.description)

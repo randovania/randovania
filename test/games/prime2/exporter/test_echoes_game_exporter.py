@@ -187,3 +187,10 @@ def test_do_export_game(
         game_files_path=export_params.contents_files_path,
         progress_update=ANY,
     )
+
+
+def test_get_unknown_input_hashes():
+    exporter = EchoesGameExporter()
+    assert exporter.get_unknown_input_hashes({}) == {}
+    assert exporter.get_unknown_input_hashes({"prime2_iso": None}) == {}
+    assert exporter.get_unknown_input_hashes({"prime2_iso": "sha1:asdf"}) == {"prime2_iso": "sha1:asdf"}

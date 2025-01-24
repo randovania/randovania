@@ -11,7 +11,7 @@ if TYPE_CHECKING:
     from randovania.layout.preset_describer import GamePresetDescriber
 
 
-def _get_none(h):
+def _get_none(hash: bytes) -> str | None:
     return None
 
 

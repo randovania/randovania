@@ -25,6 +25,7 @@ _FIELDS = [
     "backwards_lower_mines",
     "phazon_elite_without_dynamo",
     "spring_ball",
+    "remove_bars_great_tree_hall",
 ]
 
 

@@ -914,5 +914,35 @@
         "Phaaze/Sanctum (Aurora Unit 313)/Leave Phaaze": "Dock to G.F.S. Valhalla",
         "Pirate Homeworld - Seed/Pirate Homeworld Leviathan Core/Teleporter to Pirate Homeworld": "Dock to Pirate Homeworld - Command",
         "SkyTown, Elysia - Seed/Elysian Leviathan Core/Teleporter to Elysia": "Dock to SkyTown, Elysia - Main"
+    },
+    "generated_pickups": {
+        "categories": {
+            "energy_cell": {
+                "long_name": "Energy Cell",
+                "hint_details": [
+                    "an ",
+                    "energy cell"
+                ],
+                "hinted_as_major": true,
+                "is_key": true
+            }
+        },
+        "pickups": {
+            "Energy Cell": {
+                "name_template": "Energy Cell {i}",
+                "pickup_category": "energy_cell",
+                "model_name": "Energy Cell",
+                "offworld_models": {},
+                "progression": [
+                    "Fuse{i}"
+                ],
+                "additional_resources": {
+                    "Fuses": 1,
+                    "ItemPercentage": 1
+                },
+                "preferred_location_category": "major",
+                "probability_offset": 0.25
+            }
+        }
     }
 }
