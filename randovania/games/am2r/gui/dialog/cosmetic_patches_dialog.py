@@ -12,7 +12,7 @@ from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatch
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
 if TYPE_CHECKING:
-    from PySide6.QtWidgets import QWidget
+    from PySide6 import QtWidgets
 
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
@@ -42,8 +42,8 @@ def hue_rotate_color(original_color: tuple[int, int, int], rotation: int) -> tup
 class AM2RCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_AM2RCosmeticPatchesDialog):
     _cosmetic_patches: AM2RCosmeticPatches
 
-    def __init__(self, parent: QWidget | None, current: BaseCosmeticPatches):
-        super().__init__(parent)
+    def __init__(self, parent: QtWidgets.QWidget | None, current: BaseCosmeticPatches):
+        super().__init__(parent, current)
         self.setupUi(self)
 
         assert isinstance(current, AM2RCosmeticPatches)

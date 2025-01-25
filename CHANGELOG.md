@@ -38,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Artaria
 
+- Added: In White EMMI Introduction: Climb from  Door to Teleport to Dairon (Lower) to Door to Teleport to Dairon (Thermal) by grapple-jumping on the falling magnet platform.
 - Added: It is now logical to blow up the Proto EMMI blob in Melee tutorial from the right, with Wave Beam, Diffusion beam or a Pseudo Wave Beam (Intermediate) using Morph Ball, Wide Beam and Charge Beam.
 - Changed: The logic surrounding the Single Use Slide in EMMI Zone Dome now makes it so that the event nodes remain logically accessible after collecting the event.
 - Changed: It is now logical to go back to the event node for blowing up the Proto EMMI Blob from the right.
