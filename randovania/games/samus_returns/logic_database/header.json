@@ -1465,115 +1465,6 @@
                     }
                 }
             },
-            "Shoot Wave Beam": {
-                "display_name": "Shoot Wave Beam",
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Wave",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "misc",
-                                                "name": "SeparateBeams",
-                                                "amount": 1,
-                                                "negate": true
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "Spazer",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "Plasma",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "Shoot Spazer Beam": {
-                "display_name": "Shoot Spazer Beam",
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Spazer",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "misc",
-                                                "name": "SeparateBeams",
-                                                "amount": 1,
-                                                "negate": true
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Plasma",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
             "Lay Any Bomb": {
                 "display_name": "Lay Any Bomb",
                 "requirement": {
@@ -1964,8 +1855,13 @@
                                                                                                 "comment": null,
                                                                                                 "items": [
                                                                                                     {
-                                                                                                        "type": "template",
-                                                                                                        "data": "Shoot Wave Beam"
+                                                                                                        "type": "resource",
+                                                                                                        "data": {
+                                                                                                            "type": "items",
+                                                                                                            "name": "Wave",
+                                                                                                            "amount": 1,
+                                                                                                            "negate": false
+                                                                                                        }
                                                                                                     },
                                                                                                     {
                                                                                                         "type": "resource",
@@ -1999,8 +1895,13 @@
                                                                                                             "comment": null,
                                                                                                             "items": [
                                                                                                                 {
-                                                                                                                    "type": "template",
-                                                                                                                    "data": "Shoot Spazer Beam"
+                                                                                                                    "type": "resource",
+                                                                                                                    "data": {
+                                                                                                                        "type": "items",
+                                                                                                                        "name": "Spazer",
+                                                                                                                        "amount": 1,
+                                                                                                                        "negate": false
+                                                                                                                    }
                                                                                                                 },
                                                                                                                 {
                                                                                                                     "type": "resource",
@@ -2257,8 +2158,13 @@
                                                                                                         }
                                                                                                     },
                                                                                                     {
-                                                                                                        "type": "template",
-                                                                                                        "data": "Shoot Wave Beam"
+                                                                                                        "type": "resource",
+                                                                                                        "data": {
+                                                                                                            "type": "items",
+                                                                                                            "name": "Wave",
+                                                                                                            "amount": 1,
+                                                                                                            "negate": false
+                                                                                                        }
                                                                                                     }
                                                                                                 ]
                                                                                             }
@@ -2278,25 +2184,8 @@
                                                                                                         }
                                                                                                     },
                                                                                                     {
-                                                                                                        "type": "or",
-                                                                                                        "data": {
-                                                                                                            "comment": null,
-                                                                                                            "items": [
-                                                                                                                {
-                                                                                                                    "type": "resource",
-                                                                                                                    "data": {
-                                                                                                                        "type": "items",
-                                                                                                                        "name": "Plasma",
-                                                                                                                        "amount": 1,
-                                                                                                                        "negate": false
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                {
-                                                                                                                    "type": "template",
-                                                                                                                    "data": "Shoot Spazer Beam"
-                                                                                                                }
-                                                                                                            ]
-                                                                                                        }
+                                                                                                        "type": "template",
+                                                                                                        "data": "All Beams"
                                                                                                     }
                                                                                                 ]
                                                                                             }
@@ -2498,8 +2387,13 @@
                                                                                                         }
                                                                                                     },
                                                                                                     {
-                                                                                                        "type": "template",
-                                                                                                        "data": "Shoot Wave Beam"
+                                                                                                        "type": "resource",
+                                                                                                        "data": {
+                                                                                                            "type": "items",
+                                                                                                            "name": "Wave",
+                                                                                                            "amount": 1,
+                                                                                                            "negate": false
+                                                                                                        }
                                                                                                     }
                                                                                                 ]
                                                                                             }
@@ -2519,8 +2413,22 @@
                                                                                                         }
                                                                                                     },
                                                                                                     {
-                                                                                                        "type": "template",
-                                                                                                        "data": "Shoot Spazer Beam"
+                                                                                                        "type": "resource",
+                                                                                                        "data": {
+                                                                                                            "type": "items",
+                                                                                                            "name": "Wave",
+                                                                                                            "amount": 1,
+                                                                                                            "negate": false
+                                                                                                        }
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "type": "resource",
+                                                                                                        "data": {
+                                                                                                            "type": "items",
+                                                                                                            "name": "Spazer",
+                                                                                                            "amount": 1,
+                                                                                                            "negate": false
+                                                                                                        }
                                                                                                     }
                                                                                                 ]
                                                                                             }
@@ -2540,13 +2448,8 @@
                                                                                                         }
                                                                                                     },
                                                                                                     {
-                                                                                                        "type": "resource",
-                                                                                                        "data": {
-                                                                                                            "type": "items",
-                                                                                                            "name": "Plasma",
-                                                                                                            "amount": 1,
-                                                                                                            "negate": false
-                                                                                                        }
+                                                                                                        "type": "template",
+                                                                                                        "data": "All Beams"
                                                                                                     }
                                                                                                 ]
                                                                                             }
@@ -2857,8 +2760,13 @@
                                                                                 }
                                                                             },
                                                                             {
-                                                                                "type": "template",
-                                                                                "data": "Shoot Spazer Beam"
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "items",
+                                                                                    "name": "Wave",
+                                                                                    "amount": 1,
+                                                                                    "negate": false
+                                                                                }
                                                                             },
                                                                             {
                                                                                 "type": "resource",
@@ -2875,6 +2783,15 @@
                                                                                     "type": "tricks",
                                                                                     "name": "Combat",
                                                                                     "amount": 2,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "items",
+                                                                                    "name": "Spazer",
+                                                                                    "amount": 1,
                                                                                     "negate": false
                                                                                 }
                                                                             }
@@ -4092,12 +4009,22 @@
                                     "comment": null,
                                     "items": [
                                         {
-                                            "type": "template",
-                                            "data": "Shoot Wave Beam"
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Wave",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         },
                                         {
-                                            "type": "template",
-                                            "data": "Shoot Spazer Beam"
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Spazer",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         },
                                         {
                                             "type": "resource",
@@ -4971,6 +4898,44 @@
                         ]
                     }
                 }
+            },
+            "All Beams": {
+                "display_name": "All Beams",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Wave",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Spazer",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Plasma",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [
@@ -5465,8 +5430,13 @@
                                     "comment": null,
                                     "items": [
                                         {
-                                            "type": "template",
-                                            "data": "Shoot Wave Beam"
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Wave",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         },
                                         {
                                             "type": "and",
@@ -5522,8 +5492,13 @@
                                     "comment": null,
                                     "items": [
                                         {
-                                            "type": "template",
-                                            "data": "Shoot Spazer Beam"
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Spazer",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         },
                                         {
                                             "type": "and",
