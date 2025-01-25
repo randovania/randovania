@@ -44,18 +44,6 @@ _ALTERNATIVE_MODELS = {
     PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_SPIN"): ["powerup_doublejump", "powerup_spacejump"],
 }
 
-_SCENARIO_IDS = {
-    "artaria": "s010_cave",
-    "cataris": "s020_magma",
-    "dairon": "s030_baselab",
-    "burenia": "s040_aqua",
-    "ghavoran": "s050_forest",
-    "elun": "s060_quarantine",
-    "ferenia": "s070_basesanc",
-    "hanubia": "s080_shipyard",
-    "itorash": "s090_skybase",
-}
-
 
 def get_item_id_for_item(item: ItemResourceInfo) -> str:
     if "item_capacity_id" in item.extra:
@@ -502,9 +490,11 @@ class DreadPatchDataFactory(PatchDataFactory):
         config = self.configuration.disabled_lights.as_json
         patches = []
 
-        for region, is_disabled in config.items():
+        for region_name, is_disabled in config.items():
             if is_disabled:
-                patches.append({"scenario": _SCENARIO_IDS[region], "actor_layer": "rLightsLayer", "method": "all"})
+                scenario_id = self.game.region_list.region_with_name(region_name.capitalize()).extra["scenario_id"]
+
+                patches.append({"scenario": scenario_id, "actor_layer": "rLightsLayer", "method": "all"})
 
         return patches
 
