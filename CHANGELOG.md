@@ -23,10 +23,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Mining Facility Alpha Nest Access now has a Spider Ball method of crossing the room from either side.
 - Added: Mining Facility Gamma Nest Access now has a Spider Ball method of crossing the room from either side.
 
-##### Area 5 Tower Exterior
-
-- Added: Tower Exterior Spider Ball Clip added to traverse from Next to Teleporter to Pickup (Super Missile Tank Bottom).
-
 ### Metroid Dread
 
 #### Logic Database
@@ -60,6 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid: Samus Returns
 
+- **Major** - Added: Split beams and suits. When playing with non-progressive beams or suits, each individual upgrade provides a unique effect instead of providing the effects of all previous upgrades. For suits, having only Gravity does not protect against lava; having both suits does. It only reduced damages as well as gives proper movement in this case.
 - Changed: The hinted item after collecting the last required DNA is now dependent on the final boss. The Baby Metroid is hinted for Proteus Ridley, the Ice Beam for Metroid Queen and the Bomb for Diggernaut.
 - Fixed: Prevented the block with a hidden item in Area 4 Central Caves - Transit Tunnel from being destroyed from another area, causing the item disappear.
 - Fixed: Incorrect rotation of a progressive item if the previous stage of the progressive item was received without leaving the area.
@@ -70,6 +67,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Area 4 Central Caverns
 
 - Added: Transport to Area 3 and Crystal Mines: A beginner Spider Ball Clip to reach the elevator to Crystal Mines from the bottom Chozo Seal with Space Jump.
+
+##### Area 5 Tower Exterior
+
+- Added: Tower Exterior Spider Ball Clip added to traverse from Next to Teleporter to Pickup (Super Missile Tank Bottom).
 
 ## [8.8.0] - 2025-01-02
 
