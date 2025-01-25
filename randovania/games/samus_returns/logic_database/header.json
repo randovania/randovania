@@ -2168,20 +2168,54 @@
                                                                                         {
                                                                                             "type": "and",
                                                                                             "data": {
-                                                                                                "comment": null,
+                                                                                                "comment": "TODO: Test the beams",
                                                                                                 "items": [
                                                                                                     {
                                                                                                         "type": "resource",
                                                                                                         "data": {
                                                                                                             "type": "items",
                                                                                                             "name": "Aeion",
-                                                                                                            "amount": 1100,
+                                                                                                            "amount": 1200,
                                                                                                             "negate": false
                                                                                                         }
                                                                                                     },
                                                                                                     {
-                                                                                                        "type": "template",
-                                                                                                        "data": "All Beams"
+                                                                                                        "type": "or",
+                                                                                                        "data": {
+                                                                                                            "comment": null,
+                                                                                                            "items": [
+                                                                                                                {
+                                                                                                                    "type": "template",
+                                                                                                                    "data": "Have All Beams"
+                                                                                                                },
+                                                                                                                {
+                                                                                                                    "type": "and",
+                                                                                                                    "data": {
+                                                                                                                        "comment": null,
+                                                                                                                        "items": [
+                                                                                                                            {
+                                                                                                                                "type": "resource",
+                                                                                                                                "data": {
+                                                                                                                                    "type": "items",
+                                                                                                                                    "name": "Spazer",
+                                                                                                                                    "amount": 1,
+                                                                                                                                    "negate": false
+                                                                                                                                }
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                                "type": "resource",
+                                                                                                                                "data": {
+                                                                                                                                    "type": "items",
+                                                                                                                                    "name": "Wave",
+                                                                                                                                    "amount": 1,
+                                                                                                                                    "negate": false
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            ]
+                                                                                                        }
                                                                                                     }
                                                                                                 ]
                                                                                             }
@@ -2366,7 +2400,7 @@
                                                                             {
                                                                                 "type": "or",
                                                                                 "data": {
-                                                                                    "comment": null,
+                                                                                    "comment": "TODO: Test the beams",
                                                                                     "items": [
                                                                                         {
                                                                                             "type": "and",
@@ -2445,7 +2479,7 @@
                                                                                                     },
                                                                                                     {
                                                                                                         "type": "template",
-                                                                                                        "data": "All Beams"
+                                                                                                        "data": "Have All Beams"
                                                                                                     }
                                                                                                 ]
                                                                                             }
@@ -4895,8 +4929,8 @@
                     }
                 }
             },
-            "All Beams": {
-                "display_name": "All Beams",
+            "Have All Beams": {
+                "display_name": "Have All Beams",
                 "requirement": {
                     "type": "and",
                     "data": {
