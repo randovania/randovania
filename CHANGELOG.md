@@ -1,4 +1,4 @@
-# Change Log
+7# Change Log
 
 All notable changes to this project will be documented in this file.
 
@@ -56,7 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid: Samus Returns
 
-- **Major** - Added: Split beams and suits. When playing with non-progressive beams or suits, each individual upgrade provides a unique effect instead of providing the effects of all previous upgrades. For suits, protection against lava requires having both suits, whereas Gravity on its just provides reduced damage and free movement.
+- **Major** - Added: Split beams and suits. When playing with non-progressive beams or suits, each individual upgrade provides a unique effect instead of providing the effects of all previous upgrades. For suits, protection against lava requires having both suits, whereas Gravity on its own just provides reduced damage and free movement.
 - Changed: The hinted item after collecting the last required DNA is now dependent on the final boss. The Baby Metroid is hinted for Proteus Ridley, the Ice Beam for Metroid Queen and the Bomb for Diggernaut.
 - Fixed: Prevented the block with a hidden item in Area 4 Central Caves - Transit Tunnel from being destroyed from another area, causing the item disappear.
 - Fixed: Incorrect rotation of a progressive item if the previous stage of the progressive item was received without leaving the area.
