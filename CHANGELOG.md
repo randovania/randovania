@@ -29,6 +29,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Added: There is now a preset option for each region that will remove all of its light sources when enabled, making the game very dark.
+
 #### Logic Database
 
 - Fixed: A typo in the event name Artaria - Prepare Speedboost in Map Station has been changed from Prepare Speeboost in Map Station.

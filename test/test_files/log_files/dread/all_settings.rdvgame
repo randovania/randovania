@@ -10,7 +10,7 @@
         "word_hash": "Armadigger Spittail Armadigger",
         "presets": [
             {
-                "schema_version": 76,
+                "schema_version": 97,
                 "base_preset_uuid": null,
                 "name": "All Settings",
                 "uuid": "38849a5f-ed44-47cc-83a7-8f084ea27612",
@@ -362,6 +362,7 @@
                     "pickup_model_data_source": "random",
                     "logical_resource_action": "randomly",
                     "first_progression_must_be_local": true,
+                    "two_sided_door_lock_search": false,
                     "minimum_available_locations_for_hint_placement": 5,
                     "minimum_location_weight_for_hint_placement": 0.1,
                     "dock_rando": {
@@ -403,6 +404,7 @@
                     "single_set_for_pickups_that_solve": true,
                     "staggered_multi_pickup_placement": true,
                     "check_if_beatable_after_base_patches": false,
+                    "logical_pickup_placement": "minimal",
                     "teleporters": {
                         "mode": "one-way-teleporter",
                         "excluded_teleporters": [],
@@ -418,6 +420,7 @@
                     "nerf_power_bombs": true,
                     "warp_to_start": true,
                     "april_fools_hints": false,
+                    "freesink": false,
                     "artifacts": {
                         "prefer_emmi": true,
                         "prefer_major_bosses": true,
@@ -425,7 +428,18 @@
                     },
                     "constant_heat_damage": 15,
                     "constant_cold_damage": 20,
-                    "constant_lava_damage": 25
+                    "constant_lava_damage": 25,
+                    "disabled_lights": {
+                        "artaria": true,
+                        "burenia": true,
+                        "cataris": true,
+                        "dairon": true,
+                        "elun": false,
+                        "ferenia": false,
+                        "ghavoran": false,
+                        "hanubia": false,
+                        "itorash": false
+                    }
                 }
             }
         ]
