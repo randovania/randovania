@@ -67,6 +67,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Torvus Bog
 
 - Added: Torvus Grove: Two expert difficulty methods to cross the upper part of this room without Space Jump Boots.
+- Added: Torvus Plaza: Using Boost Ball and standables to reach the pickup without Spider or Screw Attack.
 
 ##### Sanctuary Fortress
 
@@ -77,7 +78,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Hive Dynamo Works: Advanced/Expert NSJ Extended Dashes to go across the gap with the grapple point.
 - Added: Hive Entrance: Expert inbounds method to get to the item without Light Suit.
-- Changed: Temple Security Access: Crossing the room after the gates have been triggered with only Screw Attack no longer requires Screw Attack at Z-Axis. 
+- Changed: Temple Security Access: Crossing the room after the gates have been triggered with only Screw Attack no longer requires Screw Attack at Z-Axis.
 
 ### Metroid: Samus Returns
 
