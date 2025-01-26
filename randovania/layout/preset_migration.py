@@ -1097,6 +1097,7 @@ def _migrate_v96(preset: dict, game: RandovaniaGame) -> None:
             "hanubia": False,
             "itorash": False,
         }
+    return preset
 
 
 def _migrate_v97(preset: dict) -> dict:
