@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import platform
 
-import dolphin_memory_engine
+import dolphin_memory_engine  # type: ignore[import-untyped]
 import pid
-from dolphin_memory_engine._dolphin_memory_engine import DolphinStatus
+from dolphin_memory_engine._dolphin_memory_engine import DolphinStatus  # type: ignore[import-untyped]
 
 from randovania.game_connection.executor.memory_operation import (
     MemoryOperation,
@@ -16,7 +16,7 @@ MEM1_START = 0x80000000
 MEM1_END = 0x81800000
 
 
-def _validate_range(address: int, size: int):
+def _validate_range(address: int, size: int) -> None:
     if address < MEM1_START or address + size > MEM1_END:
         raise MemoryOperationException(
             f"Range {address:x} -> {address + size:x} is outside of the GameCube memory range."
@@ -24,7 +24,7 @@ def _validate_range(address: int, size: int):
 
 
 class DolphinExecutor(MemoryOperationExecutor):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.dolphin = dolphin_memory_engine
         self._pid = pid.PidFile("randovania-dolphin-backend")
@@ -59,11 +59,11 @@ class DolphinExecutor(MemoryOperationExecutor):
 
         return None
 
-    def disconnect(self):
+    def disconnect(self) -> None:
         self._pid.close()
         self.dolphin.un_hook()
 
-    def _test_still_hooked(self):
+    def _test_still_hooked(self) -> None:
         try:
             if len(self.dolphin.read_bytes(0x0, 4)) != 4:
                 raise RuntimeError("Dolphin hook didn't read the correct byte count")

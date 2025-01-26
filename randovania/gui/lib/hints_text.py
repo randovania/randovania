@@ -7,13 +7,13 @@ from PySide6 import QtCore, QtWidgets
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.hint_node import HintNode
+from randovania.generator.pickup_pool.pickup_creator import create_generated_pickup
 
 
 def prime1_hint_text():
     db = default_database.resource_database_for(RandovaniaGame.METROID_PRIME)
-    from randovania.games.prime1.generator.pickup_pool import artifacts
 
-    artifact = artifacts.create_artifact(0, 0, db)
+    artifact = create_generated_pickup("Chozo Artifact", db, name="Truth")
 
     result = [
         (
@@ -26,14 +26,12 @@ def prime1_hint_text():
 
 
 def prime2_hint_text():
-    from randovania.games.prime2.generator.pickup_pool import dark_temple_keys, sky_temple_keys
-
     db = default_database.resource_database_for(RandovaniaGame.METROID_PRIME_ECHOES)
 
     result = []
 
-    for temple in range(3):
-        key = dark_temple_keys.create_dark_temple_key(0, temple, db)
+    for temple_key in ("Dark Agon Key", "Dark Torvus Key", "Ing Hive Key"):
+        key = create_generated_pickup(temple_key, db, i=1)
         result.append(
             (
                 key.name.replace(" 1", "").strip(),
@@ -42,7 +40,7 @@ def prime2_hint_text():
             )
         )
 
-    key = sky_temple_keys.create_sky_temple_key(0, db)
+    key = create_generated_pickup("Sky Temple Key", db, i=1)
     result.append(
         (
             "Sky Temple Key",
@@ -56,9 +54,8 @@ def prime2_hint_text():
 
 def prime3_hint_text():
     db = default_database.resource_database_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
-    from randovania.games.prime3.generator.pickup_pool import energy_cells
 
-    cell = energy_cells.create_energy_cell(0, db)
+    cell = create_generated_pickup("Energy Cell", db, i=1)
 
     result = [
         (

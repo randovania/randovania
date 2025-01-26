@@ -50,10 +50,17 @@ def get_teleporter_area_to_node_mapping() -> dict[str, str]:
     return result
 
 
-def get_node_name_for_area(game: str, world_name: str, area_name: str) -> str:
-    mapping = get_raw_data(RandovaniaGame(game))["start_node_per_area"][world_name]
+def get_node_name_for_area(game: RandovaniaGame, world_name: str, area_name: str) -> str:
+    mapping = get_raw_data(game)["start_node_per_area"][world_name]
     return mapping[area_name]
 
 
 def get_default_dock_lock_settings(game: RandovaniaGame) -> dict:
     return get_raw_data(game)["default_dock_lock_settings"]
+
+
+def get_generated_pickups(game: RandovaniaGame) -> dict:
+    data = get_raw_data(game)
+    if "generated_pickups" not in data:
+        return {"categories": {}, "pickups": {}}
+    return data["generated_pickups"]

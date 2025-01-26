@@ -151,7 +151,7 @@ class AM2RRemoteConnector(RemoteConnector):
         if self.current_region is None:
             return
 
-        inventory_dict = defaultdict(int)
+        inventory_dict: dict[str, int] = defaultdict(int)
         start_of_inventory = "items:"
 
         if not new_inventory_response.startswith(start_of_inventory):
@@ -170,14 +170,15 @@ class AM2RRemoteConnector(RemoteConnector):
                     "Response should contain a '|', but it doesn't. Original response: %s", new_inventory_response
                 )
                 continue
-            (item_name, quantity) = position.split("|", 1)
-            if not quantity.isdigit():
+            (item_name, q) = position.split("|", 1)
+            if not q.isdigit():
                 self.logger.warning(
                     "Response should contain a digit, but instead contains '%s'. Original response: %s",
                     position,
                     new_inventory_response,
                 )
                 continue
+            quantity = int(q)
 
             # Ammo is sent twice by the game: once as actual ammo, once as expansion. Let's ignore the expansions.
             item_name_replacement = {
@@ -192,7 +193,7 @@ class AM2RRemoteConnector(RemoteConnector):
 
             # If our item name is in the lookup dict, we replace it. If it isn't, we keep it as is
             item_name = item_name_replacement.get(item_name, item_name)
-            inventory_dict[item_name] += int(quantity)
+            inventory_dict[item_name] += quantity
 
         # The game sends the name of the progressive items, not the underlying items.
         # Since progressives are not resources in the DB, we need to handle them correctly and give the actual items.

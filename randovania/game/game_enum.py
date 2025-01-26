@@ -1,3 +1,6 @@
+# mypy: disable-error-code="no-redef"
+# we specifically abuse redefinition in this class to import game_module
+
 from __future__ import annotations
 
 import typing

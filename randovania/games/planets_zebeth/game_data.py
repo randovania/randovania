@@ -77,7 +77,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     faq=[
         (
             "Which versions of Metroid Planets are supported?",
-            "Only version 1.27g is supported. " "Any other versions will fail to export. ",
+            "Only version 1.27g is supported. Any other versions will fail to export. ",
         )
     ],
     hash_words=_hash_words(),

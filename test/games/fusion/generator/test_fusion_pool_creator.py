@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import pytest
 
-from randovania.games.fusion.generator.pool_creator import artifact_pool, create_fusion_artifact
+from randovania.games.fusion.generator.pool_creator import artifact_pool
 from randovania.games.fusion.layout.fusion_configuration import FusionArtifactConfig
 from randovania.generator.pickup_pool import PoolResults
+from randovania.generator.pickup_pool.pickup_creator import create_generated_pickup
 from randovania.layout.exceptions import InvalidConfiguration
 
 
@@ -26,9 +27,9 @@ def test_fusion_pool_creator(fusion_game_description, required_metroids, placed_
 
     # Assert
     assert results == PoolResults(
-        [create_fusion_artifact(i, db) for i in range(required_metroids)],
+        [create_generated_pickup("Infant Metroid", db, i=i + 1) for i in range(required_metroids)],
         {},
-        [create_fusion_artifact(i, db) for i in range(required_metroids, 20)],
+        [create_generated_pickup("Infant Metroid", db, i=i + 1) for i in range(required_metroids, 20)],
     )
 
 

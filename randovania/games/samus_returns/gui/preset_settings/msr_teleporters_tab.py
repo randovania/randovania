@@ -37,7 +37,7 @@ class PresetTeleportersMSR(PresetTeleporterTab, Ui_PresetTeleportersMSR, NodeLis
             "This is the only non-vanilla setting which guarantees that all regions are reachable."
         ),
         TeleporterShuffleMode.TWO_WAY_UNCHECKED: (
-            "After taking an elevator, the elevator in the room you are in" " will bring you back to where you were."
+            "After taking an elevator, the elevator in the room you are in will bring you back to where you were."
         ),
         TeleporterShuffleMode.ONE_WAY_TELEPORTER: (
             "All elevators bring you to an elevator room, but going backwards can go somewhere else. "

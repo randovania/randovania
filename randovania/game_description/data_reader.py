@@ -498,9 +498,8 @@ def read_used_trick_levels(
 
 
 def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescription]:
-    data = game_migration.migrate_to_current(data)
-
     game = RandovaniaGame(data["game"])
+    data = game_migration.migrate_to_current(data, game)
 
     resource_database = read_resource_database(game, data["resource_database"])
     dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)

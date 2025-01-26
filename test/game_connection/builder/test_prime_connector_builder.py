@@ -29,7 +29,7 @@ class MockedPrimeConnectorBuilder(PrimeConnectorBuilder):
         return ConnectorBuilderChoice.DOLPHIN
 
     def configuration_params(self) -> dict:
-        pass
+        return {}
 
 
 async def test_identify_game_ntsc(mocker):

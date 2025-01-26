@@ -531,8 +531,7 @@ def test_invalid_db():
         "Lava World/Hot/Pickup (Not A Pickup) is not a Pickup Node, but naming matches 'Pickup (...)'",
         "Lava World/Hot/Bad Pickup is a Pickup Node, but naming doesn't match 'Pickup (...)'",
         "Unknown strongly connected component detected containing 1 nodes:\n['World/Area 1/Event - Foo']",
-        "Unknown strongly connected component detected containing 1 nodes:\n"
-        "['World/Area 1/Door to Area 2 (Generic)']",
+        "Unknown strongly connected component detected containing 1 nodes:\n['World/Area 1/Door to Area 2 (Generic)']",
         "Unknown strongly connected component detected containing 1 nodes:\n['World/Area 2/Door to Area 1']",
         "Unknown strongly connected component detected containing 1 nodes:\n['World/Area 1/Door to Area 2 (Dock)']",
         (

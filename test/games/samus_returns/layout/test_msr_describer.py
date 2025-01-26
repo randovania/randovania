@@ -56,9 +56,9 @@ def test_msr_format_params(artifacts) -> None:
     assert dict(result) == {
         "Logic Settings": ["All tricks disabled"],
         "Item Pool": [
-            f"Size: {174+artifacts.placed_artifacts} of 211",
+            f"Size: {174 + artifacts.placed_artifacts} of 211",
             "Starts with Scan Pulse",
-            "Progressive Beam, Progressive Suit, Progressive Jump",
+            "Progressive Jump",
             "Energy Reserve Tank, Aeion Reserve Tank, Missile Reserve Tank",
         ],
         "Gameplay": ["Starts at Surface East - Landing Site"],

@@ -2,6 +2,7 @@
 Docking Bay Hangar
 Extra - map_name: Main Deck0
 Extra - room_id: [0, 63]
+Extra - unlocked_save_recharge_station: True
 > Door to Docking Bay Access; Heals? False
   * Layers: default
   * Open Hatch to Docking Bay Access/Door to Docking Bay Hangar
@@ -11,15 +12,24 @@ Extra - room_id: [0, 63]
   > Event - Omega Metroid
       All of the following:
           After Navigation Controls Activated
-          # Weapon Requirements - TODO: more beams
-          Wide Beam or Combat (Intermediate)
+          Any of the following:
+              # Weapon Requirements
+              # Trickless
+              Plasma Beam and Wide Beam
+              All of the following:
+                  # Easy 1 Beam methods
+                  Combat (Beginner)
+                  Plasma Beam or Wide Beam
+              All of the following:
+                  # Harder 1 Beam methods
+                  Combat (Intermediate)
+                  Charge Beam or Ice Beam or Wave Beam
           Any of the following:
               # Energy requirements
-              Combat (Hypermode) or Normal Damage ≥ 1000
-              Combat (Beginner) and Normal Damage ≥ 800
-              Combat (Intermediate) and Normal Damage ≥ 600
-              Combat (Advanced) and Normal Damage ≥ 300
-              Combat (Expert) and Normal Damage ≥ 100
+              Combat (Expert) or Normal Damage ≥ 500
+              Combat (Beginner) and Normal Damage ≥ 300
+              Combat (Intermediate) and Normal Damage ≥ 200
+              Combat (Advanced) and Normal Damage ≥ 100
 
 > Ship; Heals? True; Spawn Point
   * Layers: default
@@ -158,6 +168,7 @@ Extra - room_id: [7]
 Main Deck Recharge Room
 Extra - map_name: Main Deck8
 Extra - room_id: [8]
+Extra - unlocked_save_recharge_station: True
 > Door to Concourse; Heals? False
   * Layers: default
   * L0 Hatch to Concourse/Door to Main Deck Recharge Room
@@ -239,7 +250,7 @@ Extra - room_id: [10]
 Habitation Deck Save Room
 Extra - map_name: Main Deck11
 Extra - room_id: [11]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Elevator to Central Hub; Heals? False
   * Layers: default
   * L0 Hatch to Elevator to Central Hub/Door to Habitation Deck Save Room
@@ -365,7 +376,9 @@ Extra - room_id: [13, 74, 85]
               Combat (Advanced) and 10+ DMG Missiles
           Any of the following:
               # Health Requirements
-              Combat (Hypermode) or Normal Damage ≥ 1000
+              Normal Damage ≥ 1000
+              # Hitless: https://youtu.be/W5S4xK5cV-Q
+              Combat (Hypermode)
               Combat (Beginner) and Normal Damage ≥ 800
               Combat (Intermediate) and Normal Damage ≥ 600
               Combat (Advanced) and Normal Damage ≥ 400
@@ -431,6 +444,11 @@ Extra - room_id: [15]
                   Movement (Advanced) and Can Freeze Enemies With Diffusion
           # NHJ Jump, freeze it while stretched, then WJ of the left door to get on top: https://youtu.be/o-DdSO4E3-M
           Wall Jump (Intermediate) and Disabled Door Lock Rando and Can Freeze Enemies With Any Weapon
+          # Kill Funes and then SWJ up
+          Wall Jump (Beginner) and Can Kill Tough Beam-Resistant Enemy and Can Single Walljump
+  > Door to Habitation Deck (Upper)
+      # Kill Funes and then SWJ up
+      Wall Jump (Beginner) and Can Kill Tough Beam-Resistant Enemy and Can Single Walljump
 
 > Door to Habitation Deck (Lower); Heals? False
   * Layers: default
@@ -958,7 +976,7 @@ Extra - room_id: [32]
 Main Deck Save Room
 Extra - map_name: Main Deck33
 Extra - room_id: [33]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Hornoad Hallway; Heals? False
   * Layers: default
   * L0 Hatch to Hornoad Hallway/Door to Main Deck Save Room
@@ -1079,7 +1097,7 @@ Extra - room_id: [35, 36]
 Crew Quarters Save Room
 Extra - map_name: Main Deck37
 Extra - room_id: [37]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Crew Quarters East; Heals? False
   * Layers: default
   * L0 Hatch to Crew Quarters East/Door to Crew Quarters Save Room
@@ -1254,7 +1272,7 @@ Extra - room_id: [42, 41]
 Operations Deck Save Room
 Extra - map_name: Main Deck44
 Extra - room_id: [44]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Operations Deck Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Operations Deck Recharge Room/Door to Operations Deck Save Room
@@ -1401,9 +1419,12 @@ Extra - room_id: [49, 59]
               # Beam requirements.
               Charge Beam and Wave Beam
               All of the following:
-                  Shinespark Tricks (Expert)
                   # Having only one beam makes this harder to hit / have only one attempt
-                  Charge Beam or Wave Beam
+                  Shinespark Tricks (Expert)
+                  Any of the following:
+                      Wave Beam
+                      # If you only have charge, you need to have access to the other side
+                      Charge Beam and After Reactor Controls Activated
               # Without Wave nor Charge, there's only one attempt and its hard.
               Shinespark Tricks (Hypermode)
   > Door to Silo Save Room
@@ -1478,7 +1499,7 @@ Extra - room_id: [50]
       Any of the following:
           Space Jump or Can Kill Tough Beam-Resistant Enemy
           # Dodge Pirates: https://www.youtube.com/watch?v=u8_gclW4-gQ
-          Combat (Intermediate)
+          Combat (Beginner)
           # Damage boost
           Damage Boosts (Beginner) and Normal Damage ≥ 94
   > Other to Silo Scaffolding
@@ -1691,7 +1712,7 @@ Extra - room_id: [57]
 Silo Save Room
 Extra - map_name: Main Deck58
 Extra - room_id: [58]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Central Reactor Core; Heals? False
   * Layers: default
   * Open Hatch to Central Reactor Core/Door to Silo Save Room
@@ -1769,7 +1790,7 @@ Extra - room_id: [62]
 Restricted Save Room
 Extra - map_name: Main Deck64
 Extra - room_id: [64]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Back Door to Sector 6 (NOC); Heals? False
   * Layers: default
   * L4 Hatch to Back Door to Sector 6 (NOC)/Door to Restricted Save Room
@@ -2068,6 +2089,7 @@ Extra - room_id: [76]
 Operations Deck Recharge Room
 Extra - map_name: Main Deck81
 Extra - room_id: [81]
+Extra - unlocked_save_recharge_station: True
 > Door to Operations Deck; Heals? False
   * Layers: default
   * L0 Hatch to Operations Deck/Door to Operations Deck Recharge Room

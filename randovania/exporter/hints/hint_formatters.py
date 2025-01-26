@@ -84,8 +84,7 @@ class RelativeFormatter(LocationFormatter):
 
         colored_dist = self.distance_painter(distance_msg, with_color)
         return (
-            f"{pick_hint.determiner.title}{pick_hint.pickup_name}"
-            f" can be found {colored_dist} away from {other_name}."
+            f"{pick_hint.determiner.title}{pick_hint.pickup_name} can be found {colored_dist} away from {other_name}."
         )
 
     def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool) -> str:
