@@ -6766,30 +6766,11 @@
                     "pickup_index": 3,
                     "location_category": "major",
                     "connections": {
-                        "Beside Door": {
-                            "type": "or",
+                        "Next to Pickup": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "GeneratorHack",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "WallJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -6825,23 +6806,6 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Arena": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "GeneratorHack",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Beside Door": {
                             "type": "and",
                             "data": {
@@ -6996,8 +6960,8 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Beside Door": {
-                            "type": "and",
+                        "Next to Pickup": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -7008,32 +6972,6 @@
                                             "name": "Missiles",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "GeneratorHack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "WallJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
                                         }
                                     }
                                 ]
@@ -7193,24 +7131,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 586.43,
-                        "y": 275.19,
+                        "x": 601.02,
+                        "y": 318.22,
                         "z": 0.0
                     },
-                    "description": "FIXME: The connections to return back here technically arent trivial, but are\ncurrently assumed until a few generator issues have been figured out.",
+                    "description": "",
                     "layers": [
                         "default"
                     ],
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Pickup (Energy Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Crew Quarters East": {
                             "type": "or",
                             "data": {
@@ -7254,8 +7185,39 @@
                                 ]
                             }
                         },
+                        "Next to Pickup": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Next to Pickup": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 882.614442020445,
+                        "y": 481.7010122286583,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Other to The Attic": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -7276,6 +7238,23 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Beside Door": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "WallJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
