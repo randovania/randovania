@@ -36,7 +36,7 @@ Extra - asset_id: collision_camera_000
                           All of the following:
                               Shoot Any Missile
                               # Break the shot blocks
-                              Precise Aiming (Beginner) or Lay Any Bomb or Shoot Wave Beam
+                              Wave Beam or Precise Aiming (Beginner) or Lay Any Bomb
   > Save Station
       Trivial
   > Door to Moheek Mount
@@ -105,7 +105,7 @@ Extra - asset_id: collision_camera_000
           Screw Attack
           All of the following:
               Morph Ball
-              Precise Aiming (Beginner) or Lay Bomb or Shoot Wave Beam
+              Wave Beam or Precise Aiming (Beginner) or Lay Bomb
 
 ----------------
 Moheek Mount
@@ -923,9 +923,7 @@ Extra - asset_id: collision_camera_028
   * Extra - actor_type: doorpowerpower
   * Extra - tile_index: 162
   > Door to Gullugg Gangway (Bottom)
-      All of the following:
-          Plasma Beam
-          Enabled Door Type Randomizer or Disabled Door Lock Randomizer
+      Plasma Beam and Wave Beam and Disabled Door Type Randomizer and Disabled Door Lock Randomizer
   > Door to Metroid Caverns Save Station
       Trivial
 
@@ -1029,7 +1027,9 @@ Extra - asset_id: collision_camera_033
   * Extra - actor_name: LE_Item_001
   * Extra - actor_type: item_missiletank
   > Door to Moheek Mount
-      Trivial
+      All of the following:
+          Varia Suit
+          Gravity Suit or Space Jump or Use Spider Ball
 
 > Door to Moheek Mount; Heals? False
   * Layers: default
@@ -1037,20 +1037,23 @@ Extra - asset_id: collision_camera_033
   * Extra - actor_name: Door009
   * Extra - actor_type: doorchargecharge
   > Pickup (Missile Tank)
-      Any of the following:
-          All of the following:
-              Varia Suit
+      All of the following:
+          Varia Suit
+          Any of the following:
+              # Avoiding the lava
               Space Jump or Use Spider Ball
-          All of the following:
-              # Gravity way
-              Gravity Suit
-              Wall Jump (Beginner) or Simple IBJ
-              # Super Jump + Unmorph Extend
-              Morph Ball and Super Jump (Advanced) and Unmorph Extend (Advanced)
+              All of the following:
+                  # Climb via entering the lava
+                  Gravity Suit
+                  Any of the following:
+                      Simple IBJ
+                      # TODO: Add video/revisit
+                      Morph Ball and Super Jump (Advanced) and Unmorph Extend (Advanced) and Wall Jump (Beginner)
   > Door to Gullugg Gangway
-      Any of the following:
-          Gravity Suit
-          Varia Suit and Use Spider Ball
+      All of the following:
+          Varia Suit
+          # Entering or avoiding the lava
+          Gravity Suit or Use Spider Ball
 
 > Door to Gullugg Gangway; Heals? False
   * Layers: default
@@ -1058,12 +1061,13 @@ Extra - asset_id: collision_camera_033
   * Extra - actor_name: Door010
   * Extra - actor_type: doorchargecharge
   > Door to Moheek Mount
-      Any of the following:
-          Gravity Suit
-          Varia Suit and Use Spider Ball
+      All of the following:
+          Varia Suit
+          # Entering or avoiding the lava
+          Gravity Suit or Use Spider Ball
   > Pickup (Super Missile Tank)
       All of the following:
-          Gravity Suit and Morph Ball and Super Missile
+          Gravity Suit and Morph Ball and Super Missile and Varia Suit
           Any of the following:
               Space Jump or Simple IBJ
               All of the following:
@@ -1088,7 +1092,7 @@ Extra - asset_id: collision_camera_033
   * Extra - actor_name: HiddenPowerup002
   * Extra - actor_type: item_supermissiletank
   > Door to Gullugg Gangway
-      Gravity Suit
+      Gravity Suit and Varia Suit
 
 ----------------
 Inner Temple West Hall
