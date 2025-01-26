@@ -58,6 +58,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Typo in the Differences tab.
 - Added: FAQ entry for light beam transport requirements.
 
+#### Logic Database
+
+##### Agon Wastes
+
+- Added: Mining Station B: Hypermode method to open the portal without Space Jump Boots or Morph Ball Bombs.
+
+##### Torvus Bog
+
+- Added: Torvus Grove: Two expert difficulty methods to cross the upper part of this room without Space Jump Boots.
+
+##### Sanctuary Fortress
+
+- Added: Worker's Path: Advanced bomb jumps to get to the cannon platforms NSJ.
+- Added: Grand Abyss: Expert extended dashes and standables to cross from the Vault side to the Watch Station side.
+
+##### Ing Hive
+
+- Added: Hive Dynamo Works: Advanced/Expert NSJ Extended Dashes to go across the gap with the grapple point.
+- Added: Hive Entrance: Expert inbounds method to get to the item without Light Suit.
+- Changed: Temple Security Access: Crossing the room after the gates have been triggered with only Screw Attack no longer requires Screw Attack at Z-Axis. 
+
 ### Metroid: Samus Returns
 
 - **Major** - Added: Split beams and suits. When playing with non-progressive beams or suits, each individual upgrade provides a unique effect instead of providing the effects of all previous upgrades. For suits, protection against lava requires having both suits, whereas Gravity on its own just provides reduced damage and free movement.
