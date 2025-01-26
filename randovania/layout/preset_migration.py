@@ -1101,7 +1101,7 @@ def _migrate_v96(preset: dict, game: RandovaniaGame) -> None:
 
 
 def _migrate_v97(preset: dict, game: RandovaniaGame) -> None:
-    if game == RandovaniaGame.METROID_PRIME_3_CORRUPTION:
+    if game == RandovaniaGame.METROID_PRIME_CORRUPTION:
         preset["configuration"]["teleporters"] = {
             "mode": "vanilla",
             "excluded_teleporters": [],
