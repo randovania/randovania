@@ -140,6 +140,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Tower Exterior Spider Ball Clip added to traverse from Next to Teleporter to Pickup (Super Missile Tank Bottom).
 
+##### Area 5 Tower Interior
+
+- Fixed: Grapple Shuffler - Impossible connection back from the pickup if it was reach via a Melee Clip.
+
 ## [8.8.0] - 2025-01-02
 
 - Added: Experimental preset option to place all majors or pickups logically. This makes sure pickups that are not required can be collected.
