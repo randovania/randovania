@@ -3123,6 +3123,18 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Other to Shadow Moses Island": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Break Single Bomb Blocks"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -3166,6 +3178,38 @@
                             }
                         }
                     }
+                },
+                "Other to Shadow Moses Island": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 96.82,
+                        "y": 30.85,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            101
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Other",
+                    "default_connection": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Shadow Moses Island",
+                        "node": "Other from Dessgeega Dormitory"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
                 }
             }
         },
@@ -8932,6 +8976,46 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {}
+                },
+                "Other from Dessgeega Dormitory": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 113.05,
+                        "y": 220.58,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            102
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Other",
+                    "default_connection": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Dessgeega Dormitory",
+                        "node": "Other to Shadow Moses Island"
+                    },
+                    "default_dock_weakness": "Blocked Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Central Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
