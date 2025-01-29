@@ -1414,6 +1414,66 @@
                                 ]
                             }
                         },
+                        "Event - Proto EMMI Blob (East Side)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s010_cave:default:PRP_DB_CV_014",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Diffusion or Wave"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Charge Beam"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wide",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Pseudo",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "West of Blob": {
                             "type": "and",
                             "data": {
@@ -3288,6 +3348,66 @@
                                                         "name": "DoorLocks",
                                                         "amount": 1,
                                                         "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://www.youtube.com/watch?v=DygpVK2XWJM",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "a lot more lenient with a walljump",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "GrappleMovement",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "GrappleMovement",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -16350,7 +16470,7 @@
                                 ]
                             }
                         },
-                        "Event - EMMI Single Use Slide": {
+                        "Event - EMMI Single Use Slide Down": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16376,6 +16496,15 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Event - EMMI Single Use Slide Up": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArtariaEmmiSingleUseSlide",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -16592,7 +16721,28 @@
                                 ]
                             }
                         },
-                        "Event - EMMI Single Use Slide": {
+                        "Event - EMMI Single Use Slide Down": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Slide"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ArtariaEmmiSingleUseSlide",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - EMMI Single Use Slide Up": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16600,19 +16750,19 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
-                                            "name": "ArtariaEmmiSingleUseSlide",
+                                            "type": "items",
+                                            "name": "Morph",
                                             "amount": 1,
-                                            "negate": true
+                                            "negate": false
                                         }
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Morph",
+                                            "type": "events",
+                                            "name": "ArtariaEmmiSingleUseSlide",
                                             "amount": 1,
-                                            "negate": false
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -16675,11 +16825,11 @@
                         }
                     }
                 },
-                "Event - EMMI Single Use Slide": {
+                "Event - EMMI Single Use Slide Down": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -678.51,
+                        "x": -700.0,
                         "y": 2718.95,
                         "z": 0.0
                     },
@@ -16691,15 +16841,6 @@
                     "valid_starting_location": false,
                     "event_name": "ArtariaEmmiSingleUseSlide",
                     "connections": {
-                        "Door to EMMI Zone Exit North": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Below Slide": {
                             "type": "template",
                             "data": "Can Slide"
@@ -16780,6 +16921,33 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - EMMI Single Use Slide Up": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -439.07,
+                        "y": 2608.3,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ArtariaEmmiSingleUseSlide",
+                    "connections": {
+                        "Door to EMMI Zone Exit North": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [8.9.x] - 2025-02-??
 
 - Added: It is now possible to focus the game images in the "Games" tab via a Keyboard.
+- Added: Experimental option under Generation -> Logic Settings that makes an early check if the game is unbeatable due to options such as starting location, transports etc.
 - Changed: Wording on the Door Locks preset tab to be clearer.
 - Changed: The main Randovania window now doesn't have an unnecessary border.
 - Changed: The highlighted button in the cosmetic options is now `Accept` instead of `Reset to Defaults`.
@@ -22,23 +23,66 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Mining Facility Alpha Nest Access now has a Spider Ball method of crossing the room from either side.
 - Added: Mining Facility Gamma Nest Access now has a Spider Ball method of crossing the room from either side.
 
-##### Area 5 Tower Exterior
-
-- Added: Tower Exterior Spider Ball Clip added to traverse from Next to Teleporter to Pickup (Super Missile Tank Bottom).
-
 ### Metroid Dread
+
+- Added: There is now a preset option for each region that will remove all of its light sources when enabled, making the game very dark.
 
 #### Logic Database
 
 - Fixed: A typo in the event name Artaria - Prepare Speedboost in Map Station has been changed from Prepare Speeboost in Map Station.
+- Changed: Various locations listed below are altered in ways that improve the quality of generation and resolution. What is and isn't in logic should remain unchanged.
+
+##### Artaria
+
+- Added: In White EMMI Introduction: Climb from  Door to Teleport to Dairon (Lower) to Door to Teleport to Dairon (Thermal) by grapple-jumping on the falling magnet platform.
+- Added: It is now logical to blow up the Proto EMMI blob in Melee tutorial from the right, with Wave Beam, Diffusion beam or a Pseudo Wave Beam (Intermediate) using Morph Ball, Wide Beam and Charge Beam.
+- Changed: The logic surrounding the Single Use Slide in EMMI Zone Dome now makes it so that the event nodes remain logically accessible after collecting the event.
+- Changed: It is now logical to go back to the event node for blowing up the Proto EMMI Blob from the right.
+
+##### Cataris
+
+- Changed: It is now considered logical to go back into Kraid's area using the normal entrance after defeating Kraid, if all the blobs necessary to go around have been blown up.
+
+##### Dairon
+
+- Changed: The logic in the Freezer is changed so that traversing the right part of the room ignores the dangerousness of turning on the Freezer generator. Meanwhile, all connections in the left part of the room that can be used before turning on the generator now require Highly Dangerous Logic.
+
+##### Ghavoran
+
+- Changed: It is now logical to go back to the event node for flipping the Super Missile Rotatable from the tunnel under it.
+- Changed: It is now logical to go back to the event node for lowering the Super Missile Spider Magnet from the tunnel under it.
 
 ### Metroid Prime 2: Echoes
 
 - Changed: Double Damage is now classified as a Beam instead of a Suit.
 - Fixed: Typo in the Differences tab.
+- Added: FAQ entry for light beam transport requirements.
+
+#### Logic Database
+
+##### Agon Wastes
+
+- Added: Mining Station B: Hypermode method to open the portal without Space Jump Boots or Morph Ball Bombs.
+
+##### Torvus Bog
+
+- Added: Torvus Grove: Two expert difficulty methods to cross the upper part of this room without Space Jump Boots.
+- Added: Torvus Plaza: Using Boost Ball and standables to reach the pickup without Spider or Screw Attack.
+
+##### Sanctuary Fortress
+
+- Added: Worker's Path: Advanced bomb jumps to get to the cannon platforms NSJ.
+- Added: Grand Abyss: Expert extended dashes and standables to cross from the Vault side to the Watch Station side.
+
+##### Ing Hive
+
+- Added: Hive Dynamo Works: Advanced/Expert NSJ Extended Dashes to go across the gap with the grapple point.
+- Added: Hive Entrance: Expert inbounds method to get to the item without Light Suit.
+- Changed: Temple Security Access: Crossing the room after the gates have been triggered with only Screw Attack no longer requires Screw Attack at Z-Axis.
 
 ### Metroid: Samus Returns
 
+- **Major** - Added: Split beams and suits. When playing with non-progressive beams or suits, each individual upgrade provides a unique effect instead of providing the effects of all previous upgrades. For suits, protection against lava requires having both suits, whereas Gravity on its own just provides reduced damage and free movement.
 - Changed: The hinted item after collecting the last required DNA is now dependent on the final boss. The Baby Metroid is hinted for Proteus Ridley, the Ice Beam for Metroid Queen and the Bomb for Diggernaut.
 - Fixed: Prevented the block with a hidden item in Area 4 Central Caves - Transit Tunnel from being destroyed from another area, causing the item disappear.
 - Fixed: Incorrect rotation of a progressive item if the previous stage of the progressive item was received without leaving the area.
@@ -49,6 +93,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Area 4 Central Caverns
 
 - Added: Transport to Area 3 and Crystal Mines: A beginner Spider Ball Clip to reach the elevator to Crystal Mines from the bottom Chozo Seal with Space Jump.
+
+##### Area 5 Tower Exterior
+
+- Added: Tower Exterior Spider Ball Clip added to traverse from Next to Teleporter to Pickup (Super Missile Tank Bottom).
 
 ## [8.8.0] - 2025-01-02
 

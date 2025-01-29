@@ -12,23 +12,30 @@ Extra - unlocked_save_recharge_station: True
   > Event - Omega Metroid
       All of the following:
           After Navigation Controls Activated
-          # Weapon Requirements - TODO: more beams
-          Wide Beam or Combat (Intermediate)
+          Any of the following:
+              # Weapon Requirements
+              # Trickless
+              Plasma Beam and Wide Beam
+              All of the following:
+                  # Easy 1 Beam methods
+                  Combat (Beginner)
+                  Plasma Beam or Wide Beam
+              All of the following:
+                  # Harder 1 Beam methods
+                  Combat (Intermediate)
+                  Charge Beam or Ice Beam or Wave Beam
           Any of the following:
               # Energy requirements
-              Combat (Hypermode) or Normal Damage ≥ 1000
-              Combat (Beginner) and Normal Damage ≥ 800
-              Combat (Intermediate) and Normal Damage ≥ 600
-              Combat (Advanced) and Normal Damage ≥ 300
-              Combat (Expert) and Normal Damage ≥ 100
+              Combat (Expert) or Normal Damage ≥ 500
+              Combat (Beginner) and Normal Damage ≥ 300
+              Combat (Intermediate) and Normal Damage ≥ 200
+              Combat (Advanced) and Normal Damage ≥ 100
 
 > Ship; Heals? True; Spawn Point
   * Layers: default
   * Extra - X: 25
   * Extra - Y: 10
   > Door to Docking Bay Access
-      Trivial
-  > Event - L0
       Trivial
 
 > Event - Omega Metroid; Heals? False
@@ -40,13 +47,6 @@ Extra - unlocked_save_recharge_station: True
 > Event - Victory; Heals? False
   * Layers: default
   * Event Victory Event
-  > Ship
-      Trivial
-
-> Event - L0; Heals? False
-  * Layers: default
-  * Event Level 0 Locks Released
-  * TODO: revise how this node gets into play
   > Ship
       Trivial
 
@@ -435,6 +435,11 @@ Extra - room_id: [15]
                   Movement (Advanced) and Can Freeze Enemies With Diffusion
           # NHJ Jump, freeze it while stretched, then WJ of the left door to get on top: https://youtu.be/o-DdSO4E3-M
           Wall Jump (Intermediate) and Disabled Door Lock Rando and Can Freeze Enemies With Any Weapon
+          # Kill Funes and then SWJ up
+          Wall Jump (Beginner) and Can Kill Tough Beam-Resistant Enemy and Can Single Walljump
+  > Door to Habitation Deck (Upper)
+      # Kill Funes and then SWJ up
+      Wall Jump (Beginner) and Can Kill Tough Beam-Resistant Enemy and Can Single Walljump
 
 > Door to Habitation Deck (Lower); Heals? False
   * Layers: default
@@ -557,7 +562,7 @@ Extra - room_id: [18]
       After Main Deck Power Bomb Geron Destroyed
   > Other to Western Hub
       Any of the following:
-          Morph Ball and Can Break Single Bomb Blocks
+          Can Break Single Bomb Blocks
           All of the following:
               # Shinespark and recharge in Hornoad Hallway
               Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
@@ -713,8 +718,8 @@ Extra - room_id: [22]
   > Other to Habitation Deck (Upper)
       Any of the following:
           Space Jump or Can Freeze Enemies With Any Weapon
-          # TODO: check if you can do this with jump extneds
-          Wall Jump (Beginner) and Can Single Walljump
+          # Kill Namihe's and then SWJ up. TODO: check if you can do this with jump extneds
+          Wall Jump (Beginner) and Can Kill Tough Beam-Resistant Enemy and Can Single Walljump
 
 ----------------
 Ruined Stairwell
@@ -1109,15 +1114,13 @@ Extra - room_id: [38]
   * Extra - room: 38
   * Extra - blockx: 53
   * Extra - blocky: 10
-  > Beside Door
-      Wall Jump (Beginner) or Enabled Generator Workaround
+  > Next to Pickup
+      Trivial
 
 > Door to Crew Quarters East; Heals? False
   * Layers: default
   * L0 Hatch to Crew Quarters East/Door to Arachnus Arena
   * Extra - door_idx: (88,)
-  > Arena
-      Enabled Generator Workaround
   > Beside Door
       Trivial
 
@@ -1140,10 +1143,8 @@ Extra - room_id: [38]
   * Layers: default
   * Open Passage to The Attic/Other to Arachnus Arena
   * Extra - door_idx: (200,)
-  > Beside Door
-      All of the following:
-          Missiles
-          Wall Jump (Beginner) or Enabled Generator Workaround
+  > Next to Pickup
+      Missiles
 
 > Event - Arachnus; Heals? False
   * Layers: default
@@ -1176,18 +1177,23 @@ Extra - room_id: [38]
 
 > Beside Door; Heals? False
   * Layers: default
-  * FIXME: The connections to return back here technically arent trivial, but are
-currently assumed until a few generator issues have been figured out.
-  > Pickup (Energy Tank)
-      Trivial
   > Door to Crew Quarters East
       After Boss Arachnus Defeated
   > Other to Concourse Ventilation
       Morph Ball and Screw Attack
+  > Next to Pickup
+      Trivial
+
+> Next to Pickup; Heals? False
+  * Layers: default
+  > Pickup (Energy Tank)
+      Trivial
   > Other to The Attic
       Missiles
   > Arena
       Trivial
+  > Beside Door
+      Wall Jump (Beginner)
 
 ----------------
 Operations Deck Data Room
@@ -1329,8 +1335,9 @@ Extra - room_id: [47]
           All of the following:
               # Destroy Blocks
               Can Use Power Bombs
-              # PBs only requires two because one doesn't destroy all of them.
+              # These blocks require two PBs because one doesn't destroy all of them.
               Power Bombs ≥ 2 or Can Use Bombs
+          # Get up to item
           Wall Jump (Beginner) or Have Any Jump Upgrade
 
 ----------------
@@ -1412,7 +1419,7 @@ Extra - room_id: [49, 59]
                       # If you only have charge, you need to have access to the other side
                       Charge Beam and After Reactor Controls Activated
               # Without Wave nor Charge, there's only one attempt and its hard.
-              Shinespark Tricks (Hypermode)
+              After Reactor Controls Activated and Shinespark Tricks (Hypermode)
   > Door to Silo Save Room
       Trivial
 
@@ -1485,7 +1492,7 @@ Extra - room_id: [50]
       Any of the following:
           Space Jump or Can Kill Tough Beam-Resistant Enemy
           # Dodge Pirates: https://www.youtube.com/watch?v=u8_gclW4-gQ
-          Combat (Intermediate)
+          Combat (Beginner)
           # Damage boost
           Damage Boosts (Beginner) and Normal Damage ≥ 94
   > Other to Silo Scaffolding

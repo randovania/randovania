@@ -16,7 +16,7 @@ class BlankCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_BlankCosmeticPatc
     _cosmetic_patches: BlankCosmeticPatches
 
     def __init__(self, parent: QtWidgets.QWidget | None, current: BaseCosmeticPatches):
-        super().__init__(parent)
+        super().__init__(parent, current)
         self.setupUi(self)
 
         assert isinstance(current, BlankCosmeticPatches)

@@ -1084,6 +1084,21 @@ def _migrate_v95(preset: dict, game: RandovaniaGame) -> None:
         hints.pop("baby_metroid")
 
 
+def _migrate_v96(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_DREAD:
+        preset["configuration"]["disabled_lights"] = {
+            "artaria": False,
+            "burenia": False,
+            "cataris": False,
+            "dairon": False,
+            "elun": False,
+            "ferenia": False,
+            "ghavoran": False,
+            "hanubia": False,
+            "itorash": False,
+        }
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1180,6 +1195,7 @@ _MIGRATIONS = [
     _migrate_v93,  # update default dock_rando in Prime 1 to use RP Blast Shield Change
     _migrate_v94,
     _migrate_v95,  # msr rename baby_metroid hint to final_boss_item hint
+    _migrate_v96,  # dread disable lights per region
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -15,14 +15,17 @@ from randovania.gui.lib.signal_handling import set_combo_with_value
 
 if TYPE_CHECKING:
     from randovania.games.prime2.layout.echoes_cosmetic_suits import EchoesSuitPreferences, SuitColor
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
 
 class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPatchesDialog):
     _cosmetic_patches: EchoesCosmeticPatches
 
-    def __init__(self, parent: QtWidgets.QWidget | None, current: EchoesCosmeticPatches):
-        super().__init__(parent)
+    def __init__(self, parent: QtWidgets.QWidget | None, current: BaseCosmeticPatches):
+        super().__init__(parent, current)
         self.setupUi(self)
+
+        assert isinstance(current, EchoesCosmeticPatches)
         self._cosmetic_patches = current
 
         self.options_foldable.set_content_layout(self.options_foldable_layout)

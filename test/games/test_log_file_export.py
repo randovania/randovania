@@ -106,6 +106,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "factorio/starter_preset.rdvgame",
         # Fusion
         "fusion/starter_preset.rdvgame",
+        "fusion/short_intro.rdvgame",
         # Dread
         "dread/starter_preset.rdvgame",  # starter preset
         "dread/crazy_settings.rdvgame",  # crazy settings
@@ -127,8 +128,9 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "samus_returns/diggernaut_boss_free_placement_dna.rdvgame",  # diggernaut final boss + 7/15 dna anywhere
         "samus_returns/door_lock.rdvgame",  # starter preset + door lock
         "samus_returns/door_lock_access_open.rdvgame",  # door lock + access open doors
-        "samus_returns/queen_boss_custom_required_dna.rdvgame",  # quuen final boss + custom required dna 20/30
+        "samus_returns/queen_boss_custom_required_dna.rdvgame",  # queen final boss + custom required dna 20/30
         "samus_returns/starter_preset.rdvgame",  # starter preset
+        "samus_returns/progressive_beams_and_suits.rdvgame",  # starter preset + progressive beam and suit
         # Super Metroid
         "sdm_test_game.rdvgame",
     ]

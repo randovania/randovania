@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import functools
+from typing import TYPE_CHECKING
 
 from PySide6 import QtGui, QtWidgets
 
@@ -11,13 +12,18 @@ from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatch
 from randovania.gui.lib import signal_handling, slider_updater
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
+if TYPE_CHECKING:
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+
 
 class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_MSRCosmeticPatchesDialog):
     _cosmetic_patches: MSRCosmeticPatches
 
-    def __init__(self, parent: QtWidgets.QWidget | None, current: MSRCosmeticPatches):
-        super().__init__(parent)
+    def __init__(self, parent: QtWidgets.QWidget | None, current: BaseCosmeticPatches):
+        super().__init__(parent, current)
         self.setupUi(self)
+
+        assert isinstance(current, MSRCosmeticPatches)
         self._cosmetic_patches = current
 
         for room_gui_type in MSRRoomGuiType:

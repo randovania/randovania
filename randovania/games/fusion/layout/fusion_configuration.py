@@ -25,6 +25,7 @@ class FusionConfiguration(BaseConfiguration):
     artifacts: FusionArtifactConfig
     hints: HintConfiguration
     open_save_recharge_hatches: bool
+    short_intro_text: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
