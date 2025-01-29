@@ -35,6 +35,7 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games import default_data
+from randovania.gui.dialog.area_details_popup import AreaDetailsPopup
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
 from randovania.gui.docks.connection_filtering_widget import ConnectionFilteringWidget
@@ -173,7 +174,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         else:
             self.save_database_button.clicked.connect(self._prompt_save_database)
 
-        self.rename_area_button.clicked.connect(self._rename_area)
+        self.edit_area_button.clicked.connect(self.on_area_edit_button)
         self.new_node_button.clicked.connect(self._create_new_node_no_location)
         self.delete_node_button.clicked.connect(self._remove_node)
         self.zoom_slider.valueChanged.connect(self._on_slider_changed)
@@ -670,22 +671,35 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             pretty_print.write_human_readable_game(self.game_description, self._data_path.with_suffix(""))
             default_database.game_description_for.cache_clear()
 
-    def _rename_area(self) -> None:
-        new_name, did_confirm = QInputDialog.getText(self, "New Name", "Insert area name:", text=self.current_area.name)
-        if not did_confirm or new_name == "" or new_name == self.current_area.name:
+    @asyncSlot()
+    async def on_area_edit_button(self) -> None:
+        if self._check_for_edit_dialog():
             return
 
+        area = self.current_area
+
         if self.current_node is not None:
-            node_index = self.current_area.nodes.index(self.current_node)
+            node_index = area.nodes.index(self.current_node)
         else:
             node_index = None
-        self.editor.rename_area(self.current_area, new_name)
-        self.on_select_region()
-        self.focus_on_area_by_name(new_name)
-        if node_index is not None:
-            self.focus_on_node(self.current_area.nodes[node_index])
-        else:
-            self.update_selected_node()
+
+        area_edit_popup = AreaDetailsPopup(self.game_description, area)
+        if await self._execute_edit_dialog(area_edit_popup):
+            try:
+                new_area = area_edit_popup.create_new_area()
+            except ValueError as e:
+                if not self._warning_dialogs_disabled:
+                    await async_dialog.warning(self, "Error in new area", str(e))
+                return
+
+            self.editor.replace_area(area, new_area)
+
+            self.on_select_region()
+            self.focus_on_area_by_name(new_area.name)
+            if node_index is not None:
+                self.focus_on_node(self.current_area.nodes[node_index])
+            else:
+                self.update_selected_node()
 
     def _move_node(self, node: Node, location: NodeLocation) -> None:
         area = self.current_area
@@ -910,7 +924,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.area_view_canvas.set_zoom_value(self.zoom_slider.value())
 
     def update_edit_mode(self) -> None:
-        self.rename_area_button.setVisible(self.edit_mode)
+        self.edit_area_button.setVisible(self.edit_mode)
         self.delete_node_button.setVisible(self.edit_mode)
         self.new_node_button.setVisible(self.edit_mode)
         self.save_database_button.setVisible(self.edit_mode)

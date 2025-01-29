@@ -300,7 +300,7 @@ def write_node(node: Node) -> dict:
         data.update(common_fields)
         data["pickup_index"] = node.pickup_index.index
         data["location_category"] = node.location_category.value
-        data["hint_features"] = [ft.as_json for ft in sorted(node.hint_features)]
+        data["hint_features"] = [ft.name for ft in sorted(node.hint_features)]
 
     elif isinstance(node, EventNode):
         data["node_type"] = "event"
@@ -358,7 +358,7 @@ def write_area(area: Area) -> dict:
     extra = frozen_lib.unwrap(area.extra)
     return {
         "default_node": area.default_node,
-        "hint_features": sorted(area.hint_features),
+        "hint_features": sorted(feature.name for feature in area.hint_features),
         "extra": extra,
         "nodes": nodes,
     }

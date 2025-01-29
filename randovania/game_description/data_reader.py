@@ -442,7 +442,7 @@ class RegionReader:
                 connections=connections,
                 extra=data["extra"],
                 default_node=data["default_node"],
-                hint_features=frozenset(data["hint_features"]),
+                hint_features=frozenset(self.hint_feature_database[feature] for feature in data["hint_features"]),
             )
         except KeyError as e:
             raise KeyError(f"Missing key `{e}` for area `{area_name}`")
