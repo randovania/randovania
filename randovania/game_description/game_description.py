@@ -90,7 +90,7 @@ class GameDescription:
             resource_database=self.resource_database,
             layers=self.layers,
             dock_weakness_database=self.dock_weakness_database,
-            hint_feature_databse=self.hint_feature_database,
+            hint_feature_database=self.hint_feature_database,
             region_list=copy.deepcopy(self.region_list, memodict),
             victory_condition=self.victory_condition,
             starting_location=self.starting_location,

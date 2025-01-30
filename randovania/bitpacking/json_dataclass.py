@@ -5,6 +5,7 @@ import datetime
 import inspect
 import typing
 import uuid
+from collections.abc import Mapping
 from enum import Enum
 
 from frozendict import frozendict
@@ -18,8 +19,10 @@ T = typing.TypeVar("T")
 
 EXCLUDE_DEFAULT = {"exclude_if_default": True}
 
+Metadata = Mapping[typing.Any, typing.Any]
 
-def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict, metadata: dict) -> typing.Any:
+
+def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict, metadata: Metadata) -> typing.Any:
     type_ = type_lib.resolve_optional(type_)[0]
 
     if arg is None:
@@ -90,7 +93,7 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict, metadata: 
     return arg
 
 
-def _encode_value(value: typing.Any, metadata: dict) -> typing.Any:
+def _encode_value(value: typing.Any, metadata: Metadata) -> typing.Any:
     if isinstance(value, Enum):
         return value.value
 

@@ -59,7 +59,7 @@ class ResourceDatabaseGenericModel(EditableTableModel[ResourceInfo]):
     def _create_item(self, short_name: str) -> ResourceInfo:
         return SimpleResourceInfo(self.db.first_unused_resource_index(), short_name, short_name, self.resource_type)
 
-    def _get_item_identifier(self, item: ResourceInfo):
+    def _get_item_identifier(self, item: ResourceInfo) -> str:
         return item.short_name
 
     def append_item(self, resource: ResourceInfo) -> bool:

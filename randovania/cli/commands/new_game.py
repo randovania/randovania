@@ -22,7 +22,7 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.hint_features import PickupHintFeature
+from randovania.game_description.hint_features import HintDetails, PickupHintFeature
 from randovania.game_description.pickup.pickup_database import PickupDatabase
 from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
 from randovania.game_description.requirements.base import Requirement
@@ -258,18 +258,18 @@ def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
         "weapon": PickupHintFeature(
             name="weapon",
             long_name="Weapon",
-            hint_details=("a ", "weapon"),
+            hint_details=HintDetails("a ", "weapon"),
         ),
         "ammo-based": PickupHintFeature(
             name="ammo-based",
             long_name="Ammo-Based",
-            hint_details=("an ", "ammo-based item"),
+            hint_details=HintDetails("an ", "ammo-based item"),
             is_broad_category=True,
         ),
         "key": PickupHintFeature(
             name="key",
             long_name="Key",
-            hint_details=("a ", "key"),
+            hint_details=HintDetails("a ", "key"),
             is_broad_category=True,
         ),
     }
@@ -279,8 +279,8 @@ def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
             "Victory Key": StandardPickupDefinition(
                 game=game_enum,
                 name="Victory Key",
-                gui_category="key",
-                hint_features=frozenset(("key",)),
+                gui_category=pickup_categories["key"],
+                hint_features=frozenset((pickup_categories["key"],)),
                 model_name="VictoryKey",
                 offworld_models=frozendict(),
                 progression=("VictoryKey",),
