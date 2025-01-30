@@ -59,7 +59,7 @@ class DockWeaknessListModel(EditableListModel[DockWeakness]):
         self.delegate.items = list(self.db.weaknesses[self.type].keys())
 
     def _display_item(self, row: int) -> str:
-        return self._get_items()[row].name
+        return self.items[row].name
 
     def _new_item(self, identifier: str) -> DockWeakness:
         return self.db.weaknesses[self.type][identifier]

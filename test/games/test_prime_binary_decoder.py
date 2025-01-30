@@ -48,9 +48,8 @@ sample_data = {
     },
     "hint_feature_database": {
         "key": {
-            "long_name": "Key",
-            "hint_details": ["a ", "key"],
-            "is_broad_category": True,
+            "long_name": "Room",
+            "hint_details": ["in ", "a room"],
         }
     },
     "used_trick_levels": {},

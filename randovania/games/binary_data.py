@@ -329,7 +329,6 @@ ConstructHintFeatureDatabase = OptionalValue(
         Struct(
             long_name=String,
             hint_details=String[2],
-            is_broad_category=Flag,
         )
     )
 )

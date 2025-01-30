@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import typing
 from random import Random
-from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
@@ -27,8 +27,8 @@ from randovania.games.prime2.generator.hint_distributor import EchoesHintDistrib
 from randovania.generator.filler import runner
 from randovania.generator.generator import create_player_pool
 
-if TYPE_CHECKING:
-    from randovania.game_description.hint_features import HintFeature
+if typing.TYPE_CHECKING:
+    from randovania.game_description.hint_features import PickupHintFeature
 
 
 async def test_run_filler(
@@ -143,7 +143,7 @@ def test_add_hints_precision(empty_patches):
     }
 
 
-def _make_pickup(pickup_category: HintFeature, generator_params: PickupGeneratorParams):
+def _make_pickup(pickup_category: PickupHintFeature, generator_params: PickupGeneratorParams):
     return PickupEntry(
         name="Pickup",
         model=PickupModel(
