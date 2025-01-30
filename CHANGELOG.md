@@ -87,7 +87,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Prevented the block with a hidden item in Area 4 Central Caves - Transit Tunnel from being destroyed from another area, causing the item disappear.
 - Fixed: Incorrect rotation of a progressive item if the previous stage of the progressive item was received without leaving the area.
 - Fixed: Once you have collected all Metroid DNA, when traveling from Surface West to Surface East, a message will always appear asking if you want to fight Proteus Ridley or not. Canceling the message will load Surface East like normal. This is to prevent Surface East from being potentially inaccessible if the only entry point is from Surface West.
-- Fixed: The in-game disconnected message not properly activating when getting disconnected from the server.
+- Fixed: Issue where reloading an area would retain the disconnected status regardless if the disconnect message was displayed or not.
 
 #### Logic Database
 
