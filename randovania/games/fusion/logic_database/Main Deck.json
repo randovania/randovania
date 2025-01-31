@@ -4612,7 +4612,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Kill Namihe's and then SWJ up. TODO: check if you can do this with jump extneds",
+                                            "comment": "Kill Namihe's and then SWJ up.",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -4904,16 +4904,18 @@
                         "y": 344.0,
                         "z": 0.0
                     },
-                    "description": "TODO: future start location",
+                    "description": "",
                     "layers": [
                         "default"
                     ],
                     "extra": {
                         "door_idx": [
                             50
-                        ]
+                        ],
+                        "X": 24,
+                        "Y": 18
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Main Deck",
@@ -9182,7 +9184,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "With Power Bombs",
+                                                        "comment": "With Power Bombs hitless",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -9369,52 +9371,13 @@
                                                         "comment": "Kill them",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "ScrewAttack",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Via normal methods. Taking/avoiding damage is accounted in connection to down here",
+                                                                    "comment": "Taking/avoiding damage is accounted in connection to down here",
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
                                                                             "data": "Can Kill Tough Beam-Resistant Enemy"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "With Power Bombs",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Can Use Power Bombs"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "PowerBombs",
-                                                                                "amount": 4,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Combat",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
                                                                         }
                                                                     ]
                                                                 }
@@ -9549,15 +9512,6 @@
                                                             {
                                                                 "type": "template",
                                                                 "data": "Can Kill Tough Beam-Resistant Enemy"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "ScrewAttack",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
                                                             }
                                                         ]
                                                     }
@@ -10631,7 +10585,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "SWJ - TODO: revisit with HJ only after SWJ is patched",
+                                                        "comment": "SWJ",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -10642,6 +10596,32 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "WallJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Equipment manip",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "MenuMod",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
