@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import os
 import sys
 from enum import Enum
 from typing import Self
@@ -32,7 +31,7 @@ class ConnectorBuilderChoice(Enum):
             if sys.platform == "darwin":
                 return False
             if sys.platform == "linux" and randovania.is_frozen():
-                return os.getuid() == 0 and not randovania.is_flatpak()
+                return not randovania.is_flatpak()
 
         return True
 
