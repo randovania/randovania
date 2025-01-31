@@ -24,9 +24,7 @@ class CSHintDistributor(HintDistributor):
     def num_joke_hints(self) -> int:
         return 0
 
-    async def get_specific_pickup_precision_pair_overrides(
-        self, patches: GamePatches, prefill: PreFillParams
-    ) -> dict[NodeIdentifier, PrecisionPair]:
+    async def get_specific_pickup_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
         def p(loc: HintLocationPrecision) -> PrecisionPair:
             return PrecisionPair(loc, HintItemPrecision.DETAILED, False)
 

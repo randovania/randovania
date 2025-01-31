@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.hint import (
     HintDarkTemple,
     HintItemPrecision,
@@ -18,8 +19,8 @@ from randovania.lib import enum_lib
 if TYPE_CHECKING:
     from random import Random
 
-    from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.generator.filler.filler_configuration import PlayerPool
     from randovania.generator.filler.player_state import PlayerState
     from randovania.generator.hint_distributor import HintProvider
@@ -31,6 +32,9 @@ class EchoesHintDistributor(HintDistributor):
     @property
     def num_joke_hints(self) -> int:
         return 2
+
+    def interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
+        return super().interesting_pickup_to_hint(pickup) and not pickup.has_hint_feature("key")
 
     async def get_guaranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
         def g(index, loc):
@@ -94,3 +98,21 @@ class EchoesHintDistributor(HintDistributor):
             return self.add_hints_precision(player_state, patches, rng)
         else:
             return self.replace_hints_without_precision_with_jokes(patches)
+
+    async def get_specific_pickup_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
+        precision = PrecisionPair(HintLocationPrecision.KEYBEARER, HintItemPrecision.BROAD_CATEGORY, include_owner=True)
+
+        c = NodeIdentifier.create
+        keybearers = [
+            c("Agon Wastes", "Central Mining Station", "Keybearer Corpse (J-Stl)"),
+            c("Agon Wastes", "Main Reactor", "Keybearer Corpse (B-Stl)"),
+            c("Sanctuary Fortress", "Sanctuary Entrance", "Keybearer Corpse (S-Jrs)"),
+            c("Sanctuary Fortress", "Dynamo Works", "Keybearer Corpse (C-Rch)"),
+            c("Temple Grounds", "Landing Site", "Keybearer Corpse (M-Dhe)"),
+            c("Temple Grounds", "Industrial Site", "Keybearer Corpse (J-Fme)"),
+            c("Temple Grounds", "Storage Cavern A", "Keybearer Corpse (D-Isl)"),
+            c("Torvus Bog", "Torvus Lagoon", "Keybearer Corpse (S-Dly)"),
+            c("Torvus Bog", "Catacombs", "Keybearer Corpse (G-Sch)"),
+        ]
+
+        return {keybearer: precision for keybearer in keybearers}

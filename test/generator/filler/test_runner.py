@@ -89,7 +89,7 @@ def test_fill_unassigned_hints_empty_assignment(echoes_game_description, echoes_
     hint_distributor = echoes_game_description.game.generator.hint_distributor
 
     # Run
-    result = hint_distributor.fill_unassigned_hints(
+    result = hint_distributor.old_fill_unassigned_hints(
         echoes_game_patches,
         echoes_game_description.region_list,
         rng,

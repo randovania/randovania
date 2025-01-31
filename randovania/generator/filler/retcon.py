@@ -7,7 +7,6 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.node import Node
-from randovania.game_description.hint import LocationHint
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
 from randovania.generator.filler.filler_library import UnableToGenerate, UncollectedState
@@ -351,7 +350,7 @@ def retcon_playthrough_filler(
             for i, new_pickup in enumerate(new_pickups):
                 if i > 0:
                     current_player.reach = reach_lib.advance_reach_with_possible_unsafe_resources(current_player.reach)
-                    current_player.advance_scan_asset_seen_count()
+                    current_player.advance_hint_seen_count()
                     all_locations_weighted = _calculate_all_pickup_indices_weight(player_states)
 
                 log_entry = _assign_pickup_somewhere(
@@ -420,25 +419,18 @@ def _assign_pickup_somewhere(
             debug_print_weighted_locations(all_locations, player_states)
 
         index_owner_state, pickup_index = usable_locations.select_location(rng)
-        index_owner_state.assign_pickup(pickup_index, PickupTarget(action, current_player.index))
+        index_owner_state.assign_pickup(
+            pickup_index,
+            PickupTarget(action, current_player.index),
+            UncollectedState.from_reach(index_owner_state.reach),
+            all_locations,
+        )
 
         increment_index_age(all_locations, action.generator_params.index_age_impact)
         all_locations.remove(index_owner_state, pickup_index)
 
         # Place a hint for the new item
-        hint_location = _calculate_hint_location_for_action(
-            action,
-            index_owner_state,
-            all_locations,
-            UncollectedState.from_reach(index_owner_state.reach),
-            pickup_index,
-            rng,
-            index_owner_state.hint_initial_pickups,
-        )
-        if hint_location is not None:
-            index_owner_state.reach.state.patches = index_owner_state.reach.state.patches.assign_hint(
-                hint_location, LocationHint.unassigned(pickup_index)
-            )
+        hint_location = None  # TODO
 
         if pickup_index in index_owner_state.reach.state.collected_pickup_indices:
             current_player.reach.advance_to(current_player.reach.state.assign_pickup_resources(action))
