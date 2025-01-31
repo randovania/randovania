@@ -11,17 +11,12 @@ if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
     from randovania.generator.filler.filler_configuration import PlayerPool
     from randovania.generator.filler.player_state import PlayerState
-    from randovania.generator.hint_distributor import HintProvider
 
 
 class PrimeHintDistributor(HintDistributor):
-    def precision_pair_weighted_list(self) -> list[PrecisionPair]:
-        return [
-            PrecisionPair(HintLocationPrecision.REGION_ONLY, HintItemPrecision.DETAILED, True),
-        ]
-
-    def _get_relative_hint_providers(self) -> list[HintProvider]:
-        return []
+    @property
+    def default_precision_pair(self) -> PrecisionPair:
+        return PrecisionPair(HintLocationPrecision.REGION_ONLY, HintItemPrecision.DETAILED, True)
 
     async def assign_precision_to_hints(
         self, patches: GamePatches, rng: Random, player_pool: PlayerPool, player_state: PlayerState

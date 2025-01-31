@@ -6,7 +6,7 @@ from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision, LocationHint, PrecisionPair
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
-from randovania.generator.hint_distributor import HintDistributor, HintProvider, HintTargetPrecision
+from randovania.generator.hint_distributor import HintDistributor, HintTargetPrecision
 
 if TYPE_CHECKING:
     from random import Random
@@ -63,21 +63,9 @@ class CSHintDistributor(HintDistributor):
 
         return []
 
-    def precision_pair_weighted_list(self) -> list[PrecisionPair]:
-        tiers = {
-            (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, True): 2,
-            (HintLocationPrecision.DETAILED, HintItemPrecision.PRECISE_CATEGORY, True): 1,
-            (HintLocationPrecision.REGION_ONLY, HintItemPrecision.DETAILED, True): 1,
-        }
-
-        hints = []
-        for params, quantity in tiers.items():
-            hints.extend([PrecisionPair(*params)] * quantity)
-
-        return hints
-
-    def _get_relative_hint_providers(self) -> list[HintProvider]:
-        return []
+    @property
+    def default_precision_pair(self) -> PrecisionPair:
+        return PrecisionPair.featural()
 
     async def assign_precision_to_hints(
         self, patches: GamePatches, rng: Random, player_pool: PlayerPool, player_state: PlayerState

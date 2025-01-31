@@ -7,7 +7,6 @@ from randovania.game_description.hint import (
     HintDarkTemple,
     HintItemPrecision,
     HintLocationPrecision,
-    HintRelativeAreaName,
     PrecisionPair,
     RedTempleHint,
 )
@@ -23,7 +22,6 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.generator.filler.filler_configuration import PlayerPool
     from randovania.generator.filler.player_state import PlayerState
-    from randovania.generator.hint_distributor import HintProvider
     from randovania.generator.pre_fill_params import PreFillParams
 
 
@@ -33,8 +31,8 @@ class EchoesHintDistributor(HintDistributor):
     def num_joke_hints(self) -> int:
         return 2
 
-    def interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
-        return super().interesting_pickup_to_hint(pickup) and not pickup.has_hint_feature("key")
+    def less_interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
+        return not pickup.has_hint_feature("key")
 
     async def get_guaranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
         def g(index, loc):
@@ -66,29 +64,18 @@ class EchoesHintDistributor(HintDistributor):
         return patches
 
     # Post Filler
+    @property
+    def default_precision_pair(self) -> PrecisionPair:
+        return PrecisionPair.featural()
 
-    def precision_pair_weighted_list(self) -> list[PrecisionPair]:
-        tiers = {
-            (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, False): 3,
-            (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, True): 2,
-            (HintLocationPrecision.DETAILED, HintItemPrecision.PRECISE_CATEGORY, True): 2,
-            (HintLocationPrecision.DETAILED, HintItemPrecision.GENERAL_CATEGORY, True): 1,
-            (HintLocationPrecision.REGION_ONLY, HintItemPrecision.DETAILED, False): 2,
-            (HintLocationPrecision.REGION_ONLY, HintItemPrecision.PRECISE_CATEGORY, True): 1,
-        }
-
-        hints = []
-        for params, quantity in tiers.items():
-            hints.extend([PrecisionPair(*params)] * quantity)
-
-        return hints
-
-    def _get_relative_hint_providers(self) -> list[HintProvider]:
-        return [
-            self._relative(HintLocationPrecision.RELATIVE_TO_AREA, True, HintRelativeAreaName.NAME, 4),
-            self._relative(HintLocationPrecision.RELATIVE_TO_AREA, False, HintRelativeAreaName.NAME, 3),
-            self._relative(HintLocationPrecision.RELATIVE_TO_INDEX, True, HintItemPrecision.DETAILED, 4),
-        ]
+        # tiers = {
+        #     (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, False): 3,
+        #     (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, True): 2,
+        #     (HintLocationPrecision.DETAILED, HintItemPrecision.PRECISE_CATEGORY, True): 2,
+        #     (HintLocationPrecision.DETAILED, HintItemPrecision.GENERAL_CATEGORY, True): 1,
+        #     (HintLocationPrecision.REGION_ONLY, HintItemPrecision.DETAILED, False): 2,
+        #     (HintLocationPrecision.REGION_ONLY, HintItemPrecision.PRECISE_CATEGORY, True): 1,
+        # }
 
     async def assign_precision_to_hints(
         self, patches: GamePatches, rng: Random, player_pool: PlayerPool, player_state: PlayerState

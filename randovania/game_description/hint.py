@@ -20,6 +20,9 @@ class HintItemPrecision(Enum):
     # Precision hasn't been assigned yet
     UNDEFINED = "undefined"
 
+    # Based on a feature of the item
+    FEATURAL = "featural"
+
     # The exact item
     DETAILED = "detailed"
 
@@ -39,6 +42,9 @@ class HintItemPrecision(Enum):
 class HintLocationPrecision(Enum):
     # Precision hasn't been assigned yet
     UNDEFINED = "undefined"
+
+    # Based on a feature of the location
+    FEATURAL = "featural"
 
     # The exact location
     DETAILED = "detailed"
@@ -100,7 +106,7 @@ class RelativeDataArea(JsonDataclass, RelativeData):  # type: ignore[misc]
 class PrecisionPair(JsonDataclass):
     location: HintLocationPrecision
     item: HintItemPrecision
-    include_owner: bool
+    include_owner: bool | None = None
     relative: RelativeData | None = None
 
     @classmethod
@@ -115,8 +121,15 @@ class PrecisionPair(JsonDataclass):
             relative=RelativeData.from_json(relative) if relative is not None else None,
         )
 
+    @classmethod
+    def featural(cls) -> typing.Self:
+        return cls(
+            location=HintLocationPrecision.FEATURAL,
+            item=HintItemPrecision.FEATURAL,
+        )
 
-_PRECISION_PAIR_UNASSIGNED = PrecisionPair(
+
+PRECISION_PAIR_UNASSIGNED = PrecisionPair(
     location=HintLocationPrecision.UNDEFINED,
     item=HintItemPrecision.UNDEFINED,
     include_owner=False,
@@ -157,7 +170,7 @@ class LocationHint(BaseHint):
     @classmethod
     def unassigned(cls, target: PickupIndex) -> typing.Self:
         """Creates a LocationHint without assigning its precision."""
-        return cls(target=target, precision=_PRECISION_PAIR_UNASSIGNED)
+        return cls(target=target, precision=PRECISION_PAIR_UNASSIGNED)
 
     @classmethod
     def hint_type(cls) -> HintType:
@@ -165,7 +178,11 @@ class LocationHint(BaseHint):
 
 
 def is_unassigned_location(hint: BaseHint) -> typing.TypeGuard[LocationHint]:
-    return isinstance(hint, LocationHint) and (hint.precision is _PRECISION_PAIR_UNASSIGNED)
+    return isinstance(hint, LocationHint) and (
+        (hint.precision is PRECISION_PAIR_UNASSIGNED)
+        or (hint.precision.location is HintLocationPrecision.FEATURAL)
+        or (hint.precision.item is HintItemPrecision.FEATURAL)
+    )
 
 
 @dataclass(frozen=True)

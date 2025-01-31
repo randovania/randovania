@@ -1,37 +1,26 @@
 from __future__ import annotations
 
-import copy
 import dataclasses
 from abc import ABC
-from collections.abc import Callable, Iterator
+from collections.abc import Callable
 from random import Random
 from typing import TYPE_CHECKING
 
-from randovania.game_description import node_search
 from randovania.game_description.db.hint_node import HintNode, HintNodeKind
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import (
-    Hint,
-    HintItemPrecision,
-    HintLocationPrecision,
-    HintRelativeAreaName,
     JokeHint,
     LocationHint,
     PrecisionPair,
-    RelativeData,
-    RelativeDataArea,
-    RelativeDataItem,
     is_unassigned_location,
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.filler.player_state import HintState, PlayerState
-from randovania.lib import random_lib
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
-    from randovania.game_description.db.area import Area
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -39,11 +28,6 @@ if TYPE_CHECKING:
     from randovania.generator.pre_fill_params import PreFillParams
 
 HintProvider = Callable[[PlayerState, GamePatches, Random, PickupIndex], LocationHint | None]
-
-
-def _not_empty(it: Iterator) -> bool:
-    return sum(1 for _ in it) > 0
-
 
 HintTargetPrecision = tuple[PickupIndex, PrecisionPair]
 
@@ -124,7 +108,6 @@ class HintDistributor(ABC):
 
         return patches
 
-    # TODO: do these *after* base hints?
     async def assign_pre_filler_hints(
         self, patches: GamePatches, prefill: PreFillParams, rng_required: bool = True
     ) -> GamePatches:
@@ -151,12 +134,6 @@ class HintDistributor(ABC):
             rng,
             player_state.hint_state,
         )
-        full_hints_patches = self.old_fill_unassigned_hints(
-            full_hints_patches,
-            player_state.game.region_list,
-            rng,
-            player_state.hint_state.hint_initial_pickups,
-        )
         return await self.assign_precision_to_hints(full_hints_patches, rng, player_pool, player_state)
 
     async def assign_precision_to_hints(
@@ -173,19 +150,12 @@ class HintDistributor(ABC):
         raise NotImplementedError
 
     def interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
-        return pickup.show_in_credits_spoiler  # FIXME
+        """Highest priority pickups are those shown in the credits"""
+        return pickup.show_in_credits_spoiler and self.less_interesting_pickup_to_hint(pickup)
 
-    def get_hint_for_pickup(self, target: PickupIndex) -> Hint:
-        # TODO
-
-        return LocationHint(
-            PrecisionPair(
-                HintLocationPrecision.DETAILED,
-                HintItemPrecision.DETAILED,
-                True,
-            ),
-            target,
-        )
+    def less_interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
+        """Certain games may want certain pickups to only be hinted as a last resort"""
+        return True
 
     def fill_unassigned_hints(
         self,
@@ -194,6 +164,7 @@ class HintDistributor(ABC):
         rng: Random,
         hint_state: HintState,
     ) -> GamePatches:
+        """Selects targets for all remaining unassigned generic hint nodes"""
         hinted_pickups = {hint.target for hint in patches.hints.values() if isinstance(hint, LocationHint)}
 
         def sort_hints(item: tuple[NodeIdentifier, set[PickupIndex]]):
@@ -201,235 +172,84 @@ class HintDistributor(ABC):
 
         # assign hints with fewest potential targets first to help ensure none of them run out of options
         for hint_node, potential_targets in sorted(hint_state.hint_valid_targets.items(), key=sort_hints):
-            real_potential_targets = potential_targets - hinted_pickups
-            real_potential_targets = {
-                target
-                for target in real_potential_targets
-                if self.interesting_pickup_to_hint(patches.pickup_assignment[target].pickup)
-            }
-
-            if not real_potential_targets:
-                debug.debug_print(f"No remaining targets for {hint_node}; skipping")
+            if hint_node in patches.hints:
+                # hint has already been assigned
                 continue
 
-            target = rng.choice(sorted(real_potential_targets))
-            hinted_pickups.add(target)
+            node = region_list.typed_node_by_identifier(hint_node, HintNode)
+            if node.kind != HintNodeKind.GENERIC:
+                continue
 
-            hint = self.get_hint_for_pickup(target)
-            patches = patches.assign_hint(hint_node, hint)
+            debug.debug_print(f"> Choosing hint target for {hint_node.as_string}:")
+
+            # exclude uninteresting pickups (minors, Echoes keys, etc.)
+            real_potential_targets = {
+                target
+                for target in potential_targets
+                if self.interesting_pickup_to_hint(patches.pickup_assignment[target].pickup)
+            }
+            # don't hint things twice
+            real_potential_targets -= hinted_pickups
+
+            if not real_potential_targets:
+                # no interesting pickups to place - use anything placed by the generator
+                real_potential_targets = {
+                    pickup
+                    for pickup, entry in patches.pickup_assignment.items()
+                    if self.less_interesting_pickup_to_hint(entry.pickup)
+                }
+                real_potential_targets -= hinted_pickups
+                debug.debug_print(
+                    f"  * No interesting pickups; trying {len(real_potential_targets)} less interesting pickups"
+                )
+
+            if not real_potential_targets:
+                # STILL no pickups to place - just use *anything* that hasn't been hinted
+                real_potential_targets = {
+                    node.pickup_index for node in region_list.iterate_nodes() if isinstance(node, PickupNode)
+                }
+                real_potential_targets -= hinted_pickups
+                debug.debug_print(
+                    f"  * Still no viable pickups; trying {len(real_potential_targets)} uninteresting pickups"
+                )
+
+            if not real_potential_targets:
+                raise UnableToGenerate("Not enough PickupNodes in the game to fill all hint locations.")
+
+            target = rng.choice(sorted(real_potential_targets))
+
+            hinted_pickups.add(target)
+            debug.debug_print(
+                f"  * Placing hint for {patches.pickup_assignment.get(target, target)}"
+                f" at {region_list.node_name(region_list.node_from_pickup_index(target))}\n"
+            )
+
+            patches = patches.assign_hint(hint_node, LocationHint.unassigned(target))
 
         return patches
 
-    def old_fill_unassigned_hints(
-        self,
-        patches: GamePatches,
-        region_list: RegionList,
-        rng: Random,
-        hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]],
-    ) -> GamePatches:
-        new_hints = copy.copy(patches.hints)
-
-        debug.debug_print(f"fill_unassigned_hints: hint_initial_pickups has {len(hint_initial_pickups)} elements")
-
-        # Get all Hint's NodeIdentifiers from the RegionList
-        potential_hint_locations: set[NodeIdentifier] = {
-            node.identifier for node in region_list.iterate_nodes() if isinstance(node, HintNode)
-        }
-        for hint in potential_hint_locations:
-            if hint not in hint_initial_pickups:
-                hint_initial_pickups[hint] = frozenset()
-
-        # But remove these that already have hints
-        potential_hint_locations -= patches.hints.keys()
-
-        # We try our best to not hint the same thing twice
-        location_hints = {hint for hint in patches.hints.values() if isinstance(hint, LocationHint)}
-        hinted_indices: set[PickupIndex] = {hint.target for hint in location_hints}
-
-        # Get interesting items to place hints for
-        possible_indices: set[PickupIndex] = {
-            index
-            for index, target in patches.pickup_assignment.items()
-            if self.interesting_pickup_to_hint(target.pickup)
-        }
-        possible_indices -= hinted_indices
-
-        debug.debug_print(
-            f"fill_unassigned_hints had {len(possible_indices)} decent indices "
-            f"for {len(potential_hint_locations)} hint locations"
-        )
-
-        if debug.debug_level() > 1:
-            print("> Num pickups per asset:")
-            for asset, pickups in hint_initial_pickups.items():
-                print(f"* {asset}: {len(pickups)} pickups")
-            print("> Done.")
-
-        all_pickup_indices = [node.pickup_index for node in region_list.iterate_nodes() if isinstance(node, PickupNode)]
-        rng.shuffle(all_pickup_indices)
-
-        # If there isn't enough indices, use unhinted non-majors placed by generator
-        if (num_indices_needed := len(potential_hint_locations) - len(possible_indices)) > 0:
-            potential_indices = [
-                index for index in all_pickup_indices if index not in possible_indices and index not in hinted_indices
-            ]
-            debug.debug_print(
-                f"Had only {len(possible_indices)} hintable indices, but needed {len(potential_hint_locations)}."
-                f" Found {len(potential_indices)} less desirable locations."
-            )
-            possible_indices |= set(potential_indices[:num_indices_needed])
-
-        # But if we don't have enough hints, just pick randomly from everything
-        while len(possible_indices) < len(potential_hint_locations):
-            debug.debug_print(
-                f"Still only {len(possible_indices)} indices out of {len(potential_hint_locations)} target."
-                f"Desperate pool has {len(all_pickup_indices)} left."
-            )
-            try:
-                possible_indices.add(all_pickup_indices.pop())
-            except IndexError:
-                raise UnableToGenerate("Not enough PickupNodes in the game to fill all hint locations.")
-
-        # Get an stable order
-        ordered_possible_indices = sorted(possible_indices)
-        ordered_potential_hint_locations = sorted(potential_hint_locations)
-
-        num_hints: dict[PickupIndex, int] = {
-            index: sum(1 for indices in hint_initial_pickups.values() if index in indices)
-            for index in ordered_possible_indices
-        }
-        max_seen = max(num_hints.values()) if num_hints else 0
-        pickup_indices_weight: dict[PickupIndex, int] = {
-            index: max_seen - num_hint for index, num_hint in num_hints.items()
-        }
-        # Ensure all indices are present with at least weight 0
-        for index in ordered_possible_indices:
-            if index not in pickup_indices_weight:
-                pickup_indices_weight[index] = 0
-
-        for hint in sorted(ordered_potential_hint_locations, key=lambda r: len(hint_initial_pickups[r]), reverse=True):
-            try:
-                new_index = random_lib.select_element_with_weight(pickup_indices_weight, rng)
-            except StopIteration:
-                # If everything has weight 0, then just choose randomly.
-                new_index = random_lib.random_key(pickup_indices_weight, rng)
-
-            del pickup_indices_weight[new_index]
-
-            new_hints[hint] = LocationHint.unassigned(new_index)
-            debug.debug_print(
-                f"Added hint at {hint} for item at "
-                f"{region_list.node_name(region_list.node_from_pickup_index(new_index))}"
-            )
-
-        return dataclasses.replace(patches, hints=new_hints)
-
     def replace_hints_without_precision_with_jokes(self, patches: GamePatches) -> GamePatches:
         """
-        Adds WRONG_GAME precision to all hints that are missing one precision.
+        Assigns a JokeHint to each hint node with unassigned precision
         :param patches:
         :return:
         """
 
-        hints_to_replace = {asset: JokeHint() for asset, hint in patches.hints.items() if is_unassigned_location(hint)}
+        hints_to_replace = {
+            hint_node: JokeHint() for hint_node, hint in patches.hints.items() if is_unassigned_location(hint)
+        }
 
         return dataclasses.replace(
-            patches, hints={asset: hints_to_replace.get(asset, hint) for asset, hint in patches.hints.items()}
+            patches,
+            hints={hint_node: hints_to_replace.get(hint_node, hint) for hint_node, hint in patches.hints.items()},
         )
 
-    def precision_pair_weighted_list(self) -> list[PrecisionPair]:
+    @property
+    def default_precision_pair(self) -> PrecisionPair:
         raise NotImplementedError
 
-    def add_relative_hint(
-        self,
-        region_list: RegionList,
-        patches: GamePatches,
-        rng: Random,
-        target: PickupIndex,
-        target_precision: HintItemPrecision,
-        relative_type: HintLocationPrecision,
-        precise_distance: bool,
-        precision: HintItemPrecision | HintRelativeAreaName,
-        max_distance: int,
-    ) -> LocationHint | None:
-        """
-        Creates a relative hint.
-        :return: Might be None, if no hint could be created.
-        """
-        target_node = node_search.pickup_index_to_node(region_list, target)
-        target_area = region_list.nodes_to_area(target_node)
-        dock_types_to_ignore = patches.game.dock_weakness_database.all_ignore_hints_dock_types
-        distances = node_search.distances_to_node(
-            region_list, target_node, dock_types_to_ignore, patches=patches, cutoff=max_distance
-        )
-
-        def _major_pickups(area: Area) -> Iterator[PickupIndex]:
-            for index in area.pickup_indices:
-                t = patches.pickup_assignment.get(index)
-                # FIXME: None should be ok, but this must be called after junk has been filled
-                if t is not None:
-                    if t.pickup.show_in_credits_spoiler:  # FIXME
-                        yield index
-
-        area_choices = {
-            area: 1 / max(distance, 2)
-            for area, distance in distances.items()
-            if (
-                distance > 0
-                and area.in_dark_aether == target_area.in_dark_aether
-                and (relative_type == HintLocationPrecision.RELATIVE_TO_AREA or _not_empty(_major_pickups(area)))
-            )
-        }
-        if not area_choices:
-            return None
-
-        area = random_lib.select_element_with_weight(dict(sorted(area_choices.items(), key=lambda a: a[0].name)), rng)
-
-        distance_offset = None
-        if not precise_distance:
-            distance_offset = max_distance - distances[area]
-
-        relative: RelativeData
-
-        if relative_type == HintLocationPrecision.RELATIVE_TO_AREA:
-            assert isinstance(precision, HintRelativeAreaName)
-            relative = RelativeDataArea(distance_offset, region_list.identifier_for_area(area), precision)
-
-        elif relative_type == HintLocationPrecision.RELATIVE_TO_INDEX:
-            assert isinstance(precision, HintItemPrecision)
-            relative = RelativeDataItem(distance_offset, rng.choice(list(_major_pickups(area))), precision)
-        else:
-            raise ValueError(f"Invalid relative_type: {relative_type}")
-
-        precision_pair = PrecisionPair(relative_type, target_precision, include_owner=False, relative=relative)
-        return LocationHint(precision_pair, target)
-
-    def _relative(
-        self,
-        relative_type: HintLocationPrecision,
-        precise_distance: bool,
-        precision: HintItemPrecision | HintRelativeAreaName,
-        max_distance: int,
-    ) -> HintProvider:
-        def _wrapper(
-            player_state: PlayerState, patches: GamePatches, rng: Random, target: PickupIndex
-        ) -> LocationHint | None:
-            return self.add_relative_hint(
-                player_state.game.region_list,
-                patches,
-                rng,
-                target,
-                HintItemPrecision.DETAILED,
-                relative_type,
-                precise_distance,
-                precision,
-                max_distance,
-            )
-
-        return _wrapper
-
-    def _get_relative_hint_providers(self) -> list[HintProvider]:
-        raise NotImplementedError
+    def get_hint_precision(self, hint_node: NodeIdentifier, hint: LocationHint, rng: Random) -> PrecisionPair:
+        pass
 
     def add_hints_precision(
         self,
@@ -449,26 +269,15 @@ class HintDistributor(ABC):
             identifier: hint for identifier, hint in patches.hints.items() if is_unassigned_location(hint)
         }
 
-        relative_hint_providers = self._get_relative_hint_providers()
-        identifiers = list(hints_to_replace.keys())
-        rng.shuffle(identifiers)
-
-        while identifiers and relative_hint_providers:
-            hint_target = hints_to_replace[identifiers[-1]].target
-            assert hint_target is not None
-            new_hint = relative_hint_providers.pop()(player_state, patches, rng, hint_target)
-            if new_hint is not None:
-                hints_to_replace[identifiers.pop()] = new_hint
+        unassigned_hints = list(hints_to_replace.items())
+        rng.shuffle(unassigned_hints)
 
         # Add random precisions
-        precisions: list[PrecisionPair] = []
-        for identifier in identifiers:
-            precisions = random_lib.create_weighted_list(rng, precisions, self.precision_pair_weighted_list)
-            precision = precisions.pop()
-
+        for identifier, hint in unassigned_hints:
+            precision = self.get_hint_precision(identifier, hint, rng)
             hints_to_replace[identifier] = dataclasses.replace(hints_to_replace[identifier], precision=precision)
 
-        # Replace the hints the in the patches
+        # Replace the hints in the patches
         return dataclasses.replace(
             patches,
             hints={identifier: hints_to_replace.get(identifier, hint) for identifier, hint in patches.hints.items()},
