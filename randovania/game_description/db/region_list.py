@@ -320,10 +320,16 @@ class RegionList(NodeProvider):
     def get_configurable_node_requirement(self, identifier: NodeIdentifier) -> Requirement:
         return self.configurable_nodes[identifier]
 
+    def __hash__(self) -> int:
+        return hash(self.all_nodes)
+
     @functools.lru_cache
-    def pickup_nodes_with_feature(self, feature: HintFeature) -> Iterator[PickupNode]:
-        yield from (
-            node for node in self.iterate_nodes() if isinstance(node, PickupNode) and feature in node.hint_features
+    def pickup_nodes_with_feature(self, feature: HintFeature) -> tuple[PickupNode]:
+        return tuple(
+            node
+            for node in self.iterate_nodes()
+            if isinstance(node, PickupNode)
+            and ((feature in node.hint_features) or (feature in self.nodes_to_area(node).hint_features))
         )
 
 

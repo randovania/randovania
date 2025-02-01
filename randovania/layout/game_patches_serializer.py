@@ -256,7 +256,7 @@ def decode_single(
     # Hints
     hints = {}
     for identifier_str, hint in game_modifications["hints"].items():
-        hints[NodeIdentifier.from_string(identifier_str)] = BaseHint.from_json(hint)
+        hints[NodeIdentifier.from_string(identifier_str)] = BaseHint.from_json(hint, game=game)
 
     patches = GamePatches.create_from_game(game, player_index, configuration)
     patches = patches.assign_dock_connections(dock_connections)

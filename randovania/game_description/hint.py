@@ -5,10 +5,14 @@ from dataclasses import dataclass
 from enum import Enum
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.game_description import default_database
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.hint_features import HintFeature, PickupHintFeature
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.lib import enum_lib
+
+if typing.TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
 
 
 class HintDarkTemple(Enum):
@@ -112,15 +116,39 @@ class PrecisionPair(JsonDataclass):
 
     @classmethod
     def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
-        # re-implemented for an version without expensive reflection
+        game: GameDescription = extra["game"]
+
         relative = json_dict.get("relative")
 
+        location_json = json_dict.get("location")
+        if location_json is not None:
+            location = HintLocationPrecision(location_json)
+        else:
+            location = game.hint_feature_database[json_dict["location_feature"]]
+
+        item_json = json_dict.get("item")
+        if item_json is not None:
+            item = HintItemPrecision(item_json)
+        else:
+            item = default_database.pickup_database_for_game(game.game).pickup_categories[json_dict["item_feature"]]
+
         return cls(
-            location=HintLocationPrecision(json_dict["location"]),
-            item=HintItemPrecision(json_dict["item"]),
+            location=location,
+            item=item,
             include_owner=json_dict["include_owner"],
             relative=RelativeData.from_json(relative) if relative is not None else None,
         )
+
+    @property
+    def as_json(self) -> dict:
+        data = super().as_json
+        if isinstance(self.location, HintFeature):
+            del data["location"]
+            data["location_feature"] = self.location.name
+        if isinstance(self.item, PickupHintFeature):
+            del data["item"]
+            data["item_feature"] = self.item.name
+        return data
 
     @classmethod
     def featural(cls) -> typing.Self:
@@ -165,7 +193,7 @@ class LocationHint(BaseHint):
     def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
         return cls(
             target=PickupIndex(json_dict["target"]),
-            precision=PrecisionPair.from_json(json_dict["precision"]),
+            precision=PrecisionPair.from_json(json_dict["precision"], **extra),
         )
 
     @classmethod

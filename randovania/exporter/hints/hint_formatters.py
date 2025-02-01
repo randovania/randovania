@@ -6,6 +6,7 @@ from randovania.exporter.hints.determiner import Determiner
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
 from randovania.game_description import node_search
 from randovania.game_description.hint import HintLocationPrecision, HintRelativeAreaName, LocationHint, RelativeDataArea
+from randovania.game_description.hint_features import HintFeature
 from randovania.layout import filtered_database
 
 if TYPE_CHECKING:
@@ -30,13 +31,16 @@ class TemplatedFormatter(LocationFormatter):
         self.with_region = with_region
         self.upper_pickup = upper_pickup
 
-    def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool) -> str:
-        node_name = self.namer.format_location(
+    def location_name(self, game: RandovaniaGame, hint: LocationHint, with_color: bool) -> str:
+        return self.namer.format_location(
             location=PickupLocation(game, hint.target),
             with_region=self.with_region or hint.precision.location == HintLocationPrecision.REGION_ONLY,
             with_area=hint.precision.location != HintLocationPrecision.REGION_ONLY,
             with_color=with_color,
         )
+
+    def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool) -> str:
+        node_name = self.location_name(game, hint, with_color)
         pickup = pick_hint.pickup_name
         if self.upper_pickup:
             pickup = pickup.upper()
@@ -51,6 +55,20 @@ class TemplatedFormatter(LocationFormatter):
             determiner=determiner,
             pickup=pickup,
             node=node_name,
+        )
+
+
+class FeaturalFormatter(TemplatedFormatter):
+    def __init__(self, template: str, namer: HintNamer, upper_pickup: bool = False):
+        self.template = template
+        self.namer = namer
+        self.upper_pickup = upper_pickup
+
+    def location_name(self, game: RandovaniaGame, hint: LocationHint, with_color: bool) -> str:
+        assert isinstance(hint.precision.location, HintFeature)
+        return self.namer.format_location_feature(
+            hint.precision.location,
+            with_color,
         )
 
 

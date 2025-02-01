@@ -1,17 +1,11 @@
 from __future__ import annotations
 
-import dataclasses
 from typing import TYPE_CHECKING
 
-from randovania.exporter.hints.hint_formatters import LocationFormatter, RelativeAreaFormatter, TemplatedFormatter
+from randovania.exporter.hints.basic_hint_formatters import basic_hint_formatters
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
-from randovania.exporter.hints.relative_item_formatter import RelativeItemFormatter
-from randovania.game_description import default_database
-from randovania.game_description.hint import Hint, HintLocationPrecision
 
 if TYPE_CHECKING:
-    from randovania.exporter.hints.pickup_hint import PickupHint
-    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.pickup_node import PickupNode
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_patches import GamePatches
@@ -34,61 +28,18 @@ def colorize_text(color: str, text: str, with_color: bool):
         return text
 
 
-class PrimeFamilyHintNamer(HintNamer):
-    location_formatters: dict[HintLocationPrecision, LocationFormatter]
-
+class PrimeFamilyHintNamer(HintNamer[str]):
     def __init__(self, all_patches: dict[int, GamePatches], players_config: PlayersConfiguration):
         patches = all_patches[players_config.player_index]
 
-        self.location_formatters = {
-            HintLocationPrecision.DETAILED: TemplatedFormatter(
-                "{determiner.title}{pickup} can be found in {node}.",
-                self,
-            ),
-            HintLocationPrecision.REGION_ONLY: TemplatedFormatter(
-                "{determiner.title}{pickup} can be found in {node}.",
-                self,
-            ),
-            HintLocationPrecision.RELATIVE_TO_AREA: RelativeAreaFormatter(
-                patches,
-                lambda msg, with_color: colorize_text(self.color_location, msg, with_color),
-            ),
-            HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(
-                patches,
-                lambda msg, with_color: colorize_text(self.color_location, msg, with_color),
-                players_config,
-            ),
-        }
-
-    def format_joke(self, joke: str, with_color: bool) -> str:
-        return colorize_text(self.color_joke, joke, with_color)
-
-    def format_player(self, name: str, with_color: bool) -> str:
-        return colorize_text(self.color_player, name, with_color)
-
-    def format_region(self, location: PickupLocation, with_color: bool) -> str:
-        region_list = default_database.game_description_for(location.game).region_list
-        result = region_list.region_name_from_node(region_list.node_from_pickup_index(location.location), True)
-        return colorize_text(self.color_location, result, with_color)
-
-    def format_area(self, location: PickupLocation, with_region: bool, with_color: bool) -> str:
-        region_list = default_database.game_description_for(location.game).region_list
-        result = _area_name(region_list, region_list.node_from_pickup_index(location.location), not with_region)
-        return colorize_text(self.color_location, result, with_color)
-
-    def format_location_hint(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
-        return self.location_formatters[hint.precision.location].format(
-            game,
-            dataclasses.replace(
-                pick_hint, pickup_name=colorize_text(self.color_item, pick_hint.pickup_name, with_color)
-            ),
-            hint,
-            with_color,
+        location_hint_template = "{determiner.title}{pickup} can be found in {node}."
+        self.location_formatters = basic_hint_formatters(
+            self,
+            location_hint_template,
+            patches,
+            lambda msg, with_color: colorize_text(self.color_location, msg, with_color),
+            players_config,
         )
-
-    def format_resource_is_starting(self, resource: ItemResourceInfo, with_color: bool) -> str:
-        """Used when for when an item has a guaranteed hint, but is a starting item."""
-        return f"{colorize_text(self.color_item, resource.long_name, with_color)} has no need to be located."
 
     def format_guaranteed_resource(
         self,

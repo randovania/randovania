@@ -42,6 +42,14 @@ class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
         """All items controlled by this model. Automatically handles both list and dict"""
         raise NotImplementedError
 
+    def _iterate_items(self) -> typing.Iterator[T]:
+        """Iterate items, regardless of list vs dict"""
+        items = self._get_items()
+        if isinstance(items, list):
+            yield from items
+        else:
+            yield from items.values()
+
     def _create_item(self, identifier: str) -> T:
         """Create a new valid item using the provided identifier"""
         raise NotImplementedError
@@ -129,7 +137,7 @@ class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
                     return True
             else:
                 if value:
-                    all_items = self._get_items()
+                    all_items = set(self._iterate_items())
                     if any(self._get_item_identifier(item) == value for item in all_items):
                         return False
                     return self.append_item(self._create_item(value))

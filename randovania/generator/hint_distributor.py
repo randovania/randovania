@@ -51,8 +51,10 @@ def choose_feature(
     mean: float,
     std_dev: float,
 ) -> FeatureT | PrecisionT:
+    # arbitrarily increased until it felt good
+    DEGREE = 30
     feature_precisions = {
-        feature: math.pow((total_elements - len(elements_with_feature[feature])) / (total_elements - 1), 3)
+        feature: math.pow((total_elements - len(elements_with_feature[feature])) / (total_elements - 1), DEGREE)
         for feature in elements_with_feature
     }
     feature_precisions = {
@@ -62,6 +64,7 @@ def choose_feature(
         # exclude any features that would only point to a single element
     }
     feature_precisions[detailed_precision] = 1.0
+    debug.debug_print(str(feature_precisions))
 
     target_precision = rng.gauss(mean, std_dev)
     target_precision = min(max(target_precision, 0.0), 1.0)
@@ -311,10 +314,6 @@ class HintDistributor(ABC):
         patches: GamePatches,
         player_pools: list[PlayerPool],
     ) -> PrecisionPair:
-        # TODO: make this configurable per-game
-        FEATURAL_MEAN = 0.7
-        FEATURAL_STD_DEV = 0.2
-
         region_list = patches.game.region_list
 
         precision = hint.precision
@@ -333,6 +332,9 @@ class HintDistributor(ABC):
                     for feature in pickup.hint_features:
                         pickups_with_feature[feature].append(pickup)
 
+            # TODO: make this configurable per-game
+            FEATURAL_MEAN = 0.7
+            FEATURAL_STD_DEV = 0.2
             feature = choose_feature(
                 pickups_with_feature,
                 len(relevant_pickups),
@@ -360,6 +362,9 @@ class HintDistributor(ABC):
 
             location_features = location.hint_features | region_list.nodes_to_area(location).hint_features
 
+            # TODO: make this configurable per-game
+            FEATURAL_MEAN = 0.93
+            FEATURAL_STD_DEV = 0.05
             feature = choose_feature(
                 locations_with_feature,
                 len(relevant_locations),
