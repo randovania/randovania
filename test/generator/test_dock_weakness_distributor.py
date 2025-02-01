@@ -174,7 +174,7 @@ async def test_dock_weakness_distribute(default_blank_preset):
         editor.dock_rando_configuration = dataclasses.replace(editor.dock_rando_configuration, mode=DockRandoMode.DOCKS)
         preset = editor.create_custom_preset_with()
 
-    gen_params = GeneratorParameters(5000, False, [preset])
+    gen_params = GeneratorParameters(6000, False, [preset])
     description = await generate_and_validate_description(gen_params, None, False)
 
     assert list(description.all_patches[0].all_dock_weaknesses())

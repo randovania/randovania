@@ -147,7 +147,7 @@ def patches_with_data(request, echoes_game_description, echoes_game_patches, ech
 
     if request.param.get("hint"):
         identifier, hint = request.param.get("hint")
-        patches = patches.assign_hint(NodeIdentifier.from_string(identifier), BaseHint.from_json(hint))
+        patches = patches.assign_hint(NodeIdentifier.from_string(identifier), BaseHint.from_json(hint, game=game))
         data["hints"][identifier] = hint
 
     return data, patches

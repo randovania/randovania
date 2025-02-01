@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from randovania.exporter.hints.hint_formatters import TemplatedFormatter
 from randovania.game_description.hint import HintLocationPrecision
-from randovania.games.common.prime_family.exporter.hint_namer import PrimeFamilyHintNamer, colorize_text
+from randovania.games.common.prime_family.exporter.hint_namer import PrimeFamilyHintNamer
 from randovania.games.prime2.exporter.hint_formaters import GuardianFormatter
 
 if TYPE_CHECKING:
@@ -20,7 +20,7 @@ class EchoesHintNamer(PrimeFamilyHintNamer):
             "The Flying Ing Cache in {node} contains {determiner}{pickup}.", self
         )
         self.location_formatters[HintLocationPrecision.GUARDIAN] = GuardianFormatter(
-            lambda msg, with_color: colorize_text("#FF3333", msg, with_color),
+            lambda msg, with_color: self.colorize_text("#FF3333", msg, with_color),
         )
         self.location_formatters[HintLocationPrecision.LIGHT_SUIT_LOCATION] = TemplatedFormatter(
             "U-Mos's reward for returning the Sanctuary energy is {determiner}{pickup}.",
@@ -28,7 +28,7 @@ class EchoesHintNamer(PrimeFamilyHintNamer):
         )
 
     def format_temple_name(self, temple_name: str, with_color: bool) -> str:
-        return colorize_text(self.color_item, temple_name, with_color)
+        return self.colorize_text(self.color_item, temple_name, with_color)
 
     @property
     def color_joke(self) -> str:

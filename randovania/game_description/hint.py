@@ -121,12 +121,14 @@ class PrecisionPair(JsonDataclass):
         relative = json_dict.get("relative")
 
         location_json = json_dict.get("location")
+        location: HintLocationPrecision | HintFeature
         if location_json is not None:
             location = HintLocationPrecision(location_json)
         else:
             location = game.hint_feature_database[json_dict["location_feature"]]
 
         item_json = json_dict.get("item")
+        item: HintItemPrecision | PickupHintFeature
         if item_json is not None:
             item = HintItemPrecision(item_json)
         else:

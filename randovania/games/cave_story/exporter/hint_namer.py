@@ -24,6 +24,7 @@ class CSHintNamer(HintNamer[None]):
             patches,
             lambda msg, with_color: msg,
             players_config,
+            with_region=False,
         )
 
         self.location_formatters.update(

@@ -24,11 +24,12 @@ def basic_hint_formatters(
     distance_painter: Callable[[str, bool], str],
     players_config: PlayersConfiguration,
     featural_hint_template: str | None = None,
+    with_region: bool = True,
 ) -> dict[HintLocationPrecision | HintFeature, LocationFormatter]:
     if featural_hint_template is None:
         featural_hint_template = "{determiner.title}{pickup} can be found {node}."
-    basic_formatter = TemplatedFormatter(location_hint_template, namer)
-    feature_formatter = FeaturalFormatter(featural_hint_template, namer)
+    basic_formatter = TemplatedFormatter(location_hint_template, namer, with_region)
+    feature_formatter = FeaturalFormatter(featural_hint_template, namer, with_region)
 
     location_formatters: dict[HintLocationPrecision | HintFeature, LocationFormatter] = defaultdict(
         lambda: feature_formatter

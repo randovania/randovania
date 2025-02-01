@@ -22,9 +22,9 @@ class HintFeature(JsonDataclass):
         assert self.long_name, "Long name must not be empty"
 
     @property
-    def general_details(self) -> tuple[str, str]:
+    def general_details(self) -> HintDetails:
         # FIXME
-        return "an ", "item"
+        return HintDetails("an ", "item")
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}('{self.name}')"

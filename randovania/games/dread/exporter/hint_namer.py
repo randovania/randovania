@@ -52,7 +52,8 @@ class DreadHintNamer(HintNamer[DreadColor]):
             players_config,
         )
 
-    def colorize_text(self, color: DreadColor, text: str, with_color: bool):
+    @classmethod
+    def colorize_text(cls, color: DreadColor, text: str, with_color: bool):
         if with_color:
             return f"{color.value}{text}{DreadColor.WHITE.value}"
         else:

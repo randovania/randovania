@@ -324,7 +324,7 @@ class RegionList(NodeProvider):
         return hash(self.all_nodes)
 
     @functools.lru_cache
-    def pickup_nodes_with_feature(self, feature: HintFeature) -> tuple[PickupNode]:
+    def pickup_nodes_with_feature(self, feature: HintFeature) -> tuple[PickupNode, ...]:
         return tuple(
             node
             for node in self.iterate_nodes()

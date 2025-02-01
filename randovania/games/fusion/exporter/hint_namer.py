@@ -39,7 +39,8 @@ class FusionHintNamer(HintNamer[FusionColor]):
             players_config,
         )
 
-    def colorize_text(self, color: FusionColor, text: str, with_color: bool) -> str:
+    @classmethod
+    def colorize_text(cls, color: FusionColor, text: str, with_color: bool) -> str:
         if with_color:
             return f"{color.value}{text}{FusionColor.RESET.value}"
         else:
