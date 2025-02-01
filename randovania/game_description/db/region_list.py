@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import dataclasses
+import functools
 import operator
 import typing
 
@@ -20,6 +21,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region import Region
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.pickup_index import PickupIndex
 
@@ -317,6 +319,12 @@ class RegionList(NodeProvider):
 
     def get_configurable_node_requirement(self, identifier: NodeIdentifier) -> Requirement:
         return self.configurable_nodes[identifier]
+
+    @functools.lru_cache
+    def pickup_nodes_with_feature(self, feature: HintFeature) -> Iterator[PickupNode]:
+        yield from (
+            node for node in self.iterate_nodes() if isinstance(node, PickupNode) and feature in node.hint_features
+        )
 
 
 def _calculate_nodes_to_area_region(regions: Iterable[Region]) -> tuple[dict[NodeIndex, Area], dict[NodeIndex, Region]]:

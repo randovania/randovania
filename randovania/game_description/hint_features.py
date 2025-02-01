@@ -26,8 +26,14 @@ class HintFeature(JsonDataclass):
         # FIXME
         return "an ", "item"
 
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}('{self.name}')"
+
 
 @dataclasses.dataclass(frozen=True, order=True)
 class PickupHintFeature(HintFeature):
     is_broad_category: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
     """Used for Echoes Flying Ing Cache hints"""
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}('{self.name}')"

@@ -6,6 +6,7 @@ from enum import Enum
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.hint_features import HintFeature, PickupHintFeature
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.lib import enum_lib
 
@@ -104,8 +105,8 @@ class RelativeDataArea(JsonDataclass, RelativeData):  # type: ignore[misc]
 
 @dataclass(frozen=True)
 class PrecisionPair(JsonDataclass):
-    location: HintLocationPrecision
-    item: HintItemPrecision
+    location: HintLocationPrecision | HintFeature
+    item: HintItemPrecision | PickupHintFeature
     include_owner: bool | None = None
     relative: RelativeData | None = None
 

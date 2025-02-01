@@ -78,11 +78,16 @@ class EchoesHintDistributor(HintDistributor):
         # }
 
     async def assign_precision_to_hints(
-        self, patches: GamePatches, rng: Random, player_pool: PlayerPool, player_state: PlayerState
+        self,
+        patches: GamePatches,
+        rng: Random,
+        player_pool: PlayerPool,
+        player_state: PlayerState,
+        player_pools: list[PlayerPool],
     ) -> GamePatches:
         assert isinstance(player_pool.configuration, EchoesConfiguration)
         if player_pool.configuration.hints.item_hints:
-            return self.add_hints_precision(player_state, patches, rng)
+            return self.add_hints_precision(player_state, patches, rng, player_pools)
         else:
             return self.replace_hints_without_precision_with_jokes(patches)
 
