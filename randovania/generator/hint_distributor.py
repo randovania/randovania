@@ -423,6 +423,11 @@ class HintDistributor(ABC):
 
 class AllJokesHintDistributor(HintDistributor):
     async def assign_precision_to_hints(
-        self, patches: GamePatches, rng: Random, player_pool: PlayerPool, player_state: PlayerState
+        self,
+        patches: GamePatches,
+        rng: Random,
+        player_pool: PlayerPool,
+        player_state: PlayerState,
+        player_pools: list[PlayerPool],
     ) -> GamePatches:
         return self.replace_hints_without_precision_with_jokes(patches)

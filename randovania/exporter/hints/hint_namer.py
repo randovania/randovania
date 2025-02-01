@@ -28,7 +28,8 @@ ColorT = TypeVar("ColorT")
 class HintNamer(Generic[ColorT]):
     location_formatters: dict[HintLocationPrecision | HintFeature, LocationFormatter]
 
-    def colorize_text(self, color: ColorT | None, text: str, with_color: bool) -> str:
+    @classmethod
+    def colorize_text(cls, color: ColorT | None, text: str, with_color: bool) -> str:
         return text
 
     @property

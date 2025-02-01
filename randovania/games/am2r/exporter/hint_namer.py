@@ -29,7 +29,8 @@ class AM2RHintNamer(HintNamer[AM2RColor]):
             players_config,
         )
 
-    def colorize_text(color: AM2RColor, text: str, with_color: bool) -> str:
+    @classmethod
+    def colorize_text(cls, color: AM2RColor, text: str, with_color: bool) -> str:
         if with_color:
             return f"{color.value}{text}{AM2RColor.WHITE.value}"
         else:
