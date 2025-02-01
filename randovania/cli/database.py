@@ -9,6 +9,7 @@ from typing import Any
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database, trick_documentation
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
 from randovania.game_description.trick_documentation import TrickUsageState
 from randovania.games import binary_data, default_data
@@ -438,6 +439,54 @@ def trick_usage_documentation_command(sub_parsers: _SubParsersAction) -> None:
     parser.set_defaults(func=trick_usage_documentation_logic)
 
 
+def features_per_node_command_logic(args: Namespace) -> None:
+    """Reports features for given pickup nodes, taking into account area and node specific features"""
+    db = load_game_description(args)
+    pickup_node_count = 0
+    featureless_nodes = []
+    no_features = 0
+    one_features = 0
+    two_features = 0
+    threeplus_features = 0
+    for region in db.region_list.regions:
+        for area in region.areas:
+            area_features = area.hint_features
+            for node in area.nodes:
+                if isinstance(node, PickupNode):
+                    pickup_node_count += 1
+                    node_features = node.hint_features
+                    all_features = area_features
+                    for hint in node_features:
+                        if hint not in area_features:
+                            all_features.append(hint)
+                    if len(all_features) == 0:
+                        no_features += 1
+                        featureless_nodes.append(str(area.name) + "/" + str(node.name))
+                    elif len(all_features) == 1:
+                        one_features += 1
+                    elif len(all_features) == 2:
+                        two_features += 1
+                    else:
+                        threeplus_features += 1
+                    print(area.name + "/" + node.name + ": " + str(len(all_features)))
+    print("no features:     " + str(no_features))
+    print("1 feature :      " + str(one_features))
+    print("2 features:      " + str(two_features))
+    print("3+ features:     " + str(threeplus_features))
+    print("total pickups: /" + str(pickup_node_count))
+    print("-----------------------------")
+    print("featureless nodes: " + str(featureless_nodes))
+
+
+def features_per_node_command(sub_parsers: _SubParsersAction) -> None:
+    parser: ArgumentParser = sub_parsers.add_parser(
+        "features-per-node",
+        help="Print how many features per pickup node there are",
+        formatter_class=argparse.MetavarTypeHelpFormatter,
+    )
+    parser.set_defaults(func=features_per_node_command_logic)
+
+
 def create_subparsers(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser("database", help="Actions for database manipulation")
 
@@ -465,6 +514,7 @@ def create_subparsers(sub_parsers: _SubParsersAction) -> None:
     pickups_per_area_command(sub_parsers)
     create_export_videos_command(sub_parsers)
     trick_usage_documentation_command(sub_parsers)
+    features_per_node_command(sub_parsers)
 
     def check_command(args: Namespace) -> None:
         if args.database_command is None:
