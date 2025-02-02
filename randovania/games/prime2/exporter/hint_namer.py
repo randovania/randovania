@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.exporter.hints.hint_formatters import TemplatedFormatter
 from randovania.games.common.prime_family.exporter.hint_namer import PrimeFamilyHintNamer
@@ -35,18 +35,22 @@ class EchoesHintNamer(PrimeFamilyHintNamer):
     def format_temple_name(self, temple_name: str, with_color: bool) -> str:
         return self.colorize_text(self.color_item, temple_name, with_color)
 
+    @override
     @property
     def color_joke(self) -> str:
         return "#45F731"
 
+    @override
     @property
     def color_item(self) -> str:
         return "#FF6705B3"
 
+    @override
     @property
     def color_player(self) -> str:
         return "#d4cc33"
 
+    @override
     @property
     def color_location(self) -> str:
         return "#FF3333"

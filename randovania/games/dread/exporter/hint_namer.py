@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.exporter.hints.basic_hint_formatters import basic_hint_formatters
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
@@ -52,6 +52,7 @@ class DreadHintNamer(HintNamer[DreadColor]):
             players_config,
         )
 
+    @override
     @classmethod
     def colorize_text(cls, color: DreadColor, text: str, with_color: bool) -> str:
         if with_color:
@@ -59,6 +60,7 @@ class DreadHintNamer(HintNamer[DreadColor]):
         else:
             return text
 
+    @override
     def format_resource_is_starting(self, resource: ItemResourceInfo, with_color: bool) -> str:
         """Used when for when an item has a guaranteed hint, but is a starting item."""
         if resource.short_name.startswith("Artifact"):
@@ -66,6 +68,7 @@ class DreadHintNamer(HintNamer[DreadColor]):
 
         return super().format_resource_is_starting(resource, with_color)
 
+    @override
     def format_guaranteed_resource(
         self,
         resource: ItemResourceInfo,
@@ -93,21 +96,22 @@ class DreadHintNamer(HintNamer[DreadColor]):
             location_name,
         )
 
-    def format_temple_name(self, temple_name: str, with_color: bool) -> str:
-        raise RuntimeError("Unsupported feature")
-
+    @override
     @property
     def color_joke(self) -> DreadColor:
         return DreadColor.GREEN
 
+    @override
     @property
     def color_item(self) -> DreadColor:
         return DreadColor.YELLOW
 
+    @override
     @property
     def color_player(self) -> DreadColor:
         return DreadColor.PINK
 
+    @override
     @property
     def color_location(self) -> DreadColor:
         return DreadColor.BLUE

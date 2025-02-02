@@ -133,8 +133,3 @@ class HintNamer(Generic[ColorT]):
     def format_location_feature(self, feature: HintFeature, with_color: bool) -> str:
         """Formats a location feature"""
         return self.colorize_text(self.color_location, feature.hint_details[1], with_color)
-
-    # Echoes only
-    # FIXME: this should be refactored out of this class
-    def format_temple_name(self, temple_name: str, with_color: bool) -> str:
-        raise NotImplementedError

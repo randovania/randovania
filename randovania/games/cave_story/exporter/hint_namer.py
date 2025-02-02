@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.exporter.hints.basic_hint_formatters import basic_hint_formatters
 from randovania.exporter.hints.hint_formatters import TemplatedFormatter
@@ -45,6 +45,7 @@ class CSHintNamer(HintNamer[None]):
             }
         )
 
+    @override
     def format_guaranteed_resource(
         self,
         resource: ItemResourceInfo,
@@ -56,9 +57,7 @@ class CSHintNamer(HintNamer[None]):
         # TODO
         raise NotImplementedError
 
-    def format_temple_name(self, temple_name: str, with_color: bool) -> str:
-        raise RuntimeError("Unsupported function")
-
+    @override
     @property
     def color_default(self) -> None:
         return None

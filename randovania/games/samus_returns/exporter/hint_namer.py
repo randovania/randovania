@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.exporter.hints.basic_hint_formatters import basic_hint_formatters
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
@@ -27,6 +27,7 @@ class MSRHintNamer(HintNamer[None]):
             players_config,
         )
 
+    @override
     def format_resource_is_starting(self, resource: ItemResourceInfo, with_color: bool) -> str:
         """Used for when an item has a guaranteed hint, but is a starting item."""
         if resource.short_name.startswith("Metroid DNA "):
@@ -34,6 +35,7 @@ class MSRHintNamer(HintNamer[None]):
 
         return super().format_resource_is_starting(resource, with_color)
 
+    @override
     def format_guaranteed_resource(
         self,
         resource: ItemResourceInfo,
@@ -60,12 +62,14 @@ class MSRHintNamer(HintNamer[None]):
             location_name,
         )
 
+    @override
     def format_location_hint(
         self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool
     ) -> str:
         msg = super().format_location_hint(game, pick_hint, hint, with_color)
         return f"{msg}\n"
 
+    @override
     @property
     def color_default(self) -> None:
         return None

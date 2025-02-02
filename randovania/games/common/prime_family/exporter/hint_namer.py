@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.exporter.hints.basic_hint_formatters import basic_hint_formatters
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
@@ -24,6 +24,7 @@ class PrimeFamilyHintNamer(HintNamer[str]):
             players_config,
         )
 
+    @override
     @classmethod
     def colorize_text(cls, color: str, text: str, with_color: bool):
         if with_color:
@@ -31,6 +32,7 @@ class PrimeFamilyHintNamer(HintNamer[str]):
         else:
             return text
 
+    @override
     def format_guaranteed_resource(
         self,
         resource: ItemResourceInfo,
@@ -48,22 +50,3 @@ class PrimeFamilyHintNamer(HintNamer[str]):
             location, with_region=True, with_area=not hide_area, with_color=with_color
         )
         return f"{resource_color} is located in {determiner}{location_color}."
-
-    def format_temple_name(self, temple_name: str, with_color: bool) -> str:
-        raise NotImplementedError
-
-    @property
-    def color_joke(self) -> str:
-        raise NotImplementedError
-
-    @property
-    def color_item(self) -> str:
-        raise NotImplementedError
-
-    @property
-    def color_player(self) -> str:
-        raise NotImplementedError
-
-    @property
-    def color_location(self) -> str:
-        raise NotImplementedError

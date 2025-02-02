@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.exporter.hints.basic_hint_formatters import basic_hint_formatters
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
@@ -39,6 +39,7 @@ class FusionHintNamer(HintNamer[FusionColor]):
             players_config,
         )
 
+    @override
     @classmethod
     def colorize_text(cls, color: FusionColor, text: str, with_color: bool) -> str:
         if with_color:
@@ -46,6 +47,7 @@ class FusionHintNamer(HintNamer[FusionColor]):
         else:
             return text
 
+    @override
     def format_guaranteed_resource(
         self,
         resource: ItemResourceInfo,
@@ -67,24 +69,29 @@ class FusionHintNamer(HintNamer[FusionColor]):
             location_name,
         )
 
+    @override
     def format_location_hint(
         self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool
     ) -> str:
         msg = super().format_location_hint(game, pick_hint, hint, with_color)
         return f"{msg}\n"
 
+    @override
     @property
     def color_joke(self) -> FusionColor:
         return FusionColor.GREEN
 
+    @override
     @property
     def color_item(self) -> FusionColor:
         return FusionColor.YELLOW
 
+    @override
     @property
     def color_player(self) -> FusionColor:
         return FusionColor.RED
 
+    @override
     @property
     def color_location(self) -> FusionColor:
         return FusionColor.PINK

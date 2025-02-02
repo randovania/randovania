@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import override
 
 from randovania.exporter.hints.basic_hint_formatters import basic_hint_formatters
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
@@ -29,6 +30,7 @@ class AM2RHintNamer(HintNamer[AM2RColor]):
             players_config,
         )
 
+    @override
     @classmethod
     def colorize_text(cls, color: AM2RColor, text: str, with_color: bool) -> str:
         if with_color:
@@ -36,6 +38,7 @@ class AM2RHintNamer(HintNamer[AM2RColor]):
         else:
             return text
 
+    @override
     def format_resource_is_starting(self, resource: ItemResourceInfo, with_color: bool) -> str:
         """Used when for when an item has a guaranteed hint, but is a starting item."""
         if resource.short_name.startswith("Metroid DNA "):
@@ -43,6 +46,7 @@ class AM2RHintNamer(HintNamer[AM2RColor]):
 
         return super().format_resource_is_starting(resource, with_color)
 
+    @override
     def format_guaranteed_resource(
         self,
         resource: ItemResourceInfo,
@@ -69,18 +73,22 @@ class AM2RHintNamer(HintNamer[AM2RColor]):
             location_name,
         )
 
+    @override
     @property
     def color_joke(self) -> AM2RColor:
         return AM2RColor.GREEN
 
+    @override
     @property
     def color_player(self) -> AM2RColor:
         return AM2RColor.PINK
 
+    @override
     @property
     def color_location(self) -> AM2RColor:
         return AM2RColor.BLUE
 
+    @override
     @property
     def color_item(self) -> AM2RColor:
         return AM2RColor.YELLOW

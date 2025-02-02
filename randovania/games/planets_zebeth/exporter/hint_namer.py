@@ -1,3 +1,5 @@
+from typing import override
+
 from randovania.exporter.hints.basic_hint_formatters import basic_hint_formatters
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
 from randovania.game_description.game_patches import GamePatches
@@ -18,10 +20,12 @@ class PlanetsZebethHintNamer(HintNamer[None]):
             players_config,
         )
 
+    @override
     def format_resource_is_starting(self, resource: ItemResourceInfo, with_color: bool) -> str:
         """Used when for when an item has a guaranteed hint, but is a starting item."""
         return f"Started with {resource.long_name}"
 
+    @override
     def format_guaranteed_resource(
         self,
         resource: ItemResourceInfo,
@@ -48,6 +52,7 @@ class PlanetsZebethHintNamer(HintNamer[None]):
             location_name,
         )
 
+    @override
     @property
     def color_default(self) -> None:
         return None
