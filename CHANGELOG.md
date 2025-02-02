@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.10.x] - 2025-03-??
 
-Nothing yet.
+### Metroid: Samus Returns
+
+- Fixed: One Area 8 theme from not being included in music shuffle.
 
 ## [8.9.0] - 2025-02-02
 
