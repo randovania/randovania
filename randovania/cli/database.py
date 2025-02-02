@@ -448,34 +448,34 @@ def features_per_node_command_logic(args: Namespace) -> None:
     one_features = 0
     two_features = 0
     threeplus_features = 0
-    for region in db.region_list.regions:
-        for area in region.areas:
-            area_features = area.hint_features
-            for node in area.nodes:
-                if isinstance(node, PickupNode):
-                    pickup_node_count += 1
-                    node_features = node.hint_features
-                    all_features = area_features
-                    for hint in node_features:
-                        if hint not in area_features:
-                            all_features.append(hint)
-                    if len(all_features) == 0:
+    for area in db.region_list.all_areas:
+        area_features = area.hint_features
+        for node in area.nodes:
+            if isinstance(node, PickupNode):
+                pickup_node_count += 1
+                node_features = node.hint_features
+                all_features = list(area_features)
+                for hint in node_features:
+                    if hint not in area_features:
+                        all_features.append(hint)
+                match len(all_features):
+                    case 0:
                         no_features += 1
-                        featureless_nodes.append(str(area.name) + "/" + str(node.name))
-                    elif len(all_features) == 1:
+                        featureless_nodes.append(node.identifier.as_string)
+                    case 1:
                         one_features += 1
-                    elif len(all_features) == 2:
+                    case 2:
                         two_features += 1
-                    else:
+                    case _:
                         threeplus_features += 1
-                    print(area.name + "/" + node.name + ": " + str(len(all_features)))
-    print("no features:     " + str(no_features))
-    print("1 feature :      " + str(one_features))
-    print("2 features:      " + str(two_features))
-    print("3+ features:     " + str(threeplus_features))
-    print("total pickups: /" + str(pickup_node_count))
+                print(f"{node.identifier.as_string}: {len(all_features)}")
+    print(f"featureless nodes: {featureless_nodes}")
     print("-----------------------------")
-    print("featureless nodes: " + str(featureless_nodes))
+    print(f"no features:     {no_features}")
+    print(f"1 feature :      {one_features}")
+    print(f"2 features:      {two_features}")
+    print(f"3+ features:     {threeplus_features}")
+    print(f"total pickups: /{pickup_node_count}")
 
 
 def features_per_node_command(sub_parsers: _SubParsersAction) -> None:
