@@ -133,12 +133,12 @@ def test_create_hints_nothing(echoes_game_patches, players_config):
     assert result == [{"asset_id": asset_id, "strings": [message, "", message]}]
 
 
-def test_create_hints_item_joke(empty_patches, players_config):
+def test_create_hints_item_joke(echoes_game_patches, players_config):
     # Setup
     asset_id = 1000
     hint_node, _, region_list = _create_region_list(asset_id, PickupIndex(50))
 
-    patches = dataclasses.replace(empty_patches, hints={hint_node.identifier: JokeHint()})
+    patches = dataclasses.replace(echoes_game_patches, hints={hint_node.identifier: JokeHint()})
     rng = MagicMock()
     namer = EchoesHintNamer({0: patches}, players_config)
 
@@ -371,7 +371,11 @@ def test_create_hints_guardians(
         },
         hints={
             hint_node.identifier: LocationHint(
-                PrecisionPair(HintLocationPrecision.GUARDIAN, item[0], include_owner=False),
+                PrecisionPair(
+                    echoes_game_patches.game.hint_feature_database["specific_hint_guardian"],
+                    item[0],
+                    include_owner=False,
+                ),
                 pickup_index,
             )
         },
@@ -411,7 +415,9 @@ def test_create_hints_light_suit_location(echoes_game_patches, players_config, b
         },
         hints={
             hint_node.identifier: LocationHint(
-                PrecisionPair(HintLocationPrecision.LIGHT_SUIT_LOCATION, item[0], include_owner=False),
+                PrecisionPair(
+                    echoes_game_patches.game.hint_feature_database["specific_hint_2mos"], item[0], include_owner=False
+                ),
                 pickup_index,
             )
         },

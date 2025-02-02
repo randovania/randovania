@@ -2,11 +2,11 @@ from __future__ import annotations
 
 import dataclasses
 import math
-from abc import ABC
+from abc import ABC, abstractmethod
 from collections import defaultdict
 from collections.abc import Callable, Collection, Mapping, Sequence
 from random import Random
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, override
 
 from randovania.game_description.db.hint_node import HintNode, HintNodeKind
 from randovania.game_description.db.pickup_node import PickupNode
@@ -323,6 +323,7 @@ class HintDistributor(ABC):
         )
 
     @property
+    @abstractmethod
     def default_precision_pair(self) -> PrecisionPair:
         """The default PrecisionPair to use for unassigned generic hints."""
         raise NotImplementedError
@@ -461,6 +462,12 @@ class HintDistributor(ABC):
 
 
 class AllJokesHintDistributor(HintDistributor):
+    @override
+    @property
+    def default_precision_pair(self) -> PrecisionPair:
+        return PRECISION_PAIR_UNASSIGNED
+
+    @override
     async def assign_precision_to_hints(
         self,
         patches: GamePatches,

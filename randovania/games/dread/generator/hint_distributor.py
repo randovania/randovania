@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.hint import (
@@ -18,10 +18,12 @@ if TYPE_CHECKING:
 
 
 class DreadHintDistributor(HintDistributor):
+    @override
     @property
     def default_precision_pair(self) -> PrecisionPair:
         return PrecisionPair(HintLocationPrecision.REGION_ONLY, HintItemPrecision.DETAILED, True)
 
+    @override
     async def assign_specific_location_hints(self, patches: GamePatches, prefill: PreFillParams) -> GamePatches:
         assert isinstance(prefill.configuration, DreadConfiguration)
         if prefill.configuration.artifacts.required_artifacts > 0:

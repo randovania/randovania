@@ -537,6 +537,20 @@ def _migrate_v29(data: dict) -> None:
                 hint.pop("target", None)
 
 
+def _migrate_v30(data: dict) -> None:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        migration = migration_data.get_hint_location_precision_data(RandovaniaGame(game["game"]))
+        for hint in game["hints"].values():
+            if hint["hint_type"] != "location":
+                continue
+
+            precision = hint["precision"]
+            if precision["location"] in migration:
+                precision["location_feature"] = migration[precision.pop("location")]
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -567,6 +581,7 @@ _MIGRATIONS = [
     _migrate_v27,
     _migrate_v28,
     _migrate_v29,  # hint type refactor
+    _migrate_v30,  # convert old game-specific HintLocationPrecision into HintFeature
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

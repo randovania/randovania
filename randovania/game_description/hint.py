@@ -57,22 +57,9 @@ class HintLocationPrecision(Enum):
     # Includes only the region of the location
     REGION_ONLY = "region-only"
 
-    # Keybearer corpses
-    KEYBEARER = "keybearer"
-
-    # Amorbis, Chykka, and Quadraxis
-    GUARDIAN = "guardian"
-
-    # Vanilla Light Suit location
-    LIGHT_SUIT_LOCATION = "light-suit-location"
-
+    # Relative hints
     RELATIVE_TO_AREA = "relative-to-area"
     RELATIVE_TO_INDEX = "relative-to-index"
-
-    MALCO = "malco"
-    JENKA = "jenka"
-    LITTLE = "mrs-little"
-    NUMAHACHI = "numahachi"
 
 
 class HintRelativeAreaName(Enum):

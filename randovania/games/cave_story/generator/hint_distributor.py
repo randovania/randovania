@@ -1,7 +1,9 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
+from randovania.game.game_enum import RandovaniaGame
+from randovania.game_description import default_database
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision, LocationHint, PrecisionPair
@@ -20,25 +22,30 @@ USE_GUARANTEED_HINTS = False
 
 
 class CSHintDistributor(HintDistributor):
+    @override
     @property
     def num_joke_hints(self) -> int:
         return 0
 
+    @override
     async def get_specific_pickup_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
-        def p(loc: HintLocationPrecision) -> PrecisionPair:
-            return PrecisionPair(loc, HintItemPrecision.DETAILED, False)
+        game = default_database.game_description_for(RandovaniaGame.CAVE_STORY)
+
+        def p(loc: str) -> PrecisionPair:
+            return PrecisionPair(game.hint_feature_database[loc], HintItemPrecision.DETAILED, False)
 
         c = NodeIdentifier.create
 
         return {
-            c("Grasstown", "Power Room", "Hint - MALCO"): p(HintLocationPrecision.MALCO),
-            c("Ruined Egg Corridor", "Little House", "Hint - Mrs. Little"): p(HintLocationPrecision.LITTLE),
-            c("Sand Zone", "Jenka's House", "Hint - Jenka 1"): p(HintLocationPrecision.JENKA),
-            c("Sand Zone", "Jenka's House", "Hint - Jenka 2"): p(HintLocationPrecision.JENKA),
-            c("Plantation", "Statue Chamber", "Hint - Numahachi 1"): p(HintLocationPrecision.NUMAHACHI),
-            c("Plantation", "Statue Chamber", "Hint - Numahachi 2"): p(HintLocationPrecision.NUMAHACHI),
+            c("Grasstown", "Power Room", "Hint - MALCO"): p("specific_hint_malco"),
+            c("Ruined Egg Corridor", "Little House", "Hint - Mrs. Little"): p("specific_hint_little"),
+            c("Sand Zone", "Jenka's House", "Hint - Jenka 1"): p("specific_hint_jenka"),
+            c("Sand Zone", "Jenka's House", "Hint - Jenka 2"): p("specific_hint_jenka"),
+            c("Plantation", "Statue Chamber", "Hint - Numahachi 1"): p("specific_hint_numahachi"),
+            c("Plantation", "Statue Chamber", "Hint - Numahachi 2"): p("specific_hint_numahachi"),
         }
 
+    @override
     async def get_guaranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
         if USE_GUARANTEED_HINTS:
             assert isinstance(patches.configuration, CSConfiguration)
@@ -63,10 +70,12 @@ class CSHintDistributor(HintDistributor):
 
         return []
 
+    @override
     @property
     def default_precision_pair(self) -> PrecisionPair:
         return PrecisionPair.featural()
 
+    @override
     async def assign_precision_to_hints(
         self,
         patches: GamePatches,

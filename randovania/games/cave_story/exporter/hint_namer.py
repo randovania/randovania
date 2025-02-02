@@ -5,10 +5,10 @@ from typing import TYPE_CHECKING
 from randovania.exporter.hints.basic_hint_formatters import basic_hint_formatters
 from randovania.exporter.hints.hint_formatters import TemplatedFormatter
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
-from randovania.game_description.hint import HintLocationPrecision
 
 if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.interface_common.players_configuration import PlayersConfiguration
 
@@ -27,18 +27,21 @@ class CSHintNamer(HintNamer[None]):
             with_region=False,
         )
 
+        def feat(loc: str) -> HintFeature:
+            return patches.game.hint_feature_database[loc]
+
         self.location_formatters.update(
             {
-                HintLocationPrecision.MALCO: TemplatedFormatter(
+                feat("specific_hint_malco"): TemplatedFormatter(
                     "BUT ALL I KNOW HOW TO DO IS MAKE {determiner.upper}{pickup}...", self, upper_pickup=True
                 ),
-                HintLocationPrecision.JENKA: TemplatedFormatter(
+                feat("specific_hint_jenka"): TemplatedFormatter(
                     "perhaps I'll give you {determiner}{pickup} in return...", self
                 ),
-                HintLocationPrecision.LITTLE: TemplatedFormatter(
+                feat("specific_hint_little"): TemplatedFormatter(
                     "He was exploring the island with {determiner}{pickup}...", self
                 ),
-                HintLocationPrecision.NUMAHACHI: TemplatedFormatter("{determiner.capitalize}{pickup}.", self),
+                feat("specific_hint_numahachi"): TemplatedFormatter("{determiner.capitalize}{pickup}.", self),
             }
         )
 

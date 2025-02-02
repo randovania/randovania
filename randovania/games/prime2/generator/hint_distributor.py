@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
+from randovania.game.game_enum import RandovaniaGame
+from randovania.game_description import default_database
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.hint import (
     HintDarkTemple,
     HintItemPrecision,
-    HintLocationPrecision,
     PrecisionPair,
     RedTempleHint,
 )
@@ -27,27 +28,31 @@ if TYPE_CHECKING:
 
 class EchoesHintDistributor(HintDistributor):
     # Pre Filler
+    @override
     @property
     def num_joke_hints(self) -> int:
         return 2
 
+    @override
     def less_interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
         return not pickup.has_hint_feature("key")
 
+    @override
     async def get_guaranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
-        def g(index, loc):
+        def g(index: int, loc: str):
             return (
                 PickupIndex(index),
-                PrecisionPair(loc, HintItemPrecision.DETAILED, include_owner=False),
+                PrecisionPair(patches.game.hint_feature_database[loc], HintItemPrecision.DETAILED, include_owner=False),
             )
 
         return [
-            g(24, HintLocationPrecision.LIGHT_SUIT_LOCATION),  # Light Suit
-            g(43, HintLocationPrecision.GUARDIAN),  # Dark Suit (Amorbis)
-            g(79, HintLocationPrecision.GUARDIAN),  # Dark Visor (Chykka)
-            g(115, HintLocationPrecision.GUARDIAN),  # Annihilator Beam (Quadraxis)
+            g(24, "specific_hint_2mos"),  # Light Suit
+            g(43, "specific_hint_guardian"),  # Dark Suit (Amorbis)
+            g(79, "specific_hint_guardian"),  # Dark Visor (Chykka)
+            g(115, "specific_hint_guardian"),  # Annihilator Beam (Quadraxis)
         ]
 
+    @override
     async def assign_other_hints(
         self, patches: GamePatches, identifiers: list[NodeIdentifier], prefill: PreFillParams
     ) -> GamePatches:
@@ -64,10 +69,12 @@ class EchoesHintDistributor(HintDistributor):
         return patches
 
     # Post Filler
+    @override
     @property
     def default_precision_pair(self) -> PrecisionPair:
         return PrecisionPair.featural()
 
+    @override
     async def assign_precision_to_hints(
         self,
         patches: GamePatches,
@@ -82,8 +89,12 @@ class EchoesHintDistributor(HintDistributor):
         else:
             return self.replace_hints_without_precision_with_jokes(patches)
 
+    @override
     async def get_specific_pickup_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
-        precision = PrecisionPair(HintLocationPrecision.KEYBEARER, HintItemPrecision.BROAD_CATEGORY, include_owner=True)
+        game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
+        keybearer = game.hint_feature_database["specific_hint_keybearer"]
+
+        precision = PrecisionPair(keybearer, HintItemPrecision.BROAD_CATEGORY, include_owner=True)
 
         c = NodeIdentifier.create
         keybearers = [

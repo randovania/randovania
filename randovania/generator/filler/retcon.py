@@ -19,7 +19,6 @@ if TYPE_CHECKING:
     from collections.abc import Callable, Mapping, Set
     from random import Random
 
-    from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.pickup_index import PickupIndex
@@ -429,9 +428,6 @@ def _assign_pickup_somewhere(
         increment_index_age(all_locations, action.generator_params.index_age_impact)
         all_locations.remove(index_owner_state, pickup_index)
 
-        # Place a hint for the new item
-        hint_location = None  # TODO
-
         if pickup_index in index_owner_state.reach.state.collected_pickup_indices:
             current_player.reach.advance_to(current_player.reach.state.assign_pickup_resources(action))
         else:
@@ -442,7 +438,6 @@ def _assign_pickup_somewhere(
             current_player,
             action,
             pickup_index,
-            hint_location,
             index_owner_state,
             len(player_states) > 1,
         )
@@ -526,25 +521,15 @@ def pickup_placement_spoiler_entry(
     location_owner: PlayerState,
     action: PickupEntry,
     pickup_index: PickupIndex,
-    hint_identifier: NodeIdentifier | None,
     index_owner: PlayerState,
     add_indices: bool,
 ) -> str:
     region_list = index_owner.game.region_list
-    if hint_identifier is not None:
-        hint_string = " with hint at {}".format(
-            region_list.node_name(
-                region_list.node_by_identifier(hint_identifier), with_region=True, distinguish_dark_aether=True
-            )
-        )
-    else:
-        hint_string = ""
 
     pickup_node = region_list.node_from_pickup_index(pickup_index)
-    return "{}{} at {}{}{}".format(
+    return "{}{} at {}{}".format(
         f"{location_owner.name}'s " if add_indices else "",
         action.name,
         f"{index_owner.name}'s " if add_indices else "",
         region_list.node_name(pickup_node, with_region=True, distinguish_dark_aether=True),
-        hint_string,
     )
