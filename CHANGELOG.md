@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.9.x] - 2025-02-??
+## [8.10.x] - 2025-03-??
+
+Nothing yet.
+
+## [8.9.x] - 2025-02-02
 
 - Added: It is now possible to focus the game images in the "Games" tab via a Keyboard.
 - Added: Experimental option under Generation -> Logic Settings that makes an early check if the game is unbeatable due to options such as starting location, transports etc.
