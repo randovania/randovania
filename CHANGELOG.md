@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Nothing yet.
 
-## [8.9.x] - 2025-02-02
+## [8.9.0] - 2025-02-02
 
 - Added: It is now possible to focus the game images in the "Games" tab via a Keyboard.
 - Added: Experimental option under Generation -> Logic Settings that makes an early check if the game is unbeatable due to options such as starting location, transports etc.
