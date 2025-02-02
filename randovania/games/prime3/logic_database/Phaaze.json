@@ -96,8 +96,53 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Dock to Sanctum (Aurora Unit 313)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "PhaazeSkip",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
+                },
+                "Dock to Sanctum (Aurora Unit 313)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 34.58,
+                        "y": 29.98,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Phaaze",
+                        "area": "Sanctum (Aurora Unit 313)",
+                        "node": "Dock to Landing Site"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
                 }
             }
         },
@@ -1239,6 +1284,52 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {}
+                },
+                "Dock to Landing Site": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 355.6,
+                        "y": -0.03,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Phaaze",
+                        "area": "Landing Site",
+                        "node": "Dock to Sanctum (Aurora Unit 313)"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Event - Aurora Unit 313": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "PhaazeSkip",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         }
