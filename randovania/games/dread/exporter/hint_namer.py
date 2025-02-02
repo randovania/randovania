@@ -53,7 +53,7 @@ class DreadHintNamer(HintNamer[DreadColor]):
         )
 
     @classmethod
-    def colorize_text(cls, color: DreadColor, text: str, with_color: bool):
+    def colorize_text(cls, color: DreadColor, text: str, with_color: bool) -> str:
         if with_color:
             return f"{color.value}{text}{DreadColor.WHITE.value}"
         else:

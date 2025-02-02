@@ -5,7 +5,6 @@ from dataclasses import dataclass
 from enum import Enum
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.game_description import default_database
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.hint_features import HintFeature, PickupHintFeature
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -13,6 +12,7 @@ from randovania.lib import enum_lib
 
 if typing.TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.pickup.pickup_database import PickupDatabase
 
 
 class HintDarkTemple(Enum):
@@ -117,6 +117,7 @@ class PrecisionPair(JsonDataclass):
     @classmethod
     def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
         game: GameDescription = extra["game"]
+        pickup_database: PickupDatabase = extra["pickup_db"]
 
         relative = json_dict.get("relative")
 
@@ -132,7 +133,7 @@ class PrecisionPair(JsonDataclass):
         if item_json is not None:
             item = HintItemPrecision(item_json)
         else:
-            item = default_database.pickup_database_for_game(game.game).pickup_categories[json_dict["item_feature"]]
+            item = pickup_database.pickup_categories[json_dict["item_feature"]]
 
         return cls(
             location=location,
@@ -154,6 +155,7 @@ class PrecisionPair(JsonDataclass):
 
     @classmethod
     def featural(cls) -> typing.Self:
+        """A default PrecisionPair with both precisions set to FEATURAL and include_owner set to None"""
         return cls(
             location=HintLocationPrecision.FEATURAL,
             item=HintItemPrecision.FEATURAL,

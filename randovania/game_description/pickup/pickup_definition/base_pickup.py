@@ -19,6 +19,8 @@ EXTRA_DICT_STORAGE_ORDER = 20
 
 @dataclasses.dataclass(frozen=True, kw_only=True)
 class BasePickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
+    """Base class for encoding Pickups in the pickup_database json. Should not be instantiated directly."""
+
     game: RandovaniaGame = dataclasses.field(metadata={"init_from_extra": True})
     """The game this pickup comes from."""
 
@@ -94,6 +96,10 @@ class BasePickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
         pickup_categories: dict[str, PickupHintFeature],
         value: dict,
     ) -> Self:
+        """
+        Creates a new instance from an encoded json value,
+        automatically providing the necessary `extra` values for `from_json()`.
+        """
         gui_category = pickup_categories[value["gui_category"]]
         features = frozenset(pickup_categories[category] for category in value["hint_features"])
         return cls.from_json(

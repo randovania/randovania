@@ -19,6 +19,8 @@ if TYPE_CHECKING:
 
 
 class AreaDetailsPopup(QtWidgets.QDialog, Ui_AreaDetailsPopup):
+    """Editor dialog for modifying Area fields such as `name` or `extra`"""
+
     def __init__(self, game: GameDescription, area: Area):
         super().__init__()
         self.setupUi(self)
@@ -41,6 +43,7 @@ class AreaDetailsPopup(QtWidgets.QDialog, Ui_AreaDetailsPopup):
 
     # Final
     def create_new_area(self) -> Area:
+        """Create a new Area with the changes"""
         return dataclasses.replace(
             self.area,
             name=self.name_edit.text(),
@@ -49,6 +52,7 @@ class AreaDetailsPopup(QtWidgets.QDialog, Ui_AreaDetailsPopup):
         )
 
     def try_accept(self) -> None:
+        """Try to save the new Area. Closes the dialog if successful; creates an error popup on failure."""
         try:
             self.create_new_area()
             self.accept()
@@ -65,4 +69,4 @@ class AreaDetailsPopup(QtWidgets.QDialog, Ui_AreaDetailsPopup):
             box.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
             box.setDetailedText("".join(traceback.format_tb(e.__traceback__)))
             common_qt_lib.set_default_window_icon(box)
-            box.exec_()
+            box.exec()

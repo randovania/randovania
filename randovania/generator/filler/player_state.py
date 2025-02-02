@@ -32,18 +32,23 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.filler.weighted_locations import WeightedLocations
+    from randovania.generator.generator_reach import GeneratorReach
     from randovania.resolver.state import State
 
 
 class HintState:
+    """Tracks necessary state for anything relating to hint placement"""
+
     configuration: FillerConfiguration
+    game: GameDescription
 
     hint_seen_count: collections.defaultdict[NodeIdentifier, int]
     hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]]
     pickup_available_indices_when_placed: dict[PickupIndex, frozenset[PickupIndex]]
 
-    def __init__(self, config: FillerConfiguration):
+    def __init__(self, config: FillerConfiguration, game: GameDescription):
         self.configuration = config
+        self.game = game
 
         self.hint_seen_count = collections.defaultdict(int)
         self.hint_initial_pickups = {}
@@ -52,7 +57,6 @@ class HintState:
     @property
     def hint_valid_targets(self) -> dict[NodeIdentifier, set[PickupIndex]]:
         """Mapping of HintNodes to a set of valid PickupIndex choices they can target"""
-
         return {
             hint: {
                 pickup
@@ -62,6 +66,42 @@ class HintState:
             }
             for hint, pickups in self.hint_initial_pickups.items()
         }
+
+    def advance_hint_seen_count(self, reach: GeneratorReach) -> None:
+        """Increases hint seen count each time a hint is collected, and sets initial_pickups the first time"""
+        for hint_identifier in reach.state.collected_hints:
+            self.hint_seen_count[hint_identifier] += 1
+            if self.hint_seen_count[hint_identifier] == 1:
+                self.hint_initial_pickups[hint_identifier] = frozenset(reach.state.collected_pickup_indices)
+
+        filler_logging.print_new_node_identifiers(self.game, self.hint_seen_count, "Hints")
+
+    def assign_available_locations(
+        self,
+        state: PlayerState,
+        pickup_index: PickupIndex,
+        current_uncollected: UncollectedState,
+        all_locations: WeightedLocations,
+    ) -> None:
+        available = frozenset(self._valid_available_locations_for_hint(state, current_uncollected, all_locations))
+        self.pickup_available_indices_when_placed[pickup_index] = available
+
+    def _valid_available_locations_for_hint(
+        self, state: PlayerState, current_uncollected: UncollectedState, all_locations: WeightedLocations
+    ) -> list[PickupIndex]:
+        """
+        Which PickupIndexes are valid targets for a hint
+        considering the given UncollectedState and WeightedLocations?
+        """
+        return [
+            index
+            for owner, index, weight in all_locations.all_items()
+            if (
+                owner == state
+                and weight >= self.configuration.minimum_location_weight_for_hint_placement
+                and index in current_uncollected.indices
+            )
+        ]
 
 
 class PlayerState:
@@ -102,7 +142,7 @@ class PlayerState:
         self.num_actions = 0
         self.indices_groups, self.all_indices = build_available_indices(game.region_list, configuration)
 
-        self.hint_state = HintState(configuration)
+        self.hint_state = HintState(configuration, game)
 
     def __repr__(self) -> str:
         return f"PlayerState {self.name}"
@@ -110,20 +150,10 @@ class PlayerState:
     def update_for_new_state(self) -> None:
         debug.debug_print(f"\n>>> Updating state of {self.name}")
 
-        self.advance_hint_seen_count()
+        self.hint_state.advance_hint_seen_count(self.reach)
         self._advance_event_seen_count()
         self._log_new_pickup_index()
         self._calculate_potential_actions()
-
-    def advance_hint_seen_count(self) -> None:
-        for hint_identifier in self.reach.state.collected_hints:
-            self.hint_state.hint_seen_count[hint_identifier] += 1
-            if self.hint_state.hint_seen_count[hint_identifier] == 1:
-                self.hint_state.hint_initial_pickups[hint_identifier] = frozenset(
-                    self.reach.state.collected_pickup_indices
-                )
-
-        filler_logging.print_new_node_identifiers(self.game, self.hint_state.hint_seen_count, "Scan Asset")
 
     def _advance_event_seen_count(self) -> None:
         for resource, quantity in self.reach.state.resources.as_resource_gain():
@@ -188,8 +218,7 @@ class PlayerState:
                 (pickup_index, target),
             ]
         )
-        available = frozenset(self._valid_available_locations_for_hint(current_uncollected, all_locations))
-        self.hint_state.pickup_available_indices_when_placed[pickup_index] = available
+        self.hint_state.assign_available_locations(self, pickup_index, current_uncollected, all_locations)
 
     def current_state_report(self) -> str:
         state = UncollectedState.from_reach(self.reach)
@@ -294,35 +323,6 @@ class PlayerState:
             weighted = weighted.filter_major_minor_for_pickup(pickup)
 
         return weighted
-
-    def _valid_available_locations_for_hint(
-        self, current_uncollected: UncollectedState, all_locations: WeightedLocations
-    ) -> list[PickupIndex]:
-        return [
-            index
-            for owner, index, weight in all_locations.all_items()
-            if (
-                owner == self
-                and weight >= self.configuration.minimum_location_weight_for_hint_placement
-                and index in current_uncollected.indices
-            )
-        ]
-
-    def should_have_hint(
-        self, pickup: PickupEntry, current_uncollected: UncollectedState, all_locations: WeightedLocations
-    ) -> bool:
-        # FIXME
-        if not pickup.show_in_credits_spoiler:
-            return False
-
-        config = self.configuration
-
-        valid_locations = self._valid_available_locations_for_hint(current_uncollected, all_locations)
-        can_hint = len(valid_locations) >= config.minimum_available_locations_for_hint_placement
-        if not can_hint:
-            debug.debug_print(f"+ Only {len(valid_locations)} qualifying open locations, hint refused.")
-
-        return can_hint
 
     def count_self_locations(self, locations: WeightedLocations) -> int:
         return locations.count_for_player(self)

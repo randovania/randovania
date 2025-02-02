@@ -136,6 +136,10 @@ class Editor:
         self.replace_node(area, node, dataclasses.replace(node, identifier=node.identifier.renamed(new_name)))
 
     def replace_area(self, old_area: Area, new_area: Area) -> None:
+        """
+        "Safely" replaces an area with a new one, attempting
+        to update anything that might be broken by such a change
+        """
         current_region = self.game.region_list.region_with_area(old_area)
 
         if old_area.name != new_area.name:

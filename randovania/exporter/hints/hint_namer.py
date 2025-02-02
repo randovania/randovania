@@ -28,55 +28,49 @@ ColorT = TypeVar("ColorT")
 class HintNamer(Generic[ColorT]):
     location_formatters: dict[HintLocationPrecision | HintFeature, LocationFormatter]
 
+    # Colors
     @classmethod
-    def colorize_text(cls, color: ColorT | None, text: str, with_color: bool) -> str:
+    def colorize_text(cls, color: ColorT, text: str, with_color: bool) -> str:
+        """Applies color formatting to the provided text, iff `with_color` is true"""
         return text
 
     @property
-    def color_joke(self) -> ColorT | None:
-        return None
+    def color_default(self) -> ColorT:
+        """
+        A default color to use if a given color isn't defined.
+        Useful if a game supports only one or no colors.
+        """
+        raise NotImplementedError
 
     @property
-    def color_player(self) -> ColorT | None:
-        return None
+    def color_joke(self) -> ColorT:
+        """The color to use for formatting joke hints"""
+        return self.color_default
 
     @property
-    def color_location(self) -> ColorT | None:
-        return None
+    def color_player(self) -> ColorT:
+        """The color to use for player/world names"""
+        return self.color_default
 
     @property
-    def color_item(self) -> ColorT | None:
-        return None
+    def color_location(self) -> ColorT:
+        """The color to use for location names/features"""
+        return self.color_default
 
-    def _area_name(self, region_list: RegionList, pickup_node: PickupNode, hide_region: bool) -> str:
-        area = region_list.nodes_to_area(pickup_node)
-        if hide_region:
-            return area.name
-        else:
-            return region_list.area_name(area)
+    @property
+    def color_item(self) -> ColorT:
+        """The color to use for pickup names"""
+        return self.color_default
 
+    # Hints
     def format_joke(self, joke: str, with_color: bool) -> str:
+        """Formats a JokeHint"""
         return self.colorize_text(self.color_joke, joke, with_color)
-
-    def format_player(self, name: str, with_color: bool) -> str:
-        return self.colorize_text(self.color_player, name, with_color)
-
-    def format_region(self, location: PickupLocation, with_color: bool) -> str:
-        region_list = default_database.game_description_for(location.game).region_list
-        result = region_list.region_name_from_node(region_list.node_from_pickup_index(location.location), True)
-        return self.colorize_text(self.color_location, result, with_color)
-
-    def format_area(self, location: PickupLocation, with_region: bool, with_color: bool) -> str:
-        region_list = default_database.game_description_for(location.game).region_list
-        result = self._area_name(region_list, region_list.node_from_pickup_index(location.location), not with_region)
-        return self.colorize_text(self.color_location, result, with_color)
-
-    def format_location_feature(self, feature: HintFeature, with_color: bool) -> str:
-        return self.colorize_text(self.color_location, feature.hint_details[1], with_color)
 
     def format_location_hint(
         self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool
     ) -> str:
+        """Entry point for formatting a LocationHint"""
         return self.location_formatters[hint.precision.location].format(
             game,
             dataclasses.replace(
@@ -87,7 +81,7 @@ class HintNamer(Generic[ColorT]):
         )
 
     def format_resource_is_starting(self, resource: ItemResourceInfo, with_color: bool) -> str:
-        """Used when for when an item has a guaranteed hint, but is a starting item."""
+        """Used for when an item has a guaranteed hint, but is a starting item."""
         return f"{self.colorize_text(self.color_item, resource.long_name, with_color)} has no need to be located."
 
     def format_guaranteed_resource(
@@ -98,18 +92,49 @@ class HintNamer(Generic[ColorT]):
         hide_area: bool,
         with_color: bool,
     ) -> str:
-        """Used when for indicating where a given resource can be found."""
+        """Used for indicating where a specific guaranteed resource can be found."""
         raise NotImplementedError
 
-    # Echoes only
-    def format_temple_name(self, temple_name: str, with_color: bool) -> str:
-        raise NotImplementedError
+    # Player
+    def format_player(self, name: str, with_color: bool) -> str:
+        """Formats the name of a player/world"""
+        return self.colorize_text(self.color_player, name, with_color)
 
-    # Helper
+    # Locations
+    def _area_name(self, region_list: RegionList, pickup_node: PickupNode, hide_region: bool) -> str:
+        """Returns the name of the area for the given PickupNode, optionally with the region name"""
+        area = region_list.nodes_to_area(pickup_node)
+        if hide_region:
+            return area.name
+        else:
+            return region_list.area_name(area)
+
     def format_location(self, location: PickupLocation, with_region: bool, with_area: bool, with_color: bool) -> str:
+        """Formats the name of a location, with either the area, region, or both"""
         if with_area:
             return self.format_area(location, with_region=with_region, with_color=with_color)
         elif with_region:
             return self.format_region(location, with_color=with_color)
         else:
             raise ValueError("Both with_region and with_area not not set.")
+
+    def format_region(self, location: PickupLocation, with_color: bool) -> str:
+        """Formats the name of a region"""
+        region_list = default_database.game_description_for(location.game).region_list
+        result = region_list.region_name_from_node(region_list.node_from_pickup_index(location.location), True)
+        return self.colorize_text(self.color_location, result, with_color)
+
+    def format_area(self, location: PickupLocation, with_region: bool, with_color: bool) -> str:
+        """Formats the name of an area"""
+        region_list = default_database.game_description_for(location.game).region_list
+        result = self._area_name(region_list, region_list.node_from_pickup_index(location.location), not with_region)
+        return self.colorize_text(self.color_location, result, with_color)
+
+    def format_location_feature(self, feature: HintFeature, with_color: bool) -> str:
+        """Formats a location feature"""
+        return self.colorize_text(self.color_location, feature.hint_details[1], with_color)
+
+    # Echoes only
+    # FIXME: this should be refactored out of this class
+    def format_temple_name(self, temple_name: str, with_color: bool) -> str:
+        raise NotImplementedError

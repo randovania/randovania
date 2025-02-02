@@ -185,4 +185,5 @@ class PickupEntry:
         yield from self.extra_resources
 
     def has_hint_feature(self, feature_name: str) -> bool:
+        """Whether this PickupEntry has a hint feature with the given name"""
         return feature_name in {f.name for f in self.hint_features}

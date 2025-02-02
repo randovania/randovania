@@ -26,6 +26,8 @@ def basic_hint_formatters(
     featural_hint_template: str | None = None,
     with_region: bool = True,
 ) -> dict[HintLocationPrecision | HintFeature, LocationFormatter]:
+    """Returns a standard set of hint formatters useful as a baseline for most games."""
+
     if featural_hint_template is None:
         featural_hint_template = "{determiner.title}{pickup} can be found {node}."
     basic_formatter = TemplatedFormatter(location_hint_template, namer, with_region)

@@ -13,6 +13,8 @@ from randovania.layout.base.standard_pickup_state import StandardPickupStateCase
 
 @dataclasses.dataclass(frozen=True, kw_only=True)
 class StandardPickupDefinition(BasePickupDefinition):
+    """Encodes a StandardPickup in the pickup_database json"""
+
     progression: tuple[str, ...] = dataclasses.field(metadata={"storage_order": ADDITIONAL_RESOURCES_STORAGE_ORDER - 1})
     """
     Defines item resources (as short names) that collecting this pickup provides.

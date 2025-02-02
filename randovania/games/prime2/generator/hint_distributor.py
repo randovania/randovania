@@ -68,15 +68,6 @@ class EchoesHintDistributor(HintDistributor):
     def default_precision_pair(self) -> PrecisionPair:
         return PrecisionPair.featural()
 
-        # tiers = {
-        #     (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, False): 3,
-        #     (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, True): 2,
-        #     (HintLocationPrecision.DETAILED, HintItemPrecision.PRECISE_CATEGORY, True): 2,
-        #     (HintLocationPrecision.DETAILED, HintItemPrecision.GENERAL_CATEGORY, True): 1,
-        #     (HintLocationPrecision.REGION_ONLY, HintItemPrecision.DETAILED, False): 2,
-        #     (HintLocationPrecision.REGION_ONLY, HintItemPrecision.PRECISE_CATEGORY, True): 1,
-        # }
-
     async def assign_precision_to_hints(
         self,
         patches: GamePatches,

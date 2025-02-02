@@ -46,7 +46,7 @@ async def test_run_filler(
 
     filler_config = MagicMock()
     filler_config.minimum_available_locations_for_hint_placement = 0
-    player_state.hint_state = HintState(filler_config)
+    player_state.hint_state = HintState(filler_config, blank_game_description)
     empty_set: frozenset[PickupIndex] = frozenset()
     player_state.hint_state.hint_initial_pickups = {identifier: empty_set for identifier in hint_identifiers}
 
@@ -84,7 +84,7 @@ def test_fill_unassigned_hints_empty_assignment(echoes_game_description, echoes_
 
     filler_config = MagicMock()
     filler_config.minimum_available_locations_for_hint_placement = 0
-    hint_state = HintState(filler_config)
+    hint_state = HintState(filler_config, echoes_game_description)
     empty_set: frozenset[PickupIndex] = frozenset()
     hint_state.hint_initial_pickups = {node.identifier: empty_set for node in hint_nodes}
 

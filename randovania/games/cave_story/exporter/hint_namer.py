@@ -55,3 +55,7 @@ class CSHintNamer(HintNamer[None]):
 
     def format_temple_name(self, temple_name: str, with_color: bool) -> str:
         raise RuntimeError("Unsupported function")
+
+    @property
+    def color_default(self) -> None:
+        return None

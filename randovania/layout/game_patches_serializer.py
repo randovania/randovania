@@ -5,6 +5,7 @@ import dataclasses
 import re
 import typing
 
+from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
@@ -254,9 +255,10 @@ def decode_single(
                 pickup_assignment[node.pickup_index] = PickupTarget(pickup, target_player)
 
     # Hints
+    pickup_db = default_database.pickup_database_for_game(game.game)
     hints = {}
     for identifier_str, hint in game_modifications["hints"].items():
-        hints[NodeIdentifier.from_string(identifier_str)] = BaseHint.from_json(hint, game=game)
+        hints[NodeIdentifier.from_string(identifier_str)] = BaseHint.from_json(hint, game=game, pickup_db=pickup_db)
 
     patches = GamePatches.create_from_game(game, player_index, configuration)
     patches = patches.assign_dock_connections(dock_connections)

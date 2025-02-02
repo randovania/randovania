@@ -39,22 +39,37 @@ HintProvider = Callable[[PlayerState, GamePatches, Random, PickupIndex], Locatio
 
 HintTargetPrecision = tuple[PickupIndex, PrecisionPair]
 
+HintFeatureGaussianParams = tuple[float, float]
+"""The mean and standard deviation defining a Gaussian distribution."""
+
 
 # this was a generic function, but mypy *refused* to infer its types correctly
 # so now it's a class so that it can at least be explicit and not complain
 class ChooseFeature[FeatureT: SupportsRichComparison, PrecisionT]:
+    """
+    Randomly choose a hint feature from `element_features`, weighted based on their precision.
+
+
+    Precision is calculated based on how many possible elements have that feature,
+    proportional to the total number of elements.
+
+    The feature is chosen by selecting the feature with the closest precision
+    to a gaussian random variable parametrized by `mean` and `std_dev`.
+    """
+
     def __call__(
         self,
         elements_with_feature: Mapping[FeatureT | PrecisionT, Collection[Any]],
         total_elements: int,
         detailed_precision: PrecisionT,
         element_features: Collection[FeatureT],
+        additional_precision_features: Collection[PrecisionT],
         rng: Random,
         mean: float,
         std_dev: float,
     ) -> FeatureT | PrecisionT:
         # arbitrarily increased until it felt good
-        DEGREE = 30
+        DEGREE = 3
         feature_precisions = {
             feature: math.pow((total_elements - len(elements_with_feature[feature])) / (total_elements - 1), DEGREE)
             for feature in elements_with_feature
@@ -74,9 +89,7 @@ class ChooseFeature[FeatureT: SupportsRichComparison, PrecisionT]:
 
         possible_features: list[FeatureT | PrecisionT] = []
         possible_features.extend(sorted(feature for feature in element_features if feature in feature_precisions))
-        possible_features.extend(
-            feature for feature in feature_precisions if isinstance(feature, type(detailed_precision))
-        )
+        possible_features.extend(additional_precision_features)
         possible_precisions = {feature: feature_precisions[feature] for feature in possible_features}
         debug.debug_print(f"  * Possible precisions: {possible_precisions}")
 
@@ -100,6 +113,7 @@ class HintDistributor(ABC):
         ]
 
     async def get_specific_pickup_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
+        """Assigns a PrecisionPair to each HintNode with kind SPECIFIC_PICKUP in the game's database."""
         return {}
 
     async def assign_specific_location_hints(self, patches: GamePatches, prefill: PreFillParams) -> GamePatches:
@@ -225,7 +239,10 @@ class HintDistributor(ABC):
         rng: Random,
         hint_state: HintState,
     ) -> GamePatches:
-        """Selects targets for all remaining unassigned generic hint nodes"""
+        """
+        Selects targets for all remaining unassigned generic hint nodes
+        """
+
         hinted_pickups = {hint.target for hint in patches.hints.values() if isinstance(hint, LocationHint)}
 
         def sort_hints(item: tuple[NodeIdentifier, set[PickupIndex]]) -> tuple[int, NodeIdentifier]:
@@ -307,6 +324,7 @@ class HintDistributor(ABC):
 
     @property
     def default_precision_pair(self) -> PrecisionPair:
+        """The default PrecisionPair to use for unassigned generic hints."""
         raise NotImplementedError
 
     def get_hint_precision(
@@ -317,6 +335,10 @@ class HintDistributor(ABC):
         patches: GamePatches,
         player_pools: Sequence[PlayerPool],
     ) -> PrecisionPair:
+        """
+        Determines the final PrecisionPair for a given hint, filling in any unassigned or featural precisions.
+        """
+
         region_list = patches.game.region_list
 
         precision = hint.precision
@@ -339,17 +361,16 @@ class HintDistributor(ABC):
 
             location_features = location.hint_features | region_list.nodes_to_area(location).hint_features
 
-            # TODO: make this configurable per-game
-            FEATURAL_MEAN = 0.93
-            FEATURAL_STD_DEV = 0.05
+            mean, std_dev = self.location_feature_distribution()
             location_feature = ChooseFeature[HintFeature, HintLocationPrecision]()(
                 locations_with_feature,
                 len(relevant_locations),
                 HintLocationPrecision.DETAILED,
                 location_features,
+                (HintLocationPrecision.REGION_ONLY, HintLocationPrecision.DETAILED),
                 rng,
-                FEATURAL_MEAN,
-                FEATURAL_STD_DEV,
+                mean,
+                std_dev,
             )
 
             precision = dataclasses.replace(precision, location=location_feature)
@@ -366,17 +387,16 @@ class HintDistributor(ABC):
                     for feature in pickup.hint_features:
                         pickups_with_feature[feature].append(pickup)
 
-            # TODO: make this configurable per-game
-            FEATURAL_MEAN = 0.7
-            FEATURAL_STD_DEV = 0.2
+            mean, std_dev = self.item_feature_distribution()
             item_feature = ChooseFeature[PickupHintFeature, HintItemPrecision]()(
                 pickups_with_feature,
                 len(relevant_pickups),
                 HintItemPrecision.DETAILED,
                 item.pickup.hint_features,
+                (HintItemPrecision.DETAILED,),
                 rng,
-                FEATURAL_MEAN,
-                FEATURAL_STD_DEV,
+                mean,
+                std_dev,
             )
             precision = dataclasses.replace(precision, item=item_feature)
 
@@ -422,6 +442,22 @@ class HintDistributor(ABC):
             patches,
             hints={identifier: hints_to_replace.get(identifier, hint) for identifier, hint in patches.hints.items()},
         )
+
+    @classmethod
+    def location_feature_distribution(cls) -> HintFeatureGaussianParams:
+        """
+        Params for the precision distribution for location features.
+        Override in subclass to fine-tune the balance.
+        """
+        return 0.85, 0.1
+
+    @classmethod
+    def item_feature_distribution(cls) -> HintFeatureGaussianParams:
+        """
+        Params for the precision distribution for item features.
+        Override in subclass to fine-tune the balance.
+        """
+        return 0.7, 0.2
 
 
 class AllJokesHintDistributor(HintDistributor):

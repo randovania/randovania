@@ -53,7 +53,6 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.resources.resource_info import ResourceInfo
 
 SHOW_REGION_MIN_MAX_SPINNER = False
@@ -209,7 +208,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.points_of_interest_dock.raise_()
 
         self.resource_editor.ResourceChanged.connect(self._on_resource_changed)
-        self.hint_feature_editor.HintFeatureChanged.connect(self._on_hint_feature_changed)
         self.connection_filters.FiltersUpdated.connect(self._on_filters_changed)
 
         if self.game_description.game in {
@@ -673,6 +671,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     @asyncSlot()
     async def on_area_edit_button(self) -> None:
+        """Open the AreaDetailsPopup"""
+
         if self._check_for_edit_dialog():
             return
 
@@ -885,9 +885,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
                     if node.event.short_name == resource.short_name:
                         self.replace_node_with(area, node, dataclasses.replace(node, event=resource))
-
-    def _on_hint_feature_changed(self, feature: HintFeature) -> None:
-        pass
 
     def _on_filters_changed(self) -> None:
         if self.edit_mode:

@@ -47,3 +47,7 @@ class PlanetsZebethHintNamer(HintNamer[None]):
             determiner,
             location_name,
         )
+
+    @property
+    def color_default(self) -> None:
+        return None

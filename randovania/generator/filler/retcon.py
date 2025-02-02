@@ -350,7 +350,7 @@ def retcon_playthrough_filler(
             for i, new_pickup in enumerate(new_pickups):
                 if i > 0:
                     current_player.reach = reach_lib.advance_reach_with_possible_unsafe_resources(current_player.reach)
-                    current_player.advance_hint_seen_count()
+                    current_player.hint_state.advance_hint_seen_count(current_player.reach)
                     all_locations_weighted = _calculate_all_pickup_indices_weight(player_states)
 
                 log_entry = _assign_pickup_somewhere(
@@ -487,36 +487,6 @@ def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> We
     # print("============================================")
 
     return WeightedLocations(all_weights)
-
-
-def _calculate_hint_location_for_action(
-    action: PickupEntry,
-    index_owner_state: PlayerState,
-    all_locations: WeightedLocations,
-    current_uncollected: UncollectedState,
-    pickup_index: PickupIndex,
-    rng: Random,
-    hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]],
-) -> NodeIdentifier | None:
-    """
-    Calculates where a hint for the given action should be placed.
-    :return: A hint's NodeIdentifier to use, or None if no hint should be placed.
-    """
-    if index_owner_state.should_have_hint(action, current_uncollected, all_locations):
-        potential_hint_locations = [
-            identifier
-            for identifier in current_uncollected.hints
-            if pickup_index not in hint_initial_pickups[identifier]
-        ]
-        if potential_hint_locations:
-            return rng.choice(sorted(potential_hint_locations))
-        else:
-            debug.debug_print(
-                f">> Pickup {action.name} had no potential hint locations out of {len(current_uncollected.hints)}"
-            )
-    else:
-        debug.debug_print(f">> Pickup {action.name} was decided to not have a hint.")
-    return None
 
 
 def _calculate_weights_for(

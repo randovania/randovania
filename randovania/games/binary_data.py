@@ -257,7 +257,7 @@ ConstructNode = NodeAdapter(
 
 ConstructArea = Struct(
     default_node=OptionalValue(String),
-    hint_features=OptionalValue(PrefixedArray(VarInt, String)),
+    hint_features=PrefixedArray(VarInt, String),
     extra=JsonEncodedValue,
     nodes=ConstructDict(ConstructNode),
 )
@@ -324,12 +324,10 @@ ConstructDockWeaknessDatabase = Struct(
 
 ConstructUsedTrickLevels = OptionalValue(ConstructDict(PrefixedArray(VarInt, construct.Byte)))
 
-ConstructHintFeatureDatabase = OptionalValue(
-    ConstructDict(
-        Struct(
-            long_name=String,
-            hint_details=String[2],
-        )
+ConstructHintFeatureDatabase = ConstructDict(
+    Struct(
+        long_name=String,
+        hint_details=String[2],
     )
 )
 

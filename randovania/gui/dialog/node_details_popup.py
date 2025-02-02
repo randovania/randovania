@@ -539,4 +539,4 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             box.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
             box.setDetailedText("".join(traceback.format_tb(e.__traceback__)))
             common_qt_lib.set_default_window_icon(box)
-            box.exec_()
+            box.exec()

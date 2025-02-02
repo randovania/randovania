@@ -15,7 +15,7 @@ class PickupTarget(NamedTuple):
     player: int
 
     def __repr__(self) -> str:
-        return f"Player {self.player}'s {self.pickup.name}"
+        return f"World {self.player}'s {self.pickup.name}"
 
 
 PickupAssignment = dict[PickupIndex, PickupTarget]

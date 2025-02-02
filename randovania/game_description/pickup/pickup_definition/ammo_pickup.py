@@ -18,6 +18,8 @@ if TYPE_CHECKING:
 
 @dataclass(frozen=True, kw_only=True, order=True)
 class AmmoPickupDefinition(BasePickupDefinition):
+    """Encodes an AmmoPickup in the pickup_database json"""
+
     items: tuple[str, ...] = dataclasses.field(metadata={"storage_order": ADDITIONAL_RESOURCES_STORAGE_ORDER - 1})
     """
     Defines item resources (as short names) which all will be provided when the pickup is collected.

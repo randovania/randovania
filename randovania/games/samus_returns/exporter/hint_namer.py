@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
-class MSRHintNamer(HintNamer):
+class MSRHintNamer(HintNamer[None]):
     def __init__(self, all_patches: dict[int, GamePatches], players_config: PlayersConfiguration):
         patches = all_patches[players_config.player_index]
         location_hint_template = "{determiner.title}{pickup} can be found in {node}."
@@ -65,3 +65,7 @@ class MSRHintNamer(HintNamer):
     ) -> str:
         msg = super().format_location_hint(game, pick_hint, hint, with_color)
         return f"{msg}\n"
+
+    @property
+    def color_default(self) -> None:
+        return None
