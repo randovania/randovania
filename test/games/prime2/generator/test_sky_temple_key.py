@@ -25,7 +25,7 @@ def _create_pool_with(shuffled_count: int, db: ResourceDatabase):
 def test_create_key_id(index: int, echoes_resource_database):
     key = create_generated_pickup("Sky Temple Key", echoes_resource_database, i=index + 1)
 
-    assert key.pickup_category.name == "sky_temple_key"
+    assert key.gui_category.name == "sky_temple_key"
     assert key.progression == ((echoes_resource_database.get_item(f"TempleKey{index + 1}"), 1),)
 
 

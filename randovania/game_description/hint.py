@@ -6,8 +6,13 @@ from enum import Enum
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.hint_features import HintFeature, PickupHintFeature
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.lib import enum_lib
+
+if typing.TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.pickup.pickup_database import PickupDatabase
 
 
 class HintDarkTemple(Enum):
@@ -19,6 +24,9 @@ class HintDarkTemple(Enum):
 class HintItemPrecision(Enum):
     # Precision hasn't been assigned yet
     UNDEFINED = "undefined"
+
+    # Based on a feature of the item
+    FEATURAL = "featural"
 
     # The exact item
     DETAILED = "detailed"
@@ -40,28 +48,18 @@ class HintLocationPrecision(Enum):
     # Precision hasn't been assigned yet
     UNDEFINED = "undefined"
 
+    # Based on a feature of the location
+    FEATURAL = "featural"
+
     # The exact location
     DETAILED = "detailed"
 
     # Includes only the region of the location
     REGION_ONLY = "region-only"
 
-    # Keybearer corpses
-    KEYBEARER = "keybearer"
-
-    # Amorbis, Chykka, and Quadraxis
-    GUARDIAN = "guardian"
-
-    # Vanilla Light Suit location
-    LIGHT_SUIT_LOCATION = "light-suit-location"
-
+    # Relative hints
     RELATIVE_TO_AREA = "relative-to-area"
     RELATIVE_TO_INDEX = "relative-to-index"
-
-    MALCO = "malco"
-    JENKA = "jenka"
-    LITTLE = "mrs-little"
-    NUMAHACHI = "numahachi"
 
 
 class HintRelativeAreaName(Enum):
@@ -98,25 +96,60 @@ class RelativeDataArea(JsonDataclass, RelativeData):  # type: ignore[misc]
 
 @dataclass(frozen=True)
 class PrecisionPair(JsonDataclass):
-    location: HintLocationPrecision
-    item: HintItemPrecision
-    include_owner: bool
+    location: HintLocationPrecision | HintFeature
+    item: HintItemPrecision | PickupHintFeature
+    include_owner: bool | None = None
     relative: RelativeData | None = None
 
     @classmethod
     def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
-        # re-implemented for an version without expensive reflection
+        game: GameDescription = extra["game"]
+        pickup_database: PickupDatabase = extra["pickup_db"]
+
         relative = json_dict.get("relative")
 
+        location_json = json_dict.get("location")
+        location: HintLocationPrecision | HintFeature
+        if location_json is not None:
+            location = HintLocationPrecision(location_json)
+        else:
+            location = game.hint_feature_database[json_dict["location_feature"]]
+
+        item_json = json_dict.get("item")
+        item: HintItemPrecision | PickupHintFeature
+        if item_json is not None:
+            item = HintItemPrecision(item_json)
+        else:
+            item = pickup_database.pickup_categories[json_dict["item_feature"]]
+
         return cls(
-            location=HintLocationPrecision(json_dict["location"]),
-            item=HintItemPrecision(json_dict["item"]),
+            location=location,
+            item=item,
             include_owner=json_dict["include_owner"],
             relative=RelativeData.from_json(relative) if relative is not None else None,
         )
 
+    @property
+    def as_json(self) -> dict:
+        data = super().as_json
+        if isinstance(self.location, HintFeature):
+            del data["location"]
+            data["location_feature"] = self.location.name
+        if isinstance(self.item, PickupHintFeature):
+            del data["item"]
+            data["item_feature"] = self.item.name
+        return data
 
-_PRECISION_PAIR_UNASSIGNED = PrecisionPair(
+    @classmethod
+    def featural(cls) -> typing.Self:
+        """A default PrecisionPair with both precisions set to FEATURAL and include_owner set to None"""
+        return cls(
+            location=HintLocationPrecision.FEATURAL,
+            item=HintItemPrecision.FEATURAL,
+        )
+
+
+PRECISION_PAIR_UNASSIGNED = PrecisionPair(
     location=HintLocationPrecision.UNDEFINED,
     item=HintItemPrecision.UNDEFINED,
     include_owner=False,
@@ -151,13 +184,13 @@ class LocationHint(BaseHint):
     def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
         return cls(
             target=PickupIndex(json_dict["target"]),
-            precision=PrecisionPair.from_json(json_dict["precision"]),
+            precision=PrecisionPair.from_json(json_dict["precision"], **extra),
         )
 
     @classmethod
     def unassigned(cls, target: PickupIndex) -> typing.Self:
         """Creates a LocationHint without assigning its precision."""
-        return cls(target=target, precision=_PRECISION_PAIR_UNASSIGNED)
+        return cls(target=target, precision=PRECISION_PAIR_UNASSIGNED)
 
     @classmethod
     def hint_type(cls) -> HintType:
@@ -165,7 +198,11 @@ class LocationHint(BaseHint):
 
 
 def is_unassigned_location(hint: BaseHint) -> typing.TypeGuard[LocationHint]:
-    return isinstance(hint, LocationHint) and (hint.precision is _PRECISION_PAIR_UNASSIGNED)
+    return isinstance(hint, LocationHint) and (
+        (hint.precision is PRECISION_PAIR_UNASSIGNED)
+        or (hint.precision.location is HintLocationPrecision.FEATURAL)
+        or (hint.precision.item is HintItemPrecision.FEATURAL)
+    )
 
 
 @dataclass(frozen=True)

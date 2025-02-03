@@ -14,7 +14,7 @@ from randovania.layout.base.standard_pickup_state import DEFAULT_MAXIMUM_SHUFFLE
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset

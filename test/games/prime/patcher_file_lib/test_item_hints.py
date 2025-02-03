@@ -133,12 +133,12 @@ def test_create_hints_nothing(echoes_game_patches, players_config):
     assert result == [{"asset_id": asset_id, "strings": [message, "", message]}]
 
 
-def test_create_hints_item_joke(empty_patches, players_config):
+def test_create_hints_item_joke(echoes_game_patches, players_config):
     # Setup
     asset_id = 1000
     hint_node, _, region_list = _create_region_list(asset_id, PickupIndex(50))
 
-    patches = dataclasses.replace(empty_patches, hints={hint_node.identifier: JokeHint()})
+    patches = dataclasses.replace(echoes_game_patches, hints={hint_node.identifier: JokeHint()})
     rng = MagicMock()
     namer = EchoesHintNamer({0: patches}, players_config)
 
@@ -275,12 +275,13 @@ def test_create_message_for_hint_dark_temple_no_keys(empty_patches, players_conf
     assert result == "The keys to &push;&main-color=#FF6705B3;Dark Torvus Temple&pop; are nowhere to be found."
 
 
+# @pytest.mark.skip
 @pytest.mark.parametrize(
     "item",
     [
         (HintItemPrecision.DETAILED, "The", "&push;&main-color=#FF6705B3;Blank Pickup&pop;"),
         (HintItemPrecision.PRECISE_CATEGORY, "A", "&push;&main-color=#FF6705B3;suit&pop;"),
-        (HintItemPrecision.GENERAL_CATEGORY, "A", "&push;&main-color=#FF6705B3;major upgrade&pop;"),
+        (HintItemPrecision.GENERAL_CATEGORY, "An", "&push;&main-color=#FF6705B3;item&pop;"),
         (HintItemPrecision.BROAD_CATEGORY, "A", "&push;&main-color=#FF6705B3;life support system&pop;"),
     ],
 )
@@ -332,6 +333,7 @@ def test_create_hints_item_location(echoes_game_patches, blank_pickup, item, loc
     assert result == [{"asset_id": asset_id, "strings": [message, "", message]}]
 
 
+# @pytest.mark.skip
 @pytest.mark.parametrize(
     "pickup_index_and_guardian",
     [
@@ -345,7 +347,7 @@ def test_create_hints_item_location(echoes_game_patches, blank_pickup, item, loc
     [
         (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Blank Pickup&pop;"),
         (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;suit&pop;"),
-        (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
+        (HintItemPrecision.GENERAL_CATEGORY, "an &push;&main-color=#FF6705B3;item&pop;"),
         (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
     ],
 )
@@ -369,7 +371,11 @@ def test_create_hints_guardians(
         },
         hints={
             hint_node.identifier: LocationHint(
-                PrecisionPair(HintLocationPrecision.GUARDIAN, item[0], include_owner=False),
+                PrecisionPair(
+                    echoes_game_patches.game.hint_feature_database["specific_hint_guardian"],
+                    item[0],
+                    include_owner=False,
+                ),
                 pickup_index,
             )
         },
@@ -385,12 +391,13 @@ def test_create_hints_guardians(
     assert result == [{"asset_id": asset_id, "strings": [message, "", message]}]
 
 
+# @pytest.mark.skip
 @pytest.mark.parametrize(
     "item",
     [
         (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Blank Pickup&pop;"),
         (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;suit&pop;"),
-        (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
+        (HintItemPrecision.GENERAL_CATEGORY, "an &push;&main-color=#FF6705B3;item&pop;"),
         (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
     ],
 )
@@ -408,7 +415,9 @@ def test_create_hints_light_suit_location(echoes_game_patches, players_config, b
         },
         hints={
             hint_node.identifier: LocationHint(
-                PrecisionPair(HintLocationPrecision.LIGHT_SUIT_LOCATION, item[0], include_owner=False),
+                PrecisionPair(
+                    echoes_game_patches.game.hint_feature_database["specific_hint_2mos"], item[0], include_owner=False
+                ),
                 pickup_index,
             )
         },

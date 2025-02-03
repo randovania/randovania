@@ -10,7 +10,7 @@ from randovania.game_description import default_database
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
+    from randovania.game_description.pickup.pickup_definition.ammo_pickup import AmmoPickupDefinition
 
 
 @dataclasses.dataclass(frozen=True)

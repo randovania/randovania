@@ -264,7 +264,7 @@ class Bootstrap:
         pickup_database = default_database.pickup_database_for_game(game)
         category = pickup_database.pickup_categories[item_category]
 
-        all_artifacts = [pickup for pickup in list(pool_results.to_place) if pickup.pickup_category is category]
+        all_artifacts = [pickup for pickup in list(pool_results.to_place) if pickup.gui_category is category]
         if len(all_artifacts) > len(reduced_locations):
             raise InvalidConfiguration(
                 f"Has {len(all_artifacts)} {item_category.long_name} in the pool, "

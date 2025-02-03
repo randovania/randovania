@@ -71,7 +71,7 @@ def _conditional_resources_for_pickup(pickup: PickupEntry) -> list[ConditionalRe
 
 
 def _pickup_description(pickup: PickupEntry) -> str:
-    if not pickup.pickup_category.is_expansion:
+    if not pickup.is_expansion:
         if len(pickup.progression) > 1:
 
             def _all_conditionals_have_names(names: list[str | None]) -> typing.TypeGuard[list[str]]:

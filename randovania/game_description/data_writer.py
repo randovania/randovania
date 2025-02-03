@@ -28,6 +28,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription, MinimalLogicData
+    from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.requirements.array_base import RequirementArrayBase
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -254,6 +255,11 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
     }
 
 
+# Hint Features
+def write_hint_feature_database(data: dict[str, HintFeature]) -> dict:
+    return {name: feature.as_json for name, feature in data.items()}
+
+
 # Region/Area/Nodes
 
 
@@ -294,6 +300,7 @@ def write_node(node: Node) -> dict:
         data.update(common_fields)
         data["pickup_index"] = node.pickup_index.index
         data["location_category"] = node.location_category.value
+        data["hint_features"] = [ft.name for ft in sorted(node.hint_features)]
 
     elif isinstance(node, EventNode):
         data["node_type"] = "event"
@@ -351,6 +358,7 @@ def write_area(area: Area) -> dict:
     extra = frozen_lib.unwrap(area.extra)
     return {
         "default_node": area.default_node,
+        "hint_features": sorted(feature.name for feature in area.hint_features),
         "extra": extra,
         "nodes": nodes,
     }
@@ -426,6 +434,7 @@ def write_game_description(game: GameDescription) -> dict:
         "minimal_logic": write_minimal_logic_db(game.minimal_logic),
         "victory_condition": write_requirement(game.victory_condition),
         "dock_weakness_database": write_dock_weakness_database(game.dock_weakness_database),
+        "hint_feature_database": write_hint_feature_database(game.hint_feature_database),
         "used_trick_levels": write_used_trick_levels(game),
         "flatten_to_set_on_patch": game.region_list.flatten_to_set_on_patch,
         "regions": write_region_list(game.region_list),

@@ -11,7 +11,7 @@ from randovania.layout.base.ammo_pickup_state import AmmoPickupState
 if TYPE_CHECKING:
     from collections.abc import Iterable
 
-    from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
+    from randovania.game_description.pickup.pickup_definition.ammo_pickup import AmmoPickupDefinition
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
 

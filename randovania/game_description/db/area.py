@@ -10,6 +10,7 @@ if typing.TYPE_CHECKING:
     from collections.abc import Iterator
 
     from randovania.game_description.db.node import Node
+    from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.pickup_index import PickupIndex
 
@@ -21,6 +22,7 @@ class Area:
     connections: dict[Node, dict[Node, Requirement]]
     extra: dict[str, typing.Any]
     default_node: str | None = None
+    hint_features: frozenset[HintFeature] = frozenset()
 
     def __repr__(self) -> str:
         return f"Area[{self.name}]"

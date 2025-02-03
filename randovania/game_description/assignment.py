@@ -14,6 +14,9 @@ class PickupTarget(NamedTuple):
     pickup: PickupEntry
     player: int
 
+    def __repr__(self) -> str:
+        return f"World {self.player}'s {self.pickup.name}"
+
 
 PickupAssignment = dict[PickupIndex, PickupTarget]
 PickupTargetAssociation = tuple[PickupIndex, PickupTarget]

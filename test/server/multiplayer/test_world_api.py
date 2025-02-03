@@ -35,21 +35,21 @@ if TYPE_CHECKING:
             [("Power", 1)],
             (
                 "C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr"
-                "mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35fPr8"
+                "mqu36hR({|%H-0=Fe*DMb1Rce83IeAD`^573!^JLdy~syZXlQe)w#{Vm5rsDrInC@rO}nNKtQno"
             ),
         ),
         (  # negative
             [("Missile", -5)],
             (
                 "C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr"
-                "mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35sC@#!"
+                "mqu36hR({|%H-0=Fe*DMb1Rce83IeAD`^573!^JLdy~syZXlQe)w#{Vm5rsDrInC@rO}nNR6c=X"
             ),
         ),
         (  # progressive
             [("DarkSuit", 1), ("LightSuit", 1)],
             (
                 "C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr"
-                "mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu364TnIm"
+                "mqu36hR({|%H-0=Fe*DMb1Rce83IeAD`^573!^JLdy~syZXlQe)w#{Vm5rsDrInC@rO}nNhQpv(fB"
             ),
         ),
     ],
@@ -87,7 +87,7 @@ def test_emit_world_pickups_update_one_action(
         "A",
         PickupModel(echoes_resource_database.game_enum, "AmmoModel"),
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=progression,
         generator_params=default_generator_params,
     )
@@ -162,7 +162,7 @@ def test_game_session_collect_pickup_for_self(
         "A",
         1,
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=((echoes_resource_database.item[0], 1),),
         generator_params=default_generator_params,
     )

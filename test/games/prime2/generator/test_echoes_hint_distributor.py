@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
 from unittest.mock import ANY, MagicMock, call
 
 import pytest
@@ -9,7 +10,6 @@ from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.hint import (
     HintDarkTemple,
     HintItemPrecision,
-    HintLocationPrecision,
     JokeHint,
     LocationHint,
     PrecisionPair,
@@ -19,30 +19,36 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
 from randovania.generator.pre_fill_params import PreFillParams
 
+if TYPE_CHECKING:
+    from randovania.game_description.hint_features import HintFeature
+
 
 @pytest.mark.parametrize("is_multiworld", [False, True])
-async def test_add_default_hints_to_patches(echoes_game_description, empty_patches, is_multiworld):
+async def test_add_default_hints_to_patches(echoes_game_description, echoes_game_patches, is_multiworld):
     # Setup
     layout_configuration = MagicMock()
     layout_configuration.game = RandovaniaGame.METROID_PRIME_ECHOES
     rng = MagicMock()
     hint_distributor = EchoesHintDistributor()
 
+    def precision(loc: str) -> HintFeature:
+        return echoes_game_description.hint_feature_database[loc]
+
     def _light_suit_location_hint(number: int):
         return LocationHint(
-            PrecisionPair(HintLocationPrecision.LIGHT_SUIT_LOCATION, HintItemPrecision.DETAILED, include_owner=False),
+            PrecisionPair(precision("specific_hint_2mos"), HintItemPrecision.DETAILED, include_owner=False),
             PickupIndex(number),
         )
 
     def _guardian_hint(number: int):
         return LocationHint(
-            PrecisionPair(HintLocationPrecision.GUARDIAN, HintItemPrecision.DETAILED, include_owner=False),
+            PrecisionPair(precision("specific_hint_guardian"), HintItemPrecision.DETAILED, include_owner=False),
             PickupIndex(number),
         )
 
     def _keybearer_hint(number: int):
         return LocationHint(
-            PrecisionPair(HintLocationPrecision.KEYBEARER, HintItemPrecision.BROAD_CATEGORY, include_owner=True),
+            PrecisionPair(precision("specific_hint_keybearer"), HintItemPrecision.BROAD_CATEGORY, include_owner=True),
             PickupIndex(number),
         )
 
@@ -77,7 +83,7 @@ async def test_add_default_hints_to_patches(echoes_game_description, empty_patch
 
     # Run
     result = await hint_distributor.assign_pre_filler_hints(
-        empty_patches,
+        echoes_game_patches,
         prefill=PreFillParams(
             rng=rng,
             configuration=layout_configuration,

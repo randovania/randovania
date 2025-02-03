@@ -13,7 +13,7 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState, St
 from randovania.lib import enum_lib
 
 if TYPE_CHECKING:
-    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
 

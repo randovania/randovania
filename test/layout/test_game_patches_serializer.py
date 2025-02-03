@@ -147,7 +147,10 @@ def patches_with_data(request, echoes_game_description, echoes_game_patches, ech
 
     if request.param.get("hint"):
         identifier, hint = request.param.get("hint")
-        patches = patches.assign_hint(NodeIdentifier.from_string(identifier), BaseHint.from_json(hint))
+        patches = patches.assign_hint(
+            NodeIdentifier.from_string(identifier),
+            BaseHint.from_json(hint, game=game, pickup_db=echoes_pickup_database),
+        )
         data["hints"][identifier] = hint
 
     return data, patches
@@ -203,8 +206,8 @@ def test_bit_pack_pickup_entry(
             game=RandovaniaGame.METROID_PRIME_CORRUPTION,
             name="HyperMissile",
         ),
-        pickup_category=generic_pickup_category,
-        broad_category=generic_pickup_category,
+        gui_category=generic_pickup_category,
+        hint_features=frozenset((generic_pickup_category,)),
         progression=(
             (
                 find_resource_info_with_long_name(echoes_resource_database.item, "Morph Ball"),

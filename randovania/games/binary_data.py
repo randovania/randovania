@@ -38,6 +38,7 @@ _EXPECTED_FIELDS = [
     "minimal_logic",
     "victory_condition",
     "dock_weakness_database",
+    "hint_feature_database",
     "used_trick_levels",
     "flatten_to_set_on_patch",
     "regions",
@@ -229,6 +230,7 @@ ConstructNode = NodeAdapter(
                     **NodeBaseFields,
                     pickup_index=VarInt,
                     location_category=construct.Enum(Byte, major=0, minor=1),
+                    hint_features=PrefixedArray(VarInt, String),
                 ),
                 "event": Struct(
                     **NodeBaseFields,
@@ -255,6 +257,7 @@ ConstructNode = NodeAdapter(
 
 ConstructArea = Struct(
     default_node=OptionalValue(String),
+    hint_features=PrefixedArray(VarInt, String),
     extra=JsonEncodedValue,
     nodes=ConstructDict(ConstructNode),
 )
@@ -321,6 +324,14 @@ ConstructDockWeaknessDatabase = Struct(
 
 ConstructUsedTrickLevels = OptionalValue(ConstructDict(PrefixedArray(VarInt, construct.Byte)))
 
+ConstructHintFeatureDatabase = ConstructDict(
+    Struct(
+        long_name=String,
+        hint_details=String[2],
+    )
+)
+
+
 ConstructGame = Struct(
     magic_number=Const(b"Req."),
     format_version=Const(current_format_version, Int32ub),
@@ -334,6 +345,7 @@ ConstructGame = Struct(
             minimal_logic=OptionalValue(ConstructMinimalLogicDatabase),
             victory_condition=ConstructRequirement,
             dock_weakness_database=ConstructDockWeaknessDatabase,
+            hint_feature_database=ConstructHintFeatureDatabase,
             used_trick_levels=ConstructUsedTrickLevels,
             flatten_to_set_on_patch=Flag,
             regions=PrefixedArray(VarInt, ConstructRegion),

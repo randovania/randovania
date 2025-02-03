@@ -10,6 +10,7 @@ from randovania.game_description.resources.node_resource_info import NodeResourc
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node import NodeContext
+    from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.resources.location_category import LocationCategory
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceGain, ResourceInfo
@@ -19,6 +20,7 @@ if TYPE_CHECKING:
 class PickupNode(ResourceNode):
     pickup_index: PickupIndex
     location_category: LocationCategory
+    hint_features: frozenset[HintFeature] = frozenset()
 
     def __repr__(self) -> str:
         return f"PickupNode({self.name!r} -> {self.pickup_index.index})"

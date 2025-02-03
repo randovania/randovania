@@ -13,6 +13,7 @@ from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout import filtered_database
 from randovania.resolver.logic import Logic
@@ -125,8 +126,10 @@ def _is_major_or_key_pickup_node(action: ResourceNode, state: State) -> bool:
 
     if isinstance(pickup_node, PickupNode):
         target = state.patches.pickup_assignment.get(pickup_node.pickup_index)
-        return target is not None and (
-            target.pickup.pickup_category.hinted_as_major or target.pickup.pickup_category.is_key
+        return (
+            target is not None
+            and target.pickup.generator_params.preferred_location_category is LocationCategory.MAJOR
+            and not target.pickup.is_expansion
         )
     return False
 

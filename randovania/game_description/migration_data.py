@@ -64,3 +64,8 @@ def get_generated_pickups(game: RandovaniaGame) -> dict:
     if "generated_pickups" not in data:
         return {"categories": {}, "pickups": {}}
     return data["generated_pickups"]
+
+
+def get_hint_location_precision_data(game: RandovaniaGame) -> dict:
+    data = get_raw_data(game)
+    return data.get("hint_location_precision", {})
