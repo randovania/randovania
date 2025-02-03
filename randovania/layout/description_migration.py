@@ -596,10 +596,7 @@ def _migrate_hint_precision(data: dict, item_precisions_to_migrate: set[str]) ->
                 and ("area_location" not in relative)
                 and (relative["precision"] in item_precisions_to_migrate)
             ):
-                print(relative)
                 migrate_precision(relative, PickupIndex(relative["other_index"]), "precision", "precision_feature")
-                print(relative)
-                print()
 
 
 def _migrate_v30(data: dict) -> None:

@@ -81,8 +81,7 @@ class RelativeDataItem(JsonDataclass, RelativeData):  # type: ignore[misc]
 
     @classmethod
     def from_json(cls, json_dict: dict, **extra: typing.Any):
-        print(json_dict)
-        pickup_database: PickupDatabase = extra["pickup_db"]
+        pickup_database: PickupDatabase = extra["other_pickup_db"]
 
         item_json = json_dict.get("precision")
         item: HintItemPrecision | PickupHintFeature

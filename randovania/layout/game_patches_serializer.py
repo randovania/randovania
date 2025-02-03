@@ -23,6 +23,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.layout.base.base_configuration import BaseConfiguration
 
@@ -261,16 +262,29 @@ def decode_single(
     for identifier_str, hint in game_modifications["hints"].items():
         extra = {}
         if hint["hint_type"] == "location":
-            extra["game"] = game
-            target = pickup_assignment.get(PickupIndex(hint["target"]))
-            if hint["precision"].get("relative") is not None:
-                print(identifier_str)
-            if target is not None:
+            pickup_db = default_database.pickup_database_for_game(game.game)
+
+            def get_target_pickup_db(target: PickupTarget) -> PickupDatabase:
                 target_game = all_games[target.player]
                 target_pickup_db = default_database.pickup_database_for_game(target_game.game)
-                extra["pickup_db"] = target_pickup_db
+                return target_pickup_db
+
+            if (relative := hint["precision"].get("relative")) is not None:
+                if "other_index" in relative:
+                    other_target = pickup_assignment.get(PickupIndex(relative["other_index"]))
+                    if other_target is not None:
+                        extra["other_pickup_db"] = get_target_pickup_db(other_target)
+                    else:
+                        extra["other_pickup_db"] = pickup_db
+
+            extra["game"] = game
+            target = pickup_assignment.get(PickupIndex(hint["target"]))
+
+            if target is not None:
+                extra["pickup_db"] = get_target_pickup_db(target)
             else:
-                extra["pickup_db"] = default_database.pickup_database_for_game(game.game)
+                extra["pickup_db"] = pickup_db
+
         hints[NodeIdentifier.from_string(identifier_str)] = BaseHint.from_json(hint, **extra)
 
     patches = GamePatches.create_from_game(game, player_index, configuration)
