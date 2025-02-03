@@ -67,7 +67,7 @@ class RelativeData:
     distance_offset: int | None
 
     @classmethod
-    def from_json(cls, json_dict: dict, **extra: typing.Any) -> RelativeData:
+    def from_json(cls, json_dict: dict, **extra: typing.Any) -> RelativeDataItem | RelativeDataArea:
         if "area_location" in json_dict:
             return RelativeDataArea.from_json(json_dict, **extra)
         else:
@@ -75,12 +75,12 @@ class RelativeData:
 
 
 @dataclass(frozen=True)
-class RelativeDataItem(JsonDataclass, RelativeData):  # type: ignore[misc]
+class RelativeDataItem(JsonDataclass, RelativeData):
     other_index: PickupIndex
     precision: HintItemPrecision | PickupHintFeature
 
     @classmethod
-    def from_json(cls, json_dict: dict, **extra: typing.Any):
+    def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
         pickup_database: PickupDatabase = extra["other_pickup_db"]
 
         item_json = json_dict.get("precision")
