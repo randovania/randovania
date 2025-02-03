@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: One Area 8 theme from not being included in music shuffle.
 
+#### Logic Database
+
+#### Area 5 Tower Exterior
+
+- Fixed: Starting in Zeta Arena Access now places Samus in the correct room.
+
 ## [8.9.0] - 2025-02-02
 
 - Added: It is now possible to focus the game images in the "Games" tab via a Keyboard.
