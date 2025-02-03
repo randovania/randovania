@@ -32,14 +32,6 @@ class HintFeature(JsonDataclass):
         assert self.name, "Name must not be empty"
         assert self.long_name, "Long name must not be empty"
 
-    @property
-    def general_details(self) -> HintDetails:
-        # FIXME
-        return HintDetails("an ", "item")
-
-    def __repr__(self) -> str:
-        return f"{self.__class__.__name__}('{self.name}')"
-
 
 @dataclasses.dataclass(frozen=True, order=True)
 class PickupHintFeature(HintFeature):

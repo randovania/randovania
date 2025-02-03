@@ -520,3 +520,44 @@ def test_create_message_for_hint_relative_area(
         f"&push;&main-color=#FF3333;{distance_text} {10 + (offset or 0)} rooms&pop; away from "
         f"Torvus Bog - Great Bridge."
     )
+
+
+@pytest.mark.parametrize("item_feature_id", ["suit", "beam"])
+@pytest.mark.parametrize("loc_feature_id", ["boost", "boss"])
+def test_create_message_for_featural_hint(
+    item_feature_id: str,
+    loc_feature_id: str,
+    echoes_game_patches,
+    blank_pickup,
+    echoes_pickup_database,
+    echoes_game_description,
+    players_config,
+):
+    patches = echoes_game_patches.assign_new_pickups(
+        [
+            (PickupIndex(5), PickupTarget(blank_pickup, 0)),
+        ]
+    )
+
+    namer = EchoesHintNamer({0: patches}, PlayersConfiguration(0, {0: "You"}))
+    exporter = HintExporter(namer, random.Random(0), ["A Joke"])
+
+    loc_feature = echoes_game_description.hint_feature_database[loc_feature_id]
+    item_feature = echoes_pickup_database.pickup_categories[item_feature_id]
+    hint = LocationHint(
+        PrecisionPair(
+            loc_feature,
+            item_feature,
+            include_owner=False,
+        ),
+        PickupIndex(5),
+    )
+
+    # Run
+    result = exporter.create_message_for_hint(hint, {0: patches}, players_config, True)
+
+    assert result == (
+        f"{item_feature.hint_details[0].capitalize()}"
+        f"&push;&main-color=#FF6705B3;{item_feature.hint_details[1]}&pop; "
+        f"can be found &push;&main-color=#FF3333;{loc_feature.hint_details[1]}&pop;."
+    )

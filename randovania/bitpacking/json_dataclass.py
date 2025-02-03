@@ -124,15 +124,11 @@ def _encode_value(value: typing.Any, metadata: Metadata) -> typing.Any:
         return value
 
 
-def _field_storage_keyfunc(field: dataclasses.Field) -> int:
-    return field.metadata.get("storage_order", 0)
-
-
 class JsonDataclass:
     @property
     def as_json(self: DataclassInstance) -> dict:
         result = {}
-        for field in sorted(dataclasses.fields(self), key=_field_storage_keyfunc):
+        for field in dataclasses.fields(self):
             if not field.init or field.metadata.get("init_from_extra"):
                 continue
             value = getattr(self, field.name)

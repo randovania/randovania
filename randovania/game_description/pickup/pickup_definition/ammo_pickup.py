@@ -6,8 +6,6 @@ from typing import TYPE_CHECKING
 
 from randovania.bitpacking.json_dataclass import EXCLUDE_DEFAULT
 from randovania.game_description.pickup.pickup_definition.base_pickup import (
-    ADDITIONAL_RESOURCES_STORAGE_ORDER,
-    GENERATOR_PARAMS_STORAGE_ORDER,
     BasePickupDefinition,
 )
 from randovania.game_description.pickup.pickup_entry import ResourceLock
@@ -20,32 +18,26 @@ if TYPE_CHECKING:
 class AmmoPickupDefinition(BasePickupDefinition):
     """Encodes an AmmoPickup in the pickup_database json"""
 
-    items: tuple[str, ...] = dataclasses.field(metadata={"storage_order": ADDITIONAL_RESOURCES_STORAGE_ORDER - 1})
+    items: tuple[str, ...]
     """
     Defines item resources (as short names) which all will be provided when the pickup is collected.
     A user is able to customize how much of each ammo is given upon collection.
     """
 
-    unlocked_by: str | None = dataclasses.field(
-        default=None, metadata={"exclude_if_default": True, "storage_order": ADDITIONAL_RESOURCES_STORAGE_ORDER + 1}
-    )
+    unlocked_by: str | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
     """
     Defines which item resource (as short name) unlocks the ammo provided by this pickup.
     If unset, the ammo is always provided.
     """
 
-    temporary: str | None = dataclasses.field(
-        default=None, metadata={"exclude_if_default": True, "storage_order": ADDITIONAL_RESOURCES_STORAGE_ORDER + 1}
-    )
+    temporary: str | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
     """
     Defines which item resource (as short name) keeps track of ammo collected from this pickup
     before the real ammo has been unlocked.
     Must be set when `unlocked_by` is set.
     """
 
-    allows_negative: bool = dataclasses.field(
-        default=False, metadata={"exclude_if_default": True, "storage_order": ADDITIONAL_RESOURCES_STORAGE_ORDER + 1}
-    )
+    allows_negative: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
     """Determines whether the user can configure this expansion to remove maximum ammo rather than provide it."""
 
     include_expected_counts: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
@@ -56,15 +48,11 @@ class AmmoPickupDefinition(BasePickupDefinition):
     """Whether to indicate the overall maximum ammo in the item pool tab."""
 
     # override defaults from parent
-    probability_multiplier: float = dataclasses.field(
-        default=2.0, metadata={"exclude_if_default": True, "storage_order": GENERATOR_PARAMS_STORAGE_ORDER}
-    )
+    probability_multiplier: float = dataclasses.field(default=2.0, metadata=EXCLUDE_DEFAULT)
     """During generation, determines by how much the weight when placing the pickup will be multiplied."""
 
     # TODO: change later to lower number after more experimentation and adjust in test_pickup_creator
-    index_age_impact: float = dataclasses.field(
-        default=1.0, metadata={"exclude_if_default": True, "storage_order": GENERATOR_PARAMS_STORAGE_ORDER}
-    )
+    index_age_impact: float = dataclasses.field(default=1.0, metadata=EXCLUDE_DEFAULT)
     """
     During generation, determines by how much to increase all reachable location's age before this pickup is placed.
     The older a location is, the less likely it is for future pickups to be placed there.
@@ -88,3 +76,26 @@ class AmmoPickupDefinition(BasePickupDefinition):
                 temporary_item=resource_database.get_item(self.temporary),
             )
         return None
+
+    @property
+    def json_field_order(self) -> list[str]:
+        return [
+            "gui_category",
+            "hint_features",
+            "model_name",
+            "offworld_models",
+            "preferred_location_category",
+            "items",
+            "additional_resources",
+            "unlocked_by",
+            "temporary",
+            "allows_negative",
+            "include_expected_counts",
+            "explain_other_sources",
+            "mention_limit",
+            "index_age_impact",
+            "probability_offset",
+            "probability_multiplier",
+            "description",
+            "extra",
+        ]

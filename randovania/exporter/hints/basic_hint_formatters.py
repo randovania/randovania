@@ -25,13 +25,14 @@ def basic_hint_formatters(
     players_config: PlayersConfiguration,
     featural_hint_template: str | None = None,
     with_region: bool = True,
+    upper_pickup: bool = False,
 ) -> dict[HintLocationPrecision | HintFeature, LocationFormatter]:
     """Returns a standard set of hint formatters useful as a baseline for most games."""
 
     if featural_hint_template is None:
         featural_hint_template = "{determiner.title}{pickup} can be found {node}."
-    basic_formatter = TemplatedFormatter(location_hint_template, namer, with_region)
-    feature_formatter = FeaturalFormatter(featural_hint_template, namer, with_region)
+    basic_formatter = TemplatedFormatter(location_hint_template, namer, with_region, upper_pickup)
+    feature_formatter = FeaturalFormatter(featural_hint_template, namer, upper_pickup)
 
     location_formatters: dict[HintLocationPrecision | HintFeature, LocationFormatter] = defaultdict(
         lambda: feature_formatter

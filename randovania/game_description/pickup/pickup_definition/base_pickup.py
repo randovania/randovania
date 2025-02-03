@@ -3,7 +3,7 @@ from typing import Self
 
 from frozendict import frozendict
 
-from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.bitpacking.json_dataclass import EXCLUDE_DEFAULT, JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.hint_features import PickupHintFeature
@@ -35,54 +35,37 @@ class BasePickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
     hint_features: frozenset[PickupHintFeature] = dataclasses.field(metadata={"init_from_extra": True})
     """Defines which features this pickup can be referred to with by hints."""
 
-    model_name: str = dataclasses.field(metadata={"storage_order": BASE_METADATA_STORAGE_ORDER})
+    model_name: str
     """The name of the model that should be used by default for this pickup."""
 
-    offworld_models: frozendict[RandovaniaGame, str] = dataclasses.field(
-        metadata={"storage_order": BASE_METADATA_STORAGE_ORDER}
-    )
+    offworld_models: frozendict[RandovaniaGame, str]
     """A dictionary defining the name of the model for other games if this pickup is in their world."""
 
-    preferred_location_category: LocationCategory = dataclasses.field(
-        metadata={"storage_order": BASE_METADATA_STORAGE_ORDER}
-    )
+    preferred_location_category: LocationCategory
     """
     The category for the preferred location. Used to determine where to place this Pickup when Major/Minor placement
     is enabled, and for when this pickup is referenced by a major/minor hint.
     """
 
-    additional_resources: frozendict[str, int] = dataclasses.field(
-        default_factory=frozendict,
-        metadata={"exclude_if_default": True, "storage_order": ADDITIONAL_RESOURCES_STORAGE_ORDER},
-    )
+    additional_resources: frozendict[str, int] = dataclasses.field(default_factory=frozendict, metadata=EXCLUDE_DEFAULT)
     """Defines item resources (as short names) which all will be additionally provided when the pickup is collected."""
 
-    index_age_impact: float = dataclasses.field(
-        default=1.0, metadata={"exclude_if_default": True, "storage_order": GENERATOR_PARAMS_STORAGE_ORDER}
-    )
+    index_age_impact: float = dataclasses.field(default=1.0, metadata=EXCLUDE_DEFAULT)
     """
     During generation, determines by how much to increase all reachable location's age before this pickup is placed.
     The older a location is, the less likely it is for future pickups to be placed there.
     """
 
-    probability_offset: float = dataclasses.field(
-        default=0.0, metadata={"exclude_if_default": True, "storage_order": GENERATOR_PARAMS_STORAGE_ORDER}
-    )
+    probability_offset: float = dataclasses.field(default=0.0, metadata=EXCLUDE_DEFAULT)
     """During generation, determines how much the weight when placing the pickup will be offset."""
 
-    probability_multiplier: float = dataclasses.field(
-        default=1.0, metadata={"exclude_if_default": True, "storage_order": GENERATOR_PARAMS_STORAGE_ORDER}
-    )
+    probability_multiplier: float = dataclasses.field(default=1.0, metadata=EXCLUDE_DEFAULT)
     """During generation, determines by how much the weight when placing the pickup will be multiplied."""
 
-    description: str | None = dataclasses.field(
-        default=None, metadata={"exclude_if_default": True, "storage_order": EXTRA_DICT_STORAGE_ORDER - 1}
-    )
+    description: str | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
     """An extra description of the pickup. Will be used in the GUI for more info."""
 
-    extra: frozendict = dataclasses.field(
-        default_factory=frozendict, metadata={"exclude_if_default": True, "storage_order": EXTRA_DICT_STORAGE_ORDER}
-    )
+    extra: frozendict = dataclasses.field(default_factory=frozendict, metadata=EXCLUDE_DEFAULT)
     """
     A dictionary that can contain any arbitrary game-specific extra information.
     Developers can use the game-specific however they need to.
@@ -112,8 +95,16 @@ class BasePickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
 
     @property
     def as_json(self) -> dict:
-        return {
+        data = {
             "gui_category": self.gui_category.name,
             "hint_features": sorted(feature.name for feature in self.hint_features),
             **super().as_json,
         }
+        ordered_data = {field: data[field] for field in self.json_field_order if field in data}
+        ordered_data.update(data)
+        return data
+
+    @property
+    def json_field_order(self) -> list[str]:
+        """An ordered list of field names to sort the result of `as_json` to."""
+        raise NotImplementedError

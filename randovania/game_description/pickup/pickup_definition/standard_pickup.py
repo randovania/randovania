@@ -4,7 +4,6 @@ import dataclasses
 
 from randovania.bitpacking.json_dataclass import EXCLUDE_DEFAULT
 from randovania.game_description.pickup.pickup_definition.base_pickup import (
-    ADDITIONAL_RESOURCES_STORAGE_ORDER,
     BasePickupDefinition,
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -15,25 +14,20 @@ from randovania.layout.base.standard_pickup_state import StandardPickupStateCase
 class StandardPickupDefinition(BasePickupDefinition):
     """Encodes a StandardPickup in the pickup_database json"""
 
-    progression: tuple[str, ...] = dataclasses.field(metadata={"storage_order": ADDITIONAL_RESOURCES_STORAGE_ORDER - 1})
+    progression: tuple[str, ...]
     """
     Defines item resources (as short names) that collecting this pickup provides.
     If this tuple contains only one resource, then every collection will give that resource.
     If it contains more than one, then every time the pickup will be collected, it will give the Nth resource.
     """
 
-    ammo: tuple[str, ...] = dataclasses.field(
-        default_factory=tuple,
-        metadata={"exclude_if_default": True, "storage_order": ADDITIONAL_RESOURCES_STORAGE_ORDER + 1},
-    )
+    ammo: tuple[str, ...] = dataclasses.field(default_factory=tuple, metadata=EXCLUDE_DEFAULT)
     """
     Defines item resources (as short names) which all will be provided when the pickup is collected.
     A user is able to customize how much of each ammo is given upon collection.
     """
 
-    unlocks_ammo: bool = dataclasses.field(
-        default=False, metadata={"exclude_if_default": True, "storage_order": ADDITIONAL_RESOURCES_STORAGE_ORDER + 1}
-    )
+    unlocks_ammo: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
     """Determines whether collecting the pickup allows to immediately use all ammo defined in the 'ammo' field."""
 
     show_in_credits_spoiler: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
@@ -94,3 +88,29 @@ class StandardPickupDefinition(BasePickupDefinition):
         if self.custom_count_for_starting_case is None:
             return 1
         return self.custom_count_for_starting_case
+
+    @property
+    def json_field_order(self) -> list[str]:
+        return [
+            "gui_category",
+            "hint_features",
+            "model_name",
+            "offworld_models",
+            "preferred_location_category",
+            "progression",
+            "additional_resources",
+            "ammo",
+            "unlocks_ammo",
+            "show_in_credits_spoiler",
+            "expected_case_for_describer",
+            "custom_count_for_shuffled_case",
+            "custom_count_for_starting_case",
+            "hide_from_gui",
+            "must_be_starting",
+            "original_locations",
+            "index_age_impact",
+            "probability_offset",
+            "probability_multiplier",
+            "description",
+            "extra",
+        ]
