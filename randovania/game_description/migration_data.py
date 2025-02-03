@@ -69,3 +69,8 @@ def get_generated_pickups(game: RandovaniaGame) -> dict:
 def get_hint_location_precision_data(game: RandovaniaGame) -> dict:
     data = get_raw_data(game)
     return data.get("hint_location_precision", {})
+
+
+def get_old_hint_categories(game: RandovaniaGame) -> dict:
+    data = get_raw_data(game)
+    return data.get("old_hint_categories", {})
