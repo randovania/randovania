@@ -13,6 +13,7 @@ from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import BaseHint
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.generator.pickup_pool import PoolResults, pool_creator
@@ -143,6 +144,7 @@ def decode_single(
     game: GameDescription,
     game_modifications: dict,
     configuration: BaseConfiguration,
+    all_games: dict[int, GameDescription],
 ) -> GamePatches:
     """
     Decodes a dict created by `serialize` back into a GamePatches.
@@ -255,10 +257,21 @@ def decode_single(
                 pickup_assignment[node.pickup_index] = PickupTarget(pickup, target_player)
 
     # Hints
-    pickup_db = default_database.pickup_database_for_game(game.game)
     hints = {}
     for identifier_str, hint in game_modifications["hints"].items():
-        hints[NodeIdentifier.from_string(identifier_str)] = BaseHint.from_json(hint, game=game, pickup_db=pickup_db)
+        extra = {}
+        if hint["hint_type"] == "location":
+            extra["game"] = game
+            target = pickup_assignment.get(PickupIndex(hint["target"]))
+            if hint["precision"].get("relative") is not None:
+                print(identifier_str)
+            if target is not None:
+                target_game = all_games[target.player]
+                target_pickup_db = default_database.pickup_database_for_game(target_game.game)
+                extra["pickup_db"] = target_pickup_db
+            else:
+                extra["pickup_db"] = default_database.pickup_database_for_game(game.game)
+        hints[NodeIdentifier.from_string(identifier_str)] = BaseHint.from_json(hint, **extra)
 
     patches = GamePatches.create_from_game(game, player_index, configuration)
     patches = patches.assign_dock_connections(dock_connections)
@@ -287,7 +300,7 @@ def decode(
         for index, configuration in layout_configurations.items()
     }
     return {
-        index: decode_single(index, all_pools, all_games[index], modifications, layout_configurations[index])
+        index: decode_single(index, all_pools, all_games[index], modifications, layout_configurations[index], all_games)
         for index, modifications in enumerate(game_modifications)
     }
 

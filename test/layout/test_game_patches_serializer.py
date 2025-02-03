@@ -175,7 +175,7 @@ def test_decode(patches_with_data, default_echoes_configuration):
     pool = pool_creator.calculate_pool_results(default_echoes_configuration, game)
 
     # Run
-    decoded = game_patches_serializer.decode_single(0, {0: pool}, game, encoded, default_echoes_configuration)
+    decoded = game_patches_serializer.decode_single(0, {0: pool}, game, encoded, default_echoes_configuration, [game])
 
     # Assert
     assert set(decoded.all_dock_connections()) == set(expected.all_dock_connections())

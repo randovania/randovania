@@ -31,17 +31,9 @@ class HintItemPrecision(Enum):
     # The exact item
     DETAILED = "detailed"
 
-    # movement, morph ball, etc
-    PRECISE_CATEGORY = "precise-category"
-
-    # major item, key, expansion
-    GENERAL_CATEGORY = "general-category"
-
     # x-related, life-support, or just the precise category
+    # TODO: remove this if keybearer hints are rebalanced
     BROAD_CATEGORY = "broad-category"
-
-    # Say nothing at all about the item
-    NOTHING = "nothing"
 
 
 class HintLocationPrecision(Enum):
@@ -57,7 +49,7 @@ class HintLocationPrecision(Enum):
     # Includes only the region of the location
     REGION_ONLY = "region-only"
 
-    # Relative hints
+    # DEPRECATED: Relative hints
     RELATIVE_TO_AREA = "relative-to-area"
     RELATIVE_TO_INDEX = "relative-to-index"
 
@@ -77,15 +69,41 @@ class RelativeData:
     @classmethod
     def from_json(cls, json_dict: dict, **extra: typing.Any) -> RelativeData:
         if "area_location" in json_dict:
-            return RelativeDataArea.from_json(json_dict)
+            return RelativeDataArea.from_json(json_dict, **extra)
         else:
-            return RelativeDataItem.from_json(json_dict)
+            return RelativeDataItem.from_json(json_dict, **extra)
 
 
 @dataclass(frozen=True)
 class RelativeDataItem(JsonDataclass, RelativeData):  # type: ignore[misc]
     other_index: PickupIndex
-    precision: HintItemPrecision
+    precision: HintItemPrecision | PickupHintFeature
+
+    @classmethod
+    def from_json(cls, json_dict: dict, **extra: typing.Any):
+        print(json_dict)
+        pickup_database: PickupDatabase = extra["pickup_db"]
+
+        item_json = json_dict.get("precision")
+        item: HintItemPrecision | PickupHintFeature
+        if item_json is not None:
+            item = HintItemPrecision(item_json)
+        else:
+            item = pickup_database.pickup_categories[json_dict["precision_feature"]]
+
+        return cls(
+            other_index=PickupIndex(json_dict["other_index"]),
+            precision=item,
+            distance_offset=json_dict["distance_offset"],
+        )
+
+    @property
+    def as_json(self) -> dict:
+        data = super().as_json
+        if isinstance(self.precision, PickupHintFeature):
+            del data["precision"]
+            data["precision_feature"] = self.precision.name
+        return data
 
 
 @dataclass(frozen=True)
@@ -99,7 +117,7 @@ class PrecisionPair(JsonDataclass):
     location: HintLocationPrecision | HintFeature
     item: HintItemPrecision | PickupHintFeature
     include_owner: bool | None = None
-    relative: RelativeData | None = None
+    relative: RelativeDataItem | RelativeDataArea | None = None
 
     @classmethod
     def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
@@ -126,7 +144,7 @@ class PrecisionPair(JsonDataclass):
             location=location,
             item=item,
             include_owner=json_dict["include_owner"],
-            relative=RelativeData.from_json(relative) if relative is not None else None,
+            relative=RelativeData.from_json(relative, **extra) if relative is not None else None,
         )
 
     @property

@@ -94,21 +94,12 @@ def create_pickup_hint(
     if isinstance(precision, PickupHintFeature):
         details = precision.hint_details
 
-    elif precision is HintItemPrecision.GENERAL_CATEGORY:
-        details = target.pickup.gui_category.general_details
-
-    elif precision is HintItemPrecision.PRECISE_CATEGORY:
-        details = target.pickup.gui_category.hint_details
-
     elif precision is HintItemPrecision.BROAD_CATEGORY:
         broad = next(category for category in target.pickup.hint_features if category.is_broad_category)
         details = broad.hint_details
 
     elif precision is HintItemPrecision.DETAILED:
         details = HintDetails(_calculate_determiner(pickup_assignment, target.pickup, region_list), target.pickup.name)
-
-    elif precision is HintItemPrecision.NOTHING:
-        details = HintDetails("an ", "item")
 
     else:
         raise ValueError(f"Unknown precision: {precision}")

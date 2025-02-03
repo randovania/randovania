@@ -4,7 +4,9 @@ import re
 import typing
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description import migration_data
+from randovania.game_description import default_database, migration_data
+from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.layout.game_patches_serializer import _ETM_NAME
 from randovania.lib import migration_lib
 
 
@@ -537,18 +539,72 @@ def _migrate_v29(data: dict) -> None:
                 hint.pop("target", None)
 
 
-def _migrate_v30(data: dict) -> None:
+def _migrate_hint_precision(data: dict, item_precisions_to_migrate: set[str]) -> None:
     game_modifications = data["game_modifications"]
 
     for game in game_modifications:
-        migration = migration_data.get_hint_location_precision_data(RandovaniaGame(game["game"]))
+        game_enum = RandovaniaGame(game["game"])
+        region_list = default_database.game_description_for(game_enum).region_list
+        location_precision = migration_data.get_hint_location_precision_data(game_enum)
+
         for hint in game["hints"].values():
             if hint["hint_type"] != "location":
                 continue
 
             precision = hint["precision"]
-            if precision["location"] in migration:
-                precision["location_feature"] = migration[precision.pop("location")]
+            if precision["location"] in location_precision:
+                precision["location_feature"] = location_precision[precision.pop("location")]
+
+            def migrate_precision(_precision: dict, target: PickupIndex, old_key: str, new_key: str) -> None:
+                item_node = region_list.node_from_pickup_index(target)
+                region, area = region_list.region_and_area_by_area_identifier(item_node.identifier.area_identifier)
+                area_and_node = item_node.identifier.as_string.removeprefix(f"{region.name}/")
+
+                correct_name = region.correct_name(area.in_dark_aether)
+                target_name = game["locations"][correct_name][area_and_node]
+                target_name_re = re.compile(r"(.*) for Player (\d+)")
+
+                if target_name == _ETM_NAME:
+                    # who cares, honestly
+                    _precision[old_key] = "detailed"
+                    return
+
+                pickup_name_match = target_name_re.match(target_name)
+                if pickup_name_match is not None:
+                    pickup_name = pickup_name_match.group(1)
+                    target_player = int(pickup_name_match.group(2)) - 1
+                else:
+                    pickup_name = target_name
+                    target_player = 0
+
+                target_game = RandovaniaGame(game_modifications[target_player]["game"])
+                old_categories = migration_data.get_old_hint_categories(target_game)
+
+                if pickup_name in old_categories:
+                    item_data = old_categories[pickup_name]
+                else:
+                    # generated pickups
+                    item_data = next(data for name, data in old_categories.items() if pickup_name.startswith(name))
+
+                _precision[new_key] = item_data[_precision.pop(old_key)]
+
+            if precision["item"] in item_precisions_to_migrate:
+                migrate_precision(precision, PickupIndex(hint["target"]), "item", "item_feature")
+
+            if (
+                (relative := precision.get("relative")) is not None
+                and ("area_location" not in relative)
+                and (relative["precision"] in item_precisions_to_migrate)
+            ):
+                print(relative)
+                migrate_precision(relative, PickupIndex(relative["other_index"]), "precision", "precision_feature")
+                print(relative)
+                print()
+
+
+def _migrate_v30(data: dict) -> None:
+    # TODO: eventually migrate broad-category if keybearer hints are rebalanced
+    _migrate_hint_precision(data, {"precise-category", "general-category"})
 
 
 _MIGRATIONS = [
@@ -581,7 +637,7 @@ _MIGRATIONS = [
     _migrate_v27,
     _migrate_v28,
     _migrate_v29,  # hint type refactor
-    _migrate_v30,  # convert old game-specific HintLocationPrecision into HintFeature
+    _migrate_v30,  # migrate some HintLocationPrecision and HintItemPrecision to HintFeature
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

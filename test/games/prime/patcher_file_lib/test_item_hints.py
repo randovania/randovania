@@ -280,8 +280,6 @@ def test_create_message_for_hint_dark_temple_no_keys(empty_patches, players_conf
     "item",
     [
         (HintItemPrecision.DETAILED, "The", "&push;&main-color=#FF6705B3;Blank Pickup&pop;"),
-        (HintItemPrecision.PRECISE_CATEGORY, "A", "&push;&main-color=#FF6705B3;suit&pop;"),
-        (HintItemPrecision.GENERAL_CATEGORY, "An", "&push;&main-color=#FF6705B3;item&pop;"),
         (HintItemPrecision.BROAD_CATEGORY, "A", "&push;&main-color=#FF6705B3;life support system&pop;"),
     ],
 )
@@ -346,8 +344,6 @@ def test_create_hints_item_location(echoes_game_patches, blank_pickup, item, loc
     "item",
     [
         (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Blank Pickup&pop;"),
-        (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;suit&pop;"),
-        (HintItemPrecision.GENERAL_CATEGORY, "an &push;&main-color=#FF6705B3;item&pop;"),
         (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
     ],
 )
@@ -396,8 +392,6 @@ def test_create_hints_guardians(
     "item",
     [
         (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Blank Pickup&pop;"),
-        (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;suit&pop;"),
-        (HintItemPrecision.GENERAL_CATEGORY, "an &push;&main-color=#FF6705B3;item&pop;"),
         (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
     ],
 )
@@ -437,7 +431,6 @@ def test_create_hints_light_suit_location(echoes_game_patches, players_config, b
     ("reference_precision", "reference_name"),
     [
         (HintItemPrecision.DETAILED, "the Reference Pickup"),
-        (HintItemPrecision.PRECISE_CATEGORY, "a suit"),
         (HintItemPrecision.BROAD_CATEGORY, "a life support system"),
     ],
 )
