@@ -5,6 +5,7 @@ import math
 from abc import ABC, abstractmethod
 from collections import defaultdict
 from collections.abc import Callable, Collection, Mapping, Sequence
+from enum import Enum
 from random import Random
 from typing import TYPE_CHECKING, Any, override
 
@@ -27,8 +28,6 @@ from randovania.generator.filler.player_state import HintState, PlayerState
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
-    from _typeshed import SupportsRichComparison
-
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -45,34 +44,30 @@ HintFeatureGaussianParams = tuple[float, float]
 
 # this was a generic function, but mypy *refused* to infer its types correctly
 # so now it's a class so that it can at least be explicit and not complain
-class ChooseFeature[FeatureT: SupportsRichComparison, PrecisionT]:
-    """
-    Randomly choose a hint feature from `element_features`, weighted based on their precision.
-
-
-    Precision is calculated based on how many possible elements have that feature,
-    proportional to the total number of elements.
-
-    The feature is chosen by selecting the feature with the closest precision
-    to a gaussian random variable parametrized by `mean` and `std_dev`.
-    """
-
-    def __call__(
+class FeatureChooser[FeatureT: HintFeature, PrecisionT: Enum]:
+    def __init__(
         self,
-        elements_with_feature: Mapping[FeatureT | PrecisionT, Collection[Any]],
         total_elements: int,
+        elements_with_feature: Mapping[FeatureT | PrecisionT, Collection[Any]],
         detailed_precision: PrecisionT,
-        element_features: Collection[FeatureT],
-        additional_precision_features: Collection[PrecisionT],
-        rng: Random,
-        mean: float,
-        std_dev: float,
-    ) -> FeatureT | PrecisionT:
+    ):
+        self.total_elements = total_elements
+        self.elements_with_feature = elements_with_feature
+        self.detailed_precision = detailed_precision
+
+    def feature_precisions(self) -> dict[FeatureT | PrecisionT, float]:
+        """
+        Determine the precision of all provided Features,
+        as a percentage from `0.0` to `1.0`.
+        """
+
         # arbitrarily increased until it felt good
         DEGREE = 3
         feature_precisions = {
-            feature: math.pow((total_elements - len(elements_with_feature[feature])) / (total_elements - 1), DEGREE)
-            for feature in elements_with_feature
+            feature: math.pow(
+                ((self.total_elements - len(self.elements_with_feature[feature])) / (self.total_elements - 1)), DEGREE
+            )
+            for feature in self.elements_with_feature
         }
         feature_precisions = {
             feature: ft_precision
@@ -80,8 +75,38 @@ class ChooseFeature[FeatureT: SupportsRichComparison, PrecisionT]:
             if ft_precision < 1.0
             # exclude any features that would only point to a single element
         }
-        feature_precisions[detailed_precision] = 1.0
-        debug.debug_print(str(feature_precisions))
+        feature_precisions[self.detailed_precision] = 1.0
+
+        return feature_precisions
+
+    def debug_presicions(self, header: str) -> None:
+        """Debug print `feature_precisions()`"""
+
+        debug.debug_print(f"> {header}:")
+        for feature, precision in self.feature_precisions().items():
+            name = feature.name if isinstance(feature, Enum) else feature.long_name
+            debug.debug_print(f" * {name}: {precision}")
+        debug.debug_print("")
+
+    def choose_feature(
+        self,
+        element_features: Collection[FeatureT],
+        additional_precision_features: Collection[PrecisionT],
+        rng: Random,
+        mean: float,
+        std_dev: float,
+    ) -> FeatureT | PrecisionT:
+        """
+        Randomly choose a hint feature from `element_features`, weighted based on their precision.
+
+
+        Precision is calculated based on how many possible elements have that feature,
+        proportional to the total number of elements.
+
+        The feature is chosen by selecting the feature with the closest precision
+        to a gaussian random variable parametrized by `mean` and `std_dev`.
+        """
+        feature_precisions = self.feature_precisions()
 
         target_precision = rng.gauss(mean, std_dev)
         target_precision = min(max(target_precision, 0.0), 1.0)
@@ -328,6 +353,51 @@ class HintDistributor(ABC):
         """The default PrecisionPair to use for unassigned generic hints."""
         raise NotImplementedError
 
+    def get_location_feature_chooser(
+        self, patches: GamePatches, location: PickupNode | None = None
+    ) -> FeatureChooser[HintFeature, HintLocationPrecision]:
+        """Create a FeatureChooser for location Features"""
+
+        region_list = patches.game.region_list
+        locations_with_feature: dict[HintFeature | HintLocationPrecision, list[PickupNode]] = defaultdict(list)
+        relevant_locations: list[PickupNode] = []
+
+        relevant_locations.extend(node for node in region_list.iterate_nodes() if isinstance(node, PickupNode))
+        for feature in patches.game.hint_feature_database.values():
+            locations_with_feature[feature].extend(region_list.pickup_nodes_with_feature(feature))
+
+        if location is not None:
+            locations_with_feature[HintLocationPrecision.REGION_ONLY] = [
+                node for node in region_list.nodes_to_region(location).all_nodes if isinstance(node, PickupNode)
+            ]
+
+        return FeatureChooser[HintFeature, HintLocationPrecision](
+            len(relevant_locations),
+            locations_with_feature,
+            HintLocationPrecision.DETAILED,
+        )
+
+    def get_pickup_feature_chooser(
+        self,
+        player_pools: Sequence[PlayerPool],
+    ) -> FeatureChooser[PickupHintFeature, HintItemPrecision]:
+        """Create a FeatureChooser for pickup Features"""
+
+        pickups_with_feature: dict[PickupHintFeature | HintItemPrecision, list[PickupEntry]] = defaultdict(list)
+        relevant_pickups: list[PickupEntry] = []
+
+        for pool in player_pools:
+            for pickup in pool.pickups:
+                relevant_pickups.append(pickup)
+                for feature in pickup.hint_features:
+                    pickups_with_feature[feature].append(pickup)
+
+        return FeatureChooser[PickupHintFeature, HintItemPrecision](
+            len(relevant_pickups),
+            pickups_with_feature,
+            HintItemPrecision.DETAILED,
+        )
+
     def get_hint_precision(
         self,
         hint_node: NodeIdentifier,
@@ -347,26 +417,14 @@ class HintDistributor(ABC):
             precision = self.default_precision_pair
 
         if precision.location == HintLocationPrecision.FEATURAL:
-            locations_with_feature: dict[HintFeature | HintLocationPrecision, list[PickupNode]] = defaultdict(list)
             location = region_list.node_from_pickup_index(hint.target)
             debug.debug_print(f"> Choosing location feature for {location}")
-            relevant_locations: list[PickupNode] = []
-
-            relevant_locations.extend(node for node in region_list.iterate_nodes() if isinstance(node, PickupNode))
-            for feature in patches.game.hint_feature_database.values():
-                locations_with_feature[feature].extend(region_list.pickup_nodes_with_feature(feature))
-
-            locations_with_feature[HintLocationPrecision.REGION_ONLY] = [
-                node for node in region_list.nodes_to_region(location).all_nodes if isinstance(node, PickupNode)
-            ]
 
             location_features = location.hint_features | region_list.nodes_to_area(location).hint_features
-
             mean, std_dev = self.location_feature_distribution()
-            location_feature = ChooseFeature[HintFeature, HintLocationPrecision]()(
-                locations_with_feature,
-                len(relevant_locations),
-                HintLocationPrecision.DETAILED,
+            loc_chooser = self.get_location_feature_chooser(patches, location)
+
+            location_feature = loc_chooser.choose_feature(
                 location_features,
                 (HintLocationPrecision.REGION_ONLY, HintLocationPrecision.DETAILED),
                 rng,
@@ -377,22 +435,12 @@ class HintDistributor(ABC):
             precision = dataclasses.replace(precision, location=location_feature)
 
         if precision.item == HintItemPrecision.FEATURAL:
-            pickups_with_feature: dict[PickupHintFeature | HintItemPrecision, list[PickupEntry]] = defaultdict(list)
             item = patches.pickup_assignment[hint.target]
             debug.debug_print(f"> Choosing pickup feature for {item.pickup}")
-            relevant_pickups: list[PickupEntry] = []
-
-            for pool in player_pools:
-                for pickup in pool.pickups:
-                    relevant_pickups.append(pickup)
-                    for feature in pickup.hint_features:
-                        pickups_with_feature[feature].append(pickup)
 
             mean, std_dev = self.item_feature_distribution()
-            item_feature = ChooseFeature[PickupHintFeature, HintItemPrecision]()(
-                pickups_with_feature,
-                len(relevant_pickups),
-                HintItemPrecision.DETAILED,
+            item_chooser = self.get_pickup_feature_chooser(player_pools)
+            item_feature = item_chooser.choose_feature(
                 item.pickup.hint_features,
                 (HintItemPrecision.DETAILED,),
                 rng,
@@ -432,6 +480,12 @@ class HintDistributor(ABC):
 
         unassigned_hints = list(hints_to_replace.items())
         rng.shuffle(unassigned_hints)
+
+        loc_chooser = self.get_location_feature_chooser(patches)
+        loc_chooser.debug_presicions("Location Feature Precisions")
+
+        item_chooser = self.get_pickup_feature_chooser(player_pools)
+        item_chooser.debug_presicions("Pickup Feature Precisions")
 
         # Add random precisions
         for identifier, hint in unassigned_hints:
