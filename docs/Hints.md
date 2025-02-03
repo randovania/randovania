@@ -2,11 +2,15 @@
 The featural hint system gives designers a high degree of freedom when it comes to designing and balancing hints for their game, while being easy to implement.
 
 ## Assigning Hint Features
+### Locations
 Locations can be assigned Features in the database editor. There are two ways to assign Features: to `Area`s, and to `PickupNode`s.
 
 Most of the time, you'll want to assign to `Area`s. `Area` Features are automatically applied to all `PickupNode`s they contain.
 
 `PickupNode` features are useful when an `Area` has multiple `PickupNode`s, but they don't all have the same Features. For instance, perhaps you have a Feature for "submerged in water", but only one of the two `PickupNode`s in an `Area` is underwater.
+
+### Pickups
+Pickups can be assigned Features by editing `pickup-database.json`.
 
 ## Balancing your Features
 ### Adjusting the precision distributions

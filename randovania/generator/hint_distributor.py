@@ -42,8 +42,6 @@ HintFeatureGaussianParams = tuple[float, float]
 """The mean and standard deviation defining a Gaussian distribution."""
 
 
-# this was a generic function, but mypy *refused* to infer its types correctly
-# so now it's a class so that it can at least be explicit and not complain
 class FeatureChooser[FeatureT: HintFeature, PrecisionT: Enum]:
     def __init__(
         self,
