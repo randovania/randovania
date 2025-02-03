@@ -79,7 +79,7 @@ class FeatureChooser[FeatureT: HintFeature, PrecisionT: Enum]:
 
         return feature_precisions
 
-    def debug_presicions(self, header: str) -> None:
+    def debug_precisions(self, header: str) -> None:
         """Debug print `feature_precisions()`"""
 
         debug.debug_print(f"> {header}:")
@@ -482,10 +482,10 @@ class HintDistributor(ABC):
         rng.shuffle(unassigned_hints)
 
         loc_chooser = self.get_location_feature_chooser(patches)
-        loc_chooser.debug_presicions("Location Feature Precisions")
+        loc_chooser.debug_precisions("Location Feature Precisions")
 
         item_chooser = self.get_pickup_feature_chooser(player_pools)
-        item_chooser.debug_presicions("Pickup Feature Precisions")
+        item_chooser.debug_precisions("Pickup Feature Precisions")
 
         # Add random precisions
         for identifier, hint in unassigned_hints:
