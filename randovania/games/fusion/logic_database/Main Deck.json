@@ -1783,6 +1783,27 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "After All Infants are collected, the hatch will despawn",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "All Infants Collected"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -4632,7 +4653,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Kill Namihe's and then SWJ up. TODO: check if you can do this with jump extneds",
+                                            "comment": "Kill Namihe's and then SWJ up.",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -4926,16 +4947,18 @@
                         "y": 344.0,
                         "z": 0.0
                     },
-                    "description": "TODO: future start location",
+                    "description": "",
                     "layers": [
                         "default"
                     ],
                     "extra": {
                         "door_idx": [
                             50
-                        ]
+                        ],
+                        "X": 24,
+                        "Y": 18
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Main Deck",
@@ -7419,7 +7442,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Elevator Access": {
+                        "Other to Main Elevator Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7428,7 +7451,7 @@
                         }
                     }
                 },
-                "Door to Main Elevator Access": {
+                "Other to Main Elevator Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7447,13 +7470,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Main Elevator Access",
-                        "node": "Door to Elevator to Sector Hub"
+                        "node": "Other to Elevator to Sector Hub"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -7507,7 +7530,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Elevator Access": {
+                        "Other to Main Elevator Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7529,7 +7552,7 @@
                 ]
             },
             "nodes": {
-                "Door to Elevator to Sector Hub": {
+                "Other to Elevator to Sector Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7548,13 +7571,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Elevator to Sector Hub",
-                        "node": "Door to Main Elevator Access"
+                        "node": "Other to Main Elevator Access"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -7602,7 +7625,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Sector Hub": {
+                        "Other to Elevator to Sector Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9235,7 +9258,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "With Power Bombs",
+                                                        "comment": "With Power Bombs hitless",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -9422,52 +9445,13 @@
                                                         "comment": "Kill them",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "ScrewAttack",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Via normal methods. Taking/avoiding damage is accounted in connection to down here",
+                                                                    "comment": "Taking/avoiding damage is accounted in connection to down here",
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
                                                                             "data": "Can Kill Tough Beam-Resistant Enemy"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "With Power Bombs",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Can Use Power Bombs"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "PowerBombs",
-                                                                                "amount": 4,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Combat",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
                                                                         }
                                                                     ]
                                                                 }
@@ -9602,15 +9586,6 @@
                                                             {
                                                                 "type": "template",
                                                                 "data": "Can Kill Tough Beam-Resistant Enemy"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "ScrewAttack",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
                                                             }
                                                         ]
                                                     }
@@ -10694,7 +10669,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "SWJ - TODO: revisit with HJ only after SWJ is patched",
+                                                        "comment": "SWJ",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -10705,6 +10680,32 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "WallJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Equipment manip",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "MenuMod",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }

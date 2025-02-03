@@ -128,7 +128,7 @@ def _dread_linux_ryujinx_path(options: dict) -> None:
 
 def _msr_cosmetic_laser_color(options: dict) -> None:
     if "cosmetic_patches" in options.get("game_samus_returns", {}):
-        options["game_samus_returns"]["cosmetic_patches"].pop("use_grapple_laser_color")
+        options["game_samus_returns"]["cosmetic_patches"].pop("use_grapple_laser_color", None)
 
 
 def _msr_exheader_path(options: dict) -> None:

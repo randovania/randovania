@@ -139,6 +139,7 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
   * [Henrique "Darkszero" Gemignani](https://github.com/henriquegemignani/)
   * [duncathan_salt](https://twitter.com/duncathan_salt)
   * Merikatt
+  * [Athebyne](https://github.com/f-raZ0R)
 
 * Logic Database by:
   * [Dyceron](https://www.twitch.tv/dyceron)

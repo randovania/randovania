@@ -673,6 +673,77 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Event - Stabilizer 1 Online": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Kill with Shinespark from Yameba Corridor - https://youtu.be/DpeSE126r3M",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "L0Locks",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "ShinesparkTrick",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLockRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "S1MissileGeron",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Room Center": {
                             "type": "and",
                             "data": {
@@ -796,68 +867,6 @@
                                     {
                                         "type": "template",
                                         "data": "Can Kill Stabilizer Geron"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Kill with Shinespark from Yameba Corridor - https://youtu.be/DpeSE126r3M",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpeedBooster",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "ShinesparkTrick",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "EntranceRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "L0Locks",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -1701,6 +1710,15 @@
                                         "data": {
                                             "type": "tricks",
                                             "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "L0Locks",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2476,6 +2494,15 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -2785,6 +2812,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Shinespark from Below": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2820,6 +2854,13 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Shinespark from Below": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2882,102 +2923,6 @@
                                             "name": "ChargeBeam",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Shinespark from Screw Shaft - https://youtu.be/SrshBBv-MCw",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpeedBooster",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "ShinesparkTrick",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Hi-Jump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "WallJump",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "Possible without wall jumps or jump upgrades - https://youtu.be/WsY4pSmBAyo",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "ShinesparkTrick",
-                                                                                "amount": 4,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
                                         }
                                     },
                                     {
@@ -3062,6 +3007,169 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Shinespark from Below": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Shinespark from Below": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 277.9137201052752,
+                        "y": 23.92584963954681,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Screw Shaft": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Stabilizer4",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Zebesian Zag": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Stabilizer4",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Stabilizer 4 Online": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Shinespark from Screw Shaft or Zebesian Zag: https://youtu.be/SrshBBv-MCw",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "L0Locks",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "ShinesparkTrick",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLockRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Possible without wall jumps or jump upgrades: https://youtu.be/WsY4pSmBAyo",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3537,7 +3645,7 @@
                         "Door to Lava Lake Annex": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Deal with Lava",
                                 "items": [
                                     {
                                         "type": "and",
@@ -3568,7 +3676,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Suitless Damage Run: https://youtu.be/TC4s0dx6lg4",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3597,48 +3705,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "VariaSuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "DamageRuns",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "LavaDamage",
-                                                        "amount": 21,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Have Any Suit Upgrade"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -3707,7 +3775,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Ledge Grab jump (disable Screw Attack): https://youtu.be/MCiLT2kbrJQ",
+                                            "comment": "Damge run via Ledge Grab jump (disable Screw Attack): https://youtu.be/MCiLT2kbrJQ",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3721,12 +3789,12 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Damage reqs",
                                                         "items": [
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Suitless",
+                                                                    "comment": null,
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -3752,33 +3820,11 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "With any suit.",
+                                                                    "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "or",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "VariaSuit",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "GravitySuit",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Have Any Suit Upgrade"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -3810,7 +3856,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Going to the bottom of the lava and climbing up due to missing the platform",
+                                            "comment": "Damage run via jumping into bottom of lava",
                                             "items": [
                                                 {
                                                     "type": "and",
@@ -3857,53 +3903,13 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "LavaDamage",
-                                                                    "amount": 35,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "VariaSuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageRuns",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "LavaDamage",
                                                                     "amount": 50,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "GravitySuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Have Any Suit Upgrade"
                                                             }
                                                         ]
                                                     }
@@ -3956,7 +3962,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Damage run",
                                             "items": [
                                                 {
                                                     "type": "and",
@@ -3990,48 +3996,8 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "VariaSuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageRuns",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "LavaDamage",
-                                                                    "amount": 70,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "GravitySuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Have Any Suit Upgrade"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -4077,7 +4043,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Deal with Lava",
                                             "items": [
                                                 {
                                                     "type": "and",
@@ -4303,30 +4269,8 @@
                                             "comment": "Damage run and one suit",
                                             "items": [
                                                 {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "VariaSuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "GravitySuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Have Any Suit Upgrade"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -4472,7 +4416,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Deal with Lava",
                                             "items": [
                                                 {
                                                     "type": "and",
@@ -4503,7 +4447,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Suitless Damage Run: https://youtu.be/GUfsbWoRpzA",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -4636,7 +4580,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Damage run suitless",
+                                            "comment": "Damage run suitless: https://youtu.be/VFbTQoMI0uA",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4662,33 +4606,11 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Damage run with any suit",
+                                            "comment": "Damage run and one suit",
                                             "items": [
                                                 {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "VariaSuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "GravitySuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Have Any Suit Upgrade"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -5037,7 +4959,7 @@
                         "Door to Lava Lake": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Deal with Lava",
                                 "items": [
                                     {
                                         "type": "and",
@@ -5068,7 +4990,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Suitless Damage Run: https://youtu.be/jfuH3Epvxh8",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5097,48 +5019,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "VariaSuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "DamageRuns",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "LavaDamage",
-                                                        "amount": 20,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Have Any Suit Upgrade"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -5226,7 +5108,7 @@
                         "Door to Entrance Lobby": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Deal with Lava",
                                 "items": [
                                     {
                                         "type": "and",
@@ -5257,7 +5139,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Suitless Damage Run: https://youtu.be/pu2I2jaMrjI",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5286,48 +5168,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "VariaSuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "DamageRuns",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "LavaDamage",
-                                                        "amount": 40,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Have Any Suit Upgrade"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -6022,7 +5864,7 @@
                                                                 "data": {
                                                                     "type": "items",
                                                                     "name": "Missiles",
-                                                                    "amount": 30,
+                                                                    "amount": 20,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -6181,7 +6023,7 @@
                                                                 "data": {
                                                                     "type": "items",
                                                                     "name": "Missiles",
-                                                                    "amount": 30,
+                                                                    "amount": 20,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -6635,14 +6477,23 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "DMG boost - TODO: this damage value is wrong, get proper values",
+                                                        "comment": "DMG boost",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "NormalDamage",
-                                                                    "amount": 50,
+                                                                    "amount": 150,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoosts",
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -6726,18 +6577,36 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "DMG Boost - TODO: this damage value is wrong, get proper values",
+                                            "comment": "DMG Boost",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "NormalDamage",
-                                                        "amount": 50,
+                                                        "amount": 150,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageBoosts",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 3,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -7912,7 +7781,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "NormalDamage",
-                                                                    "amount": 200,
+                                                                    "amount": 100,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -7999,7 +7868,7 @@
                                                                                         "data": {
                                                                                             "type": "tricks",
                                                                                             "name": "WallJump",
-                                                                                            "amount": 1,
+                                                                                            "amount": 2,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
@@ -8394,14 +8263,14 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Move to off the pillar, right as the top most Ripper turns to the right: https://youtu.be/66mAKLiF8z4",
+                                                        "comment": "Move off the pillar, right as the top most Ripper turns to the right: https://youtu.be/66mAKLiF8z4",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Combat",
-                                                                    "amount": 2,
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -8542,7 +8411,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "NormalDamage",
-                                                                    "amount": 200,
+                                                                    "amount": 100,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -8877,7 +8746,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Knowledge",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -9912,7 +9781,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Get past Rippers - TODO: health for damage runs",
+                                            "comment": "Get past Rippers",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -9924,12 +9793,29 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "DamageRuns",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": "Run and jump through the acid: https://youtu.be/BPF8pppB7po",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "NormalDamage",
+                                                                    "amount": 130,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -10692,6 +10578,131 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Shinespark from Hornoad Housing -> Access",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "L0Locks",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLockRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Gadora"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "After Fight, Trickless: https://youtu.be/Z6_miH4qoQY",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "ChargeCore-X",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Pre-Fight, with Hi-Jump: https://youtu.be/q7HKdMt4v3g",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Pre-fight, No Hi-Jump: https://youtu.be/Fo8-jjuPdik",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Arena": {
                             "type": "and",
                             "data": {
@@ -10732,6 +10743,68 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Shinespark from Central Stabilizer -> Escape: https://youtu.be/BsW39UKOYVw",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "L0Locks",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLockRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "ShinesparkTrick",
+                                            "amount": 5,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Stabilizer5",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Arena": {
                             "type": "and",
                             "data": {
@@ -10812,201 +10885,6 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Pickup (Energy Tank)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Vanilla Method - Shinespark from Hornoad Housing -> Access",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpeedBooster",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Kill Gadora"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "EntranceRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "After Fight, Trickless: https://youtu.be/Z6_miH4qoQY",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Hi-Jump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "events",
-                                                                                "name": "ChargeCore-X",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "Pre-Fight, with Hi-Jump: https://youtu.be/q7HKdMt4v3g",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Hi-Jump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "ShinesparkTrick",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "Pre-fight, No Hi-Jump: https://youtu.be/Fo8-jjuPdik",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "ShinesparkTrick",
-                                                                                "amount": 3,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "L0Locks",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Alternate - Shinespark from Central Stabilizer -> Escape: https://youtu.be/BsW39UKOYVw",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "EntranceRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpeedBooster",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "ShinesparkTrick",
-                                                        "amount": 5,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "L0Locks",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Stabilizer5",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Door to Charge Core Arena Access": {
                             "type": "or",
                             "data": {
@@ -11775,7 +11653,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Deal with water",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -11797,6 +11675,15 @@
                                                                     "type": "tricks",
                                                                     "name": "ShinesparkTrick",
                                                                     "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "ChargeBeam",
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -11896,37 +11783,29 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "or",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "ScrewAttack",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": "Keep storing spark, until you can shoot the Scizer: https://youtu.be/QnQD7K9hcB8",
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "ShinesparkTrick",
-                                                                                            "amount": 3,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "items",
+                                                                    "name": "ScrewAttack",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Keep storing spark, until you can shoot the Scizer: https://youtu.be/QnQD7K9hcB8",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 3,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -11940,6 +11819,15 @@
                                         "data": {
                                             "type": "items",
                                             "name": "L0Locks",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "S1ChargeAccessBombs",
                                             "amount": 1,
                                             "negate": false
                                         }

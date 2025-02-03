@@ -306,7 +306,10 @@ Extra - room_id: [13, 74, 85]
   > Door to Elevator to Crew Quarters
       Trivial
   > Event - Missile Shield
-      Missiles
+      Any of the following:
+          Missiles
+          # After All Infants are collected, the hatch will despawn
+          Knowledge (Expert) and All Infants Collected
 
 > Door to Operations Deck Recharge Room; Heals? False
   * Layers: default
@@ -718,7 +721,7 @@ Extra - room_id: [22]
   > Other to Habitation Deck (Upper)
       Any of the following:
           Space Jump or Can Freeze Enemies With Any Weapon
-          # Kill Namihe's and then SWJ up. TODO: check if you can do this with jump extneds
+          # Kill Namihe's and then SWJ up.
           Wall Jump (Beginner) and Can Kill Tough Beam-Resistant Enemy and Can Single Walljump
 
 ----------------
@@ -758,11 +761,12 @@ Extra - room_id: [23]
 Sector Hub
 Extra - map_name: Main Deck24
 Extra - room_id: [24]
-> Elevator to Main Elevator Shaft; Heals? False
+> Elevator to Main Elevator Shaft; Heals? False; Spawn Point
   * Layers: default
   * Elevator to Main Elevator Shaft/Other to Sector Hub
-  * TODO: future start location
   * Extra - door_idx: (50,)
+  * Extra - X: 24
+  * Extra - Y: 18
   > Door to Elevator to Sector 2 (TRO)
       Trivial
   > Door to Elevator to Sector 1 (SRX)
@@ -1223,12 +1227,12 @@ Extra - room_id: [40, 19]
   * Layers: default
   * Elevator to Main Elevator Shaft/Other to Elevator to Sector Hub
   * Extra - door_idx: (94, 49)
-  > Door to Main Elevator Access
+  > Other to Main Elevator Access
       Trivial
 
-> Door to Main Elevator Access; Heals? False
+> Other to Main Elevator Access; Heals? False
   * Layers: default
-  * Open Hatch to Main Elevator Access/Door to Elevator to Sector Hub
+  * Destroyed Door to Main Elevator Access/Other to Elevator to Sector Hub
   * Extra - door_idx: (95, 40)
   > Elevator to Main Elevator Shaft
       Trivial
@@ -1239,16 +1243,16 @@ Extra - room_id: [40, 19]
   * Layers: default
   * Open Passage to Main Elevator Cache/Other to Elevator to Sector Hub
   * Extra - door_idx: (171,)
-  > Door to Main Elevator Access
+  > Other to Main Elevator Access
       Trivial
 
 ----------------
 Main Elevator Access
 Extra - map_name: Main Deck42
 Extra - room_id: [42, 41]
-> Door to Elevator to Sector Hub; Heals? False
+> Other to Elevator to Sector Hub; Heals? False
   * Layers: default
-  * Open Hatch to Elevator to Sector Hub/Door to Main Elevator Access
+  * Destroyed Door to Elevator to Sector Hub/Other to Main Elevator Access
   * Extra - door_idx: (96, 92)
   > Door to Ruined Stairwell
       Trivial
@@ -1257,7 +1261,7 @@ Extra - room_id: [42, 41]
   * Layers: default
   * L0 Hatch to Ruined Stairwell/Door to Main Elevator Access
   * Extra - door_idx: (97, 93)
-  > Door to Elevator to Sector Hub
+  > Other to Elevator to Sector Hub
       Trivial
 
 ----------------
@@ -1527,7 +1531,7 @@ Extra - room_id: [51]
                   # Via normal methods. Expects you to take damage or avoid their shots.
                   Can Kill Tough Beam-Resistant Enemy
                   Combat (Intermediate) or Normal Damage ≥ 128
-              # With Power Bombs
+              # With Power Bombs hitless
               Power Bombs ≥ 4 and Combat (Beginner) and Can Use Power Bombs
           # Damage Boost through them
           Damage Boosts (Intermediate) and Normal Damage ≥ 195
@@ -1555,11 +1559,8 @@ Extra - room_id: [51]
               # Get past pirates
               Any of the following:
                   # Kill them
-                  Screw Attack
-                  # Via normal methods. Taking/avoiding damage is accounted in connection to down here
+                  # Taking/avoiding damage is accounted in connection to down here
                   Can Kill Tough Beam-Resistant Enemy
-                  # With Power Bombs
-                  Power Bombs ≥ 4 and Combat (Beginner) and Can Use Power Bombs
               # Damage Boost through them
               Damage Boosts (Intermediate) and Normal Damage ≥ 195
               # Damageless: https://youtu.be/zmSH3fDcCVI?t=31
@@ -1574,7 +1575,7 @@ Extra - room_id: [51]
           Any of the following:
               # Get past pirates
               # Kill them
-              Screw Attack or Can Kill Tough Beam-Resistant Enemy
+              Can Kill Tough Beam-Resistant Enemy
               # Damage Boost through them
               Damage Boosts (Intermediate) and Normal Damage ≥ 95
               # Pirates don't exist if coming from above was done damageless: https://www.youtube.com/watch?v=2Pfo7v_Qngg
@@ -1776,8 +1777,10 @@ Extra - room_id: [62]
           Screw Attack
           Any of the following:
               Space Jump
-              # SWJ - TODO: revisit with HJ only after SWJ is patched
+              # SWJ
               Wall Jump (Beginner) and Can Single Walljump
+              # Equipment manip
+              Wall Jump (Beginner) and Enabled Equipment Manipulation
 
 ----------------
 Restricted Save Room

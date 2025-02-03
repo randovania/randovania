@@ -303,7 +303,7 @@ Extra - room_id: [9]
               # Break Blocks
               Can Use Power Bombs
               Screw Attack and Knowledge (Beginner) and Can Use Bombs
-              # Cursed Method: https://youtu.be/Cqf5mZg1NZc
+              # JBJ Method: https://youtu.be/Cqf5mZg1NZc
               Hi-Jump and Jump Bombjump (Hypermode) and Mid-Air Morph (Intermediate) and Can Use Bombs and Can Use Springball
 
 > Event - Break Bomb Blocks; Heals? False
@@ -348,6 +348,7 @@ Extra - room_id: [10]
               Can Use Bombs
               # JBJ: https://youtu.be/WSEOa-Ke16g
               Jump Bombjump (Advanced) or Can Use Springball
+          # Break with Screw
           Screw Attack and Knowledge (Beginner)
 
 ----------------
@@ -437,12 +438,22 @@ Extra - room_id: [13, 46]
                   Hi-Jump
                   # Do a glitchy WJ, popping you through the Cocoon: https://youtu.be/l7ZIQt6lK2M
                   Wall Jump (Intermediate)
-          # Manipulate and Freeze Kihunters: https://youtu.be/OCqWmh5SuGg
-          After Boss Nettori Defeated and Stand On Frozen Enemies (Advanced) and Can Freeze Enemies With Any Weapon
+          All of the following:
+              # Manipulate and Freeze Kihunters: https://youtu.be/OCqWmh5SuGg
+              After Boss Nettori Defeated and Stand On Frozen Enemies (Advanced)
+              Any of the following:
+                  # Freezing Reqs
+                  Can Freeze Enemies With Ice Beam
+                  All of the following:
+                      Missiles ≥ 2
+                      Any of the following:
+                          # Freeze with Missiles. Diffusion is much harder.
+                          Can Freeze Enemies With Ice Missiles
+                          Stand On Frozen Enemies (Expert) and Can Freeze Enemies With Diffusion
           # JBJ then buffer wall jump https://clips.twitch.tv/GrotesqueYummyGerbilChefFrank-5OKlWbe3ooKrkuFE
           Jump Bombjump (Hypermode) and Wall Jump (Hypermode) and Can Use Bombs
-          # SWJ
-          Wall Jump (Beginner) and Can Single Walljump
+          # SWJ to middle platform, then do a normal walljump
+          Wall Jump (Intermediate) and Can Single Walljump
 
 > Door to Southern Save Access; Heals? False
   * Layers: default
@@ -521,6 +532,8 @@ Extra - room_id: [14]
   * Extra - door_idx: (33,)
   > Door to Collapsed Shaft
       Trivial
+  > Other to Shadow Moses Island
+      Can Break Single Bomb Blocks
 
 > Door to Collapsed Shaft; Heals? False
   * Layers: default
@@ -528,6 +541,11 @@ Extra - room_id: [14]
   * Extra - door_idx: (34, 100)
   > Door to Central Shaft
       Trivial
+
+> Other to Shadow Moses Island; Heals? False
+  * Layers: default
+  * Open Passage to Shadow Moses Island/Other from Dessgeega Dormitory
+  * Extra - door_idx: (101,)
 
 ----------------
 Southern Save Access
@@ -652,13 +670,13 @@ Extra - room_id: [18]
   > Event - Zazabi
       All of the following:
           All of the following:
-              # Zazabi Requirements
+              # Zazabi Requirements (hardcoded 10 hits)
               Any of the following:
                   # Weapon Requirements
                   Charge Beam or Missiles ≥ 30
                   Missiles ≥ 10 and Combat (Beginner)
               # Escape from getting caught
-              Combat (Advanced) or Can Use Bombs
+              Combat (Intermediate) or Can Use Bombs
           # Core-X Requirements
           Missiles
           Any of the following:
@@ -805,7 +823,7 @@ Extra - room_id: [22, 51]
               Wide Beam or Combat (Intermediate)
               Power Bombs ≥ 5 and Can Use Power Bombs
           Any of the following:
-              # Statue Requirements
+              # Statue Requirements (2000 HP)
               All of the following:
                   # Kill with Charge
                   Charge Beam
@@ -824,7 +842,7 @@ Extra - room_id: [22, 51]
                           Missiles ≥ 67 and 30 DMG Missiles
                           Missiles ≥ 45 and 45 DMG Missiles
           All of the following:
-              # Core-X Requirements
+              # Core-X Requirements (200 HP)
               Missiles
               Any of the following:
                   20 DMG Missiles
@@ -936,6 +954,7 @@ Extra - room_id: [25]
                       # Break block with screw
                       Screw Attack and Knowledge (Beginner)
                       Any of the following:
+                          # Reach the bomb block
                           Can Activate Pillar or Have Any Jump Upgrade
                           Wall Jump (Beginner) and Can Single Walljump
 
@@ -1041,7 +1060,7 @@ Extra - room_id: [27]
                       # Wall jump instead of ledge grabs: https://youtu.be/jkn5df7GKwo
                       Wall Jump (Intermediate)
               # NHJ with ledge grabs: https://youtu.be/YdMD2TAgkuc
-              Movement (Intermediate)
+              Shinespark Tricks (Expert)
   > Other to Entrance Lobby
       Trivial
 
@@ -1125,6 +1144,7 @@ Extra - room_id: [31, 7]
               Can Use Power Bombs
               Screw Attack and Knowledge (Beginner)
               All of the following:
+                  # Break with Bombs
                   Can Use Bombs
                   Any of the following:
                       Can Use Springball
@@ -1197,6 +1217,7 @@ Extra - room_id: [32, 35]
       All of the following:
           After Boss Nettori Defeated
           Any of the following:
+              # Get up
               Space Jump
               Hi-Jump and Stand On Frozen Enemies (Intermediate) and Wall Jump (Intermediate) and Can Freeze Enemies With Any Weapon
 
@@ -1359,7 +1380,7 @@ Extra - unlocked_save_recharge_station: True
   > Save Station
       Trivial
 
-> Save Station; Heals? False
+> Save Station; Heals? False; Spawn Point
   * Layers: default
   * Extra - X: 10
   * Extra - Y: 10
@@ -1420,6 +1441,13 @@ Extra - room_id: [41]
   * Layers: default
   * L0 Hatch to Central Shaft/Door to Shadow Moses Island
   * Extra - door_idx: (97, 103)
+
+> Other from Dessgeega Dormitory; Heals? False
+  * Layers: default
+  * Blocked Passage to Dessgeega Dormitory/Other to Shadow Moses Island
+  * Extra - door_idx: (102,)
+  > Door to Central Shaft
+      Trivial
 
 ----------------
 Oasis
@@ -1492,7 +1520,7 @@ Extra - room_id: [43]
   > Door to Zoro Zig-Zag
       Any of the following:
           Space Jump
-          # https://youtu.be/8gjeZTK98_8
+          # WJ up: https://youtu.be/8gjeZTK98_8
           Wall Jump (Intermediate)
 
 ----------------
@@ -1545,8 +1573,19 @@ Extra - room_id: [47]
       # Space Jump, or don't fall down: https://youtu.be/yEFbN8WOEBU
       Space Jump or Movement (Intermediate)
   > Door to Collapsed Shaft
-      # Jump out of shinespark bonk by holding A https://youtu.be/XqUE9Di2MTU
-      Speed Booster and Knowledge (Advanced) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+      All of the following:
+          # Shinespark diagonally on the bottom at the door
+          Speed Booster and Disabled Entrance Rando and Disabled Open Hatch Lock Rando
+          Any of the following:
+              # Shinespark is harder if you can't get back up
+              Shinespark Tricks (Advanced)
+              All of the following:
+                  # Easier if you can repeat it
+                  Shinespark Tricks (Intermediate)
+                  Any of the following:
+                      # Get up
+                      Space Jump
+                      Wall Jump (Intermediate) and Can Single Walljump
   > Door to Central Shaft
       Trivial
 
@@ -1631,7 +1670,13 @@ Extra - room_id: [50]
   * Extra - door_idx: (114,)
   > Pickup (Power Bomb Tank)
       Any of the following:
-          Morph Ball and Can Freeze Enemies With Any Weapon
+          All of the following:
+              # Vanilla way: freeze Rippers and get across
+              Morph Ball
+              Any of the following:
+                  # Freezing requirements
+                  Can Freeze Enemies With Ice Beam or Can Freeze Enemies With Ice Missiles
+                  Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies With Diffusion
           # Crumble jumps: https://youtu.be/TBeE7JbT6OA
           Movement (Hypermode)
           # Respin after touching crumble blocks: https://youtu.be/qcjCJnrj7GY
@@ -1705,7 +1750,7 @@ Extra - room_id: [54]
       Any of the following:
           Space Jump
           All of the following:
-              Wall Jump (Advanced)
+              Wall Jump (Expert)
               Any of the following:
                   # Wall jump off of crumble blocks: https://youtu.be/CzN5mAyRkLc
                   Movement (Hypermode)

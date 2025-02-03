@@ -5,7 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.9.x] - 2025-02-??
+## [8.10.x] - 2025-03-??
+
+### Metroid: Samus Returns
+
+- Fixed: One Area 8 theme from not being included in music shuffle.
+
+#### Logic Database
+
+#### Area 5 Tower Exterior
+
+- Fixed: Starting in Zeta Arena Access now places Samus in the correct room.
+
+## [8.9.0] - 2025-02-02
 
 - Added: It is now possible to focus the game images in the "Games" tab via a Keyboard.
 - Added: Experimental option under Generation -> Logic Settings that makes an early check if the game is unbeatable due to options such as starting location, transports etc.
@@ -87,6 +99,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Prevented the block with a hidden item in Area 4 Central Caves - Transit Tunnel from being destroyed from another area, causing the item disappear.
 - Fixed: Incorrect rotation of a progressive item if the previous stage of the progressive item was received without leaving the area.
 - Fixed: Once you have collected all Metroid DNA, when traveling from Surface West to Surface East, a message will always appear asking if you want to fight Proteus Ridley or not. Canceling the message will load Surface East like normal. This is to prevent Surface East from being potentially inaccessible if the only entry point is from Surface West.
+- Fixed: Issue where reloading an area would retain the disconnected status regardless if the disconnect message was displayed or not.
 
 #### Logic Database
 

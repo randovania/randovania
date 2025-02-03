@@ -61,8 +61,8 @@ class FusionPatchDataFactory(PatchDataFactory):
         starting_location_dict = {
             "Area": self.game.region_list.nodes_to_region(starting_location_node).extra["area_id"],
             "Room": self.game.region_list.nodes_to_area(starting_location_node).extra["room_id"][0],
-            "X": starting_location_node.extra["X"],
-            "Y": starting_location_node.extra["Y"],
+            "BlockX": starting_location_node.extra["X"],
+            "BlockY": starting_location_node.extra["Y"],
         }
         return starting_location_dict
 

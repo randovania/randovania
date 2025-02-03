@@ -1150,7 +1150,7 @@
                         "Door to Arctic Underside": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Charge in previous room",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1180,32 +1180,12 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "VariaSuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Needed for charging in previous room",
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Kill PB Geron"
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     },
                                     {
@@ -2093,10 +2073,6 @@
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Kill PB Geron"
                                     }
                                 ]
                             }
@@ -2139,10 +2115,6 @@
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Kill PB Geron"
-                                    },
                                     {
                                         "type": "or",
                                         "data": {
@@ -3773,7 +3745,7 @@
                 ]
             },
             "nodes": {
-                "Door to Crow's Nest": {
+                "Other to Crow's Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3791,20 +3763,20 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Crow's Nest",
-                        "node": "Door to Data Room"
+                        "node": "Other to Data Room"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Ruined Corridor": {
+                        "Other to Ruined Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3860,7 +3832,7 @@
                         }
                     }
                 },
-                "Door to Ruined Corridor": {
+                "Other to Ruined Corridor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3878,20 +3850,20 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Ruined Corridor",
-                        "node": "Door to Data Room"
+                        "node": "Other to Data Room"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Crow's Nest": {
+                        "Other to Crow's Nest": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3983,7 +3955,7 @@
                 ]
             },
             "nodes": {
-                "Door to Data Room": {
+                "Other to Data Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4001,20 +3973,20 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Data Room",
-                        "node": "Door to Ruined Corridor"
+                        "node": "Other to Ruined Corridor"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Flooded Tower": {
+                        "Other to Flooded Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4023,7 +3995,7 @@
                         }
                     }
                 },
-                "Door to Flooded Tower": {
+                "Other to Flooded Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4041,20 +4013,20 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Flooded Tower",
-                        "node": "Door to Ruined Corridor"
+                        "node": "Other to Ruined Corridor"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Data Room": {
+                        "Other to Data Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4107,7 +4079,7 @@
                         }
                     }
                 },
-                "Door to Ruined Break Room": {
+                "Other to Ruined Break Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4125,20 +4097,20 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Ruined Break Room",
-                        "node": "Door to Nightmare Hub West"
+                        "node": "Other to Nightmare Hub West"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Nightmare Hub East": {
+                        "Other to Nightmare Hub East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4161,7 +4133,7 @@
                         }
                     }
                 },
-                "Door to Nightmare Hub East": {
+                "Other to Nightmare Hub East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4179,20 +4151,20 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Nightmare Hub East",
-                        "node": "Door to Nightmare Hub West"
+                        "node": "Other to Nightmare Hub West"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Ruined Break Room": {
+                        "Other to Ruined Break Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4272,7 +4244,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Ruined Break Room": {
+                        "Other to Ruined Break Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4345,7 +4317,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Ruined Break Room": {
+                        "Other to Ruined Break Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4469,7 +4441,7 @@
                 ]
             },
             "nodes": {
-                "Door to Nightmare Hub West": {
+                "Other to Nightmare Hub West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4487,13 +4459,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Nightmare Hub West",
-                        "node": "Door to Nightmare Hub East"
+                        "node": "Other to Nightmare Hub East"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4614,7 +4586,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Nightmare Hub West": {
+                        "Other to Nightmare Hub West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8661,7 +8633,7 @@
                                 ]
                             }
                         },
-                        "Door to Data Room": {
+                        "Other to Data Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8670,7 +8642,7 @@
                         }
                     }
                 },
-                "Door to Data Room": {
+                "Other to Data Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8688,13 +8660,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Data Room",
-                        "node": "Door to Crow's Nest"
+                        "node": "Other to Crow's Nest"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -9536,7 +9508,7 @@
                 ]
             },
             "nodes": {
-                "Door to Ruined Corridor": {
+                "Other to Ruined Corridor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9554,13 +9526,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Ruined Corridor",
-                        "node": "Door to Flooded Tower"
+                        "node": "Other to Flooded Tower"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -9778,7 +9750,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Ruined Corridor": {
+                        "Other to Ruined Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10730,7 +10702,7 @@
                     "location_category": "minor",
                     "hint_features": [],
                     "connections": {
-                        "Door to Nightmare Hub West": {
+                        "Other to Nightmare Hub West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10739,7 +10711,7 @@
                         }
                     }
                 },
-                "Door to Nightmare Hub West": {
+                "Other to Nightmare Hub West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10757,13 +10729,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Nightmare Hub West",
-                        "node": "Door to Ruined Break Room"
+                        "node": "Other to Ruined Break Room"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,

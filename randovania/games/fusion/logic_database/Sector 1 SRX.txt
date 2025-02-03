@@ -131,6 +131,9 @@ Extra - room_id: [4]
   * Layers: default
   * L0 Hatch to Yameba Corridor/Door to Atmospheric Stabilizer Northwest
   * Extra - door_idx: (11,)
+  > Event - Stabilizer 1 Online
+      # Kill with Shinespark from Yameba Corridor - https://youtu.be/DpeSE126r3M
+      Level 0 Keycard and Speed Booster and After Sector 1 Yameba Corridor Missile Geron Destroyed and Knowledge (Intermediate) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Room Center
       Trivial
 
@@ -154,10 +157,7 @@ Extra - room_id: [4]
   > Door to Hornoad Hole
       After Stabilizer Northwest Restored
   > Event - Stabilizer 1 Online
-      Any of the following:
-          Can Kill Stabilizer Geron
-          # Kill with Shinespark from Yameba Corridor - https://youtu.be/DpeSE126r3M
-          Level 0 Keycard and Speed Booster and Knowledge (Beginner) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
+      Can Kill Stabilizer Geron
 
 ----------------
 Hornoad Hole
@@ -297,7 +297,7 @@ Extra - room_id: [9]
       Trivial
   > Event - Stabilizer 5 Online
       # Kill with Shinespark from Checkpoint - https://youtu.be/2biI4SB_wAs
-      Speed Booster and Wave Beam and Knowledge (Beginner) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+      Level 0 Keycard and Speed Booster and Wave Beam and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Room Center; Heals? False
   * Layers: default
@@ -419,7 +419,7 @@ Extra - room_id: [13]
       Trivial
   > Event - Stabilizer 3 Online
       # Speed Boost the Stabilizer: https://youtu.be/V20W0F4dZP0
-      Level 0 Keycard and Speed Booster and After Stabilizer Southeast Restored and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
+      Level 0 Keycard and Speed Booster and After Stabilizer Southeast Restored and Knowledge (Intermediate) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Sciser Puddle; Heals? False
   * Layers: default
@@ -478,12 +478,16 @@ Extra - room_id: [15]
   * Extra - door_idx: (33,)
   > Room Center
       Trivial
+  > Shinespark from Below
+      Trivial
 
 > Door to Zebesian Zag; Heals? False
   * Layers: default
   * L0 Hatch to Zebesian Zag/Door to Atmospheric Stabilizer Southeast
   * Extra - door_idx: (75,)
   > Room Center
+      Trivial
+  > Shinespark from Below
       Trivial
 
 > Room Center; Heals? False
@@ -498,13 +502,6 @@ Extra - room_id: [15]
       Any of the following:
           Charge Beam or Missiles
           All of the following:
-              # Shinespark from Screw Shaft - https://youtu.be/SrshBBv-MCw
-              Speed Booster and Knowledge (Beginner) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando
-              Any of the following:
-                  Hi-Jump or Wall Jump (Advanced)
-                  # Possible without wall jumps or jump upgrades - https://youtu.be/WsY4pSmBAyo
-                  Shinespark Tricks (Expert)
-          All of the following:
               # Kill with Screw Attack
               Screw Attack and Knowledge (Beginner)
               # Get high enough
@@ -515,6 +512,23 @@ Extra - room_id: [15]
   * Event Stabilizer Southeast Restored
   > Room Center
       Trivial
+  > Shinespark from Below
+      Trivial
+
+> Shinespark from Below; Heals? False
+  * Layers: default
+  > Door to Screw Shaft
+      After Stabilizer Southeast Restored
+  > Door to Zebesian Zag
+      After Stabilizer Southeast Restored
+  > Event - Stabilizer 4 Online
+      All of the following:
+          # Shinespark from Screw Shaft or Zebesian Zag: https://youtu.be/SrshBBv-MCw
+          Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
+          Any of the following:
+              Hi-Jump or Wall Jump (Advanced)
+              # Possible without wall jumps or jump upgrades: https://youtu.be/WsY4pSmBAyo
+              Shinespark Tricks (Expert)
 
 ----------------
 Screw Shaft
@@ -587,29 +601,26 @@ Extra - room_id: [17]
   * Extra - blocky: 6
   > Door to Lava Lake Annex
       Any of the following:
+          # Deal with Lava
           Gravity Suit and Varia Suit
+          # Suitless Damage Run: https://youtu.be/TC4s0dx6lg4
           Damage Runs (Intermediate) and Lava Damage ≥ 60
-          Varia Suit and Damage Runs (Beginner) and Lava Damage ≥ 21
-          Gravity Suit and Damage Runs (Beginner) and Lava Damage ≥ 30
+          Damage Runs (Beginner) and Lava Damage ≥ 30 and Have Any Suit Upgrade
   > Door to Zebesian Zig
       Any of the following:
           Space Jump
           Gravity Suit and Varia Suit
           All of the following:
-              # Ledge Grab jump (disable Screw Attack): https://youtu.be/MCiLT2kbrJQ
+              # Damge run via Ledge Grab jump (disable Screw Attack): https://youtu.be/MCiLT2kbrJQ
               Movement (Beginner)
               Any of the following:
-                  # Suitless
+                  # Damage reqs
                   Damage Runs (Intermediate) and Lava Damage ≥ 20
-                  All of the following:
-                      # With any suit.
-                      Damage Runs (Beginner) and Lava Damage ≥ 10
-                      Gravity Suit or Varia Suit
+                  Damage Runs (Beginner) and Lava Damage ≥ 10 and Have Any Suit Upgrade
           Any of the following:
-              # Going to the bottom of the lava and climbing up due to missing the platform
+              # Damage run via jumping into bottom of lava
               Damage Runs (Intermediate) and Lava Damage ≥ 100
-              Varia Suit and Damage Runs (Beginner) and Lava Damage ≥ 35
-              Gravity Suit and Damage Runs (Beginner) and Lava Damage ≥ 50
+              Damage Runs (Beginner) and Lava Damage ≥ 50 and Have Any Suit Upgrade
 
 > Pickup (Missile Tank in Lava); Heals? False
   * Layers: default
@@ -622,13 +633,14 @@ Extra - room_id: [17]
       All of the following:
           Morph Ball
           Any of the following:
+              # Damage run
               Damage Runs (Intermediate) and Lava Damage ≥ 185
-              Varia Suit and Damage Runs (Beginner) and Lava Damage ≥ 70
-              Gravity Suit and Damage Runs (Beginner) and Lava Damage ≥ 100
+              Damage Runs (Beginner) and Lava Damage ≥ 100 and Have Any Suit Upgrade
   > Door to Zebesian Zig
       All of the following:
           Morph Ball
           Any of the following:
+              # Deal with Lava
               Gravity Suit and Varia Suit
               Damage Runs (Intermediate) and Lava Damage ≥ 160
               Varia Suit and Damage Runs (Beginner) and Lava Damage ≥ 60
@@ -644,10 +656,8 @@ Extra - room_id: [17]
           Gravity Suit and Varia Suit
           # Damage run suitless
           Damage Runs (Intermediate) and Lava Damage ≥ 125
-          All of the following:
-              # Damage run and one suit
-              Damage Runs (Beginner) and Lava Damage ≥ 65
-              Gravity Suit or Varia Suit
+          # Damage run and one suit
+          Damage Runs (Beginner) and Lava Damage ≥ 65 and Have Any Suit Upgrade
 
 > Door to Zebesian Zig; Heals? False
   * Layers: default
@@ -662,7 +672,9 @@ Extra - room_id: [17]
       All of the following:
           Morph Ball
           Any of the following:
+              # Deal with Lava
               Gravity Suit and Varia Suit
+              # Suitless Damage Run: https://youtu.be/GUfsbWoRpzA
               Damage Runs (Intermediate) and Lava Damage ≥ 150
               Varia Suit and Damage Runs (Beginner) and Lava Damage ≥ 55
               Gravity Suit and Damage Runs (Beginner) and Lava Damage ≥ 80
@@ -670,12 +682,10 @@ Extra - room_id: [17]
       Any of the following:
           # Intended
           Gravity Suit and Varia Suit
-          # Damage run suitless
+          # Damage run suitless: https://youtu.be/VFbTQoMI0uA
           Damage Runs (Intermediate) and Lava Damage ≥ 75
-          All of the following:
-              # Damage run with any suit
-              Damage Runs (Beginner) and Lava Damage ≥ 35
-              Gravity Suit or Varia Suit
+          # Damage run and one suit
+          Damage Runs (Beginner) and Lava Damage ≥ 35 and Have Any Suit Upgrade
   > Pickup (Missile Tank on Platform)
       Trivial
 
@@ -738,10 +748,11 @@ Extra - room_id: [20]
   * Extra - door_idx: (42,)
   > Door to Lava Lake
       Any of the following:
+          # Deal with Lava
           Gravity Suit and Varia Suit
+          # Suitless Damage Run: https://youtu.be/jfuH3Epvxh8
           Damage Runs (Intermediate) and Lava Damage ≥ 55
-          Varia Suit and Damage Runs (Beginner) and Lava Damage ≥ 20
-          Gravity Suit and Damage Runs (Beginner) and Lava Damage ≥ 25
+          Damage Runs (Beginner) and Lava Damage ≥ 25 and Have Any Suit Upgrade
   > Door to Glass Tube to Sector 3 (PYR)
       Morph Ball and Screw Attack
 
@@ -751,10 +762,11 @@ Extra - room_id: [20]
   * Extra - door_idx: (43,)
   > Door to Entrance Lobby
       Any of the following:
+          # Deal with Lava
           Gravity Suit and Varia Suit
+          # Suitless Damage Run: https://youtu.be/pu2I2jaMrjI
           Damage Runs (Intermediate) and Lava Damage ≥ 100
-          Varia Suit and Damage Runs (Beginner) and Lava Damage ≥ 40
-          Gravity Suit and Damage Runs (Beginner) and Lava Damage ≥ 50
+          Damage Runs (Beginner) and Lava Damage ≥ 50 and Have Any Suit Upgrade
 
 > Door to Glass Tube to Sector 3 (PYR); Heals? False
   * Layers: default
@@ -855,7 +867,7 @@ Extra - room_id: [22]
           Any of the following:
               # Kill Gold Zebesians (135 HP x2)
               Charge Beam or Screw Attack
-              Missiles ≥ 30 and 20 DMG Missiles
+              Missiles ≥ 20 and 20 DMG Missiles
               Missiles ≥ 10 and 45 DMG Missiles
           # Get past Bomb Blocks
           Can Use Any Bombs
@@ -874,7 +886,7 @@ Extra - room_id: [22]
           Any of the following:
               # Kill Gold Zebesians (135 HP x2)
               Charge Beam or Screw Attack
-              Missiles ≥ 30 and 20 DMG Missiles
+              Missiles ≥ 20 and 20 DMG Missiles
               Missiles ≥ 10 and 45 DMG Missiles
           # Get past Bomb Blocks
           Can Use Any Bombs
@@ -956,8 +968,8 @@ Extra - room_id: [26]
           Can Kill Gadora
           Any of the following:
               Screw Attack or Can Freeze Enemies With Any Weapon
-              # DMG boost - TODO: this damage value is wrong, get proper values
-              Normal Damage ≥ 50
+              # DMG boost
+              Damage Boosts (Beginner) and Normal Damage ≥ 150
               # Navigate the room Damageless: https://youtu.be/6LnIEbN2deg
               Combat (Advanced)
 
@@ -967,9 +979,9 @@ Extra - room_id: [26]
   * Extra - door_idx: (57,)
   > Door to Tourian Hub West
       Any of the following:
-          Screw Attack or Can Freeze Enemies With Any Weapon
-          # DMG Boost - TODO: this damage value is wrong, get proper values
-          Normal Damage ≥ 50
+          Screw Attack or Combat (Advanced) or Can Freeze Enemies With Any Weapon
+          # DMG Boost
+          Damage Boosts (Beginner) and Normal Damage ≥ 150
 
 ----------------
 Ridley Arena
@@ -1123,7 +1135,7 @@ Extra - room_id: [30]
               # Dodge: https://youtu.be/mpN1LGf4lmU
               Morph Ball and Combat (Beginner)
               # Damage boost
-              Damage Boosts (Beginner) and Normal Damage ≥ 200
+              Damage Boosts (Beginner) and Normal Damage ≥ 100
           Any of the following:
               # Get past the rippers in shaft
               All of the following:
@@ -1136,7 +1148,7 @@ Extra - room_id: [30]
                   Can Freeze Enemies With Any Weapon
                   Any of the following:
                       Space Jump
-                      Stand On Frozen Enemies (Intermediate) and Wall Jump (Beginner)
+                      Stand On Frozen Enemies (Intermediate) and Wall Jump (Intermediate)
               All of the following:
                   # Damage boost with SJ or HJ+WJ: https://youtu.be/uyPIOm9rYyQ
                   Damage Boosts (Intermediate) and Normal Damage ≥ 100
@@ -1178,8 +1190,8 @@ Extra - room_id: [30]
           Any of the following:
               # Get past the Rippers in Shaft
               Screw Attack or Can Freeze Enemies With Any Weapon
-              # Move to off the pillar, right as the top most Ripper turns to the right: https://youtu.be/66mAKLiF8z4
-              Combat (Intermediate)
+              # Move off the pillar, right as the top most Ripper turns to the right: https://youtu.be/66mAKLiF8z4
+              Combat (Advanced)
               # Damage boost
               Damage Boosts (Beginner) and Normal Damage ≥ 50
           Any of the following:
@@ -1190,7 +1202,7 @@ Extra - room_id: [30]
               # Dodge: https://youtu.be/mpN1LGf4lmU
               Morph Ball and Combat (Beginner)
               # Damage Boost
-              Damage Boosts (Beginner) and Normal Damage ≥ 200
+              Damage Boosts (Beginner) and Normal Damage ≥ 100
           Any of the following:
               # Get past the Rippers in corridor
               Morph Ball or Screw Attack
@@ -1240,7 +1252,7 @@ Extra - room_id: [32]
       Any of the following:
           Can Kill Stabilizer Geron
           # Shinespark from Moto Motorway - https://youtu.be/I9YH_s989sQ
-          Level 0 Keycard and Speed Booster and Knowledge (Beginner) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
+          Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Event - Stabilizer 2 Online; Heals? False
   * Layers: default
@@ -1390,8 +1402,10 @@ Extra - room_id: [36]
       All of the following:
           Morph Ball and Screw Attack and Wave Beam
           Any of the following:
-              # Get past Rippers - TODO: health for damage runs
-              Space Jump or Damage Runs (Intermediate)
+              # Get past Rippers
+              Space Jump
+              # Run and jump through the acid: https://youtu.be/BPF8pppB7po
+              Damage Runs (Intermediate) and Normal Damage ≥ 130
               # Navigate the room with an Ice Weapon: https://youtu.be/rjzsSJlkeKw
               Stand On Frozen Enemies (Advanced) and Can Freeze Enemies With Any Weapon
 
@@ -1521,6 +1535,17 @@ Extra - room_id: [40]
   * Layers: default
   * L0 Hatch to Charge Core Arena Access/Door to Charge Core Arena
   * Extra - door_idx: (82,)
+  > Pickup (Energy Tank)
+      All of the following:
+          # Shinespark from Hornoad Housing -> Access
+          Level 0 Keycard and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando and Can Kill Gadora
+          Any of the following:
+              # After Fight, Trickless: https://youtu.be/Z6_miH4qoQY
+              Hi-Jump and After Boss Charge Core-X Defeated
+              # Pre-Fight, with Hi-Jump: https://youtu.be/q7HKdMt4v3g
+              Hi-Jump and Shinespark Tricks (Intermediate)
+              # Pre-fight, No Hi-Jump: https://youtu.be/Fo8-jjuPdik
+              Shinespark Tricks (Advanced)
   > Arena
       Trivial
 
@@ -1528,6 +1553,9 @@ Extra - room_id: [40]
   * Layers: default
   * L0 Hatch to Charge Core Escape/Door to Charge Core Arena
   * Extra - door_idx: (85,)
+  > Pickup (Energy Tank)
+      # Shinespark from Central Stabilizer -> Escape: https://youtu.be/BsW39UKOYVw
+      Level 0 Keycard and Speed Booster and After Stabilizer Central Restored and Shinespark Tricks (Hypermode) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Arena
       Trivial
 
@@ -1548,20 +1576,6 @@ Extra - room_id: [40]
 
 > Arena; Heals? False
   * Layers: default
-  > Pickup (Energy Tank)
-      Any of the following:
-          All of the following:
-              # Vanilla Method - Shinespark from Hornoad Housing -> Access
-              Level 0 Keycard and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando and Can Kill Gadora
-              Any of the following:
-                  # After Fight, Trickless: https://youtu.be/Z6_miH4qoQY
-                  Hi-Jump and After Boss Charge Core-X Defeated
-                  # Pre-Fight, with Hi-Jump: https://youtu.be/q7HKdMt4v3g
-                  Hi-Jump and Shinespark Tricks (Intermediate)
-                  # Pre-fight, No Hi-Jump: https://youtu.be/Fo8-jjuPdik
-                  Shinespark Tricks (Advanced)
-          # Alternate - Shinespark from Central Stabilizer -> Escape: https://youtu.be/BsW39UKOYVw
-          Level 0 Keycard and Speed Booster and After Stabilizer Central Restored and Shinespark Tricks (Hypermode) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Door to Charge Core Arena Access
       After Boss Charge Core-X Defeated
   > Door to Charge Core Escape
@@ -1711,23 +1725,21 @@ Extra - room_id: [47]
   * Extra - door_idx: (101,)
   > Pickup (Hidden Power Bomb Tank)
       All of the following:
-          Level 0 Keycard and Morph Ball and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando and Can Bounce in Ball
+          Level 0 Keycard and Morph Ball and Speed Booster and After Sector 1 Charge Core Arena Access Bomb Blocks Destroyed and Disabled Door Lock Rando and Disabled Entrance Rando and Can Bounce in Ball
           Any of the following:
+              # Deal with water
               Gravity Suit
               # Very tight without Gravity: https://youtu.be/7CrmoeqlIUk
-              Shinespark Tricks (Hypermode)
+              Charge Beam and Shinespark Tricks (Hypermode)
           Any of the following:
               # A way to pass by the Sciser
               Charge Beam or Missiles or Plasma Beam
               All of the following:
                   Wide Beam
                   Ice Beam or Wave Beam
-              All of the following:
-                  Gravity Suit
-                  Any of the following:
-                      Screw Attack
-                      # Keep storing spark, until you can shoot the Scizer: https://youtu.be/QnQD7K9hcB8
-                      Shinespark Tricks (Advanced)
+              Gravity Suit and Screw Attack
+              # Keep storing spark, until you can shoot the Scizer: https://youtu.be/QnQD7K9hcB8
+              Shinespark Tricks (Advanced)
 
 ----------------
 Glass Tube to Sector 2 (TRO)

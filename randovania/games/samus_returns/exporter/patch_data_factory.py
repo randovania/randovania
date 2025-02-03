@@ -149,6 +149,7 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
         "m_met2_caverns3_99",
         "m_met2_caverns4_99",
         "m_met2_metroid_hatching99",
+        "m_met2_metroidnest_10gentei99",
         "m_prologue99",
         "m_select99",
         "m_title99",
