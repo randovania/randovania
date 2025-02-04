@@ -32,14 +32,14 @@ class HintFeature(JsonDataclass):
         assert self.name, "Name must not be empty"
         assert self.long_name, "Long name must not be empty"
 
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}('{self.name}')"
 
-@dataclasses.dataclass(frozen=True, order=True)
+
+@dataclasses.dataclass(frozen=True, order=True, repr=False)
 class PickupHintFeature(HintFeature):
     """Specialized HintFeature for PickupEntry, which has additional needs over basic HintFeatures"""
 
     # TODO: refactor out eventually (migration necessary)
     is_broad_category: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
     """Used for Echoes Flying Ing Cache hints"""
-
-    def __repr__(self) -> str:
-        return f"{self.__class__.__name__}('{self.name}')"

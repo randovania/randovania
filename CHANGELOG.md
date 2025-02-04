@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Every game now has a "Pickup Hint Features" tab where you can view which Features apply to which pickups.
 - Added: Cave Story and Echoes now have a "Pickup Location Features" tab where you can view which Features apply to which locations.
 - Added: Location Features can be viewed in the Database Viewer.
+- Fixed: It is now properly impossible for multiple hints to point to the same location.
 
 ### Metroid Prime 2: Echoes
 - Removed: Relative hints will no longer be placed.

@@ -502,7 +502,7 @@ class HintDistributor(ABC):
         Params for the precision distribution for location features.
         Override in subclass to fine-tune the balance.
         """
-        return 0.85, 0.1
+        return 0.8, 0.15
 
     @classmethod
     def item_feature_distribution(cls) -> HintFeatureGaussianParams:
