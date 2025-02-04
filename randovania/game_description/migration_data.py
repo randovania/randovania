@@ -66,11 +66,17 @@ def get_generated_pickups(game: RandovaniaGame) -> dict:
     return data["generated_pickups"]
 
 
-def get_hint_location_precision_data(game: RandovaniaGame) -> dict:
+def get_hint_location_precision_data(game: RandovaniaGame) -> dict[str, str]:
     data = get_raw_data(game)
     return data.get("hint_location_precision", {})
 
 
-def get_old_hint_categories(game: RandovaniaGame) -> dict:
+def get_old_hint_categories(game: RandovaniaGame) -> dict[str, dict[str, str]]:
     data = get_raw_data(game)
     return data.get("old_hint_categories", {})
+
+
+def get_node_keys_for_pickup_index(game: RandovaniaGame, index: int) -> tuple[str, str]:
+    mapping = get_raw_data(game)["pickup_index_to_node"]
+    node = mapping[str(index)]
+    return node["region"], node["area_and_node"]

@@ -11,8 +11,6 @@ def test_round_trip_small(test_files_dir):
 
     game = data_reader.decode_data(migrated_data)
 
-    print(game.__dict__.keys())
-
     encoded_data = data_writer.write_game_description(game)
     encoded_data["used_trick_levels"] = None
     assert encoded_data == migrated_data

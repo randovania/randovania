@@ -30,7 +30,26 @@ class FieldDefinition[QtT, PyT]:
     field_name: str
     _: dataclasses.KW_ONLY
     to_qt: typing.Callable[[PyT], QtT] = _unmodified_to_qt  # type: ignore[assignment]
-    from_qt: typing.Callable[[QtT], tuple[bool, PyT]] = _unmodified_from_qt  # type: ignore[assignment]
+    from_qt: typing.Callable[[QtT], tuple[bool, PyT | None]] = _unmodified_from_qt  # type: ignore[assignment]
+
+
+def BoolFieldDefinition(display_name: str, field_name: str) -> FieldDefinition[str, bool]:
+    def bool_to_qt(value: bool) -> str:
+        return "True" if value else "False"
+
+    def bool_from_qt(value: str) -> tuple[bool, bool | None]:
+        if value.lower() == "true":
+            return (True, True)
+        if value.lower() == "false":
+            return (True, False)
+        return (False, None)
+
+    return FieldDefinition[str, bool](
+        display_name=display_name,
+        field_name=field_name,
+        to_qt=bool_to_qt,
+        from_qt=bool_from_qt,
+    )
 
 
 class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
@@ -67,6 +86,7 @@ class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
         raise NotImplementedError
 
     def set_allow_edits(self, value: bool) -> None:
+        """Setter for `allow_edits`"""
         self.beginResetModel()
         self.allow_edits = value
         self.endResetModel()
@@ -92,12 +112,14 @@ class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
         return len(self._all_columns())
 
     def _get_item(self, row: int) -> T:
+        """Return the item on the given row."""
         all_items = self._get_items()
         if isinstance(all_items, list):
             return all_items[row]
         return all_items[list(all_items.keys())[row]]
 
     def _set_item(self, row: int, item: T) -> None:
+        """Set the given row to the given item."""
         all_items = self._get_items()
         if isinstance(all_items, list):
             all_items[row] = item
@@ -152,6 +174,7 @@ class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
         return False
 
     def _append_item_to_database(self, item: T) -> None:
+        """Appends the given item to the model's underlying database"""
         all_items = self._get_items()
         if isinstance(all_items, list):
             all_items.append(item)
@@ -161,6 +184,7 @@ class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
             all_items[id] = item
 
     def append_item(self, item: T) -> bool:
+        """Appends the item to the database and safely adds rows while doing so"""
         row = self.rowCount()
         self.beginInsertRows(QtCore.QModelIndex(), row + 1, row + 1)
         self._append_item_to_database(item)

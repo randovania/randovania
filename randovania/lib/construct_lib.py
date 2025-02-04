@@ -118,6 +118,41 @@ class JsonEncodedValueAdapter(construct.Adapter):
         return json.dumps(obj, separators=(",", ":"))
 
 
+class DefaultsAdapter(construct.Adapter):
+    """
+    Adapter for Structs where `construct.Default`
+    fields are omitted when equal to the default.
+    """
+
+    def __init__(self, subcon: construct.Construct):
+        if not isinstance(subcon, Struct):
+            raise TypeError("subcon should be a Struct")
+        super().__init__(subcon)
+
+    @property
+    def subcons(self) -> list[construct.Subconstruct]:
+        """Typed wrapper for `subcon.subcons`"""
+        assert isinstance(self.subcon, Struct)
+        return typing.cast(list[construct.Subconstruct], self.subcon.subcons)
+
+    def _decode(self, obj: dict, context: construct.Container, path: str) -> construct.Container:
+        decoded = construct.Container(obj)
+        for sc in self.subcons:
+            if not isinstance(sc.subcon, construct.Default):
+                continue
+            if decoded[sc.name] == sc.subcon.value:
+                del decoded[sc.name]
+        return decoded
+
+    def _encode(self, obj: dict, context: construct.Container, path: str) -> construct.Container:
+        encoded = construct.Container(obj)
+        for sc in self.subcons:
+            if not isinstance(sc.subcon, construct.Default):
+                continue
+            encoded.setdefault(sc.name, sc.subcon.value)
+        return encoded
+
+
 JsonEncodedValue = JsonEncodedValueAdapter(String)
 CompressedJsonValue = construct.Prefixed(construct.VarInt, construct.Compressed(JsonEncodedValue, "zlib"))
 NullTerminatedCompressedJsonValue = construct.Prefixed(

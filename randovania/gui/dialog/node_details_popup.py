@@ -27,7 +27,6 @@ from randovania.gui.generated.node_details_popup_ui import Ui_NodeDetailsPopup
 from randovania.gui.lib import async_dialog, common_qt_lib, signal_handling
 from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
 from randovania.gui.lib.editable_list_view import EditableListModel
-from randovania.gui.lib.hint_feature_list_model import HintFeatureListModel
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.lib import enum_lib, frozen_lib
 
@@ -131,8 +130,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         for category in enum_lib.iterate_enum(LocationCategory):
             self.location_category_combo.addItem(category.long_name, category)
 
-        self.hint_feature_box.setModel(HintFeatureListModel(self.game.hint_feature_database))
-        self.hint_feature_box.delegate.items = [ft.long_name for ft in self.game.hint_feature_database.values()]
+        self.hint_feature_box.create_model(self.game.hint_feature_database)
 
         # Teleporter
         self.set_teleporter_network_unlocked_by(Requirement.trivial())

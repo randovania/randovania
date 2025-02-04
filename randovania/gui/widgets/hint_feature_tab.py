@@ -78,7 +78,7 @@ class LocationHintFeatureTab(HintFeatureTab):
 
     def add_features(self, game: GameDescription) -> None:
         for feature in sorted(game.hint_feature_database.values(), key=_keyfunc):
-            if feature.long_name.startswith("_"):
+            if feature.hidden:
                 continue
 
             node_names = [node.identifier.as_string for node in game.region_list.pickup_nodes_with_feature(feature)]
@@ -93,7 +93,7 @@ class PickupHintFeatureTab(HintFeatureTab):
 
     def add_features(self, pickup_db: PickupDatabase) -> None:
         for feature in sorted(pickup_db.pickup_categories.values(), key=_keyfunc):
-            if feature.long_name.startswith("_"):
+            if feature.hidden:
                 continue
 
             def pickups_with_feature(group: dict[str, BasePickupDefinition]) -> Iterable[str]:

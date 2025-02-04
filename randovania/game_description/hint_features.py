@@ -27,6 +27,7 @@ class HintFeature(JsonDataclass):
     name: str = dataclasses.field(metadata={"init_from_extra": True})
     long_name: str
     hint_details: HintDetails = dataclasses.field(metadata={"store_named_tuple_without_names": True})
+    hidden: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
 
     def __post_init__(self) -> None:
         assert self.name, "Name must not be empty"

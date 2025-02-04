@@ -5,7 +5,7 @@ from PySide6 import QtCore, QtWidgets
 from randovania.game_description.hint_features import HintDetails, HintFeature
 from randovania.gui.generated.hint_feature_database_editor_ui import Ui_HintFeatureDatabaseEditor
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
-from randovania.gui.lib.editable_table_model import EditableTableModel, FieldDefinition
+from randovania.gui.lib.editable_table_model import BoolFieldDefinition, EditableTableModel, FieldDefinition
 
 
 class HintFeatureDatabaseModel(EditableTableModel[HintFeature]):
@@ -26,6 +26,7 @@ class HintFeatureDatabaseModel(EditableTableModel[HintFeature]):
                 to_qt=lambda v: v.description,
                 from_qt=lambda v: (True, HintDetails("", v)),
             ),
+            BoolFieldDefinition("Hidden?", "hidden"),
         ]
 
     @override

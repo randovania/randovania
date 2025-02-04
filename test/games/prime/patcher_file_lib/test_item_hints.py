@@ -275,7 +275,6 @@ def test_create_message_for_hint_dark_temple_no_keys(empty_patches, players_conf
     assert result == "The keys to &push;&main-color=#FF6705B3;Dark Torvus Temple&pop; are nowhere to be found."
 
 
-# @pytest.mark.skip
 @pytest.mark.parametrize(
     "item",
     [
@@ -331,7 +330,6 @@ def test_create_hints_item_location(echoes_game_patches, blank_pickup, item, loc
     assert result == [{"asset_id": asset_id, "strings": [message, "", message]}]
 
 
-# @pytest.mark.skip
 @pytest.mark.parametrize(
     "pickup_index_and_guardian",
     [
@@ -387,7 +385,6 @@ def test_create_hints_guardians(
     assert result == [{"asset_id": asset_id, "strings": [message, "", message]}]
 
 
-# @pytest.mark.skip
 @pytest.mark.parametrize(
     "item",
     [

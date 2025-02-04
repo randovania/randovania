@@ -245,7 +245,7 @@
    <item>
     <widget class="QTabWidget" name="tab_widget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_generic">
       <attribute name="title">
@@ -471,7 +471,7 @@
         <widget class="QComboBox" name="location_category_combo"/>
        </item>
        <item row="2" column="0">
-        <widget class="EditableListView" name="hint_feature_box">
+        <widget class="HintFeatureListView" name="hint_feature_box">
          <property name="title">
           <string>Hint Features</string>
          </property>
@@ -814,6 +814,12 @@
    <class>EditableListView</class>
    <extends>QGroupBox</extends>
    <header>randovania.gui.lib.editable_list_view</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HintFeatureListView</class>
+   <extends>QGroupBox</extends>
+   <header>randovania.gui.lib.hint_feature_list_view</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

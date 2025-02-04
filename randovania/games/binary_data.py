@@ -8,6 +8,7 @@ from construct import (
     Byte,
     Compressed,
     Const,
+    Default,
     Flag,
     Float32b,
     Float64b,
@@ -22,7 +23,14 @@ from construct import (
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import game_migration
 from randovania.game_description.db.hint_node import HintNodeKind
-from randovania.lib.construct_lib import ConstructDict, JsonEncodedValue, OptionalValue, String, convert_to_raw_python
+from randovania.lib.construct_lib import (
+    ConstructDict,
+    DefaultsAdapter,
+    JsonEncodedValue,
+    OptionalValue,
+    String,
+    convert_to_raw_python,
+)
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -325,9 +333,12 @@ ConstructDockWeaknessDatabase = Struct(
 ConstructUsedTrickLevels = OptionalValue(ConstructDict(PrefixedArray(VarInt, construct.Byte)))
 
 ConstructHintFeatureDatabase = ConstructDict(
-    Struct(
-        long_name=String,
-        hint_details=String[2],
+    DefaultsAdapter(
+        Struct(
+            long_name=String,
+            hint_details=String[2],
+            hidden=Default(Flag, False),
+        )
     )
 )
 

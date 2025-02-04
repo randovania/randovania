@@ -4,9 +4,7 @@ import re
 import typing
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description import default_database, migration_data
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.layout.game_patches_serializer import _ETM_NAME
+from randovania.game_description import migration_data
 from randovania.lib import migration_lib
 
 
@@ -544,7 +542,6 @@ def _migrate_hint_precision(data: dict, item_precisions_to_migrate: set[str]) ->
 
     for game in game_modifications:
         game_enum = RandovaniaGame(game["game"])
-        region_list = default_database.game_description_for(game_enum).region_list
         location_precision = migration_data.get_hint_location_precision_data(game_enum)
 
         for hint in game["hints"].values():
@@ -555,16 +552,13 @@ def _migrate_hint_precision(data: dict, item_precisions_to_migrate: set[str]) ->
             if precision["location"] in location_precision:
                 precision["location_feature"] = location_precision[precision.pop("location")]
 
-            def migrate_precision(_precision: dict, target: PickupIndex, old_key: str, new_key: str) -> None:
-                item_node = region_list.node_from_pickup_index(target)
-                region, area = region_list.region_and_area_by_area_identifier(item_node.identifier.area_identifier)
-                area_and_node = item_node.identifier.as_string.removeprefix(f"{region.name}/")
+            def migrate_precision(_precision: dict, target: int, old_key: str, new_key: str) -> None:
+                correct_name, area_and_node = migration_data.get_node_keys_for_pickup_index(game_enum, target)
 
-                correct_name = region.correct_name(area.in_dark_aether)
                 target_name = game["locations"][correct_name][area_and_node]
                 target_name_re = re.compile(r"(.*) for Player (\d+)")
 
-                if target_name == _ETM_NAME:
+                if target_name == "Energy Transfer Module":
                     # who cares, honestly
                     _precision[old_key] = "detailed"
                     return
@@ -589,18 +583,17 @@ def _migrate_hint_precision(data: dict, item_precisions_to_migrate: set[str]) ->
                 _precision[new_key] = item_data[_precision.pop(old_key)]
 
             if precision["item"] in item_precisions_to_migrate:
-                migrate_precision(precision, PickupIndex(hint["target"]), "item", "item_feature")
+                migrate_precision(precision, hint["target"], "item", "item_feature")
 
             if (
                 (relative := precision.get("relative")) is not None
                 and ("area_location" not in relative)
                 and (relative["precision"] in item_precisions_to_migrate)
             ):
-                migrate_precision(relative, PickupIndex(relative["other_index"]), "precision", "precision_feature")
+                migrate_precision(relative, relative["other_index"], "precision", "precision_feature")
 
 
 def _migrate_v30(data: dict) -> None:
-    # TODO: eventually migrate broad-category if keybearer hints are rebalanced
     _migrate_hint_precision(data, {"precise-category", "general-category"})
 
 

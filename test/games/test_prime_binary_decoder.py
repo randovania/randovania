@@ -50,7 +50,12 @@ sample_data = {
         "key": {
             "long_name": "Room",
             "hint_details": ["in ", "a room"],
-        }
+        },
+        "key2": {
+            "long_name": "Room",
+            "hint_details": ["in ", "a room"],
+            "hidden": True,
+        },
     },
     "used_trick_levels": {},
     "flatten_to_set_on_patch": False,

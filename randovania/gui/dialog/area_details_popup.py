@@ -10,7 +10,6 @@ from PySide6 import QtWidgets
 
 from randovania.gui.generated.area_details_popup_ui import Ui_AreaDetailsPopup
 from randovania.gui.lib import common_qt_lib
-from randovania.gui.lib.hint_feature_list_model import HintFeatureListModel
 from randovania.lib import frozen_lib
 
 if TYPE_CHECKING:
@@ -29,8 +28,7 @@ class AreaDetailsPopup(QtWidgets.QDialog, Ui_AreaDetailsPopup):
         self.game = game
         self.area = area
 
-        self.hint_feature_box.setModel(HintFeatureListModel(self.game.hint_feature_database))
-        self.hint_feature_box.delegate.items = [ft.long_name for ft in self.game.hint_feature_database.values()]
+        self.hint_feature_box.create_model(self.game.hint_feature_database)
 
         # Signals
         self.button_box.accepted.connect(self.try_accept)
