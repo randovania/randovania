@@ -126,7 +126,7 @@ class DefaultsAdapter(construct.Adapter):
 
     def __init__(self, subcon: construct.Construct):
         if not isinstance(subcon, Struct):
-            raise TypeError("subcon should be a Struct")
+            raise TypeError(f"subcon should be a Struct; got {type(subcon)}")
         super().__init__(subcon)
 
     @property
