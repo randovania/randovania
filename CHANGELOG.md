@@ -14,6 +14,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Location Features can be viewed in the Database Viewer.
 - Fixed: It is now properly impossible for multiple hints to point to the same location.
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Changed: Flipping the spinner. in Screw Attack Room when by going from the door to the transport is now logically possible also after having flipped the spinner.
+- Changed: All other connections in Screw Attack Room that are only open before flipping the spinner are now only logical when Highly Dangerous Logic is enabled.
+- Changed: The conditions that depends on not having blown up the blob in Screw Attack Room are now only logical when Highly Dangerous Logic is enabled.
+
 ### Metroid Prime 2: Echoes
 - Removed: Relative hints will no longer be placed.
 - Changed: Legacy multiworld sessions where an Echoes hint points to a Cave Story item may have very slightly altered wording.
