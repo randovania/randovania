@@ -510,7 +510,7 @@ class HintDistributor(ABC):
         Params for the precision distribution for item features.
         Override in subclass to fine-tune the balance.
         """
-        return 0.7, 0.2
+        return 0.9, 0.2
 
 
 class AllJokesHintDistributor(HintDistributor):
