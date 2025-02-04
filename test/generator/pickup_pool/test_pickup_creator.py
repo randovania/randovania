@@ -158,6 +158,7 @@ def test_create_missile_launcher(
         ammo_requires_main_item=True,
     )
     result = dataclasses.replace(result, offworld_models=frozendict({}))
+    categories = echoes_pickup_database.pickup_categories
 
     # Assert
     assert result == PickupEntry(
@@ -168,12 +169,14 @@ def test_create_missile_launcher(
             (echoes_resource_database.get_item(echoes_items.PERCENTAGE), 1),
         ),
         model=PickupModel(echoes_resource_database.game_enum, "MissileLauncher"),
-        gui_category=echoes_pickup_database.pickup_categories["missile"],
+        gui_category=categories["missile"],
         hint_features=frozenset(
             (
-                echoes_pickup_database.pickup_categories["major"],
-                echoes_pickup_database.pickup_categories["missile"],
-                echoes_pickup_database.pickup_categories["missile_related"],
+                categories["major"],
+                categories["missile"],
+                categories["missile_related"],
+                categories["chozo"],
+                categories["weapon"],
             )
         ),
         generator_params=default_generator_params,
@@ -217,6 +220,7 @@ def test_create_seeker_launcher(
         ammo_requires_main_item,
     )
     result = dataclasses.replace(result, offworld_models=frozendict({}))
+    categories = echoes_pickup_database.pickup_categories
 
     # Assert
 
@@ -228,12 +232,14 @@ def test_create_seeker_launcher(
             (echoes_resource_database.get_item(echoes_items.PERCENTAGE), 1),
         ),
         model=PickupModel(echoes_resource_database.game_enum, "SeekerLauncher"),
-        gui_category=echoes_pickup_database.pickup_categories["missile"],
+        gui_category=categories["missile"],
         hint_features=frozenset(
             (
-                echoes_pickup_database.pickup_categories["missile"],
-                echoes_pickup_database.pickup_categories["missile_related"],
-                echoes_pickup_database.pickup_categories["major"],
+                categories["missile"],
+                categories["missile_related"],
+                categories["major"],
+                categories["luminoth"],
+                categories["weapon"],
             )
         ),
         respects_lock=ammo_requires_main_item,
