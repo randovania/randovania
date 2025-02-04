@@ -31,7 +31,7 @@ class HintFeatureTab(QWidget, Ui_HintFeatureTab):
         return (
             f"When a {self.element_type} is referenced in a hint, "
             f"the hint may refer to it using a Feature of varying precision. "
-            f"The following is a list of which {self.element_type}s a given Feature may refer to:"
+            f"The following is a list of which {self.element_type}s a given Feature may refer to."
         )
 
     def add_feature_widget(self, feature: HintFeature, elements_with_feature: list[str]) -> None:
@@ -75,6 +75,17 @@ class LocationHintFeatureTab(HintFeatureTab):
     @property
     def element_type(self) -> str:
         return "location"
+
+    @property
+    def description(self) -> str:
+        return (
+            super().description
+            + "\n\n"
+            + (
+                '**As a general rule, the wording "near" means that the '
+                "pickup location is in the same room as the feature.**"
+            )
+        )
 
     def add_features(self, game: GameDescription) -> None:
         for feature in sorted(game.hint_feature_database.values(), key=_keyfunc):
