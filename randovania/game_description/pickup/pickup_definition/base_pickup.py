@@ -9,13 +9,6 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.hint_features import PickupHintFeature
 from randovania.game_description.resources.location_category import LocationCategory
 
-# how to order json-encoded fields
-BASE_METADATA_STORAGE_ORDER = -20
-ADDITIONAL_RESOURCES_STORAGE_ORDER = -10
-OTHER_METADATA_STORAGE_ORDER = 0
-GENERATOR_PARAMS_STORAGE_ORDER = 10
-EXTRA_DICT_STORAGE_ORDER = 20
-
 
 @dataclasses.dataclass(frozen=True, kw_only=True)
 class BasePickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
