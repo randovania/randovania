@@ -6,6 +6,7 @@ import functools
 import json
 import typing
 
+from frozendict import frozendict
 from PySide6 import QtCore, QtWidgets
 
 from randovania.game_description.requirements.base import Requirement
@@ -37,31 +38,40 @@ def encode_extra(qt_value: str) -> tuple[bool, typing.Any]:
         return False, None
 
 
-GENERIC_FIELDS = [
-    FieldDefinition("Short Name", "short_name"),
-    FieldDefinition("Long Name", "long_name"),
-    FieldDefinition("Extra", "extra", to_qt=lambda v: json.dumps(frozen_lib.unwrap(v)), from_qt=encode_extra),
+GENERIC_FIELDS: list[FieldDefinition] = [
+    FieldDefinition[str, str]("Short Name", "short_name"),
+    FieldDefinition[str, str]("Long Name", "long_name"),
+    FieldDefinition[str, frozendict](
+        "Extra", "extra", to_qt=lambda v: json.dumps(frozen_lib.unwrap(v)), from_qt=encode_extra
+    ),
 ]
 
 
 class ResourceDatabaseGenericModel(EditableTableModel[ResourceInfo]):
+    """Model for editing a database of ResourceInfo using a QTableView"""
+
     def __init__(self, db: ResourceDatabase, resource_type: ResourceType):
         super().__init__()
         self.db = db
         self.resource_type = resource_type
 
+    @typing.override
     def _all_columns(self) -> list[FieldDefinition]:
         return GENERIC_FIELDS
 
+    @typing.override
     def _get_items(self) -> list[ResourceInfo]:
         return typing.cast(list[ResourceInfo], self.db.get_by_type(self.resource_type))
 
+    @typing.override
     def _create_item(self, short_name: str) -> ResourceInfo:
         return SimpleResourceInfo(self.db.first_unused_resource_index(), short_name, short_name, self.resource_type)
 
+    @typing.override
     def _get_item_identifier(self, item: ResourceInfo) -> str:
         return item.short_name
 
+    @typing.override
     def append_item(self, resource: ResourceInfo) -> bool:
         assert resource.resource_index == self.db.first_unused_resource_index()
         return super().append_item(resource)
@@ -72,12 +82,16 @@ ITEM_FIELDS.insert(2, FieldDefinition("Max Capacity", "max_capacity", from_qt=la
 
 
 class ResourceDatabaseItemModel(ResourceDatabaseGenericModel):
+    """Model for editing a database of ItemResourceInfo using a QTableView"""
+
     def __init__(self, db: ResourceDatabase):
         super().__init__(db, ResourceType.ITEM)
 
+    @typing.override
     def _all_columns(self) -> list[FieldDefinition]:
         return ITEM_FIELDS
 
+    @typing.override
     def _create_item(self, short_name: str) -> ItemResourceInfo:
         return ItemResourceInfo(self.db.first_unused_resource_index(), short_name, short_name, 1)
 
@@ -87,12 +101,16 @@ TRICK_FIELDS.insert(2, FieldDefinition("Description", "description"))
 
 
 class ResourceDatabaseTrickModel(ResourceDatabaseGenericModel):
+    """Model for editing a database of TrickResourceInfo using a QTableView"""
+
     def __init__(self, db: ResourceDatabase):
         super().__init__(db, ResourceType.TRICK)
 
+    @typing.override
     def _all_columns(self) -> list[FieldDefinition]:
         return TRICK_FIELDS
 
+    @typing.override
     def _create_item(self, short_name: str) -> TrickResourceInfo:
         return TrickResourceInfo(self.db.first_unused_resource_index(), short_name, short_name, "")
 

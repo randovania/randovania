@@ -47,7 +47,7 @@ class EchoesHintNamer(PrimeFamilyHintNamer):
 
     @override
     @property
-    def color_player(self) -> str:
+    def color_world(self) -> str:
         return "#d4cc33"
 
     @override

@@ -83,6 +83,11 @@ class HintState:
         current_uncollected: UncollectedState,
         all_locations: WeightedLocations,
     ) -> None:
+        """
+        Update pickup_available_indices_when_placed with
+        the available indices when the pickup is placed
+        """
+
         available = frozenset(self._valid_available_locations_for_hint(state, current_uncollected, all_locations))
         self.pickup_available_indices_when_placed[pickup_index] = available
 

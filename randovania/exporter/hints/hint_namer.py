@@ -48,7 +48,7 @@ class HintNamer(Generic[ColorT]):
         return self.color_default
 
     @property
-    def color_player(self) -> ColorT:
+    def color_world(self) -> ColorT:
         """The color to use for player/world names"""
         return self.color_default
 
@@ -87,7 +87,7 @@ class HintNamer(Generic[ColorT]):
     def format_guaranteed_resource(
         self,
         resource: ItemResourceInfo,
-        player_name: str | None,
+        world_name: str | None,
         location: PickupLocation,
         hide_area: bool,
         with_color: bool,
@@ -95,10 +95,10 @@ class HintNamer(Generic[ColorT]):
         """Used for indicating where a specific guaranteed resource can be found."""
         raise NotImplementedError
 
-    # Player
-    def format_player(self, name: str, with_color: bool) -> str:
+    # World
+    def format_world(self, name: str, with_color: bool) -> str:
         """Formats the name of a player/world"""
-        return self.colorize_text(self.color_player, name, with_color)
+        return self.colorize_text(self.color_world, name, with_color)
 
     # Locations
     def _area_name(self, region_list: RegionList, pickup_node: PickupNode, hide_region: bool) -> str:

@@ -34,6 +34,6 @@ class RelativeItemFormatter(RelativeFormatter):
             self.players_config,
             False,
         )
-        assert phint.player_name is None
+        assert phint.world_name is None
         other_name = f"{phint.determiner}{phint.pickup_name}"
         return self.relative_format(pick_hint, hint, other_area, other_name, with_color)

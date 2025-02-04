@@ -266,10 +266,10 @@ class HintDistributor(ABC):
         Selects targets for all remaining unassigned generic hint nodes
         """
 
-        hinted_pickups = {hint.target for hint in patches.hints.values() if isinstance(hint, LocationHint)}
+        hinted_locations = {hint.target for hint in patches.hints.values() if isinstance(hint, LocationHint)}
 
         def sort_hints(item: tuple[NodeIdentifier, set[PickupIndex]]) -> tuple[int, NodeIdentifier]:
-            return (len(item[1] - hinted_pickups), item[0])
+            return (len(item[1] - hinted_locations), item[0])
 
         # assign hints with fewest potential targets first to help ensure none of them run out of options
         for hint_node, potential_targets in sorted(hint_state.hint_valid_targets.items(), key=sort_hints):
@@ -290,16 +290,16 @@ class HintDistributor(ABC):
                 if self.interesting_pickup_to_hint(patches.pickup_assignment[target].pickup)
             }
             # don't hint things twice
-            real_potential_targets -= hinted_pickups
+            real_potential_targets -= hinted_locations
 
             if not real_potential_targets:
-                # no interesting pickups to place - use anything placed by the generator
+                # no interesting pickups to place - use anything placed during fill or prefill
                 real_potential_targets = {
                     pickup
                     for pickup, entry in patches.pickup_assignment.items()
                     if self.less_interesting_pickup_to_hint(entry.pickup)
                 }
-                real_potential_targets -= hinted_pickups
+                real_potential_targets -= hinted_locations
                 debug.debug_print(
                     f"  * No interesting pickups; trying {len(real_potential_targets)} less interesting pickups"
                 )
@@ -309,7 +309,7 @@ class HintDistributor(ABC):
                 real_potential_targets = {
                     node.pickup_index for node in region_list.iterate_nodes() if isinstance(node, PickupNode)
                 }
-                real_potential_targets -= hinted_pickups
+                real_potential_targets -= hinted_locations
                 debug.debug_print(
                     f"  * Still no viable pickups; trying {len(real_potential_targets)} uninteresting pickups"
                 )
@@ -319,7 +319,7 @@ class HintDistributor(ABC):
 
             target = rng.choice(sorted(real_potential_targets))
 
-            hinted_pickups.add(target)
+            hinted_locations.add(target)
             debug.debug_print(
                 f"  * Placing hint for {patches.pickup_assignment.get(target, target)}"
                 f" at {region_list.node_name(region_list.node_from_pickup_index(target))}\n"
@@ -354,7 +354,11 @@ class HintDistributor(ABC):
     def get_location_feature_chooser(
         self, patches: GamePatches, location: PickupNode | None = None
     ) -> FeatureChooser[HintFeature, HintLocationPrecision]:
-        """Create a FeatureChooser for location Features"""
+        """
+        Create a FeatureChooser for location Features.
+
+        If `location` is provided, the `REGION_ONLY` feature will be calculated.
+        """
 
         region_list = patches.game.region_list
         locations_with_feature: dict[HintFeature | HintLocationPrecision, list[PickupNode]] = defaultdict(list)
@@ -385,7 +389,7 @@ class HintDistributor(ABC):
         relevant_pickups: list[PickupEntry] = []
 
         for pool in player_pools:
-            for pickup in pool.pickups:
+            for pickup in pool.all_pickups:
                 relevant_pickups.append(pickup)
                 for feature in pickup.hint_features:
                     pickups_with_feature[feature].append(pickup)
@@ -450,7 +454,7 @@ class HintDistributor(ABC):
         if precision.include_owner is None:
             owner_chance = 1.0 - (1 / len(player_pools))
             if len(player_pools) > 5:
-                owner_chance = 0.0
+                owner_chance = 1.0
 
             include_owner = rng.random() <= owner_chance
             precision = dataclasses.replace(precision, include_owner=include_owner)

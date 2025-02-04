@@ -463,7 +463,7 @@ def _akul_testament_string_patch(namer: HintNamer) -> list[dict[str, typing.Any]
     ]
 
     title = "Metroid Prime 2: Echoes Randomizer Tournament"
-    champs = [f"{champ['title']}\n{namer.format_player(champ['name'], with_color=True)}" for champ in raw_champs]
+    champs = [f"{champ['title']}\n{namer.format_world(champ['name'], with_color=True)}" for champ in raw_champs]
 
     return [
         {

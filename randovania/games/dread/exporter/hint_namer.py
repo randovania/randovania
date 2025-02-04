@@ -72,14 +72,14 @@ class DreadHintNamer(HintNamer[DreadColor]):
     def format_guaranteed_resource(
         self,
         resource: ItemResourceInfo,
-        player_name: str | None,
+        world_name: str | None,
         location: PickupLocation,
         hide_area: bool,
         with_color: bool,
     ) -> str:
         determiner = ""
-        if player_name is not None:
-            determiner = self.format_player(player_name, with_color=with_color) + "'s "
+        if world_name is not None:
+            determiner = self.format_world(world_name, with_color=with_color) + "'s "
 
         fmt = "{} is located in {}{}."
         location_name = self.format_location(location, with_region=True, with_area=not hide_area, with_color=with_color)
@@ -108,7 +108,7 @@ class DreadHintNamer(HintNamer[DreadColor]):
 
     @override
     @property
-    def color_player(self) -> DreadColor:
+    def color_world(self) -> DreadColor:
         return DreadColor.PINK
 
     @override

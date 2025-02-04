@@ -1,3 +1,5 @@
+from typing import override
+
 from PySide6 import QtCore, QtWidgets
 
 from randovania.game_description.hint_features import HintDetails, HintFeature
@@ -7,15 +9,18 @@ from randovania.gui.lib.editable_table_model import EditableTableModel, FieldDef
 
 
 class HintFeatureDatabaseModel(EditableTableModel[HintFeature]):
+    """Model for editing a HintFeature database using a QTableView."""
+
     def __init__(self, db: dict[str, HintFeature]):
         super().__init__()
         self.db = db
 
+    @override
     def _all_columns(self) -> list[FieldDefinition]:
         return [
-            FieldDefinition("Short Name", "name"),
-            FieldDefinition("Long Name", "long_name"),
-            FieldDefinition(
+            FieldDefinition[str, str]("Short Name", "name"),
+            FieldDefinition[str, str]("Long Name", "long_name"),
+            FieldDefinition[str, HintDetails](
                 "Hint Details",
                 "hint_details",
                 to_qt=lambda v: v.description,
@@ -23,15 +28,19 @@ class HintFeatureDatabaseModel(EditableTableModel[HintFeature]):
             ),
         ]
 
+    @override
     def _get_items(self) -> dict[str, HintFeature]:
         return self.db
 
+    @override
     def _create_item(self, identifier: str) -> HintFeature:
         return HintFeature(identifier, identifier, HintDetails("", ""))
 
+    @override
     def _get_item_identifier(self, item: HintFeature) -> str:
         return item.name
 
+    @override
     def append_item(self, item: HintFeature) -> bool:
         assert item.name not in self.db
         return super().append_item(item)

@@ -36,14 +36,14 @@ class PrimeFamilyHintNamer(HintNamer[str]):
     def format_guaranteed_resource(
         self,
         resource: ItemResourceInfo,
-        player_name: str | None,
+        world_name: str | None,
         location: PickupLocation,
         hide_area: bool,
         with_color: bool,
     ) -> str:
         determiner = ""
-        if player_name is not None:
-            determiner = self.format_player(player_name, with_color=with_color) + "'s "
+        if world_name is not None:
+            determiner = self.format_world(world_name, with_color=with_color) + "'s "
 
         resource_color = self.colorize_text(self.color_item, resource.long_name, with_color)
         location_color = self.format_location(

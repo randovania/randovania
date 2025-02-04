@@ -250,7 +250,7 @@ class FusionPatchDataFactory(PatchDataFactory):
                 pickup_node = region_list.node_from_pickup_index(location.location.location)
                 elements[pickup.name].append(
                     {
-                        "World": location.player_name,
+                        "World": location.world_name,
                         "Region": region_list.region_name_from_node(pickup_node),
                         "Area": region_list.nodes_to_area(pickup_node).name,
                     }

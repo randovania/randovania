@@ -10,7 +10,7 @@ from PySide6 import QtWidgets
 
 from randovania.gui.generated.area_details_popup_ui import Ui_AreaDetailsPopup
 from randovania.gui.lib import common_qt_lib
-from randovania.gui.lib.editable_list_view import HintFeatureListModel
+from randovania.gui.lib.hint_feature_list_model import HintFeatureListModel
 from randovania.lib import frozen_lib
 
 if TYPE_CHECKING:

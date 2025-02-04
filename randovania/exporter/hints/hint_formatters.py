@@ -51,8 +51,8 @@ class TemplatedFormatter(LocationFormatter):
         if self.upper_pickup:
             pickup = pickup.upper()
 
-        if pick_hint.player_name is not None:
-            name = self.namer.format_player(pick_hint.player_name, with_color=with_color)
+        if pick_hint.world_name is not None:
+            name = self.namer.format_world(pick_hint.world_name, with_color=with_color)
             determiner = Determiner(f"{name}'s ", supports_title=False)
         else:
             determiner = pick_hint.determiner

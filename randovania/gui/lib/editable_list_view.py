@@ -1,11 +1,12 @@
 from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import Qt
 
-from randovania.game_description.hint_features import HintFeature
 from randovania.gui.widgets.combo_box_item_delegate import ComboBoxItemDelegate
 
 
 class EditableListModel[T](QtCore.QAbstractListModel):
+    """Underlying Model for EditableListView. Should be subclassed."""
+
     items: list[T]
 
     def __init__(self):
@@ -13,9 +14,19 @@ class EditableListModel[T](QtCore.QAbstractListModel):
         self.items = []
 
     def _display_item(self, row: int) -> str:
+        """
+        Return a human-readable string
+        representing the item on this row.
+        """
+
         raise NotImplementedError
 
     def _new_item(self, identifier: str) -> T:
+        """
+        Create and return a new item,
+        with the provided identifier.
+        """
+
         raise NotImplementedError
 
     def rowCount(self, parent: QtCore.QModelIndex = ...) -> int:
@@ -58,6 +69,11 @@ class EditableListModel[T](QtCore.QAbstractListModel):
 
 
 class EditableListView(QtWidgets.QGroupBox):
+    """
+    Generic base class for adding and removing elements from a list
+    in the GUI, such as dock weaknesses or hint features.
+    """
+
     def __init__(self, parent: QtWidgets.QWidget | None, model: EditableListModel | None = None):
         super().__init__(parent)
 
@@ -92,15 +108,3 @@ class EditableListView(QtWidgets.QGroupBox):
         if indices:
             assert len(indices) == 1
             self.model.removeRow(indices[0])
-
-
-class HintFeatureListModel(EditableListModel[HintFeature]):
-    def __init__(self, hint_features: dict[str, HintFeature]):
-        super().__init__()
-        self.db = hint_features
-
-    def _display_item(self, row: int) -> str:
-        return self.items[row].long_name
-
-    def _new_item(self, identifier: str) -> HintFeature:
-        return next(v for v in self.db.values() if v.long_name == identifier)

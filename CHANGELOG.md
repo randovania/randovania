@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [8.10.x] - 2025-03-??
 
 - **Major** - Added: Featural Hints. Echoes and Cave Story now use a brand new hint system, where hints may refer to various Features of a pickup or of a location. Read the complete changelog for more details.
-- **Major** - Changed: Hints are now placed after item placement, rather than during. This should result in more interesting hints in all games.
+- **Major** - Changed: Hints are now placed after pickup placement, rather than during. This should result in more interesting hints in all games.
 - Added: Every game now has a "Pickup Hint Features" tab where you can view which Features apply to which pickups.
 - Added: Cave Story and Echoes now have a "Pickup Location Features" tab where you can view which Features apply to which locations.
 - Added: Location Features can be viewed in the Database Viewer.

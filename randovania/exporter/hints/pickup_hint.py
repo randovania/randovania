@@ -38,7 +38,7 @@ _DET_NULL.extend(f"Sky Temple Key {i}" for i in range(1, 10))
 @dataclasses.dataclass(frozen=True)
 class PickupHint:
     determiner: Determiner
-    player_name: str | None
+    world_name: str | None
     pickup_name: str
 
 

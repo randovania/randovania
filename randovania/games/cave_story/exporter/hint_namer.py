@@ -49,7 +49,7 @@ class CSHintNamer(HintNamer[None]):
     def format_guaranteed_resource(
         self,
         resource: ItemResourceInfo,
-        player_name: str | None,
+        world_name: str | None,
         location: PickupLocation,
         hide_area: bool,
         with_color: bool,

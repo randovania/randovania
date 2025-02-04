@@ -118,6 +118,7 @@ async def create_player_pool(
             configuration=configuration,
             patches=patches,
             pickups=pool_results.to_place,
+            all_pickups=list(pool_results.all_pickups()),
         )
 
     raise InvalidConfiguration(

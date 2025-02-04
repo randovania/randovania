@@ -50,14 +50,14 @@ class AM2RHintNamer(HintNamer[AM2RColor]):
     def format_guaranteed_resource(
         self,
         resource: ItemResourceInfo,
-        player_name: str | None,
+        world_name: str | None,
         location: PickupLocation,
         hide_area: bool,
         with_color: bool,
     ) -> str:
         determiner = ""
-        if player_name is not None:
-            determiner = self.format_player(player_name, with_color=with_color) + "'s "
+        if world_name is not None:
+            determiner = self.format_world(world_name, with_color=with_color) + "'s "
 
         fmt = "{} is located in {}{}."
         location_name = self.format_location(location, with_region=True, with_area=not hide_area, with_color=with_color)
@@ -80,7 +80,7 @@ class AM2RHintNamer(HintNamer[AM2RColor]):
 
     @override
     @property
-    def color_player(self) -> AM2RColor:
+    def color_world(self) -> AM2RColor:
         return AM2RColor.PINK
 
     @override

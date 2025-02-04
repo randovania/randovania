@@ -15,13 +15,13 @@ if TYPE_CHECKING:
 
 
 class OwnedPickupLocation(NamedTuple):
-    player_name: str | None
+    world_name: str | None
     location: PickupLocation
 
     def export(self, namer: HintNamer, use_player_color: bool = True) -> str:
         hint = namer.format_location(self.location, with_region=True, with_area=True, with_color=False)
-        if self.player_name is not None:
-            hint = f"{namer.format_player(self.player_name, with_color=use_player_color)}'s {hint}"
+        if self.world_name is not None:
+            hint = f"{namer.format_world(self.world_name, with_color=use_player_color)}'s {hint}"
         return hint
 
 

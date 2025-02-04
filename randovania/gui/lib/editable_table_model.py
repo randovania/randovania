@@ -21,15 +21,23 @@ def _unmodified_from_qt[T](obj: T) -> tuple[bool, T]:
 
 
 @dataclasses.dataclass(frozen=True)
-class FieldDefinition:
+class FieldDefinition[QtT, PyT]:
+    """
+    Defines an interface between a Dataclass field and a table column.
+    """
+
     display_name: str
     field_name: str
     _: dataclasses.KW_ONLY
-    to_qt: typing.Callable[[typing.Any], typing.Any] = _unmodified_to_qt
-    from_qt: typing.Callable[[typing.Any], tuple[bool, typing.Any]] = _unmodified_from_qt
+    to_qt: typing.Callable[[PyT], QtT] = _unmodified_to_qt  # type: ignore[assignment]
+    from_qt: typing.Callable[[QtT], tuple[bool, PyT]] = _unmodified_from_qt  # type: ignore[assignment]
 
 
 class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
+    """
+    Generic base class for using a QTableView to edit a Dataclass.
+    """
+
     def __init__(self):
         super().__init__()
         self.allow_edits = True
