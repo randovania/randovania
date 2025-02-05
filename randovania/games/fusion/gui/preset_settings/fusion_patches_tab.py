@@ -19,6 +19,7 @@ if typing.TYPE_CHECKING:
 _FIELDS = [
     "instant_transitions",
     "anti_softlock",
+    "short_intro_text",
 ]
 
 

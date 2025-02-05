@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.games.samus_returns.generator.pool_creator import METROID_DNA_CATEGORY
 from randovania.games.samus_returns.layout import MSRConfiguration
 from randovania.games.samus_returns.layout.msr_configuration import FinalBossConfiguration
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
@@ -143,6 +142,6 @@ class MSRBootstrap(Bootstrap):
             return super().assign_pool_results(rng, patches, pool_results)
 
         locations = self.all_preplaced_item_locations(patches.game, patches.configuration, is_dna_node)
-        self.pre_place_items(rng, locations, pool_results, METROID_DNA_CATEGORY)
+        self.pre_place_items(rng, locations, pool_results, "dna", patches.game.game)
 
         return super().assign_pool_results(rng, patches, pool_results)

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [8.9.x] - 2025-02-??
 
 - Added: It is now possible to focus the game images in the "Games" tab via a Keyboard.
+- Added: Experimental option under Generation -> Logic Settings that makes an early check if the game is unbeatable due to options such as starting location, transports etc.
 - Changed: Wording on the Door Locks preset tab to be clearer.
 - Changed: The main Randovania window now doesn't have an unnecessary border.
 - Changed: The highlighted button in the cosmetic options is now `Accept` instead of `Reset to Defaults`.
@@ -31,6 +32,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Fixed: A typo in the event name Artaria - Prepare Speedboost in Map Station has been changed from Prepare Speeboost in Map Station.
+- Changed: Various locations listed below are altered in ways that improve the quality of generation and resolution. What is and isn't in logic should remain unchanged.
+
+##### Artaria
+
+- Added: It is now logical to blow up the Proto EMMI blob in Melee tutorial from the right, with Wave Beam, Diffusion beam or a Pseudo Wave Beam (Intermediate) using Morph Ball, Wide Beam and Charge Beam.
+- Changed: The logic surrounding the Single Use Slide in EMMI Zone Dome now makes it so that the event nodes remain logically accessible after collecting the event.
+- Changed: It is now logical to go back to the event node for blowing up the Proto EMMI Blob from the right.
+
+##### Cataris
+
+- Changed: It is now considered logical to go back into Kraid's area using the normal entrance after defeating Kraid, if all the blobs necessary to go around have been blown up.
+
+##### Dairon
+
+- Changed: The logic in the Freezer is changed so that traversing the right part of the room ignores the dangerousness of turning on the Freezer generator. Meanwhile, all connections in the left part of the room that can be used before turning on the generator now require Highly Dangerous Logic.
+
+##### Ghavoran
+
+- Changed: It is now logical to go back to the event node for flipping the Super Missile Rotatable from the tunnel under it.
+- Changed: It is now logical to go back to the event node for lowering the Super Missile Spider Magnet from the tunnel under it.
 
 ### Metroid Prime 2: Echoes
 

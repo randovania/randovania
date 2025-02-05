@@ -142,7 +142,7 @@ def render_region_graph_logic(args: Namespace) -> None:
                 shape = "polygon"
 
             c = (dark_colors if area.in_dark_aether else colors)[region.name]
-            fillcolor = "".join(f"{max(0, int(c[i * 2 + 1:i * 2 + 3], 16) - 64):02x}" for i in range(3))
+            fillcolor = "".join(f"{max(0, int(c[i * 2 + 1 : i * 2 + 3], 16) - 64):02x}" for i in range(3))
             this_dot.node(
                 f"{region.name}-{area.name}",
                 area.name,

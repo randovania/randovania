@@ -196,7 +196,7 @@
                 "room_id": [
                     1
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Entrance Recharge Room": {
@@ -1740,7 +1740,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Charge Beam can kill the Geron because the beam cannon can be stuck inside the shell and fire past it without touching the shell",
+                                            "comment": "Charge Beam flare can kill the Geron without touching the shell: https://youtu.be/EYzjWUclb_0",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1809,11 +1809,28 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Missiles can be used for damage by bumping into Geron: https://youtu.be/Mp9YwFW3dLM",
+                                            "comment": "Missiles/Charge Beam can be used for damage by bumping into Geron: https://youtu.be/Mp9YwFW3dLM",
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "10+ DMG Missiles"
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "10+ DMG Missiles"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "ChargeBeam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
@@ -2131,7 +2148,8 @@
                 "map_name": "Sector 111",
                 "room_id": [
                     11
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Entrance Lobby": {
@@ -2980,15 +2998,20 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Get high enough",
                                                         "items": [
                                                             {
                                                                 "type": "template",
                                                                 "data": "Have Any Jump Upgrade"
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Can Screw Single Walljump"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -3187,7 +3210,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "Jump on every single pirate with HJ: https://youtu.be/T_aded4xYeU",
+                                                                                "comment": "Jump on every single pirate with HJ",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -3206,7 +3229,7 @@
                                                                                                 {
                                                                                                     "type": "and",
                                                                                                     "data": {
-                                                                                                        "comment": null,
+                                                                                                        "comment": "HJ+WJ: https://www.youtube.com/watch?v=Hfmrj3rurOY",
                                                                                                         "items": [
                                                                                                             {
                                                                                                                 "type": "resource",
@@ -3230,12 +3253,20 @@
                                                                                                     }
                                                                                                 },
                                                                                                 {
-                                                                                                    "type": "resource",
+                                                                                                    "type": "and",
                                                                                                     "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "StandOnFrozenEnemies",
-                                                                                                        "amount": 3,
-                                                                                                        "negate": false
+                                                                                                        "comment": "Only HJ, no walljumps:: https://youtu.be/T_aded4xYeU",
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "StandOnFrozenEnemies",
+                                                                                                                    "amount": 3,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
                                                                                                     }
                                                                                                 }
                                                                                             ]
@@ -3341,6 +3372,15 @@
                                                                                                                     "type": "tricks",
                                                                                                                     "name": "StandOnFrozenEnemies",
                                                                                                                     "amount": 4,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "WallJump",
+                                                                                                                    "amount": 3,
                                                                                                                     "negate": false
                                                                                                                 }
                                                                                                             }
@@ -4857,7 +4897,7 @@
                 "room_id": [
                     19
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Tourian Central Hub": {
@@ -6379,7 +6419,7 @@
                 "room_id": [
                     24
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Tourian Hub West": {
@@ -8963,7 +9003,7 @@
                 "room_id": [
                     34
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Checkpoint Intersection": {
@@ -9453,14 +9493,14 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Damage Boost. Holding into the ladder makes you able to climb it",
+                                            "comment": "Damage Boost through Pirates. Holding into the ladder lets you climb it: https://youtu.be/cqHI8tNmNVw",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "DamageBoosts",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -9469,7 +9509,16 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "NormalDamage",
-                                                        "amount": 131,
+                                                        "amount": 170,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -9570,7 +9619,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Get past Rippers - TODO: health for damage runs",
+                                            "comment": "Get past Rippers",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -9582,12 +9631,29 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "DamageRuns",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": "Run and jump through acid: https://youtu.be/2HZNcwNVLH0",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "NormalDamage",
+                                                                    "amount": 90,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -10986,7 +11052,7 @@
                 "room_id": [
                     42
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Hornoad Housing": {
@@ -12143,12 +12209,29 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "WaveBeam",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": "Charge Beam Flare can hit through the corner",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Knowledge",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "WaveBeam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]

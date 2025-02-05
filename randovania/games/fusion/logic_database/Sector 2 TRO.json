@@ -378,7 +378,7 @@
                 "room_id": [
                     1
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Entrance Recharge Room": {
@@ -1126,7 +1126,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Get into tunnel",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -1144,7 +1144,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Freeze Owtch",
+                                                                    "comment": "Freeze Owtch: https://www.youtube.com/watch?v=G5mbopU8V3o",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -1165,7 +1165,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Destroy first Bomb Block with Screw",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -2914,7 +2914,7 @@
                         "y": 898.35,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "TODO: excluded from DLR due to hatch limitations",
                     "layers": [
                         "default"
                     ],
@@ -2931,7 +2931,7 @@
                         "node": "Door to Central Shaft"
                     },
                     "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -3263,7 +3263,7 @@
                 "room_id": [
                     16
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Southern Save Access": {
@@ -3893,12 +3893,20 @@
                                             "comment": "Health Requirements",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": "Hitless: https://www.youtube.com/watch?v=uv-K3rSjiC8",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -5728,49 +5736,25 @@
                                                     "data": "Can Activate Pillar"
                                                 },
                                                 {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
                                                     "type": "or",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "and",
+                                                                "type": "template",
+                                                                "data": "Can Use Springball"
+                                                            },
+                                                            {
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "or",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Can Use Springball"
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "and",
-                                                                                        "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "MidAirMorph",
-                                                                                                        "amount": 4,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "template",
-                                                                                                    "data": "Can Use Bombs"
-                                                                                                }
-                                                                                            ]
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "tricks",
+                                                                    "name": "MidAirMorph",
+                                                                    "amount": 4,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -5964,8 +5948,25 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Screw Single Walljump"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Screw Single Walljump"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
                                                     "type": "and",
@@ -8418,7 +8419,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "NHJ damage boost",
+                                                        "comment": "NHJ damage boost: https://youtu.be/2_3yWlyZrYQ",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -8474,7 +8475,8 @@
                 "map_name": "Sector 237",
                 "room_id": [
                     37
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Entrance Save Room": {
@@ -8597,7 +8599,7 @@
                 "room_id": [
                     38
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Data Hub": {
@@ -8767,7 +8769,7 @@
                 "room_id": [
                     40
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Collapsed Shaft": {
@@ -9514,21 +9516,37 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 3,
-                                            "negate": false
+                                            "comment": "Requires you to only shoot upper block on way in: https://youtu.be/bmge53Vxg5w",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "WallJump",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": "WJ off of left wall: https://youtu.be/PQwCkP1QNC4?t=26",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -9812,7 +9830,8 @@
                 "map_name": "Sector 248",
                 "room_id": [
                     48
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Other to Eastern Shaft": {
@@ -9888,7 +9907,7 @@
                 "room_id": [
                     49
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Puyo Palace": {
@@ -10133,7 +10152,7 @@
                         "y": 416.0,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "TODO: excluded from DLR due to hatch limitations",
                     "layers": [
                         "default"
                     ],
@@ -10150,7 +10169,7 @@
                         "node": "Door to Ripper Tower"
                     },
                     "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -10639,18 +10658,26 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "WallJump",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "WJ up: https://youtu.be/g_jse1Z8TUE?t=12",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Shinespark up: https://youtu.be/g_jse1Z8TUE",
                                             "items": [
                                                 {
                                                     "type": "resource",

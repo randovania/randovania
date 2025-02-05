@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import dataclasses
 import struct
+from typing import TypeGuard
 
 from randovania.game_connection.executor.common_socket_holder import CommonSocketHolder
 from randovania.game_connection.executor.memory_operation import (
@@ -20,11 +21,11 @@ class SocketHolder(CommonSocketHolder):
 
 
 class RequestBatch:
-    def __init__(self):
+    def __init__(self) -> None:
         self.data = b""
-        self.ops = []
+        self.ops: list[MemoryOperation] = []
         self.num_read_bytes = 0
-        self.addresses = []
+        self.addresses: list[int] = []
 
     def copy(self) -> RequestBatch:
         new = RequestBatch()
@@ -34,30 +35,30 @@ class RequestBatch:
         new.addresses.extend(self.addresses)
         return new
 
-    def build_request_data(self):
+    def build_request_data(self) -> bytes:
         header = struct.pack(f">BBBB{len(self.addresses)}I", 0, len(self.ops), len(self.addresses), 1, *self.addresses)
         return header + self.data
 
     @property
-    def input_bytes(self):
+    def input_bytes(self) -> int:
         return len(self.data) + 4 * len(self.addresses)
 
     @property
-    def num_validator_bytes(self):
+    def num_validator_bytes(self) -> int:
         return 1 + (len(self.ops) - 1) // 8 if self.ops else 0
 
     @property
-    def output_bytes(self):
+    def output_bytes(self) -> int:
         return self.num_read_bytes + self.num_validator_bytes
 
-    def is_compatible_with(self, holder: SocketHolder):
+    def is_compatible_with(self, holder: SocketHolder) -> bool:
         return (
             len(self.addresses) < holder.max_addresses
             and self.output_bytes <= holder.max_output
             and self.input_bytes <= holder.max_input
         )
 
-    def add_op(self, op: MemoryOperation):
+    def add_op(self, op: MemoryOperation) -> None:
         if op.address not in self.addresses:
             self.addresses.append(op.address)
 
@@ -102,7 +103,7 @@ class NintendontExecutor(MemoryOperationExecutor):
         self._ip = ip
 
     @property
-    def ip(self):
+    def ip(self) -> str:
         return self._ip
 
     @property
@@ -139,20 +140,26 @@ class NintendontExecutor(MemoryOperationExecutor):
             self._socket_error = e
             return message
 
-    def disconnect(self):
+    def disconnect(self) -> None:
         socket = self._socket
         self._socket = None
         if socket is not None:
             socket.writer.close()
 
+    @staticmethod
+    def _is_socket_connected(socket: SocketHolder | None) -> TypeGuard[SocketHolder]:
+        return socket is not None
+
     def is_connected(self) -> bool:
-        return self._socket is not None
+        return self._is_socket_connected(self._socket)
 
     def _prepare_requests_for(self, ops: list[MemoryOperation]) -> list[RequestBatch]:
+        assert self._is_socket_connected(self._socket)
+
         requests: list[RequestBatch] = []
         current_batch = RequestBatch()
 
-        def _new_request():
+        def _new_request() -> None:
             nonlocal current_batch
             requests.append(current_batch)
             current_batch = RequestBatch()
@@ -166,8 +173,7 @@ class NintendontExecutor(MemoryOperationExecutor):
 
             if op.read_byte_count is None and (op.write_bytes is not None and len(op.write_bytes) > max_write_size):
                 self.logger.debug(
-                    f"Operation {i} had {len(op.write_bytes)} bytes, "
-                    f"above the limit of {max_write_size}. Splitting."
+                    f"Operation {i} had {len(op.write_bytes)} bytes, above the limit of {max_write_size}. Splitting."
                 )
                 for offset in range(0, len(op.write_bytes), max_write_size):
                     if op.offset is None:
@@ -203,6 +209,8 @@ class NintendontExecutor(MemoryOperationExecutor):
         return requests
 
     async def _send_requests_to_socket(self, requests: list[RequestBatch]) -> list[bytes]:
+        assert self._is_socket_connected(self._socket)
+
         all_responses = []
         try:
             for request in requests:

@@ -38,7 +38,7 @@ Extra - room_id: [0]
 Entrance Save Room
 Extra - map_name: Sector 11
 Extra - room_id: [1]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
@@ -307,14 +307,16 @@ Extra - room_id: [9]
       After Stabilizer Central Restored
   > Event - Stabilizer 5 Online
       Any of the following:
-          # Charge Beam can kill the Geron because the beam cannon can be stuck inside the shell and fire past it without touching the shell
+          # Charge Beam flare can kill the Geron without touching the shell: https://youtu.be/EYzjWUclb_0
           Charge Beam and Knowledge (Intermediate)
           All of the following:
               # Vanilla - Morph Ball to cross to the other side of the tunnel and use Missiles or Charge Beam
               Morph Ball
               Charge Beam or Missiles
-          # Missiles can be used for damage by bumping into Geron: https://youtu.be/Mp9YwFW3dLM
-          Damage Boosts (Intermediate) and Knowledge (Intermediate) and Normal Damage ≥ 30 and 10+ DMG Missiles
+          All of the following:
+              # Missiles/Charge Beam can be used for damage by bumping into Geron: https://youtu.be/Mp9YwFW3dLM
+              Damage Boosts (Intermediate) and Knowledge (Intermediate) and Normal Damage ≥ 30
+              Charge Beam or 10+ DMG Missiles
           All of the following:
               # Alternate methods of defeating the Geron
               Knowledge (Beginner)
@@ -365,6 +367,7 @@ Extra - room_id: [10]
 Entrance Recharge Room
 Extra - map_name: Sector 111
 Extra - room_id: [11]
+Extra - unlocked_save_recharge_station: True
 > Door to Entrance Lobby; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Lobby/Door to Entrance Recharge Room
@@ -504,7 +507,8 @@ Extra - room_id: [15]
           All of the following:
               # Kill with Screw Attack
               Screw Attack and Knowledge (Beginner)
-              Can Single Walljump or Have Any Jump Upgrade
+              # Get high enough
+              Wall Jump (Beginner) or Have Any Jump Upgrade
 
 > Event - Stabilizer 4 Online; Heals? False
   * Layers: default
@@ -540,11 +544,13 @@ Extra - room_id: [16]
                       # SWJ up, freeze topmost pirate: https://youtu.be/6ha7hZ0iW1I
                       Stand On Frozen Enemies (Intermediate) and Wall Jump (Advanced) and Can Single Walljump
                       All of the following:
-                          # Jump on every single pirate with HJ: https://youtu.be/T_aded4xYeU
+                          # Jump on every single pirate with HJ
                           Hi-Jump
                           Any of the following:
-                              Stand On Frozen Enemies (Advanced)
+                              # HJ+WJ: https://www.youtube.com/watch?v=Hfmrj3rurOY
                               Stand On Frozen Enemies (Intermediate) and Wall Jump (Beginner)
+                              # Only HJ, no walljumps:: https://youtu.be/T_aded4xYeU
+                              Stand On Frozen Enemies (Advanced)
                       # Jump on every single pirate with NHJ: https://youtu.be/rpQG_ZFJ2Wg
                       Stand On Frozen Enemies (Hypermode) and Wall Jump (Intermediate)
                   Any of the following:
@@ -555,7 +561,7 @@ Extra - room_id: [16]
                           Missiles ≥ 20 and Can Freeze Enemies With Diffusion
                           Any of the following:
                               # Diffusion is way easier if you only have to freeze one pirate: https://youtu.be/o91JwaZoFTg
-                              Stand On Frozen Enemies (Expert) and Can Single Walljump
+                              Stand On Frozen Enemies (Expert) and Wall Jump (Advanced) and Can Single Walljump
                               # Very hard to stand on all pirates: https://www.youtube.com/watch?v=A4Zw5Rt28kI
                               Stand On Frozen Enemies (Hypermode)
 
@@ -707,7 +713,7 @@ Extra - room_id: [18]
 Tourian Save Room East
 Extra - map_name: Sector 119
 Extra - room_id: [19]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Tourian Central Hub; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Central Hub/Door to Tourian Save Room East
@@ -913,7 +919,7 @@ Extra - room_id: [23]
 Tourian Save Room West
 Extra - map_name: Sector 124
 Extra - room_id: [24]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Tourian Hub West; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Hub West/Door to Tourian Save Room West
@@ -1273,7 +1279,7 @@ Extra - room_id: [33]
 Save Room East
 Extra - map_name: Sector 134
 Extra - room_id: [34]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Checkpoint Intersection; Heals? False
   * Layers: default
   * L0 Hatch to Checkpoint Intersection/Door to Save Room East
@@ -1338,8 +1344,8 @@ Extra - room_id: [35]
           Combat (Intermediate)
           # Shinespark from Atmospheric Stabilizer Room: https://youtu.be/_PmmHN9YvKw
           Level 0 Keycard and Speed Booster and After Stabilizer Southeast Restored and Disabled Door Lock Rando and Disabled Entrance Rando
-          # Damage Boost. Holding into the ladder makes you able to climb it
-          Damage Boosts (Beginner) and Normal Damage ≥ 131
+          # Damage Boost through Pirates. Holding into the ladder lets you climb it: https://youtu.be/cqHI8tNmNVw
+          Damage Boosts (Intermediate) and Movement (Beginner) and Normal Damage ≥ 170
 
 ----------------
 Tourian Entrance
@@ -1355,8 +1361,10 @@ Extra - room_id: [36]
           # Get into Tunnel
           Mid-Air Morph (Intermediate) or Can Bounce in Ball
           Any of the following:
-              # Get past Rippers - TODO: health for damage runs
-              Space Jump or Damage Runs (Intermediate)
+              # Get past Rippers
+              Space Jump
+              # Run and jump through acid: https://youtu.be/2HZNcwNVLH0
+              Damage Runs (Intermediate) and Normal Damage ≥ 90
               # Navigate room with an ice weapon https://youtu.be/3gxkQTbymVQ
               Stand On Frozen Enemies (Advanced) and Can Freeze Enemies With Any Weapon
 
@@ -1576,7 +1584,7 @@ Extra - room_id: [41]
 Central Save Room
 Extra - map_name: Sector 142
 Extra - room_id: [42]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Hornoad Housing; Heals? False
   * Layers: default
   * L0 Hatch to Hornoad Housing/Door to Central Save Room
@@ -1792,7 +1800,10 @@ Extra - room_id: [51]
       All of the following:
           Any of the following:
               # Yard (snail)
-              Charge Beam and Wave Beam
+              All of the following:
+                  Charge Beam
+                  # Charge Beam Flare can hit through the corner
+                  Wave Beam or Knowledge (Intermediate)
               Power Bombs ≥ 2 and Can Use Power Bombs
           Any of the following:
               # Gerubus

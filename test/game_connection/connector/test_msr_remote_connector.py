@@ -11,6 +11,7 @@ from randovania.game_connection.executor.executor_to_connector_signals import Ex
 from randovania.game_connection.executor.msr_executor import MSRExecutor
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.network_common.remote_pickup import RemotePickup
 
 
 @pytest.fixture(name="connector")
@@ -104,8 +105,8 @@ async def test_new_received_pickups_received(connector: MSRRemoteConnector):
 async def test_set_remote_pickups(connector: MSRRemoteConnector, msr_ice_beam_pickup):
     connector.receive_remote_pickups = AsyncMock()
     remote_pickup = (
-        ("Dummy 1", msr_ice_beam_pickup, None),
-        ("Dummy 2", msr_ice_beam_pickup, None),
+        RemotePickup("Dummy 1", msr_ice_beam_pickup, None),
+        RemotePickup("Dummy 2", msr_ice_beam_pickup, None),
     )
     await connector.set_remote_pickups(remote_pickup)
     assert connector.remote_pickups == remote_pickup
@@ -114,8 +115,8 @@ async def test_set_remote_pickups(connector: MSRRemoteConnector, msr_ice_beam_pi
 async def test_receive_remote_pickups(connector: MSRRemoteConnector, msr_ice_beam_pickup):
     connector.in_cooldown = False
     remote_pickup = (
-        ("Dummy 1", msr_ice_beam_pickup, None),
-        ("Dummy 2", msr_ice_beam_pickup, PickupIndex(10)),
+        RemotePickup("Dummy 1", msr_ice_beam_pickup, None),
+        RemotePickup("Dummy 2", msr_ice_beam_pickup, PickupIndex(10)),
     )
     connector.remote_pickups = remote_pickup
     connector.executor.run_lua_code = AsyncMock()
@@ -176,7 +177,7 @@ async def test_receive_remote_pickups(connector: MSRRemoteConnector, msr_ice_bea
 @pytest.mark.parametrize("is_coop", [False, True])
 async def test_receive_remote_pickups_coop_logic(connector: MSRRemoteConnector, msr_ice_beam_pickup, is_coop: bool):
     connector.in_cooldown = False
-    remote_pickup = (("Dummy 1", msr_ice_beam_pickup, PickupIndex(69) if is_coop else None),)
+    remote_pickup = (RemotePickup("Dummy 1", msr_ice_beam_pickup, PickupIndex(69) if is_coop else None),)
     connector.remote_pickups = remote_pickup
     connector.game_specific_execute = AsyncMock()
 

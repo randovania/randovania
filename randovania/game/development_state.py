@@ -11,7 +11,7 @@ class DevelopmentState(Enum):
     DEVELOPMENT = "development"
 
     @property
-    def is_stable(self):
+    def is_stable(self) -> bool:
         return self == DevelopmentState.STABLE
 
     def can_view(self) -> bool:

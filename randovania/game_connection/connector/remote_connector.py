@@ -59,7 +59,7 @@ class RemoteConnector(QtCore.QObject):
     def layout_uuid(self) -> uuid.UUID:
         return self._layout_uuid
 
-    async def display_important_message(self, message: ImportantStatusMessage):
+    async def display_important_message(self, message: ImportantStatusMessage) -> None:
         """Requests the game to display a message from a predetermined list.
 
         Overriding this method is only necessary if implementing display_arbitrary_message is impossible for this game.
@@ -68,11 +68,11 @@ class RemoteConnector(QtCore.QObject):
         await self.display_arbitrary_message(message.long_name)
 
     @classmethod
-    def can_display_arbitrary_messages(cls):
+    def can_display_arbitrary_messages(cls) -> bool:
         """Returns if arbitrary messages can be sent to this game."""
         return cls.display_arbitrary_message is not RemoteConnector.display_arbitrary_message
 
-    async def display_arbitrary_message(self, message: str):
+    async def display_arbitrary_message(self, message: str) -> None:
         """Requests the game to display an arbitrary message.
 
         Not necessary to be implemented by every game.
@@ -80,14 +80,14 @@ class RemoteConnector(QtCore.QObject):
         """
         raise NotImplementedError
 
-    async def set_remote_pickups(self, remote_pickups: tuple[RemotePickup, ...]):
+    async def set_remote_pickups(self, remote_pickups: tuple[RemotePickup, ...]) -> None:
         """
         Sets the list of remote pickups that must be sent to the game.
         :param remote_pickups: Ordered list of pickups sent from other players, with the name of the player.
         """
         raise NotImplementedError
 
-    async def force_finish(self):
+    async def force_finish(self) -> None:
         """Disconnect from the game, releasing any resources."""
         raise NotImplementedError
 

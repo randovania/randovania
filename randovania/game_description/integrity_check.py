@@ -281,9 +281,7 @@ def find_duplicated_pickup_index(region_list: RegionList) -> Iterator[str]:
         if isinstance(node, PickupNode):
             name = region_list.node_name(node, with_region=True, distinguish_dark_aether=True)
             if node.pickup_index in known_indices:
-                yield (
-                    f"{name} has {node.pickup_index}, " f"but it was already used in {known_indices[node.pickup_index]}"
-                )
+                yield (f"{name} has {node.pickup_index}, but it was already used in {known_indices[node.pickup_index]}")
             else:
                 known_indices[node.pickup_index] = name
 

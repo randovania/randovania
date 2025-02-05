@@ -1,5 +1,5 @@
 {
-    "schema_version": 9,
+    "schema_version": 10,
     "pickup_categories": {
         "beam": {
             "long_name": "Beams",
@@ -88,6 +88,29 @@
                 "miscellaneous system"
             ],
             "hinted_as_major": true
+        },
+        "InfantMetroid": {
+            "long_name": "Infant Metroid",
+            "hint_details": [
+                "an ",
+                "Infant Metroid"
+            ],
+            "hinted_as_major": false,
+            "is_key": true
+        }
+    },
+    "generated_pickups": {
+        "Infant Metroid": {
+            "name_template": "Infant Metroid {i}",
+            "pickup_category": "InfantMetroid",
+            "model_name": "InfantMetroid",
+            "offworld_models": {},
+            "progression": [
+                "Infant Metroid {i}"
+            ],
+            "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
+            "probability_offset": 0.25
         }
     },
     "standard_pickups": {
@@ -517,11 +540,11 @@
             "preferred_location_category": "minor",
             "expected_case_for_describer": "shuffled",
             "custom_count_for_shuffled_case": 20,
+            "probability_offset": 1.5,
+            "probability_multiplier": 2.0,
             "extra": {
                 "StartingItemCategory": "Energy"
-            },
-            "probability_offset": 1.5,
-            "probability_multiplier": 2.0
+            }
         },
         "Level 0 Keycard": {
             "pickup_category": "misc",
@@ -627,12 +650,11 @@
             "preferred_location_category": "minor",
             "unlocked_by": "MissileData",
             "temporary": "LockedMissiles",
+            "probability_offset": 1.5,
             "allows_negative": true,
             "extra": {
                 "TankIncrementName": "MissileTank"
-            },
-            "probability_offset": 1.5,
-            "probability_multiplier": 2.0
+            }
         },
         "Power Bomb Tank": {
             "broad_category": "morph_ball_related",

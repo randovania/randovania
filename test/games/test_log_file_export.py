@@ -106,6 +106,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "factorio/starter_preset.rdvgame",
         # Fusion
         "fusion/starter_preset.rdvgame",
+        "fusion/short_intro.rdvgame",
         # Dread
         "dread/starter_preset.rdvgame",  # starter preset
         "dread/crazy_settings.rdvgame",  # crazy settings

@@ -26,7 +26,7 @@ def main() -> None:
     # Add our local dotnet to path if it exists, which it only does for portable ones.
     dotnet_path = randovania.get_data_path().joinpath("dotnet_runtime")
     if randovania.is_frozen() and dotnet_path.exists():
-        os.environ["PATH"] = f'{dotnet_path}{os.pathsep}{os.environ["PATH"]}'
+        os.environ["PATH"] = f"{dotnet_path}{os.pathsep}{os.environ['PATH']}"
         os.environ["DOTNET_ROOT"] = f"{dotnet_path}"
         # This one is seemingly needed while we're still on dotnet6 to avoid some edge cases
         os.environ["DOTNET_MULTILEVEL_LOOKUP"] = "0"

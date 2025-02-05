@@ -972,12 +972,88 @@
         "Great Temple/Temple Transport B/Elevator to Temple Grounds": "Temple Transport Violet",
         "Agon Wastes/Transport to Temple Grounds/Elevator to Temple Grounds": "Agon Entrance",
         "Agon Wastes/Transport to Torvus Bog/Elevator to Torvus Bog": "Agon Portal Access",
-        "Agon Wastes/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress": "Agon Temple Access",        
+        "Agon Wastes/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress": "Agon Temple Access",
         "Torvus Bog/Transport to Temple Grounds/Elevator to Temple Grounds": "Torvus Entrance",
         "Torvus Bog/Transport to Agon Wastes/Elevator to Agon Wastes": "Torvus Temple Access",
-        "Torvus Bog/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress": "Lower Torvus Access",        
+        "Torvus Bog/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress": "Lower Torvus Access",
         "Sanctuary Fortress/Transport to Temple Grounds/Elevator to Temple Grounds": "Sanctuary Entrance",
         "Sanctuary Fortress/Transport to Agon Wastes/Elevator to Agon Wastes": "Sanctuary Spider side",
         "Sanctuary Fortress/Transport to Torvus Bog/Elevator to Torvus Bog": "Sanctuary Vault side"
+    },
+    "generated_pickups": {
+        "categories": {
+            "temple_key": {
+                "long_name": "Dark Temple Key",
+                "hint_details": [
+                    "a ",
+                    "red Temple Key"
+                ],
+                "hinted_as_major": false,
+                "is_key": true
+            },
+            "sky_temple_key": {
+                "long_name": "Sky Temple Key",
+                "hint_details": [
+                    "a ",
+                    "Sky Temple Key"
+                ],
+                "hinted_as_major": false,
+                "is_key": true
+            }
+        },
+        "pickups": {
+            "Sky Temple Key": {
+                "name_template": "Sky Temple Key {i}",
+                "pickup_category": "sky_temple_key",
+                "model_name": "SkyTempleKey",
+                "offworld_models": {
+                    "am2r": "sItemSkyTempleKeyEchoes"
+                },
+                "progression": [
+                    "TempleKey{i}"
+                ],
+                "preferred_location_category": "major",
+                "probability_offset": 3.0
+            },
+            "Dark Agon Key": {
+                "name_template": "Dark Agon Key {i}",
+                "pickup_category": "temple_key",
+                "model_name": "DarkTempleKey",
+                "offworld_models": {
+                    "am2r": "sItemDarkAgonKeyEchoes"
+                },
+                "progression": [
+                    "AgonKey{i}"
+                ],
+                "preferred_location_category": "major",
+                "probability_offset": 3.0
+            },
+            "Dark Torvus Key": {
+                "name_template": "Dark Torvus Key {i}",
+                "pickup_category": "temple_key",
+                "model_name": "DarkTempleKey",
+                "offworld_models": {
+                    "am2r": "sItemDarkTorvusKeyEchoes"
+                },
+                "progression": [
+                    "TorvusKey{i}"
+                ],
+                "preferred_location_category": "major",
+                "probability_offset": 3.0
+            },
+            "Ing Hive Key": {
+                "name_template": "Ing Hive Key {i}",
+                "pickup_category": "temple_key",
+                "model_name": "DarkTempleKey",
+                "offworld_models": {
+                    "am2r": "sItemIngHiveKeyEchoes"
+                },
+                "progression": [
+                    "HiveKey{i}"
+                ],
+                "preferred_location_category": "major",
+                "probability_offset": 3.0
+            }
+        }
     }
 }

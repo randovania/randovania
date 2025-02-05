@@ -9,6 +9,7 @@ import randovania.game.gui
 import randovania.game.layout
 import randovania.game.web_info
 from randovania.games.samus_returns import layout
+from randovania.games.samus_returns.db_integrity import find_msr_db_errors
 from randovania.games.samus_returns.layout import progressive_items
 from randovania.games.samus_returns.layout.preset_describer import MSRPresetDescriber
 
@@ -173,4 +174,5 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     exporter=_exporter,
     defaults_available_in_game_sessions=True,
     multiple_start_nodes_per_area=True,
+    logic_db_integrity=find_msr_db_errors,
 )

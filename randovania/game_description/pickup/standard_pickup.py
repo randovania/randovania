@@ -9,7 +9,7 @@ from frozendict import frozendict
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.pickup.pickup_category import PickupCategory
+from randovania.game_description.pickup.pickup_category import GENERIC_KEY_CATEGORY, PickupCategory
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.layout.base.standard_pickup_state import StandardPickupStateCase
@@ -126,23 +126,33 @@ class StandardPickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
 
     @classmethod
     def from_json_with_categories(
-        cls, name: str, game: RandovaniaGame, pickup_categories: dict[str, PickupCategory], value: dict
+        cls,
+        name: str,
+        game: RandovaniaGame,
+        pickup_categories: dict[str, PickupCategory],
+        value: dict,
+        *,
+        default_category: PickupCategory | None = None,
     ) -> Self:
+        pickup_category = pickup_categories.get(value.get("pickup_category", ""), default_category)
+        broad_category = pickup_categories.get(value.get("broad_category", ""), default_category)
         return cls.from_json(
             value,
             game=game,
             name=name,
-            pickup_category=pickup_categories[value["pickup_category"]],
-            broad_category=pickup_categories[value["broad_category"]],
+            pickup_category=pickup_category,
+            broad_category=broad_category,
         )
 
     @property
     def as_json(self) -> dict:
-        return {
-            "pickup_category": self.pickup_category.name,
-            "broad_category": self.broad_category.name,
-            **super().as_json,
-        }
+        data = {}
+        if self.pickup_category is not GENERIC_KEY_CATEGORY:
+            data["pickup_category"] = self.pickup_category.name
+        if self.broad_category is not GENERIC_KEY_CATEGORY:
+            data["broad_category"] = self.broad_category.name
+        data.update(super().as_json)
+        return data
 
     @property
     def count_for_shuffled_case(self) -> int:

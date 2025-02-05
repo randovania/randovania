@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.games.dread.generator.pool_creator import DREAD_ARTIFACT_CATEGORY
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.resolver.bootstrap import Bootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
@@ -91,5 +90,5 @@ class DreadBootstrap(Bootstrap):
     def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
         assert isinstance(patches.configuration, DreadConfiguration)
         locations = self.all_preplaced_item_locations(patches.game, patches.configuration, is_dna_node)
-        self.pre_place_items(rng, locations, pool_results, DREAD_ARTIFACT_CATEGORY)
+        self.pre_place_items(rng, locations, pool_results, "dna", patches.game.game)
         return super().assign_pool_results(rng, patches, pool_results)

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import os
-import platform
+import sys
 from enum import Enum
 from typing import Self
 
@@ -27,13 +27,12 @@ class ConnectorBuilderChoice(Enum):
                 return False
 
         if self is ConnectorBuilderChoice.DOLPHIN:
-            match platform.system():
-                case "Darwin":
-                    return False
-                case "Linux" if randovania.is_frozen():
-                    return os.getuid() == 0 and not randovania.is_flatpak()
-                case _:
-                    return True
+            # using sys.platform here instead of platform.system() due to a mypy limitation
+            # see: https://github.com/python/mypy/issues/8166
+            if sys.platform == "darwin":
+                return False
+            if sys.platform == "linux" and randovania.is_frozen():
+                return os.getuid() == 0 and not randovania.is_flatpak()
 
         return True
 

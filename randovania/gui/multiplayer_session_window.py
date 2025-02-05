@@ -638,8 +638,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     async def clear_generated_game(self):
         if self._last_actions.actions:
             warning = (
-                "<b>all progress in this session is permanently lost</b>."
-                "<br /><br />Are you sure you wish to continue?"
+                "<b>all progress in this session is permanently lost</b>.<br /><br />Are you sure you wish to continue?"
             )
             icon = QtWidgets.QMessageBox.Icon.Critical
         else:

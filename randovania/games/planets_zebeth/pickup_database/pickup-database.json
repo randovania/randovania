@@ -1,5 +1,5 @@
 {
-    "schema_version": 9,
+    "schema_version": 10,
     "pickup_categories": {
         "beam": {
             "long_name": "Beams",
@@ -80,6 +80,29 @@
                 "life support system"
             ],
             "hinted_as_major": false
+        },
+        "tourian_key": {
+            "long_name": "Tourian Key",
+            "hint_details": [
+                "a ",
+                "key"
+            ],
+            "hinted_as_major": false,
+            "is_key": true
+        }
+    },
+    "generated_pickups": {
+        "Tourian Key": {
+            "name_template": "Tourian Key {i}",
+            "pickup_category": "tourian_key",
+            "model_name": "spr_ITEM_Tourian_Key",
+            "offworld_models": {},
+            "progression": [
+                "Tourian Key"
+            ],
+            "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
+            "probability_offset": 0.25
         }
     },
     "standard_pickups": {
@@ -96,8 +119,8 @@
             "progression": [
                 "Bombs"
             ],
-            "expected_case_for_describer": "shuffled",
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 6
             ]
@@ -114,8 +137,8 @@
             "progression": [
                 "Screw Attack"
             ],
-            "expected_case_for_describer": "shuffled",
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 23
             ]
@@ -133,8 +156,8 @@
             "progression": [
                 "Varia Suit"
             ],
-            "expected_case_for_describer": "shuffled",
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 3
             ]
@@ -152,8 +175,8 @@
             "progression": [
                 "Hi-Jump"
             ],
-            "expected_case_for_describer": "shuffled",
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 16
             ]
@@ -169,9 +192,9 @@
             "progression": [
                 "Ice Beam"
             ],
+            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "custom_count_for_shuffled_case": 2,
-            "preferred_location_category": "major",
             "original_locations": [
                 8,
                 10
@@ -189,8 +212,8 @@
             "progression": [
                 "Wave Beam"
             ],
-            "expected_case_for_describer": "shuffled",
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 24
             ]
@@ -205,8 +228,8 @@
             "progression": [
                 "Long Beam"
             ],
-            "expected_case_for_describer": "shuffled",
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 2
             ]
@@ -223,8 +246,8 @@
             "progression": [
                 "Morph Ball"
             ],
-            "expected_case_for_describer": "shuffled",
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 0
             ]
@@ -242,8 +265,8 @@
             "progression": [
                 "Missile Launcher"
             ],
-            "expected_case_for_describer": "shuffled",
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "ammo": [
                 "Missiles"
             ],
@@ -265,9 +288,9 @@
             "progression": [
                 "Energy Tank"
             ],
+            "preferred_location_category": "minor",
             "expected_case_for_describer": "shuffled",
-            "custom_count_for_shuffled_case": 8,
-            "preferred_location_category": "minor"
+            "custom_count_for_shuffled_case": 8
         }
     },
     "ammo_pickups": {

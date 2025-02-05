@@ -3,9 +3,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-from randovania.game_description.pickup import migrations
+from randovania.game_description.pickup import pickup_migration
 from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
-from randovania.game_description.pickup.pickup_category import PickupCategory
+from randovania.game_description.pickup.pickup_category import GENERIC_KEY_CATEGORY, PickupCategory
 from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 
 if TYPE_CHECKING:
@@ -15,6 +15,7 @@ if TYPE_CHECKING:
 @dataclass(frozen=True)
 class PickupDatabase:
     pickup_categories: dict[str, PickupCategory]
+    generated_pickups: dict[str, StandardPickupDefinition]
     standard_pickups: dict[str, StandardPickupDefinition]
     ammo_pickups: dict[str, AmmoPickupDefinition]
     default_pickups: dict[PickupCategory, tuple[StandardPickupDefinition, ...]]
@@ -30,10 +31,17 @@ def read_database(database_data: dict, game: RandovaniaGame) -> PickupDatabase:
     :param game:
     :return:
     """
-    migrations.migrate_current(database_data)
+    pickup_migration.migrate_current(database_data, game)
 
     pickup_categories = {
         name: PickupCategory.from_json(name, category) for name, category in database_data["pickup_categories"].items()
+    }
+
+    generated_pickups = {
+        group_name: StandardPickupDefinition.from_json_with_categories(
+            pickup.pop("name_template"), game, pickup_categories, pickup, default_category=GENERIC_KEY_CATEGORY
+        )
+        for group_name, pickup in database_data["generated_pickups"].items()
     }
 
     standard_pickups = {
@@ -55,6 +63,7 @@ def read_database(database_data: dict, game: RandovaniaGame) -> PickupDatabase:
 
     return PickupDatabase(
         pickup_categories,
+        generated_pickups,
         standard_pickups,
         ammo_pickups,
         default_pickups,
@@ -70,6 +79,14 @@ def write_database(database: PickupDatabase) -> dict:
     """
     pickup_categories = {name: pickup_category.as_json for name, pickup_category in database.pickup_categories.items()}
 
+    generated_pickups = {
+        group_name: {
+            "name_template": pickup.name,
+            **pickup.as_json,
+        }
+        for group_name, pickup in database.generated_pickups.items()
+    }
+
     standard_pickups = {name: pickup.as_json for name, pickup in database.standard_pickups.items()}
 
     ammo_pickups = {name: ammo.as_json for name, ammo in database.ammo_pickups.items()}
@@ -81,8 +98,9 @@ def write_database(database: PickupDatabase) -> dict:
     default_offworld_model = database.default_offworld_model
 
     return {
-        "schema_version": migrations.CURRENT_VERSION,
+        "schema_version": pickup_migration.CURRENT_VERSION,
         "pickup_categories": pickup_categories,
+        "generated_pickups": generated_pickups,
         "standard_pickups": standard_pickups,
         "ammo_pickups": ammo_pickups,
         "default_pickups": default_pickups,

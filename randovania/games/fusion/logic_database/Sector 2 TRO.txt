@@ -67,7 +67,7 @@ Extra - room_id: [0]
 Entrance Save Room
 Extra - map_name: Sector 21
 Extra - room_id: [1]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
@@ -216,9 +216,11 @@ Extra - room_id: [6]
           All of the following:
               Can Use Bombs
               Any of the following:
+                  # Get into tunnel
                   Mid-Air Morph (Beginner) or Can Use Springball
-                  # Freeze Owtch
+                  # Freeze Owtch: https://www.youtube.com/watch?v=G5mbopU8V3o
                   Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
+                  # Destroy first Bomb Block with Screw
                   Screw Attack and Knowledge (Beginner)
 
 ----------------
@@ -486,7 +488,8 @@ Extra - room_id: [13, 46]
 
 > Door to Ripper Tower; Heals? False
   * Layers: default
-  * Open Hatch to Ripper Tower/Door to Central Shaft
+  * Open Hatch to Ripper Tower/Door to Central Shaft; Excluded from Dock Lock Rando
+  * TODO: excluded from DLR due to hatch limitations
   * Extra - door_idx: (113,)
   > Beside Drop
       Morph Ball
@@ -548,7 +551,7 @@ Extra - room_id: [15]
 Save Room South
 Extra - map_name: Sector 216
 Extra - room_id: [16]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Southern Save Access; Heals? False
   * Layers: default
   * L0 Hatch to Southern Save Access/Door to Save Room South
@@ -660,7 +663,9 @@ Extra - room_id: [18]
           Missiles
           Any of the following:
               # Health Requirements
-              Combat (Intermediate) or Normal Damage ≥ 180
+              Normal Damage ≥ 180
+              # Hitless: https://www.youtube.com/watch?v=uv-K3rSjiC8
+              Combat (Intermediate)
               Combat (Beginner) and Normal Damage ≥ 90
 
 ----------------
@@ -920,10 +925,8 @@ Extra - room_id: [25]
           Can Use Power Bombs
           All of the following:
               # Jump from edge of pillar https://youtu.be/EBzc_Sjvj3A
-              Can Activate Pillar
-              Any of the following:
-                  Can Use Springball
-                  Mid-Air Morph (Expert) and Can Use Bombs
+              Can Activate Pillar and Can Use Bombs
+              Mid-Air Morph (Expert) or Can Use Springball
           All of the following:
               Gravity Suit
               Any of the following:
@@ -950,7 +953,8 @@ Extra - room_id: [26]
       All of the following:
           Screw Attack
           Any of the following:
-              Space Jump or Can Single Walljump
+              Space Jump
+              Wall Jump (Beginner) and Can Single Walljump
               # Shinespark through bottom door and jump out of bonk by holding A: https://youtu.be/pEP-Sys6cJI
               Level 0 Keycard and Level 1 Keycard and Speed Booster and Knowledge (Advanced) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Event - L1 Locks
@@ -1296,7 +1300,7 @@ Extra - room_id: [33]
               Hi-Jump and Movement (Intermediate)
               # NHJ hitless: https://youtu.be/cbgXDxu9rmU
               Movement (Advanced)
-              # NHJ damage boost
+              # NHJ damage boost: https://youtu.be/2_3yWlyZrYQ
               Damage Boosts (Beginner) and Normal Damage ≥ 34
   > Door to Glass Tube to Sector 1 (SRX)
       Screw Attack
@@ -1305,6 +1309,7 @@ Extra - room_id: [33]
 Entrance Recharge Room
 Extra - map_name: Sector 237
 Extra - room_id: [37]
+Extra - unlocked_save_recharge_station: True
 > Door to Entrance Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Save Room/Door to Entrance Recharge Room
@@ -1330,7 +1335,7 @@ Extra - room_id: [37]
 Data Save Room
 Extra - map_name: Sector 238
 Extra - room_id: [38]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Data Hub; Heals? False
   * Layers: default
   * L0 Hatch to Data Hub/Door to Data Save Room
@@ -1367,7 +1372,7 @@ Extra - room_id: [39]
 Zazabi Save Room
 Extra - map_name: Sector 240
 Extra - room_id: [40]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Collapsed Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Collapsed Shaft/Door to Zazabi Save Room
@@ -1489,8 +1494,12 @@ Extra - room_id: [47]
       Trivial
   > Door to Nettori Save Room
       Any of the following:
-          Space Jump or Movement (Advanced) or Wall Jump (Intermediate)
+          Space Jump
           Hi-Jump and Movement (Intermediate)
+          # Requires you to only shoot upper block on way in: https://youtu.be/bmge53Vxg5w
+          Movement (Advanced)
+          # WJ off of left wall: https://youtu.be/PQwCkP1QNC4?t=26
+          Wall Jump (Intermediate)
 
 > Door to Collapsed Shaft; Heals? False
   * Layers: default
@@ -1529,6 +1538,7 @@ Extra - room_id: [47]
 Hidden Recharge Room
 Extra - map_name: Sector 248
 Extra - room_id: [48]
+Extra - unlocked_save_recharge_station: True
 > Other to Eastern Shaft; Heals? False
   * Layers: default
   * Tunnel to Eastern Shaft/Other to Hidden Recharge Room
@@ -1545,7 +1555,7 @@ Extra - room_id: [48]
 Nettori Save Room
 Extra - map_name: Sector 249
 Extra - room_id: [49]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Puyo Palace; Heals? False
   * Layers: default
   * Open Hatch to Puyo Palace/Door to Nettori Save Room
@@ -1600,7 +1610,8 @@ Extra - room_id: [50]
 
 > Door to Central Shaft; Heals? False
   * Layers: default
-  * L0 Hatch to Central Shaft/Door to Ripper Tower
+  * L0 Hatch to Central Shaft/Door to Ripper Tower; Excluded from Dock Lock Rando
+  * TODO: excluded from DLR due to hatch limitations
   * Extra - door_idx: (114,)
   > Pickup (Power Bomb Tank)
       Any of the following:
@@ -1693,7 +1704,10 @@ Extra - room_id: [54]
       Trivial
   > Door to Level 1 Security Room
       Any of the following:
-          Space Jump or Wall Jump (Beginner)
+          Space Jump
+          # WJ up: https://youtu.be/g_jse1Z8TUE?t=12
+          Wall Jump (Beginner)
+          # Shinespark up: https://youtu.be/g_jse1Z8TUE
           Speed Booster and Shinespark Tricks (Beginner)
 
 ----------------
