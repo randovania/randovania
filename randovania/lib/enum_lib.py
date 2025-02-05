@@ -14,6 +14,14 @@ def iterate_enum(enum_class: type[T]) -> Iterator[T]:
     yield from enum_class
 
 
+def enum_definition_order(enum_instance: T) -> int:
+    """
+    Returns the index at which the given enum instance was defined.
+    Useful for sorting functions.
+    """
+    return list(type(enum_instance)).index(enum_instance)
+
+
 def add_long_name(enum_class: type[T], names: dict[T, str]) -> None:
     add_per_enum_field(enum_class, "long_name", names)
 
