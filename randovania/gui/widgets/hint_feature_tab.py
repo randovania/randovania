@@ -2,6 +2,7 @@ from collections.abc import Iterable
 
 from PySide6.QtWidgets import QLabel, QSizePolicy, QSpacerItem, QVBoxLayout, QWidget
 
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.pickup.pickup_database import PickupDatabase
@@ -92,7 +93,20 @@ class LocationHintFeatureTab(HintFeatureTab):
             if feature.hidden:
                 continue
 
-            node_names = [node.identifier.as_string for node in game.region_list.pickup_nodes_with_feature(feature)]
+            # sort normally, but put dark regions immediately after their light region
+            def nodes_keyfunc(node: PickupNode) -> tuple[str, bool, str, str]:
+                id_ = node.identifier
+                area = game.region_list.area_by_area_location(id_.area_identifier)
+
+                return id_.region, area.in_dark_aether, id_.area, id_.node
+
+            node_names = [
+                game.region_list.node_name(node, True, True)
+                for node in sorted(
+                    game.region_list.pickup_nodes_with_feature(feature),
+                    key=nodes_keyfunc,
+                )
+            ]
             self.add_feature_widget(feature, node_names)
         self.add_spacer()
 
