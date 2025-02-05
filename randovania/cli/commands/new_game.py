@@ -22,9 +22,9 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.pickup.pickup_category import GENERIC_KEY_CATEGORY, PickupCategory
+from randovania.game_description.hint_features import HintDetails, PickupHintFeature
 from randovania.game_description.pickup.pickup_database import PickupDatabase
-from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -222,6 +222,7 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
         game=game_enum,
         dock_weakness_database=dock_weakness_database,
         resource_database=resource_database,
+        hint_feature_database={},
         layers=("default",),
         victory_condition=ResourceRequirement.simple(items[1]),
         starting_location=intro_node.identifier,
@@ -254,17 +255,22 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
 
 def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
     pickup_categories = {
-        "weapon": PickupCategory(
+        "weapon": PickupHintFeature(
             name="weapon",
             long_name="Weapon",
-            hint_details=("a ", "weapon"),
-            hinted_as_major=True,
+            hint_details=HintDetails("a ", "weapon"),
         ),
-        "ammo-based": PickupCategory(
+        "ammo-based": PickupHintFeature(
             name="ammo-based",
             long_name="Ammo-Based",
-            hint_details=("an ", "ammo-based item"),
-            hinted_as_major=False,
+            hint_details=HintDetails("an ", "ammo-based item"),
+            is_broad_category=True,
+        ),
+        "key": PickupHintFeature(
+            name="key",
+            long_name="Key",
+            hint_details=HintDetails("a ", "key"),
+            is_broad_category=True,
         ),
     }
     pickup_db = PickupDatabase(
@@ -273,8 +279,8 @@ def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
             "Victory Key": StandardPickupDefinition(
                 game=game_enum,
                 name="Victory Key",
-                pickup_category=GENERIC_KEY_CATEGORY,
-                broad_category=GENERIC_KEY_CATEGORY,
+                gui_category=pickup_categories["key"],
+                hint_features=frozenset((pickup_categories["key"],)),
                 model_name="VictoryKey",
                 offworld_models=frozendict(),
                 progression=("VictoryKey",),
@@ -286,12 +292,18 @@ def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
             "Powerful Weapon": StandardPickupDefinition(
                 game=game_enum,
                 name="Powerful Weapon",
-                pickup_category=pickup_categories["weapon"],
-                broad_category=pickup_categories["ammo-based"],
+                gui_category=pickup_categories["weapon"],
+                hint_features=frozenset(
+                    (
+                        pickup_categories["weapon"],
+                        pickup_categories["ammo-based"],
+                    )
+                ),
                 model_name="Powerful",
                 offworld_models=frozendict(),
                 progression=("Weapon",),
                 preferred_location_category=LocationCategory.MAJOR,
+                show_in_credits_spoiler=True,
             ),
         },
         ammo_pickups={},

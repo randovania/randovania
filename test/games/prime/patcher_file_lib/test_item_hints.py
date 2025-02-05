@@ -133,12 +133,12 @@ def test_create_hints_nothing(echoes_game_patches, players_config):
     assert result == [{"asset_id": asset_id, "strings": [message, "", message]}]
 
 
-def test_create_hints_item_joke(empty_patches, players_config):
+def test_create_hints_item_joke(echoes_game_patches, players_config):
     # Setup
     asset_id = 1000
     hint_node, _, region_list = _create_region_list(asset_id, PickupIndex(50))
 
-    patches = dataclasses.replace(empty_patches, hints={hint_node.identifier: JokeHint()})
+    patches = dataclasses.replace(echoes_game_patches, hints={hint_node.identifier: JokeHint()})
     rng = MagicMock()
     namer = EchoesHintNamer({0: patches}, players_config)
 
@@ -279,8 +279,6 @@ def test_create_message_for_hint_dark_temple_no_keys(empty_patches, players_conf
     "item",
     [
         (HintItemPrecision.DETAILED, "The", "&push;&main-color=#FF6705B3;Blank Pickup&pop;"),
-        (HintItemPrecision.PRECISE_CATEGORY, "A", "&push;&main-color=#FF6705B3;suit&pop;"),
-        (HintItemPrecision.GENERAL_CATEGORY, "A", "&push;&main-color=#FF6705B3;major upgrade&pop;"),
         (HintItemPrecision.BROAD_CATEGORY, "A", "&push;&main-color=#FF6705B3;life support system&pop;"),
     ],
 )
@@ -344,8 +342,6 @@ def test_create_hints_item_location(echoes_game_patches, blank_pickup, item, loc
     "item",
     [
         (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Blank Pickup&pop;"),
-        (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;suit&pop;"),
-        (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
         (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
     ],
 )
@@ -369,7 +365,11 @@ def test_create_hints_guardians(
         },
         hints={
             hint_node.identifier: LocationHint(
-                PrecisionPair(HintLocationPrecision.GUARDIAN, item[0], include_owner=False),
+                PrecisionPair(
+                    echoes_game_patches.game.hint_feature_database["specific_hint_guardian"],
+                    item[0],
+                    include_owner=False,
+                ),
                 pickup_index,
             )
         },
@@ -389,8 +389,6 @@ def test_create_hints_guardians(
     "item",
     [
         (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Blank Pickup&pop;"),
-        (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;suit&pop;"),
-        (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
         (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
     ],
 )
@@ -408,7 +406,9 @@ def test_create_hints_light_suit_location(echoes_game_patches, players_config, b
         },
         hints={
             hint_node.identifier: LocationHint(
-                PrecisionPair(HintLocationPrecision.LIGHT_SUIT_LOCATION, item[0], include_owner=False),
+                PrecisionPair(
+                    echoes_game_patches.game.hint_feature_database["specific_hint_2mos"], item[0], include_owner=False
+                ),
                 pickup_index,
             )
         },
@@ -428,7 +428,6 @@ def test_create_hints_light_suit_location(echoes_game_patches, players_config, b
     ("reference_precision", "reference_name"),
     [
         (HintItemPrecision.DETAILED, "the Reference Pickup"),
-        (HintItemPrecision.PRECISE_CATEGORY, "a suit"),
         (HintItemPrecision.BROAD_CATEGORY, "a life support system"),
     ],
 )
@@ -517,4 +516,45 @@ def test_create_message_for_hint_relative_area(
         f"The &push;&main-color=#FF6705B3;Blank Pickup&pop; can be found "
         f"&push;&main-color=#FF3333;{distance_text} {10 + (offset or 0)} rooms&pop; away from "
         f"Torvus Bog - Great Bridge."
+    )
+
+
+@pytest.mark.parametrize("item_feature_id", ["suit", "beam"])
+@pytest.mark.parametrize("loc_feature_id", ["boost", "boss"])
+def test_create_message_for_featural_hint(
+    item_feature_id: str,
+    loc_feature_id: str,
+    echoes_game_patches,
+    blank_pickup,
+    echoes_pickup_database,
+    echoes_game_description,
+    players_config,
+):
+    patches = echoes_game_patches.assign_new_pickups(
+        [
+            (PickupIndex(5), PickupTarget(blank_pickup, 0)),
+        ]
+    )
+
+    namer = EchoesHintNamer({0: patches}, PlayersConfiguration(0, {0: "You"}))
+    exporter = HintExporter(namer, random.Random(0), ["A Joke"])
+
+    loc_feature = echoes_game_description.hint_feature_database[loc_feature_id]
+    item_feature = echoes_pickup_database.pickup_categories[item_feature_id]
+    hint = LocationHint(
+        PrecisionPair(
+            loc_feature,
+            item_feature,
+            include_owner=False,
+        ),
+        PickupIndex(5),
+    )
+
+    # Run
+    result = exporter.create_message_for_hint(hint, {0: patches}, players_config, True)
+
+    assert result == (
+        f"{item_feature.hint_details[0].capitalize()}"
+        f"&push;&main-color=#FF6705B3;{item_feature.hint_details[1]}&pop; "
+        f"can be found &push;&main-color=#FF3333;{loc_feature.hint_details[1]}&pop;."
     )

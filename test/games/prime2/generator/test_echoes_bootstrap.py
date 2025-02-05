@@ -77,7 +77,7 @@ def test_assign_pool_results(echoes_game_description, default_echoes_configurati
     )
 
     # Assert
-    shuffled_stks = [pickup for pickup in pool_results.to_place if pickup.pickup_category.name == "sky_temple_key"]
+    shuffled_stks = [pickup for pickup in pool_results.to_place if pickup.gui_category.name == "sky_temple_key"]
 
     assert result.starting_equipment == pool_results.starting
     if stk_mode == LayoutSkyTempleKeyMode.ALL_BOSSES:

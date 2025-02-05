@@ -135,12 +135,12 @@ def test_create_hints_all_placed(
 @pytest.mark.parametrize("multiworld", [False, True])
 @pytest.mark.parametrize("hide_area", [False, True])
 def test_create_hints_all_starting(
-    hide_area: bool, multiworld: bool, empty_patches, echoes_game_description, default_echoes_configuration
+    hide_area: bool, multiworld: bool, echoes_game_patches, echoes_game_description, default_echoes_configuration
 ):
     # Setup
     players_config = PlayersConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
 
-    patches = empty_patches.assign_extra_starting_pickups(
+    patches = echoes_game_patches.assign_extra_starting_pickups(
         [
             (create_generated_pickup("Sky Temple Key", echoes_game_description.resource_database, i=key + 1))
             for key in range(9)
@@ -170,7 +170,7 @@ def test_create_hints_all_starting(
     assert result == expected
 
 
-def test_hide_hints(empty_patches):
+def test_hide_hints(echoes_game_patches):
     # Setup
     expected = [
         {"asset_id": 0xD97685FE, "strings": make_useless_stk_hint(1)},
@@ -184,7 +184,7 @@ def test_hide_hints(empty_patches):
         {"asset_id": 0xCAA1C50A, "strings": make_useless_stk_hint(9)},
     ]
 
-    namer = EchoesHintNamer({0: empty_patches}, PlayersConfiguration(0, {}))
+    namer = EchoesHintNamer({0: echoes_game_patches}, PlayersConfiguration(0, {}))
 
     # Run
     result = randovania.games.prime2.exporter.hints.hide_stk_hints(namer)

@@ -10,7 +10,7 @@ from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.hint_node import HintNode
-from randovania.games.fusion.exporter.hint_namer import FusionColor, FusionHintNamer, colorize_text
+from randovania.games.fusion.exporter.hint_namer import FusionColor, FusionHintNamer
 from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
@@ -200,6 +200,7 @@ class FusionPatchDataFactory(PatchDataFactory):
         if len(starting_items_list) == 0:
             starting_items_text = ""
         metroid_location_text = "anywhere" if self.configuration.artifacts.prefer_anywhere else "at bosses"
+        colorize_text = FusionHintNamer.colorize_text
         long_intro = (
             f"{starting_items_text}Your objective is as follows: the {colorize_text(FusionColor.YELLOW, 'SA-X', True)} "
             f"has discovered and destroyed a top secret {colorize_text(FusionColor.YELLOW, 'Metroid', True)} "
@@ -249,7 +250,7 @@ class FusionPatchDataFactory(PatchDataFactory):
                 pickup_node = region_list.node_from_pickup_index(location.location.location)
                 elements[pickup.name].append(
                     {
-                        "World": location.player_name,
+                        "World": location.world_name,
                         "Region": region_list.region_name_from_node(pickup_node),
                         "Area": region_list.nodes_to_area(pickup_node).name,
                     }

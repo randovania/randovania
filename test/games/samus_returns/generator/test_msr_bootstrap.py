@@ -37,7 +37,7 @@ def test_assign_pool_results_predetermined(msr_game_description, msr_configurati
         pool_results,
     )
     # Assert
-    shuffled_dna = [pickup for pickup in pool_results.to_place if pickup.pickup_category.name == "dna"]
+    shuffled_dna = [pickup for pickup in pool_results.to_place if pickup.gui_category.name == "dna"]
     assert result.starting_equipment == pool_results.starting
     assert set(result.pickup_assignment.keys()) == {PickupIndex(i) for i in expected}
     assert shuffled_dna == []
@@ -67,7 +67,7 @@ def test_assign_pool_results_prefer_anywhere(msr_game_description, msr_configura
     )
 
     # Assert
-    shuffled_dna = [pickup for pickup in pool_results.to_place if pickup.pickup_category.name == "dna"]
+    shuffled_dna = [pickup for pickup in pool_results.to_place if pickup.gui_category.name == "dna"]
 
     assert pool_results.to_place == initial_starting_place
     assert len(shuffled_dna) == artifacts.placed_artifacts

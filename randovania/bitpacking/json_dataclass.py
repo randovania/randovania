@@ -5,6 +5,7 @@ import datetime
 import inspect
 import typing
 import uuid
+from collections.abc import Mapping
 from enum import Enum
 
 from frozendict import frozendict
@@ -16,8 +17,12 @@ if typing.TYPE_CHECKING:
 
 T = typing.TypeVar("T")
 
+EXCLUDE_DEFAULT = {"exclude_if_default": True}
 
-def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.Any:
+Metadata = Mapping[typing.Any, typing.Any]
+
+
+def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict, metadata: Metadata) -> typing.Any:
     type_ = type_lib.resolve_optional(type_)[0]
 
     if arg is None:
@@ -29,6 +34,8 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
         return type_(arg)
 
     elif type_lib.is_named_tuple(type_):
+        if metadata.get("store_named_tuple_without_names"):
+            return type_(*arg)
         return type_(**arg)
 
     elif type_origin is list:
@@ -37,7 +44,7 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
         else:
             value_types = typing.Any
 
-        return [_decode_with_type(value, value_types, {}) for value in arg]
+        return [_decode_with_type(value, value_types, {}, metadata) for value in arg]
 
     elif type_origin is tuple:
         type_args = typing.get_args(type_)
@@ -50,7 +57,8 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
             value_types = [typing.Any] * len(arg)
 
         return tuple(
-            _decode_with_type(value, value_type, {}) for value, value_type in zip(arg, value_types, strict=True)
+            _decode_with_type(value, value_type, {}, metadata)
+            for value, value_type in zip(arg, value_types, strict=True)
         )
 
     elif type_origin in (dict, frozendict):
@@ -60,7 +68,7 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
             key_type, value_types = str, typing.Any
 
         return type_origin(
-            (_decode_with_type(key, key_type, {}), _decode_with_type(value, value_types, {}))
+            (_decode_with_type(key, key_type, {}, metadata), _decode_with_type(value, value_types, {}, metadata))
             for key, value in arg.items()
         )
 
@@ -85,7 +93,7 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
     return arg
 
 
-def _encode_value(value: typing.Any) -> typing.Any:
+def _encode_value(value: typing.Any, metadata: Metadata) -> typing.Any:
     if isinstance(value, Enum):
         return value.value
 
@@ -93,13 +101,15 @@ def _encode_value(value: typing.Any) -> typing.Any:
         return str(value)
 
     elif type_lib.is_named_tuple(type(value)):
-        return _encode_value(value._asdict())
+        if metadata.get("store_named_tuple_without_names"):
+            return _encode_value(tuple(value), metadata)
+        return _encode_value(value._asdict(), metadata)
 
     elif isinstance(value, tuple | list):
-        return [_encode_value(v) for v in value]
+        return [_encode_value(v, metadata) for v in value]
 
     elif isinstance(value, dict | frozendict):
-        result = {_encode_value(k): _encode_value(v) for k, v in value.items()}
+        result = {_encode_value(k, metadata): _encode_value(v, metadata) for k, v in value.items()}
         if isinstance(value, frozendict):
             return frozendict(result)
         return result
@@ -133,7 +143,7 @@ class JsonDataclass:
                 else:
                     raise RuntimeError(f"exclude_if_default, but field {field.name} has no default?")
 
-            result[field.name] = _encode_value(value)
+            result[field.name] = _encode_value(value, field.metadata)
         return result
 
     @classmethod
@@ -166,7 +176,7 @@ class JsonDataclass:
                     if isinstance(field_type, str):
                         field_type = resolved_types[field.name]
 
-                    arg = _decode_with_type(arg, field_type, extra_args)
+                    arg = _decode_with_type(arg, field_type, extra_args, field.metadata)
 
             new_instance[field.name] = arg
 

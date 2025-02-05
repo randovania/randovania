@@ -17,13 +17,11 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY
-from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
-from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.exporter.hint_namer import CSHintNamer
 from randovania.games.cave_story.layout.preset_describer import get_ingame_hash
 from randovania.games.cave_story.patcher.caver_music_shuffle import CaverMusic
+from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
     from caver.schema import CaverData, CaverdataMaps, CaverdataMapsHints, CaverdataOtherTsc, TscScript
@@ -102,16 +100,7 @@ class CSPatchDataFactory(PatchDataFactory):
 
     def _create_pickups_data(self) -> dict[MapName, dict[EventNumber, TscScript]]:
         nothing_item = PickupTarget(
-            PickupEntry(
-                "Nothing",
-                PickupModel(RandovaniaGame.CAVE_STORY, "Nothing"),
-                USELESS_PICKUP_CATEGORY,
-                USELESS_PICKUP_CATEGORY,
-                (),
-                generator_params=PickupGeneratorParams(
-                    preferred_location_category=LocationCategory.MAJOR,  # TODO
-                ),
-            ),
+            pickup_creator.create_visual_nothing(RandovaniaGame.CAVE_STORY, "Nothing", "Nothing"),
             self.players_config.player_index,
         )
 

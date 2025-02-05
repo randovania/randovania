@@ -20,6 +20,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region import Region
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.pickup_index import PickupIndex
 
@@ -43,6 +44,7 @@ class RegionList(NodeProvider):
     _patches_dock_lock_requirements: list[Requirement | None] | None
     _teleporter_network_cache: dict[str, list[TeleporterNetworkNode]]
     configurable_nodes: dict[NodeIdentifier, Requirement]
+    _feature_to_pickup_nodes: dict[HintFeature, tuple[PickupNode, ...]]
 
     def __deepcopy__(self, memodict: dict) -> RegionList:
         return RegionList(
@@ -83,6 +85,7 @@ class RegionList(NodeProvider):
         self._nodes = None
         self._identifier_to_node = {}
         self._teleporter_network_cache = {}
+        self._feature_to_pickup_nodes = {}
 
     def _iterate_over_nodes(self) -> Iterator[Node]:
         for region in self.regions:
@@ -317,6 +320,16 @@ class RegionList(NodeProvider):
 
     def get_configurable_node_requirement(self, identifier: NodeIdentifier) -> Requirement:
         return self.configurable_nodes[identifier]
+
+    def pickup_nodes_with_feature(self, feature: HintFeature) -> tuple[PickupNode, ...]:
+        """Returns an iterable tuple of PickupNodes with the given feature (either directly or in their area)"""
+        if feature not in self._feature_to_pickup_nodes:
+            self._feature_to_pickup_nodes[feature] = tuple(
+                node
+                for _, area, node in self.all_regions_areas_nodes
+                if isinstance(node, PickupNode) and ((feature in area.hint_features) or (feature in node.hint_features))
+            )
+        return self._feature_to_pickup_nodes[feature]
 
 
 def _calculate_nodes_to_area_region(regions: Iterable[Region]) -> tuple[dict[NodeIndex, Area], dict[NodeIndex, Region]]:

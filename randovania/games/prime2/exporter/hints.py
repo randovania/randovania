@@ -6,7 +6,6 @@ from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.hints.joke_hints import JOKE_HINTS
 from randovania.game_description.db.hint_node import HintNode
-from randovania.games.common.prime_family.exporter.hint_namer import colorize_text
 from randovania.games.prime2.patcher import echoes_items
 
 if TYPE_CHECKING:
@@ -123,7 +122,7 @@ def hide_stk_hints(namer: EchoesHintNamer) -> list:
         create_simple_logbook_hint(
             _SKY_TEMPLE_KEY_SCAN_ASSETS[key_number],
             "{} is lost somewhere in Aether.".format(
-                colorize_text(namer.color_item, f"Sky Temple Key {key_number + 1}", True)
+                namer.colorize_text(namer.color_item, f"Sky Temple Key {key_number + 1}", True)
             ),
         )
         for key_number in range(9)

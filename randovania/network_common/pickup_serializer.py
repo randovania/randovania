@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackFloat
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.pickup.pickup_category import PickupCategory
+from randovania.game_description.hint_features import PickupHintFeature
 from randovania.game_description.pickup.pickup_entry import (
     PickupEntry,
     PickupGeneratorParams,
@@ -82,22 +82,20 @@ class DatabaseBitPackHelper:
 
 
 # Item categories encoding & decoding
-def _encode_pickup_category(category: PickupCategory):
+def _encode_pickup_category(category: PickupHintFeature):
     yield from bitpacking.encode_string(category.name)
     yield from bitpacking.encode_string(category.long_name)
     yield from bitpacking.encode_string(category.hint_details[0])
     yield from bitpacking.encode_string(category.hint_details[1])
-    yield from bitpacking.encode_bool(category.hinted_as_major)
-    yield from bitpacking.encode_bool(category.is_key)
+    yield from bitpacking.encode_bool(category.is_broad_category)
 
 
-def _decode_pickup_category(decoder: BitPackDecoder) -> PickupCategory:
-    return PickupCategory(
+def _decode_pickup_category(decoder: BitPackDecoder) -> PickupHintFeature:
+    return PickupHintFeature(
         name=bitpacking.decode_string(decoder),
         long_name=bitpacking.decode_string(decoder),
         hint_details=(bitpacking.decode_string(decoder), bitpacking.decode_string(decoder)),
-        hinted_as_major=bitpacking.decode_bool(decoder),
-        is_key=bitpacking.decode_bool(decoder),
+        is_broad_category=bitpacking.decode_bool(decoder),
     )
 
 
@@ -116,8 +114,8 @@ class BitPackPickupEntry:
         yield from bitpacking.encode_string(self.value.name)
         yield from self.value.model.game.bit_pack_encode({})
         yield from bitpacking.encode_string(self.value.model.name)
-        yield from _encode_pickup_category(self.value.pickup_category)
-        yield from _encode_pickup_category(self.value.broad_category)
+        yield from _encode_pickup_category(self.value.gui_category)
+        yield from bitpacking.encode_tuple(tuple(sorted(self.value.hint_features)), _encode_pickup_category)
         yield from bitpacking.encode_tuple(self.value.progression, helper.encode_resource_quantity)
         yield from bitpacking.encode_tuple(self.value.extra_resources, helper.encode_resource_quantity)
         yield from bitpacking.encode_bool(self.value.unlocks_resource)
@@ -133,6 +131,8 @@ class BitPackPickupEntry:
             _PROBABILITY_MULTIPLIER_META
         )
         yield from bitpacking.encode_big_int(self.value.generator_params.required_progression)
+        yield from bitpacking.encode_bool(self.value.show_in_credits_spoiler)
+        yield from bitpacking.encode_bool(self.value.is_expansion)
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, database: ResourceDatabase) -> PickupEntry:
@@ -144,7 +144,7 @@ class BitPackPickupEntry:
             name=bitpacking.decode_string(decoder),
         )
         pickup_category = _decode_pickup_category(decoder)
-        broad_category = _decode_pickup_category(decoder)
+        hint_features = frozenset(bitpacking.decode_tuple(decoder, _decode_pickup_category))
         progression = bitpacking.decode_tuple(decoder, helper.decode_resource_quantity)
         extra_resources = bitpacking.decode_tuple(decoder, helper.decode_resource_quantity)
         unlocks_resource = bitpacking.decode_bool(decoder)
@@ -158,11 +158,14 @@ class BitPackPickupEntry:
         probability_multiplier = BitPackFloat.bit_pack_unpack(decoder, _PROBABILITY_MULTIPLIER_META)
         required_progression = bitpacking.decode_big_int(decoder)
 
+        show_in_credits_spoiler = bitpacking.decode_bool(decoder)
+        is_expansion = bitpacking.decode_bool(decoder)
+
         return PickupEntry(
             name=name,
             model=model,
-            pickup_category=pickup_category,
-            broad_category=broad_category,
+            gui_category=pickup_category,
+            hint_features=hint_features,
             progression=progression,
             extra_resources=extra_resources,
             unlocks_resource=unlocks_resource,
@@ -174,4 +177,6 @@ class BitPackPickupEntry:
                 probability_multiplier=probability_multiplier,
                 required_progression=required_progression,
             ),
+            show_in_credits_spoiler=show_in_credits_spoiler,
+            is_expansion=is_expansion,
         )

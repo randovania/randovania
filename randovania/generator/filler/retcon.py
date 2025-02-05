@@ -7,7 +7,6 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.node import Node
-from randovania.game_description.hint import LocationHint
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
 from randovania.generator.filler.filler_library import UnableToGenerate, UncollectedState
@@ -20,7 +19,6 @@ if TYPE_CHECKING:
     from collections.abc import Callable, Mapping, Set
     from random import Random
 
-    from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.pickup_index import PickupIndex
@@ -351,7 +349,7 @@ def retcon_playthrough_filler(
             for i, new_pickup in enumerate(new_pickups):
                 if i > 0:
                     current_player.reach = reach_lib.advance_reach_with_possible_unsafe_resources(current_player.reach)
-                    current_player.advance_scan_asset_seen_count()
+                    current_player.hint_state.advance_hint_seen_count(current_player.reach)
                     all_locations_weighted = _calculate_all_pickup_indices_weight(player_states)
 
                 log_entry = _assign_pickup_somewhere(
@@ -420,25 +418,15 @@ def _assign_pickup_somewhere(
             debug_print_weighted_locations(all_locations, player_states)
 
         index_owner_state, pickup_index = usable_locations.select_location(rng)
-        index_owner_state.assign_pickup(pickup_index, PickupTarget(action, current_player.index))
+        index_owner_state.assign_pickup(
+            pickup_index,
+            PickupTarget(action, current_player.index),
+            UncollectedState.from_reach(index_owner_state.reach),
+            all_locations,
+        )
 
         increment_index_age(all_locations, action.generator_params.index_age_impact)
         all_locations.remove(index_owner_state, pickup_index)
-
-        # Place a hint for the new item
-        hint_location = _calculate_hint_location_for_action(
-            action,
-            index_owner_state,
-            all_locations,
-            UncollectedState.from_reach(index_owner_state.reach),
-            pickup_index,
-            rng,
-            index_owner_state.hint_initial_pickups,
-        )
-        if hint_location is not None:
-            index_owner_state.reach.state.patches = index_owner_state.reach.state.patches.assign_hint(
-                hint_location, LocationHint.unassigned(pickup_index)
-            )
 
         if pickup_index in index_owner_state.reach.state.collected_pickup_indices:
             current_player.reach.advance_to(current_player.reach.state.assign_pickup_resources(action))
@@ -450,7 +438,6 @@ def _assign_pickup_somewhere(
             current_player,
             action,
             pickup_index,
-            hint_location,
             index_owner_state,
             len(player_states) > 1,
         )
@@ -497,36 +484,6 @@ def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> We
     return WeightedLocations(all_weights)
 
 
-def _calculate_hint_location_for_action(
-    action: PickupEntry,
-    index_owner_state: PlayerState,
-    all_locations: WeightedLocations,
-    current_uncollected: UncollectedState,
-    pickup_index: PickupIndex,
-    rng: Random,
-    hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]],
-) -> NodeIdentifier | None:
-    """
-    Calculates where a hint for the given action should be placed.
-    :return: A hint's NodeIdentifier to use, or None if no hint should be placed.
-    """
-    if index_owner_state.should_have_hint(action, current_uncollected, all_locations):
-        potential_hint_locations = [
-            identifier
-            for identifier in current_uncollected.hints
-            if pickup_index not in hint_initial_pickups[identifier]
-        ]
-        if potential_hint_locations:
-            return rng.choice(sorted(potential_hint_locations))
-        else:
-            debug.debug_print(
-                f">> Pickup {action.name} had no potential hint locations out of {len(current_uncollected.hints)}"
-            )
-    else:
-        debug.debug_print(f">> Pickup {action.name} was decided to not have a hint.")
-    return None
-
-
 def _calculate_weights_for(
     evaluation: EvaluatedAction,
     current_uncollected: UncollectedState,
@@ -564,25 +521,15 @@ def pickup_placement_spoiler_entry(
     location_owner: PlayerState,
     action: PickupEntry,
     pickup_index: PickupIndex,
-    hint_identifier: NodeIdentifier | None,
     index_owner: PlayerState,
     add_indices: bool,
 ) -> str:
     region_list = index_owner.game.region_list
-    if hint_identifier is not None:
-        hint_string = " with hint at {}".format(
-            region_list.node_name(
-                region_list.node_by_identifier(hint_identifier), with_region=True, distinguish_dark_aether=True
-            )
-        )
-    else:
-        hint_string = ""
 
     pickup_node = region_list.node_from_pickup_index(pickup_index)
-    return "{}{} at {}{}{}".format(
+    return "{}{} at {}{}".format(
         f"{location_owner.name}'s " if add_indices else "",
         action.name,
         f"{index_owner.name}'s " if add_indices else "",
         region_list.node_name(pickup_node, with_region=True, distinguish_dark_aether=True),
-        hint_string,
     )

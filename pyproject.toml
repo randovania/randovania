@@ -23,10 +23,10 @@ classifiers = [
     "Intended Audience :: End Users/Desktop",
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Topic :: Games/Entertainment",
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dynamic = ["version"]
 
 dependencies = [
@@ -229,6 +229,7 @@ runtime-evaluated-base-classes = [
     "randovania.bitpacking.json_dataclass.JsonDataclass",
     "randovania.layout.base.base_configuration.BaseConfiguration",
     "randovania.exporter.game_exporter.GameExportParams",
+    "randovania.game_description.pickup.pickup_definition.base_pickup.BasePickupDefinition",
 ]
 
 [tool.mypy]
@@ -244,6 +245,7 @@ files = [
     "randovania/games/am2r/layout/",
     "randovania/games/blank/",
     "randovania/games/cave_story/",
+    "randovania/games/dread/exporter/hint_namer.py",
     "randovania/games/dread/gui/",
     "randovania/games/fusion/gui/",
     "randovania/games/fusion/generator/",

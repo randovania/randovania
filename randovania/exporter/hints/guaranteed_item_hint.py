@@ -98,13 +98,13 @@ def create_guaranteed_hints_for_resources(
         if location is not None:
             used_locations.add(location)
 
-            player_name = None
+            world_name = None
             if players_config.is_multiworld:
-                player_name = players_config.player_names[location[0]]
+                world_name = players_config.player_names[location[0]]
 
             resulting_hints[resource] = namer.format_guaranteed_resource(
                 resource,
-                player_name,
+                world_name,
                 location[1],
                 hide_area,
                 with_color,

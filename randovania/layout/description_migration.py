@@ -537,6 +537,66 @@ def _migrate_v29(data: dict) -> None:
                 hint.pop("target", None)
 
 
+def _migrate_hint_precision(data: dict, item_precisions_to_migrate: set[str]) -> None:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        game_enum = RandovaniaGame(game["game"])
+        location_precision = migration_data.get_hint_location_precision_data(game_enum)
+
+        for hint in game["hints"].values():
+            if hint["hint_type"] != "location":
+                continue
+
+            precision = hint["precision"]
+            if precision["location"] in location_precision:
+                precision["location_feature"] = location_precision[precision.pop("location")]
+
+            def migrate_precision(_precision: dict, target: int, old_key: str, new_key: str) -> None:
+                correct_name, area_and_node = migration_data.get_node_keys_for_pickup_index(game_enum, target)
+
+                target_name = game["locations"][correct_name][area_and_node]
+                target_name_re = re.compile(r"(.*) for Player (\d+)")
+
+                if target_name == "Energy Transfer Module":
+                    # who cares, honestly
+                    _precision[old_key] = "detailed"
+                    return
+
+                pickup_name_match = target_name_re.match(target_name)
+                if pickup_name_match is not None:
+                    pickup_name = pickup_name_match.group(1)
+                    target_player = int(pickup_name_match.group(2)) - 1
+                else:
+                    pickup_name = target_name
+                    target_player = 0
+
+                target_game = RandovaniaGame(game_modifications[target_player]["game"])
+                old_categories = migration_data.get_old_hint_categories(target_game)
+
+                if pickup_name in old_categories:
+                    item_data = old_categories[pickup_name]
+                else:
+                    # generated pickups
+                    item_data = next(data for name, data in old_categories.items() if pickup_name.startswith(name))
+
+                _precision[new_key] = item_data[_precision.pop(old_key)]
+
+            if precision["item"] in item_precisions_to_migrate:
+                migrate_precision(precision, hint["target"], "item", "item_feature")
+
+            if (
+                (relative := precision.get("relative")) is not None
+                and ("area_location" not in relative)
+                and (relative["precision"] in item_precisions_to_migrate)
+            ):
+                migrate_precision(relative, relative["other_index"], "precision", "precision_feature")
+
+
+def _migrate_v30(data: dict) -> None:
+    _migrate_hint_precision(data, {"precise-category", "general-category"})
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -567,6 +627,7 @@ _MIGRATIONS = [
     _migrate_v27,
     _migrate_v28,
     _migrate_v29,  # hint type refactor
+    _migrate_v30,  # migrate some HintLocationPrecision and HintItemPrecision to HintFeature
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -6,6 +6,7 @@ from randovania.exporter.hints.determiner import Determiner
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
 from randovania.game_description import node_search
 from randovania.game_description.hint import HintLocationPrecision, HintRelativeAreaName, LocationHint, RelativeDataArea
+from randovania.game_description.hint_features import HintFeature
 from randovania.layout import filtered_database
 
 if TYPE_CHECKING:
@@ -19,30 +20,39 @@ if TYPE_CHECKING:
 
 
 class LocationFormatter:
+    """Base class for hint formatters"""
+
     def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool) -> str:
+        """Returns a fully formatted hint, ready for usage in the GUI or exporter"""
         raise NotImplementedError
 
 
 class TemplatedFormatter(LocationFormatter):
+    """Standard hint formatter for basic location precisions"""
+
     def __init__(self, template: str, namer: HintNamer, with_region: bool = True, upper_pickup: bool = False):
         self.template = template
         self.namer = namer
         self.with_region = with_region
         self.upper_pickup = upper_pickup
 
-    def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool) -> str:
-        node_name = self.namer.format_location(
+    def location_name(self, game: RandovaniaGame, hint: LocationHint, with_color: bool) -> str:
+        """Formats the name of a LocationHint's location. Used in format()"""
+        return self.namer.format_location(
             location=PickupLocation(game, hint.target),
             with_region=self.with_region or hint.precision.location == HintLocationPrecision.REGION_ONLY,
             with_area=hint.precision.location != HintLocationPrecision.REGION_ONLY,
             with_color=with_color,
         )
+
+    def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool) -> str:
+        node_name = self.location_name(game, hint, with_color)
         pickup = pick_hint.pickup_name
         if self.upper_pickup:
             pickup = pickup.upper()
 
-        if pick_hint.player_name is not None:
-            name = self.namer.format_player(pick_hint.player_name, with_color=with_color)
+        if pick_hint.world_name is not None:
+            name = self.namer.format_world(pick_hint.world_name, with_color=with_color)
             determiner = Determiner(f"{name}'s ", supports_title=False)
         else:
             determiner = pick_hint.determiner
@@ -54,7 +64,26 @@ class TemplatedFormatter(LocationFormatter):
         )
 
 
+class FeaturalFormatter(TemplatedFormatter):
+    """Hint formatter for featural hints"""
+
+    def __init__(self, template: str, namer: HintNamer, upper_pickup: bool = False):
+        self.template = template
+        self.namer = namer
+        self.upper_pickup = upper_pickup
+
+    def location_name(self, game: RandovaniaGame, hint: LocationHint, with_color: bool) -> str:
+        """Format the LocationHint's feature. Used in format()"""
+        assert isinstance(hint.precision.location, HintFeature)
+        return self.namer.format_location_feature(
+            hint.precision.location,
+            with_color,
+        )
+
+
 class RelativeFormatter(LocationFormatter):
+    """Hint formatter for relative hints"""
+
     def __init__(self, patches: GamePatches, distance_painter: Callable[[str, bool], str]):
         self.region_list = filtered_database.game_description_for_layout(patches.configuration).region_list
         self.patches = patches

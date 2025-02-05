@@ -4,6 +4,7 @@ import dataclasses
 from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
+import pytest
 from frozendict import frozendict
 
 from randovania.game_description.db.area import Area
@@ -132,3 +133,20 @@ def test_node_index_multiple_games(default_prime_preset):
 
     for node in default_game.region_list.iterate_nodes():
         assert all_nodes_default[node.node_index] is node
+
+
+@pytest.mark.parametrize(
+    ("feature_id", "expected_node_ids"),
+    [
+        ("boss", ["Intro/Boss Arena/Pickup (Free Loot)"]),
+        ("ledge", ["Intro/Ledge Room/Pickup (Double Jump)"]),
+    ],
+)
+def test_pickup_nodes_with_feature(feature_id: str, expected_node_ids: list[str], blank_game_description):
+    feature = blank_game_description.hint_feature_database[feature_id]
+
+    # test twice for coverage on the cache
+    for i in range(2):
+        nodes = blank_game_description.region_list.pickup_nodes_with_feature(feature)
+        node_ids = [node.identifier.as_string for node in nodes]
+        assert node_ids == expected_node_ids

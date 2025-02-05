@@ -46,6 +46,17 @@ sample_data = {
         },
         "dock_rando": {"force_change_two_way": False, "resolver_attempts": 200, "to_shuffle_proportion": 1.0},
     },
+    "hint_feature_database": {
+        "key": {
+            "long_name": "Room",
+            "hint_details": ["in ", "a room"],
+        },
+        "key2": {
+            "long_name": "Room",
+            "hint_details": ["in ", "a room"],
+            "hidden": True,
+        },
+    },
     "used_trick_levels": {},
     "flatten_to_set_on_patch": False,
     "regions": [],

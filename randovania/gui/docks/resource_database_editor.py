@@ -6,8 +6,8 @@ import functools
 import json
 import typing
 
+from frozendict import frozendict
 from PySide6 import QtCore, QtWidgets
-from PySide6.QtCore import Qt
 
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -20,21 +20,12 @@ from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.resource_database_editor_ui import Ui_ResourceDatabaseEditor
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.connections_visualizer import create_tree_items_for_requirement
+from randovania.gui.lib.editable_table_model import EditableTableModel, FieldDefinition
 from randovania.lib import frozen_lib
 
 if typing.TYPE_CHECKING:
-    from types import EllipsisType
-
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.resources.resource_database import ResourceDatabase
-
-
-@dataclasses.dataclass(frozen=True)
-class FieldDefinition:
-    display_name: str
-    field_name: str
-    to_qt: typing.Callable[[typing.Any], typing.Any]
-    from_qt: typing.Callable[[typing.Any], tuple[bool, typing.Any]]
 
 
 def encode_extra(qt_value: str) -> tuple[bool, typing.Any]:
@@ -47,145 +38,79 @@ def encode_extra(qt_value: str) -> tuple[bool, typing.Any]:
         return False, None
 
 
-GENERIC_FIELDS = [
-    FieldDefinition("Short Name", "short_name", lambda v: v, lambda v: (True, v)),
-    FieldDefinition("Long Name", "long_name", lambda v: v, lambda v: (True, v)),
-    FieldDefinition("Extra", "extra", lambda v: json.dumps(frozen_lib.unwrap(v)), encode_extra),
+GENERIC_FIELDS: list[FieldDefinition] = [
+    FieldDefinition[str, str]("Short Name", "short_name"),
+    FieldDefinition[str, str]("Long Name", "long_name"),
+    FieldDefinition[str, frozendict](
+        "Extra", "extra", to_qt=lambda v: json.dumps(frozen_lib.unwrap(v)), from_qt=encode_extra
+    ),
 ]
 
 
-class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
+class ResourceDatabaseGenericModel(EditableTableModel[ResourceInfo]):
+    """Model for editing a database of ResourceInfo using a QTableView"""
+
     def __init__(self, db: ResourceDatabase, resource_type: ResourceType):
         super().__init__()
         self.db = db
         self.resource_type = resource_type
-        self.allow_edits = True
 
+    @typing.override
+    def _all_columns(self) -> list[FieldDefinition]:
+        return GENERIC_FIELDS
+
+    @typing.override
     def _get_items(self) -> list[ResourceInfo]:
         return typing.cast(list[ResourceInfo], self.db.get_by_type(self.resource_type))
 
-    def set_allow_edits(self, value: bool) -> None:
-        self.beginResetModel()
-        self.allow_edits = value
-        self.endResetModel()
-
-    def all_columns(self) -> list[FieldDefinition]:
-        return GENERIC_FIELDS
-
-    def headerData(
-        self, section: int, orientation: QtCore.Qt.Orientation, role: int | EllipsisType = ...
-    ) -> typing.Any:
-        if role != Qt.ItemDataRole.DisplayRole:
-            return None
-
-        if orientation != Qt.Orientation.Horizontal:
-            return section
-
-        return self.all_columns()[section].display_name
-
-    def rowCount(self, parent: QtCore.QModelIndex | QtCore.QPersistentModelIndex | EllipsisType = ...) -> int:
-        result = len(self._get_items())
-        if self.allow_edits:
-            result += 1
-        return result
-
-    def columnCount(self, parent: QtCore.QModelIndex | QtCore.QPersistentModelIndex | EllipsisType = ...) -> int:
-        return len(self.all_columns())
-
-    def data(
-        self, index: QtCore.QModelIndex | QtCore.QPersistentModelIndex, role: int | EllipsisType = ...
-    ) -> typing.Any:
-        if role not in {Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.EditRole}:
-            return None
-
-        all_items = self._get_items()
-        if index.row() < len(all_items):
-            resource = all_items[index.row()]
-            field = self.all_columns()[index.column()]
-            return field.to_qt(getattr(resource, field.field_name))
-
-        elif role == Qt.ItemDataRole.DisplayRole:
-            if index.column() == 0:
-                return "New..."
-        else:
-            return ""
-
-    def setData(
-        self,
-        index: QtCore.QModelIndex | QtCore.QPersistentModelIndex,
-        value: typing.Any,
-        role: int | EllipsisType = ...,
-    ) -> bool:
-        if role == Qt.ItemDataRole.EditRole:
-            all_items = self._get_items()
-            if index.row() < len(all_items):
-                resource: ResourceInfo = all_items[index.row()]
-                field = self.all_columns()[index.column()]
-                valid, new_value = field.from_qt(value)
-                if valid:
-                    all_items[index.row()] = dataclasses.replace(
-                        resource,
-                        **{field.field_name: new_value},
-                    )
-                    self.dataChanged.emit(index, index, [Qt.ItemDataRole.DisplayRole])
-                    return True
-            else:
-                if value:
-                    all_items = self._get_items()
-                    if any(item.short_name == value for item in all_items):
-                        return False
-                    return self.append_item(self._create_item(value))
-        return False
-
+    @typing.override
     def _create_item(self, short_name: str) -> ResourceInfo:
         return SimpleResourceInfo(self.db.first_unused_resource_index(), short_name, short_name, self.resource_type)
 
+    @typing.override
+    def _get_item_identifier(self, item: ResourceInfo) -> str:
+        return item.short_name
+
+    @typing.override
     def append_item(self, resource: ResourceInfo) -> bool:
         assert resource.resource_index == self.db.first_unused_resource_index()
-        row = self.rowCount()
-        self.beginInsertRows(QtCore.QModelIndex(), row + 1, row + 1)
-        self._get_items().append(resource)
-        self.endInsertRows()
-        return True
-
-    def flags(self, index: QtCore.QModelIndex | QtCore.QPersistentModelIndex) -> QtCore.Qt.ItemFlag:
-        result = Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
-        if self.allow_edits:
-            if index.row() == len(self._get_items()):
-                if index.column() == 0:
-                    result |= Qt.ItemFlag.ItemIsEditable
-            else:
-                if index.column() > 0:
-                    result |= Qt.ItemFlag.ItemIsEditable
-        return result
+        return super().append_item(resource)
 
 
 ITEM_FIELDS = copy.copy(GENERIC_FIELDS)
-ITEM_FIELDS.insert(2, FieldDefinition("Max Capacity", "max_capacity", lambda v: v, lambda v: (v > 0, v)))
+ITEM_FIELDS.insert(2, FieldDefinition("Max Capacity", "max_capacity", from_qt=lambda v: (v > 0, v)))
 
 
 class ResourceDatabaseItemModel(ResourceDatabaseGenericModel):
+    """Model for editing a database of ItemResourceInfo using a QTableView"""
+
     def __init__(self, db: ResourceDatabase):
         super().__init__(db, ResourceType.ITEM)
 
-    def all_columns(self) -> list[FieldDefinition]:
+    @typing.override
+    def _all_columns(self) -> list[FieldDefinition]:
         return ITEM_FIELDS
 
+    @typing.override
     def _create_item(self, short_name: str) -> ItemResourceInfo:
         return ItemResourceInfo(self.db.first_unused_resource_index(), short_name, short_name, 1)
 
 
 TRICK_FIELDS = copy.copy(GENERIC_FIELDS)
-TRICK_FIELDS.insert(2, FieldDefinition("Description", "description", lambda v: v, lambda v: (True, v)))
+TRICK_FIELDS.insert(2, FieldDefinition("Description", "description"))
 
 
 class ResourceDatabaseTrickModel(ResourceDatabaseGenericModel):
+    """Model for editing a database of TrickResourceInfo using a QTableView"""
+
     def __init__(self, db: ResourceDatabase):
         super().__init__(db, ResourceType.TRICK)
 
-    def all_columns(self) -> list[FieldDefinition]:
+    @typing.override
+    def _all_columns(self) -> list[FieldDefinition]:
         return TRICK_FIELDS
 
+    @typing.override
     def _create_item(self, short_name: str) -> TrickResourceInfo:
         return TrickResourceInfo(self.db.first_unused_resource_index(), short_name, short_name, "")
 
