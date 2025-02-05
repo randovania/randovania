@@ -98,8 +98,8 @@ def _create_region_list(asset_id: int, pickup_index: PickupIndex):
 
 
 @pytest.fixture
-def echoes_hint_exporter(echoes_game_patches) -> HintExporter:
-    namer = EchoesHintNamer({0: echoes_game_patches}, PlayersConfiguration(0, {0: "You"}))
+def echoes_hint_exporter(echoes_game_patches, players_config) -> HintExporter:
+    namer = EchoesHintNamer({0: echoes_game_patches}, players_config)
     return HintExporter(namer, random.Random(0), ["A Joke"])
 
 
@@ -203,7 +203,7 @@ def test_create_hints_item_dark_temple_keys(
     exporter = HintExporter(namer, random.Random(0), ["A Joke"])
 
     # Run
-    result = exporter.create_message_for_hint(hint, {0: patches}, players_config, True)
+    result = exporter.create_message_for_hint(hint, True)
 
     # Assert
     assert result == expected_message
@@ -253,7 +253,7 @@ def test_create_hints_item_dark_temple_keys_cross_game(
     exporter = HintExporter(namer, random.Random(0), ["A Joke"])
 
     # Run
-    result = exporter.create_message_for_hint(hint, {0: echoes_patches, 1: prime_patches}, players_config, True)
+    result = exporter.create_message_for_hint(hint, True)
 
     # Assert
     assert result == (
@@ -267,9 +267,10 @@ def test_create_hints_item_dark_temple_keys_cross_game(
 def test_create_message_for_hint_dark_temple_no_keys(empty_patches, players_config, echoes_hint_exporter):
     # Setup
     hint = RedTempleHint(dark_temple=HintDarkTemple.TORVUS_BOG)
+    echoes_hint_exporter.namer.all_patches = {0: empty_patches}
 
     # Run
-    result = echoes_hint_exporter.create_message_for_hint(hint, {0: empty_patches}, players_config, True)
+    result = echoes_hint_exporter.create_message_for_hint(hint, True)
 
     # Assert
     assert result == "The keys to &push;&main-color=#FF6705B3;Dark Torvus Temple&pop; are nowhere to be found."
@@ -465,11 +466,11 @@ def test_create_message_for_hint_relative_item(
         PickupIndex(5),
     )
 
-    namer = EchoesHintNamer({0: patches}, PlayersConfiguration(0, {0: "You"}))
+    namer = EchoesHintNamer({0: patches}, players_config)
     exporter = HintExporter(namer, random.Random(0), ["A Joke"])
 
     # Run
-    result = exporter.create_message_for_hint(hint, {0: patches}, players_config, True)
+    result = exporter.create_message_for_hint(hint, True)
 
     # Assert
     assert result == (
@@ -505,11 +506,11 @@ def test_create_message_for_hint_relative_area(
         PickupIndex(5),
     )
 
-    namer = EchoesHintNamer({0: patches}, PlayersConfiguration(0, {0: "You"}))
+    namer = EchoesHintNamer({0: patches}, players_config)
     exporter = HintExporter(namer, random.Random(0), ["A Joke"])
 
     # Run
-    result = exporter.create_message_for_hint(hint, {0: patches}, players_config, True)
+    result = exporter.create_message_for_hint(hint, True)
 
     # Assert
     assert result == (
@@ -536,7 +537,7 @@ def test_create_message_for_featural_hint(
         ]
     )
 
-    namer = EchoesHintNamer({0: patches}, PlayersConfiguration(0, {0: "You"}))
+    namer = EchoesHintNamer({0: patches}, players_config)
     exporter = HintExporter(namer, random.Random(0), ["A Joke"])
 
     loc_feature = echoes_game_description.hint_feature_database[loc_feature_id]
@@ -551,7 +552,7 @@ def test_create_message_for_featural_hint(
     )
 
     # Run
-    result = exporter.create_message_for_hint(hint, {0: patches}, players_config, True)
+    result = exporter.create_message_for_hint(hint, True)
 
     assert result == (
         f"{item_feature.hint_details[0].capitalize()}"

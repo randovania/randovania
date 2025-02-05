@@ -30,13 +30,14 @@ def _options() -> type[PerGameOptions]:
 def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.cave_story import gui
     from randovania.games.cave_story.layout import progressive_items
+    from randovania.gui.game_details.hint_details_tab import HintDetailsTab
 
     return randovania.game.gui.GameGui(
         tab_provider=gui.cs_preset_tabs,
         cosmetic_dialog=gui.CSCosmeticPatchesDialog,
         export_dialog=gui.CSGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(gui.CSHintDetailsTab,),
+        spoiler_visualizer=(HintDetailsTab,),
         game_tab=gui.CSGameTabWidget,
     )
 

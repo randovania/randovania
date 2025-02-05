@@ -4,7 +4,7 @@ import dataclasses
 import functools
 import typing
 from random import Random
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 import randovania
 import randovania.games.prime2.exporter.hints
@@ -597,10 +597,15 @@ class EchoesPatchDataFactory(PatchDataFactory):
         cosmetic_patches: EchoesCosmeticPatches,
     ):
         super().__init__(description, players_config, cosmetic_patches)
-        self.namer = EchoesHintNamer(self.description.all_patches, self.players_config)
+        self.namer = self.get_hint_namer(description.all_patches, players_config)
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME_ECHOES
+
+    @override
+    @classmethod
+    def hint_namer_type(cls) -> type[EchoesHintNamer]:
+        return EchoesHintNamer
 
     def elevator_dock_type(self) -> DockType:
         return self.game.dock_weakness_database.find_type("elevator")
@@ -692,6 +697,7 @@ class EchoesPatchDataFactory(PatchDataFactory):
         )
 
         # Scan hints
+        assert isinstance(self.namer, EchoesHintNamer)
         result["string_patches"] = _create_string_patches(
             self.configuration.hints,
             self.configuration.use_new_patcher,

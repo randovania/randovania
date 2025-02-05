@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 from random import Random
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
-from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.dock_node import DockNode
@@ -204,6 +203,11 @@ class MSRPatchDataFactory(PatchDataFactory):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_SAMUS_RETURNS
 
+    @override
+    @classmethod
+    def hint_namer_type(cls) -> type[MSRHintNamer]:
+        return MSRHintNamer
+
     def _calculate_starting_inventory(self, resources: ResourceCollection) -> dict[str, int]:
         result = {}
         resource_gain = [
@@ -299,16 +303,13 @@ class MSRPatchDataFactory(PatchDataFactory):
         return details
 
     def _encode_hints(self, rng: Random) -> list[dict]:
-        hint_namer = MSRHintNamer(self.description.all_patches, self.players_config)
-        exporter = HintExporter(hint_namer, self.rng, ["A joke hint."])
+        exporter = self.get_hint_exporter(self.description.all_patches, self.players_config, rng, ["A joke hint."])
 
         hints = [
             {
                 "accesspoint_actor": self._teleporter_ref_for(logbook_node),
                 "text": exporter.create_message_for_hint(
                     self.patches.hints[logbook_node.identifier],
-                    self.description.all_patches,
-                    self.players_config,
                     True,
                 ),
             }
@@ -323,7 +324,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             dna_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
-                hint_namer,
+                exporter.namer,
                 hint_config.artifacts == ItemHintMode.HIDE_AREA,
                 artifacts,
                 False,

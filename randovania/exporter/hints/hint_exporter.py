@@ -12,8 +12,6 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.exporter.hints.hint_namer import HintNamer
-    from randovania.game_description.game_patches import GamePatches
-    from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
 class HintExporter:
@@ -35,10 +33,11 @@ class HintExporter:
     def create_message_for_hint(
         self,
         hint: Hint,
-        all_patches: dict[int, GamePatches],
-        players_config: PlayersConfiguration,
         with_color: bool,
     ) -> str:
+        all_patches = self.namer.all_patches
+        players_config = self.namer.players_config
+
         patches = all_patches[players_config.player_index]
 
         if isinstance(hint, JokeHint):

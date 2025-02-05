@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 import randovania
 from randovania.exporter import item_names, pickup_exporter
@@ -619,6 +619,11 @@ class PrimePatchDataFactory(PatchDataFactory):
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME
+
+    @override
+    @classmethod
+    def hint_namer_type(cls) -> type[PrimeHintNamer]:
+        return PrimeHintNamer
 
     def get_default_game_options(self):
         cosmetic_patches = self.cosmetic_patches

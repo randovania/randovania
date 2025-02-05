@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import typing
 from random import Random
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania import monitoring
 from randovania.exporter import item_names
@@ -453,6 +453,11 @@ class AM2RPatchDataFactory(PatchDataFactory):
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.AM2R
+
+    @override
+    @classmethod
+    def hint_namer_type(cls) -> type[AM2RHintNamer]:
+        return AM2RHintNamer
 
     def _credits_spoiler(self) -> str:
         spoiler = "*Major Item Locations;;"

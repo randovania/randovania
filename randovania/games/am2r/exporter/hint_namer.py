@@ -19,6 +19,8 @@ class AM2RColor(Enum):
 
 class AM2RHintNamer(HintNamer[AM2RColor]):
     def __init__(self, all_patches: dict[int, GamePatches], players_config: PlayersConfiguration):
+        super().__init__(all_patches, players_config)
+
         patches = all_patches[players_config.player_index]
         location_hint_template = "{determiner.title}{pickup} can be found in {node}."
 
