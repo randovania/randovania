@@ -829,7 +829,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Eliminate Sidehoppers and get up",
                                                         "items": [
                                                             {
                                                                 "type": "or",
@@ -892,7 +892,7 @@
                                                                                         "data": {
                                                                                             "type": "tricks",
                                                                                             "name": "ShinesparkTrick",
-                                                                                            "amount": 2,
+                                                                                            "amount": 3,
                                                                                             "negate": false
                                                                                         }
                                                                                     }
@@ -922,6 +922,32 @@
                                                             {
                                                                 "type": "template",
                                                                 "data": "Can Freeze Enemies With Any Weapon"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Kill enemies with shinespark and then get up. Respark at the right for a while to lure the sidehoppers to jump to the right.",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpeedBooster",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -1256,6 +1282,15 @@
                                                         "type": "damage",
                                                         "name": "NormalDamage",
                                                         "amount": 80,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageBoosts",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -2113,6 +2148,27 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Deal with Sidehopper",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -2177,8 +2233,25 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Kill Tough Beam-Resistant Enemy"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Deal with Sidehopper",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -2703,7 +2776,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "WallJump",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }
@@ -5831,6 +5904,15 @@
                                                                                                 }
                                                                                             ]
                                                                                         }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "ScrewAttack",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
                                                                                     }
                                                                                 ]
                                                                             }
@@ -6536,12 +6618,12 @@
                         "Event - B.O.X.": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: xbox kills box",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Weapon Requirements",
+                                            "comment": "B.O.X Weapon Requirements (300HP)",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -6941,7 +7023,7 @@
                         "Event - Wide Core-X": {
                             "type": "and",
                             "data": {
-                                "comment": "Core-X Requirements",
+                                "comment": "Core-X Requirements (160 HP)",
                                 "items": [
                                     {
                                         "type": "and",
@@ -7493,6 +7575,15 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "L0Locks",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -7708,6 +7799,36 @@
                                                             }
                                                         ]
                                                     }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Stay on the right side to slowly lure sidehoppers to you",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "VariaSuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
                                                 }
                                             ]
                                         }
@@ -7943,6 +8064,15 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Can Break Single Bomb Blocks"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "L0Locks",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -8158,6 +8288,36 @@
                                                             }
                                                         ]
                                                     }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Stay on the left side to slowly lure Sidehoppers to you",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "VariaSuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
                                                 }
                                             ]
                                         }
@@ -8435,6 +8595,24 @@
                                                                     "amount": 3,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "DoorLockRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "L0Locks",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -8642,7 +8820,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "SWJ up",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -8763,6 +8941,10 @@
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Kill Tough Beam-Resistant Enemy"
                                                             }
                                                         ]
                                                     }
@@ -9495,12 +9677,29 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "or",
                                                                             "data": {
-                                                                                "type": "items",
-                                                                                "name": "WideBeam",
-                                                                                "amount": 1,
-                                                                                "negate": false
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "WaveBeam",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "WideBeam",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         },
                                                                         {
@@ -9553,12 +9752,29 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "resource",
+                                                                                        "type": "and",
                                                                                         "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "PlasmaBeam",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
+                                                                                            "comment": "Very precise and needs lots of luck",
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "PlasmaBeam",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Combat",
+                                                                                                        "amount": 4,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -10380,7 +10596,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get up with Bombs",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -10425,7 +10641,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get up with Screw",
                                             "items": [
                                                 {
                                                     "type": "resource",
