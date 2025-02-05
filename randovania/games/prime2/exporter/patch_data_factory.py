@@ -697,6 +697,7 @@ class EchoesPatchDataFactory(PatchDataFactory):
         )
 
         # Scan hints
+        assert isinstance(self.namer, EchoesHintNamer)
         result["string_patches"] = _create_string_patches(
             self.configuration.hints,
             self.configuration.use_new_patcher,
