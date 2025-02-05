@@ -126,6 +126,21 @@ This means you need Boost Ball to fight Spider Guardian.""",
             "Why can't I use the Kinetic Orb Cannon in Sanctuary Entrance?",
             "The morph cannon will only be active once the scan post has been scanned and the room has been reloaded.",
         ),
+        (
+            "How do I use the light beam transports?",
+            """To use a light beam transport, simply enter the light beams/holograms with Light Suit. The following rooms behave differently and do not require Light Suit, and may have additional requirements in order to use the transports:
+
+#### Energy Controllers
+The light beam transports that are unlocked upon returning the Sanctuary Energy and going back to Main Energy Controller.
+
+#### Sky Temple Gateway (Sky Temple Grounds)
+
+The light beam transport unlocked when returning all the Sky Temple Keys.
+
+#### Sky Temple Energy Controller (Sky Temple)
+
+Taking the transport hologram at the center of this room.""",
+        ),
     ],
     web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=[

@@ -23,11 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Mining Facility Alpha Nest Access now has a Spider Ball method of crossing the room from either side.
 - Added: Mining Facility Gamma Nest Access now has a Spider Ball method of crossing the room from either side.
 
-##### Area 5 Tower Exterior
-
-- Added: Tower Exterior Spider Ball Clip added to traverse from Next to Teleporter to Pickup (Super Missile Tank Bottom).
-
 ### Metroid Dread
+
+- Added: There is now a preset option for each region that will remove all of its light sources when enabled, making the game very dark.
 
 #### Logic Database
 
@@ -36,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Artaria
 
+- Added: In White EMMI Introduction: Climb from  Door to Teleport to Dairon (Lower) to Door to Teleport to Dairon (Thermal) by grapple-jumping on the falling magnet platform.
 - Added: It is now logical to blow up the Proto EMMI blob in Melee tutorial from the right, with Wave Beam, Diffusion beam or a Pseudo Wave Beam (Intermediate) using Morph Ball, Wide Beam and Charge Beam.
 - Changed: The logic surrounding the Single Use Slide in EMMI Zone Dome now makes it so that the event nodes remain logically accessible after collecting the event.
 - Changed: It is now logical to go back to the event node for blowing up the Proto EMMI Blob from the right.
@@ -57,9 +56,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Double Damage is now classified as a Beam instead of a Suit.
 - Fixed: Typo in the Differences tab.
+- Added: FAQ entry for light beam transport requirements.
 
 ### Metroid: Samus Returns
 
+- **Major** - Added: Split beams and suits. When playing with non-progressive beams or suits, each individual upgrade provides a unique effect instead of providing the effects of all previous upgrades. For suits, protection against lava requires having both suits, whereas Gravity on its own just provides reduced damage and free movement.
 - Changed: The hinted item after collecting the last required DNA is now dependent on the final boss. The Baby Metroid is hinted for Proteus Ridley, the Ice Beam for Metroid Queen and the Bomb for Diggernaut.
 - Fixed: Prevented the block with a hidden item in Area 4 Central Caves - Transit Tunnel from being destroyed from another area, causing the item disappear.
 - Fixed: Incorrect rotation of a progressive item if the previous stage of the progressive item was received without leaving the area.
@@ -70,6 +71,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Area 4 Central Caverns
 
 - Added: Transport to Area 3 and Crystal Mines: A beginner Spider Ball Clip to reach the elevator to Crystal Mines from the bottom Chozo Seal with Space Jump.
+
+##### Area 5 Tower Exterior
+
+- Added: Tower Exterior Spider Ball Clip added to traverse from Next to Teleporter to Pickup (Super Missile Tank Bottom).
 
 ## [8.8.0] - 2025-01-02
 

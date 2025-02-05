@@ -486,6 +486,18 @@ class DreadPatchDataFactory(PatchDataFactory):
             }
         ]
 
+    def _light_patches(self):
+        config = self.configuration.disabled_lights.as_json
+        patches = []
+
+        for region_name, is_disabled in config.items():
+            if is_disabled:
+                scenario_id = self.game.region_list.region_with_name(region_name.capitalize()).extra["scenario_id"]
+
+                patches.append({"scenario": scenario_id, "actor_layer": "rLightsLayer", "method": "all"})
+
+        return patches
+
     def create_memo_data(self) -> dict:
         """Used to generate pickup collection messages."""
         tank = self.configuration.energy_per_tank
@@ -564,6 +576,9 @@ class DreadPatchDataFactory(PatchDataFactory):
             "tile_group_patches": self._tilegroup_patches(),
             "new_spawn_points": list(self.new_spawn_points.values()),
             "objective": self._objective_patches(),
+            "mass_delete_actors": {
+                "to_remove": self._light_patches(),
+            },
             "layout_uuid": str(self.players_config.get_own_uuid()),
         }
 

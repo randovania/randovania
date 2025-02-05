@@ -12,8 +12,6 @@ use_templates_over_items = {
     "Spider": "Use Spider Ball",
     "Bomb": "Lay Bomb or Lay Any Bomb",
     "PBAmmo": "Lay Power Bomb or Lay Any Bomb",
-    "Wave": "Shoot Wave Beam",
-    "Spazer": "Shoot Spazer Beam",
 }
 
 # short name resource -> Tuple(short name resources)

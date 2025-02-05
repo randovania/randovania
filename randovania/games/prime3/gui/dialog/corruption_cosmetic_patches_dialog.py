@@ -15,13 +15,17 @@ if TYPE_CHECKING:
 
     from PySide6 import QtWidgets
 
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+
 
 class CorruptionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CorruptionCosmeticPatchesDialog):
     _cosmetic_patches: CorruptionCosmeticPatches
 
-    def __init__(self, parent: QtWidgets.QWidget | None, current: CorruptionCosmeticPatches):
-        super().__init__(parent)
+    def __init__(self, parent: QtWidgets.QWidget | None, current: BaseCosmeticPatches):
+        super().__init__(parent, current)
         self.setupUi(self)
+
+        assert isinstance(current, CorruptionCosmeticPatches)
         self._cosmetic_patches = current
 
         for player_suit in CorruptionSuit:

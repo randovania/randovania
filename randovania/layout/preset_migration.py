@@ -1084,8 +1084,24 @@ def _migrate_v95(preset: dict, game: RandovaniaGame) -> None:
         hints.pop("baby_metroid")
 
 
-def _migrate_v96(preset: dict) -> dict:
-    if preset["game"] == "prime3":
+def _migrate_v96(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_DREAD:
+        preset["configuration"]["disabled_lights"] = {
+            "artaria": False,
+            "burenia": False,
+            "cataris": False,
+            "dairon": False,
+            "elun": False,
+            "ferenia": False,
+            "ghavoran": False,
+            "hanubia": False,
+            "itorash": False,
+        }
+    return preset
+
+
+def _migrate_v97(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME_CORRUPTION:
         preset["configuration"]["teleporters"] = {
             "mode": "vanilla",
             "excluded_teleporters": [],
@@ -1192,7 +1208,8 @@ _MIGRATIONS = [
     _migrate_v93,  # update default dock_rando in Prime 1 to use RP Blast Shield Change
     _migrate_v94,
     _migrate_v95,  # msr rename baby_metroid hint to final_boss_item hint
-    _migrate_v96,  # prime 3 phaaze skip
+    _migrate_v96,  # dread disable lights per region
+    _migrate_v97,  # prime 3 phaaze skip
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
