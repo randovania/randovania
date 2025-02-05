@@ -1112,6 +1112,12 @@ def _migrate_v97(preset: dict, game: RandovaniaGame) -> None:
     return preset
 
 
+def _migrate_v98(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME_CORRUPTION:
+        preset["configuration"]["MP3Update"] = False
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1210,6 +1216,7 @@ _MIGRATIONS = [
     _migrate_v95,  # msr rename baby_metroid hint to final_boss_item hint
     _migrate_v96,  # dread disable lights per region
     _migrate_v97,  # prime 3 phaaze skip
+    _migrate_v98,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

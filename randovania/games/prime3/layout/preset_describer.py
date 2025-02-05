@@ -34,6 +34,7 @@ class CorruptionPresetDescriber(GamePresetDescriber):
                 ),
                 {
                     "Phaaze skip enabled": configuration.teleporters.skip_final_bosses,
+                    "Uses MP3Update": configuration.MP3Update,
                 },
             ],
         }
