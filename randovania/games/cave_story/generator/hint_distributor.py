@@ -16,6 +16,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
     from randovania.generator.filler.filler_configuration import PlayerPool
     from randovania.generator.filler.player_state import PlayerState
+    from randovania.generator.hint_distributor import HintFeatureGaussianParams
     from randovania.generator.pre_fill_params import PreFillParams
 
 USE_GUARANTEED_HINTS = False
@@ -89,3 +90,8 @@ class CSHintDistributor(HintDistributor):
             return self.add_hints_precision(player_state, patches, rng, player_pools)
         else:
             return self.replace_hints_without_precision_with_jokes(patches)
+
+    @override
+    @classmethod
+    def location_feature_distribution(cls) -> HintFeatureGaussianParams:
+        return 0.75, 0.07
