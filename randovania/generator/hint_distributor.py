@@ -418,6 +418,8 @@ class HintDistributor(ABC):
         if precision is PRECISION_PAIR_UNASSIGNED:
             precision = self.default_precision_pair
 
+        debug.debug_print(f"!! Calculating precision for hint at {hint_node.as_string}")
+
         if precision.location == HintLocationPrecision.FEATURAL:
             location = region_list.node_from_pickup_index(hint.target)
             debug.debug_print(f"> Choosing location feature for {location}")
