@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import math
 from collections import defaultdict
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
@@ -26,6 +26,11 @@ class FusionPatchDataFactory(PatchDataFactory):
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.FUSION
+
+    @override
+    @classmethod
+    def hint_namer_type(cls) -> type[FusionHintNamer]:
+        return FusionHintNamer
 
     def _create_pickup_dict(self, pickup_list: list[ExportedPickupDetails]) -> dict:
         pickup_map_dict = {}

@@ -38,7 +38,7 @@ def create_patches_hints(
 
     hints_for_asset: dict[NodeIdentifier, str] = {}
     for identifier, hint in all_patches[players_config.player_index].hints.items():
-        hints_for_asset[identifier] = exporter.create_message_for_hint(hint, all_patches, players_config, True)
+        hints_for_asset[identifier] = exporter.create_message_for_hint(hint, True)
 
     return [
         create_simple_logbook_hint(

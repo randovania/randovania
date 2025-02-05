@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 from copy import deepcopy
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
-from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.dock_node import DockNode
@@ -105,6 +104,11 @@ class DreadPatchDataFactory(PatchDataFactory):
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_DREAD
+
+    @override
+    @classmethod
+    def hint_namer_type(cls) -> type[DreadHintNamer]:
+        return DreadHintNamer
 
     def _calculate_starting_inventory(self, resources: ResourceCollection):
         result = {}
@@ -259,8 +263,12 @@ class DreadPatchDataFactory(PatchDataFactory):
         return details
 
     def _encode_hints(self) -> list[dict]:
-        namer = DreadHintNamer(self.description.all_patches, self.players_config)
-        exporter = HintExporter(namer, self.rng, ["A joke hint."])
+        exporter = self.get_hint_exporter(
+            self.description.all_patches,
+            self.players_config,
+            self.rng,
+            ["A joke hint."],
+        )
 
         return [
             {
@@ -268,8 +276,6 @@ class DreadPatchDataFactory(PatchDataFactory):
                 "hint_id": hint_node.extra["hint_id"],
                 "text": exporter.create_message_for_hint(
                     self.patches.hints[hint_node.identifier],
-                    self.description.all_patches,
-                    self.players_config,
                     True,
                 ),
             }

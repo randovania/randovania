@@ -1,13 +1,12 @@
 from __future__ import annotations
 
 import collections
-from random import Random
+import random
 from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
 from randovania.game_description.hint import LocationHint
-from randovania.games.cave_story.exporter.patch_data_factory import get_hints
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.layout import filtered_database
 from randovania.lib.container_lib import iterate_key_sorted
@@ -19,7 +18,7 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-class CSHintDetailsTab(GameDetailsTab):
+class HintDetailsTab(GameDetailsTab):
     def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame):
         super().__init__(parent, game)
         self.tree_widget = QtWidgets.QTreeWidget(parent)
@@ -32,7 +31,7 @@ class CSHintDetailsTab(GameDetailsTab):
 
     def update_content(
         self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
-    ) -> None:
+    ):
         self.tree_widget.clear()
         self.tree_widget.setColumnCount(3)
         self.tree_widget.setHeaderLabels(["Hint", "Pickup", "In-Game Text"])
@@ -42,17 +41,22 @@ class CSHintDetailsTab(GameDetailsTab):
         patches = all_patches[players.player_index]
 
         per_region: dict[str, dict[str, tuple[str, str]]] = collections.defaultdict(dict)
+        exporter = game.game.data.patch_data_factory().get_hint_exporter(
+            all_patches,
+            players,
+            random.Random(0),
+            ["A joke hint."],
+        )
 
-        hints = get_hints(all_patches, players, Random())
         for identifier, hint in patches.hints.items():
             node = region_list.node_by_identifier(identifier)
             source_region = region_list.nodes_to_region(node)
             source_name = region_list.node_name(node)
 
-            hint_text = hints[identifier]
-            hint = patches.hints[identifier]
+            hint_text = exporter.create_message_for_hint(hint, False)
+
             if not isinstance(hint, LocationHint):
-                hinted_pickup = "No target for hint"
+                hinted_pickup = ""
             else:
                 target = patches.pickup_assignment.get(hint.target)
                 if target is None:

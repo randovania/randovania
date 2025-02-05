@@ -25,6 +25,7 @@ def _options() -> type[PerGameOptions]:
 
 def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.fusion import gui
+    from randovania.gui.game_details.hint_details_tab import HintDetailsTab
 
     return randovania.game.gui.GameGui(
         game_tab=gui.FusionGameTabWidget,
@@ -32,7 +33,7 @@ def _gui() -> randovania.game.gui.GameGui:
         cosmetic_dialog=gui.FusionCosmeticPatchesDialog,
         export_dialog=gui.FusionGameExportDialog,
         progressive_item_gui_tuples=(),
-        spoiler_visualizer=(gui.FusionHintDetailsTab,),
+        spoiler_visualizer=(HintDetailsTab,),
     )
 
 
