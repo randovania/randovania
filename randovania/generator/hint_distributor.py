@@ -47,7 +47,7 @@ class FeatureChooser[FeatureT: HintFeature, PrecisionT: Enum]:
         self,
         total_elements: int,
         elements_with_feature: Mapping[FeatureT | PrecisionT, Collection[Any]],
-        detailed_precision: PrecisionT,
+        detailed_precision: PrecisionT | None,
     ):
         self.total_elements = total_elements
         self.elements_with_feature = elements_with_feature
@@ -73,7 +73,8 @@ class FeatureChooser[FeatureT: HintFeature, PrecisionT: Enum]:
             if ft_precision < 1.0
             # exclude any features that would only point to a single element
         }
-        feature_precisions[self.detailed_precision] = 1.0
+        if self.detailed_precision is not None:
+            feature_precisions[self.detailed_precision] = 1.0
 
         return feature_precisions
 
@@ -351,6 +352,21 @@ class HintDistributor(ABC):
         """The default PrecisionPair to use for unassigned generic hints."""
         raise NotImplementedError
 
+    @property
+    def use_detailed_item_precision(self) -> bool:
+        """Whether `HintItemPrecision.DETAILED` is a valid feature."""
+        return True
+
+    @property
+    def use_detailed_location_precision(self) -> bool:
+        """Whether `HintLocationPrecision.DETAILED` is a valid feature."""
+        return True
+
+    @property
+    def use_region_location_precision(self) -> bool:
+        """Whether `HintLocationPrecision.REGION_ONLY` is a valid feature."""
+        return True
+
     def get_location_feature_chooser(
         self, patches: GamePatches, location: PickupNode | None = None
     ) -> FeatureChooser[HintFeature, HintLocationPrecision]:
@@ -368,15 +384,17 @@ class HintDistributor(ABC):
         for feature in patches.game.hint_feature_database.values():
             locations_with_feature[feature].extend(region_list.pickup_nodes_with_feature(feature))
 
-        if location is not None:
+        if location is not None and self.use_region_location_precision:
             locations_with_feature[HintLocationPrecision.REGION_ONLY] = [
                 node for node in region_list.nodes_to_region(location).all_nodes if isinstance(node, PickupNode)
             ]
 
+        detailed_precision = HintLocationPrecision.DETAILED if self.use_detailed_location_precision else None
+
         return FeatureChooser[HintFeature, HintLocationPrecision](
             len(relevant_locations),
             locations_with_feature,
-            HintLocationPrecision.DETAILED,
+            detailed_precision,
         )
 
     def get_pickup_feature_chooser(
@@ -394,10 +412,12 @@ class HintDistributor(ABC):
                 for feature in pickup.hint_features:
                     pickups_with_feature[feature].append(pickup)
 
+        detailed_precision = HintItemPrecision.DETAILED if self.use_detailed_item_precision else None
+
         return FeatureChooser[PickupHintFeature, HintItemPrecision](
             len(relevant_pickups),
             pickups_with_feature,
-            HintItemPrecision.DETAILED,
+            detailed_precision,
         )
 
     def get_hint_precision(
@@ -426,9 +446,15 @@ class HintDistributor(ABC):
             mean, std_dev = self.location_feature_distribution()
             loc_chooser = self.get_location_feature_chooser(patches, location)
 
+            additional_loc_precisions = []
+            if self.use_region_location_precision:
+                additional_loc_precisions.append(HintLocationPrecision.REGION_ONLY)
+            if self.use_detailed_location_precision:
+                additional_loc_precisions.append(HintLocationPrecision.DETAILED)
+
             location_feature = loc_chooser.choose_feature(
                 location_features,
-                (HintLocationPrecision.REGION_ONLY, HintLocationPrecision.DETAILED),
+                additional_loc_precisions,
                 rng,
                 mean,
                 std_dev,
@@ -440,11 +466,16 @@ class HintDistributor(ABC):
             item = patches.pickup_assignment[hint.target]
             debug.debug_print(f"> Choosing pickup feature for {item.pickup}")
 
+            additional_item_precisions = []
+            if self.use_detailed_item_precision:
+                additional_item_precisions.append(HintItemPrecision.DETAILED)
+
             mean, std_dev = self.item_feature_distribution()
+
             item_chooser = self.get_pickup_feature_chooser(player_pools)
             item_feature = item_chooser.choose_feature(
                 item.pickup.hint_features,
-                (HintItemPrecision.DETAILED,),
+                additional_item_precisions,
                 rng,
                 mean,
                 std_dev,
