@@ -13,7 +13,7 @@ from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network
 from randovania.network_client.network_client import ConnectionState
 
 if TYPE_CHECKING:
-    from randovania.network_common.multiplayer_session import User
+    from randovania.network_common.user import CurrentUser
 
 
 class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
@@ -45,7 +45,7 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
         # Initial update
         self.on_user_changed(network_client.current_user)
 
-    def on_user_changed(self, user: User):
+    def on_user_changed(self, user: CurrentUser):
         self.activateWindow()
         self.on_server_connection_state_updated(self.network_client.connection_state)
         self.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Reset).setEnabled(user is not None)

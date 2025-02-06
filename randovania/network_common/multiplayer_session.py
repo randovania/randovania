@@ -12,7 +12,9 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.game_connection_status import GameConnectionStatus
+from randovania.network_common.game_details import GameDetails
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
+from randovania.network_common.user import RandovaniaUser, UserID
 
 if TYPE_CHECKING:
     from randovania.network_common.remote_inventory import RemoteInventory
@@ -22,8 +24,6 @@ MAX_SESSION_NAME_LENGTH = 50
 MAX_WORLD_NAME_LENGTH = 30
 
 WORLD_NAME_RE = re.compile(r"^[a-zA-Z0-9 _\-!?()]{1," + str(MAX_WORLD_NAME_LENGTH) + "}$")
-
-UserID = int
 
 
 @dataclasses.dataclass(frozen=True)
@@ -52,9 +52,7 @@ class UserWorldDetail(JsonDataclass):
 
 
 @dataclasses.dataclass(frozen=True)
-class MultiplayerUser(JsonDataclass):
-    id: UserID
-    name: str
+class MultiplayerUser(RandovaniaUser):
     admin: bool
     ready: bool
     worlds: dict[uuid.UUID, UserWorldDetail]
@@ -95,13 +93,6 @@ class MultiplayerSessionAction(JsonDataclass):
 class MultiplayerSessionActions(JsonDataclass):
     session_id: int
     actions: list[MultiplayerSessionAction]  # TODO: use tuple
-
-
-@dataclasses.dataclass(frozen=True)
-class GameDetails(JsonDataclass):
-    seed_hash: str
-    word_hash: str
-    spoiler: bool
 
 
 @dataclasses.dataclass(frozen=True)
@@ -153,26 +144,3 @@ class WorldUserInventory:
     world_id: uuid.UUID
     user_id: UserID
     inventory: RemoteInventory
-
-
-@dataclasses.dataclass(frozen=True)
-class User:
-    id: UserID
-    name: str
-    discord_id: int | None = None
-
-    @classmethod
-    def from_json(cls, data) -> User:
-        return cls(
-            id=data["id"],
-            name=data["name"],
-            discord_id=data.get("discord_id"),
-        )
-
-    @property
-    def as_json(self) -> dict:
-        return {
-            "id": self.id,
-            "name": self.name,
-            "discord_id": self.discord_id,
-        }
