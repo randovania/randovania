@@ -23,8 +23,8 @@ from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import string_lib
 from randovania.lib.container_lib import zip2
 from randovania.network_common.game_connection_status import GameConnectionStatus
+from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import (
-    GameDetails,
     MultiplayerSessionAction,
     MultiplayerSessionActions,
     MultiplayerSessionAuditEntry,
@@ -32,10 +32,10 @@ from randovania.network_common.multiplayer_session import (
     MultiplayerSessionEntry,
     MultiplayerUser,
     MultiplayerWorld,
-    User,
     UserWorldDetail,
 )
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
+from randovania.network_common.user import CurrentUser
 
 if TYPE_CHECKING:
     import pytest_mock
@@ -182,7 +182,7 @@ async def test_on_session_meta_update(
 ) -> None:
     # Setup
     network_client = MagicMock()
-    network_client.current_user = User(id=12, name="Player A")
+    network_client.current_user = CurrentUser(id=12, name="Player A")
     network_client.server_call = AsyncMock()
     game_connection = MagicMock(spec=GameConnection)
     game_connection.executor = AsyncMock()

@@ -33,20 +33,29 @@ from randovania.network_common import (
     remote_inventory,
     signals,
 )
+from randovania.network_common.async_race_room import (
+    AsyncRaceRoomEntry,
+    AsyncRaceRoomListEntry,
+    AsyncRaceRoomUserStatus,
+    AsyncRaceSettings,
+)
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionActions,
     MultiplayerSessionAuditLog,
     MultiplayerSessionEntry,
     MultiplayerSessionListEntry,
     MultiplayerWorldPickups,
-    User,
     WorldUserInventory,
 )
 from randovania.network_common.remote_pickup import RemotePickup
+from randovania.network_common.user import CurrentUser
 from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse
 
 if TYPE_CHECKING:
     from pathlib import Path
+
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+    from randovania.layout.layout_description import LayoutDescription
 
 
 class ConnectionState(Enum):
@@ -118,7 +127,7 @@ emyPxgcYxn/eR44/KJ4EBs+lVDR3veyJm+kXQ99b21/+jh5Xos1AnX5iItreGCc=
 
 class NetworkClient:
     sio: socketio.AsyncClient
-    _current_user: User | None = None
+    _current_user: CurrentUser | None = None
     _connection_state: ConnectionState
     _call_lock: asyncio.Lock
     _connect_lock: asyncio.Lock
@@ -328,7 +337,7 @@ class NetworkClient:
             self._restore_session_task.cancel()
 
     async def on_user_session_updated(self, new_session: dict):
-        self._current_user = User.from_json(new_session["user"])
+        self._current_user = CurrentUser.from_json(new_session["user"])
         self._update_reported_username()
 
         if self.connection_state == ConnectionState.ConnectedNotLogged:
@@ -458,6 +467,56 @@ class NetworkClient:
 
             raise possible_error
 
+    async def create_async_race_room(
+        self, layout: LayoutDescription, settings: AsyncRaceSettings
+    ) -> AsyncRaceRoomListEntry:
+        """
+
+        :param layout:
+        :param settings:
+        :return:
+        """
+        result = await self.server_call(
+            "async_race_create_room",
+            (
+                layout.as_binary(force_spoiler=True),
+                settings.as_json,
+            ),
+        )
+        return AsyncRaceRoomListEntry.from_json(result)
+
+    async def get_async_race_room_list(self, ignore_limit: bool) -> list[AsyncRaceRoomListEntry]:
+        return [
+            AsyncRaceRoomListEntry.from_json(item)
+            for item in await self.server_call("async_race_list_rooms", (None if ignore_limit else 100,))
+        ]
+
+    async def get_async_race_room(self, room_id: int) -> AsyncRaceRoomEntry:
+        """
+        Gets details about the given room id.
+        :param room_id:
+        :return: The room details
+        """
+        return AsyncRaceRoomEntry.from_json(await self.server_call("async_race_get_room", room_id))
+
+    async def async_race_join_and_export(self, room_id: int, cosmetic: BaseCosmeticPatches) -> dict:
+        """
+        Requests to join the given room, along with some patcher data to export the game.
+        :param room_id: The id of the room to join
+        :param cosmetic: Cosmetic Patches to use for creating the patcher data
+        :return: The patcher data necessary for exporting the game
+        """
+        return await self.server_call("async_race_join_and_export", (room_id, cosmetic.as_json))
+
+    async def async_race_change_state(self, room_id: int, status: AsyncRaceRoomUserStatus) -> AsyncRaceRoomEntry:
+        """
+        Requests the server to transition the user's state to the requested one.
+        :param room_id:
+        :param status:
+        :return: Updated room details
+        """
+        return AsyncRaceRoomEntry.from_json(await self.server_call("async_race_change_state", (room_id, status.value)))
+
     async def get_multiplayer_session_list(self, ignore_limit: bool) -> list[MultiplayerSessionListEntry]:
         return [
             MultiplayerSessionListEntry.from_json(item)
@@ -503,7 +562,7 @@ class NetworkClient:
         )
 
     @property
-    def current_user(self) -> User | None:
+    def current_user(self) -> CurrentUser | None:
         return self._current_user
 
     @property

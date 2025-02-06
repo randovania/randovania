@@ -1,5 +1,11 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from randovania.server.multiplayer import session_admin, session_api, web_api, world_api
-from randovania.server.server_app import ServerApp
+
+if TYPE_CHECKING:
+    from randovania.server.server_app import ServerApp
 
 
 def setup_app(sa: ServerApp):
