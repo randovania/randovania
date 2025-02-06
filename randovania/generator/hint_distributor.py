@@ -421,10 +421,10 @@ class HintDistributor(ABC):
         pickups_with_feature: dict[PickupHintFeature | HintItemPrecision, set[PickupEntry]] = defaultdict(set)
         relevant_pickups: set[PickupEntry] = set()
 
-        if specific_owner is not None:
-            pools = [player_pools[specific_owner]]
-        else:
+        if specific_owner is None:
             pools = player_pools
+        else:
+            pools = [player_pools[specific_owner]]
 
         for pool in pools:
             for pickup in pool.pickups_in_world:
