@@ -504,7 +504,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             self.open_game_details(layout)
 
     @asyncSlot()
-    async def _browse_racetime(self):
+    async def _browse_racetime(self) -> None:
         monitoring.metrics.incr(key="gui_browse_racetime_opened")
         from randovania.gui.dialog.racetime_browser_dialog import RacetimeBrowserDialog
 
