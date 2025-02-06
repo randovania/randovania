@@ -22,7 +22,7 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.hint_features import HintDetails, PickupHintFeature
+from randovania.game_description.hint_features import HintDetails, HintFeature
 from randovania.game_description.pickup.pickup_database import PickupDatabase
 from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
 from randovania.game_description.requirements.base import Requirement
@@ -255,22 +255,20 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
 
 def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
     pickup_categories = {
-        "weapon": PickupHintFeature(
+        "weapon": HintFeature(
             name="weapon",
             long_name="Weapon",
             hint_details=HintDetails("a ", "weapon"),
         ),
-        "ammo-based": PickupHintFeature(
+        "ammo-based": HintFeature(
             name="ammo-based",
             long_name="Ammo-Based",
             hint_details=HintDetails("an ", "ammo-based item"),
-            is_broad_category=True,
         ),
-        "key": PickupHintFeature(
+        "key": HintFeature(
             name="key",
             long_name="Key",
             hint_details=HintDetails("a ", "key"),
-            is_broad_category=True,
         ),
     }
     pickup_db = PickupDatabase(

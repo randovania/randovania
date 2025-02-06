@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
     from randovania.game.game_enum import RandovaniaGame
-    from randovania.game_description.hint_features import PickupHintFeature
+    from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
 
 T = TypeVar("T")
@@ -30,7 +30,7 @@ def _check_matching_pickups(actual: Iterable[T], reference: Iterable[T]):
 class StandardPickupConfiguration(BitPackValue):
     game: RandovaniaGame
     pickups_state: dict[StandardPickupDefinition, StandardPickupState]
-    default_pickups: dict[PickupHintFeature, StandardPickupDefinition]
+    default_pickups: dict[HintFeature, StandardPickupDefinition]
     minimum_random_starting_pickups: int
     maximum_random_starting_pickups: int
 
@@ -177,7 +177,7 @@ class StandardPickupConfiguration(BitPackValue):
 
     def replace_default_pickup(
         self,
-        category: PickupHintFeature,
+        category: HintFeature,
         pickup: StandardPickupDefinition,
     ) -> StandardPickupConfiguration:
         """

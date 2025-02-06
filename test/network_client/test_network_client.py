@@ -299,7 +299,7 @@ def test_decode_pickup(
 ):
     data = (
         "h^WxYK%Bzb%2NU&w=%giys9}cw>h&ixhA)=I<_*yXJu|>a%p3j6&;nimC2=yfhEzEw1EwU(UqOO$>p%O5KI8-+"
-        "~(lQ#?s8v%E&;{=*rqK+1Xo}T$)(s1xICWWpZg_AW3v(Z6HHobY*96a(Qem#1jBIw>h{nv9z-^va%2~x-zzaEI<"
+        "~(lQ#?s8v%E&;{=*rq*v$D4`xiqoN3XaO$%H-0<K$7Un+CYZF=*rIC<nq{Ch$aAaZgX&DV`*k-Wn>^}bY*P-u>b"
     )
     expected_pickup = PickupEntry(
         name="The Name",

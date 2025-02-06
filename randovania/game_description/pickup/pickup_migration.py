@@ -194,6 +194,11 @@ def _migrate_v11(pickup_data: dict, game: RandovaniaGame) -> None:
             pickup["probability_multiplier"] = float(mult)
 
 
+def _migrate_v12(pickup_data: dict, game: RandovaniaGame) -> None:
+    for category in pickup_data["pickup_categories"].values():
+        category.pop("is_broad_category", None)
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -206,6 +211,7 @@ _MIGRATIONS = [
     _migrate_v9,  # add generated_pickups
     _migrate_v10,  # move category fields to pickup and add hint_features
     _migrate_v11,  # fix the fact that old migrations don't actually work on old DBs, lol
+    _migrate_v12,  # remove is_broad_category
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

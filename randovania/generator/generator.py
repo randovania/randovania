@@ -12,7 +12,7 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_collection import ResourceCollection
-from randovania.generator import dock_weakness_distributor
+from randovania.generator import dock_weakness_distributor, hint_distributor
 from randovania.generator.filler.filler_configuration import FillerResults, PlayerPool
 from randovania.generator.filler.filler_library import UnableToGenerate, filter_unassigned_pickup_nodes
 from randovania.generator.filler.runner import run_filler
@@ -132,7 +132,7 @@ async def _create_pools_and_fill(
     presets: list[Preset],
     status_update: Callable[[str], None],
     world_names: list[str],
-) -> FillerResults:
+) -> tuple[list[PlayerPool], FillerResults]:
     """
     Runs the rng-dependant parts of the generation, with retries
     :param rng:
@@ -169,7 +169,8 @@ async def _create_pools_and_fill(
                 raise config
             raise
 
-    return await run_filler(rng, player_pools, world_names, status_update)
+    results = await run_filler(rng, player_pools, world_names, status_update)
+    return player_pools, results
 
 
 def _distribute_remaining_items(rng: Random, filler_results: FillerResults, presets: list[Preset]) -> FillerResults:
@@ -271,11 +272,13 @@ async def _create_description(
         retry=tenacity.retry_if_exception_type(UnableToGenerate),
         reraise=True,
     )
-
-    filler_results: FillerResults = await retrying(_create_pools_and_fill, rng, presets, status_update, world_names)
+    pools_results = await retrying(_create_pools_and_fill, rng, presets, status_update, world_names)
+    player_pools: list[PlayerPool] = pools_results[0]
+    filler_results: FillerResults = pools_results[1]
 
     filler_results = _distribute_remaining_items(rng, filler_results, presets)
     filler_results = await dock_weakness_distributor.distribute_post_fill_weaknesses(rng, filler_results, status_update)
+    filler_results = await hint_distributor.distribute_specific_location_hints(rng, filler_results, player_pools)
 
     return LayoutDescription.create_new(
         generator_parameters=generator_params,

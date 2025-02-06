@@ -4,6 +4,7 @@ import dataclasses
 from typing import TYPE_CHECKING, Generic, NamedTuple, TypeVar
 
 from randovania.game_description import default_database
+from randovania.game_description.hint import SpecificHintPrecision
 
 if TYPE_CHECKING:
     from randovania.exporter.hints.hint_formatters import LocationFormatter
@@ -77,6 +78,7 @@ class HintNamer(Generic[ColorT]):
         self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool
     ) -> str:
         """Entry point for formatting a LocationHint"""
+        assert not isinstance(hint.precision.location, SpecificHintPrecision)
         return self.location_formatters[hint.precision.location].format(
             game,
             dataclasses.replace(

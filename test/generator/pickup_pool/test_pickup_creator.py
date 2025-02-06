@@ -5,7 +5,7 @@ import dataclasses
 import pytest
 from frozendict import frozendict
 
-from randovania.game_description.hint_features import HintDetails, PickupHintFeature
+from randovania.game_description.hint_features import HintDetails, HintFeature
 from randovania.game_description.pickup.pickup_definition.ammo_pickup import AmmoPickupDefinition
 from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
 from randovania.game_description.pickup.pickup_entry import (
@@ -22,8 +22,8 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
 @pytest.fixture
-def less_generic_pickup_category() -> PickupHintFeature:
-    return PickupHintFeature(
+def less_generic_pickup_category() -> HintFeature:
+    return HintFeature(
         name="the_category",
         long_name="The Category",
         hint_details=HintDetails("a ", " wonderful item"),

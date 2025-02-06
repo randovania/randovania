@@ -14,7 +14,7 @@ from frozendict import frozendict
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint_features import PickupHintFeature
+from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
@@ -282,8 +282,8 @@ def is_frozen(request: pytest.FixtureRequest, mocker: pytest_mock.MockerFixture)
 
 
 @pytest.fixture
-def generic_pickup_category() -> PickupHintFeature:
-    return PickupHintFeature(
+def generic_pickup_category() -> HintFeature:
+    return HintFeature(
         name="generic",
         long_name="Generic Item Category",
         hint_details=("an ", "unspecified item"),
@@ -291,18 +291,17 @@ def generic_pickup_category() -> PickupHintFeature:
 
 
 @pytest.fixture
-def useless_pickup_category() -> PickupHintFeature:
-    return PickupHintFeature(
+def useless_pickup_category() -> HintFeature:
+    return HintFeature(
         name="useless",
         long_name="Useless",
         hint_details=("", "nothing"),
-        is_broad_category=True,
     )
 
 
 @pytest.fixture
-def ammo_pickup_category() -> PickupHintFeature:
-    return PickupHintFeature(
+def ammo_pickup_category() -> HintFeature:
+    return HintFeature(
         name="expansion",
         long_name="Expansion",
         hint_details=("an ", "expansion"),

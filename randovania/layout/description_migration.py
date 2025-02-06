@@ -549,7 +549,7 @@ def _migrate_hint_precision(data: dict, item_precisions_to_migrate: set[str]) ->
                 continue
 
             precision = hint["precision"]
-            if precision["location"] in location_precision:
+            if precision.get("location") in location_precision:
                 precision["location_feature"] = location_precision[precision.pop("location")]
 
             def migrate_precision(_precision: dict, target: int, old_key: str, new_key: str) -> None:
@@ -582,19 +582,23 @@ def _migrate_hint_precision(data: dict, item_precisions_to_migrate: set[str]) ->
 
                 _precision[new_key] = item_data[_precision.pop(old_key)]
 
-            if precision["item"] in item_precisions_to_migrate:
+            if precision.get("item") in item_precisions_to_migrate:
                 migrate_precision(precision, hint["target"], "item", "item_feature")
 
             if (
                 (relative := precision.get("relative")) is not None
                 and ("area_location" not in relative)
-                and (relative["precision"] in item_precisions_to_migrate)
+                and (relative.get("precision") in item_precisions_to_migrate)
             ):
                 migrate_precision(relative, relative["other_index"], "precision", "precision_feature")
 
 
 def _migrate_v30(data: dict) -> None:
     _migrate_hint_precision(data, {"precise-category", "general-category"})
+
+
+def _migrate_v31(data: dict) -> None:
+    _migrate_hint_precision(data, {"broad-category"})
 
 
 _MIGRATIONS = [
@@ -628,6 +632,7 @@ _MIGRATIONS = [
     _migrate_v28,
     _migrate_v29,  # hint type refactor
     _migrate_v30,  # migrate some HintLocationPrecision and HintItemPrecision to HintFeature
+    _migrate_v31,  # remove HintLocationPrecision.BROAD_CATEGORY
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

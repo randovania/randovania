@@ -14,6 +14,7 @@ from randovania.game_description.hint import (
     LocationHint,
     PrecisionPair,
     RedTempleHint,
+    SpecificHintPrecision,
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
@@ -48,7 +49,7 @@ async def test_add_default_hints_to_patches(echoes_game_description, echoes_game
 
     def _keybearer_hint(number: int):
         return LocationHint(
-            PrecisionPair(precision("specific_hint_keybearer"), HintItemPrecision.BROAD_CATEGORY, include_owner=True),
+            PrecisionPair(precision("specific_hint_keybearer"), SpecificHintPrecision(0.4), include_owner=True),
             PickupIndex(number),
         )
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-from randovania.game_description.hint_features import PickupHintFeature
+from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.pickup import pickup_migration
 from randovania.game_description.pickup.pickup_definition.ammo_pickup import AmmoPickupDefinition
 from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
@@ -14,11 +14,11 @@ if TYPE_CHECKING:
 
 @dataclass(frozen=True)
 class PickupDatabase:
-    pickup_categories: dict[str, PickupHintFeature]
+    pickup_categories: dict[str, HintFeature]
     generated_pickups: dict[str, StandardPickupDefinition]
     standard_pickups: dict[str, StandardPickupDefinition]
     ammo_pickups: dict[str, AmmoPickupDefinition]
-    default_pickups: dict[PickupHintFeature, tuple[StandardPickupDefinition, ...]]
+    default_pickups: dict[HintFeature, tuple[StandardPickupDefinition, ...]]
     default_offworld_model: str
 
     def get_pickup_with_name(self, name: str) -> StandardPickupDefinition | AmmoPickupDefinition:
@@ -34,7 +34,7 @@ def read_database(database_data: dict, game: RandovaniaGame) -> PickupDatabase:
     pickup_migration.migrate_current(database_data, game)
 
     pickup_categories = {
-        name: PickupHintFeature.from_json(category, name=name)
+        name: HintFeature.from_json(category, name=name)
         for name, category in database_data["pickup_categories"].items()
     }
 
