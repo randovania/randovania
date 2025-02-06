@@ -88,7 +88,7 @@ class FeatureChooser[FeatureT: HintFeature, PrecisionT: Enum]:
             return
 
         print(f"> {header}:")
-        for feature, precision in self.feature_precisions().items():
+        for feature, precision in sorted(self.feature_precisions().items(), key=lambda item: item[1]):
             print(f"   {self._debug_precision_text(feature, precision)}")
         print("")
 
