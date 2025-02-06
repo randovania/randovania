@@ -425,7 +425,7 @@ class HintDistributor(ABC):
         relevant_pickups: set[PickupEntry] = set()
 
         for pool in player_pools:
-            for pickup in pool.all_pickups:
+            for pickup in pool.pickups_in_world:
                 relevant_pickups.add(pickup)
                 for feature in pickup.hint_features:
                     pickups_with_feature[feature].add(pickup)
