@@ -176,7 +176,6 @@ def test_create_missile_launcher(
                 categories["missile"],
                 categories["missile_related"],
                 categories["chozo"],
-                categories["weapon"],
             )
         ),
         generator_params=default_generator_params,
@@ -239,7 +238,6 @@ def test_create_seeker_launcher(
                 categories["missile_related"],
                 categories["major"],
                 categories["luminoth"],
-                categories["weapon"],
             )
         ),
         respects_lock=ammo_requires_main_item,
