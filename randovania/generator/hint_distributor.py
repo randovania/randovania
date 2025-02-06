@@ -417,14 +417,14 @@ class HintDistributor(ABC):
     ) -> FeatureChooser[PickupHintFeature, HintItemPrecision]:
         """Create a FeatureChooser for pickup Features"""
 
-        pickups_with_feature: dict[PickupHintFeature | HintItemPrecision, list[PickupEntry]] = defaultdict(list)
-        relevant_pickups: list[PickupEntry] = []
+        pickups_with_feature: dict[PickupHintFeature | HintItemPrecision, set[PickupEntry]] = defaultdict(set)
+        relevant_pickups: set[PickupEntry] = set()
 
         for pool in player_pools:
             for pickup in pool.all_pickups:
-                relevant_pickups.append(pickup)
+                relevant_pickups.add(pickup)
                 for feature in pickup.hint_features:
-                    pickups_with_feature[feature].append(pickup)
+                    pickups_with_feature[feature].add(pickup)
 
         detailed_precision = HintItemPrecision.DETAILED if self.use_detailed_item_precision else None
 
