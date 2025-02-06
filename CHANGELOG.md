@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed: Relative hints will no longer be placed.
 - Changed: Legacy multiworld sessions where an Echoes hint points to a Cave Story item may have very slightly altered wording.
 - Changed: A legacy relative hint pointing to a Nothing will now always refer to it by name.
+- Changed: Keybearer hints may refer to pickups using different categories than before.
 
 ### Metroid: Samus Returns
 

@@ -1,5 +1,5 @@
 {
-    "schema_version": 11,
+    "schema_version": 13,
     "pickup_categories": {
         "visor": {
             "long_name": "Visors",
@@ -34,8 +34,7 @@
             "hint_details": [
                 "a ",
                 "movement system"
-            ],
-            "is_broad_category": true
+            ]
         },
         "missile": {
             "long_name": "Missile",
@@ -71,7 +70,7 @@
                 "a ",
                 "missile-related upgrade"
             ],
-            "is_broad_category": true
+            "hidden": true
         },
         "morph_ball_related": {
             "long_name": "Morph Ball Related",
@@ -79,7 +78,7 @@
                 "a ",
                 "morph ball-related upgrade"
             ],
-            "is_broad_category": true
+            "hidden": true
         },
         "beam_related": {
             "long_name": "Beam Related",
@@ -87,7 +86,7 @@
                 "a ",
                 "beam-related upgrade"
             ],
-            "is_broad_category": true
+            "hidden": true
         },
         "life_support": {
             "long_name": "Life Support",
@@ -95,7 +94,7 @@
                 "a ",
                 "life support system"
             ],
-            "is_broad_category": true
+            "hidden": true
         },
         "hud": {
             "long_name": "HUD System",
@@ -103,7 +102,7 @@
                 "a ",
                 "HUD system"
             ],
-            "is_broad_category": true
+            "hidden": true
         },
         "temple_key": {
             "long_name": "Dark Temple Key",
@@ -124,22 +123,23 @@
             "hint_details": [
                 "a ",
                 "major item"
-            ]
+            ],
+            "hidden": true
         },
         "expansion": {
             "long_name": "Expansion",
             "hint_details": [
                 "an ",
                 "expansion"
-            ]
+            ],
+            "hidden": true
         },
         "key": {
             "long_name": "Key",
             "hint_details": [
                 "a ",
                 "key"
-            ],
-            "is_broad_category": true
+            ]
         },
         "chozo": {
             "long_name": "Chozo Technology",
@@ -169,11 +169,11 @@
                 "dark-aligned upgrade"
             ]
         },
-        "weapon": {
-            "long_name": "Weapons System",
+        "cheat": {
+            "long_name": "Cheating",
             "hint_details": [
                 "a ",
-                "weapons system"
+                "cheater's delight"
             ]
         }
     },
@@ -255,10 +255,10 @@
         "Combat Visor": {
             "gui_category": "visor",
             "hint_features": [
+                "chozo",
                 "hud",
                 "major",
-                "visor",
-                "chozo"
+                "visor"
             ],
             "model_name": "ScanVisor INCOMPLETE",
             "offworld_models": {
@@ -277,10 +277,10 @@
         "Scan Visor": {
             "gui_category": "visor",
             "hint_features": [
+                "chozo",
                 "hud",
                 "major",
-                "visor",
-                "chozo"
+                "visor"
             ],
             "model_name": "ScanVisor INCOMPLETE",
             "offworld_models": {
@@ -299,11 +299,11 @@
         "Dark Visor": {
             "gui_category": "visor",
             "hint_features": [
+                "dark",
                 "hud",
-                "major",
-                "visor",
                 "luminoth",
-                "dark"
+                "major",
+                "visor"
             ],
             "model_name": "DarkVisor",
             "offworld_models": {
@@ -325,9 +325,9 @@
             "gui_category": "visor",
             "hint_features": [
                 "hud",
+                "luminoth",
                 "major",
-                "visor",
-                "luminoth"
+                "visor"
             ],
             "model_name": "EchoVisor",
             "offworld_models": {
@@ -348,10 +348,10 @@
         "Varia Suit": {
             "gui_category": "suit",
             "hint_features": [
+                "chozo",
                 "life_support",
                 "major",
-                "suit",
-                "chozo"
+                "suit"
             ],
             "model_name": "VariaSuit INCOMPLETE",
             "offworld_models": {
@@ -374,11 +374,11 @@
         "Dark Suit": {
             "gui_category": "suit",
             "hint_features": [
+                "dark",
                 "life_support",
-                "major",
-                "suit",
                 "luminoth",
-                "dark"
+                "major",
+                "suit"
             ],
             "model_name": "DarkSuit",
             "offworld_models": {
@@ -403,10 +403,10 @@
             "gui_category": "suit",
             "hint_features": [
                 "life_support",
-                "major",
-                "suit",
+                "light",
                 "luminoth",
-                "light"
+                "major",
+                "suit"
             ],
             "model_name": "LightSuit",
             "offworld_models": {
@@ -432,9 +432,9 @@
             "gui_category": "suit",
             "hint_features": [
                 "life_support",
+                "luminoth",
                 "major",
-                "suit",
-                "luminoth"
+                "suit"
             ],
             "model_name": "VariaSuit INCOMPLETE",
             "offworld_models": {
@@ -462,9 +462,8 @@
             "hint_features": [
                 "beam",
                 "beam_related",
-                "major",
                 "chozo",
-                "weapon"
+                "major"
             ],
             "model_name": "CoinChest",
             "offworld_models": {
@@ -487,9 +486,8 @@
             "hint_features": [
                 "beam",
                 "beam_related",
-                "major",
                 "chozo",
-                "weapon"
+                "major"
             ],
             "model_name": "ChargeBeam INCOMPLETE",
             "offworld_models": {
@@ -512,10 +510,9 @@
             "hint_features": [
                 "beam",
                 "beam_related",
-                "major",
+                "dark",
                 "luminoth",
-                "weapon",
-                "dark"
+                "major"
             ],
             "model_name": "DarkBeam",
             "offworld_models": {
@@ -542,10 +539,9 @@
             "hint_features": [
                 "beam",
                 "beam_related",
-                "major",
+                "light",
                 "luminoth",
-                "weapon",
-                "light"
+                "major"
             ],
             "model_name": "LightBeam",
             "offworld_models": {
@@ -572,11 +568,10 @@
             "hint_features": [
                 "beam",
                 "beam_related",
-                "major",
-                "luminoth",
-                "weapon",
+                "dark",
                 "light",
-                "dark"
+                "luminoth",
+                "major"
             ],
             "model_name": "AnnihilatorBeam",
             "offworld_models": {
@@ -602,11 +597,7 @@
         "Double Damage": {
             "gui_category": "beam",
             "hint_features": [
-                "beam",
-                "beam_related",
-                "missile_related",
-                "major",
-                "weapon"
+                "cheat"
             ],
             "model_name": "UnlimitedBeamAmmo",
             "offworld_models": {},
@@ -623,10 +614,7 @@
         "Unlimited Beam Ammo": {
             "gui_category": "beam",
             "hint_features": [
-                "beam",
-                "beam_related",
-                "major",
-                "weapon"
+                "cheat"
             ],
             "model_name": "UnlimitedBeamAmmo",
             "offworld_models": {},
@@ -643,10 +631,10 @@
         "Morph Ball": {
             "gui_category": "morph_ball",
             "hint_features": [
+                "chozo",
                 "major",
                 "morph_ball",
-                "morph_ball_related",
-                "chozo"
+                "morph_ball_related"
             ],
             "model_name": "CoinChest",
             "offworld_models": {
@@ -668,11 +656,10 @@
         "Morph Ball Bomb": {
             "gui_category": "morph_ball",
             "hint_features": [
+                "chozo",
                 "major",
                 "morph_ball",
-                "morph_ball_related",
-                "chozo",
-                "weapon"
+                "morph_ball_related"
             ],
             "model_name": "MorphBallBomb",
             "offworld_models": {
@@ -696,10 +683,10 @@
         "Boost Ball": {
             "gui_category": "morph_ball",
             "hint_features": [
+                "chozo",
                 "major",
                 "morph_ball",
-                "morph_ball_related",
-                "chozo"
+                "morph_ball_related"
             ],
             "model_name": "BoostBall",
             "offworld_models": {
@@ -723,10 +710,10 @@
         "Spider Ball": {
             "gui_category": "morph_ball",
             "hint_features": [
+                "chozo",
                 "major",
                 "morph_ball",
-                "morph_ball_related",
-                "chozo"
+                "morph_ball_related"
             ],
             "model_name": "SpiderBall",
             "offworld_models": {
@@ -750,11 +737,10 @@
         "Power Bomb": {
             "gui_category": "morph_ball",
             "hint_features": [
+                "chozo",
                 "major",
                 "morph_ball",
-                "morph_ball_related",
-                "chozo",
-                "weapon"
+                "morph_ball_related"
             ],
             "model_name": "PowerBomb",
             "offworld_models": {
@@ -782,11 +768,8 @@
         "Cannon Ball": {
             "gui_category": "morph_ball",
             "hint_features": [
-                "major",
-                "morph_ball",
-                "morph_ball_related",
-                "luminoth",
-                "weapon"
+                "cheat",
+                "morph_ball"
             ],
             "model_name": "BoostBall",
             "offworld_models": {
@@ -808,9 +791,9 @@
         "Space Jump Boots": {
             "gui_category": "movement",
             "hint_features": [
+                "chozo",
                 "major",
-                "movement",
-                "chozo"
+                "movement"
             ],
             "model_name": "SpaceJumpBoots",
             "offworld_models": {
@@ -834,9 +817,9 @@
         "Gravity Boost": {
             "gui_category": "movement",
             "hint_features": [
+                "luminoth",
                 "major",
-                "movement",
-                "luminoth"
+                "movement"
             ],
             "model_name": "GravityBoost",
             "offworld_models": {
@@ -859,9 +842,9 @@
         "Grapple Beam": {
             "gui_category": "movement",
             "hint_features": [
+                "chozo",
                 "major",
-                "movement",
-                "chozo"
+                "movement"
             ],
             "model_name": "GrappleBeam",
             "offworld_models": {
@@ -885,10 +868,9 @@
         "Screw Attack": {
             "gui_category": "movement",
             "hint_features": [
-                "major",
-                "movement",
                 "chozo",
-                "weapon"
+                "major",
+                "movement"
             ],
             "model_name": "ScrewAttack",
             "offworld_models": {
@@ -911,9 +893,9 @@
         "Progressive Grapple": {
             "gui_category": "movement",
             "hint_features": [
+                "chozo",
                 "major",
-                "movement",
-                "chozo"
+                "movement"
             ],
             "model_name": "GrappleBeam",
             "offworld_models": {
@@ -940,11 +922,10 @@
         "Missile Launcher": {
             "gui_category": "missile",
             "hint_features": [
+                "chozo",
                 "major",
                 "missile",
-                "missile_related",
-                "chozo",
-                "weapon"
+                "missile_related"
             ],
             "model_name": "MissileLauncher",
             "offworld_models": {
@@ -972,11 +953,10 @@
         "Seeker Launcher": {
             "gui_category": "missile",
             "hint_features": [
+                "luminoth",
                 "major",
                 "missile",
-                "missile_related",
-                "luminoth",
-                "weapon"
+                "missile_related"
             ],
             "model_name": "SeekerLauncher",
             "offworld_models": {
@@ -1002,10 +982,7 @@
         "Unlimited Missiles": {
             "gui_category": "missile",
             "hint_features": [
-                "major",
-                "missile",
-                "missile_related",
-                "weapon"
+                "cheat"
             ],
             "model_name": "UnlimitedMissiles",
             "offworld_models": {},
@@ -1024,9 +1001,9 @@
             "hint_features": [
                 "beam_related",
                 "charge_combo",
-                "major",
                 "chozo",
-                "weapon"
+                "major",
+                "missile"
             ],
             "model_name": "SuperMissile",
             "offworld_models": {
@@ -1052,10 +1029,10 @@
             "hint_features": [
                 "beam_related",
                 "charge_combo",
-                "major",
+                "light",
                 "luminoth",
-                "weapon",
-                "light"
+                "major",
+                "missile"
             ],
             "model_name": "Sunburst",
             "offworld_models": {
@@ -1078,10 +1055,10 @@
             "hint_features": [
                 "beam_related",
                 "charge_combo",
-                "major",
+                "dark",
                 "luminoth",
-                "weapon",
-                "dark"
+                "major",
+                "missile"
             ],
             "model_name": "Darkburst",
             "offworld_models": {
@@ -1105,11 +1082,11 @@
             "hint_features": [
                 "beam_related",
                 "charge_combo",
-                "major",
-                "luminoth",
-                "weapon",
+                "dark",
                 "light",
-                "dark"
+                "luminoth",
+                "major",
+                "missile"
             ],
             "model_name": "SonicBoom",
             "offworld_models": {
@@ -1132,9 +1109,9 @@
             "gui_category": "translator",
             "hint_features": [
                 "hud",
+                "luminoth",
                 "major",
-                "translator",
-                "luminoth"
+                "translator"
             ],
             "model_name": "VioletTranslator",
             "offworld_models": {
@@ -1156,9 +1133,9 @@
             "gui_category": "translator",
             "hint_features": [
                 "hud",
+                "luminoth",
                 "major",
-                "translator",
-                "luminoth"
+                "translator"
             ],
             "model_name": "AmberTranslator",
             "offworld_models": {
@@ -1180,9 +1157,9 @@
             "gui_category": "translator",
             "hint_features": [
                 "hud",
+                "luminoth",
                 "major",
-                "translator",
-                "luminoth"
+                "translator"
             ],
             "model_name": "EmeraldTranslator",
             "offworld_models": {
@@ -1204,9 +1181,9 @@
             "gui_category": "translator",
             "hint_features": [
                 "hud",
+                "luminoth",
                 "major",
-                "translator",
-                "luminoth"
+                "translator"
             ],
             "model_name": "CobaltTranslator",
             "offworld_models": {
@@ -1227,10 +1204,9 @@
         "Energy Tank": {
             "gui_category": "energy_tank",
             "hint_features": [
+                "chozo",
                 "energy_tank",
-                "life_support",
-                "major",
-                "chozo"
+                "life_support"
             ],
             "model_name": "EnergyTank",
             "offworld_models": {
@@ -1257,6 +1233,7 @@
         "Missile Expansion": {
             "gui_category": "missile",
             "hint_features": [
+                "chozo",
                 "expansion",
                 "missile_related"
             ],
@@ -1281,6 +1258,7 @@
         "Power Bomb Expansion": {
             "gui_category": "morph_ball",
             "hint_features": [
+                "chozo",
                 "expansion",
                 "morph_ball_related"
             ],
@@ -1306,7 +1284,8 @@
             "gui_category": "beam",
             "hint_features": [
                 "beam_related",
-                "expansion"
+                "expansion",
+                "luminoth"
             ],
             "model_name": "DarkBeamAmmoExpansion",
             "offworld_models": {
@@ -1326,7 +1305,8 @@
             "gui_category": "beam",
             "hint_features": [
                 "beam_related",
-                "expansion"
+                "expansion",
+                "luminoth"
             ],
             "model_name": "LightBeamAmmoExpansion",
             "offworld_models": {
@@ -1346,7 +1326,8 @@
             "gui_category": "beam",
             "hint_features": [
                 "beam_related",
-                "expansion"
+                "expansion",
+                "luminoth"
             ],
             "model_name": "BeamAmmoExpansion",
             "offworld_models": {

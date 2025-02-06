@@ -101,7 +101,6 @@ def test_fill_unassigned_hints_empty_assignment(echoes_game_description, echoes_
 
 
 def test_add_hints_precision(empty_patches, blank_pickup):
-    player_state = MagicMock()
     player_pools = [MagicMock()]
     rng = MagicMock()
     rng.gauss.return_value = 0.0
@@ -116,25 +115,29 @@ def test_add_hints_precision(empty_patches, blank_pickup):
     ]
     pickups = [(PickupIndex(i), blank_pickup) for i in range(1, 4)]
     nc = NodeIdentifier.create
+    identifiers = [
+        nc("Intro", "Hint Room", "Hint no Translator"),
+        nc("Intro", "Hint Room", "Hint with Translator"),
+    ]
 
     initial_patches = empty_patches
-    for i, hint in enumerate(hints):
-        initial_patches = initial_patches.assign_hint(nc("w", "a", f"{i}"), hint)
+    for identifier, hint in zip(identifiers, hints, strict=True):
+        initial_patches = initial_patches.assign_hint(identifier, hint)
 
     initial_patches = initial_patches.assign_own_pickups(pickups)
 
     hint_distributor = EchoesHintDistributor()
 
     # Run
-    result = hint_distributor.add_hints_precision(player_state, initial_patches, rng, player_pools)
+    result = hint_distributor.add_hints_precision(initial_patches, rng, player_pools)
 
     # Assert
     assert result.hints == {
-        nc("w", "a", "0"): LocationHint(
+        nc("Intro", "Hint Room", "Hint no Translator"): LocationHint(
             PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, include_owner=False),
             PickupIndex(1),
         ),
-        nc("w", "a", "1"): LocationHint(
+        nc("Intro", "Hint Room", "Hint with Translator"): LocationHint(
             PrecisionPair(HintLocationPrecision.REGION_ONLY, HintItemPrecision.DETAILED, include_owner=True),
             PickupIndex(2),
         ),

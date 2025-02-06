@@ -37,6 +37,11 @@ async def test_create_patches(
         new_callable=AsyncMock,
         return_value=filler_result,
     )
+    mock_specific_location_hints: AsyncMock = mocker.patch(
+        "randovania.generator.hint_distributor.distribute_specific_location_hints",
+        new_callable=AsyncMock,
+        return_value=filler_result,
+    )
     mock_distribute_remaining_items.return_value = filler_result
 
     generator_parameters = MagicMock()
@@ -67,6 +72,7 @@ async def test_create_patches(
     )
     mock_distribute_remaining_items.assert_called_once_with(rng, filler_result, presets)
     mock_dock_weakness_distributor.assert_called_once_with(rng, filler_result, status_update)
+    mock_specific_location_hints.assert_called_once_with(rng, filler_result, player_pools)
 
     assert result == LayoutDescription.create_new(
         generator_parameters=generator_parameters,

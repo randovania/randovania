@@ -160,11 +160,10 @@ def create_generated_pickup(
     )
 
 
-USELESS_PICKUP_CATEGORY = hint_features.PickupHintFeature(
+USELESS_PICKUP_CATEGORY = hint_features.HintFeature(
     name="useless",
     long_name="Useless",
     hint_details=hint_features.HintDetails("an ", "Energy Transfer Module"),
-    is_broad_category=True,
 )
 
 

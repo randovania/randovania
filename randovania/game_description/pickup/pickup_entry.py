@@ -14,7 +14,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from randovania.game_description.hint_features import PickupHintFeature
+    from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.resources.location_category import LocationCategory
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import (
@@ -74,8 +74,8 @@ class PickupGeneratorParams:
 class PickupEntry:
     name: str
     model: PickupModel
-    gui_category: PickupHintFeature
-    hint_features: frozenset[PickupHintFeature]
+    gui_category: HintFeature
+    hint_features: frozenset[HintFeature]
     progression: tuple[tuple[ItemResourceInfo, int], ...]
     generator_params: PickupGeneratorParams
     extra_resources: ResourceGainTuple = ()

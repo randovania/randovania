@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackFloat
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.hint_features import PickupHintFeature
+from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.pickup.pickup_entry import (
     PickupEntry,
     PickupGeneratorParams,
@@ -82,20 +82,18 @@ class DatabaseBitPackHelper:
 
 
 # Item categories encoding & decoding
-def _encode_pickup_category(category: PickupHintFeature):
-    yield from bitpacking.encode_string(category.name)
-    yield from bitpacking.encode_string(category.long_name)
-    yield from bitpacking.encode_string(category.hint_details[0])
-    yield from bitpacking.encode_string(category.hint_details[1])
-    yield from bitpacking.encode_bool(category.is_broad_category)
+def _encode_hint_feature(feature: HintFeature):
+    yield from bitpacking.encode_string(feature.name)
+    yield from bitpacking.encode_string(feature.long_name)
+    yield from bitpacking.encode_string(feature.hint_details[0])
+    yield from bitpacking.encode_string(feature.hint_details[1])
 
 
-def _decode_pickup_category(decoder: BitPackDecoder) -> PickupHintFeature:
-    return PickupHintFeature(
+def _decode_hint_feature(decoder: BitPackDecoder) -> HintFeature:
+    return HintFeature(
         name=bitpacking.decode_string(decoder),
         long_name=bitpacking.decode_string(decoder),
         hint_details=(bitpacking.decode_string(decoder), bitpacking.decode_string(decoder)),
-        is_broad_category=bitpacking.decode_bool(decoder),
     )
 
 
@@ -114,8 +112,8 @@ class BitPackPickupEntry:
         yield from bitpacking.encode_string(self.value.name)
         yield from self.value.model.game.bit_pack_encode({})
         yield from bitpacking.encode_string(self.value.model.name)
-        yield from _encode_pickup_category(self.value.gui_category)
-        yield from bitpacking.encode_tuple(tuple(sorted(self.value.hint_features)), _encode_pickup_category)
+        yield from _encode_hint_feature(self.value.gui_category)
+        yield from bitpacking.encode_tuple(tuple(sorted(self.value.hint_features)), _encode_hint_feature)
         yield from bitpacking.encode_tuple(self.value.progression, helper.encode_resource_quantity)
         yield from bitpacking.encode_tuple(self.value.extra_resources, helper.encode_resource_quantity)
         yield from bitpacking.encode_bool(self.value.unlocks_resource)
@@ -143,8 +141,8 @@ class BitPackPickupEntry:
             game=RandovaniaGame.bit_pack_unpack(decoder, {}),
             name=bitpacking.decode_string(decoder),
         )
-        pickup_category = _decode_pickup_category(decoder)
-        hint_features = frozenset(bitpacking.decode_tuple(decoder, _decode_pickup_category))
+        pickup_category = _decode_hint_feature(decoder)
+        hint_features = frozenset(bitpacking.decode_tuple(decoder, _decode_hint_feature))
         progression = bitpacking.decode_tuple(decoder, helper.decode_resource_quantity)
         extra_resources = bitpacking.decode_tuple(decoder, helper.decode_resource_quantity)
         unlocks_resource = bitpacking.decode_bool(decoder)

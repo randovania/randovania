@@ -6,7 +6,7 @@ from frozendict import frozendict
 from randovania.bitpacking.json_dataclass import EXCLUDE_DEFAULT, JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.hint_features import PickupHintFeature
+from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.resources.location_category import LocationCategory
 
 
@@ -20,12 +20,12 @@ class BasePickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
     name: str = dataclasses.field(metadata={"init_from_extra": True})
     """The name of the pickup."""
 
-    gui_category: PickupHintFeature = dataclasses.field(metadata={"init_from_extra": True})
+    gui_category: HintFeature = dataclasses.field(metadata={"init_from_extra": True})
     """
     Used in the GUI for visually grouping pickups with the same precise category.
     """
 
-    hint_features: frozenset[PickupHintFeature] = dataclasses.field(metadata={"init_from_extra": True})
+    hint_features: frozenset[HintFeature] = dataclasses.field(metadata={"init_from_extra": True})
     """Defines which features this pickup can be referred to with by hints."""
 
     model_name: str
@@ -69,7 +69,7 @@ class BasePickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
         cls,
         name: str,
         game: RandovaniaGame,
-        pickup_categories: dict[str, PickupHintFeature],
+        pickup_categories: dict[str, HintFeature],
         value: dict,
     ) -> Self:
         """

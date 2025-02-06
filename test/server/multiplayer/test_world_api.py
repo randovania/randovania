@@ -35,21 +35,21 @@ if TYPE_CHECKING:
             [("Power", 1)],
             (
                 "C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr"
-                "mqu36hR({|%H-0=Fe*DMb1Rce83IeAD`^573!^JLdy~syZXlQe)w#{Vm5rsDrInC@rO}nNKtQno"
+                "mqu384V{&_mC2=!U{rQi=2s?`G6a`KR?-AE7e-cg_a~OZ+(9q{t8<%!D;rBQODiD*OQS1k0RqG"
             ),
         ),
         (  # negative
             [("Missile", -5)],
             (
                 "C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr"
-                "mqu36hR({|%H-0=Fe*DMb1Rce83IeAD`^573!^JLdy~syZXlQe)w#{Vm5rsDrInC@rO}nNR6c=X"
+                "mqu384V{&_mC2=!U{rQi=2s?`G6a`KR?-AE7e-cg_a~OZ+(9q{t8<%!D;rBQODiD*OQS1kQ2GUk"
             ),
         ),
         (  # progressive
             [("DarkSuit", 1), ("LightSuit", 1)],
             (
                 "C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr"
-                "mqu36hR({|%H-0=Fe*DMb1Rce83IeAD`^573!^JLdy~syZXlQe)w#{Vm5rsDrInC@rO}nNhQpv(fB"
+                "mqu384V{&_mC2=!U{rQi=2s?`G6a`KR?-AE7e-cg_a~OZ+(9q{t8<%!D;rBQODiD*OQS1l8xDbD"
             ),
         ),
     ],
@@ -97,7 +97,7 @@ def test_emit_world_pickups_update_one_action(
     # Run
     world_api.emit_world_pickups_update(sa, w1)
 
-    # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason
+    # # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason
     # from randovania.server.multiplayer.world_api import _base64_encode_pickup
     # new_data = _base64_encode_pickup(pickup, echoes_resource_database)
     # assert new_data == b""

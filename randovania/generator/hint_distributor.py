@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import dataclasses
+import functools
 import math
 from abc import ABC, abstractmethod
 from collections import defaultdict
-from collections.abc import Callable, Collection, Mapping, Sequence
+from collections.abc import Callable, Collection, Container, Mapping, Sequence
 from enum import Enum
 from random import Random
 from typing import TYPE_CHECKING, Any, override
@@ -19,9 +20,10 @@ from randovania.game_description.hint import (
     JokeHint,
     LocationHint,
     PrecisionPair,
+    SpecificHintPrecision,
     is_unassigned_location,
 )
-from randovania.game_description.hint_features import HintFeature, PickupHintFeature
+from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.filler.player_state import HintState, PlayerState
@@ -31,7 +33,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.generator.filler.filler_configuration import PlayerPool
+    from randovania.generator.filler.filler_configuration import FillerResults, PlayerPool
     from randovania.generator.pre_fill_params import PreFillParams
 
 HintProvider = Callable[[PlayerState, GamePatches, Random, PickupIndex], LocationHint | None]
@@ -42,18 +44,18 @@ HintFeatureGaussianParams = tuple[float, float]
 """The mean and standard deviation defining a Gaussian distribution."""
 
 
-class FeatureChooser[FeatureT: HintFeature, PrecisionT: Enum]:
+class FeatureChooser[PrecisionT: Enum]:
     def __init__(
         self,
         total_elements: int,
-        elements_with_feature: Mapping[FeatureT | PrecisionT, Collection[Any]],
+        elements_with_feature: Mapping[HintFeature | PrecisionT, Collection[Any]],
         detailed_precision: PrecisionT | None,
     ):
         self.total_elements = total_elements
         self.elements_with_feature = elements_with_feature
         self.detailed_precision = detailed_precision
 
-    def feature_precisions(self) -> dict[FeatureT | PrecisionT, float]:
+    def feature_precisions(self) -> dict[HintFeature | PrecisionT, float]:
         """
         Determine the precision of all provided Features,
         as a percentage from `0.0` to `1.0`.
@@ -70,15 +72,17 @@ class FeatureChooser[FeatureT: HintFeature, PrecisionT: Enum]:
         feature_precisions = {
             feature: ft_precision
             for feature, ft_precision in feature_precisions.items()
-            if ft_precision < 1.0
-            # exclude any features that would only point to a single element
+            if (
+                ft_precision < 1.0  # exclude any features that would only point to a single element
+                and not (isinstance(feature, HintFeature) and feature.hidden)
+            )
         }
         if self.detailed_precision is not None:
             feature_precisions[self.detailed_precision] = 1.0
 
         return feature_precisions
 
-    def _debug_precision_text(self, feature: FeatureT | PrecisionT, precision: float) -> str:
+    def _debug_precision_text(self, feature: HintFeature | PrecisionT, precision: float) -> str:
         """Human readable text for a feature/precision pair"""
         return f"{precision * 100: 7.2f}% {feature}"
 
@@ -94,12 +98,12 @@ class FeatureChooser[FeatureT: HintFeature, PrecisionT: Enum]:
 
     def choose_feature(
         self,
-        element_features: Collection[FeatureT],
+        element_features: Collection[HintFeature],
         additional_precision_features: Collection[PrecisionT],
         rng: Random,
         mean: float,
         std_dev: float,
-    ) -> FeatureT | PrecisionT:
+    ) -> HintFeature | PrecisionT:
         """
         Randomly choose a hint feature from `element_features`, weighted based on their precision.
 
@@ -116,7 +120,7 @@ class FeatureChooser[FeatureT: HintFeature, PrecisionT: Enum]:
         target_precision = min(max(target_precision, 0.0), 1.0)
         debug.debug_print(f"  * Target precision: {target_precision * 100:0.2f}%")
 
-        possible_features: list[FeatureT | PrecisionT] = []
+        possible_features: list[HintFeature | PrecisionT] = []
         possible_features.extend(sorted(feature for feature in element_features if feature in feature_precisions))
         possible_features.extend(additional_precision_features)
         if debug.debug_level() > 0:
@@ -239,15 +243,15 @@ class HintDistributor(ABC):
             rng,
             player_state.hint_state,
         )
-        return await self.assign_precision_to_hints(full_hints_patches, rng, player_pool, player_state, player_pools)
+        return await self.assign_precision_to_hints(full_hints_patches, rng, player_pool, player_pools)
 
     async def assign_precision_to_hints(
         self,
         patches: GamePatches,
         rng: Random,
         player_pool: PlayerPool,
-        player_state: PlayerState,
         player_pools: list[PlayerPool],
+        hint_kinds: Container[HintNodeKind] = {HintNodeKind.GENERIC},
     ) -> GamePatches:
         """
         Ensures no hints present in `patches` has no precision.
@@ -257,7 +261,7 @@ class HintDistributor(ABC):
         :param player_state:
         :return:
         """
-        return self.add_hints_precision(player_state, patches, rng, player_pools)
+        return self.add_hints_precision(patches, rng, player_pools, hint_kinds)
 
     def interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
         """Highest priority pickups are those shown in the credits"""
@@ -380,7 +384,7 @@ class HintDistributor(ABC):
 
     def get_location_feature_chooser(
         self, patches: GamePatches, location: PickupNode | None = None
-    ) -> FeatureChooser[HintFeature, HintLocationPrecision]:
+    ) -> FeatureChooser[HintLocationPrecision]:
         """
         Create a FeatureChooser for location Features.
 
@@ -405,7 +409,7 @@ class HintDistributor(ABC):
 
         detailed_precision = HintLocationPrecision.DETAILED if self.use_detailed_location_precision else None
 
-        return FeatureChooser[HintFeature, HintLocationPrecision](
+        return FeatureChooser[HintLocationPrecision](
             len(relevant_locations),
             locations_with_feature,
             detailed_precision,
@@ -415,10 +419,10 @@ class HintDistributor(ABC):
         self,
         player_pools: Sequence[PlayerPool],
         specific_owner: int | None = None,
-    ) -> FeatureChooser[PickupHintFeature, HintItemPrecision]:
+    ) -> FeatureChooser[HintItemPrecision]:
         """Create a FeatureChooser for pickup Features"""
 
-        pickups_with_feature: dict[PickupHintFeature | HintItemPrecision, set[PickupEntry]] = defaultdict(set)
+        pickups_with_feature: dict[HintFeature | HintItemPrecision, set[PickupEntry]] = defaultdict(set)
         relevant_pickups: set[PickupEntry] = set()
 
         if specific_owner is None:
@@ -434,7 +438,7 @@ class HintDistributor(ABC):
 
         detailed_precision = HintItemPrecision.DETAILED if self.use_detailed_item_precision else None
 
-        return FeatureChooser[PickupHintFeature, HintItemPrecision](
+        return FeatureChooser[HintItemPrecision](
             len(relevant_pickups),
             pickups_with_feature,
             detailed_precision,
@@ -460,6 +464,11 @@ class HintDistributor(ABC):
 
         debug.debug_print(f"!! Calculating precision for hint at {hint_node.as_string}")
 
+        def _get_gauss_params(specific: Any, default: HintFeatureGaussianParams) -> HintFeatureGaussianParams:
+            if isinstance(specific, SpecificHintPrecision):
+                return specific.gauss_params
+            return default
+
         if precision.include_owner is None:
             owner_chance = 1.0 - (1 / len(player_pools))
             if len(player_pools) > 5:
@@ -468,12 +477,13 @@ class HintDistributor(ABC):
             include_owner = rng.random() <= owner_chance
             precision = dataclasses.replace(precision, include_owner=include_owner)
 
-        if precision.location == HintLocationPrecision.FEATURAL:
+        if precision.location == HintLocationPrecision.FEATURAL or isinstance(
+            precision.location, SpecificHintPrecision
+        ):
             location = region_list.node_from_pickup_index(hint.target)
             debug.debug_print(f"> Choosing location feature for {location.identifier.as_string}")
 
             location_features = location.hint_features | region_list.nodes_to_area(location).hint_features
-            mean, std_dev = self.location_feature_distribution()
             loc_chooser = self.get_location_feature_chooser(patches, location)
 
             additional_loc_precisions = []
@@ -481,6 +491,8 @@ class HintDistributor(ABC):
                 additional_loc_precisions.append(HintLocationPrecision.REGION_ONLY)
             if self.use_detailed_location_precision:
                 additional_loc_precisions.append(HintLocationPrecision.DETAILED)
+
+            mean, std_dev = _get_gauss_params(precision.location, self.location_feature_distribution())
 
             location_feature = loc_chooser.choose_feature(
                 location_features,
@@ -492,7 +504,7 @@ class HintDistributor(ABC):
 
             precision = dataclasses.replace(precision, location=location_feature)
 
-        if precision.item == HintItemPrecision.FEATURAL:
+        if precision.item == HintItemPrecision.FEATURAL or isinstance(precision.item, SpecificHintPrecision):
             item = patches.pickup_assignment[hint.target]
             debug.debug_print(f"> Choosing pickup feature for {item.pickup}")
 
@@ -500,7 +512,7 @@ class HintDistributor(ABC):
             if self.use_detailed_item_precision:
                 additional_item_precisions.append(HintItemPrecision.DETAILED)
 
-            mean, std_dev = self.item_feature_distribution()
+            mean, std_dev = _get_gauss_params(precision.item, self.item_feature_distribution())
 
             if precision.include_owner:
                 specific_owner = item.player
@@ -521,21 +533,27 @@ class HintDistributor(ABC):
 
     def add_hints_precision(
         self,
-        player_state: PlayerState,
         patches: GamePatches,
         rng: Random,
         player_pools: Sequence[PlayerPool],
+        hint_kinds: Container[HintNodeKind] = set(HintNodeKind),
     ) -> GamePatches:
         """
-        Adds precision to all hints that are missing one.
+        Adds precision to all assigned `LocationHint`s that are missing one.
         :param player_state:
         :param patches:
         :param rng:
+        :param player_pools:
+        :param hint_kinds: Only replaces hints whose `HintNode`'s kind is in this set.
         :return:
         """
-
+        get_hint_node: Callable[[NodeIdentifier], HintNode] = functools.partial(
+            patches.game.region_list.typed_node_by_identifier, t=HintNode
+        )
         hints_to_replace = {
-            identifier: hint for identifier, hint in patches.hints.items() if is_unassigned_location(hint)
+            identifier: hint
+            for identifier, hint in patches.hints.items()
+            if is_unassigned_location(hint) and get_hint_node(identifier).kind in hint_kinds
         }
 
         unassigned_hints = list(hints_to_replace.items())
@@ -587,7 +605,33 @@ class AllJokesHintDistributor(HintDistributor):
         patches: GamePatches,
         rng: Random,
         player_pool: PlayerPool,
-        player_state: PlayerState,
         player_pools: list[PlayerPool],
+        hint_kinds: Container[HintNodeKind] = {HintNodeKind.GENERIC},
     ) -> GamePatches:
         return self.replace_hints_without_precision_with_jokes(patches)
+
+
+async def distribute_specific_location_hints(
+    rng: Random, filler_results: FillerResults, player_pools: list[PlayerPool]
+) -> FillerResults:
+    """Distribute HintNodeKind.SPECIFIC_PICKUP hints *after* all items have been placed."""
+    old_patches: dict[int, GamePatches] = {
+        player: result.patches for player, result in filler_results.player_results.items()
+    }
+    new_patches: dict[int, GamePatches] = {}
+
+    for player_index, patches in old_patches.items():
+        player_pool = player_pools[player_index]
+
+        hint_distributor = player_pool.game_generator.hint_distributor
+        new_patches[player_index] = await hint_distributor.assign_precision_to_hints(
+            patches, rng, player_pool, player_pools, {HintNodeKind.SPECIFIC_PICKUP}
+        )
+
+    return dataclasses.replace(
+        filler_results,
+        player_results={
+            player: dataclasses.replace(result, patches=new_patches[player])
+            for player, result in filler_results.player_results.items()
+        },
+    )

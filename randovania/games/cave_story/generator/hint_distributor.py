@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING, override
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
+from randovania.game_description.db.hint_node import HintNodeKind
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision, LocationHint, PrecisionPair
@@ -11,11 +12,11 @@ from randovania.games.cave_story.layout.cs_configuration import CSConfiguration,
 from randovania.generator.hint_distributor import HintDistributor, HintTargetPrecision
 
 if TYPE_CHECKING:
+    from collections.abc import Container
     from random import Random
 
     from randovania.game_description.game_patches import GamePatches
     from randovania.generator.filler.filler_configuration import PlayerPool
-    from randovania.generator.filler.player_state import PlayerState
     from randovania.generator.hint_distributor import HintFeatureGaussianParams
     from randovania.generator.pre_fill_params import PreFillParams
 
@@ -87,12 +88,12 @@ class CSHintDistributor(HintDistributor):
         patches: GamePatches,
         rng: Random,
         player_pool: PlayerPool,
-        player_state: PlayerState,
         player_pools: list[PlayerPool],
+        hint_kinds: Container[HintNodeKind] = {HintNodeKind.GENERIC},
     ) -> GamePatches:
         assert isinstance(player_pool.configuration, CSConfiguration)
         if player_pool.configuration.hints.item_hints:
-            return self.add_hints_precision(player_state, patches, rng, player_pools)
+            return await super().assign_precision_to_hints(patches, rng, player_pool, player_pools, hint_kinds)
         else:
             return self.replace_hints_without_precision_with_jokes(patches)
 

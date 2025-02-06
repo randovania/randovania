@@ -27,7 +27,7 @@ from randovania.layout.exceptions import InvalidConfiguration
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.hint_features import PickupHintFeature
+    from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.pickup.pickup_definition.ammo_pickup import AmmoPickupDefinition
     from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
@@ -85,7 +85,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
     _boxes_for_category: dict[
         str, tuple[QtWidgets.QGroupBox, QtWidgets.QGridLayout, dict[StandardPickupDefinition, StandardPickupWidget]]
     ]
-    _default_pickups: dict[PickupHintFeature, QtWidgets.QComboBox]
+    _default_pickups: dict[HintFeature, QtWidgets.QComboBox]
 
     _ammo_item_count_spinboxes: dict[str, list[QtWidgets.QSpinBox]]
     _ammo_pickup_widgets: dict[AmmoPickupDefinition, AmmoPickupWidgets]
@@ -277,7 +277,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
             self._default_pickups[category] = combo
 
-    def _on_default_pickup_updated(self, category: PickupHintFeature, combo: QtWidgets.QComboBox, _):
+    def _on_default_pickup_updated(self, category: HintFeature, combo: QtWidgets.QComboBox, _):
         pickup: StandardPickupDefinition = combo.currentData()
         with self._editor as editor:
             new_config = editor.standard_pickup_configuration

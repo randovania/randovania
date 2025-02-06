@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from randovania.exporter.hints import pickup_hint
 from randovania.exporter.hints.temple_key_hint import create_temple_key_hint
-from randovania.game_description.hint import Hint, JokeHint, LocationHint, RedTempleHint
+from randovania.game_description.hint import Hint, JokeHint, LocationHint, RedTempleHint, SpecificHintPrecision
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.layout import filtered_database
 
@@ -52,6 +52,7 @@ class HintExporter:
         else:
             assert isinstance(hint, LocationHint)
             assert hint.precision.include_owner is not None
+            assert not isinstance(hint.precision.item, SpecificHintPrecision)
 
             configuration = all_patches[players_config.player_index].configuration
 

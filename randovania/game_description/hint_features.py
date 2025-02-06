@@ -27,7 +27,9 @@ class HintFeature(JsonDataclass):
     name: str = dataclasses.field(metadata={"init_from_extra": True})
     long_name: str
     hint_details: HintDetails = dataclasses.field(metadata={"store_named_tuple_without_names": True})
+
     hidden: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
+    """Hidden features aren't displayed in the GUI, and can't be placed by the FeatureChooser."""
 
     def __post_init__(self) -> None:
         assert self.name, "Name must not be empty"
@@ -35,12 +37,3 @@ class HintFeature(JsonDataclass):
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}('{self.name}')"
-
-
-@dataclasses.dataclass(frozen=True, order=True, repr=False)
-class PickupHintFeature(HintFeature):
-    """Specialized HintFeature for PickupEntry, which has additional needs over basic HintFeatures"""
-
-    # TODO: refactor out eventually (migration necessary)
-    is_broad_category: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
-    """Used for Echoes Flying Ing Cache hints"""
