@@ -458,6 +458,11 @@ class HintDistributor(ABC):
 
         debug.debug_print(f"!! Calculating precision for hint at {hint_node.as_string}")
 
+        def _get_gauss_params(specific: Any, default: HintFeatureGaussianParams) -> HintFeatureGaussianParams:
+            if isinstance(specific, SpecificHintPrecision):
+                return specific.gauss_params
+            return default
+
         if precision.location == HintLocationPrecision.FEATURAL or isinstance(
             precision.location, SpecificHintPrecision
         ):
@@ -473,10 +478,7 @@ class HintDistributor(ABC):
             if self.use_detailed_location_precision:
                 additional_loc_precisions.append(HintLocationPrecision.DETAILED)
 
-            if isinstance(precision.location, SpecificHintPrecision):
-                mean, std_dev = precision.location.gauss_params
-            else:
-                mean, std_dev = self.location_feature_distribution()
+            mean, std_dev = _get_gauss_params(precision.location, self.location_feature_distribution())
 
             location_feature = loc_chooser.choose_feature(
                 location_features,
@@ -496,10 +498,7 @@ class HintDistributor(ABC):
             if self.use_detailed_item_precision:
                 additional_item_precisions.append(HintItemPrecision.DETAILED)
 
-            if isinstance(precision.item, SpecificHintPrecision):
-                mean, std_dev = precision.item.gauss_params
-            else:
-                mean, std_dev = self.item_feature_distribution()
+            mean, std_dev = _get_gauss_params(precision.item, self.item_feature_distribution())
 
             item_chooser = self.get_pickup_feature_chooser(player_pools)
             item_feature = item_chooser.choose_feature(
@@ -533,6 +532,8 @@ class HintDistributor(ABC):
         :param player_state:
         :param patches:
         :param rng:
+        :param player_pools:
+        :param hint_kinds: Which `HintNodeKind`s should be replaced?
         :return:
         """
         get_hint_node: Callable[[NodeIdentifier], HintNode] = functools.partial(
