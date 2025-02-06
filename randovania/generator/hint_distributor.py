@@ -395,13 +395,8 @@ class HintDistributor(ABC):
         for feature in patches.game.hint_feature_database.values():
             locations_with_feature[feature].extend(region_list.pickup_nodes_with_feature(feature))
 
-
         area = region_list.nodes_to_area
         if location is not None and self.use_region_location_precision:
-
-
-
-
             locations_with_feature[HintLocationPrecision.REGION_ONLY] = [
                 node
                 for node in region_list.nodes_to_region(location).all_nodes
