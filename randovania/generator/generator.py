@@ -272,9 +272,10 @@ async def _create_description(
         retry=tenacity.retry_if_exception_type(UnableToGenerate),
         reraise=True,
     )
-    pools_results = await retrying(_create_pools_and_fill, rng, presets, status_update, world_names)
-    player_pools: list[PlayerPool] = pools_results[0]
-    filler_results: FillerResults = pools_results[1]
+    pools_results: tuple[list[PlayerPool], FillerResults] = await retrying(
+        _create_pools_and_fill, rng, presets, status_update, world_names
+    )
+    player_pools, filler_results = pools_results
 
     filler_results = _distribute_remaining_items(rng, filler_results, presets)
     filler_results = await dock_weakness_distributor.distribute_post_fill_weaknesses(rng, filler_results, status_update)
