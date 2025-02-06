@@ -108,17 +108,23 @@ class FeatureChooser[FeatureT: HintFeature, PrecisionT: Enum]:
 
         target_precision = rng.gauss(mean, std_dev)
         target_precision = min(max(target_precision, 0.0), 1.0)
-        debug.debug_print(f"  * Target precision: {target_precision}")
+        debug.debug_print(f"  * Target precision: {target_precision * 100:0.2f}%")
 
         possible_features: list[FeatureT | PrecisionT] = []
         possible_features.extend(sorted(feature for feature in element_features if feature in feature_precisions))
         possible_features.extend(additional_precision_features)
-        possible_precisions = {feature: feature_precisions[feature] for feature in possible_features}
-        debug.debug_print(f"  * Possible precisions: {possible_precisions}")
+        if debug.debug_level() > 0:
+            possible_precisions = "\n".join(
+                f"     {feature_precisions[feature] * 100: 7.2f}% {feature}"
+                for feature in sorted(possible_features, key=feature_precisions.get)
+            )
+            print(f"  * Possible precisions:\n{possible_precisions}")
 
         # find feature closest to the chosen precision
         feature = min(possible_features, key=lambda f: abs(feature_precisions[f] - target_precision))
-        debug.debug_print(f"  * Closest precision: {feature} ({feature_precisions[feature] - target_precision})\n")
+        debug.debug_print(
+            f"  * Closest precision: {feature} ({(feature_precisions[feature] - target_precision) * 100:0.2f}%)\n"
+        )
 
         return feature
 
@@ -422,7 +428,7 @@ class HintDistributor(ABC):
 
         if precision.location == HintLocationPrecision.FEATURAL:
             location = region_list.node_from_pickup_index(hint.target)
-            debug.debug_print(f"> Choosing location feature for {location}")
+            debug.debug_print(f"> Choosing location feature for {location.identifier.as_string}")
 
             location_features = location.hint_features | region_list.nodes_to_area(location).hint_features
             mean, std_dev = self.location_feature_distribution()
