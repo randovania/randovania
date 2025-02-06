@@ -539,12 +539,12 @@ class HintDistributor(ABC):
         hint_kinds: Container[HintNodeKind] = set(HintNodeKind),
     ) -> GamePatches:
         """
-        Adds precision to all hints that are missing one.
+        Adds precision to all assigned `LocationHint`s that are missing one.
         :param player_state:
         :param patches:
         :param rng:
         :param player_pools:
-        :param hint_kinds: Which `HintNodeKind`s should be replaced?
+        :param hint_kinds: Only replaces hints whose `HintNode`'s kind is in this set.
         :return:
         """
         get_hint_node: Callable[[NodeIdentifier], HintNode] = functools.partial(
