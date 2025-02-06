@@ -78,14 +78,19 @@ class FeatureChooser[FeatureT: HintFeature, PrecisionT: Enum]:
 
         return feature_precisions
 
+    def _debug_precision_text(self, feature: FeatureT | PrecisionT, precision: float) -> str:
+        """Human readable text for a feature/precision pair"""
+        return f"{precision * 100: 7.2f}% {feature}"
+
     def debug_precisions(self, header: str) -> None:
         """Debug print `feature_precisions()`"""
+        if debug.debug_level() <= 0:
+            return
 
-        debug.debug_print(f"> {header}:")
+        print(f"> {header}:")
         for feature, precision in self.feature_precisions().items():
-            name = feature.name if isinstance(feature, Enum) else feature.long_name
-            debug.debug_print(f" * {name}: {precision}")
-        debug.debug_print("")
+            print(f"   {self._debug_precision_text(feature, precision)}")
+        print("")
 
     def choose_feature(
         self,
@@ -109,17 +114,23 @@ class FeatureChooser[FeatureT: HintFeature, PrecisionT: Enum]:
 
         target_precision = rng.gauss(mean, std_dev)
         target_precision = min(max(target_precision, 0.0), 1.0)
-        debug.debug_print(f"  * Target precision: {target_precision}")
+        debug.debug_print(f"  * Target precision: {target_precision * 100:0.2f}%")
 
         possible_features: list[FeatureT | PrecisionT] = []
         possible_features.extend(sorted(feature for feature in element_features if feature in feature_precisions))
         possible_features.extend(additional_precision_features)
-        possible_precisions = {feature: feature_precisions[feature] for feature in possible_features}
-        debug.debug_print(f"  * Possible precisions: {possible_precisions}")
+        if debug.debug_level() > 0:
+            possible_precisions = "\n".join(
+                f"     {self._debug_precision_text(feature, feature_precisions[feature])}"
+                for feature in sorted(possible_features, key=lambda f: feature_precisions[f])
+            )
+            print(f"  * Possible precisions:\n{possible_precisions}")
 
         # find feature closest to the chosen precision
         feature = min(possible_features, key=lambda f: abs(feature_precisions[f] - target_precision))
-        debug.debug_print(f"  * Closest precision: {feature} ({feature_precisions[feature] - target_precision})\n")
+        debug.debug_print(
+            f"  * Closest precision: {feature} ({(feature_precisions[feature] - target_precision) * 100:0.2f}%)\n"
+        )
 
         return feature
 
@@ -384,9 +395,17 @@ class HintDistributor(ABC):
         for feature in patches.game.hint_feature_database.values():
             locations_with_feature[feature].extend(region_list.pickup_nodes_with_feature(feature))
 
+
+        area = region_list.nodes_to_area
         if location is not None and self.use_region_location_precision:
+
+
+
+
             locations_with_feature[HintLocationPrecision.REGION_ONLY] = [
-                node for node in region_list.nodes_to_region(location).all_nodes if isinstance(node, PickupNode)
+                node
+                for node in region_list.nodes_to_region(location).all_nodes
+                if (isinstance(node, PickupNode) and area(node).in_dark_aether == area(location).in_dark_aether)
             ]
 
         detailed_precision = HintLocationPrecision.DETAILED if self.use_detailed_location_precision else None
@@ -438,9 +457,11 @@ class HintDistributor(ABC):
         if precision is PRECISION_PAIR_UNASSIGNED:
             precision = self.default_precision_pair
 
+        debug.debug_print(f"!! Calculating precision for hint at {hint_node.as_string}")
+
         if precision.location == HintLocationPrecision.FEATURAL:
             location = region_list.node_from_pickup_index(hint.target)
-            debug.debug_print(f"> Choosing location feature for {location}")
+            debug.debug_print(f"> Choosing location feature for {location.identifier.as_string}")
 
             location_features = location.hint_features | region_list.nodes_to_area(location).hint_features
             mean, std_dev = self.location_feature_distribution()

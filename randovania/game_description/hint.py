@@ -106,7 +106,7 @@ class RelativeDataItem(JsonDataclass, RelativeData):
 
 
 @dataclass(frozen=True)
-class RelativeDataArea(JsonDataclass, RelativeData):  # type: ignore[misc]
+class RelativeDataArea(JsonDataclass, RelativeData):
     area_location: AreaIdentifier
     precision: HintRelativeAreaName
 
