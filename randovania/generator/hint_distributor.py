@@ -77,14 +77,19 @@ class FeatureChooser[FeatureT: HintFeature, PrecisionT: Enum]:
 
         return feature_precisions
 
+    def _debug_precision_text(self, feature: FeatureT | PrecisionT, precision: float) -> str:
+        """Human readable text for a feature/precision pair"""
+        return f"{precision * 100: 7.2f}% {feature}"
+
     def debug_precisions(self, header: str) -> None:
         """Debug print `feature_precisions()`"""
+        if debug.debug_level() <= 0:
+            return
 
-        debug.debug_print(f"> {header}:")
+        print(f"> {header}:")
         for feature, precision in self.feature_precisions().items():
-            name = feature.name if isinstance(feature, Enum) else feature.long_name
-            debug.debug_print(f" * {name}: {precision}")
-        debug.debug_print("")
+            print(f"   {self._debug_precision_text(feature, precision)}")
+        print("")
 
     def choose_feature(
         self,
@@ -115,8 +120,8 @@ class FeatureChooser[FeatureT: HintFeature, PrecisionT: Enum]:
         possible_features.extend(additional_precision_features)
         if debug.debug_level() > 0:
             possible_precisions = "\n".join(
-                f"     {feature_precisions[feature] * 100: 7.2f}% {feature}"
-                for feature in sorted(possible_features, key=feature_precisions.get)
+                f"     {self._debug_precision_text(feature, feature_precisions[feature])}"
+                for feature in sorted(possible_features, key=lambda f: feature_precisions[f])
             )
             print(f"  * Possible precisions:\n{possible_precisions}")
 
