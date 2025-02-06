@@ -77,6 +77,11 @@ class CSHintDistributor(HintDistributor):
         return PrecisionPair.featural()
 
     @override
+    @property
+    def use_region_location_precision(self) -> bool:
+        return False
+
+    @override
     async def assign_precision_to_hints(
         self,
         patches: GamePatches,
