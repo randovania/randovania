@@ -418,13 +418,19 @@ class HintDistributor(ABC):
     def get_pickup_feature_chooser(
         self,
         player_pools: Sequence[PlayerPool],
+        specific_owner: int | None = None,
     ) -> FeatureChooser[HintItemPrecision]:
         """Create a FeatureChooser for pickup Features"""
 
         pickups_with_feature: dict[HintFeature | HintItemPrecision, set[PickupEntry]] = defaultdict(set)
         relevant_pickups: set[PickupEntry] = set()
 
-        for pool in player_pools:
+        if specific_owner is None:
+            pools = player_pools
+        else:
+            pools = [player_pools[specific_owner]]
+
+        for pool in pools:
             for pickup in pool.pickups_in_world:
                 relevant_pickups.add(pickup)
                 for feature in pickup.hint_features:
@@ -463,6 +469,14 @@ class HintDistributor(ABC):
                 return specific.gauss_params
             return default
 
+        if precision.include_owner is None:
+            owner_chance = 1.0 - (1 / len(player_pools))
+            if len(player_pools) > 5:
+                owner_chance = 1.0
+
+            include_owner = rng.random() <= owner_chance
+            precision = dataclasses.replace(precision, include_owner=include_owner)
+
         if precision.location == HintLocationPrecision.FEATURAL or isinstance(
             precision.location, SpecificHintPrecision
         ):
@@ -500,7 +514,12 @@ class HintDistributor(ABC):
 
             mean, std_dev = _get_gauss_params(precision.item, self.item_feature_distribution())
 
-            item_chooser = self.get_pickup_feature_chooser(player_pools)
+            if precision.include_owner:
+                specific_owner = item.player
+            else:
+                specific_owner = None
+
+            item_chooser = self.get_pickup_feature_chooser(player_pools, specific_owner)
             item_feature = item_chooser.choose_feature(
                 item.pickup.hint_features,
                 additional_item_precisions,
@@ -509,14 +528,6 @@ class HintDistributor(ABC):
                 std_dev,
             )
             precision = dataclasses.replace(precision, item=item_feature)
-
-        if precision.include_owner is None:
-            owner_chance = 1.0 - (1 / len(player_pools))
-            if len(player_pools) > 5:
-                owner_chance = 1.0
-
-            include_owner = rng.random() <= owner_chance
-            precision = dataclasses.replace(precision, include_owner=include_owner)
 
         return precision
 
