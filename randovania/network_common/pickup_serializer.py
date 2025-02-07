@@ -87,6 +87,8 @@ def _encode_hint_feature(feature: HintFeature):
     yield from bitpacking.encode_string(feature.long_name)
     yield from bitpacking.encode_string(feature.hint_details[0])
     yield from bitpacking.encode_string(feature.hint_details[1])
+    yield from bitpacking.encode_bool(feature.hidden)
+    yield from bitpacking.encode_string(feature.description)
 
 
 def _decode_hint_feature(decoder: BitPackDecoder) -> HintFeature:
@@ -94,6 +96,8 @@ def _decode_hint_feature(decoder: BitPackDecoder) -> HintFeature:
         name=bitpacking.decode_string(decoder),
         long_name=bitpacking.decode_string(decoder),
         hint_details=(bitpacking.decode_string(decoder), bitpacking.decode_string(decoder)),
+        hidden=bitpacking.decode_bool(decoder),
+        description=bitpacking.decode_string(decoder),
     )
 
 

@@ -57,7 +57,7 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
 
         if self.location_hint_features_tab is not None:
             game_description = default_database.game_description_for(game)
-            self.location_hint_features_tab.add_features(game_description)
+            self.location_hint_features_tab.add_features(game_description, self._window_manager)
 
         if self.pickup_hint_features_tab is not None:
             pickup_db = default_database.pickup_database_for_game(game)

@@ -35,21 +35,21 @@ if TYPE_CHECKING:
             [("Power", 1)],
             (
                 "C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr"
-                "mqu384V{&_mC2=!U{rQi=2s?`G6a`KR?-AE7e-cg_a~OZ+(9q{t8<%!D;rBQODiD*OQS1k0RqG"
+                "mqu35FxlB#nOvG!<^@M(Ze?<5V<1U%Wo;lsVRU6@Z*qBTEyNQ5I=4BvGO@I?G_tY~G`cdjfdK-<"
             ),
         ),
         (  # negative
             [("Missile", -5)],
             (
                 "C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr"
-                "mqu384V{&_mC2=!U{rQi=2s?`G6a`KR?-AE7e-cg_a~OZ+(9q{t8<%!D;rBQODiD*OQS1kQ2GUk"
+                "mqu35FxlB#nOvG!<^@M(Ze?<5V<1U%Wo;lsVRU6@Z*qBTEyNQ5I=4BvGO@I?G_tY~G`cdjfl&Gdhy"
             ),
         ),
         (  # progressive
             [("DarkSuit", 1), ("LightSuit", 1)],
             (
                 "C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr"
-                "mqu384V{&_mC2=!U{rQi=2s?`G6a`KR?-AE7e-cg_a~OZ+(9q{t8<%!D;rBQODiD*OQS1l8xDbD"
+                "mqu35FxlB#nOvG!<^@M(Ze?<5V<1U%Wo;lsVRU6@Z*qBTEyNQ5I=4BvGO@I?G_tY~G`cdjf*THjVg"
             ),
         ),
     ],
