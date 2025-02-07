@@ -5,6 +5,7 @@ from PySide6 import QtWidgets
 from qasync import asyncSlot
 
 from randovania.gui import game_specific_gui
+from randovania.gui.dialog.async_race_proof_popup import AsyncRaceProofPopup
 from randovania.gui.generated.async_race_room_window_ui import Ui_AsyncRaceRoomWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
@@ -90,6 +91,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         self.ui.forfeit_button.setText(
             "Forfeit" if room.self_status != AsyncRaceRoomUserStatus.FORFEITED else "Undo Forfeit"
         )
+        self.ui.submit_proof_button.setEnabled(room.self_status == AsyncRaceRoomUserStatus.FINISHED)
 
     async def _status_transition(self, new_status: AsyncRaceRoomUserStatus) -> None:
         """Transitions to the requested status, and updates the UI for it."""
@@ -174,6 +176,16 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
     @asyncSlot()
     async def _on_submit_proof(self) -> None:
         """Called when the `Submit Proof` button is pressed."""
+        dialog = AsyncRaceProofPopup(self)
+        result = await async_dialog.execute_dialog(dialog)
+        if result != QtWidgets.QDialog.DialogCode.Accepted:
+            return
+
+        await self._network_client.async_race_submit_proof(
+            self.room.id,
+            dialog.submission_notes,
+            dialog.proof_url,
+        )
 
     @asyncSlot()
     async def _on_change_options(self) -> None:
