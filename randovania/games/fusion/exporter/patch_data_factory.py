@@ -306,6 +306,20 @@ class FusionPatchDataFactory(PatchDataFactory):
             model_name="Empty",
         )
 
+    def _create_room_names(self) -> list[dict]:
+        names = []
+        for region in self.game.region_list.regions:
+            for area in region.areas:
+                for number in area.extra["room_id"]:
+                    names.append(
+                        {
+                            "Area": region.extra["area_id"],
+                            "Room": number,
+                            "Name": area.name,
+                        }
+                    )
+        return names
+
     def create_visual_nothing(self) -> PickupEntry:
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
         return pickup_creator.create_visual_nothing(self.game_enum(), "Empty")
@@ -327,6 +341,7 @@ class FusionPatchDataFactory(PatchDataFactory):
             "NavStationLocks": self._create_nav_locks(),
             "CreditsText": self._create_credits_text(),
             "DisableDemos": True,
+            "RoomNames": self._create_room_names(),
             "AntiSoftlockRoomEdits": self.configuration.anti_softlock,
             "PowerBombsWithoutBombs": True,
             "SkipDoorTransitions": self.configuration.instant_transitions,
