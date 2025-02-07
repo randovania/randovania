@@ -103,7 +103,9 @@ def change_room_settings(sa: ServerApp, room_id: int, settings_json: JsonObject)
     room.end_datetime = settings.end_date
     room.visibility = settings.visibility
     room.save()
-    return room.create_session_entry(current_user).as_json
+
+    # TODO: Reusing the `room` after we set start_datetime/end_datetime breaks create_session_entry
+    return AsyncRaceRoom.get_by_id(room_id).create_session_entry(current_user).as_json
 
 
 def get_room(sa: ServerApp, room_id: int) -> JsonType:
