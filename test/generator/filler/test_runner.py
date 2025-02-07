@@ -128,6 +128,8 @@ def test_add_hints_precision(empty_patches, blank_pickup):
 
     hint_distributor = EchoesHintDistributor()
 
+    expected_feature = empty_patches.game.hint_feature_database["hint1"]
+
     # Run
     result = hint_distributor.add_hints_precision(initial_patches, rng, player_pools)
 
@@ -138,7 +140,7 @@ def test_add_hints_precision(empty_patches, blank_pickup):
             PickupIndex(1),
         ),
         nc("Intro", "Hint Room", "Hint with Translator"): LocationHint(
-            PrecisionPair(HintLocationPrecision.REGION_ONLY, HintItemPrecision.DETAILED, include_owner=True),
+            PrecisionPair(expected_feature, HintItemPrecision.DETAILED, include_owner=True),
             PickupIndex(2),
         ),
     }
