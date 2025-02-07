@@ -86,6 +86,7 @@ class AsyncRaceRoomEntry(AsyncRaceRoomListEntry):
 
     game_details: GameDetails
     presets_raw: list[bytes]
+    is_admin: bool
     self_status: AsyncRaceRoomUserStatus
     leaderboard: RaceRoomLeaderboard | None
 
