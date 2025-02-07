@@ -338,6 +338,7 @@ ConstructHintFeatureDatabase = ConstructDict(
             long_name=String,
             hint_details=String[2],
             hidden=Default(Flag, False),
+            description=Default(String, ""),
         )
     )
 )

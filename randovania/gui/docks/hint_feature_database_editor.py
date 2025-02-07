@@ -27,6 +27,7 @@ class HintFeatureDatabaseModel(EditableTableModel[HintFeature]):
                 from_qt=lambda v: (True, HintDetails("", v)),
             ),
             BoolFieldDefinition("Hidden?", "hidden"),
+            FieldDefinition[str, str]("Description", "description"),
         ]
 
     @override

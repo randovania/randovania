@@ -31,6 +31,7 @@ class HintFeatureTab(QWidget, Ui_HintFeatureTab):
         super().__init__(parent)
         self.setupUi(self)
         self.description_label.setText(self.description)
+        self.feature_widgets: dict[HintFeature, Foldable] = {}
 
     @property
     def element_type(self) -> str:
@@ -56,22 +57,28 @@ class HintFeatureTab(QWidget, Ui_HintFeatureTab):
 
         title = f'{feature.long_name}: "{feature.hint_details[0]}{feature.hint_details[1]}"'
 
-        self.feature_widget = Foldable(self, title)
-        self.feature_widget.setObjectName(f"feature_box {feature.name}")
-        self.feature_layout = QVBoxLayout()
-        self.feature_layout.setObjectName(f"feature_layout {feature.name}")
-        self.feature_widget.set_content_layout(self.feature_layout)
+        feature_widget = Foldable(self, title)
+        self.feature_widgets[feature] = feature_widget
+
+        feature_widget.setObjectName(f"feature_box {feature.name}")
+        feature_layout = QVBoxLayout()
+        feature_layout.setObjectName(f"feature_layout {feature.name}")
+        feature_widget.set_content_layout(feature_layout)
+
+        if feature.description:
+            feature_description_label = QLabel(feature.description, feature_widget)
+            feature_layout.addWidget(feature_description_label)
 
         for i, element in enumerate(elements_with_feature):
-            element_label = self.create_element_label(element)
+            element_label = self.create_element_label(feature, element)
             element_label.setObjectName(f"feature_label {feature.name} {i}")
-            self.feature_layout.addWidget(element_label)
+            feature_layout.addWidget(element_label)
 
-        self.scroll_area_contents.layout().addWidget(self.feature_widget)
+        self.scroll_area_contents.layout().addWidget(feature_widget)
 
-    def create_element_label(self, element: str) -> QLabel:
+    def create_element_label(self, feature: HintFeature, element: str) -> QLabel:
         """Creates a label to refer to the given element."""
-        return QLabel(element, self.feature_widget)
+        return QLabel(element, self.feature_widgets[feature])
 
     def add_spacer(self) -> None:
         """Adds a vertical spacer to the tab"""
@@ -105,8 +112,8 @@ class LocationHintFeatureTab(HintFeatureTab):
             )
         )
 
-    def create_element_label(self, element: str):
-        element_label = super().create_element_label(element)
+    def create_element_label(self, feature: HintFeature, element: str):
+        element_label = super().create_element_label(feature, element)
         element_label.linkActivated.connect(
             on_click_data_editor_link(
                 self._window_manager,

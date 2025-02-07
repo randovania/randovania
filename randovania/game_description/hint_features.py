@@ -31,6 +31,9 @@ class HintFeature(JsonDataclass):
     hidden: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
     """Hidden features aren't displayed in the GUI, and can't be placed by the FeatureChooser."""
 
+    description: str = dataclasses.field(default="", metadata=EXCLUDE_DEFAULT)
+    """Additional description to display in the GUI in the HintFeatureTab."""
+
     def __post_init__(self) -> None:
         assert self.name, "Name must not be empty"
         assert self.long_name, "Long name must not be empty"
