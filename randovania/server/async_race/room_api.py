@@ -79,6 +79,33 @@ def create_room(sa: ServerApp, layout_bin: bytes, settings_json: JsonObject) -> 
     return new_room.create_session_entry(current_user).as_json
 
 
+def change_room_settings(sa: ServerApp, room_id: int, settings_json: JsonObject) -> JsonObject:
+    """
+    Updates the settings for the given room
+    :param sa:
+    :param room_id:
+    :param settings_json:
+    :return:
+    """
+    current_user = sa.get_current_user()
+    settings = AsyncRaceSettings.from_json(settings_json)
+
+    room = AsyncRaceRoom.get_by_id(room_id)
+
+    if room.creator != current_user:
+        raise error.NotAuthorizedForActionError
+
+    if not (0 < len(settings.name) <= MAX_SESSION_NAME_LENGTH):
+        raise error.InvalidActionError("Invalid session name length")
+
+    room.name = settings.name
+    room.start_datetime = settings.start_date
+    room.end_datetime = settings.end_date
+    room.visibility = settings.visibility
+    room.save()
+    return room.create_session_entry(current_user).as_json
+
+
 def get_room(sa: ServerApp, room_id: int) -> JsonType:
     """
     Gets details about the given room id
@@ -129,7 +156,7 @@ def join_and_export(sa: ServerApp, room_id: int, cosmetic_json: JsonType) -> Jso
 
 def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
     """
-
+    Adjusts the start date, finish date or forfeit flag of the user's entry based on the requested state.
     :param sa:
     :param room_id:
     :param new_state:
@@ -139,7 +166,7 @@ def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
     user = sa.get_current_user()
     entry = database.AsyncRaceEntry.entry_for(room, user)
     if entry is None:
-        raise error.InvalidActionError("User not a member of given room")
+        raise error.NotAuthorizedForActionError
 
     old_state = entry.user_status()
     new_state = AsyncRaceRoomUserStatus(new_state)
@@ -187,7 +214,7 @@ def submit_proof(sa: ServerApp, room_id: int, submission_notes: str, proof_url: 
     user = sa.get_current_user()
     entry = database.AsyncRaceEntry.entry_for(room, user)
     if entry is None:
-        raise error.InvalidActionError("User not a member of given room")
+        raise error.NotAuthorizedForActionError
 
     if entry.user_status() != AsyncRaceRoomUserStatus.FINISHED:
         raise error.InvalidActionError("Only possible to submit proof after finishing")
@@ -200,6 +227,7 @@ def submit_proof(sa: ServerApp, room_id: int, submission_notes: str, proof_url: 
 def setup_app(sa: ServerApp) -> None:
     sa.on("async_race_list_rooms", list_rooms, with_header_check=True)
     sa.on("async_race_create_room", create_room, with_header_check=True)
+    sa.on("async_race_change_room_settings", change_room_settings, with_header_check=True)
     sa.on("async_race_get_room", get_room, with_header_check=True)
     sa.on("async_race_join_and_export", join_and_export, with_header_check=True)
     sa.on("async_race_change_state", change_state, with_header_check=True)
