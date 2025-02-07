@@ -609,10 +609,10 @@ class AsyncRaceEntry(BaseModel):
         """
         if self.start_date is None:
             return async_race_room.AsyncRaceRoomUserStatus.JOINED
-        elif self.finish_date is None:
-            return async_race_room.AsyncRaceRoomUserStatus.STARTED
         elif self.forfeit:
             return async_race_room.AsyncRaceRoomUserStatus.FORFEITED
+        elif self.finish_date is None:
+            return async_race_room.AsyncRaceRoomUserStatus.STARTED
         else:
             return async_race_room.AsyncRaceRoomUserStatus.FINISHED
 

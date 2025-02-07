@@ -174,6 +174,7 @@ def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
         case (_, _):
             raise error.InvalidActionError("Unsupported state transition")
 
+    # TODO: audit entry of performed actions
     entry.save()
     return room.create_session_entry(user).as_json
 
