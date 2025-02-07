@@ -52,7 +52,7 @@ class RaceRoomLeaderboard(JsonDataclass):
 @dataclasses.dataclass
 class AsyncRaceEntryEntry(JsonDataclass):
     """
-    All data about an user's entry to a race. Should only be available to admins.
+    All data about a user's entry to a race. Should only be available to admins.
     """
 
     user: RandovaniaUser
