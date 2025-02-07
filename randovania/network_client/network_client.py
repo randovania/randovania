@@ -527,6 +527,17 @@ class NetworkClient:
         """
         await self.server_call("async_race_submit_proof", (room_id, submission_notes, proof_url))
 
+    async def async_race_change_room_settings(self, room_id: int, settings: AsyncRaceSettings) -> AsyncRaceRoomEntry:
+        """
+        Updates the settings for the given room.
+        :param room_id:
+        :param settings: The settings to replace with. Password is ignored.
+        :return: The updated room entry.
+        """
+        return AsyncRaceRoomEntry.from_json(
+            await self.server_call("async_race_change_room_settings", (room_id, settings.as_json))
+        )
+
     async def get_multiplayer_session_list(self, ignore_limit: bool) -> list[MultiplayerSessionListEntry]:
         return [
             MultiplayerSessionListEntry.from_json(item)

@@ -551,9 +551,17 @@ class AsyncRaceRoom(BaseModel):
     def start_datetime(self) -> datetime.datetime:
         return datetime.datetime.fromisoformat(self.start_date)
 
+    @start_datetime.setter
+    def start_datetime(self, value: datetime.datetime | None) -> None:
+        self.start_date = value
+
     @property
     def end_datetime(self) -> datetime.datetime:
         return datetime.datetime.fromisoformat(self.end_date)
+
+    @end_datetime.setter
+    def end_datetime(self, value: datetime.datetime | None) -> None:
+        self.end_date = value
 
     def create_session_entry(self, for_user: User) -> async_race_room.AsyncRaceRoomEntry:
         game_details = self.game_details()
