@@ -306,7 +306,7 @@ class FusionPatchDataFactory(PatchDataFactory):
             model_name="Empty",
         )
 
-    def _create_room_names(self):
+    def _create_room_names(self) -> list[dict]:
         names = []
         for region in self.game.region_list.regions:
             for area in region.areas:
