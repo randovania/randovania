@@ -578,6 +578,7 @@ class AsyncRaceRoom(BaseModel):
             presets_raw=[
                 VersionedPreset.with_preset(preset).as_bytes() for preset in self.layout_description.all_presets
             ],
+            is_admin=for_user == self.creator,
             self_status=status,
             leaderboard=None,
         )
