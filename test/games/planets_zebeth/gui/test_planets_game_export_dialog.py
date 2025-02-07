@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
@@ -13,9 +12,6 @@ from randovania.games.planets_zebeth.exporter.options import PlanetsZebethPerGam
 from randovania.games.planets_zebeth.gui.dialog.game_export_dialog import PlanetsZebethGameExportDialog
 from randovania.games.planets_zebeth.layout.planets_zebeth_cosmetic_patches import PlanetsZebethCosmeticPatches
 from randovania.interface_common.options import Options
-
-if TYPE_CHECKING:
-    import pytest_mock
 
 
 @pytest.mark.parametrize("has_output_dir", [False, True])
