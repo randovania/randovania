@@ -22,7 +22,7 @@ class AsyncRaceCreationDialog(QtWidgets.QDialog):
         self.ui.setupUi(self)
 
         self.ui.visibility_combo_box.setItemData(0, MultiplayerSessionVisibility.VISIBLE)
-        self.ui.visibility_combo_box.setItemData(0, MultiplayerSessionVisibility.HIDDEN)
+        self.ui.visibility_combo_box.setItemData(1, MultiplayerSessionVisibility.HIDDEN)
 
         self.ui.name_edit.setMaxLength(MAX_SESSION_NAME_LENGTH)
         signal_handling.on_checked(self.ui.password_check, self._on_password_check)
