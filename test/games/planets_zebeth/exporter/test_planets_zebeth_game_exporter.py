@@ -29,7 +29,9 @@ def test_export_game_raises_without_dotnet(mocker):
 
     with pytest.raises(UnableToExportError):
         exporter._do_export_game(
-            MagicMock(), PlanetsZebethGameExportParams(spoiler_output=None, input_path=None, output_path=None), MagicMock()
+            MagicMock(),
+            PlanetsZebethGameExportParams(spoiler_output=None, input_path=None, output_path=None),
+            MagicMock(),
         )
 
 
@@ -41,7 +43,9 @@ def test_export_game_raises_with_wrong_dotnet_exit_code(mocker):
 
     with pytest.raises(UnableToExportError):
         exporter._do_export_game(
-            MagicMock(), PlanetsZebethGameExportParams(spoiler_output=None, input_path=None, output_path=None), MagicMock()
+            MagicMock(),
+            PlanetsZebethGameExportParams(spoiler_output=None, input_path=None, output_path=None),
+            MagicMock(),
         )
 
 
@@ -65,7 +69,9 @@ def test_do_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
     done = mocker.patch("concurrent.futures.Future.done", side_effect=[False, True])
     result = mocker.patch("concurrent.futures.Future.result")
 
-    patch_data = test_files_dir.read_json("patcher_data", "planets_zebeth", "planets_zebeth", patch_data_name, "world_1.json")
+    patch_data = test_files_dir.read_json(
+        "patcher_data", "planets_zebeth", "planets_zebeth", patch_data_name, "world_1.json"
+    )
 
     exporter = PlanetsZebethGameExporter()
     export_params = PlanetsZebethGameExportParams(
@@ -105,7 +111,9 @@ def test_run_patcher(test_files_dir, mocker, patch_data_name: str, tmp_path):
     mocker.patch("planets_yapr.load_wrapper", side_effect=mocked_load_wrapper)
 
     receiving_pipe, output_pipe = multiprocessing.Pipe(True)
-    patch_data = test_files_dir.read_json("patcher_data", "planets_zebeth", "planets_zebeth", patch_data_name, "world_1.json")
+    patch_data = test_files_dir.read_json(
+        "patcher_data", "planets_zebeth", "planets_zebeth", patch_data_name, "world_1.json"
+    )
 
     export_params = PlanetsZebethGameExportParams(
         spoiler_output=None,
