@@ -10,7 +10,7 @@ from randovania.game_description.hint import (
     PrecisionPair,
 )
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
-from randovania.generator.hint_distributor import HintDistributor
+from randovania.generator.hint_distributor import HintDistributor, HintSuitability
 
 if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
@@ -25,8 +25,13 @@ class DreadHintDistributor(HintDistributor):
         return PrecisionPair(HintLocationPrecision.REGION_ONLY, HintItemPrecision.DETAILED, True)
 
     @override
-    def less_interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
-        return not pickup.has_hint_feature("dna")
+    def hint_suitability_for_pickup(self, pickup: PickupEntry) -> HintSuitability:
+        if pickup.show_in_credits_spoiler:
+            return HintSuitability.INTERESTING
+        elif not pickup.has_hint_feature("dna"):
+            return HintSuitability.LESS_INTERESTING
+        else:
+            return HintSuitability.NOT_INTERESTING
 
     @override
     async def assign_specific_location_hints(self, patches: GamePatches, prefill: PreFillParams) -> GamePatches:

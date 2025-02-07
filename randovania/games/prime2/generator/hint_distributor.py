@@ -15,7 +15,7 @@ from randovania.game_description.hint import (
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-from randovania.generator.hint_distributor import HintDistributor, HintTargetPrecision
+from randovania.generator.hint_distributor import HintDistributor, HintSuitability, HintTargetPrecision
 from randovania.lib import enum_lib
 
 if TYPE_CHECKING:
@@ -36,8 +36,13 @@ class EchoesHintDistributor(HintDistributor):
         return 2
 
     @override
-    def less_interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
-        return not pickup.has_hint_feature("key")
+    def hint_suitability_for_pickup(self, pickup: PickupEntry) -> HintSuitability:
+        if pickup.show_in_credits_spoiler:
+            return HintSuitability.INTERESTING
+        elif not pickup.has_hint_feature("key"):
+            return HintSuitability.LESS_INTERESTING
+        else:
+            return HintSuitability.NOT_INTERESTING
 
     @override
     async def get_guaranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
