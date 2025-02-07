@@ -1,13 +1,14 @@
 import datetime
 
 import humanize
-from PySide6 import QtWidgets
+from PySide6 import QtCore, QtWidgets
 from qasync import asyncSlot
 
 from randovania.gui import game_specific_gui
+from randovania.gui.dialog.async_race_creation_dialog import AsyncRaceCreationDialog
 from randovania.gui.dialog.async_race_proof_popup import AsyncRaceProofPopup
 from randovania.gui.generated.async_race_room_window_ui import Ui_AsyncRaceRoomWindow
-from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
+from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, signal_handling
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.interface_common.options import Options
@@ -30,6 +31,11 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         self.ui = Ui_AsyncRaceRoomWindow()
         self.ui.setupUi(self)
 
+        self._change_options_menu = QtWidgets.QMenu(self.ui.change_options_button)
+        self.ui.change_options_button.setMenu(self._change_options_menu)
+        self._change_options_menu.addAction("Change Options").triggered.connect(self._on_change_options)
+        self._change_options_menu.addAction("View Entries")
+
         # TODO: background task things
 
         self.ui.customize_cosmetic_button.clicked.connect(self._open_user_preferences_dialog)
@@ -38,7 +44,6 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         self.ui.finish_button.clicked.connect(self._on_finish)
         self.ui.forfeit_button.clicked.connect(self._on_forfeit)
         self.ui.submit_proof_button.clicked.connect(self._on_submit_proof)
-        self.ui.change_options_button.clicked.connect(self._on_change_options)
         self.on_room_details(room)
 
     def on_room_details(self, room: AsyncRaceRoomEntry) -> None:
@@ -92,6 +97,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
             "Forfeit" if room.self_status != AsyncRaceRoomUserStatus.FORFEITED else "Undo Forfeit"
         )
         self.ui.submit_proof_button.setEnabled(room.self_status == AsyncRaceRoomUserStatus.FINISHED)
+        self.ui.change_options_button.setEnabled(room.is_admin)
 
     async def _status_transition(self, new_status: AsyncRaceRoomUserStatus) -> None:
         """Transitions to the requested status, and updates the UI for it."""
@@ -190,6 +196,24 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
     @asyncSlot()
     async def _on_change_options(self) -> None:
         """Called when the `Change room options` button is pressed."""
+
+        dialog = AsyncRaceCreationDialog(self)
+        dialog.ui.name_edit.setText(self.room.name)
+        dialog.ui.password_edit.setVisible(False)
+        dialog.ui.password_check.setVisible(False)
+        dialog.ui.start_time_edit.setDateTime(
+            QtCore.QDateTime.fromSecsSinceEpoch(int(self.room.start_date.timestamp()))
+        )
+        dialog.ui.end_time_edit.setDateTime(QtCore.QDateTime.fromSecsSinceEpoch(int(self.room.end_date.timestamp())))
+        signal_handling.set_combo_with_value(dialog.ui.visibility_combo_box, self.room.visibility)
+
+        result = await async_dialog.execute_dialog(dialog)
+        if result == QtWidgets.QDialog.DialogCode.Accepted:
+            self.on_room_details(
+                await self._network_client.async_race_change_room_settings(
+                    self.room.id, dialog.create_settings_object()
+                )
+            )
 
     @asyncSlot()
     async def refresh_data(self) -> None:
