@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import copy
+import dataclasses
+from random import Random
 from typing import TYPE_CHECKING
 from unittest.mock import ANY, MagicMock, call
 
@@ -16,12 +19,16 @@ from randovania.game_description.hint import (
     RedTempleHint,
     SpecificHintPrecision,
 )
+from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
+from randovania.generator.generator import create_player_pool
 from randovania.generator.pre_fill_params import PreFillParams
+from randovania.layout.base.standard_pickup_state import StandardPickupState
+from randovania.resolver import debug
 
 if TYPE_CHECKING:
-    from randovania.game_description.hint_features import HintFeature
+    from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 
 
 @pytest.mark.parametrize("is_multiworld", [False, True])
@@ -96,3 +103,70 @@ async def test_add_default_hints_to_patches(echoes_game_description, echoes_game
     # Assert
     rng.shuffle.assert_has_calls([call(ANY), call(ANY)])
     assert result.hints == expected
+
+
+@pytest.fixture
+def echoes_configuration_everything_shuffled(default_echoes_configuration) -> EchoesConfiguration:
+    old_pickups_config = default_echoes_configuration.standard_pickup_configuration
+    pickups_state = copy.copy(old_pickups_config.pickups_state)
+
+    for pickup in old_pickups_config.pickups_state:
+        if pickup.must_be_starting:
+            continue
+        pickups_state[pickup] = StandardPickupState(
+            num_shuffled_pickups=1, included_ammo=tuple(1 for ammo in pickup.ammo)
+        )
+
+    return dataclasses.replace(
+        default_echoes_configuration,
+        standard_pickup_configuration=dataclasses.replace(
+            old_pickups_config,
+            pickups_state=pickups_state,
+        ),
+        ammo_pickup_configuration=dataclasses.replace(
+            default_echoes_configuration.ammo_pickup_configuration,
+            pickups_state={
+                ammo: dataclasses.replace(ammo_state, pickup_count=1)
+                for ammo, ammo_state in default_echoes_configuration.ammo_pickup_configuration.pickups_state.items()
+            },
+        ),
+    )
+
+
+async def test_keybearer_hint_precisions(
+    echoes_configuration_everything_shuffled, echoes_game_patches, echoes_pickup_database
+):
+    # Setup
+    rng = Random(0)
+
+    player_pools = [
+        await create_player_pool(rng, echoes_configuration_everything_shuffled, 0, 1, "World 1", MagicMock()),
+    ]
+    pool = player_pools[0]
+
+    hint_distributor = EchoesHintDistributor()
+
+    hint_node = NodeIdentifier.create("Agon Wastes", "Central Mining Station", "Keybearer Corpse (J-Stl)")
+    keybearer_precision = (await hint_distributor.get_specific_pickup_precision_pairs())[hint_node]
+    hint = LocationHint(keybearer_precision, PickupIndex(0))
+
+    categories = echoes_pickup_database.pickup_categories
+    broad_categories = {categories["chozo"], categories["luminoth"], categories["key"], categories["cheat"]}
+
+    pickup_results: dict[str, HintFeature] = {}
+    expected_results: dict[str, HintFeature] = {}
+
+    # Run
+    for pickup in pool.pickups_in_world:
+        expected_results[pickup.name] = next(ft for ft in pickup.hint_features if ft in broad_categories)
+
+        patches = echoes_game_patches.assign_own_pickups([(PickupIndex(0), pickup)])
+
+        with debug.with_level(1):
+            precision = hint_distributor.get_hint_precision(hint_node, hint, rng, patches, player_pools)
+
+        assert isinstance(precision.item, HintFeature)
+        pickup_results[pickup.name] = precision.item
+
+    # Assert
+    assert pickup_results == expected_results
