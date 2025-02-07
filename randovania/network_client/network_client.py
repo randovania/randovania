@@ -517,6 +517,16 @@ class NetworkClient:
         """
         return AsyncRaceRoomEntry.from_json(await self.server_call("async_race_change_state", (room_id, status.value)))
 
+    async def async_race_submit_proof(self, room_id: int, submission_notes: str, proof_url: str) -> None:
+        """
+        Uploads the proof data for the given room.
+        :param room_id:
+        :param submission_notes:
+        :param proof_url:
+        :return:
+        """
+        await self.server_call("async_race_submit_proof", (room_id, submission_notes, proof_url))
+
     async def get_multiplayer_session_list(self, ignore_limit: bool) -> list[MultiplayerSessionListEntry]:
         return [
             MultiplayerSessionListEntry.from_json(item)

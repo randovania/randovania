@@ -179,9 +179,28 @@ def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
     return room.create_session_entry(user).as_json
 
 
+def submit_proof(sa: ServerApp, room_id: int, submission_notes: str, proof_url: str) -> None:
+    """
+    This endpoint allows a user to record submission notes and a link to proof for their run.
+    """
+    room = AsyncRaceRoom.get_by_id(room_id)
+    user = sa.get_current_user()
+    entry = database.AsyncRaceEntry.entry_for(room, user)
+    if entry is None:
+        raise error.InvalidActionError("User not a member of given room")
+
+    if entry.user_status() != AsyncRaceRoomUserStatus.FINISHED:
+        raise error.InvalidActionError("Only possible to submit proof after finishing")
+
+    entry.submission_notes = submission_notes
+    entry.proof_url = proof_url
+    entry.save()
+
+
 def setup_app(sa: ServerApp) -> None:
     sa.on("async_race_list_rooms", list_rooms, with_header_check=True)
     sa.on("async_race_create_room", create_room, with_header_check=True)
     sa.on("async_race_get_room", get_room, with_header_check=True)
     sa.on("async_race_join_and_export", join_and_export, with_header_check=True)
     sa.on("async_race_change_state", change_state, with_header_check=True)
+    sa.on("async_race_submit_proof", submit_proof, with_header_check=True)
