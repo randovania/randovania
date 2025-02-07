@@ -74,18 +74,21 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
             if room.self_status in {AsyncRaceRoomUserStatus.ROOM_NOT_OPEN, AsyncRaceRoomUserStatus.NOT_MEMBER}
             else "Re-export"
         )
-        self.ui.start_button.setEnabled(room.self_status == AsyncRaceRoomUserStatus.JOINED)
+        self.ui.start_button.setEnabled(
+            room.self_status in {AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.JOINED}
+        )
+        self.ui.start_button.setText("Start" if room.self_status != AsyncRaceRoomUserStatus.STARTED else "Undo Start")
         self.ui.finish_button.setEnabled(
             room.self_status in {AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.FINISHED}
         )
         self.ui.finish_button.setText(
-            "Finish" if room.self_status == AsyncRaceRoomUserStatus.STARTED else "Undo Finish"
+            "Finish" if room.self_status != AsyncRaceRoomUserStatus.FINISHED else "Undo Finish"
         )
         self.ui.forfeit_button.setEnabled(
             room.self_status in {AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.FORFEITED}
         )
         self.ui.forfeit_button.setText(
-            "Forfeit" if room.self_status == AsyncRaceRoomUserStatus.STARTED else "Undo Forfeit"
+            "Forfeit" if room.self_status != AsyncRaceRoomUserStatus.FORFEITED else "Undo Forfeit"
         )
 
     async def _status_transition(self, new_status: AsyncRaceRoomUserStatus) -> None:
@@ -168,9 +171,11 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
             "async_race_room_window_cosmetic_clicked",
         )
 
+    @asyncSlot()
     async def _on_submit_proof(self) -> None:
         """Called when the `Submit Proof` button is pressed."""
 
+    @asyncSlot()
     async def _on_change_options(self) -> None:
         """Called when the `Change room options` button is pressed."""
 
