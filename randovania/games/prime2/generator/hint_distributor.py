@@ -112,3 +112,8 @@ class EchoesHintDistributor(HintDistributor):
         ]
 
         return {keybearer: precision for keybearer in keybearers}
+
+    @override
+    @property
+    def use_region_location_precision(self) -> bool:
+        return False
