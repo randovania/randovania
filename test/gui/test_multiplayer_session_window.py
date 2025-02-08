@@ -22,12 +22,12 @@ from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import string_lib
 from randovania.lib.container_lib import zip2
+from randovania.network_common.audit import AuditEntry
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionAction,
     MultiplayerSessionActions,
-    MultiplayerSessionAuditEntry,
     MultiplayerSessionAuditLog,
     MultiplayerSessionEntry,
     MultiplayerUser,
@@ -1025,10 +1025,7 @@ async def test_update_session_audit_log(window: MultiplayerSessionWindow):
     window._session = MagicMock()
     log = MultiplayerSessionAuditLog(
         session_id=window._session.id,
-        entries=[
-            MultiplayerSessionAuditEntry("You", f"Did something for the {i}-th time.", datetime.datetime.now())
-            for i in range(50)
-        ],
+        entries=[AuditEntry("You", f"Did something for the {i}-th time.", datetime.datetime.now()) for i in range(50)],
     )
     scrollbar = window.tab_audit.verticalScrollBar()
 

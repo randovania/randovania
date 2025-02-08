@@ -11,6 +11,7 @@ from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.network_common.audit import AuditEntry
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
@@ -127,16 +128,9 @@ class MultiplayerSessionEntry(JsonDataclass):
 
 
 @dataclasses.dataclass(frozen=True)
-class MultiplayerSessionAuditEntry(JsonDataclass):
-    user: str
-    message: str
-    time: datetime.datetime
-
-
-@dataclasses.dataclass(frozen=True)
 class MultiplayerSessionAuditLog(JsonDataclass):
     session_id: int
-    entries: list[MultiplayerSessionAuditEntry]  # TODO: restore tuple
+    entries: list[AuditEntry]  # TODO: restore tuple
 
 
 @dataclasses.dataclass(frozen=True)
