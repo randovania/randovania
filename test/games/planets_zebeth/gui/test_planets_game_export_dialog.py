@@ -25,7 +25,7 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
         output_directory.mkdir()
     else:
         output_directory = None
-        expected_default_name = "Planets Zebeth Randomizer - MyHash"
+        expected_default_name = "Planets Zebeth Randomizer"
 
     options = MagicMock()
     options.options_for_game.return_value = PlanetsZebethPerGameOptions(
@@ -62,7 +62,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
     skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.MouseButton.LeftButton)
 
     # Assert
-    mock_prompt.assert_called_once_with(window, "Planets Zebeth Randomizer - MyHash", [""])
+    mock_prompt.assert_called_once_with(window, "Planets Zebeth Randomizer", [""])
     assert window.output_file_edit.text() == ""
 
 

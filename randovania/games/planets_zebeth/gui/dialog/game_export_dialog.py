@@ -84,9 +84,7 @@ class PlanetsZebethGameExportDialog(GameExportDialog, Ui_PlanetsZebethGameExport
 
     # Output File
     def _on_output_folder_button(self):
-        output_dir = prompt_for_output_directory(
-            self, f"Planets Zebeth Randomizer - {self._word_hash}", self.output_folder_edit
-        )
+        output_dir = prompt_for_output_directory(self, "Planets Zebeth Randomizer", self.output_folder_edit)
         if output_dir is not None:
             self.output_folder_edit.setText(str(output_dir))
 
