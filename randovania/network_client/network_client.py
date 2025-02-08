@@ -34,10 +34,12 @@ from randovania.network_common import (
     signals,
 )
 from randovania.network_common.async_race_room import (
+    AsyncRaceRoomAdminData,
     AsyncRaceRoomEntry,
     AsyncRaceRoomListEntry,
     AsyncRaceRoomUserStatus,
     AsyncRaceSettings,
+    RaceRoomLeaderboard,
 )
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionActions,
@@ -498,6 +500,22 @@ class NetworkClient:
         :return: The room details
         """
         return AsyncRaceRoomEntry.from_json(await self.server_call("async_race_get_room", room_id))
+
+    async def async_race_get_leaderboard(self, room_id: int) -> RaceRoomLeaderboard:
+        """
+        Gets the leaderboard for the given room. Must have already finished to work.
+        :param room_id:
+        :return: The room's leaderboard
+        """
+        return RaceRoomLeaderboard.from_json(await self.server_call("async_race_get_leaderboard", room_id))
+
+    async def async_race_admin_get_admin_data(self, room_id: int) -> AsyncRaceRoomAdminData:
+        """
+        Gets all details regarding a room that are exclusive to administrators
+        :param room_id:
+        :return: The room's data exclusive to administrators
+        """
+        return AsyncRaceRoomAdminData.from_json(await self.server_call("async_race_admin_get_admin_data", room_id))
 
     async def async_race_join_and_export(self, room_id: int, cosmetic: BaseCosmeticPatches) -> dict:
         """
