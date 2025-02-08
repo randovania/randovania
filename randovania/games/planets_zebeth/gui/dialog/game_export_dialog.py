@@ -41,63 +41,67 @@ class PlanetsZebethGameExportDialog(GameExportDialog, Ui_PlanetsZebethGameExport
         assert isinstance(per_game, PlanetsZebethPerGameOptions)
 
         # Input
-        self.input_file_button.clicked.connect(self._on_input_file_button)
+        self.input_folder_button.clicked.connect(self._on_input_folder_button)
 
         # Output
-        self.output_file_button.clicked.connect(self._on_output_file_button)
+        self.output_folder_button.clicked.connect(self._on_output_folder_button)
 
         if per_game.input_path is not None:
-            self.input_file_edit.setText(str(per_game.input_path))
+            self.input_folder_edit.setText(str(per_game.input_path))
 
         if per_game.output_path is not None:
-            self.output_file_edit.setText(str(per_game.output_path))
+            self.output_folder_edit.setText(str(per_game.output_path))
 
         add_field_validation(
             accept_button=self.accept_button,
             fields={
-                self.input_file_edit: lambda: not (self.input_file.is_dir() and _is_valid_input_dir(self.input_file)),
-                self.output_file_edit: lambda: not (self.output_file.is_dir() and self.output_file != self.input_file),
+                self.input_folder_edit: lambda: not (
+                    self.input_folder.is_dir() and _is_valid_input_dir(self.input_folder)
+                ),
+                self.output_folder_edit: lambda: not (
+                    self.output_folder.is_dir() and self.output_folder != self.input_folder
+                ),
             },
         )
 
     @property
-    def input_file(self) -> Path:
-        return Path(self.input_file_edit.text())
+    def input_folder(self) -> Path:
+        return Path(self.input_folder_edit.text())
 
     @property
-    def output_file(self) -> Path:
-        return Path(self.output_file_edit.text())
+    def output_folder(self) -> Path:
+        return Path(self.output_folder_edit.text())
 
     @property
     def auto_save_spoiler(self) -> bool:
         return self.auto_save_spoiler_check.isChecked()
 
     # Input file
-    def _on_input_file_button(self):
-        input_dir = prompt_for_input_directory(self, self.input_file_edit)
+    def _on_input_folder_button(self):
+        input_dir = prompt_for_input_directory(self, self.input_folder_edit)
         if input_dir is not None:
-            self.input_file_edit.setText(str(input_dir.absolute()))
+            self.input_folder_edit.setText(str(input_dir.absolute()))
 
     # Output File
-    def _on_output_file_button(self):
+    def _on_output_folder_button(self):
         output_dir = prompt_for_output_directory(
-            self, f"Planets Zebeth Randomizer - {self._word_hash}", self.output_file_edit
+            self, f"Planets Zebeth Randomizer - {self._word_hash}", self.output_folder_edit
         )
         if output_dir is not None:
-            self.output_file_edit.setText(str(output_dir))
+            self.output_folder_edit.setText(str(output_dir))
 
     def update_per_game_options(self, per_game: PlanetsZebethPerGameOptions) -> PlanetsZebethPerGameOptions:
         return dataclasses.replace(
             per_game,
-            input_path=self.input_file,
-            output_path=self.output_file,
+            input_path=self.input_folder,
+            output_path=self.output_folder,
         )
 
     def get_game_export_params(self) -> PlanetsZebethGameExportParams:
-        spoiler_output = spoiler_path_for_directory(self.auto_save_spoiler, self.output_file)
+        spoiler_output = spoiler_path_for_directory(self.auto_save_spoiler, self.output_folder)
 
         return PlanetsZebethGameExportParams(
             spoiler_output=spoiler_output,
-            input_path=self.input_file,
-            output_path=self.output_file,
+            input_path=self.input_folder,
+            output_path=self.output_folder,
         )
