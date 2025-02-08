@@ -6,7 +6,7 @@ from contextlib import contextmanager
 from typing import TYPE_CHECKING
 from unittest.mock import ANY, MagicMock
 
-import planets_yapr.wrapper
+import planets_yapr.wrapper  # type: ignore[import-untyped]
 import pytest
 
 from randovania.games.planets_zebeth.exporter.game_exporter import (
