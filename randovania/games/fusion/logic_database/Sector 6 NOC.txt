@@ -57,6 +57,10 @@ Extra - room_id: [0]
                   Hi-Jump or Movement (Advanced)
               # Break the blocks with Power Bombs
               Can Use Power Bombs
+              All of the following:
+                  # When standing on frozen Menu's, use bomb jumps/spring ball to break them
+                  Knowledge (Advanced) and Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies With Any Weapon and Can Use Bombs
+                  Movement (Intermediate) or Can Use Springball
           Any of the following:
               # Climb up
               Wall Jump (Beginner) or Have Any Jump Upgrade
@@ -165,6 +169,8 @@ Extra - room_id: [3]
               Wall Jump (Beginner) or Have Any Jump Upgrade
           # Upper way
           Screw Attack
+  > Other to Entrance Lobby
+      After Boss Varia Core-X Defeated or Can Kill Super Geron
   > Other to Vault
       All of the following:
           Can Break Single Bomb Blocks
@@ -181,6 +187,8 @@ Extra - room_id: [3]
       All of the following:
           Can Use Any Bombs
           Wall Jump (Beginner) or Have Any Jump Upgrade
+  > Door to Nocturnal Access
+      After Boss Varia Core-X Defeated or Can Kill Super Geron
 
 > Other to Vault; Heals? False
   * Layers: default
@@ -256,7 +264,7 @@ Extra - room_id: [5]
   * Extra - door_idx: (14,)
   > Door to Nocturnal Access
       # Without Breaking Blocks: https://youtu.be/o43xM3s5YdE
-      Movement (Beginner) or Have Any Jump Upgrade
+      Movement (Beginner) or Wall Jump (Beginner) or Have Any Jump Upgrade
 
 > Door to Glass Tube to Sector 5 (ARC); Heals? False
   * Layers: default
@@ -371,8 +379,9 @@ Extra - room_id: [8]
   * Extra - door_idx: (16,)
   > Door to Nocturnal Shaft
       Any of the following:
+          Varia Suit
           # Stun the Ice X: https://youtu.be/gWr0prPkpiI
-          Varia Suit or Combat (Intermediate)
+          Combat (Intermediate)
           # Tank one Ice-X: https://youtu.be/OPhU8BH0FYU
           Damage Boosts (Beginner) and Cold Damage ≥ 69
 
@@ -396,11 +405,22 @@ Extra - room_id: [8]
                           Hi-Jump
                           # SWJ: https://youtu.be/xJ3ouhpX3ns
                           Can Single Walljump
+                  All of the following:
+                      # Freeze the Owtch. Only works if the owtch starts crawling towards the door.
+                      Stand On Frozen Enemies (Advanced) and Can Freeze Enemies With Any Weapon
+                      Any of the following:
+                          # Lure the Owtch to the left
+                          Screw Attack
+                          Damage Boosts (Intermediate) and Normal Damage ≥ 135
               Any of the following:
                   # Get past Blue X (left side)
                   Varia Suit
-                  # https://youtu.be/JsdPO-DjDwE
-                  Combat (Intermediate)
+                  Any of the following:
+                      # Dodge them
+                      Combat (Advanced)
+                      # Wide lets you break the shoot blocks easier: https://youtu.be/JsdPO-DjDwE
+                      Wide Beam and Combat (Intermediate)
+                  # Tank them
                   Damage Boosts (Beginner) and Cold Damage ≥ 138
 
 ----------------
@@ -415,7 +435,7 @@ Extra - room_id: [9]
       Any of the following:
           All of the following:
               Speed Booster and Enabled Generator Workaround
-              # Generator traps itself and doesn't know how to get out
+              # Generator traps itself and doesn't dare killing Varia Core-X to get out
               Charge Beam or Shinespark Tricks (Intermediate)
           # These blocks disappear after defeating Mega Core
           After Boss Varia Core-X Defeated
@@ -469,14 +489,17 @@ Extra - room_id: [10]
   * Extra - door_idx: (27,)
   > Door to Data Access
       Any of the following:
-          Can Use Bombs
           # Shot blocks will not respawn after they are broken
           Morph Ball and Disabled Entrance Rando
-          All of the following:
-              Can Use Power Bombs
-              Any of the following:
-                  Varia Suit or Combat (Advanced)
-                  Damage Boosts (Intermediate) and Cold Damage ≥ 432
+          Any of the following:
+              # Destroy Blocks
+              Can Use Bombs
+              All of the following:
+                  # Power Bomb reveals all the Blue-X
+                  Can Use Power Bombs
+                  Any of the following:
+                      Varia Suit or Combat (Advanced)
+                      Damage Boosts (Intermediate) and Cold Damage ≥ 432
 
 > Door to Big Shell 2; Heals? False
   * Layers: default
@@ -568,7 +591,7 @@ Extra - room_id: [13]
           # Mega-X Requirements
           Charge Beam
           All of the following:
-              # Core-X Requirements
+              # Core-X Requirements (180HP)
               Missiles
               Combat (Beginner) or 20 DMG Missiles
               # A way to dodge
@@ -651,6 +674,7 @@ Extra - room_id: [15]
       All of the following:
           Can Use Any Bombs
           Any of the following:
+              # Get up to the ledge
               Have Any Jump Upgrade
               All of the following:
                   # Freeze Zozoro: https://youtu.be/wu8pKLvrAMw
@@ -705,7 +729,7 @@ Extra - room_id: [16]
   * Extra - area: 0
   * Extra - room: 16
   * Extra - source: WaveCoreX
-  > Arena
+  > Event - B.O.X
       Trivial
 
 > Beside Crumble Blocks; Heals? False
@@ -760,6 +784,12 @@ Extra - room_id: [16]
                       Movement (Advanced)
                       # TODO: vid, also check if you can do this w/o grav
                       Gravity Suit and Hi-Jump and Jump Bombjump (Hypermode)
+
+> Event - B.O.X; Heals? False
+  * Layers: default
+  * Event Boss B.O.X. Defeated
+  > Arena
+      Trivial
 
 ----------------
 Elevator to Main Deck
@@ -821,14 +851,15 @@ Extra - room_id: [18]
           Can Bounce in Ball and Can Use Any Bombs
           Any of the following:
               All of the following:
-                  # Vanilla Method - Freeze an Owtch on the Crumble Blocks (and use regular Bombs to open the passage)
+                  # Vanilla Method - Freeze an Owtch on the Crumble Blocks and use regular Bombs to open the passage
+                  Can Use Bombs
                   Any of the following:
-                      # Template not used because normal Ice Missiles can't hit the Owtch to freeze it in the right spot https://youtu.be/4y7ohyL0zkE&t=14s
+                      # Freeze the owtch in the right spot: https://youtu.be/4y7ohyL0zkE&t=14s
                       Can Freeze Enemies With Diffusion
                       Wave Beam and Can Freeze Enemies With Ice Beam
-              # Alternate Method - Jump off the Crumble Blocks morphed (frame perfect) https://youtu.be/4y7ohyL0zkE&t=14
+              # Jump off the Crumble Blocks morphed (frame perfect) https://youtu.be/4y7ohyL0zkE&t=14
               Movement (Advanced) and Can Use Springball
-              # Alternate Method - Jump off the Crumble Blocks without Jumpball by unmorphing first (also frame perfect) https://youtu.be/4y7ohyL0zkE&t=24
+              # Jump off the Crumble Blocks without Springball by unmorphing first (also frame perfect) https://youtu.be/4y7ohyL0zkE&t=24
               Movement (Expert)
               # Spam bombs to hover across: https://youtu.be/4y7ohyL0zkE&t=37
               Movement (Advanced) and Can Use Bombs
@@ -883,6 +914,9 @@ Extra - room_id: [20]
 > Door to Checkpoint to Restricted Zone; Heals? False
   * Layers: default
   * L4 Hatch to Checkpoint to Restricted Zone/Door to Neglected Shaft
+  * There is a possibility to model a full shinespark to the top door without a
+jump extend. However modelling that is not great because it requires
+duplicating all of the requirements. Thus, it isn't modelled.
   * Extra - door_idx: (42,)
   > Door to Bull Bend
       # Shinespark from adjacent room: https://youtu.be/D3sd1AoU-q8
@@ -890,6 +924,7 @@ Extra - room_id: [20]
   > Door to Neglected Save Room
       Any of the following:
           Space Jump
+          # Freeze the Bull
           Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies With Any Weapon
           # Break the blocks in a certain way and Wall Jump: https://youtu.be/cB_xiz5mbr8
           Wall Jump (Beginner)
@@ -1019,12 +1054,7 @@ Extra - room_id: [26]
   * L0 Hatch to Big Shell 1/Door to Shell Access
   * Extra - door_idx: (54,)
   > Door to Clogged Cavern
-      All of the following:
-          Can Use Power Bombs
-          Any of the following:
-              Have Any Jump Upgrade
-              # Stand on edge of upper platform: https://youtu.be/OKuCxGiJQTI
-              Movement (Beginner)
+      Can Use Power Bombs
 
 ----------------
 Big Shell 1
@@ -1049,7 +1079,7 @@ Extra - room_id: [27]
               # Possible with Single Wall Jumping the left side.
               Wall Jump (Beginner) and Can Single Walljump
               Any of the following:
-                  # Possible without Single Wall Jumping physics by jumping off both walls. Height gain per jump is small.
+                  # Possible with normal Wall Jumping by jumping off both walls. Height gain per jump is small.
                   # WJ with HJ: https://youtu.be/zONETruT9GE
                   Hi-Jump and Wall Jump (Intermediate)
                   # WJ without HJ: https://youtu.be/sllAuRCH1UM
@@ -1178,7 +1208,7 @@ Extra - room_id: [30]
           # JBJ: https://youtu.be/M_bad6jxMRk
           Hi-Jump and Jump Bombjump (Expert) and Can Use Bombs
           # Freeze Bull: https://youtu.be/JDSabpkP9qo&t=43
-          Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
+          Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies With Any Weapon
           # Damage boost off of bull: https://youtu.be/o3SWYYDnbe4
           Hi-Jump and Damage Boosts (Intermediate) and Wall Jump (Beginner) and Normal Damage ≥ 61
           # SWJ
@@ -1353,7 +1383,7 @@ Extra - room_id: [38]
           Speed Booster
           Any of the following:
               Can Use Bombs
-              # Wave Beam is difficult to control, but can solve the puzzle (Wide Beam could be turned off if also collected): https://youtu.be/7EqFwO03BAs
+              # Wave Beam is difficult to control, but can solve the puzzle: https://youtu.be/7EqFwO03BAs
               Wave Beam and Knowledge (Advanced)
               All of the following:
                   # Shinespark directly from adjacent room to the item: https://youtu.be/8Gl3-ZWtDAQ
