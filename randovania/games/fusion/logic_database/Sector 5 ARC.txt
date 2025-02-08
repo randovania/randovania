@@ -134,8 +134,11 @@ Extra - room_id: [3, 6]
       Any of the following:
           Space Jump
           All of the following:
+              # Freeze Chute Leeches
               Can Freeze Enemies With Any Weapon
-              Hi-Jump or Stand On Frozen Enemies (Intermediate)
+              Any of the following:
+                  Hi-Jump or Stand On Frozen Enemies (Intermediate)
+                  Stand On Frozen Enemies (Beginner) and Wall Jump (Beginner)
 
 ----------------
 Training Aerie
@@ -233,11 +236,12 @@ Extra - room_id: [7, 15]
   > Door to Crow's Nest
       All of the following:
           Any of the following:
+              # Get up
               Wall Jump (Beginner) or Have Any Jump Upgrade
               Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
           Any of the following:
+              # Cold Reqs
               Varia Suit
-              # Damage Reqs
               Damage Runs (Advanced) and Cold Damage ≥ 50
 
 > Door to Ripper Road; Heals? False
@@ -346,9 +350,11 @@ Extra - room_id: [9]
                       Cold Damage ≥ 800
                       Hi-Jump and Cold Damage ≥ 600
           Any of the following:
+              # Get up
               Wall Jump (Beginner) or Have Any Jump Upgrade
               # Climb Hidden Ladder
               Can Use Any Bombs
+              # Freeze Zeelas
               Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
 
 ----------------
@@ -653,7 +659,7 @@ Extra - room_id: [18]
   > Other to Ruined Break Room
       Any of the following:
           Have Any Jump Upgrade
-          # https://youtu.be/lRKybDZdiA4
+          # JBJ up: https://youtu.be/lRKybDZdiA4
           Jump Bombjump (Intermediate) and Can Use Bombs
   > Door to Nightmare Access
       Trivial
@@ -744,7 +750,7 @@ Extra - room_id: [20]
                   Missiles ≥ 100 and Combat (Expert) and 20 DMG Missiles
                   Missiles ≥ 50 and Combat (Advanced) and 45 DMG Missiles
           All of the following:
-              # Core-X Requirements
+              # Core-X Requirements (240HP)
               Missiles
               Any of the following:
                   20 DMG Missiles
@@ -814,8 +820,9 @@ Extra - room_id: [22, 21]
                   Can Freeze Enemies With Any Weapon
                   Any of the following:
                       Hi-Jump
-                      # https://youtu.be/a7A00q8XP9M
+                      # With WJ: https://youtu.be/a7A00q8XP9M
                       Wall Jump (Intermediate)
+              # Single walljump
               Wall Jump (Intermediate) and Can Single Walljump
           Any of the following:
               # Damage Reqs
@@ -916,6 +923,7 @@ Extra - room_id: [24]
   > Door to Kago Speedway
       Space Jump
   > Door to Groznyj Grad
+      # Kago disapears once you have PBs
       Can Use Power Bombs
 
 > Door to Kago Speedway; Heals? False
@@ -923,7 +931,10 @@ Extra - room_id: [24]
   * L0 Hatch to Kago Speedway/Door to Groznyj Shaft
   * Extra - door_idx: (104,)
   > Door to Waver Ward
-      Space Jump
+      Any of the following:
+          Space Jump
+          # Store spark in next room and carry it to here
+          Speed Booster and Varia Suit and Shinespark Tricks (Advanced) and Can Freeze Enemies With Any Weapon
   > Door to Save Room South
       Trivial
 
@@ -984,8 +995,8 @@ Extra - room_id: [26]
               # Damage Reqs
               Varia Suit
               # No springball: https://youtu.be/a4urCWRPTNM
-              Damage Runs (Hypermode) and Cold Damage ≥ 733 and Can Use Bombs
-              Damage Runs (Expert) and Cold Damage ≥ 440 and Can Use Springball
+              Damage Runs (Hypermode) and Cold Damage ≥ 733 and Can Freeze Enemies With Any Weapon and Can Use Bombs
+              Damage Runs (Expert) and Cold Damage ≥ 440 and Can Freeze Enemies With Any Weapon and Can Use Springball
 
 ----------------
 Nightmare Access
@@ -1017,12 +1028,8 @@ Extra - room_id: [28]
   * Extra - door_idx: (63,)
   > Door to Zebesian Waters
       Any of the following:
-          Combat (Intermediate) or Can Use Power Bombs
+          Combat (Intermediate) or Can Kill Tough Underwater Beam-Resistant Enemy
           Damage Boosts (Intermediate) and Normal Damage ≥ 250
-          Charge Beam and Have Any Beam Upgrade
-          Gravity Suit and Screw Attack
-          Missiles ≥ 10 and 10+ DMG Missiles
-          Missiles ≥ 2 and 45 DMG Missiles
 
 > Door to Zebesian Waters; Heals? False
   * Layers: default
@@ -1030,12 +1037,8 @@ Extra - room_id: [28]
   * Extra - door_idx: (117,)
   > Door to Nightmare Hub West
       Any of the following:
-          Combat (Intermediate) or Can Use Power Bombs
+          Combat (Intermediate) or Can Kill Tough Underwater Beam-Resistant Enemy
           Damage Boosts (Intermediate) and Normal Damage ≥ 250
-          Charge Beam and Have Any Beam Upgrade
-          Gravity Suit and Screw Attack
-          Missiles ≥ 10 and 10+ DMG Missiles
-          Missiles ≥ 2 and 45 DMG Missiles
 
 ----------------
 Security Save Room
@@ -1169,8 +1172,8 @@ Extra - room_id: [33]
           Morph Ball
           Any of the following:
               Can Use Power Bombs
-              # Holding right during climb and down+left during item fanfare allows you to clip back out
-              Screw Attack and Knowledge (Intermediate)
+              # Hold right during climb and down+left during fanfare. 50/50 on success.
+              Screw Attack and Knowledge (Intermediate) and Movement (Intermediate)
               All of the following:
                   Can Use Bombs
                   Any of the following:
@@ -1251,7 +1254,7 @@ Extra - room_id: [36]
   * Extra - blockx: 8
   * Extra - blocky: 8
   > Door to Glass Tube to Sector 3 (PYR)
-      Trivial
+      Can Break Single Bomb Blocks
 
 > Door to Glass Tube to Sector 3 (PYR); Heals? False
   * Layers: default
@@ -1463,14 +1466,16 @@ Extra - room_id: [45]
   * Extra - door_idx: (112,)
   > Beside Missile Block
       Any of the following:
-          Underwater Wall Jump (Expert)
           Gravity Suit and Space Jump
           All of the following:
+              # Freeze the Skullteras
               Can Freeze Enemies With Any Weapon
               Any of the following:
                   Hi-Jump
                   # Climb Skulltera NHJ https://youtu.be/kOtV9nNaPNQ
                   Stand On Frozen Enemies (Intermediate)
+          # Underwater Walljump
+          Underwater Wall Jump (Expert)
 
 > Beside Missile Block; Heals? False
   * Layers: default
@@ -1478,12 +1483,13 @@ Extra - room_id: [45]
       All of the following:
           Screw Attack
           Any of the following:
+              # Get up
               All of the following:
                   Gravity Suit
                   Any of the following:
                       Space Jump
                       Wall Jump (Intermediate) and Can Single Walljump
-              # TODO: vid
+              # Get up with underwater + singlewalljumping TODO: vid
               Underwater Wall Jump (Hypermode) and Wall Jump (Advanced) and Can Single Walljump
   > Other to Mini-Fridge
       Missiles
@@ -1521,6 +1527,7 @@ Extra - room_id: [46]
           # Upgradeless: https://youtu.be/uGBnSMt72Jc?t=13
           Combat (Hypermode)
           All of the following:
+              # No template, because these pirates are stronger and there are 2 of them
               Charge Beam and Plasma Beam
               Wave Beam or Wide Beam
           Damage Boosts (Intermediate) and Normal Damage ≥ 190
@@ -1529,13 +1536,10 @@ Extra - room_id: [46]
           Missiles ≥ 4 and 45 DMG Missiles
   > Door to Flooded Access
       Any of the following:
-          Can Use Power Bombs
-          Gravity Suit and Screw Attack
-          Charge Beam and Have Any Beam Upgrade
-          Missiles ≥ 10 and 10+ DMG Missiles
-          Missiles ≥ 2 and 45 DMG Missiles
+          Can Kill Tough Underwater Beam-Resistant Enemy
           # Upgradeless: https://youtu.be/FdeET1OemYw?t=19
           Combat (Intermediate)
+          # Damage boost through it
           Damage Boosts (Intermediate) and Normal Damage ≥ 95
 
 > Door to Flooded Access; Heals? False
@@ -1544,13 +1548,10 @@ Extra - room_id: [46]
   * Extra - door_idx: (116,)
   > Door to Flooded Airlock to Sector 4 (AQA)
       Any of the following:
-          Can Use Power Bombs
-          Gravity Suit and Screw Attack
-          Charge Beam and Have Any Beam Upgrade
-          Missiles ≥ 10 and 10+ DMG Missiles
-          Missiles ≥ 2 and 45 DMG Missiles
+          Can Kill Tough Underwater Beam-Resistant Enemy
           # Upgradeless: https://youtu.be/uGBnSMt72Jc
           Combat (Intermediate)
+          # Damage boost through it
           Damage Boosts (Intermediate) and Normal Damage ≥ 95
 
 ----------------
@@ -1633,13 +1634,13 @@ Extra - room_id: [50]
           # This can safely not have Door Lock Rando check
           Gravity Suit and Speed Booster and Disabled Entrance Rando
           # Some way to kill the pirates
-          Combat (Expert) or Can Kill Tough Beam-Resistant Enemy
+          Combat (Expert) or Can Kill Tough Underwater Beam-Resistant Enemy
   > Area Transition to Sector 4 (AQA)
       All of the following:
           # This can safely not have Door Lock Rando check
           Gravity Suit and Speed Booster and Disabled Entrance Rando
           # Some way to kill the pirates
-          Combat (Expert) or Can Kill Tough Beam-Resistant Enemy
+          Combat (Expert) or Can Kill Tough Underwater Beam-Resistant Enemy
 
 > Area Transition to Sector 4 (AQA); Heals? False
   * Layers: default
@@ -1671,7 +1672,12 @@ Extra - room_id: [51]
       All of the following:
           Any of the following:
               Space Jump
-              Hi-Jump and Can Freeze Enemies With Any Weapon
+              All of the following:
+                  # Kill enemies and freeze them transformations
+                  Can Freeze Enemies With Any Weapon
+                  Any of the following:
+                      Hi-Jump
+                      Stand On Frozen Enemies (Beginner) and Wall Jump (Beginner)
           Any of the following:
               # Damage Reqs
               Varia Suit
