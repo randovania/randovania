@@ -19,12 +19,12 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import async_race_room, error, multiplayer_session
+from randovania.network_common.audit import AuditEntry
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import (
     MAX_SESSION_NAME_LENGTH,
     MAX_WORLD_NAME_LENGTH,
-    MultiplayerSessionAuditEntry,
     MultiplayerSessionAuditLog,
     MultiplayerUser,
     MultiplayerWorld,
@@ -505,10 +505,10 @@ class MultiplayerAuditEntry(BaseModel):
     message: str = peewee.TextField()
     time: str = peewee.DateTimeField(default=_datetime_now)
 
-    def as_entry(self) -> MultiplayerSessionAuditEntry:
+    def as_entry(self) -> AuditEntry:
         time = datetime.datetime.fromisoformat(self.time)
 
-        return MultiplayerSessionAuditEntry(
+        return AuditEntry(
             user=self.user.name,
             message=self.message,
             time=time,
@@ -528,7 +528,9 @@ class AsyncRaceRoom(BaseModel):
     creation_date: str = peewee.DateTimeField(default=_datetime_now)
     start_date: str = peewee.DateTimeField()
     end_date: str = peewee.DateTimeField()
+
     entries: list[AsyncRaceEntry]
+    audit_log: list[AsyncRaceAuditEntry]
 
     @property
     def layout_description(self) -> LayoutDescription:
@@ -589,6 +591,22 @@ class AsyncRaceRoom(BaseModel):
             is_admin=for_user == self.creator,
             self_status=status,
             leaderboard=None,
+        )
+
+
+class AsyncRaceAuditEntry(BaseModel):
+    room: AsyncRaceRoom = peewee.ForeignKeyField(AsyncRaceRoom, backref="audit_log")
+    user: User = peewee.ForeignKeyField(User)
+    message: str = peewee.TextField()
+    time: str = peewee.DateTimeField(default=_datetime_now)
+
+    def as_entry(self) -> AuditEntry:
+        time = datetime.datetime.fromisoformat(self.time)
+
+        return AuditEntry(
+            user=self.user.name,
+            message=self.message,
+            time=time,
         )
 
 
@@ -670,5 +688,6 @@ all_classes = [
     MultiplayerAuditEntry,
     AsyncRaceRoom,
     AsyncRaceEntry,
+    AsyncRaceAuditEntry,
     PerformedDatabaseMigrations,
 ]
