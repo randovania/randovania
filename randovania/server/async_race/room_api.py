@@ -203,7 +203,10 @@ def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
         case (_, _):
             raise error.InvalidActionError("Unsupported state transition")
 
-    # TODO: audit entry of performed actions
+    database.AsyncRaceAuditEntry.create(
+        room=room, user=sa.get_current_user(), message=f"Changed state from {old_state.value} to {new_state.value}"
+    )
+
     entry.save()
     return room.create_session_entry(user).as_json
 
@@ -220,6 +223,10 @@ def submit_proof(sa: ServerApp, room_id: int, submission_notes: str, proof_url: 
 
     if entry.user_status() != AsyncRaceRoomUserStatus.FINISHED:
         raise error.InvalidActionError("Only possible to submit proof after finishing")
+
+    database.AsyncRaceAuditEntry.create(
+        room=room, user=sa.get_current_user(), message="Updated submission notes and proof."
+    )
 
     entry.submission_notes = submission_notes
     entry.proof_url = proof_url
