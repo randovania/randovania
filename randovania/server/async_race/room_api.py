@@ -8,7 +8,14 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.json_lib import JsonObject, JsonType
 from randovania.network_common import error
-from randovania.network_common.async_race_room import AsyncRaceRoomListEntry, AsyncRaceRoomUserStatus, AsyncRaceSettings
+from randovania.network_common.async_race_room import (
+    AsyncRaceRoomAdminData,
+    AsyncRaceRoomListEntry,
+    AsyncRaceRoomUserStatus,
+    AsyncRaceSettings,
+    RaceRoomLeaderboard,
+    RaceRoomLeaderboardEntry,
+)
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import (
     MAX_SESSION_NAME_LENGTH,
@@ -118,6 +125,55 @@ def get_room(sa: ServerApp, room_id: int) -> JsonType:
     room = AsyncRaceRoom.get_by_id(room_id)
     # FIXME: password protected!
     return room.create_session_entry(sa.get_current_user()).as_json
+
+
+def get_leaderboard(sa: ServerApp, room_id: int) -> JsonType:
+    """
+    Gets the race results. Only accessible after the end time is reached.
+    :param sa:
+    :param room_id: The room to get details for
+    :return: A RaceRoomLeaderboard, json encoded
+    """
+    room = AsyncRaceRoom.get_by_id(room_id)
+    if room.end_datetime > datetime.datetime.now(datetime.UTC):
+        raise error.NotAuthorizedForActionError
+
+    entries = []
+    for entry in room.entries:
+        match entry.user_status():
+            case AsyncRaceRoomUserStatus.FINISHED:
+                entries.append(
+                    RaceRoomLeaderboardEntry(
+                        user=entry.user.as_randovania_user(),
+                        time=entry.finish_datetime - entry.start_datetime,
+                    )
+                )
+            case AsyncRaceRoomUserStatus.FORFEITED | AsyncRaceRoomUserStatus.STARTED:
+                entries.append(
+                    RaceRoomLeaderboardEntry(
+                        user=entry.user.as_randovania_user(),
+                        time=None,
+                    )
+                )
+
+    return RaceRoomLeaderboard(entries).as_json
+
+
+def admin_get_admin_data(sa: ServerApp, room_id: int) -> JsonType:
+    """
+    Gets the all details of every user who has joined the room. Only accessible by admins.
+    :param sa:
+    :param room_id: The room to get details for
+    :return: A AsyncRaceRoomAdminData, json encoded
+    """
+    user = sa.get_current_user()
+    room = AsyncRaceRoom.get_by_id(room_id)
+    if room.creator != user:
+        raise error.NotAuthorizedForActionError
+
+    return AsyncRaceRoomAdminData(
+        users=[entry.create_session_entry() for entry in room.entries],
+    ).as_json
 
 
 def join_and_export(sa: ServerApp, room_id: int, cosmetic_json: JsonType) -> JsonType:
@@ -238,6 +294,8 @@ def setup_app(sa: ServerApp) -> None:
     sa.on("async_race_create_room", create_room, with_header_check=True)
     sa.on("async_race_change_room_settings", change_room_settings, with_header_check=True)
     sa.on("async_race_get_room", get_room, with_header_check=True)
+    sa.on("async_race_get_leaderboard", get_leaderboard, with_header_check=True)
+    sa.on("async_race_admin_get_admin_data", admin_get_admin_data, with_header_check=True)
     sa.on("async_race_join_and_export", join_and_export, with_header_check=True)
     sa.on("async_race_change_state", change_state, with_header_check=True)
     sa.on("async_race_submit_proof", submit_proof, with_header_check=True)

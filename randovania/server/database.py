@@ -31,6 +31,7 @@ from randovania.network_common.multiplayer_session import (
     UserWorldDetail,
 )
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
+from randovania.network_common.user import RandovaniaUser
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
@@ -122,6 +123,9 @@ class User(BaseModel):
             "name": self.name,
             "discord_id": self.discord_id,
         }
+
+    def as_randovania_user(self) -> RandovaniaUser:
+        return RandovaniaUser(id=self.id, name=self.name)
 
 
 def _datetime_now() -> datetime.datetime:
@@ -642,6 +646,17 @@ class AsyncRaceEntry(BaseModel):
             return async_race_room.AsyncRaceRoomUserStatus.STARTED
         else:
             return async_race_room.AsyncRaceRoomUserStatus.FINISHED
+
+    def create_session_entry(self) -> async_race_room.AsyncRaceEntryEntry:
+        return async_race_room.AsyncRaceEntryEntry(
+            user=self.user.as_randovania_user(),
+            join_date=self.join_datetime,
+            start_date=self.start_datetime,
+            finish_date=self.finish_datetime,
+            forfeit=self.forfeit,
+            submission_notes=self.submission_notes,
+            proof_url=self.proof_url,
+        )
 
     @property
     def join_datetime(self) -> datetime.datetime:
