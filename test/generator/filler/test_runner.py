@@ -72,7 +72,7 @@ async def test_run_filler(
     assert initial_pickup_count == len(remaining_items) + len(result_patches.pickup_assignment.values())
 
 
-def test_fill_unassigned_hints_empty_assignment(echoes_game_description, echoes_game_patches):
+async def test_fill_unassigned_hints_empty_assignment(echoes_game_description, echoes_game_patches):
     # Setup
     rng = Random(5000)
     hint_nodes = [
@@ -88,12 +88,17 @@ def test_fill_unassigned_hints_empty_assignment(echoes_game_description, echoes_
     empty_set: frozenset[PickupIndex] = frozenset()
     hint_state.hint_initial_pickups = {node.identifier: empty_set for node in hint_nodes}
 
+    player_pools = [
+        await create_player_pool(rng, echoes_game_patches.configuration, 0, 1, "World 1", MagicMock()),
+    ]
+
     # Run
     result = hint_distributor.fill_unassigned_hints(
         echoes_game_patches,
         echoes_game_description.region_list,
         rng,
         hint_state,
+        player_pools,
     )
 
     # Assert

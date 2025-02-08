@@ -25,7 +25,7 @@ class DreadHintDistributor(HintDistributor):
         return PrecisionPair(HintLocationPrecision.REGION_ONLY, HintItemPrecision.DETAILED, True)
 
     @override
-    def less_interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
+    def is_pickup_interesting(self, pickup: PickupEntry) -> bool:
         return not pickup.has_hint_feature("dna")
 
     @override

@@ -36,7 +36,7 @@ class EchoesHintDistributor(HintDistributor):
         return 2
 
     @override
-    def less_interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
+    def is_pickup_interesting(self, pickup: PickupEntry) -> bool:
         return not pickup.has_hint_feature("key")
 
     @override
