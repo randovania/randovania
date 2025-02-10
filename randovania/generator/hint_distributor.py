@@ -540,29 +540,33 @@ class HintDistributor(ABC):
             precision = dataclasses.replace(precision, location=location_feature)
 
         if precision.item == HintItemPrecision.FEATURAL or isinstance(precision.item, SpecificHintPrecision):
-            item = patches.pickup_assignment[hint.target]
-            debug.debug_print(f"> Choosing pickup feature for {item.pickup}")
-
-            additional_item_precisions = []
-            if self.use_detailed_item_precision:
-                additional_item_precisions.append(HintItemPrecision.DETAILED)
-
-            mean, std_dev = _get_gauss_params(precision.item, self.item_feature_distribution())
-
-            if precision.include_owner:
-                specific_owner = item.player
+            item = patches.pickup_assignment.get(hint.target)
+            if item is None:
+                debug.debug_print("> No pickup here yet; defaulting to DETAILED.\n")
+                precision = dataclasses.replace(precision, item=HintItemPrecision.DETAILED)
             else:
-                specific_owner = None
+                debug.debug_print(f"> Choosing pickup feature for {item.pickup}")
 
-            item_chooser = self.get_pickup_feature_chooser(player_pools, specific_owner)
-            item_feature = item_chooser.choose_feature(
-                item.pickup.hint_features,
-                additional_item_precisions,
-                rng,
-                mean,
-                std_dev,
-            )
-            precision = dataclasses.replace(precision, item=item_feature)
+                additional_item_precisions = []
+                if self.use_detailed_item_precision:
+                    additional_item_precisions.append(HintItemPrecision.DETAILED)
+
+                mean, std_dev = _get_gauss_params(precision.item, self.item_feature_distribution())
+
+                if precision.include_owner:
+                    specific_owner = item.player
+                else:
+                    specific_owner = None
+
+                item_chooser = self.get_pickup_feature_chooser(player_pools, specific_owner)
+                item_feature = item_chooser.choose_feature(
+                    item.pickup.hint_features,
+                    additional_item_precisions,
+                    rng,
+                    mean,
+                    std_dev,
+                )
+                precision = dataclasses.replace(precision, item=item_feature)
 
         return precision
 

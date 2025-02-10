@@ -3,6 +3,8 @@ from __future__ import annotations
 from random import Random
 from unittest.mock import MagicMock
 
+import pytest
+
 from randovania.game_description.db.hint_node import HintNode, HintNodeKind
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.hint import (
@@ -85,8 +87,6 @@ async def test_fill_unassigned_hints_empty_assignment(echoes_game_description, e
     filler_config = MagicMock()
     filler_config.minimum_available_locations_for_hint_placement = 0
     hint_state = HintState(filler_config, echoes_game_description)
-    empty_set: frozenset[PickupIndex] = frozenset()
-    hint_state.hint_initial_pickups = {node.identifier: empty_set for node in hint_nodes}
 
     player_pools = [
         await create_player_pool(rng, echoes_game_patches.configuration, 0, 1, "World 1", MagicMock()),
@@ -105,7 +105,14 @@ async def test_fill_unassigned_hints_empty_assignment(echoes_game_description, e
     assert len(result.hints) == len(hint_nodes)
 
 
-def test_add_hints_precision(empty_patches, blank_pickup):
+@pytest.mark.parametrize(
+    "pickups_to_assign",
+    [
+        [1, 2, 3],
+        [1, 3],  # test case for a Nothing being hinted
+    ],
+)
+def test_add_hints_precision(empty_patches, blank_pickup, pickups_to_assign):
     player_pools = [MagicMock()]
     rng = MagicMock()
     rng.gauss.return_value = 0.0
@@ -118,7 +125,9 @@ def test_add_hints_precision(empty_patches, blank_pickup):
         ),
         LocationHint.unassigned(PickupIndex(2)),
     ]
-    pickups = [(PickupIndex(i), blank_pickup) for i in range(1, 4)]
+
+    assignment = [(PickupIndex(i), blank_pickup) for i in pickups_to_assign]
+
     nc = NodeIdentifier.create
     identifiers = [
         nc("Intro", "Hint Room", "Hint no Translator"),
@@ -129,7 +138,7 @@ def test_add_hints_precision(empty_patches, blank_pickup):
     for identifier, hint in zip(identifiers, hints, strict=True):
         initial_patches = initial_patches.assign_hint(identifier, hint)
 
-    initial_patches = initial_patches.assign_own_pickups(pickups)
+    initial_patches = initial_patches.assign_own_pickups(assignment)
 
     hint_distributor = EchoesHintDistributor()
 

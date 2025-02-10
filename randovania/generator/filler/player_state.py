@@ -5,6 +5,7 @@ import re
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.common import elevators
 from randovania.generator import reach_lib
@@ -57,7 +58,7 @@ class HintState:
     @property
     def hint_valid_targets(self) -> dict[NodeIdentifier, set[PickupIndex]]:
         """Mapping of HintNodes to a set of valid PickupIndex choices they can target"""
-        return {
+        targets = {
             hint: {
                 pickup
                 for pickup, available in self.pickup_available_indices_when_placed.items()
@@ -66,6 +67,12 @@ class HintState:
             }
             for hint, pickups in self.hint_initial_pickups.items()
         }
+        for node in self.game.region_list.iterate_nodes():
+            if not isinstance(node, HintNode):
+                continue
+            # ensure all hint nodes are included, even if they have no targets
+            targets.setdefault(node.identifier, set())
+        return targets
 
     def advance_hint_seen_count(self, reach: GeneratorReach) -> None:
         """Increases hint seen count each time a hint is collected, and sets initial_pickups the first time"""
