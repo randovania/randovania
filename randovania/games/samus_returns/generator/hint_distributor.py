@@ -16,5 +16,10 @@ class MSRHintDistributor(HintDistributor):
         return PrecisionPair.featural()
 
     @override
+    @property
+    def use_detailed_location_precision(self) -> bool:
+        return False
+
+    @override
     def less_interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
         return not pickup.has_hint_feature("dna")
