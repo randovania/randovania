@@ -159,7 +159,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
         ],
         need_to_play=[
             "A modded 3DS with Luma3DS, or Citra",
-            "A dumped RomFS of your original game. Any region works.",
+            "A decrypted copy of your original game. Currently, only the NA and EU versions are supported.",
         ],
     ),
     hash_words=_hash_words(),
