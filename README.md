@@ -244,6 +244,8 @@ Clone this repository and open the folder in Visual Studio Code. It suggests sev
 
 If your Python is setup properly, you can use the `Create venv with all exporters` task by pressing CTRL+SHIFT+P, type in `Task`, select `Tasks: Run task` and then select the task. It will create the venv with all the dependencies installed for you.
 
+Then make sure that the Python extension is installed and select the Python installation from the venv via CTRL+SHIFT+P and `Select Python: Interpreter`.
+
 There is also a task defined to run all tests. To run individual tests you can utilise the `Testing` section of Visual Studio Code. You can simply run or debug a test there.
 
 To start Randovania you can press CTRL+F5. If you only press F5, Randovania will start with a debugger. Be aware that starting with a debugger makes the application much slower.

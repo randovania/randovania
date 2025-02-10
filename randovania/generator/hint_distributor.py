@@ -336,7 +336,7 @@ class HintDistributor(ABC):
             # exclude uninteresting pickups (minors, Echoes keys, etc.)
             real_potential_targets = {
                 target
-                for target in potential_targets
+                for target in sorted(potential_targets)
                 if self.hint_suitability_for_target(patches.pickup_assignment[target], player_pools)
                 >= HintSuitability.MORE_INTERESTING
             }
@@ -468,7 +468,7 @@ class HintDistributor(ABC):
         for pool in pools:
             for pickup in pool.pickups_in_world:
                 relevant_pickups.add(pickup)
-                for feature in pickup.hint_features:
+                for feature in sorted(pickup.hint_features):
                     pickups_with_feature[feature].add(pickup)
 
         detailed_precision = HintItemPrecision.DETAILED if self.use_detailed_item_precision else None
