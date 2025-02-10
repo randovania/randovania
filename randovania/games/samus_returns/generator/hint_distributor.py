@@ -23,3 +23,7 @@ class MSRHintDistributor(HintDistributor):
             if target.pickup.has_hint_feature(feature):
                 return False
         return True
+
+    @property
+    def use_detailed_location_precision(self) -> bool:
+        return False
