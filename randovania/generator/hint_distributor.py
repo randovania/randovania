@@ -6,9 +6,9 @@ import math
 from abc import ABC, abstractmethod
 from collections import defaultdict
 from collections.abc import Callable, Collection, Container, Mapping, Sequence
-from enum import Enum
+from enum import Enum, IntEnum
 from random import Random
-from typing import TYPE_CHECKING, Any, override
+from typing import TYPE_CHECKING, Any, final, override
 
 from randovania.game_description.db.hint_node import HintNode, HintNodeKind
 from randovania.game_description.db.pickup_node import PickupNode
@@ -30,6 +30,7 @@ from randovania.generator.filler.player_state import HintState, PlayerState
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
+    from randovania.game_description.assignment import PickupTarget
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -139,6 +140,19 @@ class FeatureChooser[PrecisionT: Enum]:
         return feature
 
 
+class HintSuitability(IntEnum):
+    """How high priority a given pickup is for hinting."""
+
+    LEAST_INTERESTING = 0
+    """Last resort for hint placement."""
+
+    INTERESTING = 1
+    """Fallback for when there are no `MORE_INTERESTING` pickups."""
+
+    MORE_INTERESTING = 2
+    """Highest priority."""
+
+
 class HintDistributor(ABC):
     @property
     def num_joke_hints(self) -> int:
@@ -242,6 +256,7 @@ class HintDistributor(ABC):
             player_state.game.region_list,
             rng,
             player_state.hint_state,
+            player_pools,
         )
         return await self.assign_precision_to_hints(full_hints_patches, rng, player_pool, player_pools)
 
@@ -263,12 +278,30 @@ class HintDistributor(ABC):
         """
         return self.add_hints_precision(patches, rng, player_pools, hint_kinds)
 
-    def interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
-        """Highest priority pickups are those shown in the credits"""
-        return pickup.show_in_credits_spoiler and self.less_interesting_pickup_to_hint(pickup)
+    @final
+    @staticmethod
+    def hint_suitability_for_target(target: PickupTarget, player_pools: list[PlayerPool]) -> HintSuitability:
+        """
+        Determines the HintSuitability for the given target,
+        according to the criteria of its *owner's* HintDistributor.
 
-    def less_interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
-        """Certain games may want certain pickups to only be hinted as a last resort"""
+        `MORE_INTERESTING` pickups are a subset of `INTERESTING` pickups,
+        which are a subset of `LEAST_INTERESTING` pickups.
+        """
+        hint_distributor = player_pools[target.player].game_generator.hint_distributor
+
+        if not hint_distributor.is_pickup_interesting(target.pickup):
+            return HintSuitability.LEAST_INTERESTING
+        if not hint_distributor.is_pickup_more_interesting(target.pickup):
+            return HintSuitability.INTERESTING
+        return HintSuitability.MORE_INTERESTING
+
+    def is_pickup_more_interesting(self, pickup: PickupEntry) -> bool:
+        """Pickups which don't satisfy this check are lower priority for hinting than those that do."""
+        return pickup.show_in_credits_spoiler
+
+    def is_pickup_interesting(self, pickup: PickupEntry) -> bool:
+        """Pickups which don't satisfy this check are only hinted as a last resort."""
         return True
 
     def fill_unassigned_hints(
@@ -277,6 +310,7 @@ class HintDistributor(ABC):
         region_list: RegionList,
         rng: Random,
         hint_state: HintState,
+        player_pools: list[PlayerPool],
     ) -> GamePatches:
         """
         Selects targets for all remaining unassigned generic hint nodes
@@ -303,7 +337,8 @@ class HintDistributor(ABC):
             real_potential_targets = {
                 target
                 for target in sorted(potential_targets)
-                if self.interesting_pickup_to_hint(patches.pickup_assignment[target].pickup)
+                if self.hint_suitability_for_target(patches.pickup_assignment[target], player_pools)
+                >= HintSuitability.MORE_INTERESTING
             }
             # don't hint things twice
             real_potential_targets -= hinted_locations
@@ -313,7 +348,7 @@ class HintDistributor(ABC):
                 real_potential_targets = {
                     pickup
                     for pickup, entry in patches.pickup_assignment.items()
-                    if self.less_interesting_pickup_to_hint(entry.pickup)
+                    if self.hint_suitability_for_target(entry, player_pools) >= HintSuitability.INTERESTING
                 }
                 real_potential_targets -= hinted_locations
                 debug.debug_print(
