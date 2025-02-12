@@ -14,7 +14,11 @@ from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.interface_common.options import Options
 from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
-from randovania.network_common.async_race_room import AsyncRaceRoomEntry, AsyncRaceRoomUserStatus
+from randovania.network_common.async_race_room import (
+    AsyncRaceRoomEntry,
+    AsyncRaceRoomRaceStatus,
+    AsyncRaceRoomUserStatus,
+)
 
 
 class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
@@ -22,7 +26,13 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
     room: AsyncRaceRoomEntry
     preset: VersionedPreset
 
-    def __init__(self, room: AsyncRaceRoomEntry, network_client: QtNetworkClient, options: Options):
+    def __init__(
+        self,
+        room: AsyncRaceRoomEntry,
+        password: str | None,
+        network_client: QtNetworkClient,
+        options: Options,
+    ):
         super().__init__()
         self._network_client = network_client
         self._options = options
@@ -31,10 +41,11 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         self.ui = Ui_AsyncRaceRoomWindow()
         self.ui.setupUi(self)
 
-        self._change_options_menu = QtWidgets.QMenu(self.ui.change_options_button)
-        self.ui.change_options_button.setMenu(self._change_options_menu)
-        self._change_options_menu.addAction("Change Options").triggered.connect(self._on_change_options)
-        self._change_options_menu.addAction("View Entries")
+        self._administration_menu = QtWidgets.QMenu(self.ui.administration_button)
+        self.ui.administration_button.setMenu(self._administration_menu)
+        self._administration_menu.addAction("Change options").triggered.connect(self._on_change_options)
+        self._administration_menu.addAction("View user entries")
+        self.ui.view_preset_description_button.clicked.connect(self._preset_view_summary)
 
         # TODO: background task things
 
@@ -70,34 +81,57 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
             f"Game: {game_name}\nHash: {room.game_details.word_hash} ({room.game_details.seed_hash})"
         )
 
-        categories = list(preset_describer.describe(self.preset.get_preset()))
-        self.ui.layout_description_left_label.setText(preset_describer.merge_categories(categories[::2]))
-        self.ui.layout_description_right_label.setText(preset_describer.merge_categories(categories[1::2]))
+        can_participate = room.race_status == AsyncRaceRoomRaceStatus.ACTIVE
+
         self.ui.customize_cosmetic_button.setEnabled(self.preset.game.gui.cosmetic_dialog is not None)
-        self.ui.join_and_export_button.setEnabled(room.self_status != AsyncRaceRoomUserStatus.ROOM_NOT_OPEN)
+        self.ui.join_and_export_button.setEnabled(
+            can_participate and room.self_status != AsyncRaceRoomUserStatus.ROOM_NOT_OPEN
+        )
         self.ui.join_and_export_button.setText(
             "Join and export game"
             if room.self_status in {AsyncRaceRoomUserStatus.ROOM_NOT_OPEN, AsyncRaceRoomUserStatus.NOT_MEMBER}
             else "Re-export"
         )
         self.ui.start_button.setEnabled(
-            room.self_status in {AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.JOINED}
+            can_participate and room.self_status in {AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.JOINED}
         )
         self.ui.start_button.setText("Start" if room.self_status != AsyncRaceRoomUserStatus.STARTED else "Undo Start")
         self.ui.finish_button.setEnabled(
-            room.self_status in {AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.FINISHED}
+            can_participate and room.self_status in {AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.FINISHED}
         )
         self.ui.finish_button.setText(
             "Finish" if room.self_status != AsyncRaceRoomUserStatus.FINISHED else "Undo Finish"
         )
         self.ui.forfeit_button.setEnabled(
-            room.self_status in {AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.FORFEITED}
+            can_participate and room.self_status in {AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.FORFEITED}
         )
         self.ui.forfeit_button.setText(
             "Forfeit" if room.self_status != AsyncRaceRoomUserStatus.FORFEITED else "Undo Forfeit"
         )
         self.ui.submit_proof_button.setEnabled(room.self_status == AsyncRaceRoomUserStatus.FINISHED)
-        self.ui.change_options_button.setEnabled(room.is_admin)
+        self.ui.administration_button.setEnabled(room.is_admin)
+
+        participation_text = None
+        match room.race_status:
+            case AsyncRaceRoomRaceStatus.SCHEDULED:
+                participation_text = f"Race starts in {humanize.naturaltime(room.start_date, when=now)}"
+            case AsyncRaceRoomRaceStatus.FINISHED:
+                participation_text = "Race has finished."
+
+        self.ui.participation_label.setText(participation_text or "")
+        self.ui.participation_label.setVisible(participation_text is not None)
+        self.ui.results_group.setEnabled(room.race_status == AsyncRaceRoomRaceStatus.FINISHED)
+
+    @asyncSlot()
+    async def _preset_view_summary(self) -> None:
+        preset = self.preset.get_preset()
+        description = preset_describer.merge_categories(preset_describer.describe(preset))
+
+        message_box = QtWidgets.QMessageBox(self)
+        message_box.setWindowTitle(preset.name)
+        message_box.setText(description)
+        message_box.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
+        await async_dialog.execute_dialog(message_box)
 
     async def _status_transition(self, new_status: AsyncRaceRoomUserStatus) -> None:
         """Transitions to the requested status, and updates the UI for it."""
