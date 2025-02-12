@@ -11,6 +11,7 @@ from randovania.network_common import error
 from randovania.network_common.async_race_room import (
     AsyncRaceRoomAdminData,
     AsyncRaceRoomListEntry,
+    AsyncRaceRoomRaceStatus,
     AsyncRaceRoomUserStatus,
     AsyncRaceSettings,
     RaceRoomLeaderboard,
@@ -29,13 +30,14 @@ from randovania.server.server_app import ServerApp
 
 
 def list_rooms(sa: ServerApp, limit: int | None) -> JsonType:
-    # Note: this query fails to list any session that has no memberships
-    # But that's fine, because these sessions should've been deleted!
+    now = datetime.datetime.now(datetime.UTC)
+
     def construct_helper(**args: typing.Any) -> AsyncRaceRoomListEntry:
         args["creation_date"] = datetime.datetime.fromisoformat(args["creation_date"])
         args["start_date"] = datetime.datetime.fromisoformat(args["start_date"])
         args["end_date"] = datetime.datetime.fromisoformat(args["end_date"])
         args["has_password"] = bool(args["has_password"])
+        args["race_status"] = AsyncRaceRoomRaceStatus.from_dates(args["start_date"], args["end_date"], now)
         return AsyncRaceRoomListEntry(**args)
 
     sessions: list[AsyncRaceRoomListEntry] = (
