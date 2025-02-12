@@ -10443,13 +10443,21 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Behind Speed Blocks": {
-                            "type": "resource",
+                        "Event - Pump Control Terminal": {
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "SpeedBooster",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Next to Pickup": {
@@ -10595,12 +10603,12 @@
                         }
                     }
                 },
-                "Behind Speed Blocks": {
-                    "node_type": "generic",
+                "Event - Pump Control Terminal": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 114.74816394219378,
-                        "y": 294.5981205085683,
+                        "x": 165.67292051456533,
+                        "y": 266.24257153041054,
                         "z": 0.0
                     },
                     "description": "",
@@ -10609,14 +10617,8 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
+                    "event_name": "LowerWaterLevel",
                     "connections": {
-                        "Event - Pump Control Terminal": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Next to Pickup": {
                             "type": "and",
                             "data": {
@@ -10646,15 +10648,6 @@
                                                                 "data": {
                                                                     "type": "events",
                                                                     "name": "LowerWaterLevel",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "misc",
-                                                                    "name": "GeneratorHack",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -10725,40 +10718,15 @@
                         }
                     }
                 },
-                "Event - Pump Control Terminal": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 165.67292051456533,
-                        "y": 266.24257153041054,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "LowerWaterLevel",
-                    "connections": {
-                        "Behind Speed Blocks": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Next to Pickup": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 167.1768061738182,
-                        "y": 214.895705022664,
+                        "x": 167.18,
+                        "y": 214.9,
                         "z": 0.0
                     },
-                    "description": "FIXME: Collecting the pump event is by the generator definition not considered\nsafe. The generator workaround is assuming here that if you reach this PonR,\nthat you were able to collect the event.",
+                    "description": "",
                     "layers": [
                         "default"
                     ],
@@ -10814,15 +10782,6 @@
                                                                             "data": {
                                                                                 "type": "events",
                                                                                 "name": "LowerWaterLevel",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "misc",
-                                                                                "name": "GeneratorHack",
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
@@ -10904,15 +10863,6 @@
                                                             }
                                                         ]
                                                     }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "GeneratorHack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
                                                 }
                                             ]
                                         }
@@ -10920,7 +10870,7 @@
                                 ]
                             }
                         },
-                        "Behind Speed Blocks": {
+                        "Event - Pump Control Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10962,15 +10912,6 @@
                                                                             "data": {
                                                                                 "type": "events",
                                                                                 "name": "LowerWaterLevel",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "misc",
-                                                                                "name": "GeneratorHack",
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
@@ -11051,15 +10992,6 @@
                                                                 }
                                                             }
                                                         ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "GeneratorHack",
-                                                        "amount": 1,
-                                                        "negate": false
                                                     }
                                                 }
                                             ]
