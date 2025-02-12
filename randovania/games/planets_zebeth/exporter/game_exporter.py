@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import dataclasses
 import multiprocessing
-import subprocess
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
@@ -10,7 +9,7 @@ from typing import TYPE_CHECKING, Any
 import randovania
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
-from randovania.patching.patchers.exceptions import UnableToExportError
+from randovania.games.common.dotnet import is_dotnet_set_up
 
 if TYPE_CHECKING:
     from multiprocessing.connection import Connection
@@ -54,22 +53,8 @@ class PlanetsZebethGameExporter(GameExporter):
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
         # Check if dotnet is available
-        dotnet_ran_fine = False
-        try:
-            dotnet_process = subprocess.run(["dotnet", "--info"], check=False)
-            dotnet_ran_fine = dotnet_process.returncode == 0
-        except FileNotFoundError:
-            dotnet_ran_fine = False
-
-        monitoring.set_tag("planets_dotnet_ran_fine", dotnet_ran_fine)
-
-        if not dotnet_ran_fine:
-            raise UnableToExportError(
-                "You do not have .NET installed!\n"
-                "Please ensure that it is installed and located in PATH. It can be installed "
-                "from here:\n"
-                "https://aka.ms/dotnet/download"
-            )
+        # Raises error in case it's not set up
+        is_dotnet_set_up()
 
         receiving_pipe, output_pipe = multiprocessing.Pipe(True)
 
