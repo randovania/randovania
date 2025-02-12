@@ -3697,7 +3697,7 @@
                         "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: varia / damage runs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -3741,6 +3741,32 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 170,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
