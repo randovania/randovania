@@ -1,6 +1,7 @@
 import dataclasses
 import datetime
 import enum
+import typing
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.layout.versioned_preset import VersionedPreset
@@ -18,6 +19,26 @@ class AsyncRaceSettings(JsonDataclass):
     visibility: MultiplayerSessionVisibility
 
 
+class AsyncRaceRoomRaceStatus(enum.Enum):
+    """
+    Indicates if the race has already started and/or finished.
+    """
+
+    SCHEDULED = "scheduled"
+    ACTIVE = "active"
+    FINISHED = "finished"
+
+    @classmethod
+    def from_dates(cls, start: datetime.datetime, end: datetime.datetime, now: datetime.datetime) -> typing.Self:
+        """Calculates the status based on the given start and end dates, compared to a given now."""
+        if now < start:
+            return cls.SCHEDULED
+        if now > end:
+            return cls.FINISHED
+        assert start < end
+        return cls.ACTIVE
+
+
 @dataclasses.dataclass
 class AsyncRaceRoomListEntry(JsonDataclass):
     """
@@ -32,6 +53,7 @@ class AsyncRaceRoomListEntry(JsonDataclass):
     start_date: datetime.datetime
     end_date: datetime.datetime
     visibility: MultiplayerSessionVisibility
+    race_status: AsyncRaceRoomRaceStatus
 
 
 @dataclasses.dataclass
