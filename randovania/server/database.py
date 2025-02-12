@@ -19,6 +19,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import async_race_room, error, multiplayer_session
+from randovania.network_common.async_race_room import AsyncRaceRoomRaceStatus
 from randovania.network_common.audit import AuditEntry
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.game_details import GameDetails
@@ -572,9 +573,11 @@ class AsyncRaceRoom(BaseModel):
     def create_session_entry(self, for_user: User) -> async_race_room.AsyncRaceRoomEntry:
         game_details = self.game_details()
 
+        now = _datetime_now()
+
         if (entry := AsyncRaceEntry.entry_for(self, for_user)) is not None:
             status = entry.user_status()
-        elif self.start_datetime <= _datetime_now():
+        elif self.start_datetime <= now:
             status = async_race_room.AsyncRaceRoomUserStatus.NOT_MEMBER
         else:
             status = async_race_room.AsyncRaceRoomUserStatus.ROOM_NOT_OPEN
@@ -588,6 +591,11 @@ class AsyncRaceRoom(BaseModel):
             creation_date=self.creation_datetime,
             start_date=self.start_datetime,
             end_date=self.end_datetime,
+            race_status=AsyncRaceRoomRaceStatus.from_dates(
+                self.start_datetime,
+                self.end_datetime,
+                now,
+            ),
             game_details=game_details,
             presets_raw=[
                 VersionedPreset.with_preset(preset).as_bytes() for preset in self.layout_description.all_presets
