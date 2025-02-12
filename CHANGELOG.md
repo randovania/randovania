@@ -38,9 +38,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+#### Area 4 Central Caves
+
+- Fixed: Starting in Spazer Beam Chamber now places Samus in the correct room.
+
 #### Area 5 Tower Exterior
 
-- Fixed: Starting in Zeta Arena Access now places Samus in the correct room.
+- Fixed: Starting in Screw Attack Chamber or Zeta Arena Access now places Samus in the correct room.
 
 ## [8.9.0] - 2025-02-02
 
