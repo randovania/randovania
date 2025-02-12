@@ -169,27 +169,26 @@ Extra - room_id: [3]
       All of the following:
           Morph Ball
           Any of the following:
-              # Freeze Powamp by shooting through wall
-              Wave Beam and Can Freeze Enemies With Ice Beam
               Any of the following:
-                  # Freeze Powamp with Diffusion
+                  # Freeze Powamp by hitting it through the wall.
                   Can Freeze Enemies With Diffusion
-                  All of the following:
-                      # Freeze by bending shot
-                      Knowledge (Advanced)
-                      Any of the following:
-                          # Freeze Requirements
-                          # w/ Ice Missiles: https://youtu.be/zdGZBI3tKAw
-                          Can Freeze Enemies With Ice Missiles
-                          # w/ Ice Beam: https://youtu.be/LtBms_eox-E&t=88
-                          Can Freeze Enemies With Ice Beam
-                      # Deal with water
-                      Gravity Suit or After Sector 4 Water Level Lowered
-                      Any of the following:
-                          # Movement Requirements
-                          # NHJ: https://youtu.be/DJHGcspkPhM
-                          Movement (Advanced) and Wall Jump (Advanced)
-                          Movement (Intermediate) and Have Any Jump Upgrade
+                  Wave Beam and Can Freeze Enemies With Ice Beam
+              All of the following:
+                  # Freeze by bending shot
+                  Knowledge (Advanced)
+                  Any of the following:
+                      # Freeze Requirements
+                      # w/ Ice Missiles: https://youtu.be/zdGZBI3tKAw
+                      Can Freeze Enemies With Ice Missiles
+                      # w/ Ice Beam: https://youtu.be/LtBms_eox-E&t=88
+                      Can Freeze Enemies With Ice Beam
+                  # Deal with water
+                  Gravity Suit or After Sector 4 Water Level Lowered
+                  Any of the following:
+                      # Movement Requirements
+                      # NHJ: https://youtu.be/DJHGcspkPhM
+                      Movement (Advanced) and Wall Jump (Advanced)
+                      Movement (Intermediate) and Have Any Jump Upgrade
           Any of the following:
               # Damage Reqs
               After Sector 4 Water Level Lowered
@@ -340,7 +339,7 @@ Extra - room_id: [6]
                   # Reach sciser
                   Hi-Jump
                   # NHJ via ledge-grab jump: https://youtu.be/6RhuTs1mD1c
-                  Movement (Intermediate)
+                  Mid-Air Morph (Intermediate) and Movement (Intermediate) and Stand On Frozen Enemies (Intermediate)
           All of the following:
               # Destroy bomb blocks and go up with SJ
               Space Jump
@@ -485,7 +484,7 @@ Extra - room_id: [10]
                   Space Jump
                   Hi-Jump and Wall Jump (Intermediate)
                   Wall Jump (Beginner) and Can Single Walljump
-          # Underwater Walljump out. Double speed at around water level: https://youtu.be/CWyXKT_3JBE
+          # Underwater Walljump out. Double WJ speed at around water level: https://youtu.be/CWyXKT_3JBE
           Underwater Wall Jump (Expert)
 
 ----------------
@@ -716,7 +715,7 @@ Extra - room_id: [15]
   * Extra - door_idx: (35,)
   > Pickup (Missile Tank)
       Any of the following:
-          Combat (Advanced) or Can Kill Tough Underwater Beam-Resistant Enemy
+          Combat (Advanced) or Can Freeze Enemies With Any Weapon or Can Kill Tough Underwater Beam-Resistant Enemy
           Damage Boosts (Advanced) and Normal Damage ≥ 150
 
 ----------------
@@ -730,6 +729,7 @@ Extra - room_id: [16]
   > Door to Aquarium Hub Access
       Any of the following:
           All of the following:
+              # With Gravity
               Gravity Suit
               Any of the following:
                   Space Jump
@@ -743,15 +743,25 @@ Extra - room_id: [16]
                           Wall Jump (Beginner)
                           # With HJ: https://youtu.be/M6cyTUajA1s
                           Hi-Jump
-          # Jump off of frozen Evir and perform many underwater WJs TODO: video
-          Stand On Frozen Enemies (Beginner) and Underwater Wall Jump (Expert) and Can Freeze Enemies With Any Weapon
+          All of the following:
+              # Jump off of frozen Evir and perform many underwater WJs TODO: video
+              Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
+              Any of the following:
+                  Underwater Wall Jump (Expert)
+                  Hi-Jump and Underwater Wall Jump (Advanced)
 
 > Door to Aquarium Hub Access; Heals? False
   * Layers: default
   * L4 Hatch to Aquarium Hub Access/Door to Evir Shaft
   * Extra - door_idx: (37,)
   > Door to Aquarium Tank
-      Trivial
+      Any of the following:
+          # Evir will be in the way
+          Can Kill Tough Underwater Beam-Resistant Enemy
+          # Damage boost through
+          Damage Boosts (Beginner) and Normal Damage ≥ 95
+          # Evirs move on a cycle, jump down when the Evir is out of the way
+          Combat (Advanced)
 
 ----------------
 Aquarium Tank
@@ -876,7 +886,7 @@ Extra - room_id: [19]
           Gravity Suit and Level 0 Keycard and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
           Any of the following:
               After Sector 4 Water Level Lowered
-              Damage Runs (Beginner) and Electrified Water Damage ≥ 10
+              Damage Runs (Beginner) and Electrified Water Damage ≥ 20
   > Room Center
       Any of the following:
           # To destroy Powamp
@@ -945,7 +955,7 @@ Extra - room_id: [20]
       Any of the following:
           Can Break Single Bomb Blocks
           # Shinespark from Pump Control Unit: https://youtu.be/GukqyHY3bHM
-          Level 0 Keycard and Level 1 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+          Level 0 Keycard and Level 1 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Bottom of Room
       All of the following:
           Morph Ball
@@ -986,7 +996,7 @@ Extra - room_id: [20]
           After Sector 4 Water Level Lowered
           All of the following:
               # Damage Run
-              Damage Runs (Beginner)
+              Damage Runs (Intermediate)
               Any of the following:
                   Electrified Water Damage ≥ 31
                   Electrified Water Damage ≥ 8 and Have Any Suit Upgrade
@@ -1087,7 +1097,6 @@ Extra - unlocked_save_recharge_station: True
   * Tunnel to Breeding Tank Access/Other to Pump Control Save Room
   * Extra - door_idx: (69,)
   > Door to Pump Control Access
-      # TODO: test what happens with entrance rando
       Can Use Any Bombs
 
 > Save Station; Heals? False; Spawn Point
@@ -1203,7 +1212,7 @@ Extra - room_id: [24]
       Trivial
   > Other to Security Bypass
       All of the following:
-          Missiles
+          Missiles and Morph Ball
           Any of the following:
               # Break Bomb Blocks
               Can Use Power Bombs
@@ -1216,7 +1225,7 @@ Extra - room_id: [24]
               # You can Screw Attack these blocks
               Gravity Suit and Screw Attack and Knowledge (Beginner)
               # Shinespark from Cargo Hold
-              Gravity Suit and Level 0 Keycard and Space Jump and Speed Booster and Knowledge (Advanced) and Shinespark Tricks (Hypermode) and Disabled Door Lock Rando and Disabled Entrance Rando
+              Gravity Suit and Level 0 Keycard and Space Jump and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Hypermode) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Aquarium Shaft West; Heals? False
   * Layers: default
@@ -1233,7 +1242,7 @@ Extra - room_id: [24]
       Morph Ball
   > Door to Security Access
       All of the following:
-          Missiles
+          Missiles and Morph Ball
           Any of the following:
               Can Use Any Bombs
               Gravity Suit and Screw Attack and Knowledge (Beginner)
@@ -1249,9 +1258,7 @@ Extra - room_id: [25]
   > Door to Level 4 Security Room
       Trivial
   > Other to Security Bypass
-      Any of the following:
-          Movement (Beginner)
-          Gravity Suit and Space Jump
+      Trivial
   > By Hole
       Movement (Beginner)
 
@@ -1275,9 +1282,7 @@ Extra - room_id: [25]
   * Open Passage to Security Bypass/Other to Security Access
   * Extra - door_idx: (83,)
   > Door to Cheddar Bay
-      Any of the following:
-          Movement (Beginner)
-          Gravity Suit and Space Jump
+      Trivial
 
 > Other to Sciser Sanctuary; Heals? False
   * Layers: default
@@ -1699,6 +1704,8 @@ Extra - room_id: [35]
                   Space Jump
                   # Shinespark
                   Level 0 Keycard and Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+                  # Single walljump on the side and kill the powamps
+                  Screw Attack and Wall Jump (Intermediate) and Can Single Walljump
 
 > Door to Glass Tube to Sector 2 (TRO); Heals? False
   * Layers: default
@@ -1737,7 +1744,7 @@ Extra - room_id: [35]
   > Other to Diffusion Connection Access
       All of the following:
           Morph Ball
-          # https://youtu.be/kxyotciTTXM
+          # Get into tunnel: https://youtu.be/kxyotciTTXM
           Mid-Air Morph (Intermediate) or Can Bounce in Ball
   > Upper Ladder
       Missiles and Morph Ball and After Powamp Shaft Diffusion Blocks Destroyed
@@ -1797,11 +1804,11 @@ Extra - room_id: [36]
                   Missiles ≥ 3 and Super Missile Data
                   Morph Ball and Power Bombs ≥ 2 and Knowledge (Beginner)
               All of the following:
-                  Gravity Suit
-                  Any of the following:
-                      Screw Attack and Knowledge (Beginner)
-                      # Run past Geron spawning
-                      Movement (Intermediate)
+                  # Destroy Geron with Screw
+                  Screw Attack and Knowledge (Beginner)
+                  Gravity Suit or After Sector 4 Water Level Lowered
+              # Run past Geron spawning
+              Hi-Jump and Movement (Intermediate)
   > Door to Aquarium Storage
       All of the following:
           Morph Ball
@@ -2002,13 +2009,6 @@ Extra - room_id: [40]
               # Shoot charge flare through wall https://youtu.be/IyAMH0n71bI
               Charge Beam and Knowledge (Intermediate)
           Any of the following:
-              # Get to the Gloden Scisers
-              Wave Beam
-              All of the following:
-                  Missiles ≥ 2
-                  # Either move to the Scizers or precisely shoot from the outside
-                  Morph Ball or Movement (Intermediate)
-          Any of the following:
               # Kill the Golden Scisers
               # Kill from outside with Wave
               Charge Beam and Wave Beam
@@ -2019,7 +2019,7 @@ Extra - room_id: [40]
                       Charge Beam or Missiles ≥ 5
                       Gravity Suit and Screw Attack
               # Kill from outside with Missiles
-              Missiles ≥ 10 and Movement (Intermediate)
+              Missiles ≥ 10 and Combat (Intermediate)
 
 > Door to Sanctuary Cache; Heals? False
   * Layers: default
@@ -2168,7 +2168,7 @@ Extra - room_id: [45]
   * L0 Hatch to Glass Tube to Sector 6 (NOC)/Door to Diffusion Connection Access
   * Extra - door_idx: (110,)
   > Other to Powamp Shaft
-      Trivial
+      Morph Ball
 
 > Other to Powamp Shaft; Heals? False
   * Layers: default
