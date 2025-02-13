@@ -52,6 +52,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         self.ui.customize_cosmetic_button.clicked.connect(self._open_user_preferences_dialog)
         self.ui.join_and_export_button.clicked.connect(self._on_join_and_export)
         self.ui.start_button.clicked.connect(self._on_start)
+        self.ui.pause_button.clicked.connect(self._on_pause)
         self.ui.finish_button.clicked.connect(self._on_finish)
         self.ui.forfeit_button.clicked.connect(self._on_forfeit)
         self.ui.submit_proof_button.clicked.connect(self._on_submit_proof)
@@ -96,6 +97,10 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
             can_participate and room.self_status in {AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.JOINED}
         )
         self.ui.start_button.setText("Start" if room.self_status != AsyncRaceRoomUserStatus.STARTED else "Undo Start")
+        self.ui.pause_button.setEnabled(
+            can_participate and room.self_status in {AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.PAUSED}
+        )
+        self.ui.pause_button.setText("Pause" if room.self_status != AsyncRaceRoomUserStatus.PAUSED else "Unpause")
         self.ui.finish_button.setEnabled(
             can_participate and room.self_status in {AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.FINISHED}
         )
@@ -144,6 +149,15 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
             AsyncRaceRoomUserStatus.STARTED
             if self.room.self_status == AsyncRaceRoomUserStatus.JOINED
             else AsyncRaceRoomUserStatus.JOINED
+        )
+
+    @asyncSlot()
+    async def _on_pause(self) -> None:
+        """Called when the `Pause` button is pressed."""
+        await self._status_transition(
+            AsyncRaceRoomUserStatus.PAUSED
+            if self.room.self_status != AsyncRaceRoomUserStatus.PAUSED
+            else AsyncRaceRoomUserStatus.STARTED
         )
 
     @asyncSlot()

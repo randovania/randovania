@@ -23,6 +23,7 @@ from randovania.network_common.multiplayer_session import (
 )
 from randovania.server import database
 from randovania.server.database import (
+    AsyncRaceEntryPause,
     AsyncRaceRoom,
     User,
 )
@@ -174,7 +175,7 @@ def admin_get_admin_data(sa: ServerApp, room_id: int) -> JsonType:
         raise error.NotAuthorizedForActionError
 
     return AsyncRaceRoomAdminData(
-        users=[entry.create_session_entry() for entry in room.entries],
+        users=[entry.create_admin_entry() for entry in room.entries],
     ).as_json
 
 
@@ -233,6 +234,8 @@ def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
 
     now = datetime.datetime.now(datetime.UTC)
 
+    things_to_save = [entry]
+
     match (old_state, new_state):
         case (AsyncRaceRoomUserStatus.JOINED, AsyncRaceRoomUserStatus.STARTED):
             entry.start_datetime = now
@@ -241,6 +244,18 @@ def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
         case (AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.JOINED):
             # Undoing pressing "Start"
             entry.start_datetime = None
+
+        case (AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.PAUSED):
+            # Pressing Finish
+            AsyncRaceEntryPause.create(entry=entry, start=now)
+            entry.paused = True
+
+        case (AsyncRaceRoomUserStatus.PAUSED, AsyncRaceRoomUserStatus.STARTED):
+            # Pressing Finish
+            pause = AsyncRaceEntryPause.active_pause(entry)
+            pause.end = now
+            things_to_save.append(pause)
+            entry.paused = False
 
         case (AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.FINISHED):
             # Pressing Finish
@@ -261,11 +276,13 @@ def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
         case (_, _):
             raise error.InvalidActionError("Unsupported state transition")
 
-    database.AsyncRaceAuditEntry.create(
-        room=room, user=sa.get_current_user(), message=f"Changed state from {old_state.value} to {new_state.value}"
-    )
+    with database.db.atomic():
+        database.AsyncRaceAuditEntry.create(
+            room=room, user=sa.get_current_user(), message=f"Changed state from {old_state.value} to {new_state.value}"
+        )
+        for it in things_to_save:
+            it.save()
 
-    entry.save()
     return room.create_session_entry(user).as_json
 
 
