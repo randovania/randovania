@@ -72,6 +72,16 @@ class RaceRoomLeaderboard(JsonDataclass):
 
 
 @dataclasses.dataclass
+class AsyncRacePauseEntry(JsonDataclass):
+    """
+    A pause attempt. End being None indicates the pause is still active.
+    """
+
+    start: datetime.datetime
+    end: datetime.datetime | None
+
+
+@dataclasses.dataclass
 class AsyncRaceEntryEntry(JsonDataclass):
     """
     All data about a user's entry to a race. Should only be available to admins.
@@ -82,6 +92,7 @@ class AsyncRaceEntryEntry(JsonDataclass):
     start_date: datetime.datetime | None
     finish_date: datetime.datetime | None
     forfeit: bool
+    pauses: list[AsyncRacePauseEntry]
     submission_notes: str
     proof_url: str | None
 
@@ -96,6 +107,7 @@ class AsyncRaceRoomUserStatus(enum.Enum):
     NOT_MEMBER = "not-member"
     JOINED = "joined"
     STARTED = "started"
+    PAUSED = "paused"
     FINISHED = "finished"
     FORFEITED = "forfeited"
 
