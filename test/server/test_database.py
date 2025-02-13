@@ -125,6 +125,7 @@ def test_async_race_active_pause(clean_database):
         game_details_json="{}",
         start_date=datetime.datetime.now(datetime.UTC),
         end_date=datetime.datetime.now(datetime.UTC) + datetime.timedelta(days=30),
+        allow_pause=True,
     )
     entry = database.AsyncRaceEntry.create(
         room=room,
