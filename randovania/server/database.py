@@ -633,7 +633,7 @@ class AsyncRaceEntry(BaseModel):
     finish_date = peewee.DateTimeField(null=True)
     paused: bool = peewee.BooleanField(default=False)
     forfeit: bool = peewee.BooleanField(default=False)
-    submission_notes: str = peewee.CharField(max_length=200)
+    submission_notes: str = peewee.CharField(max_length=200, default="")
     proof_url: str | None = peewee.CharField(null=True)
     pauses: Sequence[AsyncRaceEntryPause]
 
@@ -712,6 +712,12 @@ class AsyncRaceEntryPause(BaseModel):
         if self.end is not None:
             return datetime.datetime.fromisoformat(self.end)
         return None
+
+    @property
+    def length(self) -> datetime.timedelta | None:
+        if self.end is None:
+            return None
+        return self.end_datetime - self.start_datetime
 
     @classmethod
     def active_pause(cls, entry: AsyncRaceEntry) -> Self | None:
