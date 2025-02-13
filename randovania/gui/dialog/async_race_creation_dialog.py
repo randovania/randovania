@@ -57,6 +57,7 @@ class AsyncRaceCreationDialog(QtWidgets.QDialog):
             start_date=self.ui.start_time_edit.dateTime().toPython(),
             end_date=self.ui.end_time_edit.dateTime().toPython(),
             visibility=self.ui.visibility_combo_box.currentData(),
+            allow_pause=self.ui.allow_pause_check.isChecked(),
         )
 
     def _on_password_check(self, active: bool) -> None:

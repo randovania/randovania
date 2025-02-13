@@ -66,10 +66,10 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
 
         self.ui.start_end_date_label.setText(
             f"Race Start: {humanize.naturaltime(room.start_date, when=now)},"
-            f" at {humanize.naturaldate(room.start_date)}"
+            f" at {room.start_date.strftime('%c')}"
             "<br />"
             f"Race End: {humanize.naturaltime(room.end_date, when=now)},"
-            f" at {humanize.naturaldate(room.end_date)}"
+            f" at {room.end_date.strftime('%c')}"
         )
         presets = room.presets
         if len(presets) > 1:
@@ -97,6 +97,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
             can_participate and room.self_status in {AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.JOINED}
         )
         self.ui.start_button.setText("Start" if room.self_status != AsyncRaceRoomUserStatus.STARTED else "Undo Start")
+        self.ui.pause_button.setVisible(room.allow_pause)
         self.ui.pause_button.setEnabled(
             can_participate and room.self_status in {AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.PAUSED}
         )
@@ -253,6 +254,9 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
             QtCore.QDateTime.fromSecsSinceEpoch(int(self.room.start_date.timestamp()))
         )
         dialog.ui.end_time_edit.setDateTime(QtCore.QDateTime.fromSecsSinceEpoch(int(self.room.end_date.timestamp())))
+        dialog.ui.allow_pause_check.setChecked(self.room.allow_pause)
+        if self.room.allow_pause and self.room.race_status != AsyncRaceRoomRaceStatus.SCHEDULED:
+            dialog.ui.allow_pause_check.setEnabled(False)
         signal_handling.set_combo_with_value(dialog.ui.visibility_combo_box, self.room.visibility)
 
         result = await async_dialog.execute_dialog(dialog)

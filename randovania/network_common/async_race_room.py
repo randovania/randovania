@@ -17,6 +17,7 @@ class AsyncRaceSettings(JsonDataclass):
     start_date: datetime.datetime
     end_date: datetime.datetime
     visibility: MultiplayerSessionVisibility
+    allow_pause: bool
 
 
 class AsyncRaceRoomRaceStatus(enum.Enum):
@@ -122,6 +123,7 @@ class AsyncRaceRoomEntry(AsyncRaceRoomListEntry):
     presets_raw: list[bytes]
     is_admin: bool
     self_status: AsyncRaceRoomUserStatus
+    allow_pause: bool
     leaderboard: RaceRoomLeaderboard | None
 
     @property

@@ -84,6 +84,7 @@ def create_room(sa: ServerApp, layout_bin: bytes, settings_json: JsonObject) -> 
             creator=current_user,
             start_date=settings.start_date,
             end_date=settings.end_date,
+            allow_pause=settings.allow_pause,
         )
 
     return new_room.create_session_entry(current_user).as_json
@@ -112,6 +113,7 @@ def change_room_settings(sa: ServerApp, room_id: int, settings_json: JsonObject)
     room.start_datetime = settings.start_date
     room.end_datetime = settings.end_date
     room.visibility = settings.visibility
+    room.allow_pause = settings.allow_pause
     room.save()
 
     # TODO: Reusing the `room` after we set start_datetime/end_datetime breaks create_session_entry
@@ -247,6 +249,9 @@ def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
 
         case (AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.PAUSED):
             # Pressing Finish
+            if not room.allow_pause:
+                raise error.InvalidActionError("Pausing not allowed")
+
             AsyncRaceEntryPause.create(entry=entry, start=now)
             entry.paused = True
 

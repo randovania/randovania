@@ -533,6 +533,7 @@ class AsyncRaceRoom(BaseModel):
     creation_date: str = peewee.DateTimeField(default=_datetime_now)
     start_date: str = peewee.DateTimeField()
     end_date: str = peewee.DateTimeField()
+    allow_pause: bool = peewee.BooleanField()
 
     entries: list[AsyncRaceEntry]
     audit_log: list[AsyncRaceAuditEntry]
@@ -602,6 +603,7 @@ class AsyncRaceRoom(BaseModel):
             ],
             is_admin=for_user == self.creator,
             self_status=status,
+            allow_pause=self.allow_pause,
             leaderboard=None,
         )
 
