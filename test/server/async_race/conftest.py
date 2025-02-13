@@ -43,7 +43,6 @@ def simple_room(clean_database, test_files_dir) -> database.AsyncRaceRoom:
         user=user2,
         join_date=datetime.datetime(2020, 5, 6, 0, 0, tzinfo=datetime.UTC),
         start_date=datetime.datetime(2020, 5, 11, 0, 0, tzinfo=datetime.UTC),
-        submission_notes="",
     )
 
     return room
