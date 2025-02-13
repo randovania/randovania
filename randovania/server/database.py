@@ -35,7 +35,7 @@ from randovania.network_common.session_visibility import MultiplayerSessionVisib
 from randovania.network_common.user import RandovaniaUser
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Iterator
+    from collections.abc import Iterable, Iterator, Sequence
 
     from randovania.lib.json_lib import JsonObject
 
@@ -629,9 +629,11 @@ class AsyncRaceEntry(BaseModel):
     join_date = peewee.DateTimeField(default=_datetime_now)
     start_date = peewee.DateTimeField(null=True)
     finish_date = peewee.DateTimeField(null=True)
+    paused: bool = peewee.BooleanField(default=False)
     forfeit: bool = peewee.BooleanField(default=False)
     submission_notes: str = peewee.CharField(max_length=200)
     proof_url: str | None = peewee.CharField(null=True)
+    pauses: Sequence[AsyncRaceEntryPause]
 
     @classmethod
     def entry_for(cls, room: AsyncRaceRoom, user: User) -> Self | None:
@@ -644,18 +646,20 @@ class AsyncRaceEntry(BaseModel):
 
     def user_status(self) -> async_race_room.AsyncRaceRoomUserStatus:
         """
-        Calculates a AsyncRaceRoomUserStatus based on the presence of dates and forfeit flags.
+        Calculates a AsyncRaceRoomUserStatus based on the presence of dates and flags.
         """
         if self.start_date is None:
             return async_race_room.AsyncRaceRoomUserStatus.JOINED
         elif self.forfeit:
             return async_race_room.AsyncRaceRoomUserStatus.FORFEITED
+        elif self.paused:
+            return async_race_room.AsyncRaceRoomUserStatus.PAUSED
         elif self.finish_date is None:
             return async_race_room.AsyncRaceRoomUserStatus.STARTED
         else:
             return async_race_room.AsyncRaceRoomUserStatus.FINISHED
 
-    def create_session_entry(self) -> async_race_room.AsyncRaceEntryEntry:
+    def create_admin_entry(self) -> async_race_room.AsyncRaceEntryEntry:
         return async_race_room.AsyncRaceEntryEntry(
             user=self.user.as_randovania_user(),
             join_date=self.join_datetime,
@@ -664,6 +668,7 @@ class AsyncRaceEntry(BaseModel):
             forfeit=self.forfeit,
             submission_notes=self.submission_notes,
             proof_url=self.proof_url,
+            pauses=[pause.create_admin_entry() for pause in self.pauses],
         )
 
     @property
@@ -691,6 +696,34 @@ class AsyncRaceEntry(BaseModel):
         self.finish_date = value
 
 
+class AsyncRaceEntryPause(BaseModel):
+    entry: AsyncRaceEntry = peewee.ForeignKeyField(AsyncRaceEntry, backref="pauses")
+    start = peewee.DateTimeField(default=_datetime_now)
+    end = peewee.DateTimeField(null=True)
+
+    @property
+    def start_datetime(self) -> datetime.datetime:
+        return datetime.datetime.fromisoformat(self.start)
+
+    @property
+    def end_datetime(self) -> datetime.datetime | None:
+        if self.end is not None:
+            return datetime.datetime.fromisoformat(self.end)
+        return None
+
+    @classmethod
+    def active_pause(cls, entry: AsyncRaceEntry) -> Self | None:
+        for it in cls.select().where(cls.entry == entry, cls.end.is_null()):
+            return it
+        return None
+
+    def create_admin_entry(self) -> async_race_room.AsyncRacePauseEntry:
+        return async_race_room.AsyncRacePauseEntry(
+            start=self.start_datetime,
+            end=self.end_datetime,
+        )
+
+
 class DatabaseMigrations(enum.Enum):
     ADD_READY_TO_MEMBERSHIP = "ready_membership"
     SESSION_STATE_TO_VISIBILITY = "session_state_to_visibility"
@@ -711,6 +744,7 @@ all_classes = [
     MultiplayerAuditEntry,
     AsyncRaceRoom,
     AsyncRaceEntry,
+    AsyncRaceEntryPause,
     AsyncRaceAuditEntry,
     PerformedDatabaseMigrations,
 ]
