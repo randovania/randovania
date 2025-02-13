@@ -12,6 +12,7 @@ from randovania.gui.generated.async_race_room_window_ui import Ui_AsyncRaceRoomW
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, signal_handling
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.qt_network_client import QtNetworkClient
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common.options import Options
 from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
@@ -23,6 +24,8 @@ from randovania.network_common.async_race_room import (
 
 
 class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
+    CloseEvent = QtCore.Signal()
+
     ui: Ui_AsyncRaceRoomWindow
     room: AsyncRaceRoomEntry
     preset: VersionedPreset
@@ -34,10 +37,12 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         password: str | None,
         network_client: QtNetworkClient,
         options: Options,
+        window_manager: WindowManager,
     ):
         super().__init__()
         self._network_client = network_client
         self._options = options
+        self._window_manager = window_manager
         common_qt_lib.set_default_window_icon(self)
 
         self.ui = Ui_AsyncRaceRoomWindow()
@@ -49,6 +54,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         self._administration_menu.addAction("View user entries")
         self.ui.view_preset_description_button.clicked.connect(self._preset_view_summary)
 
+        self.ui.view_spoiler_button.clicked.connect(self._view_spoiler)
         self.ui.view_leaderboard_button.clicked.connect(self._view_leaderboard)
 
         # TODO: background task things
@@ -245,6 +251,18 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
             dialog.submission_notes,
             dialog.proof_url,
         )
+
+    @asyncSlot()
+    async def _view_spoiler(self) -> None:
+        """Opens a GameDetailsWindow with the layout for this room"""
+
+        try:
+            self.setEnabled(False)
+            layout = await self._network_client.async_race_get_layout(self.room.id)
+        finally:
+            self.setEnabled(True)
+
+        self._window_manager.open_game_details(layout)
 
     @asyncSlot()
     async def _view_leaderboard(self) -> None:

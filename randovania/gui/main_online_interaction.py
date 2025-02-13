@@ -23,7 +23,6 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
     from randovania.interface_common.preset_manager import PresetManager
 
-
 BaseSession = typing_extensions.TypeVar("BaseSession")
 
 
@@ -110,8 +109,9 @@ class OnlineInteractions(QtWidgets.QWidget):
             "Requesting the room list...",
         )
         if session is not None:
-            self.async_room = AsyncRaceRoomWindow(session, None, self.network_client, self.options)
-            self.async_room.show()
+            async_room = AsyncRaceRoomWindow(session, None, self.network_client, self.options, self.window_manager)
+            async_room.show()
+            self.window_manager.track_window(async_room)
 
     @asyncSlot()
     @handle_network_errors

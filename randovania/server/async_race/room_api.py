@@ -169,6 +169,21 @@ def get_leaderboard(sa: ServerApp, room_id: int) -> JsonType:
     return RaceRoomLeaderboard(entries).as_json
 
 
+def get_layout(sa: ServerApp, room_id: int) -> bytes:
+    """
+    Gets the layout description for the room, if it has finished
+    :param sa:
+    :param room_id: The room to get details for
+    :return: A LayoutDescription, byte-encoded
+    """
+
+    room = AsyncRaceRoom.get_by_id(room_id)
+    if room.end_datetime > datetime.datetime.now(datetime.UTC):
+        raise error.NotAuthorizedForActionError
+
+    return room.layout_description_json
+
+
 def admin_get_admin_data(sa: ServerApp, room_id: int) -> JsonType:
     """
     Gets the all details of every user who has joined the room. Only accessible by admins.
@@ -323,6 +338,7 @@ def setup_app(sa: ServerApp) -> None:
     sa.on("async_race_change_room_settings", change_room_settings, with_header_check=True)
     sa.on("async_race_get_room", get_room, with_header_check=True)
     sa.on("async_race_get_leaderboard", get_leaderboard, with_header_check=True)
+    sa.on("async_race_get_layout", get_layout, with_header_check=True)
     sa.on("async_race_admin_get_admin_data", admin_get_admin_data, with_header_check=True)
     sa.on("async_race_join_and_export", join_and_export, with_header_check=True)
     sa.on("async_race_change_state", change_state, with_header_check=True)

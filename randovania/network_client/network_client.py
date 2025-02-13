@@ -509,6 +509,16 @@ class NetworkClient:
         """
         return RaceRoomLeaderboard.from_json(await self.server_call("async_race_get_leaderboard", room_id))
 
+    async def async_race_get_layout(self, room_id: int) -> LayoutDescription:
+        """
+        Gets the leaderboard for the given room. Must have already finished to work.
+        :param room_id:
+        :return: The room's leaderboard
+        """
+        from randovania.layout.layout_description import LayoutDescription
+
+        return LayoutDescription.from_bytes(await self.server_call("async_race_get_layout", room_id))
+
     async def async_race_admin_get_admin_data(self, room_id: int) -> AsyncRaceRoomAdminData:
         """
         Gets all details regarding a room that are exclusive to administrators
