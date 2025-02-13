@@ -6,6 +6,7 @@ from qasync import asyncSlot
 
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.async_race_creation_dialog import AsyncRaceCreationDialog
+from randovania.gui.dialog.async_race_leaderboard_dialog import AsyncRaceLeaderboardDialog
 from randovania.gui.dialog.async_race_proof_popup import AsyncRaceProofPopup
 from randovania.gui.generated.async_race_room_window_ui import Ui_AsyncRaceRoomWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, signal_handling
@@ -25,6 +26,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
     ui: Ui_AsyncRaceRoomWindow
     room: AsyncRaceRoomEntry
     preset: VersionedPreset
+    _leaderboard_dialog: AsyncRaceLeaderboardDialog | None = None
 
     def __init__(
         self,
@@ -46,6 +48,8 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         self._administration_menu.addAction("Change options").triggered.connect(self._on_change_options)
         self._administration_menu.addAction("View user entries")
         self.ui.view_preset_description_button.clicked.connect(self._preset_view_summary)
+
+        self.ui.view_leaderboard_button.clicked.connect(self._view_leaderboard)
 
         # TODO: background task things
 
@@ -241,6 +245,25 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
             dialog.submission_notes,
             dialog.proof_url,
         )
+
+    @asyncSlot()
+    async def _view_leaderboard(self) -> None:
+        """Opens a widget with the leaderboard results"""
+        if self._leaderboard_dialog is not None:
+            self._leaderboard_dialog.raise_()
+            return
+
+        try:
+            self.setEnabled(False)
+            leaderboard = await self._network_client.async_race_get_leaderboard(self.room.id)
+        finally:
+            self.setEnabled(True)
+
+        self._leaderboard_dialog = AsyncRaceLeaderboardDialog(self, leaderboard)
+        try:
+            await async_dialog.execute_dialog(self._leaderboard_dialog)
+        finally:
+            self._leaderboard_dialog = None
 
     @asyncSlot()
     async def _on_change_options(self) -> None:
