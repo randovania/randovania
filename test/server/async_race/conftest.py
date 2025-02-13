@@ -34,6 +34,7 @@ def simple_room(clean_database, test_files_dir) -> database.AsyncRaceRoom:
         creation_date=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.UTC),
         start_date=datetime.datetime(2020, 5, 10, 0, 0, tzinfo=datetime.UTC),
         end_date=datetime.datetime(2020, 6, 10, 0, 0, tzinfo=datetime.UTC),
+        allow_pause=True,
     )
     room.save()
 
