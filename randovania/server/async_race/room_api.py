@@ -1,5 +1,6 @@
 import datetime
 import json
+import math
 import typing
 
 from peewee import Case
@@ -150,7 +151,9 @@ def get_leaderboard(sa: ServerApp, room_id: int) -> JsonType:
                 entries.append(
                     RaceRoomLeaderboardEntry(
                         user=entry.user.as_randovania_user(),
-                        time=entry.finish_datetime - entry.start_datetime,
+                        time=entry.finish_datetime
+                        - entry.start_datetime
+                        - sum((pause.length for pause in entry.pauses), datetime.timedelta(seconds=0)),
                     )
                 )
             case AsyncRaceRoomUserStatus.FORFEITED | AsyncRaceRoomUserStatus.STARTED:
@@ -160,6 +163,8 @@ def get_leaderboard(sa: ServerApp, room_id: int) -> JsonType:
                         time=None,
                     )
                 )
+
+    entries.sort(key=lambda key: key.time.total_seconds() if key.time is not None else math.inf)
 
     return RaceRoomLeaderboard(entries).as_json
 
@@ -196,7 +201,6 @@ def join_and_export(sa: ServerApp, room_id: int, cosmetic_json: JsonType) -> Jso
     database.AsyncRaceEntry.get_or_create(
         room=room,
         user=user,
-        submission_notes="",
     )
 
     layout_description = room.layout_description

@@ -130,7 +130,6 @@ def test_async_race_active_pause(clean_database):
     entry = database.AsyncRaceEntry.create(
         room=room,
         user=someone,
-        submission_notes="",
     )
 
     assert database.AsyncRaceEntryPause.active_pause(entry) is None
