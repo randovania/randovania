@@ -78,6 +78,13 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict, metadata: 
     elif type_ is datetime.datetime:
         return datetime.datetime.fromisoformat(arg)
 
+    elif type_ is datetime.timedelta:
+        return datetime.timedelta(
+            days=arg["days"],
+            seconds=arg["seconds"],
+            microseconds=arg["microseconds"],
+        )
+
     elif hasattr(type_, "from_json"):
         arg_spec = inspect.getfullargspec(type_.from_json)
 
@@ -116,6 +123,13 @@ def _encode_value(value: typing.Any, metadata: Metadata) -> typing.Any:
 
     elif isinstance(value, datetime.datetime):
         return value.astimezone(datetime.UTC).isoformat()
+
+    elif isinstance(value, datetime.timedelta):
+        return {
+            "days": value.days,
+            "seconds": value.seconds,
+            "microseconds": value.microseconds,
+        }
 
     elif value is not None and hasattr(value, "as_json"):
         return value.as_json
