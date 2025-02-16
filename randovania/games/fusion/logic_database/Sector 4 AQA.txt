@@ -1530,7 +1530,7 @@ Extra - room_id: [33]
   * Layers: default
   * L1 Hatch to Pump Control Access/Door to Pump Control Unit
   * Extra - door_idx: (76,)
-  > Behind Speed Blocks
+  > Event - Pump Control Terminal
       Speed Booster
   > Next to Pickup
       All of the following:
@@ -1548,15 +1548,14 @@ Extra - room_id: [33]
               # Deal with water
               Gravity Suit or After Sector 4 Water Level Lowered
 
-> Behind Speed Blocks; Heals? False
+> Event - Pump Control Terminal; Heals? False
   * Layers: default
-  > Event - Pump Control Terminal
-      Trivial
+  * Event Sector 4 Water Level Lowered
   > Next to Pickup
       All of the following:
           Morph Ball
           Any of the following:
-              After Sector 4 Water Level Lowered or Enabled Generator Workaround
+              After Sector 4 Water Level Lowered
               All of the following:
                   # Damage Run
                   Damage Runs (Beginner)
@@ -1564,17 +1563,8 @@ Extra - room_id: [33]
                       Electrified Water Damage ≥ 25
                       Electrified Water Damage ≥ 7 and Have Any Suit Upgrade
 
-> Event - Pump Control Terminal; Heals? False
-  * Layers: default
-  * Event Sector 4 Water Level Lowered
-  > Behind Speed Blocks
-      Trivial
-
 > Next to Pickup; Heals? False
   * Layers: default
-  * FIXME: Collecting the pump event is by the generator definition not considered
-safe. The generator workaround is assuming here that if you reach this PonR,
-that you were able to collect the event.
   > Pickup (Missile Tank)
       Trivial
   > Door to Pump Control Access
@@ -1584,25 +1574,25 @@ that you were able to collect the event.
               Can Use Springball
               All of the following:
                   Can Use Bombs
-                  Gravity Suit or After Sector 4 Water Level Lowered or Enabled Generator Workaround
+                  Gravity Suit or After Sector 4 Water Level Lowered
           Any of the following:
-              After Sector 4 Water Level Lowered or Enabled Generator Workaround
+              After Sector 4 Water Level Lowered
               All of the following:
                   # Damage Run
                   Damage Runs (Beginner)
                   Any of the following:
                       Electrified Water Damage ≥ 44
                       Electrified Water Damage ≥ 15 and Have Any Suit Upgrade
-  > Behind Speed Blocks
+  > Event - Pump Control Terminal
       All of the following:
           Any of the following:
               # Get into tunnel
               Can Use Springball
               All of the following:
                   Can Use Bombs
-                  Gravity Suit or After Sector 4 Water Level Lowered or Enabled Generator Workaround
+                  Gravity Suit or After Sector 4 Water Level Lowered
           Any of the following:
-              After Sector 4 Water Level Lowered or Enabled Generator Workaround
+              After Sector 4 Water Level Lowered
               All of the following:
                   # Damage Run
                   Damage Runs (Beginner)
