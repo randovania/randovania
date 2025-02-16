@@ -2906,12 +2906,29 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Grapple",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "Move the shuffler block both ways",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Grapple",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "Area 5 Tower Interior - Grapple Shuffler Long Grapple Block",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -2941,6 +2958,32 @@
                                                     }
                                                 }
                                             ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Shuffler Grapple Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -3120,8 +3163,8 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Grapple",
+                                            "type": "events",
+                                            "name": "Area 5 Tower Interior - Grapple Shuffler Long Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -3484,6 +3527,33 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Event - Shuffler Grapple Block": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4046.99,
+                        "y": 3005.01,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Area 5 Tower Interior - Grapple Shuffler Long Grapple Block",
+                    "connections": {
+                        "Door to Interior Teleporter (Bottom)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
