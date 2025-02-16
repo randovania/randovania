@@ -26,6 +26,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: All other connections in Screw Attack Room that are only open before flipping the spinner are now only logical when Highly Dangerous Logic is enabled.
 - Changed: The conditions that depends on not having blown up the blob in Screw Attack Room are now only logical when Highly Dangerous Logic is enabled.
 
+##### Burenia
+
+- Added: In Main Hub Tower Bottom: Reach from Alcove Across Grapple Block to Ledge above Grapple Block using Spin Boost.
+- Added: In Main Hub Tower Bottom: Reach from Water Space Jump Platform to Door to Save Station South Access (Lower) using Gravity Suit, Spin Boost and Movement (Beginner).
+- Changed: In Main Hub Tower Bottom: Reaching Door to Save Station South Access (Lower) from Above Screw Attack Blocks with Spin Boost now requires Wall Jump (Beginner).
+- Changed: In Main Hub Tower Bottom: Reaching Ledge above Grapple Block from Water Space Jump Platform using Spin Boost now requires either the Grapple Block Event or Wall Jump (Beginner).
+
 ##### Cataris
 
 - Added: The pillar in Moving Magnet Walls (Small) can now be crossed with Spin Boost and Wall Jump (Intermediate).
