@@ -149,6 +149,15 @@ def _remove_msr_fields(options: dict) -> None:
         options["game_samus_returns"]["input_file"] = None
 
 
+def _dolphin_configuration_fields(options: dict) -> None:
+    for connector_builder in options["connector_builders"]:
+        if connector_builder["choice"] == "dolphin":
+            connector_builder["params"] = {
+                "dolphin_cmd": "",
+                "dolphin_comm": "",
+            }
+
+
 _CONVERTER_FOR_VERSION = [
     None,
     None,
@@ -188,6 +197,7 @@ _CONVERTER_FOR_VERSION = [
     _only_new_fields,  # added MSR's music sliders
     _remove_msr_fields,  # removes MSR's exheader and input field
     _only_new_fields,  # added last_changelog_displayed_dev
+    _dolphin_configuration_fields,  # added dolphin process management settings
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 
