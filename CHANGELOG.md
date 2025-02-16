@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Cataris
 
 - Changed: Using Spin Boost in conjunction with the Slide Jump to reach the upper part of the Experiment-Z57 room now requires Wall Jump (Intermediate).
+- Changed: Using Spin Boost to do the First Blob event in Z-57 Heat ROom West (Left) now requires Movement (Beginner).
 
 ##### Dairon
 
