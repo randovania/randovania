@@ -81,6 +81,7 @@ class PlanetsZebethGameExporter(GameExporter):
             future.result()
 
 
+# TODO: implement some json validation in the patcher and call it here
 @monitoring.trace_function
 def _run_patcher(patch_data: dict, export_params: PlanetsZebethGameExportParams, output_pipe: Connection) -> None:
     # Delay this, so that we only load CLR/dotnet when exporting

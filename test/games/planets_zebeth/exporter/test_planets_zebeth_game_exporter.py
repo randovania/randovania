@@ -68,7 +68,6 @@ def test_do_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
 def test_run_patcher(test_files_dir, mocker, patch_data_name: str, tmp_path):
     # Setup
     def finished_status(input_path: Path, output_path: Path, configuration: dict, status_update):
-        # TODO: implement some json validation in the patcher and call it here
         status_update("Finished", 1.0)
 
     def mocked_version():
