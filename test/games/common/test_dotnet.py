@@ -1,29 +1,26 @@
-from unittest.mock import MagicMock
-
 import pytest
 
-from randovania.exporter.game_exporter import GameExporter, GameExportParams
-from randovania.patching.patchers.exceptions import UnableToExportError
+from randovania.games.common.dotnet import DotnetNotSetupException, is_dotnet_set_up
 
 
 def test_dotnet_missing(mocker):
     mocker.patch("subprocess.run", side_effect=FileNotFoundError)
 
-    exporter = GameExporter()
-
-    with pytest.raises(UnableToExportError):
-        exporter._do_export_game(
-            MagicMock(), GameExportParams(spoiler_output=None, input_path=None, output_path=None), MagicMock()
-        )
+    with pytest.raises(DotnetNotSetupException):
+        is_dotnet_set_up()
 
 
-def test_dotnet_non_zero_error_code(mocker):
+def test_dotnet_on_error(mocker):
     dotnet_process = mocker.patch("subprocess.run")
     dotnet_process.returncode = 1
 
-    exporter = GameExporter()
+    with pytest.raises(DotnetNotSetupException):
+        is_dotnet_set_up()
 
-    with pytest.raises(UnableToExportError):
-        exporter._do_export_game(
-            MagicMock(), GameExportParams(spoiler_output=None, input_path=None, output_path=None), MagicMock()
-        )
+
+def test_dotnet_runs_fine(mocker):
+    dotnet_process = mocker.patch("subprocess.run")
+    dotnet_process.returncode = 0
+
+    with pytest.raises(DotnetNotSetupException):
+        is_dotnet_set_up()
