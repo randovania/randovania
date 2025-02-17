@@ -12,7 +12,7 @@ def test_dotnet_missing(mocker):
 
 def test_dotnet_on_error(mocker):
     dotnet_process = mocker.patch("subprocess.run")
-    dotnet_process.returncode = 1
+    dotnet_process.return_value.returncode = 1
 
     with pytest.raises(DotnetNotSetupException):
         is_dotnet_set_up()
@@ -20,7 +20,6 @@ def test_dotnet_on_error(mocker):
 
 def test_dotnet_runs_fine(mocker):
     dotnet_process = mocker.patch("subprocess.run")
-    dotnet_process.returncode = 0
+    dotnet_process.return_value.returncode = 0
 
-    with pytest.raises(DotnetNotSetupException):
-        is_dotnet_set_up()
+    is_dotnet_set_up()

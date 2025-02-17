@@ -10,7 +10,6 @@ class DotnetNotSetupException(UnableToExportError):
 
 
 def is_dotnet_set_up() -> None:
-    dotnet_ran_fine = False
     try:
         dotnet_process = subprocess.run(["dotnet", "--info"], check=False)
         dotnet_ran_fine = dotnet_process.returncode == 0
