@@ -85,7 +85,7 @@ class PlanetsZebethGameExporter(GameExporter):
 @monitoring.trace_function
 def _run_patcher(patch_data: dict, export_params: PlanetsZebethGameExportParams, output_pipe: Connection) -> None:
     # Delay this, so that we only load CLR/dotnet when exporting
-    import planets_yapr
+    import planets_yapr  # type: ignore[import-untyped]
 
     def status_update(message: str, progress: float) -> None:
         output_pipe.send((message, progress))
