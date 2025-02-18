@@ -34,6 +34,7 @@ from randovania.network_common import (
     signals,
 )
 from randovania.network_common.async_race_room import (
+    AsyncRaceEntryData,
     AsyncRaceRoomAdminData,
     AsyncRaceRoomEntry,
     AsyncRaceRoomListEntry,
@@ -54,6 +55,7 @@ from randovania.network_common.user import CurrentUser
 from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse
 
 if TYPE_CHECKING:
+    from collections.abc import Sequence
     from pathlib import Path
 
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
@@ -526,6 +528,20 @@ class NetworkClient:
         :return: The room's data exclusive to administrators
         """
         return AsyncRaceRoomAdminData.from_json(await self.server_call("async_race_admin_get_admin_data", room_id))
+
+    async def async_race_admin_update_entries(
+        self, room_id: int, modified_entries: Sequence[AsyncRaceEntryData]
+    ) -> AsyncRaceRoomEntry:
+        """
+        :param room_id:
+        :param modified_entries: the user entries that were modified.
+        :return: The room details
+        """
+        return AsyncRaceRoomEntry.from_json(
+            await self.server_call(
+                "async_race_admin_update_entries", (room_id, [entry.as_json for entry in modified_entries])
+            )
+        )
 
     async def async_race_join_and_export(self, room_id: int, cosmetic: BaseCosmeticPatches) -> dict:
         """

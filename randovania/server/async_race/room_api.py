@@ -10,6 +10,7 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.json_lib import JsonObject, JsonType
 from randovania.network_common import error
 from randovania.network_common.async_race_room import (
+    AsyncRaceEntryData,
     AsyncRaceRoomAdminData,
     AsyncRaceRoomListEntry,
     AsyncRaceRoomRaceStatus,
@@ -97,7 +98,7 @@ def change_room_settings(sa: ServerApp, room_id: int, settings_json: JsonObject)
     :param sa:
     :param room_id:
     :param settings_json:
-    :return:
+    :return: A AsyncRaceRoomEntry, json encoded
     """
     current_user = sa.get_current_user()
     settings = AsyncRaceSettings.from_json(settings_json)
@@ -207,6 +208,35 @@ def admin_get_admin_data(sa: ServerApp, room_id: int) -> JsonType:
     return AsyncRaceRoomAdminData(
         users=[entry.create_admin_entry() for entry in room.entries],
     ).as_json
+
+
+def admin_update_entries(sa: ServerApp, room_id: int, raw_new_entries: JsonType) -> JsonType:
+    """
+    Updates multiple entries for the given room, all at once.
+    :param sa:
+    :param room_id:
+    :param raw_new_entries: The list of entries to modify.
+    :return: A AsyncRaceRoomEntry, json encoded
+    """
+    user = sa.get_current_user()
+    room = AsyncRaceRoom.get_by_id(room_id)
+    if room.creator != user:
+        raise error.NotAuthorizedForActionError
+
+    new_entries = [AsyncRaceEntryData.from_json(e) for e in raw_new_entries]
+
+    with database.db.atomic():
+        for modification in new_entries:
+            if not (modification.join_date < modification.start_date < modification.finish_date):
+                raise error.InvalidActionError(f"Invalid dates for {modification.user.name}")
+
+            entry = database.AsyncRaceEntry.entry_for(room, modification.user.id)
+            entry.start_datetime = modification.start_date
+            entry.finish_datetime = modification.finish_date
+            entry.forfeit = modification.forfeit
+            entry.save()
+
+    return AsyncRaceRoom.get_by_id(room_id).create_session_entry(user).as_json
 
 
 def join_and_export(sa: ServerApp, room_id: int, cosmetic_json: JsonType) -> JsonType:
@@ -348,6 +378,7 @@ def setup_app(sa: ServerApp) -> None:
     sa.on("async_race_get_leaderboard", get_leaderboard, with_header_check=True)
     sa.on("async_race_get_layout", get_layout, with_header_check=True)
     sa.on("async_race_admin_get_admin_data", admin_get_admin_data, with_header_check=True)
+    sa.on("async_race_admin_update_entries", admin_update_entries, with_header_check=True)
     sa.on("async_race_join_and_export", join_and_export, with_header_check=True)
     sa.on("async_race_change_state", change_state, with_header_check=True)
     sa.on("async_race_submit_proof", submit_proof, with_header_check=True)
