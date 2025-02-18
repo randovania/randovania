@@ -397,7 +397,7 @@ jobs:
         uses: actions/setup-python@v5
 
       - name: Install Python packages
-        run: uv sync --frozen --all-extras
+        run: uv sync --frozen --all-extras --group typing
 
       - name: Mypy on modified files
         uses: tsuyoshicho/action-mypy@v5
