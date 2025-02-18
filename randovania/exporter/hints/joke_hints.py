@@ -37,4 +37,5 @@ JOKE_HINTS = [
     "Defeat enemies with the Light Beam to earn Dark Ammo. Defeat enemies with the Dark Beam to earn Light Ammo.",
     "Your Friend Roster is currently empty.",
     "Raven Beak? I don't know him, but he sounds handsome, wouldn't you agree Samus?",
+    "Want a hint? Just go where the items are.",
 ]
