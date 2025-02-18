@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+import randovania
 from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
 
 if TYPE_CHECKING:
@@ -30,6 +31,6 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         MetroidPresetItemPool,
         PresetPatcherEnergy,
         PresetMetroidStartingArea,
-        PresetFusionDocks,
+        PresetFusionDocks if not randovania.is_frozen() else None,  # Only show when running from source
         PresetFusionPatches,
     ]
