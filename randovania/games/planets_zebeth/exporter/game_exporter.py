@@ -49,9 +49,11 @@ class PlanetsZebethGameExporter(GameExporter):
     def _do_export_game(
         self,
         patch_data: dict,
-        export_params: PlanetsZebethGameExportParams,
+        export_params: GameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
+        assert isinstance(export_params, PlanetsZebethGameExportParams)
+
         # Check if dotnet is available
         # Raises error in case it's not set up
         is_dotnet_set_up()
