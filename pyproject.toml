@@ -148,15 +148,21 @@ test = [
     "pytest-xdist[psutil]",
 ]
 
+website = [
+    "htmlmin2",
+    "ruamel.yaml",
+]
+
+[dependency-groups]
+installer = [
+    "pyinstaller",
+    "pyinstaller-hooks-contrib",
+]
+
 typing = [
     "mypy",
     "types-aiofiles",
     "types-peewee",
-]
-
-website = [
-    "htmlmin2",
-    "ruamel.yaml",
 ]
 
 [project.readme]
