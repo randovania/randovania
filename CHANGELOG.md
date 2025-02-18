@@ -28,12 +28,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Flipping the spinner in Screw Attack Room when by going from the door to the transport is now logically possible also after having flipped the spinner, unless Highly Dangerous Logic is enabled.
 - Changed: All other connections in Screw Attack Room that are only open before flipping the spinner are now only logical when Highly Dangerous Logic is enabled.
 - Changed: The conditions that depends on not having blown up the blob in Screw Attack Room are now only logical when Highly Dangerous Logic is enabled.
+- Changed: In White EMMI Arena: Reaching Door to EMMI Zone Spinner (Middle) from Door to Central Unit Access (Charge) with Spin Boost now requires Wall Jump (Beginner).
+- Changed: In EMMI First Chase End: Reaching Door to Teleport to Dairon (Top) with Spin Boost now requires Wall Jump (Beginner).
+- Changed: In Screw Attack Room: Reaching Next to Upper Tank from Total Recharge with Spin Boost no longer requires a Wall Jump trick.
 - Fixed: Using Speed Booster to Shinespark to the top pickup in Screw Attack Room now requires Door Lock Rando to be Disabled.
+
+##### Burenia
+
+- Added: In Main Hub Tower Bottom: Reach from Alcove Across Grapple Block to Ledge above Grapple Block using Spin Boost.
+- Added: In Main Hub Tower Bottom: Reach from Water Space Jump Platform to Door to Save Station South Access (Lower) using Gravity Suit, Spin Boost and Movement (Beginner).
+- Changed: In Main Hub Tower Bottom: Reaching Door to Save Station South Access (Lower) from Above Screw Attack Blocks with Spin Boost now requires Wall Jump (Beginner).
+- Changed: In Main Hub Tower Bottom: Reaching Ledge above Grapple Block from Water Space Jump Platform using Spin Boost now requires either the Grapple Block Event or Wall Jump (Beginner).
 
 ##### Cataris
 
+- Added: The pillar in Moving Magnet Walls (Small) can now be crossed with Spin Boost and Wall Jump (Intermediate).
 - Changed: The Energy Part pickup in Thermal Device Room North no longer requires the Varia Suit if the "Cataris - Lower Lava Button" event has been triggered.
 - Changed: The blob in Z-57 Heat Room West (Right) now requires the Varia Suit to be destroyed.
+- Changed: Using Spin Boost in conjunction with the Slide Jump to reach the upper part of the Experiment-Z57 room now requires Wall Jump (Intermediate).
+- Changed: Using Spin Boost to do the First Blob event in Z-57 Heat Room West (Left) now requires Movement (Beginner).
+
+##### Dairon
+
+- Changed: Reaching the tunnel at the top of Central Unit Access with Spin Boost now requires Movement (Beginner), but remains trickless with Space Jump.
 
 ### Metroid Prime 2: Echoes
 - Removed: Relative hints will no longer be placed.
