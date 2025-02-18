@@ -30,6 +30,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The conditions that depends on not having blown up the blob in Screw Attack Room are now only logical when Highly Dangerous Logic is enabled.
 - Fixed: Using Speed Booster to Shinespark to the top pickup in Screw Attack Room now requires Door Lock Rando to be Disabled.
 
+##### Cataris
+
+- Changed: The Energy Part pickup in Thermal Device Room North no longer requires the Varia Suit if the "Cataris - Lower Lava Button" event has been triggered.
+- Changed: The blob in Z-57 Heat Room West (Right) now requires the Varia Suit to be destroyed.
+
 ### Metroid Prime 2: Echoes
 - Removed: Relative hints will no longer be placed.
 - Changed: Legacy multiworld sessions where an Echoes hint points to a Cave Story item may have very slightly altered wording.
