@@ -11,7 +11,6 @@ from randovania.gui.lib.editable_table_model import (
     DateFieldDefinition,
     EditableTableModel,
     FieldDefinition,
-    NullableFieldDefinition,
 )
 from randovania.network_common.async_race_room import AsyncRaceEntryData, AsyncRaceRoomAdminData
 
@@ -34,8 +33,8 @@ class AsyncRaceEntryDataDatabaseModel(EditableTableModel[AsyncRaceEntryData]):
                 from_qt=lambda v: (False, None),
             ),
             DateFieldDefinition("Join Date", "join_date", read_only=True),
-            NullableFieldDefinition(DateFieldDefinition("Start Date", "start_date")),
-            NullableFieldDefinition(DateFieldDefinition("Finish Date", "finish_date")),
+            DateFieldDefinition("Start Date", "start_date", optional=True),
+            DateFieldDefinition("Finish Date", "finish_date", optional=True),
             BoolFieldDefinition("Forfeited?", "forfeit"),
             FieldDefinition[str, str](
                 "Pauses?",
@@ -53,7 +52,7 @@ class AsyncRaceEntryDataDatabaseModel(EditableTableModel[AsyncRaceEntryData]):
     def data(
         self, index: QtCore.QModelIndex | QtCore.QPersistentModelIndex, role: int | EllipsisType = ...
     ) -> typing.Any:
-        if role == Qt.ItemDataRole.DecorationRole:
+        if role == Qt.ItemDataRole.BackgroundRole:
             if index.row() < len(self._get_items()):
                 item = self.db[index.row()]
                 match index.column():
