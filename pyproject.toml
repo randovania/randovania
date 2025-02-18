@@ -332,3 +332,10 @@ module = [
     "qasync.*",
 ]
 ignore_missing_imports = true
+
+[tool.uv]
+cache-keys = [
+    { git = { commit = true, tags = true } },
+    { file = "pyuic.json" },
+    { file = "**/*.ui" },
+]
