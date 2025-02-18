@@ -6,12 +6,12 @@ from contextlib import contextmanager
 from typing import TYPE_CHECKING
 from unittest.mock import ANY, MagicMock
 
-import am2r_yams.wrapper
+import planets_yapr.wrapper  # type: ignore[import-untyped]
 import pytest
 
-from randovania.games.am2r.exporter.game_exporter import (
-    AM2RGameExporter,
-    AM2RGameExportParams,
+from randovania.games.planets_zebeth.exporter.game_exporter import (
+    PlanetsZebethGameExporter,
+    PlanetsZebethGameExportParams,
     _run_patcher,
 )
 
@@ -21,14 +21,14 @@ if TYPE_CHECKING:
     from pathlib import Path
 
 
-@pytest.mark.parametrize("patch_data_name", ["starter_preset", "door_lock"])
+@pytest.mark.parametrize("patch_data_name", ["starter_preset", "starter_preset_shuffle_keys"])
 def test_do_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
     # Setup
     def exec_mock_function(max_workers=None, mp_context=None, initializer=None, initargs=(), max_tasks_per_child=None):
         return None
 
     def submit_mock_function(
-        function: Callable, patch_data: dict, export_params: AM2RGameExportParams, pipe: Connection
+        function: Callable, patch_data: dict, export_params: PlanetsZebethGameExportParams, pipe: Connection
     ):
         pipe.send(("Finished", 1.0))
         return Future()
@@ -41,10 +41,12 @@ def test_do_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
     done = mocker.patch("concurrent.futures.Future.done", side_effect=[False, True])
     result = mocker.patch("concurrent.futures.Future.result")
 
-    patch_data = test_files_dir.read_json("patcher_data", "am2r", "am2r", patch_data_name, "world_1.json")
+    patch_data = test_files_dir.read_json(
+        "patcher_data", "planets_zebeth", "planets_zebeth", patch_data_name, "world_1.json"
+    )
 
-    exporter = AM2RGameExporter()
-    export_params = AM2RGameExportParams(
+    exporter = PlanetsZebethGameExporter()
+    export_params = PlanetsZebethGameExportParams(
         spoiler_output=None,
         input_path=tmp_path.joinpath("input_path"),
         output_path=tmp_path.joinpath("output", "path"),
@@ -62,11 +64,10 @@ def test_do_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
     result.assert_called_once()
 
 
-@pytest.mark.parametrize("patch_data_name", ["starter_preset", "door_lock"])
+@pytest.mark.parametrize("patch_data_name", ["starter_preset", "starter_preset_shuffle_keys"])
 def test_run_patcher(test_files_dir, mocker, patch_data_name: str, tmp_path):
     # Setup
     def finished_status(input_path: Path, output_path: Path, configuration: dict, status_update):
-        # TODO: implement some json validation in the patcher and call it here
         status_update("Finished", 1.0)
 
     def mocked_version():
@@ -74,16 +75,18 @@ def test_run_patcher(test_files_dir, mocker, patch_data_name: str, tmp_path):
 
     @contextmanager
     def mocked_load_wrapper():
-        yield am2r_yams.wrapper.Wrapper(None)
+        yield planets_yapr.wrapper.Wrapper(None)
 
-    patch_game: MagicMock = mocker.patch("am2r_yams.wrapper.Wrapper.patch_game", side_effect=finished_status)
-    mocker.patch("am2r_yams.wrapper.Wrapper.get_csharp_version", side_effect=mocked_version)
-    mocker.patch("am2r_yams.load_wrapper", side_effect=mocked_load_wrapper)
+    patch_game: MagicMock = mocker.patch("planets_yapr.wrapper.Wrapper.patch_game", side_effect=finished_status)
+    mocker.patch("planets_yapr.wrapper.Wrapper.get_csharp_version", side_effect=mocked_version)
+    mocker.patch("planets_yapr.load_wrapper", side_effect=mocked_load_wrapper)
 
     receiving_pipe, output_pipe = multiprocessing.Pipe(True)
-    patch_data = test_files_dir.read_json("patcher_data", "am2r", "am2r", patch_data_name, "world_1.json")
+    patch_data = test_files_dir.read_json(
+        "patcher_data", "planets_zebeth", "planets_zebeth", patch_data_name, "world_1.json"
+    )
 
-    export_params = AM2RGameExportParams(
+    export_params = PlanetsZebethGameExportParams(
         spoiler_output=None,
         input_path=tmp_path.joinpath("input_path"),
         output_path=tmp_path.joinpath("output", "path"),
