@@ -369,6 +369,7 @@ jobs:
           github_token: ${{ secrets.github_token }}
           # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
           reporter: github-check
+          execute_command: uv run mypy
           setup_method: nothing
           target: --config-file=pyproject.toml
           fail_on_error: true
@@ -404,6 +405,7 @@ jobs:
           github_token: ${{ secrets.github_token }}
           # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
           reporter: github-check
+          execute_command: uv run mypy
           setup_method: nothing
           level: warning
           fail_on_error: false
