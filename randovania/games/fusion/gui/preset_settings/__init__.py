@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-import randovania
 from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
 
 if TYPE_CHECKING:
@@ -12,6 +11,7 @@ if TYPE_CHECKING:
 
 
 def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
+    import randovania
     from randovania.games.fusion.gui.preset_settings.fusion_dock_tab import PresetFusionDocks
     from randovania.games.fusion.gui.preset_settings.fusion_goal_tab import PresetFusionGoal
     from randovania.games.fusion.gui.preset_settings.fusion_hints_tab import PresetFusionHints
@@ -22,7 +22,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
     from randovania.gui.preset_settings.patcher_energy_tab import PresetPatcherEnergy
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
 
-    return [
+    tabs = [
         PresetTrickLevel,
         PresetGeneration,
         PresetFusionGoal,
@@ -31,6 +31,10 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         MetroidPresetItemPool,
         PresetPatcherEnergy,
         PresetMetroidStartingArea,
-        PresetFusionDocks if not randovania.is_frozen() else None,  # Only show when running from source
         PresetFusionPatches,
     ]
+
+    if not randovania.is_frozen():  # Tabs to only show when running from source
+        tabs.append(PresetFusionDocks)
+
+    return tabs
