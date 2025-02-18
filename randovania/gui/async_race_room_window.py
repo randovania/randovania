@@ -5,6 +5,7 @@ from PySide6 import QtCore, QtWidgets
 from qasync import asyncSlot
 
 from randovania.gui import game_specific_gui
+from randovania.gui.dialog.async_race_admin_dialog import AsyncRaceAdminDialog
 from randovania.gui.dialog.async_race_leaderboard_dialog import AsyncRaceLeaderboardDialog
 from randovania.gui.dialog.async_race_proof_popup import AsyncRaceProofPopup
 from randovania.gui.dialog.async_race_settings_dialog import AsyncRaceSettingsDialog
@@ -51,7 +52,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         self._administration_menu = QtWidgets.QMenu(self.ui.administration_button)
         self.ui.administration_button.setMenu(self._administration_menu)
         self._administration_menu.addAction("Change options").triggered.connect(self._on_change_options)
-        self._administration_menu.addAction("View user entries")
+        self._administration_menu.addAction("View user entries").triggered.connect(self._on_view_user_entries)
         self.ui.view_preset_description_button.clicked.connect(self._preset_view_summary)
 
         self.ui.view_spoiler_button.clicked.connect(self._view_spoiler)
@@ -132,7 +133,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
             case AsyncRaceRoomRaceStatus.SCHEDULED:
                 participation_text = f"Race starts in {humanize.naturaltime(room.start_date, when=now)}"
             case AsyncRaceRoomRaceStatus.FINISHED:
-                participation_text = "Race has finished."
+                participation_text = f"Race has finished. You have {self.room.self_status.name}."
 
         self.ui.participation_label.setText(participation_text or "")
         self.ui.participation_label.setVisible(participation_text is not None)
@@ -295,6 +296,19 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
                 await self._network_client.async_race_change_room_settings(
                     self.room.id, dialog.create_settings_object()
                 )
+            )
+
+    @asyncSlot()
+    async def _on_view_user_entries(self) -> None:
+        data = await self._network_client.async_race_admin_get_admin_data(self.room.id)
+        dialog = AsyncRaceAdminDialog(self, data)
+
+        result = await async_dialog.execute_dialog(dialog)
+        if result == QtWidgets.QDialog.DialogCode.Accepted:
+            new_data = dialog.admin_data()
+            modified_entries = [new for old, new in zip(data.users, new_data.users) if old != new]
+            self.on_room_details(
+                await self._network_client.async_race_admin_update_entries(self.room.id, modified_entries)
             )
 
     @asyncSlot()
