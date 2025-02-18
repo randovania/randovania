@@ -4,6 +4,8 @@ WORKDIR /usr/src/app
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
+ENV UV_LINK_MODE=copy
+
 RUN apt-get update && apt-get install -y \
     graphviz \
  && rm -rf /var/lib/apt/lists/*
@@ -19,7 +21,7 @@ COPY . .
 
 # Sync the project
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --frozen
+    uv sync --frozen --extra server --extra exporters
 
 VOLUME ["/data"]
 ENTRYPOINT ["/usr/src/app/.venv/bin/python", "-m", "randovania"]
