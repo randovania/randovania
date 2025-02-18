@@ -110,6 +110,14 @@ def change_room_settings(sa: ServerApp, room_id: int, settings_json: JsonObject)
     if not (0 < len(settings.name) <= MAX_SESSION_NAME_LENGTH):
         raise error.InvalidActionError("Invalid session name length")
 
+    now = datetime.datetime.now(datetime.UTC)
+    old_status = AsyncRaceRoomRaceStatus.from_dates(room.start_datetime, room.end_datetime, now)
+    new_status = AsyncRaceRoomRaceStatus.from_dates(settings.start_date, settings.end_date, now)
+
+    status_order = [AsyncRaceRoomRaceStatus.SCHEDULED, AsyncRaceRoomRaceStatus.ACTIVE, AsyncRaceRoomRaceStatus.FINISHED]
+    if status_order.index(new_status) < status_order.index(old_status):
+        raise error.InvalidActionError("Can't go back in time for race status")
+
     room.name = settings.name
     room.start_datetime = settings.start_date
     room.end_datetime = settings.end_date
