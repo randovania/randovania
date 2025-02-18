@@ -638,7 +638,7 @@ class AsyncRaceEntry(BaseModel):
     pauses: Sequence[AsyncRaceEntryPause]
 
     @classmethod
-    def entry_for(cls, room: AsyncRaceRoom, user: User) -> Self | None:
+    def entry_for(cls, room: AsyncRaceRoom, user: User | int) -> Self | None:
         """
         Returns the entry a given user has for the given room, or None if it doesn't exist.
         """
@@ -661,8 +661,8 @@ class AsyncRaceEntry(BaseModel):
         else:
             return async_race_room.AsyncRaceRoomUserStatus.FINISHED
 
-    def create_admin_entry(self) -> async_race_room.AsyncRaceEntryEntry:
-        return async_race_room.AsyncRaceEntryEntry(
+    def create_admin_entry(self) -> async_race_room.AsyncRaceEntryData:
+        return async_race_room.AsyncRaceEntryData(
             user=self.user.as_randovania_user(),
             join_date=self.join_datetime,
             start_date=self.start_datetime,
