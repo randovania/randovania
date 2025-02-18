@@ -26,6 +26,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: All other connections in Screw Attack Room that are only open before flipping the spinner are now only logical when Highly Dangerous Logic is enabled.
 - Changed: The conditions that depends on not having blown up the blob in Screw Attack Room are now only logical when Highly Dangerous Logic is enabled.
 
+##### Cataris
+
+- Changed: The Energy Part pickup in Thermal Device Room North no longer requires the Varia Suit if the "Cataris - Lower Lava Button" event has been triggered.
+- Changed: The blob in Z-57 Heat Room West (Right) now requires the Varia Suit to be destroyed.
+
 ### Metroid Prime 2: Echoes
 - Removed: Relative hints will no longer be placed.
 - Changed: Legacy multiworld sessions where an Echoes hint points to a Cave Story item may have very slightly altered wording.
