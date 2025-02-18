@@ -95,7 +95,7 @@ jobs:
         if: ${{ !matrix.executable }}
 
       - name: Install Python packages (executable)
-        run: uv sync --frozen --extra gui --extra exporters --extra test --with installer
+        run: uv sync --frozen --extra gui --extra exporters --extra test --group installer
         if: ${{ matrix.executable }}
 
       - name: build sdist and wheel
@@ -361,7 +361,7 @@ jobs:
         uses: actions/setup-python@v5
 
       - name: Install Python packages
-        run: uv sync --frozen --all-extras --with typing
+        run: uv sync --frozen --all-extras --group typing
 
       - name: Mypy on required files
         uses: tsuyoshicho/action-mypy@v5
