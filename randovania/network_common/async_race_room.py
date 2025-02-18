@@ -83,7 +83,7 @@ class AsyncRacePauseEntry(JsonDataclass):
 
 
 @dataclasses.dataclass
-class AsyncRaceEntryEntry(JsonDataclass):
+class AsyncRaceEntryData(JsonDataclass):
     """
     All data about a user's entry to a race. Should only be available to admins.
     """
@@ -100,7 +100,7 @@ class AsyncRaceEntryEntry(JsonDataclass):
 
 @dataclasses.dataclass
 class AsyncRaceRoomAdminData(JsonDataclass):
-    users: list[AsyncRaceEntryEntry]
+    users: list[AsyncRaceEntryData]
 
 
 class AsyncRaceRoomUserStatus(enum.Enum):
