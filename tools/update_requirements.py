@@ -15,7 +15,7 @@ this_file = Path(__file__)
 parent = this_file.parents[1]
 custom_env = {
     **os.environ,
-    "CUSTOM_COMPILE_COMMAND": f"python {this_file.relative_to(parent).as_posix()}",
+    "UV_CUSTOM_COMPILE_COMMAND": f"python {this_file.relative_to(parent).as_posix()}",
 }
 
 is_quiet = "--quiet" in sys.argv
@@ -58,20 +58,17 @@ def run_compile(
     extra: list[str] | None = None,
 ):
     args = [
-        sys.executable,
-        "-m",
-        "piptools",
+        "uv",
+        "pip",
         "compile",
-        "--allow-unsafe",
-        "--resolver",
-        "backtracking",
+        "--universal",
         "--strip-extras",
         "--output-file",
         output_file,
         *upgrade_arg,
     ]
-    if extra:
-        args.append("--extra=" + ",".join(extra))
+    for e in extra or []:
+        args.extend(["--extra", e])
     args.extend(custom_args)
 
     print("Running {}".format(" ".join(args)))
@@ -85,7 +82,15 @@ def run_compile(
     )
     final_file = parent.joinpath(output_file)
     output_contents = final_file.read_text()
-    final_file.write_text(output_contents.replace(os.fspath(parent.joinpath("requirements.txt")), "requirements.txt"))
+
+    def fix_file(contents: str) -> str:
+        return contents.replace(
+            os.fspath(parent.joinpath("requirements.txt")), "requirements.txt"
+        ).replace(
+            "tools/requirements/../../requirements.txt", "requirements.txt"
+        )
+
+    final_file.write_text(fix_file(output_contents))
 
 
 run_compile(
