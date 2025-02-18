@@ -1,3 +1,8 @@
+# /// script
+# dependencies = [
+#   "aiohttp"
+# ]
+# ///
 from __future__ import annotations
 
 import argparse

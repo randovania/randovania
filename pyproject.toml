@@ -153,15 +153,21 @@ test = [
     "pytest-codspeed",
 ]
 
+website = [
+    "htmlmin2",
+    "ruamel.yaml",
+]
+
+[dependency-groups]
+installer = [
+    "pyinstaller",
+    "pyinstaller-hooks-contrib",
+]
+
 typing = [
     "mypy",
     "types-aiofiles",
     "types-peewee",
-]
-
-website = [
-    "htmlmin2",
-    "ruamel.yaml",
 ]
 
 [project.readme]
@@ -341,3 +347,10 @@ module = [
     "ruamel.*",
 ]
 ignore_missing_imports = true
+
+[tool.uv]
+cache-keys = [
+    { git = { commit = true, tags = true } },
+    { file = "pyuic.json" },
+    { file = "**/*.ui" },
+]
