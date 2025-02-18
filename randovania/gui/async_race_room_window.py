@@ -5,11 +5,11 @@ from PySide6 import QtCore, QtWidgets
 from qasync import asyncSlot
 
 from randovania.gui import game_specific_gui
-from randovania.gui.dialog.async_race_creation_dialog import AsyncRaceCreationDialog
 from randovania.gui.dialog.async_race_leaderboard_dialog import AsyncRaceLeaderboardDialog
 from randovania.gui.dialog.async_race_proof_popup import AsyncRaceProofPopup
+from randovania.gui.dialog.async_race_settings_dialog import AsyncRaceSettingsDialog
 from randovania.gui.generated.async_race_room_window_ui import Ui_AsyncRaceRoomWindow
-from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, signal_handling
+from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
@@ -287,18 +287,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
     async def _on_change_options(self) -> None:
         """Called when the `Change room options` button is pressed."""
 
-        dialog = AsyncRaceCreationDialog(self)
-        dialog.ui.name_edit.setText(self.room.name)
-        dialog.ui.password_edit.setVisible(False)
-        dialog.ui.password_check.setVisible(False)
-        dialog.ui.start_time_edit.setDateTime(
-            QtCore.QDateTime.fromSecsSinceEpoch(int(self.room.start_date.timestamp()))
-        )
-        dialog.ui.end_time_edit.setDateTime(QtCore.QDateTime.fromSecsSinceEpoch(int(self.room.end_date.timestamp())))
-        dialog.ui.allow_pause_check.setChecked(self.room.allow_pause)
-        if self.room.allow_pause and self.room.race_status != AsyncRaceRoomRaceStatus.SCHEDULED:
-            dialog.ui.allow_pause_check.setEnabled(False)
-        signal_handling.set_combo_with_value(dialog.ui.visibility_combo_box, self.room.visibility)
+        dialog = AsyncRaceSettingsDialog(self, self.room)
 
         result = await async_dialog.execute_dialog(dialog)
         if result == QtWidgets.QDialog.DialogCode.Accepted:
