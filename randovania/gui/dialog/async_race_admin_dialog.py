@@ -49,10 +49,21 @@ class AsyncRaceEntryDataDatabaseModel(EditableTableModel[AsyncRaceEntryData]):
     def _get_items(self) -> list[AsyncRaceEntryData]:
         return self.db
 
+    def setData(
+        self,
+        index: QtCore.QModelIndex | QtCore.QPersistentModelIndex,
+        value: typing.Any,
+        role: int | EllipsisType = ...,
+    ) -> bool:
+        result = super().setData(index, value, role)
+        if result:
+            self.dataChanged.emit(self.index(index.row(), 0), self.index(index.row(), self.columnCount()))
+        return result
+
     def data(
         self, index: QtCore.QModelIndex | QtCore.QPersistentModelIndex, role: int | EllipsisType = ...
     ) -> typing.Any:
-        if role == Qt.ItemDataRole.BackgroundRole:
+        if role == Qt.ItemDataRole.DecorationRole:
             if index.row() < len(self._get_items()):
                 item = self.db[index.row()]
                 match index.column():
@@ -63,7 +74,7 @@ class AsyncRaceEntryDataDatabaseModel(EditableTableModel[AsyncRaceEntryData]):
                         if item.finish_date is not None and (
                             item.start_date is None or item.finish_date <= item.start_date
                         ):
-                            return QtGui.QColorConstants.DarkRed
+                            return QtGui.QColorConstants.Red
                 return None
             return QtGui.QColorConstants.Red
         return super().data(index, role)
@@ -83,6 +94,7 @@ class AsyncRaceAdminDialog(QtWidgets.QDialog):
         self.ui.table_view.setModel(self.model)
         self.ui.table_view.resizeColumnsToContents()
 
+        self.model.dataChanged.connect(self.validate)
         self.ui.button_box.accepted.connect(self.accept)
         self.ui.button_box.rejected.connect(self.reject)
 
@@ -90,4 +102,9 @@ class AsyncRaceAdminDialog(QtWidgets.QDialog):
         """Creates a new AsyncRaceRoomAdminData with potentially modified data by the user."""
         return AsyncRaceRoomAdminData(
             users=list(self.model.db),
+        )
+
+    def validate(self, top_left: QtCore.QModelIndex, bottom_right: QtCore.QModelIndex, roles: list[int]) -> None:
+        self.ui.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Save).setEnabled(
+            all(entry.is_valid() for entry in self.model.db)
         )
