@@ -56,10 +56,16 @@ def _run_args(parser: ArgumentParser, args: Namespace) -> int:
 def run_pytest(argv: list[str]) -> None:
     import pytest
     import pytest_asyncio.plugin
+    import pytest_codspeed.plugin
     import pytest_localftpserver.plugin
     import pytest_mock.plugin
 
-    sys.exit(pytest.main(argv[2:], plugins=[pytest_asyncio.plugin, pytest_mock.plugin, pytest_localftpserver.plugin]))
+    sys.exit(
+        pytest.main(
+            argv[2:],
+            plugins=[pytest_asyncio.plugin, pytest_mock.plugin, pytest_localftpserver.plugin, pytest_codspeed.plugin],
+        )
+    )
 
 
 def run_cli(argv: list[str]) -> None:
