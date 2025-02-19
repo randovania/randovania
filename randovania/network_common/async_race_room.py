@@ -97,6 +97,16 @@ class AsyncRaceEntryData(JsonDataclass):
     submission_notes: str
     proof_url: str | None
 
+    def is_valid(self) -> bool:
+        """Returns True if all three dates are consistent, False otherwise."""
+        if self.start_date is None:
+            return self.finish_date is None
+        else:
+            if self.finish_date is not None:
+                return self.join_date < self.start_date < self.finish_date
+            else:
+                return self.join_date < self.start_date
+
 
 @dataclasses.dataclass
 class AsyncRaceRoomAdminData(JsonDataclass):
