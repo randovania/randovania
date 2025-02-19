@@ -31,6 +31,9 @@ class EnergyTankDamageState(DamageState):
         self._resource_database = resource_database
         self._region_list = region_list
 
+    def __copy__(self) -> Self:
+        return self._duplicate()
+
     @override
     def resource_database(self) -> ResourceDatabase:
         return self._resource_database
