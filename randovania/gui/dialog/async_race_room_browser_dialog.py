@@ -47,14 +47,16 @@ class AsyncRaceRoomBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
         self.button_box.rejected.connect(self.reject)
         self.refresh_button.clicked.connect(self._refresh_slot)
 
+        self.is_member_label.setVisible(False)
+        self.is_member_yes_check.setVisible(False)
+        self.is_member_no_check.setVisible(False)
+
         checks = (
             self.has_password_yes_check,
             self.has_password_no_check,
             self.state_visibile_check,
             self.state_hidden_check,
             self.filter_age_check,
-            self.is_member_yes_check,
-            self.is_member_no_check,
         )
         for check in checks:
             check.stateChanged.connect(self.update_list)
