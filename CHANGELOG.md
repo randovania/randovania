@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Fixed: Starter Preset now has a proper description.
+
 #### Logic Database
 
 ##### Artaria
