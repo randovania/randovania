@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import copy
 from typing import TYPE_CHECKING, Self, override
 
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -32,6 +31,9 @@ class EnergyTankDamageState(DamageState):
         self._resource_database = resource_database
         self._region_list = region_list
 
+    def __copy__(self) -> Self:
+        return self._duplicate()
+
     @override
     def resource_database(self) -> ResourceDatabase:
         return self._resource_database
@@ -44,8 +46,18 @@ class EnergyTankDamageState(DamageState):
         num_tanks = resources[self._energy_tank]
         return self._starting_energy + (self._energy_per_tank * num_tanks)
 
+    def _duplicate(self) -> Self:
+        result = EnergyTankDamageState(
+            self._starting_energy,
+            self._energy_per_tank,
+            self._resource_database,
+            self._region_list,
+        )
+        result._energy = self._energy
+        return result
+
     def _at_maximum_energy(self, resources: ResourceCollection) -> Self:
-        result = copy.copy(self)
+        result = self._duplicate()
         result._energy = result._maximum_energy(resources)
         return result
 
@@ -62,7 +74,7 @@ class EnergyTankDamageState(DamageState):
 
     @override
     def apply_damage(self, damage: int) -> Self:
-        result = copy.copy(self)
+        result = self._duplicate()
         result._energy -= damage
         return result
 
@@ -76,7 +88,7 @@ class EnergyTankDamageState(DamageState):
 
     @override
     def limited_by_maximum(self, resources: ResourceCollection) -> Self:
-        result = copy.copy(self)
+        result = self._duplicate()
         result._energy = min(result._energy, result._maximum_energy(resources))
         return result
 
@@ -101,7 +113,7 @@ class EnergyTankDamageState(DamageState):
         self, new_resources: ResourceCollection, old_resources: ResourceCollection
     ) -> Self:
         tank_difference = self._energy_tank_difference(new_resources, old_resources)
-        result = copy.copy(self)
+        result = self._duplicate()
         result._energy += tank_difference * self._energy_per_tank
         return result.limited_by_maximum(new_resources)
 
