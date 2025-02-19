@@ -100,7 +100,7 @@ jobs:
 
       - name: build sdist and wheel
         run: python -m build --no-isolation
-        if: ${{ !matrix.executable && matrix.os == 'ubuntu-latest' }}
+        if: ${{ !matrix.executable && matrix.os == 'ubuntu-latest' && matrix.name != 'Resolver' }}
 
       - name: create test game
         run: coverage run -m randovania development add-new-game --enum-name TEST_GAME --enum-value test_game --short-name TG --long-name "Test Game"
@@ -119,7 +119,10 @@ jobs:
         if: ${{ !matrix.executable && matrix.name != 'Resolver' }}
 
       - name: run pytest (resolver)
-        run: python -m pytest --cov randovania --cov-append --cov-report=xml --durations=100 -n auto test/resolver/test_resolver.py test/generator/test_generator_reach.py
+        uses: CodSpeedHQ/action@v3
+        with:
+          run: python -m pytest --cov randovania --cov-append --cov-report=xml --durations=100 --codspeed
+          token: ${{ secrets.CODSPEED_TOKEN }} # Optional for public repositories
         if: ${{ matrix.name == 'Resolver' }}
 
       - name: create executable

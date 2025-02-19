@@ -141,6 +141,7 @@ _include_tricks_for_game = {
 }
 
 
+@pytest.mark.benchmark
 @pytest.mark.skip_resolver_tests
 @pytest.mark.parametrize(
     ("game_enum", "ignore_events", "ignore_pickups", "include_tricks"),
@@ -163,10 +164,7 @@ def test_database_collectable(
     ignore_pickups: set[int],
     include_tricks: set[tuple[str, LayoutTrickLevel]],
 ):
-    mocker.patch(
-        "randovania.generator.base_patches_factory.BasePatchesFactory.check_item_pool",
-        autospec=True,
-    )
+    mocker.patch("randovania.generator.base_patches_factory.BasePatchesFactory.check_item_pool")
     game, state, permalink = run_bootstrap(
         preset_manager.default_preset_for_game(game_enum).get_preset(), include_tricks
     )
@@ -214,6 +212,7 @@ def test_database_collectable(
     assert sorted(collected_events, key=lambda it: it.short_name) == expected_events
 
 
+@pytest.mark.benchmark
 @pytest.mark.parametrize("has_translator", [False, True])
 def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource_database, echoes_game_patches):
     # Setup
@@ -296,6 +295,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
         assert set(reach.safe_nodes) == {node_a, node_b}
 
 
+@pytest.mark.benchmark
 def test_reach_size_from_start_echoes(small_echoes_game_description, default_echoes_configuration, mocker):
     # Setup
     game = derived_nodes.remove_inactive_layers(
@@ -303,10 +303,7 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_ech
     ).get_mutable()
 
     mocker.patch("randovania.game_description.default_database.game_description_for", return_value=game)
-    mocker.patch(
-        "randovania.generator.base_patches_factory.BasePatchesFactory.check_item_pool",
-        autospec=True,
-    )
+    mocker.patch("randovania.generator.base_patches_factory.BasePatchesFactory.check_item_pool")
     generator = game.game.generator
 
     specific_levels = {trick.short_name: LayoutTrickLevel.maximum() for trick in game.resource_database.trick}
