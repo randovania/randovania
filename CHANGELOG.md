@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Cave Story and Echoes now have a "Pickup Location Features" tab where you can view which Features apply to which locations.
 - Added: Location Features can be viewed in the Database Viewer.
 - Fixed: It is now properly impossible for multiple hints to point to the same location.
+- Fixed: A recent regression in the resolver that made it significantly slower has been fixed.
 - Added: The Hints Spoiler tab now indicates which location a hint is pointing to.
 - Changed: The Hints Spoiler tab sorts its entries in a more helpful manner.
 
