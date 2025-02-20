@@ -57,7 +57,6 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_MSRCosmeticPatchesD
         self._persist_check_field(self.custom_energy_tank_color_check, "use_energy_tank_color")
         self._persist_check_field(self.custom_aeion_bar_color_check, "use_aeion_bar_color")
         self._persist_check_field(self.custom_ammo_hud_color_check, "use_ammo_hud_color")
-        self._persist_check_field(self.enable_remote_lua, "enable_remote_lua")
         for field_name, slider in self.field_name_to_slider_mapping.items():
             slider.valueChanged.connect(functools.partial(self._on_slider_update, slider, field_name))
         self.custom_laser_locked_color_button.clicked.connect(
@@ -98,7 +97,6 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_MSRCosmeticPatchesD
         self.custom_energy_tank_color_check.setChecked(patches.use_energy_tank_color)
         self.custom_aeion_bar_color_check.setChecked(patches.use_aeion_bar_color)
         self.custom_ammo_hud_color_check.setChecked(patches.use_ammo_hud_color)
-        self.enable_remote_lua.setChecked(patches.enable_remote_lua)
         for field_name, slider in self.field_name_to_slider_mapping.items():
             slider = self.field_name_to_slider_mapping[field_name]
             slider.setValue(getattr(patches, f"{field_name}_volume"))
