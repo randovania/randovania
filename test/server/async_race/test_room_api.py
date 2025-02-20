@@ -65,7 +65,7 @@ def test_get_leaderboard(simple_room):
     sa = MagicMock(spec=ServerApp)
 
     # Run
-    result = RaceRoomLeaderboard.from_json(room_api.get_leaderboard(sa, room.id))
+    result = RaceRoomLeaderboard.from_json(room_api.get_leaderboard(sa, room.id, ""))
 
     # Assert
     assert result == RaceRoomLeaderboard(
