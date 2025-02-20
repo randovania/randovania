@@ -397,7 +397,7 @@ def find_incompatible_video_links(game: GameDescription) -> Iterator[str]:
                             if "youtu" not in word:
                                 continue
                             if "&list" in word:
-                                yield f"Playlist linked in {node.identifier.as_string} -> {target.name}."
+                                yield f"Youtube Playlist linked in {node.identifier.as_string} -> {target.name}."
 
 
 def find_database_errors(game: GameDescription) -> list[str]:
