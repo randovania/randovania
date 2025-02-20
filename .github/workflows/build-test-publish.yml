@@ -121,7 +121,7 @@ jobs:
       - name: run pytest (resolver)
         uses: CodSpeedHQ/action@v3
         with:
-          run: python -m pytest --codspeed --codspeed-mode=walltime --codspeed-max-rounds=1
+          run: python -m pytest -n auto --codspeed --codspeed-mode=walltime --codspeed-max-rounds=1
           token: ${{ secrets.CODSPEED_TOKEN }}
         if: ${{ matrix.name == 'Resolver' }}
 
