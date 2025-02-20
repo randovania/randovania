@@ -4,8 +4,8 @@ from typing import TYPE_CHECKING
 
 from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
-from randovania.exporter.hints.joke_hints import JOKE_HINTS
 from randovania.game_description.db.hint_node import HintNode
+from randovania.games.prime2.exporter.joke_hints import JOKE_HINTS
 from randovania.games.prime2.patcher import echoes_items
 
 if TYPE_CHECKING:
