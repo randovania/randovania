@@ -8,6 +8,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QDialog, QDialogButtonBox, QPushButton, QTableWidgetItem
 from qasync import asyncSlot
 
+from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.multiplayer_session_browser_dialog_ui import Ui_MultiplayerSessionBrowserDialog
 from randovania.gui.lib import async_dialog, common_qt_lib, model_lib
 from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
@@ -113,10 +114,19 @@ class AsyncRaceRoomBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
         session = self.selected_session
 
         try:
-            self.joined_session = await self.network_client.get_async_race_room(session.id)
-
+            self.joined_session = await self.network_client.get_async_race_room(session.id, None)
         except error.WrongPasswordError:
-            return await async_dialog.warning(self, "Incorrect Password", "The password entered was incorrect.")
+            password = await TextPromptDialog.prompt(
+                title="Enter password",
+                description="This room requires a password:",
+                is_password=True,
+            )
+            if password is None:
+                return
+            try:
+                self.joined_session = await self.network_client.get_async_race_room(session.id, password)
+            except error.WrongPasswordError:
+                return await async_dialog.warning(self, "Incorrect Password", "The password entered was incorrect.")
 
         if self.joined_session is not None:
             return self.accept()
