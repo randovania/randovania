@@ -104,12 +104,12 @@ class OnlineInteractions(QtWidgets.QWidget):
         """
         Displays a selection widget for async races and then opens a widget for displaying the selected one.
         """
-        session = await self._base_browse(
+        room = await self._base_browse(
             AsyncRaceRoomBrowserDialog,
             "Requesting the room list...",
         )
-        if session is not None:
-            async_room = AsyncRaceRoomWindow(session, None, self.network_client, self.options, self.window_manager)
+        if room is not None:
+            async_room = AsyncRaceRoomWindow(room, self.network_client, self.options, self.window_manager)
             async_room.show()
             self.window_manager.track_window(async_room)
 

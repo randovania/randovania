@@ -129,6 +129,7 @@ class AsyncRaceRoomEntry(AsyncRaceRoomListEntry):
     Contains all data a client can receive about a AsyncRaceRoom.
     """
 
+    auth_token: str
     game_details: GameDetails
     presets_raw: list[bytes]
     is_admin: bool

@@ -35,7 +35,6 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
     def __init__(
         self,
         room: AsyncRaceRoomEntry,
-        password: str | None,
         network_client: QtNetworkClient,
         options: Options,
         window_manager: WindowManager,
@@ -214,7 +213,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
             return
 
         patch_data = await self._network_client.async_race_join_and_export(
-            self.room.id, self._options.options_for_game(game).cosmetic_patches
+            self.room, self._options.options_for_game(game).cosmetic_patches
         )
 
         dialog.save_options()
@@ -259,7 +258,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
 
         try:
             self.setEnabled(False)
-            layout = await self._network_client.async_race_get_layout(self.room.id)
+            layout = await self._network_client.async_race_get_layout(self.room)
         finally:
             self.setEnabled(True)
 
@@ -274,7 +273,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
 
         try:
             self.setEnabled(False)
-            leaderboard = await self._network_client.async_race_get_leaderboard(self.room.id)
+            leaderboard = await self._network_client.async_race_get_leaderboard(self.room)
         finally:
             self.setEnabled(True)
 
@@ -316,4 +315,4 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         """
         Requests new room data from the server, then updates the UI.
         """
-        self.on_room_details(await self._network_client.get_async_race_room(self.room.id))
+        self.on_room_details(await self._network_client.async_race_refresh_room(self.room))
