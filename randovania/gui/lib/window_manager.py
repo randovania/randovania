@@ -2,13 +2,12 @@ from __future__ import annotations
 
 import typing
 
-from PySide6 import QtWidgets
+from PySide6 import QtCore, QtWidgets
 
 if typing.TYPE_CHECKING:
     from pathlib import Path
 
     from randovania.game.game_enum import RandovaniaGame
-    from randovania.gui.lib.close_event_widget import CloseEventWidget
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     from randovania.gui.multiworld_client import MultiworldClient
     from randovania.interface_common.options import Options
@@ -19,8 +18,12 @@ if typing.TYPE_CHECKING:
     from randovania.layout.versioned_preset import VersionedPreset
 
 
+class WidgetWithClose(typing.Protocol):
+    CloseEvent = QtCore.Signal()
+
+
 class WindowManager(QtWidgets.QMainWindow):
-    tracked_windows: list[CloseEventWidget]
+    tracked_windows: list[WidgetWithClose]
 
     def __init__(self):
         super().__init__()
@@ -63,7 +66,7 @@ class WindowManager(QtWidgets.QMainWindow):
     def is_preview_mode(self) -> bool:
         raise NotImplementedError
 
-    def track_window(self, window: CloseEventWidget):
+    def track_window(self, window: WidgetWithClose) -> None:
         def remove_window():
             self.tracked_windows.remove(window)
 
