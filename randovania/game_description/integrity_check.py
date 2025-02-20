@@ -384,6 +384,22 @@ def check_for_resources_to_use_together(
             continue
 
 
+def find_incompatible_video_links(game: GameDescription) -> Iterator[str]:
+    db = game
+    for region in db.region_list.regions:
+        for area in region.areas:
+            for node in area.nodes:
+                for target, requirement in area.connections.get(node, {}).items():
+                    if not isinstance(requirement, RequirementArrayBase):
+                        continue
+                    if requirement.comment is not None:
+                        for word in requirement.comment.split(" "):
+                            if "youtu" not in word:
+                                continue
+                            if "&list" in word:
+                                yield f"Playlist linked in {node.identifier.as_string} -> {target.name}."
+
+
 def find_database_errors(game: GameDescription) -> list[str]:
     result = []
 
@@ -397,5 +413,6 @@ def find_database_errors(game: GameDescription) -> list[str]:
     result.extend(find_recursive_templates(game))
     result.extend(find_duplicated_pickup_index(game.region_list))
     result.extend(game.game.data.logic_db_integrity(game))
+    result.extend(find_incompatible_video_links(game))
 
     return result
