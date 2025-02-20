@@ -121,8 +121,8 @@ jobs:
       - name: run pytest (resolver)
         uses: CodSpeedHQ/action@v3
         with:
-          run: python -m pytest --cov randovania --cov-append --cov-report=xml --codspeed --codspeed-mode=walltime --codspeed-max-rounds=1
-          token: ${{ secrets.CODSPEED_TOKEN }} # Optional for public repositories
+          run: python -m pytest --codspeed --codspeed-mode=walltime --codspeed-max-rounds=1
+          token: ${{ secrets.CODSPEED_TOKEN }}
         if: ${{ matrix.name == 'Resolver' }}
 
       - name: create executable
