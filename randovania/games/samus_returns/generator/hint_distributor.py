@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, override
 
-from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision, PrecisionPair
+from randovania.game_description.hint import PrecisionPair
 from randovania.generator.hint_distributor import HintDistributor
 
 if TYPE_CHECKING:
@@ -13,7 +13,12 @@ class MSRHintDistributor(HintDistributor):
     @override
     @property
     def default_precision_pair(self) -> PrecisionPair:
-        return PrecisionPair(HintLocationPrecision.REGION_ONLY, HintItemPrecision.DETAILED, True)
+        return PrecisionPair.featural()
+
+    @override
+    @property
+    def use_detailed_location_precision(self) -> bool:
+        return False
 
     @override
     def is_pickup_interesting(self, pickup: PickupEntry) -> bool:
