@@ -385,19 +385,23 @@ def check_for_resources_to_use_together(
 
 
 def find_incompatible_video_links(game: GameDescription) -> Iterator[str]:
-    db = game
-    for region in db.region_list.regions:
+    for region in game.region_list.regions:
         for area in region.areas:
             for node in area.nodes:
                 for target, requirement in area.connections.get(node, {}).items():
-                    if not isinstance(requirement, RequirementArrayBase):
-                        continue
-                    if requirement.comment is not None:
-                        for word in requirement.comment.split(" "):
-                            if "youtu" not in word:
-                                continue
-                            if "&list" in word:
-                                yield f"Youtube Playlist linked in {node.identifier.as_string} -> {target.name}."
+                    yield from get_videos(requirement, node, target)
+
+
+def get_videos(req: Requirement, node: Node, target: Node):
+    if isinstance(req, RequirementArrayBase):
+        if req.comment is not None:
+            for word in req.comment.split(" "):
+                if "youtu" not in word:
+                    continue
+                if "&list" in word:
+                    yield f"YouTube Playlist linked in {node.identifier.as_string} -> {target.name}."
+        for i in req.items:
+            yield from get_videos(i, node, target)
 
 
 def find_database_errors(game: GameDescription) -> list[str]:
