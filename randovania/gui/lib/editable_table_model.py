@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import dataclasses
+import datetime
 import typing
 
 from PySide6 import QtCore
-from PySide6.QtCore import Qt
+from PySide6.QtCore import QDateTime, Qt
 
 if typing.TYPE_CHECKING:
     from types import EllipsisType
@@ -24,31 +25,65 @@ def _unmodified_from_qt[T](obj: T) -> tuple[bool, T]:
 class FieldDefinition[QtT, PyT]:
     """
     Defines an interface between a Dataclass field and a table column.
+    When default_factory is set, the field is optional.
     """
 
     display_name: str
     field_name: str
     _: dataclasses.KW_ONLY
+    read_only: bool = False
+    default_factory: typing.Callable[[], PyT] | None = None
     to_qt: typing.Callable[[PyT], QtT] = _unmodified_to_qt  # type: ignore[assignment]
     from_qt: typing.Callable[[QtT], tuple[bool, PyT | None]] = _unmodified_from_qt  # type: ignore[assignment]
 
 
-def BoolFieldDefinition(display_name: str, field_name: str) -> FieldDefinition[str, bool]:
+def BoolFieldDefinition(display_name: str, field_name: str, *, read_only: bool = False) -> FieldDefinition[str, bool]:
     def bool_to_qt(value: bool) -> str:
         return "True" if value else "False"
 
     def bool_from_qt(value: str) -> tuple[bool, bool | None]:
         if value.lower() == "true":
-            return (True, True)
+            return True, True
         if value.lower() == "false":
-            return (True, False)
-        return (False, None)
+            return True, False
+        return False, None
 
     return FieldDefinition[str, bool](
         display_name=display_name,
         field_name=field_name,
+        read_only=read_only,
         to_qt=bool_to_qt,
         from_qt=bool_from_qt,
+    )
+
+
+def DateFieldDefinition(
+    display_name: str, field_name: str, *, read_only: bool = False, optional: bool = False
+) -> FieldDefinition[datetime.datetime, QDateTime]:
+    """Creates a FieldDefinition for editing a datetime.datetime"""
+
+    default_factory = None
+
+    if optional:
+
+        def default_factory() -> datetime.datetime:
+            return datetime.datetime.now(datetime.UTC)
+
+    def date_to_qt(value: datetime.datetime) -> QDateTime:
+        return QtCore.QDateTime.fromSecsSinceEpoch(int(value.timestamp()))
+
+    def date_from_qt(value: QDateTime) -> tuple[bool, datetime.datetime]:
+        result = value.toPython()
+        assert isinstance(result, datetime.datetime)
+        return True, result.astimezone(datetime.UTC)
+
+    return FieldDefinition[QDateTime, datetime.datetime](
+        display_name=display_name,
+        field_name=field_name,
+        read_only=read_only,
+        default_factory=default_factory,
+        to_qt=date_to_qt,
+        from_qt=date_from_qt,
     )
 
 
@@ -77,14 +112,6 @@ class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
         else:
             yield from items.values()
 
-    def _create_item(self, identifier: str) -> T:
-        """Create a new valid item using the provided identifier"""
-        raise NotImplementedError
-
-    def _get_item_identifier(self, item: T) -> str:
-        """Get a unique identifier for the item, to prevent duplicates"""
-        raise NotImplementedError
-
     def set_allow_edits(self, value: bool) -> None:
         """Setter for `allow_edits`"""
         self.beginResetModel()
@@ -103,10 +130,7 @@ class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
         return self._all_columns()[section].display_name
 
     def rowCount(self, parent: QtCore.QModelIndex | QtCore.QPersistentModelIndex | EllipsisType = ...) -> int:
-        result = len(self._get_items())
-        if self.allow_edits:
-            result += 1
-        return result
+        return len(self._get_items())
 
     def columnCount(self, parent: QtCore.QModelIndex | QtCore.QPersistentModelIndex | EllipsisType = ...) -> int:
         return len(self._all_columns())
@@ -129,17 +153,26 @@ class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
     def data(
         self, index: QtCore.QModelIndex | QtCore.QPersistentModelIndex, role: int | EllipsisType = ...
     ) -> typing.Any:
-        if role not in {Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.EditRole}:
+        if role not in {Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.EditRole, Qt.ItemDataRole.CheckStateRole}:
             return None
 
         if index.row() < len(self._get_items()):
             item = self._get_item(index.row())
             field = self._all_columns()[index.column()]
-            return field.to_qt(getattr(item, field.field_name))
 
-        elif role == Qt.ItemDataRole.DisplayRole:
-            if index.column() == 0:
-                return "New..."
+            value = getattr(item, field.field_name)
+            if role == Qt.ItemDataRole.CheckStateRole:
+                if field.default_factory is not None:
+                    if value is not None:
+                        return Qt.CheckState.Checked
+                    else:
+                        return Qt.CheckState.Unchecked
+                return None
+
+            if field.default_factory is not None and value is None:
+                return ""
+            return field.to_qt(value)
+
         else:
             return ""
 
@@ -149,12 +182,26 @@ class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
         value: typing.Any,
         role: int | EllipsisType = ...,
     ) -> bool:
-        if role == Qt.ItemDataRole.EditRole:
+        if role in {Qt.ItemDataRole.EditRole, Qt.ItemDataRole.CheckStateRole}:
             all_items = self._get_items()
             if index.row() < len(all_items):
                 item = self._get_item(index.row())
                 field = self._all_columns()[index.column()]
-                valid, new_value = field.from_qt(value)
+
+                if field.read_only:
+                    return False
+
+                if role == Qt.ItemDataRole.CheckStateRole:
+                    if field.default_factory is None:
+                        return False
+
+                    if Qt.CheckState(value) == Qt.CheckState.Checked:
+                        valid, new_value = True, field.default_factory()
+                    else:
+                        valid, new_value = True, None
+                else:
+                    valid, new_value = field.from_qt(value)
+
                 if valid:
                     self._set_item(
                         index.row(),
@@ -165,13 +212,63 @@ class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
                     )
                     self.dataChanged.emit(index, index, [Qt.ItemDataRole.DisplayRole])
                     return True
-            else:
-                if value:
-                    all_items = set(self._iterate_items())
-                    if any(self._get_item_identifier(item) == value for item in all_items):
-                        return False
-                    return self.append_item(self._create_item(value))
         return False
+
+    def flags(self, index: QtCore.QModelIndex | QtCore.QPersistentModelIndex) -> QtCore.Qt.ItemFlag:
+        result = Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
+        if self.allow_edits:
+            field = self._all_columns()[index.column()]
+            if not field.read_only:
+                result |= Qt.ItemFlag.ItemIsEditable
+            if field.default_factory is not None:
+                result |= Qt.ItemFlag.ItemIsUserCheckable
+        return result
+
+
+class AppendableEditableTableModel[T: DataclassInstance](EditableTableModel[T]):
+    """
+    Extension of EditableTableModel, allowing for new entries to be added.
+    """
+
+    def _create_item(self, identifier: str) -> T:
+        """Create a new valid item using the provided identifier"""
+        raise NotImplementedError
+
+    def _get_item_identifier(self, item: T) -> str:
+        """Get a unique identifier for the item, to prevent duplicates"""
+        raise NotImplementedError
+
+    def rowCount(self, parent: QtCore.QModelIndex | QtCore.QPersistentModelIndex | EllipsisType = ...) -> int:
+        result = super().rowCount(parent)
+        if self.allow_edits:
+            result += 1
+        return result
+
+    def data(
+        self, index: QtCore.QModelIndex | QtCore.QPersistentModelIndex, role: int | EllipsisType = ...
+    ) -> typing.Any:
+        if index.row() >= len(self._get_items()):
+            if role == Qt.ItemDataRole.DisplayRole and index.column() == 0:
+                return "New..."
+            else:
+                return None
+        else:
+            return super().data(index, role)
+
+    def setData(
+        self,
+        index: QtCore.QModelIndex | QtCore.QPersistentModelIndex,
+        value: typing.Any,
+        role: int | EllipsisType = ...,
+    ) -> bool:
+        if role == Qt.ItemDataRole.EditRole:
+            all_items = self._get_items()
+            if index.row() >= len(all_items) and value:
+                all_items = set(self._iterate_items())
+                if any(self._get_item_identifier(item) == value for item in all_items):
+                    return False
+                return self.append_item(self._create_item(value))
+        return super().setData(index, value, role)
 
     def _append_item_to_database(self, item: T) -> None:
         """Appends the given item to the model's underlying database"""
@@ -192,12 +289,9 @@ class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
         return True
 
     def flags(self, index: QtCore.QModelIndex | QtCore.QPersistentModelIndex) -> QtCore.Qt.ItemFlag:
-        result = Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
-        if self.allow_edits:
-            if index.row() == len(self._get_items()):
-                if index.column() == 0:
-                    result |= Qt.ItemFlag.ItemIsEditable
+        if self.allow_edits and index.row() == len(self._get_items()):
+            if index.column() == 0:
+                return Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsEditable
             else:
-                if index.column() > 0:
-                    result |= Qt.ItemFlag.ItemIsEditable
-        return result
+                return Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
+        return super().flags(index)

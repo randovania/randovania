@@ -5,10 +5,10 @@ from PySide6 import QtCore, QtWidgets
 from randovania.game_description.hint_features import HintDetails, HintFeature
 from randovania.gui.generated.hint_feature_database_editor_ui import Ui_HintFeatureDatabaseEditor
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
-from randovania.gui.lib.editable_table_model import BoolFieldDefinition, EditableTableModel, FieldDefinition
+from randovania.gui.lib.editable_table_model import AppendableEditableTableModel, BoolFieldDefinition, FieldDefinition
 
 
-class HintFeatureDatabaseModel(EditableTableModel[HintFeature]):
+class HintFeatureDatabaseModel(AppendableEditableTableModel[HintFeature]):
     """Model for editing a HintFeature database using a QTableView."""
 
     def __init__(self, db: dict[str, HintFeature]):
@@ -18,7 +18,7 @@ class HintFeatureDatabaseModel(EditableTableModel[HintFeature]):
     @override
     def _all_columns(self) -> list[FieldDefinition]:
         return [
-            FieldDefinition[str, str]("Short Name", "name"),
+            FieldDefinition[str, str]("Short Name", "name", read_only=True),
             FieldDefinition[str, str]("Long Name", "long_name"),
             FieldDefinition[str, HintDetails](
                 "Hint Details",
