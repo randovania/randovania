@@ -62,6 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid: Samus Returns
 
 - Fixed: One Area 8 theme from not being included in music shuffle.
+- Removed: Enabling the automatic item tracker is no longer a cosmetic option, as it is now forced to always be enabled.
 
 #### Logic Database
 
