@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import base64
 import functools
 import inspect
+import json
 import typing
 from typing import TYPE_CHECKING, TypeVar
 
@@ -241,3 +243,12 @@ class ServerApp:
         for _ in self.get_server().manager.get_participants(namespace=namespace, room=room_name):
             return True
         return False
+
+    def encrypt_dict(self, data: dict) -> str:
+        encrypted_session = self.fernet_encrypt.encrypt(json.dumps(data).encode("utf-8"))
+        return base64.b85encode(encrypted_session).decode("ascii")
+
+    def decrypt_dict(self, data: str) -> dict:
+        encrypted_session = base64.b85decode(data)
+        json_string = self.fernet_encrypt.decrypt(encrypted_session).decode("utf-8")
+        return json.loads(json_string)

@@ -495,31 +495,44 @@ class NetworkClient:
             for item in await self.server_call("async_race_list_rooms", (None if ignore_limit else 100,))
         ]
 
-    async def get_async_race_room(self, room_id: int) -> AsyncRaceRoomEntry:
+    async def get_async_race_room(self, room_id: int, password: str | None) -> AsyncRaceRoomEntry:
         """
         Gets details about the given room id.
         :param room_id:
+        :param password: The room password
         :return: The room details
         """
-        return AsyncRaceRoomEntry.from_json(await self.server_call("async_race_get_room", room_id))
+        return AsyncRaceRoomEntry.from_json(await self.server_call("async_race_get_room", (room_id, password)))
 
-    async def async_race_get_leaderboard(self, room_id: int) -> RaceRoomLeaderboard:
+    async def async_race_refresh_room(self, room: AsyncRaceRoomEntry) -> AsyncRaceRoomEntry:
+        """
+        Gets details about the given room id.
+        :param room: The room's data from get_async_race_room
+        :return: The room details
+        """
+        return AsyncRaceRoomEntry.from_json(
+            await self.server_call("async_race_refresh_room", (room.id, room.auth_token))
+        )
+
+    async def async_race_get_leaderboard(self, room: AsyncRaceRoomEntry) -> RaceRoomLeaderboard:
         """
         Gets the leaderboard for the given room. Must have already finished to work.
-        :param room_id:
+        :param room: The room's data from get_async_race_room
         :return: The room's leaderboard
         """
-        return RaceRoomLeaderboard.from_json(await self.server_call("async_race_get_leaderboard", room_id))
+        return RaceRoomLeaderboard.from_json(
+            await self.server_call("async_race_get_leaderboard", (room.id, room.auth_token))
+        )
 
-    async def async_race_get_layout(self, room_id: int) -> LayoutDescription:
+    async def async_race_get_layout(self, room: AsyncRaceRoomEntry) -> LayoutDescription:
         """
         Gets the leaderboard for the given room. Must have already finished to work.
-        :param room_id:
+        :param room: The room's data from get_async_race_room
         :return: The room's leaderboard
         """
         from randovania.layout.layout_description import LayoutDescription
 
-        return LayoutDescription.from_bytes(await self.server_call("async_race_get_layout", room_id))
+        return LayoutDescription.from_bytes(await self.server_call("async_race_get_layout", (room.id, room.auth_token)))
 
     async def async_race_admin_get_admin_data(self, room_id: int) -> AsyncRaceRoomAdminData:
         """
@@ -543,14 +556,14 @@ class NetworkClient:
             )
         )
 
-    async def async_race_join_and_export(self, room_id: int, cosmetic: BaseCosmeticPatches) -> dict:
+    async def async_race_join_and_export(self, room: AsyncRaceRoomEntry, cosmetic: BaseCosmeticPatches) -> dict:
         """
         Requests to join the given room, along with some patcher data to export the game.
-        :param room_id: The id of the room to join
+        :param room: The room's data from get_async_race_room
         :param cosmetic: Cosmetic Patches to use for creating the patcher data
         :return: The patcher data necessary for exporting the game
         """
-        return await self.server_call("async_race_join_and_export", (room_id, cosmetic.as_json))
+        return await self.server_call("async_race_join_and_export", (room.id, room.auth_token, cosmetic.as_json))
 
     async def async_race_change_state(self, room_id: int, status: AsyncRaceRoomUserStatus) -> AsyncRaceRoomEntry:
         """

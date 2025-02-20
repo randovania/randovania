@@ -31,6 +31,32 @@ from randovania.server.database import (
 )
 from randovania.server.server_app import ServerApp
 
+MAX_AUTH_TOKEN_LENGTH = 3600 * 24
+
+
+def _verify_authorization(sa: ServerApp, room: AsyncRaceRoom, auth_token: str) -> None:
+    """
+    Checks for room password, current user membership and if the given auth token is valid.
+    :param sa:
+    :param room:
+    :param auth_token:
+    :return:
+    """
+    if room.password is not None:
+        if database.AsyncRaceEntry.entry_for(room, sa.get_current_user()) is not None:
+            return
+
+        try:
+            auth_data = sa.decrypt_dict(auth_token)
+            if auth_data["room_id"] != room.id:
+                raise error.NotAuthorizedForActionError
+
+            if datetime.datetime.now().timestamp() - auth_data["time"] > MAX_AUTH_TOKEN_LENGTH:
+                raise error.NotAuthorizedForActionError
+
+        except Exception:
+            raise error.NotAuthorizedForActionError
+
 
 def list_rooms(sa: ServerApp, limit: int | None) -> JsonType:
     now = datetime.datetime.now(datetime.UTC)
@@ -89,7 +115,7 @@ def create_room(sa: ServerApp, layout_bin: bytes, settings_json: JsonObject) -> 
             allow_pause=settings.allow_pause,
         )
 
-    return new_room.create_session_entry(current_user).as_json
+    return new_room.create_session_entry(sa).as_json
 
 
 def change_room_settings(sa: ServerApp, room_id: int, settings_json: JsonObject) -> JsonObject:
@@ -127,29 +153,47 @@ def change_room_settings(sa: ServerApp, room_id: int, settings_json: JsonObject)
     room.save()
 
     # TODO: Reusing the `room` after we set start_datetime/end_datetime breaks create_session_entry
-    return AsyncRaceRoom.get_by_id(room_id).create_session_entry(current_user).as_json
+    return AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa).as_json
 
 
-def get_room(sa: ServerApp, room_id: int) -> JsonType:
+def get_room(sa: ServerApp, room_id: int, password: str | None) -> JsonType:
     """
     Gets details about the given room id
     :param sa:
     :param room_id: The room to get details for
+    :param password:
     :return: A AsyncRaceRoomEntry, json encoded
     """
     room = AsyncRaceRoom.get_by_id(room_id)
-    # FIXME: password protected!
-    return room.create_session_entry(sa.get_current_user()).as_json
+    if room.password != password:
+        raise error.WrongPasswordError
+    return room.create_session_entry(sa).as_json
 
 
-def get_leaderboard(sa: ServerApp, room_id: int) -> JsonType:
+def refresh_room(sa: ServerApp, room_id: int, auth_token: str) -> JsonType:
+    """
+    Gets details about the given room id
+    :param sa:
+    :param room_id: The room to get details for
+    :param auth_token:
+    :return: A AsyncRaceRoomEntry, json encoded
+    """
+    room = AsyncRaceRoom.get_by_id(room_id)
+    _verify_authorization(sa, room, auth_token)
+    return room.create_session_entry(sa).as_json
+
+
+def get_leaderboard(sa: ServerApp, room_id: int, auth_token: str) -> JsonType:
     """
     Gets the race results. Only accessible after the end time is reached.
     :param sa:
     :param room_id: The room to get details for
+    :param auth_token:
     :return: A RaceRoomLeaderboard, json encoded
     """
     room = AsyncRaceRoom.get_by_id(room_id)
+    _verify_authorization(sa, room, auth_token)
+
     if room.end_datetime > datetime.datetime.now(datetime.UTC):
         raise error.NotAuthorizedForActionError
 
@@ -178,15 +222,20 @@ def get_leaderboard(sa: ServerApp, room_id: int) -> JsonType:
     return RaceRoomLeaderboard(entries).as_json
 
 
-def get_layout(sa: ServerApp, room_id: int) -> bytes:
+def get_layout(sa: ServerApp, room_id: int, auth_token: str) -> bytes:
     """
     Gets the layout description for the room, if it has finished
     :param sa:
     :param room_id: The room to get details for
+    :param auth_token:
     :return: A LayoutDescription, byte-encoded
     """
 
+    sa.decrypt_dict(auth_token)
+
     room = AsyncRaceRoom.get_by_id(room_id)
+    _verify_authorization(sa, room, auth_token)
+
     if room.end_datetime > datetime.datetime.now(datetime.UTC):
         raise error.NotAuthorizedForActionError
 
@@ -236,20 +285,21 @@ def admin_update_entries(sa: ServerApp, room_id: int, raw_new_entries: JsonType)
             entry.forfeit = modification.forfeit
             entry.save()
 
-    return AsyncRaceRoom.get_by_id(room_id).create_session_entry(user).as_json
+    return AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa).as_json
 
 
-def join_and_export(sa: ServerApp, room_id: int, cosmetic_json: JsonType) -> JsonType:
+def join_and_export(sa: ServerApp, room_id: int, auth_token: str, cosmetic_json: JsonType) -> JsonType:
     """
 
     :param sa:
     :param room_id: The room to join
+    :param auth_token:
     :param cosmetic_json:
     :return:
     """
-    # FIXME: password protected!
     user = sa.get_current_user()
     room = AsyncRaceRoom.get_by_id(room_id)
+    _verify_authorization(sa, room, auth_token)
 
     database.AsyncRaceEntry.get_or_create(
         room=room,
@@ -345,7 +395,7 @@ def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
         for it in things_to_save:
             it.save()
 
-    return room.create_session_entry(user).as_json
+    return room.create_session_entry(sa).as_json
 
 
 def submit_proof(sa: ServerApp, room_id: int, submission_notes: str, proof_url: str) -> None:
@@ -375,6 +425,7 @@ def setup_app(sa: ServerApp) -> None:
     sa.on("async_race_create_room", create_room, with_header_check=True)
     sa.on("async_race_change_room_settings", change_room_settings, with_header_check=True)
     sa.on("async_race_get_room", get_room, with_header_check=True)
+    sa.on("async_race_refresh_room", refresh_room, with_header_check=True)
     sa.on("async_race_get_leaderboard", get_leaderboard, with_header_check=True)
     sa.on("async_race_get_layout", get_layout, with_header_check=True)
     sa.on("async_race_admin_get_admin_data", admin_get_admin_data, with_header_check=True)

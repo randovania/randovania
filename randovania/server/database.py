@@ -38,6 +38,7 @@ if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator, Sequence
 
     from randovania.lib.json_lib import JsonObject
+    from randovania.server.server_app import ServerApp
 
     T = typing.TypeVar("T")
 
@@ -571,10 +572,11 @@ class AsyncRaceRoom(BaseModel):
     def end_datetime(self, value: datetime.datetime | None) -> None:
         self.end_date = value
 
-    def create_session_entry(self, for_user: User) -> async_race_room.AsyncRaceRoomEntry:
+    def create_session_entry(self, sa: ServerApp) -> async_race_room.AsyncRaceRoomEntry:
         game_details = self.game_details()
 
         now = _datetime_now()
+        for_user = sa.get_current_user()
 
         if (entry := AsyncRaceEntry.entry_for(self, for_user)) is not None:
             status = entry.user_status()
@@ -596,6 +598,12 @@ class AsyncRaceRoom(BaseModel):
                 self.start_datetime,
                 self.end_datetime,
                 now,
+            ),
+            auth_token=sa.encrypt_dict(
+                {
+                    "room_id": self.id,
+                    "time": now.timestamp(),
+                }
             ),
             game_details=game_details,
             presets_raw=[
