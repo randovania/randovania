@@ -154,7 +154,7 @@ class FusionPatchDataFactory(PatchDataFactory):
         nav_text_json = {}
         hint_lang_list = ["JapaneseKanji", "JapaneseHiragana", "English", "German", "French", "Italian", "Spanish"]
         # namer = FusionHintNamer(self.description.all_patches, self.players_config)
-        # exporter = HintExporter(namer, self.rng, ["A joke hint."])
+        # exporter = HintExporter(namer, self.rng, JOKE_HINTS)
 
         artifacts = [self.game.resource_database.get_item(f"Infant Metroid {i + 1}") for i in range(20)]
 

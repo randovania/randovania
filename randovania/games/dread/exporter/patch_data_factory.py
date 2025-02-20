@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING, override
 
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
+from randovania.exporter.hints.joke_hints import JOKE_HINTS
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.dock_node import DockNode
@@ -267,7 +268,7 @@ class DreadPatchDataFactory(PatchDataFactory):
             self.description.all_patches,
             self.players_config,
             self.rng,
-            ["A joke hint."],
+            JOKE_HINTS,
         )
 
         return [
