@@ -1097,6 +1097,25 @@ def _migrate_v96(preset: dict, game: RandovaniaGame) -> None:
             "hanubia": False,
             "itorash": False,
         }
+    return preset
+
+
+def _migrate_v97(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME_CORRUPTION:
+        preset["configuration"]["teleporters"] = {
+            "mode": "vanilla",
+            "excluded_teleporters": [],
+            "excluded_targets": [],
+            "skip_final_bosses": False,
+            "allow_unvisited_room_names": True,
+        }
+    return preset
+
+
+def _migrate_v98(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME_CORRUPTION:
+        preset["configuration"]["MP3Update"] = False
+    return preset
 
 
 _MIGRATIONS = [
@@ -1196,6 +1215,8 @@ _MIGRATIONS = [
     _migrate_v94,
     _migrate_v95,  # msr rename baby_metroid hint to final_boss_item hint
     _migrate_v96,  # dread disable lights per region
+    _migrate_v97,  # prime 3 phaaze skip
+    _migrate_v98,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
