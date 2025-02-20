@@ -188,6 +188,9 @@ class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
                 item = self._get_item(index.row())
                 field = self._all_columns()[index.column()]
 
+                if field.read_only:
+                    return False
+
                 if role == Qt.ItemDataRole.CheckStateRole:
                     if field.default_factory is None:
                         return False
