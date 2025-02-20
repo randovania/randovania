@@ -121,7 +121,7 @@ jobs:
       - name: run pytest (resolver)
         uses: CodSpeedHQ/action@v3
         with:
-          run: python -m pytest --cov randovania --cov-append --cov-report=xml --durations=100 --codspeed
+          run: python -m pytest --cov randovania --cov-append --cov-report=xml --codspeed --codspeed-mode=walltime --codspeed-max-rounds=1
           token: ${{ secrets.CODSPEED_TOKEN }} # Optional for public repositories
         if: ${{ matrix.name == 'Resolver' }}
 

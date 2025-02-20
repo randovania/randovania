@@ -212,7 +212,6 @@ def test_database_collectable(
     assert sorted(collected_events, key=lambda it: it.short_name) == expected_events
 
 
-@pytest.mark.benchmark
 @pytest.mark.parametrize("has_translator", [False, True])
 def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource_database, echoes_game_patches):
     # Setup
