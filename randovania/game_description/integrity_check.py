@@ -392,7 +392,7 @@ def find_incompatible_video_links(game: GameDescription) -> Iterator[str]:
                     yield from get_videos(requirement, node, target)
 
 
-def get_videos(req: Requirement, node: Node, target: Node):
+def get_videos(req: Requirement, node: Node, target: Node) -> Iterator[str]:
     if isinstance(req, RequirementArrayBase):
         if req.comment is not None:
             for word in req.comment.split(" "):
