@@ -6,6 +6,7 @@ requires = [
     "wheel>=0.37.0",
     "dulwich",
     "randovania-scm-version-schema",
+    "PySide6-Essentials>=6.5",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -148,15 +149,21 @@ test = [
     "pytest-xdist[psutil]",
 ]
 
+website = [
+    "htmlmin2",
+    "ruamel.yaml",
+]
+
+[dependency-groups]
+installer = [
+    "pyinstaller",
+    "pyinstaller-hooks-contrib",
+]
+
 typing = [
     "mypy",
     "types-aiofiles",
     "types-peewee",
-]
-
-website = [
-    "htmlmin2",
-    "ruamel.yaml",
 ]
 
 [project.readme]
@@ -326,3 +333,10 @@ module = [
     "qasync.*",
 ]
 ignore_missing_imports = true
+
+[tool.uv]
+cache-keys = [
+    { git = { commit = true, tags = true } },
+    { file = "pyuic.json" },
+    { file = "**/*.ui" },
+]
