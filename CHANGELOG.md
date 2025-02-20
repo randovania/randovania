@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
-- Fixed: GUI inconsistencies on the game page.
+- Fixed: GUI formatting on the game page.
 
 #### Logic Database
 
