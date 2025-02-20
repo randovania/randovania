@@ -728,7 +728,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             },
             "objective": self._objective(self.configuration),
             "layout_uuid": str(self.players_config.get_own_uuid()),
-            "enable_remote_lua": self.cosmetic_patches.enable_remote_lua or self.players_config.is_multiworld,
+            "enable_remote_lua": True,
         }
 
 
