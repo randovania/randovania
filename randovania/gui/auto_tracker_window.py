@@ -50,6 +50,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
     _connected_game: RandovaniaGame | None = None
     _current_tracker_game: RandovaniaGame | None = None
     _current_tracker_name: str = "undefined"
+    _current_tracker_details: dict | None = None
     item_tracker: ItemTrackerWidget | None = None
     _dummy_tracker: QtWidgets.QLabel | None = None
     _last_source: RemoteConnector | None = None
@@ -182,6 +183,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
             self._dummy_tracker = QtWidgets.QLabel(msg, self)
             self._dummy_tracker.setWordWrap(True)
             self.gridLayout.addWidget(self._dummy_tracker, 0, 0, 1, 1)
+            tracker_details = None
         else:
             tracker_details = json_lib.read_path(self.trackers[target_game][tracker_name])
 
@@ -191,6 +193,9 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
 
         self._current_tracker_game = target_game
         self._current_tracker_name = tracker_name
+        self._current_tracker_details = tracker_details
+        if connector is not None:
+            connector.inform_connected_tracker(tracker_details)
 
     def update_sources_combo(self):
         old_builder = self.selected_builder()
@@ -230,6 +235,9 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         self.create_tracker()
         expected_connector = self.game_connection.get_connector_for_builder(self.selected_builder())
         if expected_connector == state.source or self._last_source == state.source:
+            if self._last_source != state.source:
+                state.source.inform_connected_tracker(self._current_tracker_details)
+
             self._last_source = state.source
             if self.item_tracker is not None:
                 self.item_tracker.update_state(state.current_inventory)

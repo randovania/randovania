@@ -94,3 +94,6 @@ class RemoteConnector(QtCore.QObject):
     def is_disconnected(self) -> bool:
         """When True, this connector has lost connection with the game and must be discarded."""
         raise NotImplementedError
+
+    def inform_connected_tracker(self, tracker_details: dict | None) -> None:
+        """Called when an AutoTracker is created using this connector."""
