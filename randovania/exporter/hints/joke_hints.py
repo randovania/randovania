@@ -12,4 +12,7 @@ GENERIC_JOKE_HINTS = [
     "Imagining this hint is left as an exercise to the player.",
     "Made you look!",
     "Want a hint? Just go where the items are.",
+    "For optimal play, ensure proper posture and a positive mental attitude.",
+    "A useless hint can be found here.",
+    "We're all very proud of you.",
 ]
