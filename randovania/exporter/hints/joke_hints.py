@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-JOKE_HINTS = [
+GENERIC_JOKE_HINTS = [
     # Guidelines for joke hints:
     # 1. They should clearly be jokes, and not real hints or the result of a bug.
     # 2. They shouldn't reference real-world people.

@@ -12,7 +12,7 @@ from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.samus_returns.exporter.hint_namer import MSRHintNamer
-from randovania.games.samus_returns.exporter.joke_hints import JOKE_HINTS
+from randovania.games.samus_returns.exporter.joke_hints import MSR_JOKE_HINTS
 from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
 from randovania.games.samus_returns.layout.msr_configuration import FinalBossConfiguration
 from randovania.games.samus_returns.layout.msr_cosmetic_patches import MusicMode
@@ -303,7 +303,7 @@ class MSRPatchDataFactory(PatchDataFactory):
         return details
 
     def _encode_hints(self, rng: Random) -> list[dict]:
-        exporter = self.get_hint_exporter(self.description.all_patches, self.players_config, rng, JOKE_HINTS)
+        exporter = self.get_hint_exporter(self.description.all_patches, self.players_config, rng, MSR_JOKE_HINTS)
 
         hints = [
             {
@@ -355,7 +355,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             shuffled_hints = list(dna_hint_mapping.values())[start:end]
             shuffled_hints = [hint for hint in shuffled_hints if "Hunter already started with" not in hint]
             if not shuffled_hints:
-                shuffled_hints = [rng.choice(JOKE_HINTS + [dud_hint])]
+                shuffled_hints = [rng.choice(MSR_JOKE_HINTS + [dud_hint])]
             hints.append(
                 {"accesspoint_actor": {"scenario": scenario, "actor": actor}, "text": "\n".join(shuffled_hints) + "\n"}
             )

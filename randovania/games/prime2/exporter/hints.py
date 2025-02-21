@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.game_description.db.hint_node import HintNode
-from randovania.games.prime2.exporter.joke_hints import JOKE_HINTS
+from randovania.games.prime2.exporter.joke_hints import ECHOES_JOKE_HINTS
 from randovania.games.prime2.patcher import echoes_items
 
 if TYPE_CHECKING:
@@ -34,7 +34,7 @@ def create_patches_hints(
     namer: HintNamer,
     rng: Random,
 ) -> list:
-    exporter = HintExporter(namer, rng, JOKE_HINTS)
+    exporter = HintExporter(namer, rng, ECHOES_JOKE_HINTS)
 
     hints_for_asset: dict[NodeIdentifier, str] = {}
     for identifier, hint in all_patches[players_config.player_index].hints.items():
