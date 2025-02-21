@@ -10,6 +10,7 @@ from randovania.games.planets_zebeth.exporter.options import PlanetsZebethPerGam
 from randovania.games.planets_zebeth.gui.generated.planets_zebeth_game_export_dialog_ui import (
     Ui_PlanetsZebethGameExportDialog,
 )
+from randovania.games.planets_zebeth.layout import PlanetsZebethConfiguration
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     add_field_validation,
@@ -26,7 +27,7 @@ def _is_valid_input_dir(path: Path) -> bool:
     return path.joinpath("data.win").exists() and path.joinpath("Metroid Planets v1.27g.exe").exists()
 
 
-class PlanetsZebethGameExportDialog(GameExportDialog, Ui_PlanetsZebethGameExportDialog):
+class PlanetsZebethGameExportDialog(GameExportDialog[PlanetsZebethConfiguration], Ui_PlanetsZebethGameExportDialog):
     """A window for asking the user for what is needed to export this specific game.
 
     The provided implementation assumes you need an ISO/ROM file, and produces a new ISO/ROM file."""
@@ -35,8 +36,15 @@ class PlanetsZebethGameExportDialog(GameExportDialog, Ui_PlanetsZebethGameExport
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_PLANETS_ZEBETH
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
-        super().__init__(options, patch_data, word_hash, spoiler, games)
+    def __init__(
+        self,
+        options: Options,
+        configuration: PlanetsZebethConfiguration,
+        word_hash: str,
+        spoiler: bool,
+        games: list[RandovaniaGame],
+    ):
+        super().__init__(options, configuration, word_hash, spoiler, games)
         per_game = options.options_for_game(self.game_enum())
         assert isinstance(per_game, PlanetsZebethPerGameOptions)
 
