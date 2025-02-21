@@ -962,13 +962,13 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     @asyncSlot()
     async def game_export_listener(self, world_id: uuid.UUID, patch_data: dict):
         world = self._session.get_world(world_id)
-        games_by_world: dict[uuid.UUID, RandovaniaGame] = {
-            w.id: VersionedPreset.from_str(w.preset_raw).game for w in self._session.worlds
-        }
+        games_by_world: dict[uuid.UUID, RandovaniaGame] = {w.id: w.preset.game for w in self._session.worlds}
         game = games_by_world[world_id]
 
         export_suffix = string_lib.sanitize_for_path(f"{self._session.name} - {world.name}")
-        dialog = game.gui.export_dialog(self._options, patch_data, export_suffix, False, list(games_by_world.values()))
+        dialog = game.gui.export_dialog(
+            self._options, world.preset.get_preset().configuration, export_suffix, False, list(games_by_world.values())
+        )
         result = await async_dialog.execute_dialog(dialog)
 
         if result != QtWidgets.QDialog.DialogCode.Accepted:

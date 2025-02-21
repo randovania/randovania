@@ -183,13 +183,9 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
         monitoring.metrics.incr("gui_export_window_export_clicked", tags={"game": game.short_name})
 
-        cosmetic_patches = options.options_for_game(game).cosmetic_patches
-        data_factory = game.patch_data_factory(layout, self.players_configuration, cosmetic_patches)
-        patch_data = data_factory.create_data()
-
         dialog = game.gui.export_dialog(
             options,
-            patch_data,
+            layout.get_preset(self.players_configuration.player_index).configuration,
             layout.shareable_word_hash,
             has_spoiler,
             list(layout.all_games),
@@ -197,8 +193,12 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         result = await async_dialog.execute_dialog(dialog)
         if result != QtWidgets.QDialog.DialogCode.Accepted:
             return
-
         dialog.save_options()
+
+        cosmetic_patches = options.options_for_game(game).cosmetic_patches
+        data_factory = game.patch_data_factory(layout, self.players_configuration, cosmetic_patches)
+        patch_data = data_factory.create_data()
+
         self._can_stop_background_process = game.exporter.export_can_be_aborted
         await game_exporter.export_game(
             exporter=game.exporter,

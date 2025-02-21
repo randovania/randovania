@@ -32,6 +32,7 @@ async def test_export_iso(skip_qtbot, mocker):
     game = window.layout_description.get_preset.return_value.game
     game.exporter.can_start_new_export = False
     window.layout_description.all_games = [game]
+    configuration = window.layout_description.get_preset.return_value.configuration
     patch_data = game.patch_data_factory.return_value.create_data.return_value
 
     players_config = PlayersConfiguration(
@@ -48,7 +49,7 @@ async def test_export_iso(skip_qtbot, mocker):
     )
     game.gui.export_dialog.assert_called_once_with(
         options,
-        patch_data,
+        configuration,
         window.layout_description.shareable_word_hash,
         window.layout_description.has_spoiler,
         [game],
