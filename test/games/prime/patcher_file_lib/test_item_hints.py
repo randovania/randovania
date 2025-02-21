@@ -517,7 +517,7 @@ def test_create_message_for_hint_relative_area(
 
 
 @pytest.mark.parametrize("item_feature_id", ["suit", "beam"])
-@pytest.mark.parametrize("loc_feature_id", ["boost", "boss"])
+@pytest.mark.parametrize("loc_feature_id", ["half_pipe", "boss"])
 def test_create_message_for_featural_hint(
     item_feature_id: str,
     loc_feature_id: str,
