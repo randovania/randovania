@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from randovania.exporter.hints.joke_hints import GENERIC_JOKE_HINTS
 
-ECHOES_JOKE_HINTS = [
+ECHOES_JOKE_HINTS = GENERIC_JOKE_HINTS + [
     "Make sure to collect an Energy Transfer Module; otherwise your run won't be valid!",
     "Adam has not yet authorized the use of this hint.",
     "Hear the words of O-Lir, last Sentinel of the Fortress Temple. May they serve you well.",
@@ -30,5 +30,3 @@ ECHOES_JOKE_HINTS = [
     "Your Friend Roster is currently empty.",
     "Raven Beak? I don't know him, but he sounds handsome, wouldn't you agree Samus?",
 ]
-
-ECHOES_JOKE_HINTS += GENERIC_JOKE_HINTS
