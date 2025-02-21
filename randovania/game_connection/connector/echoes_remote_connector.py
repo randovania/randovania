@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import struct
-from typing import TYPE_CHECKING, TypeGuard
+from typing import TYPE_CHECKING, TypeGuard, override
 
 from open_prime_rando.dol_patching import all_prime_dol_patches
 
@@ -46,6 +46,8 @@ def _echoes_powerup_offset(item_index: int) -> int:
 
 
 class EchoesRemoteConnector(PrimeRemoteConnector):
+    _should_read_object_count: bool = False
+
     def __init__(self, version: EchoesDolVersion, executor: MemoryOperationExecutor):
         super().__init__(version, executor)
 
@@ -120,9 +122,7 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
 
         return item_name, resources_to_give
 
-    async def get_inventory(self) -> Inventory:
-        inventory = await super().get_inventory()
-
+    async def _read_object_count(self) -> int:
         # mapWorldInfoAreas: 0x8c0
         # mapWorldInfoAreas.areas: + 0x4
         # mapWorldInfoAreas.areas.data: +0xc
@@ -153,6 +153,21 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
             if f4 & f0 != 0:
                 count += 1
 
-        inventory[self.game.resource_database.get_item("ObjectCount")] = InventoryItem(count, 1024)
+        return count
+
+    async def get_inventory(self) -> Inventory:
+        inventory = await super().get_inventory()
+
+        if self._should_read_object_count:
+            inventory[self.game.resource_database.get_item("ObjectCount")] = InventoryItem(
+                await self._read_object_count(), 1024
+            )
 
         return inventory
+
+    @override
+    def inform_connected_tracker(self, tracker_details: dict | None) -> None:
+        if tracker_details is not None:
+            self._should_read_object_count = tracker_details.get("read_object_count", False)
+        else:
+            self._should_read_object_count = False
