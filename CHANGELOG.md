@@ -77,6 +77,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Starting in Screw Attack Chamber or Zeta Arena Access now places Samus in the correct room.
 
+##### Area 5 Tower Interior
+
+- Fixed: Grapple Shuffler - Coming back up from the pickup if it was reached via a Melee Clip.
+
 ## [8.9.0] - 2025-02-02
 
 - Added: It is now possible to focus the game images in the "Games" tab via a Keyboard.
