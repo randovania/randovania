@@ -82,7 +82,7 @@ After all of the above is done, you are able to generate games.
 
 ### Exporting games
 
-Up to now, everything is just theoretical values inside Randovania. The next step is applying these modifications to the game.
+Up to now, everything has just been theoretical values inside Randovania. The next step is applying these modifications to the game.
 
 In most cases, this involves reading the files from a user-provided copy of the game and creating either a new ROM/ISO
 file or a mod file.
@@ -153,7 +153,7 @@ After a game has been merged and is available in development builds, the respons
 - Randovania: We make sure your game is included in all Randovania changes.
 - You: Work towards the game reaching stable.
 
-We're happy to support new games by doing our part, but since that has a cost, that we don't want to be doing forever, there are some expectations regarding time frames:
+We're happy to support the addition of new games by sharing what we know, but too much investment pulls our time from core projects so we have some expectations regarding time frames:
 
 ### Active Development
 
