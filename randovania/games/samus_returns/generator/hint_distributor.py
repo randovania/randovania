@@ -17,4 +17,8 @@ class MSRHintDistributor(HintDistributor):
 
     @override
     def is_pickup_interesting(self, pickup: PickupEntry) -> bool:
-        return not pickup.has_hint_feature("dna")
+        non_interesting_features = ["dna", "energy_tank", "expansion"]
+        for feature in non_interesting_features:
+            if pickup.has_hint_feature(feature):
+                return False
+        return True
