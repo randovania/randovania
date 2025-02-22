@@ -10,7 +10,7 @@ from caver.schema import EventNumber, MapName
 from tsc_utils.flags import set_flag
 from tsc_utils.numbers import num_to_tsc_value
 
-from randovania.exporter.hints.joke_hints import JOKE_HINTS
+from randovania.exporter.hints.joke_hints import GENERIC_JOKE_HINTS
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
@@ -148,7 +148,7 @@ class CSPatchDataFactory(PatchDataFactory):
             self.description.all_patches,
             self.players_config,
             hint_rng,
-            JOKE_HINTS,
+            GENERIC_JOKE_HINTS,
         )
         patches = self.description.all_patches[self.players_config.player_index]
         hints_for_identifier = {
