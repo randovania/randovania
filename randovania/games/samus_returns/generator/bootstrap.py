@@ -26,7 +26,7 @@ if TYPE_CHECKING:
 def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:
     assert isinstance(config, MSRConfiguration)
     artifact_config = config.artifacts
-    _stronger_metroid_indices = [177, 178, 181, 185, 186, 187, 188, 192, 193, 199, 200, 202, 205, 209]
+    _stronger_metroid_indices = [177, 178, 181, 185, 186, 187, 188, 192, 193, 198, 199, 200, 202, 205, 209]
     _boss_indices = [37, 99, 139, 171, 211]
     _boss_mapping = {
         FinalBossConfiguration.ARACHNUS: 0,

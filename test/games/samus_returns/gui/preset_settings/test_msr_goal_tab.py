@@ -15,12 +15,12 @@ from randovania.interface_common.preset_editor import PresetEditor
     ("prefer_metroids", "prefer_stronger_metroids", "prefer_bosses", "expected_max_slider"),
     [
         (False, False, False, 0),
-        (True, False, False, 25),
-        (False, True, False, 14),
+        (True, False, False, 24),
+        (False, True, False, 15),
         (False, False, True, 4),
         (True, True, False, 39),
-        (True, False, True, 29),
-        (False, True, True, 18),
+        (True, False, True, 28),
+        (False, True, True, 19),
         (True, True, True, 39),
     ],
 )
