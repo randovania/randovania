@@ -59,6 +59,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Reaching the tunnel at the top of Central Unit Access with Spin Boost now requires Movement (Beginner), but remains trickless with Space Jump.
 
+### Metroid Prime
+
+#### Logic Database
+
+##### Phazon Mines
+
+- Fixed: Metroid Quarantine A: Getting the Missile Expansion via using the Spider Ball Track now requires Morph Ball.
+- Fixed: Ore Processing: Getting from Door to Elevator Access A to Door to Storage Depot B via Power Bombs, Space Jump and L-Jumps now requires Morph Ball.
+
 ### Metroid Prime 2: Echoes
 - Removed: Relative hints will no longer be placed.
 - Changed: Legacy multiworld sessions where an Echoes hint points to a Cave Story item may have very slightly altered wording.
