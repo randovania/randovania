@@ -149,6 +149,11 @@ def _remove_msr_fields(options: dict) -> None:
         options["game_samus_returns"]["input_file"] = None
 
 
+def _msr_enable_remote_lua(options: dict) -> None:
+    if "cosmetic_patches" in options.get("game_samus_returns", {}):
+        options["game_samus_returns"]["cosmetic_patches"].pop("enable_remote_lua", None)
+
+
 _CONVERTER_FOR_VERSION = [
     None,
     None,
@@ -188,6 +193,7 @@ _CONVERTER_FOR_VERSION = [
     _only_new_fields,  # added MSR's music sliders
     _remove_msr_fields,  # removes MSR's exheader and input field
     _only_new_fields,  # added last_changelog_displayed_dev
+    _msr_enable_remote_lua,  # removes enable_remote_lua as it'll always be enabled
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 

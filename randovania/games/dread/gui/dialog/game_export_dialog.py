@@ -12,6 +12,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.games.dread.exporter.game_exporter import DreadGameExportParams, DreadModPlatform, LinuxRyujinxPath
 from randovania.games.dread.exporter.options import DreadPerGameOptions
 from randovania.games.dread.gui.generated.dread_game_export_dialog_ui import Ui_DreadGameExportDialog
+from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     is_directory_validator,
@@ -86,7 +87,7 @@ def romfs_validation(line: QtWidgets.QLineEdit) -> bool:
     )
 
 
-class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
+class DreadGameExportDialog(GameExportDialog[DreadConfiguration], Ui_DreadGameExportDialog):
     def get_path_to_ryujinx(self) -> Path:
         ryujinx_path_tuple = ("Ryujinx", "mods", "contents", "010093801237c000")
         match (platform.system(), self.linux_ryujinx_path):
@@ -124,8 +125,15 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_DREAD
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
-        super().__init__(options, patch_data, word_hash, spoiler, games)
+    def __init__(
+        self,
+        options: Options,
+        configuration: DreadConfiguration,
+        word_hash: str,
+        spoiler: bool,
+        games: list[RandovaniaGame],
+    ):
+        super().__init__(options, configuration, word_hash, spoiler, games)
 
         per_game = options.options_for_game(self.game_enum())
         assert isinstance(per_game, DreadPerGameOptions)

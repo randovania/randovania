@@ -9,17 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Major** - Added: Featural Hints. Echoes and Cave Story now use a brand new hint system, where hints may refer to various Features of a pickup or of a location. Read the complete changelog for more details.
 - **Major** - Changed: Hints are now placed after pickup placement, rather than during. This should result in more interesting hints in all games.
+- **Major** - Added: Co-op as an additional Multiworld Mode. In Co-op, multiple people can share Worlds together, which means that they will share their inventory. This works for all games that support Multiworld.
 - Added: Every game now has a "Pickup Hint Features" tab where you can view which Features apply to which pickups.
 - Added: Cave Story and Echoes now have a "Pickup Location Features" tab where you can view which Features apply to which locations.
 - Added: Location Features can be viewed in the Database Viewer.
-- Fixed: It is now properly impossible for multiple hints to point to the same location.
-- Fixed: A recent regression in the resolver that made it significantly slower has been fixed.
+- Added: 3 more joke hints.
 - Added: The Hints Spoiler tab now indicates which location a hint is pointing to.
 - Changed: The Hints Spoiler tab sorts its entries in a more helpful manner.
+- Changed: Some joke hints are now shared between all games that use them.
+- Fixed: It is now properly impossible for multiple hints to point to the same location.
+- Fixed: A recent regression in the resolver that made it significantly slower has been fixed.
 
 ### Metroid Dread
 
 - Fixed: GUI formatting on the game page.
+- Fixed: Starter Preset now has a proper description.
 
 #### Logic Database
 
@@ -64,6 +68,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid: Samus Returns
 
 - Fixed: One Area 8 theme from not being included in music shuffle.
+- Removed: Enabling the automatic item tracker is no longer a cosmetic option, as it is now forced to always be enabled.
 
 #### Logic Database
 
@@ -74,6 +79,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Area 5 Tower Exterior
 
 - Fixed: Starting in Screw Attack Chamber or Zeta Arena Access now places Samus in the correct room.
+
+##### Area 5 Tower Interior
+
+- Fixed: Grapple Shuffler - Coming back up from the pickup if it was reached via a Melee Clip.
 
 ## [8.9.0] - 2025-02-02
 

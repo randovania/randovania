@@ -2782,7 +2782,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://youtu.be/i9kuD1yPSSk",
+                                                        "comment": "Ice Clip using the left Glow Fly: https://youtu.be/i9kuD1yPSSk",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2832,7 +2832,7 @@
                         "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": "https://youtu.be/wA-kNgVe_6c",
+                                "comment": "Ice Clip using the right Glow Fly: https://youtu.be/wA-kNgVe_6c",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2906,18 +2906,35 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Grapple",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "Move the shuffler block both ways",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Grapple",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "Area 5 Tower Interior - Grapple Shuffler Long Grapple Block",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Top of big Grapple block",
+                                                        "comment": "Melee Clip from on top of big Grapple block: https://youtu.be/l5mTl6UJoNY",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2941,6 +2958,32 @@
                                                     }
                                                 }
                                             ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Shuffler Long Grapple Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -3008,41 +3051,6 @@
                     "location_category": "minor",
                     "hint_features": [],
                     "connections": {
-                        "Door to Plasma Beam Chamber": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Screw",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Area 5 (Tower Interior) - Grapple Shuffler Grapple Block",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Door to Interior Teleporter (Bottom)": {
                             "type": "and",
                             "data": {
@@ -3080,6 +3088,249 @@
                                         "data": {
                                             "type": "items",
                                             "name": "Ice",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Below Pickup": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Grapple Block": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4234.886055024206,
+                        "y": 2612.1856181367334,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Area 5 (Tower Interior) - Grapple Shuffler Grapple Block",
+                    "connections": {
+                        "Above Pickup": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Above Pickup": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3661.34662820352,
+                        "y": 2726.6162186267543,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Interior Teleporter (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 5 Tower Interior - Grapple Shuffler Long Grapple Block",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Bomb"
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Phase",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Break the Screw Attack block then use spider",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Use Spider Ball"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "AirMorph",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Morph to lay bomb and immediately unmorph to grab ledge: https://youtu.be/Kh03Ra2Qn7Q",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Movement",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Grapple Block": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Below Pickup": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Below Pickup": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3938.444786062004,
+                        "y": 2048.5609360321123,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Plasma Beam Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 5 (Tower Interior) - Grapple Shuffler Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -3280,12 +3531,12 @@
                         }
                     }
                 },
-                "Event - Grapple Block": {
+                "Event - Shuffler Long Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -4234.886055024206,
-                        "y": 2612.1856181367334,
+                        "x": -4046.99,
+                        "y": 3005.01,
                         "z": 0.0
                     },
                     "description": "",
@@ -3294,142 +3545,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 5 (Tower Interior) - Grapple Shuffler Grapple Block",
-                    "connections": {
-                        "Above Pickup": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Above Pickup": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3661.34662820352,
-                        "y": 2726.6162186267543,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
+                    "event_name": "Area 5 Tower Interior - Grapple Shuffler Long Grapple Block",
                     "connections": {
                         "Door to Interior Teleporter (Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
                                 "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Pickup (Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Screw",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Power Bomb"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Lay Bomb"
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Phase",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": "Break the Screw Attack block then use spider",
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Use Spider Ball"
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "AirMorph",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": "Morph to lay bomb and immediately unmorph to grab ledge: https://youtu.be/Kh03Ra2Qn7Q",
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Movement",
-                                                                                            "amount": 3,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Grapple Block": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Grapple",
                                 "amount": 1,
                                 "negate": false
                             }

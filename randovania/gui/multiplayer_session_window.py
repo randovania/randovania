@@ -10,7 +10,6 @@ from typing import TYPE_CHECKING, Self
 from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncClose, asyncSlot
 
-import randovania
 from randovania import monitoring
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
@@ -376,7 +375,6 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.allow_coop_check.setText(
             "Enable Co-Op" + ("" if not_genned_yet else " (can only be changed before generation)")
         )
-        self.allow_coop_check.setVisible(randovania.is_dev_version())
 
     @asyncSlot(MultiplayerSessionActions)
     async def on_actions_update(self, actions: MultiplayerSessionActions):
@@ -926,9 +924,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 QtWidgets.QMessageBox.Icon.Information,
                 "Information",
                 (
-                    "Co-op is still in the testing period and may have issues.\nFor Prime 1 and Echoes in particular, "
-                    "please ensure that Randovania is always connected to the game before you collect items, as "
-                    "otherwise they will be lost permanently!"
+                    "For Prime 1 and Echoes, please ensure that Randovania is always connected to the game"
+                    " before you collect items, as otherwise they will be lost permanently!"
                 ),
             )
         else:
@@ -962,13 +959,13 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     @asyncSlot()
     async def game_export_listener(self, world_id: uuid.UUID, patch_data: dict):
         world = self._session.get_world(world_id)
-        games_by_world: dict[uuid.UUID, RandovaniaGame] = {
-            w.id: VersionedPreset.from_str(w.preset_raw).game for w in self._session.worlds
-        }
+        games_by_world: dict[uuid.UUID, RandovaniaGame] = {w.id: w.preset.game for w in self._session.worlds}
         game = games_by_world[world_id]
 
         export_suffix = string_lib.sanitize_for_path(f"{self._session.name} - {world.name}")
-        dialog = game.gui.export_dialog(self._options, patch_data, export_suffix, False, list(games_by_world.values()))
+        dialog = game.gui.export_dialog(
+            self._options, world.preset.get_preset().configuration, export_suffix, False, list(games_by_world.values())
+        )
         result = await async_dialog.execute_dialog(dialog)
 
         if result != QtWidgets.QDialog.DialogCode.Accepted:
