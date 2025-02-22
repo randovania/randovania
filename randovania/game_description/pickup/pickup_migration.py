@@ -42,7 +42,7 @@ def _migrate_v4(pickup_data: dict, game: RandovaniaGame) -> None:
 
 
 def _migrate_v5(pickup_data: dict, game: RandovaniaGame) -> None:
-    if game in {RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME_CORRUPTION}:
+    if game == RandovaniaGame.METROID_PRIME_ECHOES:
         percentage = "Percent" if game == RandovaniaGame.METROID_PRIME_ECHOES else "ItemPercentage"
 
         for pickup in itertools.chain(pickup_data["standard_pickups"].values(), pickup_data["ammo_pickups"].values()):

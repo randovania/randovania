@@ -37,11 +37,9 @@ class PrimeConnectorBuilder(ConnectorBuilder):
             return None
 
         # Delay importing these to avoid too many early imports in startup
-        from open_prime_rando.dol_patching.corruption import dol_versions as corruption_dol_versions
         from open_prime_rando.dol_patching.echoes import dol_versions as echoes_dol_versions
         from open_prime_rando.dol_patching.prime1 import dol_versions as prime1_dol_versions
 
-        from randovania.game_connection.connector.corruption_remote_connector import CorruptionRemoteConnector
         from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
         from randovania.game_connection.connector.prime1_remote_connector import Prime1RemoteConnector
 
@@ -59,9 +57,6 @@ class PrimeConnectorBuilder(ConnectorBuilder):
         ]
         all_connectors.extend(
             [EchoesRemoteConnector(version, executor) for version in echoes_dol_versions.ALL_VERSIONS]
-        )
-        all_connectors.extend(
-            [CorruptionRemoteConnector(version, executor) for version in corruption_dol_versions.ALL_VERSIONS]
         )
         read_first_ops = [
             MemoryOperation(

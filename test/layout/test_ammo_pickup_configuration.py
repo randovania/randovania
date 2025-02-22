@@ -23,7 +23,6 @@ from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfigura
             "encoded": b"\x8fH\x80",
             "pickups_state": {"Missile Expansion": {"ammo_count": [15], "pickup_count": 12}},
         },
-        {"game": RandovaniaGame.METROID_PRIME_CORRUPTION, "encoded": b"\x00", "pickups_state": {}},
     ],
 )
 def config_with_data(request, test_files_dir):
