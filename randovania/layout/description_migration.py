@@ -608,13 +608,19 @@ def _migrate_v32(data: dict) -> None:
         game_name = game["game"]
         if game_name != "samus_returns":
             continue
-        locations = game.get("locations")
 
-        old_new_name = migration_data.get_raw_data(RandovaniaGame(game_name))["a4_crystal_mines_typo"]
-        for old_name, new_name in old_new_name.items():
-            for area, nodes in locations.items():
-                if old_name in area:
-                    nodes[new_name] = nodes.pop(old_name)
+        migration = migration_data.get_raw_data(RandovaniaGame(game_name))["a4_crystal_mines_typo"]
+        dock_weakness = game.get("dock_weakness")
+        if dock_weakness is not None:
+            for old_node, new_node in migration["nodes"].items():
+                if old_node in dock_weakness:
+                    dock_weakness[new_node] = dock_weakness.pop(old_node)
+
+        for region, area_data in migration["area"].items():
+            for old_area_name, new_area_name in area_data.items():
+                region_location = game["locations"][region]
+                if old_area_name in region_location:
+                    region_location[new_area_name] = region_location.pop(old_area_name)
 
 
 _MIGRATIONS = [

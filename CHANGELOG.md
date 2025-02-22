@@ -78,7 +78,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Area 4 Crystal Mines
 
-- Fixed: A typo in the room name "Gamma+ Arena" has been changed from "Gamma Arena".
+- Fixed: Renamed the room "Gamma Arena" to "Gamma+ Arena".
 - Fixed: The Gamma+ Metroid being classified as a Gamma Metroid, thus having the wrong requirements.
 
 #### Area 5 Tower Exterior
