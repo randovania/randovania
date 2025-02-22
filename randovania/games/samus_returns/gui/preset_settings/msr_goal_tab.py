@@ -73,9 +73,9 @@ class PresetMSRGoal(PresetTab, Ui_PresetMSRGoal):
             preferred = 39
         else:
             if self.prefer_metroids_check.isChecked():
-                preferred += 25
+                preferred += 24
             if self.prefer_stronger_metroids_check.isChecked():
-                preferred += 14
+                preferred += 15
             if self.prefer_bosses_check.isChecked() and preferred < 36:
                 preferred += 4
         return preferred

@@ -27,7 +27,7 @@ def test_msr_pool_creator(msr_game_description, required_dna, placed_dna):
     ("metroids", "stronger_metroids", "bosses", "anywhere", "required_dna", "placed_dna"),
     [
         (False, False, True, False, 5, 5),
-        (False, True, False, False, 15, 15),
+        (False, True, False, False, 16, 16),
         (True, False, True, False, 40, 40),
         (True, True, True, False, 40, 40),
         (False, False, False, True, 40, 40),

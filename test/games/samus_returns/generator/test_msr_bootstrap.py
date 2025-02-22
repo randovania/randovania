@@ -21,7 +21,7 @@ from randovania.generator.pickup_pool import pool_creator
         (MSRArtifactConfig(False, False, False, False, 0, 0), []),
         (MSRArtifactConfig(False, False, True, False, 4, 4), [37, 99, 139, 171]),
         (MSRArtifactConfig(True, False, False, False, 1, 1), [183]),
-        (MSRArtifactConfig(False, True, False, False, 2, 2), [178, 187]),
+        (MSRArtifactConfig(False, True, False, False, 2, 2), [178, 185]),
         (MSRArtifactConfig(True, True, True, False, 1, 1), [197]),
     ],
 )

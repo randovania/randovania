@@ -76,6 +76,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Starting in Spazer Beam Chamber now places Samus in the correct room.
 
+#### Area 4 Crystal Mines
+
+- Fixed: Renamed the room "Gamma Arena" to "Gamma+ Arena".
+- Fixed: The Gamma+ Metroid being classified as a Gamma Metroid, thus having the wrong requirements.
+
 #### Area 5 Tower Exterior
 
 - Fixed: Starting in Screw Attack Chamber or Zeta Arena Access now places Samus in the correct room.
