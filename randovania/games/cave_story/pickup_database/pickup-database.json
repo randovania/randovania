@@ -1,1204 +1,1453 @@
 {
-    "schema_version": 9,
+    "schema_version": 13,
     "pickup_categories": {
         "weapon": {
             "long_name": "Weapons",
             "hint_details": [
                 "a ",
                 "weapon"
-            ],
-            "hinted_as_major": true
+            ]
         },
         "missile": {
             "long_name": "Missiles",
             "hint_details": [
                 "a ",
                 "missile upgrade"
-            ],
-            "hinted_as_major": true
+            ]
         },
         "items": {
             "long_name": "Major Items",
             "hint_details": [
                 "a ",
                 "major item"
-            ],
-            "hinted_as_major": true
+            ]
         },
         "useful": {
             "long_name": "Useful Items",
             "hint_details": [
                 "a ",
                 "useful item"
-            ],
-            "hinted_as_major": false
+            ]
         },
         "puppies": {
             "long_name": "Puppies",
             "hint_details": [
                 "a ",
                 "puppy"
-            ],
-            "hinted_as_major": true
+            ]
         },
         "useless": {
             "long_name": "Useless Items",
             "hint_details": [
                 "a ",
                 "useless item"
-            ],
-            "hinted_as_major": false
+            ]
         },
         "life": {
             "long_name": "Life Capsules",
             "hint_details": [
                 "a ",
                 "life capsule"
-            ],
-            "hinted_as_major": false
+            ]
         },
         "missile_related": {
-            "long_name": "Missile Upgrade",
+            "long_name": "Missile-Related Item",
             "hint_details": [
                 "a ",
-                "missile upgrade"
-            ],
-            "hinted_as_major": false
+                "missile-related item"
+            ]
         },
-        "life_support": {
+        "medicine": {
             "long_name": "Medicine",
             "hint_details": [
                 "some ",
                 "medicine"
-            ],
-            "hinted_as_major": false
+            ]
+        },
+        "key": {
+            "long_name": "Key",
+            "hint_details": [
+                "a ",
+                "key"
+            ]
+        },
+        "mimiga_item": {
+            "long_name": "Mimiga's Item",
+            "hint_details": [
+                "a ",
+                "Mimiga's item"
+            ]
+        },
+        "electronic": {
+            "long_name": "Electronic Device",
+            "hint_details": [
+                "an ",
+                "electronic device"
+            ]
+        },
+        "lewd": {
+            "long_name": "Lewd Item",
+            "hint_details": [
+                "a ",
+                "lewd item"
+            ]
+        },
+        "bomb": {
+            "long_name": "Bomb Ingredient",
+            "hint_details": [
+                "a ",
+                "bomb ingredient"
+            ]
+        },
+        "rocket": {
+            "long_name": "Rocket Component",
+            "hint_details": [
+                "a ",
+                "rocket component"
+            ]
+        },
+        "badge": {
+            "long_name": "Badge",
+            "hint_details": [
+                "a ",
+                "badge of victory"
+            ]
+        },
+        "sprinkler": {
+            "long_name": "Sprinkler",
+            "hint_details": [
+                "a ",
+                "sprinkler"
+            ]
+        },
+        "living": {
+            "long_name": "Living Being",
+            "hint_details": [
+                "a ",
+                "living being"
+            ]
+        },
+        "flight": {
+            "long_name": "Flight",
+            "hint_details": [
+                "a ",
+                "means of flight"
+            ]
         }
     },
+    "generated_pickups": {},
     "standard_pickups": {
         "Polar Star": {
-            "pickup_category": "weapon",
-            "broad_category": "weapon",
+            "gui_category": "weapon",
+            "hint_features": [
+                "weapon"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0+00"
             },
             "progression": [
                 "polarStar"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "missing",
             "original_locations": [
                 33
-            ],
-            "extra": {
-                "script": "<EVE0+00"
-            }
+            ]
         },
         "Spur": {
-            "pickup_category": "weapon",
-            "broad_category": "weapon",
+            "gui_category": "weapon",
+            "hint_features": [
+                "weapon"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
             },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0+02"
+            },
             "progression": [
                 "spur"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "missing",
             "original_locations": [
                 34
-            ],
-            "extra": {
-                "script": "<EVE0+02"
-            }
+            ]
         },
         "Progressive Polar Star": {
-            "pickup_category": "weapon",
-            "broad_category": "weapon",
+            "gui_category": "weapon",
+            "hint_features": [
+                "weapon"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0002"
             },
             "progression": [
                 "polarStar",
                 "spur"
             ],
-            "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
-            "extra": {
-                "script": "<EVE0002"
-            }
+            "expected_case_for_describer": "shuffled"
         },
         "Base Missiles": {
-            "pickup_category": "missile",
-            "broad_category": "missile_related",
+            "gui_category": "missile",
+            "hint_features": [
+                "missile",
+                "missile_related",
+                "weapon"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
             },
-            "progression": [],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "starting_item",
-            "custom_count_for_shuffled_case": 1,
+            "progression": [],
             "ammo": [
                 "missile"
             ],
             "unlocks_ammo": true,
+            "expected_case_for_describer": "starting_item",
+            "custom_count_for_shuffled_case": 1,
             "hide_from_gui": true,
             "must_be_starting": true
         },
         "Missile Launcher": {
-            "pickup_category": "missile",
-            "broad_category": "missile_related",
+            "gui_category": "missile",
+            "hint_features": [
+                "missile",
+                "missile_related",
+                "weapon"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0030"
             },
             "progression": [
                 "missiles"
             ],
-            "preferred_location_category": "major",
-            "expected_case_for_describer": "missing",
-            "extra": {
-                "script": "<EVE0030"
-            }
+            "expected_case_for_describer": "missing"
         },
         "Super Missile Launcher": {
-            "pickup_category": "missile",
-            "broad_category": "missile_related",
+            "gui_category": "missile",
+            "hint_features": [
+                "missile",
+                "missile_related",
+                "weapon"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
             },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0038"
+            },
             "progression": [
                 "supers"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "missing",
             "original_locations": [
                 18
-            ],
-            "extra": {
-                "script": "<EVE0038"
-            }
+            ]
         },
         "Progressive Missile Launcher": {
-            "pickup_category": "missile",
-            "broad_category": "missile_related",
+            "gui_category": "missile",
+            "hint_features": [
+                "missile",
+                "missile_related",
+                "weapon"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0033"
             },
             "progression": [
                 "missiles",
                 "supers"
             ],
-            "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
-            "extra": {
-                "script": "<EVE0033"
-            }
+            "expected_case_for_describer": "shuffled"
         },
         "Fireball": {
-            "pickup_category": "weapon",
-            "broad_category": "weapon",
+            "gui_category": "weapon",
+            "hint_features": [
+                "weapon"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0004"
             },
             "progression": [
                 "fireball"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 10
-            ],
-            "extra": {
-                "script": "<EVE0004"
-            }
+            ]
         },
         "Snake": {
-            "pickup_category": "weapon",
-            "broad_category": "weapon",
+            "gui_category": "weapon",
+            "hint_features": [
+                "weapon"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0005"
             },
             "progression": [
                 "snake"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 24
-            ],
-            "extra": {
-                "script": "<EVE0005"
-            }
+            ]
         },
         "Bubbler": {
-            "pickup_category": "weapon",
-            "broad_category": "weapon",
+            "gui_category": "weapon",
+            "hint_features": [
+                "weapon"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0007"
             },
             "progression": [
                 "bubbler"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 38
-            ],
-            "extra": {
-                "script": "<EVE0007"
-            }
+            ]
         },
         "Machine Gun": {
-            "pickup_category": "weapon",
-            "broad_category": "weapon",
+            "gui_category": "weapon",
+            "hint_features": [
+                "weapon"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0008"
             },
             "progression": [
                 "machineGun"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 62
-            ],
-            "extra": {
-                "script": "<EVE0008"
-            }
+            ]
         },
         "Blade": {
-            "pickup_category": "weapon",
-            "broad_category": "weapon",
+            "gui_category": "weapon",
+            "hint_features": [
+                "mimiga_item",
+                "weapon"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0009"
             },
             "progression": [
                 "blade"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 67
-            ],
-            "extra": {
-                "script": "<EVE0009"
-            }
+            ]
         },
         "Nemesis": {
-            "pickup_category": "weapon",
-            "broad_category": "weapon",
+            "gui_category": "weapon",
+            "hint_features": [
+                "weapon"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0010"
             },
             "progression": [
                 "nemesis"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 55
-            ],
-            "extra": {
-                "script": "<EVE0010"
-            }
+            ]
         },
         "Map System": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "electronic",
+                "items"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0052"
             },
             "progression": [
                 "map"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 35
-            ],
-            "extra": {
-                "script": "<EVE0052"
-            }
+            ]
         },
         "Silver Locket": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "items",
+                "mimiga_item"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0054"
             },
             "progression": [
                 "locket"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 37
-            ],
-            "extra": {
-                "script": "<EVE0054"
-            }
+            ]
         },
         "Arthur's Key": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "items",
+                "key",
+                "mimiga_item"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0051"
             },
             "progression": [
                 "arthurKey"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 39
-            ],
-            "extra": {
-                "script": "<EVE0051"
-            }
+            ]
         },
         "ID Card": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "electronic",
+                "items"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0057"
             },
             "progression": [
                 "idCard"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 2
-            ],
-            "extra": {
-                "script": "<EVE0057"
-            }
+            ]
         },
         "Santa's Key": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "items",
+                "key",
+                "mimiga_item"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0053"
             },
             "progression": [
                 "santaKey"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 4
-            ],
-            "extra": {
-                "script": "<EVE0053"
-            }
+            ]
         },
         "Chaco's Lipstick": {
-            "pickup_category": "useless",
-            "broad_category": "useless",
+            "gui_category": "useless",
+            "hint_features": [
+                "lewd",
+                "mimiga_item",
+                "useless"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "minor",
+            "extra": {
+                "script": "<EVE0087"
             },
             "progression": [
                 "lipstick"
             ],
-            "preferred_location_category": "minor",
+            "show_in_credits_spoiler": false,
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 12
-            ],
-            "extra": {
-                "script": "<EVE0087"
-            }
+            ]
         },
         "Jellyfish Juice": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "bomb",
+                "items"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0058"
             },
             "progression": [
                 "Juice"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 9
-            ],
-            "extra": {
-                "script": "<EVE0058"
-            }
+            ]
         },
         "Charcoal": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "bomb",
+                "items"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0062"
             },
             "progression": [
                 "charcoal"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 11
-            ],
-            "extra": {
-                "script": "<EVE0062"
-            }
+            ]
         },
         "Rusty Key": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "items",
+                "key"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0059"
             },
             "progression": [
                 "rustyKey"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 7
-            ],
-            "extra": {
-                "script": "<EVE0059"
-            }
+            ]
         },
         "Gum Key": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "items",
+                "key"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0060"
             },
             "progression": [
                 "gumKey"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 8
-            ],
-            "extra": {
-                "script": "<EVE0060"
-            }
+            ]
         },
         "Gum Base": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "bomb",
+                "items"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0061"
             },
             "progression": [
                 "gumBase"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 16
-            ],
-            "extra": {
-                "script": "<EVE0061"
-            }
+            ]
         },
         "Explosive": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "items"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0063"
             },
             "progression": [
                 "bomb"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 13
-            ],
-            "extra": {
-                "script": "<EVE0063"
-            }
+            ]
         },
         "Curly's Panties": {
-            "pickup_category": "useless",
-            "broad_category": "useless",
+            "gui_category": "useless",
+            "hint_features": [
+                "lewd",
+                "useless"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "minor",
+            "extra": {
+                "script": "<EVE0085"
             },
             "progression": [
                 "panties"
             ],
-            "preferred_location_category": "minor",
+            "show_in_credits_spoiler": false,
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 64
-            ],
-            "extra": {
-                "script": "<EVE0085"
-            }
+            ]
         },
         "Hajime": {
-            "pickup_category": "puppies",
-            "broad_category": "puppies",
+            "gui_category": "puppies",
+            "hint_features": [
+                "living",
+                "puppies"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
             },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0064"
+            },
             "progression": [
                 "puppies"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 63
-            ],
-            "extra": {
-                "script": "<EVE0064"
-            }
+            ]
         },
         "Kakeru": {
-            "pickup_category": "puppies",
-            "broad_category": "puppies",
+            "gui_category": "puppies",
+            "hint_features": [
+                "living",
+                "puppies"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
             },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0064"
+            },
             "progression": [
                 "puppies"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 60
-            ],
-            "extra": {
-                "script": "<EVE0064"
-            }
+            ]
         },
         "Mick": {
-            "pickup_category": "puppies",
-            "broad_category": "puppies",
+            "gui_category": "puppies",
+            "hint_features": [
+                "living",
+                "puppies"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
             },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0064"
+            },
             "progression": [
                 "puppies"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 59
-            ],
-            "extra": {
-                "script": "<EVE0064"
-            }
+            ]
         },
         "Nene": {
-            "pickup_category": "puppies",
-            "broad_category": "puppies",
+            "gui_category": "puppies",
+            "hint_features": [
+                "living",
+                "puppies"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
             },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0064"
+            },
             "progression": [
                 "puppies"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 61
-            ],
-            "extra": {
-                "script": "<EVE0064"
-            }
+            ]
         },
         "Shinobu": {
-            "pickup_category": "puppies",
-            "broad_category": "puppies",
+            "gui_category": "puppies",
+            "hint_features": [
+                "living",
+                "puppies"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
             },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0064"
+            },
             "progression": [
                 "puppies"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 66
-            ],
-            "extra": {
-                "script": "<EVE0064"
-            }
+            ]
         },
         "Life Pot": {
-            "pickup_category": "useful",
-            "broad_category": "life_support",
+            "gui_category": "useful",
+            "hint_features": [
+                "medicine",
+                "useful"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "minor",
+            "extra": {
+                "script": "<EVE0065"
             },
             "progression": [
                 "lifePot"
             ],
-            "preferred_location_category": "minor",
+            "show_in_credits_spoiler": false,
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 65
-            ],
-            "extra": {
-                "script": "<EVE0065"
-            }
+            ]
         },
         "Turbocharge": {
-            "pickup_category": "useful",
-            "broad_category": "useful",
+            "gui_category": "useful",
+            "hint_features": [
+                "useful"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "minor",
+            "extra": {
+                "script": "<EVE0070"
             },
             "progression": [
                 "turbocharge"
             ],
-            "preferred_location_category": "minor",
+            "show_in_credits_spoiler": false,
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 23
-            ],
-            "extra": {
-                "script": "<EVE0070"
-            }
+            ]
         },
         "Clinic Key": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "items",
+                "key"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0067"
             },
             "progression": [
                 "clinicKey"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 26
-            ],
-            "extra": {
-                "script": "<EVE0067"
-            }
+            ]
         },
         "Arms Barrier": {
-            "pickup_category": "useful",
-            "broad_category": "useful",
+            "gui_category": "useful",
+            "hint_features": [
+                "useful"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "minor",
+            "extra": {
+                "script": "<EVE0069"
             },
             "progression": [
                 "armsBarrier"
             ],
-            "preferred_location_category": "minor",
+            "show_in_credits_spoiler": false,
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 27
-            ],
-            "extra": {
-                "script": "<EVE0069"
-            }
+            ]
         },
         "Cure-All": {
-            "pickup_category": "items",
-            "broad_category": "life_support",
+            "gui_category": "items",
+            "hint_features": [
+                "items",
+                "medicine"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0066"
             },
             "progression": [
                 "cureAll"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 28
-            ],
-            "extra": {
-                "script": "<EVE0066"
-            }
+            ]
         },
         "Booster 0.8": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "flight",
+                "items",
+                "rocket"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0+04"
             },
             "progression": [
                 "booster1"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "missing",
             "original_locations": [
                 17
-            ],
-            "extra": {
-                "script": "<EVE0+04"
-            }
+            ]
         },
         "Booster 2.0": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "flight",
+                "items",
+                "rocket"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
             },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0073"
+            },
             "progression": [
                 "booster2"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "missing",
             "original_locations": [
                 43
-            ],
-            "extra": {
-                "script": "<EVE0073"
-            }
+            ]
         },
         "Progressive Booster": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "flight",
+                "items",
+                "rocket"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0068"
             },
             "progression": [
                 "booster1",
                 "booster2"
             ],
-            "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
-            "extra": {
-                "script": "<EVE0068"
-            }
+            "expected_case_for_describer": "shuffled"
         },
         "Tow Rope": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "items"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0080"
             },
             "progression": [
                 "towRope"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 19
-            ],
-            "extra": {
-                "script": "<EVE0080"
-            }
+            ]
         },
         "Curly's Air Tank": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "items"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0071"
             },
             "progression": [
                 "airTank"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 20
-            ],
-            "extra": {
-                "script": "<EVE0071"
-            }
+            ]
         },
         "Alien Medal": {
-            "pickup_category": "useless",
-            "broad_category": "useless",
+            "gui_category": "useless",
+            "hint_features": [
+                "badge",
+                "useless"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "minor",
+            "extra": {
+                "script": "<EVE0086"
             },
             "progression": [
                 "alienMedal"
             ],
-            "preferred_location_category": "minor",
+            "show_in_credits_spoiler": false,
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 21
-            ],
-            "extra": {
-                "script": "<EVE0086"
-            }
+            ]
         },
         "Whimsical Star": {
-            "pickup_category": "useful",
-            "broad_category": "useful",
+            "gui_category": "useful",
+            "hint_features": [
+                "useful"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "minor",
+            "extra": {
+                "script": "<EVE0088"
             },
             "progression": [
                 "whimStar"
             ],
-            "preferred_location_category": "minor",
+            "show_in_credits_spoiler": false,
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 25
-            ],
-            "extra": {
-                "script": "<EVE0088"
-            }
+            ]
         },
         "Nikumaru Counter": {
-            "pickup_category": "useless",
-            "broad_category": "useless",
+            "gui_category": "useless",
+            "hint_features": [
+                "electronic",
+                "useless"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "minor",
+            "extra": {
+                "script": "<EVE0072"
             },
             "progression": [
                 "nikumaru"
             ],
-            "preferred_location_category": "minor",
+            "show_in_credits_spoiler": false,
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 56
-            ],
-            "extra": {
-                "script": "<EVE0072"
-            }
+            ]
         },
         "Teleporter Room Key": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "items",
+                "key"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0075"
             },
             "progression": [
                 "teleportKey"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 44
-            ],
-            "extra": {
-                "script": "<EVE0075"
-            }
+            ]
         },
         "Sue's Letter": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "items",
+                "mimiga_item"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0076"
             },
             "progression": [
                 "letter"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 51
-            ],
-            "extra": {
-                "script": "<EVE0076"
-            }
+            ]
         },
         "Mimiga Mask": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "items"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0074"
             },
             "progression": [
                 "mask"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 52
-            ],
-            "extra": {
-                "script": "<EVE0074"
-            }
+            ]
         },
         "Broken Sprinkler": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "items",
+                "sprinkler"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0078"
             },
             "progression": [
                 "brokenSprinkler"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 46
-            ],
-            "extra": {
-                "script": "<EVE0078"
-            }
+            ]
         },
         "Sprinkler": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "items",
+                "sprinkler"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0079"
             },
             "progression": [
                 "newSprinkler"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 50
-            ],
-            "extra": {
-                "script": "<EVE0079"
-            }
+            ]
         },
         "Controller": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "electronic",
+                "items"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0077"
             },
             "progression": [
                 "controller"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 49
-            ],
-            "extra": {
-                "script": "<EVE0077"
-            }
+            ]
         },
         "Mushroom Badge": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "badge",
+                "items"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0083"
             },
             "progression": [
                 "mushBadge"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 41
-            ],
-            "extra": {
-                "script": "<EVE0083"
-            }
+            ]
         },
         "Ma Pignon": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "items",
+                "living"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0084"
             },
             "progression": [
                 "maPignon"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 42
-            ],
-            "extra": {
-                "script": "<EVE0084"
-            }
+            ]
         },
         "Little Man": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "items",
+                "living"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0082"
             },
             "progression": [
                 "mrLittle"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 40
-            ],
-            "extra": {
-                "script": "<EVE0082"
-            }
+            ]
         },
         "Iron Bond": {
-            "pickup_category": "items",
-            "broad_category": "items",
+            "gui_category": "items",
+            "hint_features": [
+                "badge",
+                "items"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "major",
+            "extra": {
+                "script": "<EVE0089"
             },
             "progression": [
                 "ironBond"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 45
-            ],
-            "extra": {
-                "script": "<EVE0089"
-            }
+            ]
         },
         "Clay Figure Medal": {
-            "pickup_category": "useless",
-            "broad_category": "useless",
+            "gui_category": "useless",
+            "hint_features": [
+                "badge",
+                "useless"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "minor",
+            "extra": {
+                "script": "<EVE0081"
             },
             "progression": [
                 "clayMedal"
             ],
-            "preferred_location_category": "minor",
+            "show_in_credits_spoiler": false,
             "expected_case_for_describer": "shuffled",
             "original_locations": [
                 29
-            ],
-            "extra": {
-                "script": "<EVE0081"
-            }
+            ]
         },
         "Small Life Capsule": {
-            "pickup_category": "life",
-            "broad_category": "life_support",
+            "gui_category": "life",
+            "hint_features": [
+                "life",
+                "medicine"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
             },
-            "progression": [
-                "lifeCapsule"
-            ],
             "preferred_location_category": "minor",
-            "expected_case_for_describer": "shuffled",
-            "custom_count_for_shuffled_case": 3,
-            "ammo": [
-                "lifeCapsule"
-            ],
             "extra": {
                 "script": "<EVE0012"
-            }
+            },
+            "progression": [
+                "lifeCapsule"
+            ],
+            "ammo": [
+                "lifeCapsule"
+            ],
+            "show_in_credits_spoiler": false,
+            "expected_case_for_describer": "shuffled",
+            "custom_count_for_shuffled_case": 3
         },
         "Medium Life Capsule": {
-            "pickup_category": "life",
-            "broad_category": "life_support",
+            "gui_category": "life",
+            "hint_features": [
+                "life",
+                "medicine"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
             },
-            "progression": [
-                "lifeCapsule"
-            ],
             "preferred_location_category": "minor",
-            "expected_case_for_describer": "shuffled",
-            "custom_count_for_shuffled_case": 2,
-            "ammo": [
-                "lifeCapsule"
-            ],
             "extra": {
                 "script": "<EVE0013"
-            }
-        },
-        "Large Life Capsule": {
-            "pickup_category": "life",
-            "broad_category": "life_support",
-            "model_name": "",
-            "offworld_models": {
-                "am2r": "sItemGenericCS"
             },
             "progression": [
                 "lifeCapsule"
             ],
-            "preferred_location_category": "minor",
-            "expected_case_for_describer": "shuffled",
-            "custom_count_for_shuffled_case": 7,
             "ammo": [
                 "lifeCapsule"
             ],
+            "show_in_credits_spoiler": false,
+            "expected_case_for_describer": "shuffled",
+            "custom_count_for_shuffled_case": 2
+        },
+        "Large Life Capsule": {
+            "gui_category": "life",
+            "hint_features": [
+                "life",
+                "medicine"
+            ],
+            "model_name": "",
+            "offworld_models": {
+                "am2r": "sItemGenericCS"
+            },
+            "preferred_location_category": "minor",
             "extra": {
                 "script": "<EVE0014"
-            }
+            },
+            "progression": [
+                "lifeCapsule"
+            ],
+            "ammo": [
+                "lifeCapsule"
+            ],
+            "show_in_credits_spoiler": false,
+            "expected_case_for_describer": "shuffled",
+            "custom_count_for_shuffled_case": 7
         }
     },
     "ammo_pickups": {
         "Missile Expansion": {
-            "broad_category": "missile_related",
+            "gui_category": "missile",
+            "hint_features": [
+                "missile_related"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
             },
-            "items": [
-                "missile"
-            ],
             "preferred_location_category": "minor",
             "extra": {
                 "script": "<EVE0030"
-            }
+            },
+            "items": [
+                "missile"
+            ]
         },
         "Large Missile Expansion": {
-            "broad_category": "missile_related",
+            "gui_category": "missile",
+            "hint_features": [
+                "missile_related"
+            ],
             "model_name": "",
             "offworld_models": {
                 "am2r": "sItemGenericCS"
             },
-            "items": [
-                "missile"
-            ],
             "preferred_location_category": "minor",
             "extra": {
                 "script": "<EVE0035"
-            }
+            },
+            "items": [
+                "missile"
+            ]
         }
     },
     "default_pickups": {},

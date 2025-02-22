@@ -17,6 +17,9 @@ class BaseCosmeticPatchesDialog(QtWidgets.QDialog):
     cancel_button: QtWidgets.QPushButton
     reset_button: QtWidgets.QPushButton
 
+    def __init__(self, parent: QtWidgets.QWidget | None, current: BaseCosmeticPatches):
+        super().__init__(parent)
+
     def connect_signals(self) -> None:
         self.accept_button.clicked.connect(self.accept)
         self.cancel_button.clicked.connect(self.reject)
@@ -33,7 +36,7 @@ class BaseCosmeticPatchesDialog(QtWidgets.QDialog):
         def persist_field(value: bool) -> None:
             self._cosmetic_patches = dataclasses.replace(
                 self._cosmetic_patches,
-                **{attribute_name: value},  # type: ignore[arg-type]
+                **{attribute_name: value},
             )
 
         signal_handling.on_checked(check, persist_field)

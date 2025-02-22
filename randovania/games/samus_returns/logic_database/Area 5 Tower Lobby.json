@@ -11,6 +11,7 @@
     "areas": {
         "Lobby Save Station": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -7400.0,
@@ -141,13 +142,8 @@
                                                         "comment": "Bomb Phase Drift Skip: https://youtu.be/QN5_-f6IIEs?t=20",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bomb",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Lay Bomb"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -197,6 +193,15 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "MeleeClip",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "OoB",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -591,6 +596,7 @@
         },
         "Transport to Tower Interior East": {
             "default_node": "Elevator to Area 5 Tower Interior",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -5200.0,
@@ -1305,6 +1311,7 @@
         },
         "Transport to Areas 4 and 6": {
             "default_node": "Elevator to Area 4 Central Caves",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 11300.0,
@@ -1384,6 +1391,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 102,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Ammo Recharge Station": {
                             "type": "resource",
@@ -2016,6 +2024,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 109,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Chozo Seal": {
                             "type": "and",
@@ -2655,13 +2664,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Spring",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Use Spring Ball"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -2723,6 +2727,7 @@
         },
         "Lobby Teleporter West": {
             "default_node": "Teleporter",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -16800.0,
@@ -2814,6 +2819,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 105,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Next to Grapple Block": {
                             "type": "and",
@@ -2843,6 +2849,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 106,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Transport to Tower Interior East": {
                             "type": "and",
@@ -4417,6 +4424,7 @@
         },
         "J-Shape Tunnel": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -8600.0,
@@ -4587,53 +4595,51 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Tunnel to Lobby Save Station": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Any Bomb"
+                                        "data": "Simple IBJ"
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Spider",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Any Bomb"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spider Ball"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -4643,53 +4649,51 @@
                             }
                         },
                         "Tunnel to Lobby Teleporter West (Top)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Any Bomb"
+                                        "data": "Simple IBJ"
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Spider",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Any Bomb"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spider Ball"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -4730,6 +4734,7 @@
         },
         "Transport to Tower Interior West": {
             "default_node": "Door to Lobby Teleporter West",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -12800.0,
@@ -4841,6 +4846,7 @@
         },
         "Lobby Teleporter East": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 5100.0,
@@ -4904,6 +4910,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 103,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Next to Pickup": {
                             "type": "and",
@@ -5306,12 +5313,29 @@
                                                     "data": "Fleechswarm Protection"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "MeleeClip",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "TODO: Add video",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "MeleeClip",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "OoB",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -5809,6 +5833,7 @@
         },
         "Alpha+ Arena": {
             "default_node": "Room Center",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 3050.0,
@@ -5996,6 +6021,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 188,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -6010,6 +6036,7 @@
         },
         "Gamma+ Arena Access": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -20800.0,
@@ -6149,6 +6176,7 @@
         },
         "Phase Drift Chamber": {
             "default_node": "Left of Statue",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -6100.0,
@@ -6204,6 +6232,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 107,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Left of Crumble Blocks": {
                             "type": "and",
@@ -6240,6 +6269,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 108,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Tunnel to Meboid Millpond (Bottom)": {
                             "type": "and",
@@ -6291,13 +6321,8 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bomb",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Lay Bomb"
                                                             }
                                                         ]
                                                     }
@@ -6618,6 +6643,7 @@
         },
         "Meboid Millpond": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -1900.0,
@@ -6665,6 +6691,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 104,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Room Bottom": {
                             "type": "resource",
@@ -7230,6 +7257,7 @@
         },
         "Gamma+ Arena": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -24700.0,
@@ -7421,6 +7449,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 202,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -7435,6 +7464,7 @@
         },
         "Lobby Passageway": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 8700.0,

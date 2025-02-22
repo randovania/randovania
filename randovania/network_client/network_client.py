@@ -13,7 +13,7 @@ from typing import TYPE_CHECKING
 
 import aiofiles
 import aiohttp
-import construct  # type: ignore[import-untyped]
+import construct
 import sentry_sdk
 import socketio
 import socketio.exceptions

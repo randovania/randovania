@@ -6,6 +6,7 @@
     "areas": {
         "Entrance Lobby": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 60",
                 "room_id": [
@@ -34,6 +35,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 88,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Other to Geron's Crossing": {
                             "type": "and",
@@ -380,6 +382,61 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "When standing on frozen Menu's, use bomb jumps/spring ball to break them",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Freeze Enemies With Any Weapon"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "StandOnFrozenEnemies",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Springball"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -496,12 +553,13 @@
         },
         "Entrance Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 61",
                 "room_id": [
                     1
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Entrance Recharge Room": {
@@ -622,6 +680,7 @@
         },
         "Entrance Navigation Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 62",
                 "room_id": [
@@ -766,6 +825,7 @@
         },
         "Geron's Crossing": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 63",
                 "room_id": [
@@ -1130,6 +1190,27 @@
                                 ]
                             }
                         },
+                        "Other to Entrance Lobby": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Purple Geron"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VariaCore-X",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Other to Vault": {
                             "type": "and",
                             "data": {
@@ -1253,6 +1334,27 @@
                                     }
                                 ]
                             }
+                        },
+                        "Door to Nocturnal Access": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Purple Geron"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VariaCore-X",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -1305,6 +1407,7 @@
         },
         "Nocturnal Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 64",
                 "room_id": [
@@ -1396,6 +1499,7 @@
         },
         "Nocturnal Shaft": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 65",
                 "room_id": [
@@ -1777,6 +1881,15 @@
                                     {
                                         "type": "template",
                                         "data": "Have Any Jump Upgrade"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "WallJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -1986,6 +2099,7 @@
         },
         "Mimic Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 66",
                 "room_id": [
@@ -2219,6 +2333,7 @@
         },
         "Forbidden Entrance": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 67",
                 "room_id": [
@@ -2616,6 +2731,7 @@
         },
         "Nocturnal Playground": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 68",
                 "room_id": [
@@ -2723,7 +2839,7 @@
                         "Door to Nocturnal Shaft": {
                             "type": "or",
                             "data": {
-                                "comment": "Stun the Ice X: https://youtu.be/gWr0prPkpiI",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2735,12 +2851,20 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": "Stun the Ice X: https://youtu.be/gWr0prPkpiI",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -2904,6 +3028,70 @@
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Freeze the Owtch. Only works if the owtch starts crawling towards the door.",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": "Lure the Owtch to the left",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "ScrewAttack",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "DamageBoosts",
+                                                                                                        "amount": 2,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "damage",
+                                                                                                        "name": "NormalDamage",
+                                                                                                        "amount": 135,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "StandOnFrozenEnemies",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Freeze Enemies With Any Weapon"
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -2914,17 +3102,43 @@
                                                         "comment": "Get past Blue X (left side)",
                                                         "items": [
                                                             {
-                                                                "type": "and",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "comment": "https://youtu.be/JsdPO-DjDwE",
+                                                                    "comment": "Dodge them",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
                                                                                 "name": "Combat",
-                                                                                "amount": 2,
+                                                                                "amount": 3,
                                                                                 "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Wide lets you break the shoot blocks easier: https://youtu.be/JsdPO-DjDwE",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Combat",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "WideBeam",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
@@ -2933,7 +3147,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Tank them",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -2980,6 +3194,7 @@
         },
         "Clogged Cavern": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 69",
                 "room_id": [
@@ -3050,7 +3265,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": "Generator traps itself and doesn't know how to get out",
+                                                        "comment": "Generator traps itself and doesn't dare killing Varia Core-X to get out",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -3262,6 +3477,7 @@
         },
         "Blue X Blockade": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 610",
                 "room_id": [
@@ -3466,7 +3682,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Destroy Blocks",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -3475,7 +3691,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Power Bomb reveals all the Blue-X",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -3595,12 +3811,13 @@
         },
         "Data Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 611",
                 "room_id": [
                     11
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Blue X Blockade": {
@@ -3674,6 +3891,7 @@
         },
         "Data Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 612",
                 "room_id": [
@@ -3770,6 +3988,7 @@
         },
         "Varia Core-X Arena": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 613",
                 "room_id": [
@@ -3902,6 +4121,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 108,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Arena": {
                             "type": "and",
@@ -3991,7 +4211,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Core-X Requirements",
+                                                        "comment": "Core-X Requirements (180HP)",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -4197,6 +4417,7 @@
         },
         "X-B.O.X. Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 614",
                 "room_id": [
@@ -4697,6 +4918,7 @@
         },
         "Zozoro Wine Cellar": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 615",
                 "room_id": [
@@ -4723,6 +4945,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 89,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Other to Blue X Blockade": {
                             "type": "or",
@@ -4781,7 +5004,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get up to the ledge",
                                             "items": [
                                                 {
                                                     "type": "and",
@@ -4882,6 +5105,7 @@
         },
         "X-B.O.X. Arena": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 616",
                 "room_id": [
@@ -5088,8 +5312,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 299.157324204821,
-                        "y": 148.266127254574,
+                        "x": 353.8946837994458,
+                        "y": 150.1960191484001,
                         "z": 0.0
                     },
                     "description": "",
@@ -5104,8 +5328,9 @@
                     "valid_starting_location": false,
                     "pickup_index": 111,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
-                        "Arena": {
+                        "Event - B.O.X": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5238,12 +5463,12 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "X-B.O.X. Requirements",
+                                            "comment": "X-B.O.X. Requirements (500HP) - Hitless: https://youtu.be/tN0oMbbUW5I",
                                             "items": [
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Charge Combat",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -5263,24 +5488,6 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "items",
-                                                                                "name": "IceBeam",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "PlasmaBeam",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
                                                                                 "name": "WideBeam",
                                                                                 "amount": 1,
                                                                                 "negate": false
@@ -5291,8 +5498,34 @@
                                                                             "data": {
                                                                                 "type": "tricks",
                                                                                 "name": "Combat",
-                                                                                "amount": 2,
+                                                                                "amount": 4,
                                                                                 "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "WaveBeam",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Combat",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
@@ -5304,7 +5537,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Missile Combat",
                                                         "items": [
                                                             {
                                                                 "type": "and",
@@ -5320,7 +5553,7 @@
                                                                             "data": {
                                                                                 "type": "items",
                                                                                 "name": "Missiles",
-                                                                                "amount": 30,
+                                                                                "amount": 20,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -5339,7 +5572,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "https://youtu.be/tN0oMbbUW5I",
+                                                                    "comment": null,
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
@@ -5350,7 +5583,7 @@
                                                                             "data": {
                                                                                 "type": "items",
                                                                                 "name": "Missiles",
-                                                                                "amount": 50,
+                                                                                "amount": 30,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -5380,7 +5613,7 @@
                                                                             "data": {
                                                                                 "type": "items",
                                                                                 "name": "Missiles",
-                                                                                "amount": 70,
+                                                                                "amount": 40,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -5399,7 +5632,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "https://youtu.be/fcWSo6UD5lE",
+                                                                    "comment": null,
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
@@ -5410,7 +5643,7 @@
                                                                             "data": {
                                                                                 "type": "items",
                                                                                 "name": "Missiles",
-                                                                                "amount": 90,
+                                                                                "amount": 80,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -5428,6 +5661,115 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Don't miss any",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Missiles",
+                                                                                            "amount": 50,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "10+ DMG Missiles"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Missiles",
+                                                                                            "amount": 25,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "20 DMG Missiles"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Missiles",
+                                                                                            "amount": 17,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "30 DMG Missiles"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Missiles",
+                                                                                            "amount": 12,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "45 DMG Missiles"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -5435,7 +5777,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Core-X Requirements",
+                                            "comment": "Core-X Requirements (180HP) - Hitless: https://youtu.be/fcWSo6UD5lE",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5453,28 +5795,7 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "30 DMG Missiles"
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "20 DMG Missiles"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Combat",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
+                                                                "data": "20 DMG Missiles"
                                                             },
                                                             {
                                                                 "type": "and",
@@ -5495,6 +5816,58 @@
                                                                             }
                                                                         }
                                                                     ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "For dodging",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "GravitySuit",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Hi-Jump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 5,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -5522,7 +5895,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "NormalDamage",
-                                                        "amount": 1000,
+                                                        "amount": 500,
                                                         "negate": false
                                                     }
                                                 },
@@ -5545,7 +5918,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "NormalDamage",
-                                                                    "amount": 800,
+                                                                    "amount": 350,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -5571,7 +5944,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "NormalDamage",
-                                                                    "amount": 600,
+                                                                    "amount": 300,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -5597,7 +5970,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "NormalDamage",
-                                                                    "amount": 400,
+                                                                    "amount": 180,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -5623,7 +5996,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "NormalDamage",
-                                                                    "amount": 100,
+                                                                    "amount": 95,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -5643,7 +6016,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
-                                                        "amount": 3,
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 },
@@ -5654,62 +6027,19 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Break blocks while falling down crumble blocks",
                                                         "items": [
                                                             {
                                                                 "type": "template",
                                                                 "data": "Can Use Bombs"
                                                             },
                                                             {
-                                                                "type": "or",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": "Break blocks while falling down crumble blocks",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Movement",
-                                                                                "amount": 3,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": "TODO: vid, also check if you can do this w/o grav",
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "JBJ",
-                                                                                            "amount": 5,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Hi-Jump",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "GravitySuit",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -5722,11 +6052,37 @@
                             }
                         }
                     }
+                },
+                "Event - B.O.X": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 303.18,
+                        "y": 210.5,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "B.O.X.",
+                    "connections": {
+                        "Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Elevator to Main Deck": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 617",
                 "room_id": [
@@ -5818,6 +6174,7 @@
         },
         "X-B.O.X. Garage": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 618",
                 "room_id": [
@@ -5846,6 +6203,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 90,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to X-B.O.X. Arena (Upper)": {
                             "type": "and",
@@ -5877,6 +6235,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 91,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to X-B.O.X. Arena (Lower)": {
                             "type": "and",
@@ -6002,12 +6361,12 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Vanilla Method - Freeze an Owtch on the Crumble Blocks (and use regular Bombs to open the passage)",
+                                                        "comment": "Vanilla Method - Freeze an Owtch on the Crumble Blocks and use regular Bombs to open the passage",
                                                         "items": [
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "Template not used because normal Ice Missiles can't hit the Owtch to freeze it in the right spot https://youtu.be/4y7ohyL0zkE&t=14s",
+                                                                    "comment": "Freeze the owtch in the right spot: https://youtu.be/4y7ohyL0zkE&t=14s",
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
@@ -6036,6 +6395,10 @@
                                                                         }
                                                                     ]
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
                                                             }
                                                         ]
                                                     }
@@ -6043,7 +6406,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Alternate Method - Jump off the Crumble Blocks morphed (frame perfect) https://youtu.be/4y7ohyL0zkE&t=14",
+                                                        "comment": "Jump off the Crumble Blocks morphed (frame perfect) https://youtu.be/4y7ohyL0zkE&t=14",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -6064,7 +6427,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Alternate Method - Jump off the Crumble Blocks without Jumpball by unmorphing first (also frame perfect) https://youtu.be/4y7ohyL0zkE&t=24",
+                                                        "comment": "Jump off the Crumble Blocks without Springball by unmorphing first (also frame perfect) https://youtu.be/4y7ohyL0zkE&t=24",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -6136,6 +6499,7 @@
         },
         "Bull Bend": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 619",
                 "room_id": [
@@ -6227,6 +6591,7 @@
         },
         "Neglected Shaft": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 620",
                 "room_id": [
@@ -6403,7 +6768,7 @@
                         "y": 112.0,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "There is a possibility to model a full shinespark to the top door without a\njump extend. However modelling that is not great because it requires\nduplicating all of the requirements. Thus, it isn't modelled.",
                     "layers": [
                         "default"
                     ],
@@ -6505,7 +6870,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Freeze the Bull",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -6575,12 +6940,13 @@
         },
         "Neglected Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 621",
                 "room_id": [
                     21
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Neglected Shaft": {
@@ -6654,6 +7020,7 @@
         },
         "Checkpoint to Restricted Zone": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 622",
                 "room_id": [
@@ -6774,12 +7141,13 @@
         },
         "Cavern Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 623",
                 "room_id": [
                     23
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Cavern Save Access": {
@@ -6853,6 +7221,7 @@
         },
         "Mimic Storage": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 624",
                 "room_id": [
@@ -6881,6 +7250,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 92,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Mimic Access": {
                             "type": "or",
@@ -6945,6 +7315,7 @@
         },
         "Data Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 625",
                 "room_id": [
@@ -7036,6 +7407,7 @@
         },
         "Shell Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 626",
                 "room_id": [
@@ -7064,6 +7436,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 93,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Clogged Cavern": {
                             "type": "and",
@@ -7165,35 +7538,6 @@
                                     {
                                         "type": "template",
                                         "data": "Can Use Power Bombs"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Have Any Jump Upgrade"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Stand on edge of upper platform: https://youtu.be/OKuCxGiJQTI",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -7204,6 +7548,7 @@
         },
         "Big Shell 1": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 627",
                 "room_id": [
@@ -7334,7 +7679,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": "Possible without Single Wall Jumping physics by jumping off both walls. Height gain per jump is small.",
+                                                        "comment": "Possible with normal Wall Jumping by jumping off both walls. Height gain per jump is small.",
                                                         "items": [
                                                             {
                                                                 "type": "and",
@@ -7394,6 +7739,7 @@
         },
         "Big Shell 2": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 628",
                 "room_id": [
@@ -7505,11 +7851,13 @@
         },
         "Entrance Recharge Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 629",
                 "room_id": [
                     29
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Entrance Lobby": {
@@ -7627,6 +7975,7 @@
         },
         "Twin Caverns West": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 630",
                 "room_id": [
@@ -7655,6 +8004,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 94,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Twin Caverns East (Upper)": {
                             "type": "and",
@@ -7703,6 +8053,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 95,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Ledge": {
                             "type": "or",
@@ -8077,7 +8428,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "StandOnFrozenEnemies",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }
@@ -8158,6 +8509,7 @@
         },
         "Twin Caverns East": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 631",
                 "room_id": [
@@ -8601,6 +8953,7 @@
         },
         "Maintenance Annex": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 632",
                 "room_id": [
@@ -8692,6 +9045,7 @@
         },
         "Vault": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 634",
                 "room_id": [
@@ -8720,6 +9074,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 96,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Other to Geron's Crossing": {
                             "type": "or",
@@ -8784,12 +9139,13 @@
         },
         "Twin Cavern Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 635",
                 "room_id": [
                     35
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Twin Caverns East": {
@@ -8863,6 +9219,7 @@
         },
         "Glass Tube to Sector 4 (AQA)": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 636",
                 "room_id": [
@@ -8954,6 +9311,7 @@
         },
         "Glass Tube to Sector 5 (ARC)": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 637",
                 "room_id": [
@@ -9045,6 +9403,7 @@
         },
         "Pillar Puzzle": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 638",
                 "room_id": [
@@ -9073,6 +9432,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 97,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Nocturnal Shaft": {
                             "type": "and",
@@ -9140,7 +9500,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Wave Beam is difficult to control, but can solve the puzzle (Wide Beam could be turned off if also collected): https://youtu.be/7EqFwO03BAs",
+                                                        "comment": "Wave Beam is difficult to control, but can solve the puzzle: https://youtu.be/7EqFwO03BAs",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -9178,16 +9538,8 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Can Use Power Bombs"
-                                                                        }
-                                                                    ]
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Can Use Power Bombs"
                                                             },
                                                             {
                                                                 "type": "and",
@@ -9221,6 +9573,7 @@
         },
         "Spaceboost Alley": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 639",
                 "room_id": [
@@ -9249,6 +9602,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 98,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Bottom of Room": {
                             "type": "and",
@@ -9280,6 +9634,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 99,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Bottom of Room": {
                             "type": "and",
@@ -9487,6 +9842,7 @@
         },
         "Cavern Save Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 640",
                 "room_id": [

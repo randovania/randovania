@@ -22,6 +22,7 @@ if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.dock import DockWeaknessDatabase
     from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
     from randovania.game_description.requirements.requirement_set import RequirementSet
@@ -70,8 +71,9 @@ class MinimalLogicData:
 class GameDescription:
     game: RandovaniaGame
     dock_weakness_database: DockWeaknessDatabase
-
     resource_database: ResourceDatabase
+    hint_feature_database: dict[str, HintFeature]
+
     layers: tuple[str, ...]
     victory_condition: Requirement
     starting_location: NodeIdentifier
@@ -88,6 +90,7 @@ class GameDescription:
             resource_database=self.resource_database,
             layers=self.layers,
             dock_weakness_database=self.dock_weakness_database,
+            hint_feature_database=self.hint_feature_database,
             region_list=copy.deepcopy(self.region_list, memodict),
             victory_condition=self.victory_condition,
             starting_location=self.starting_location,
@@ -101,6 +104,7 @@ class GameDescription:
         game: RandovaniaGame,
         dock_weakness_database: DockWeaknessDatabase,
         resource_database: ResourceDatabase,
+        hint_feature_database: dict[str, HintFeature],
         layers: tuple[str, ...],
         victory_condition: Requirement,
         starting_location: NodeIdentifier,
@@ -110,8 +114,9 @@ class GameDescription:
     ):
         self.game = game
         self.dock_weakness_database = dock_weakness_database
-
         self.resource_database = resource_database
+        self.hint_feature_database = hint_feature_database
+
         self.layers = layers
         self.victory_condition = victory_condition
         self.starting_location = starting_location
@@ -208,6 +213,7 @@ class GameDescription:
                 resource_database=self.resource_database,
                 layers=self.layers,
                 dock_weakness_database=self.dock_weakness_database,
+                hint_feature_database=self.hint_feature_database,
                 region_list=RegionList(
                     [region.duplicate() for region in self.region_list.regions],
                     self.region_list.flatten_to_set_on_patch,

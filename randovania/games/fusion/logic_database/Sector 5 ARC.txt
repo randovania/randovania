@@ -38,7 +38,7 @@ Extra - room_id: [0]
 Entrance Save Room
 Extra - map_name: Sector 51
 Extra - room_id: [1]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
@@ -134,8 +134,11 @@ Extra - room_id: [3, 6]
       Any of the following:
           Space Jump
           All of the following:
+              # Freeze Chute Leeches
               Can Freeze Enemies With Any Weapon
-              Hi-Jump or Stand On Frozen Enemies (Intermediate)
+              Any of the following:
+                  Hi-Jump or Stand On Frozen Enemies (Intermediate)
+                  Stand On Frozen Enemies (Beginner) and Wall Jump (Beginner)
 
 ----------------
 Training Aerie
@@ -195,10 +198,8 @@ Extra - room_id: [7, 15]
           # Damage Reqs
           Damage Runs (Advanced) and Cold Damage ≥ 200
   > Door to Arctic Underside
-      All of the following:
-          Level 0 Keycard and Speed Booster and Varia Suit and Disabled Door Lock Rando and Disabled Entrance Rando
-          # Needed for charging in previous room
-          Can Kill PB Geron
+      # Charge in previous room
+      Level 0 Keycard and Speed Booster and Varia Suit and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Waver Ward; Heals? False
   * Layers: default
@@ -235,11 +236,12 @@ Extra - room_id: [7, 15]
   > Door to Crow's Nest
       All of the following:
           Any of the following:
+              # Get up
               Wall Jump (Beginner) or Have Any Jump Upgrade
               Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
           Any of the following:
+              # Cold Reqs
               Varia Suit
-              # Damage Reqs
               Damage Runs (Advanced) and Cold Damage ≥ 50
 
 > Door to Ripper Road; Heals? False
@@ -303,7 +305,7 @@ Extra - room_id: [8]
   * Extra - door_idx: (36,)
   > Door to Security Save Room
       All of the following:
-          Wave Beam and Can Kill PB Geron
+          Wave Beam
           Any of the following:
               # Damage Reqs
               Varia Suit
@@ -314,12 +316,10 @@ Extra - room_id: [8]
   * L0 Hatch to Security Save Room/Door to Geron Checkpoint
   * Extra - door_idx: (64,)
   > Door to Arctic Containment
-      All of the following:
-          Can Kill PB Geron
-          Any of the following:
-              # Damage Reqs
-              Varia Suit
-              Damage Runs (Advanced) and Cold Damage ≥ 130
+      Any of the following:
+          # Damage Reqs
+          Varia Suit
+          Damage Runs (Advanced) and Cold Damage ≥ 130
 
 ----------------
 Security Shaft West
@@ -350,9 +350,11 @@ Extra - room_id: [9]
                       Cold Damage ≥ 800
                       Hi-Jump and Cold Damage ≥ 600
           Any of the following:
+              # Get up
               Wall Jump (Beginner) or Have Any Jump Upgrade
               # Climb Hidden Ladder
               Can Use Any Bombs
+              # Freeze Zeelas
               Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
 
 ----------------
@@ -544,21 +546,22 @@ Extra - room_id: [14]
   * Extra - door_idx: (69,)
   > Pickup (Energy Tank)
       All of the following:
-          # TODO: varia / damage runs
           Morph Ball
           Movement (Intermediate) or Can Bounce in Ball
-          # Damage Run
-          Varia Suit
+          Any of the following:
+              # Damage Run
+              Varia Suit
+              Damage Runs (Advanced) and Cold Damage ≥ 170
 
 ----------------
 Data Room
 Extra - map_name: Sector 516
 Extra - room_id: [16]
-> Door to Crow's Nest; Heals? False
+> Other to Crow's Nest; Heals? False
   * Layers: default
-  * Open Hatch to Crow's Nest/Door to Data Room
+  * Destroyed Door to Crow's Nest/Other to Data Room
   * Extra - door_idx: (91,)
-  > Door to Ruined Corridor
+  > Other to Ruined Corridor
       Trivial
 
 > Door to Data Checkpoint; Heals? False
@@ -570,11 +573,11 @@ Extra - room_id: [16]
   > Door to Frozen Tower
       Trivial
 
-> Door to Ruined Corridor; Heals? False
+> Other to Ruined Corridor; Heals? False
   * Layers: default
-  * Open Hatch to Ruined Corridor/Door to Data Room
+  * Destroyed Door to Ruined Corridor/Other to Data Room
   * Extra - door_idx: (93,)
-  > Door to Crow's Nest
+  > Other to Crow's Nest
       Trivial
 
 > Pickup (Power Bomb Data); Heals? False
@@ -597,18 +600,18 @@ Extra - room_id: [16]
 Ruined Corridor
 Extra - map_name: Sector 517
 Extra - room_id: [17]
-> Door to Data Room; Heals? False
+> Other to Data Room; Heals? False
   * Layers: default
-  * Open Hatch to Data Room/Door to Ruined Corridor
+  * Destroyed Door to Data Room/Other to Ruined Corridor
   * Extra - door_idx: (32,)
-  > Door to Flooded Tower
+  > Other to Flooded Tower
       Trivial
 
-> Door to Flooded Tower; Heals? False
+> Other to Flooded Tower; Heals? False
   * Layers: default
-  * Open Hatch to Flooded Tower/Door to Ruined Corridor
+  * Destroyed Door to Flooded Tower/Other to Ruined Corridor
   * Extra - door_idx: (33,)
-  > Door to Data Room
+  > Other to Data Room
       Trivial
 
 ----------------
@@ -625,22 +628,22 @@ Extra - room_id: [18]
   > Door to Nightmare Recharge Room
       Trivial
 
-> Door to Ruined Break Room; Heals? False
+> Other to Ruined Break Room; Heals? False
   * Layers: default
-  * Open Hatch to Ruined Break Room/Door to Nightmare Hub West
+  * Destroyed Door to Ruined Break Room/Other to Nightmare Hub West
   * Extra - door_idx: (34,)
-  > Door to Nightmare Hub East
+  > Other to Nightmare Hub East
       Trivial
   > Door to Flooded Access
       Trivial
   > Door to Nightmare Save Room
       Trivial
 
-> Door to Nightmare Hub East; Heals? False
+> Other to Nightmare Hub East; Heals? False
   * Layers: default
-  * Open Hatch to Nightmare Hub East/Door to Nightmare Hub West
+  * Destroyed Door to Nightmare Hub East/Other to Nightmare Hub West
   * Extra - door_idx: (35,)
-  > Door to Ruined Break Room
+  > Other to Ruined Break Room
       Trivial
 
 > Door to Nightmare Access; Heals? False
@@ -654,10 +657,10 @@ Extra - room_id: [18]
   * Layers: default
   * L0 Hatch to Flooded Access/Door to Nightmare Hub West
   * Extra - door_idx: (62,)
-  > Door to Ruined Break Room
+  > Other to Ruined Break Room
       Any of the following:
           Have Any Jump Upgrade
-          # https://youtu.be/lRKybDZdiA4
+          # JBJ up: https://youtu.be/lRKybDZdiA4
           Jump Bombjump (Intermediate) and Can Use Bombs
   > Door to Nightmare Access
       Trivial
@@ -666,7 +669,7 @@ Extra - room_id: [18]
   * Layers: default
   * L0 Hatch to Nightmare Save Room/Door to Nightmare Hub West
   * Extra - door_idx: (119,)
-  > Door to Ruined Break Room
+  > Other to Ruined Break Room
       Trivial
   > Door to Nightmare Recharge Room
       Any of the following:
@@ -687,9 +690,9 @@ Extra - room_id: [18]
 Nightmare Hub East
 Extra - map_name: Sector 519
 Extra - room_id: [19]
-> Door to Nightmare Hub West; Heals? False
+> Other to Nightmare Hub West; Heals? False
   * Layers: default
-  * Open Hatch to Nightmare Hub West/Door to Nightmare Hub East
+  * Destroyed Door to Nightmare Hub West/Other to Nightmare Hub East
   * Extra - door_idx: (37,)
   > Door to Nightmare Nook
       All of the following:
@@ -703,7 +706,7 @@ Extra - room_id: [19]
   * Layers: default
   * L0 Hatch to Nightmare Nook/Door to Nightmare Hub East
   * Extra - door_idx: (38,)
-  > Door to Nightmare Hub West
+  > Other to Nightmare Hub West
       Trivial
 
 ----------------
@@ -748,7 +751,7 @@ Extra - room_id: [20]
                   Missiles ≥ 100 and Combat (Expert) and 20 DMG Missiles
                   Missiles ≥ 50 and Combat (Advanced) and 45 DMG Missiles
           All of the following:
-              # Core-X Requirements
+              # Core-X Requirements (240HP)
               Missiles
               Any of the following:
                   20 DMG Missiles
@@ -818,8 +821,9 @@ Extra - room_id: [22, 21]
                   Can Freeze Enemies With Any Weapon
                   Any of the following:
                       Hi-Jump
-                      # https://youtu.be/a7A00q8XP9M
+                      # With WJ: https://youtu.be/a7A00q8XP9M
                       Wall Jump (Intermediate)
+              # Single walljump
               Wall Jump (Intermediate) and Can Single Walljump
           Any of the following:
               # Damage Reqs
@@ -920,6 +924,7 @@ Extra - room_id: [24]
   > Door to Kago Speedway
       Space Jump
   > Door to Groznyj Grad
+      # Kago disapears once you have PBs
       Can Use Power Bombs
 
 > Door to Kago Speedway; Heals? False
@@ -927,7 +932,10 @@ Extra - room_id: [24]
   * L0 Hatch to Kago Speedway/Door to Groznyj Shaft
   * Extra - door_idx: (104,)
   > Door to Waver Ward
-      Space Jump
+      Any of the following:
+          Space Jump
+          # Store spark in next room and carry it to here
+          Speed Booster and Varia Suit and Shinespark Tricks (Advanced) and Can Freeze Enemies With Any Weapon
   > Door to Save Room South
       Trivial
 
@@ -988,8 +996,8 @@ Extra - room_id: [26]
               # Damage Reqs
               Varia Suit
               # No springball: https://youtu.be/a4urCWRPTNM
-              Damage Runs (Hypermode) and Cold Damage ≥ 733 and Can Use Bombs
-              Damage Runs (Expert) and Cold Damage ≥ 440 and Can Use Springball
+              Damage Runs (Hypermode) and Cold Damage ≥ 733 and Can Freeze Enemies With Any Weapon and Can Use Bombs
+              Damage Runs (Expert) and Cold Damage ≥ 440 and Can Freeze Enemies With Any Weapon and Can Use Springball
 
 ----------------
 Nightmare Access
@@ -1021,12 +1029,8 @@ Extra - room_id: [28]
   * Extra - door_idx: (63,)
   > Door to Zebesian Waters
       Any of the following:
-          Combat (Intermediate) or Can Use Power Bombs
+          Combat (Intermediate) or Can Kill Tough Underwater Beam-Resistant Enemy
           Damage Boosts (Intermediate) and Normal Damage ≥ 250
-          Charge Beam and Have Any Beam Upgrade
-          Gravity Suit and Screw Attack
-          Missiles ≥ 10 and 10+ DMG Missiles
-          Missiles ≥ 2 and 45 DMG Missiles
 
 > Door to Zebesian Waters; Heals? False
   * Layers: default
@@ -1034,18 +1038,14 @@ Extra - room_id: [28]
   * Extra - door_idx: (117,)
   > Door to Nightmare Hub West
       Any of the following:
-          Combat (Intermediate) or Can Use Power Bombs
+          Combat (Intermediate) or Can Kill Tough Underwater Beam-Resistant Enemy
           Damage Boosts (Intermediate) and Normal Damage ≥ 250
-          Charge Beam and Have Any Beam Upgrade
-          Gravity Suit and Screw Attack
-          Missiles ≥ 10 and 10+ DMG Missiles
-          Missiles ≥ 2 and 45 DMG Missiles
 
 ----------------
 Security Save Room
 Extra - map_name: Sector 529
 Extra - room_id: [29]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Security Shaft West; Heals? False
   * Layers: default
   * L3 Hatch to Security Shaft West/Door to Security Save Room
@@ -1121,6 +1121,7 @@ Extra - room_id: [31]
 Entrance Recharge Room
 Extra - map_name: Sector 532
 Extra - room_id: [32]
+Extra - unlocked_save_recharge_station: True
 > Door to Entrance Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Save Room/Door to Entrance Recharge Room
@@ -1172,7 +1173,8 @@ Extra - room_id: [33]
           Morph Ball
           Any of the following:
               Can Use Power Bombs
-              Screw Attack and Knowledge (Beginner)
+              # Hold right during climb and down+left during fanfare. 50/50 on success.
+              Screw Attack and Knowledge (Intermediate) and Movement (Intermediate)
               All of the following:
                   Can Use Bombs
                   Any of the following:
@@ -1253,7 +1255,7 @@ Extra - room_id: [36]
   * Extra - blockx: 8
   * Extra - blocky: 8
   > Door to Glass Tube to Sector 3 (PYR)
-      Trivial
+      Can Break Single Bomb Blocks
 
 > Door to Glass Tube to Sector 3 (PYR); Heals? False
   * Layers: default
@@ -1298,12 +1300,12 @@ Extra - room_id: [36]
           Wall Jump (Beginner) or Have Any Jump Upgrade
           # Break shot blocks in certain way: https://youtu.be/M4-1Hv2kVjI
           Movement (Beginner)
-  > Door to Data Room
+  > Other to Data Room
       Trivial
 
-> Door to Data Room; Heals? False
+> Other to Data Room; Heals? False
   * Layers: default
-  * Open Hatch to Data Room/Door to Crow's Nest
+  * Destroyed Door to Data Room/Other to Crow's Nest
   * Extra - door_idx: (88,)
   > Door to Arctic Containment
       Trivial
@@ -1330,7 +1332,7 @@ Extra - room_id: [37]
 Save Room South
 Extra - map_name: Sector 538
 Extra - room_id: [38]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Kago Blockade; Heals? False
   * Layers: default
   * L0 Hatch to Kago Blockade/Door to Save Room South
@@ -1443,9 +1445,9 @@ Extra - room_id: [43]
 Flooded Tower
 Extra - map_name: Sector 545
 Extra - room_id: [45]
-> Door to Ruined Corridor; Heals? False
+> Other to Ruined Corridor; Heals? False
   * Layers: default
-  * Open Hatch to Ruined Corridor/Door to Flooded Tower
+  * Destroyed Door to Ruined Corridor/Other to Flooded Tower
   * Extra - door_idx: (54,)
   > Door to Zebesian Waters
       Trivial
@@ -1465,28 +1467,31 @@ Extra - room_id: [45]
   * Extra - door_idx: (112,)
   > Beside Missile Block
       Any of the following:
-          Underwater Wall Jump (Expert)
           Gravity Suit and Space Jump
           All of the following:
+              # Freeze the Skullteras
               Can Freeze Enemies With Any Weapon
               Any of the following:
                   Hi-Jump
                   # Climb Skulltera NHJ https://youtu.be/kOtV9nNaPNQ
                   Stand On Frozen Enemies (Intermediate)
+          # Underwater Walljump
+          Underwater Wall Jump (Expert)
 
 > Beside Missile Block; Heals? False
   * Layers: default
-  > Door to Ruined Corridor
+  > Other to Ruined Corridor
       All of the following:
           Screw Attack
           Any of the following:
+              # Get up
               All of the following:
                   Gravity Suit
                   Any of the following:
                       Space Jump
                       Wall Jump (Intermediate) and Can Single Walljump
-              # TODO: vid
-              Underwater Wall Jump (Hypermode) and Can Single Walljump
+              # Get up with underwater + singlewalljumping TODO: vid
+              Underwater Wall Jump (Hypermode) and Wall Jump (Advanced) and Can Single Walljump
   > Other to Mini-Fridge
       Missiles
   > Door to Zebesian Waters
@@ -1523,6 +1528,7 @@ Extra - room_id: [46]
           # Upgradeless: https://youtu.be/uGBnSMt72Jc?t=13
           Combat (Hypermode)
           All of the following:
+              # No template, because these pirates are stronger and there are 2 of them
               Charge Beam and Plasma Beam
               Wave Beam or Wide Beam
           Damage Boosts (Intermediate) and Normal Damage ≥ 190
@@ -1531,13 +1537,10 @@ Extra - room_id: [46]
           Missiles ≥ 4 and 45 DMG Missiles
   > Door to Flooded Access
       Any of the following:
-          Can Use Power Bombs
-          Gravity Suit and Screw Attack
-          Charge Beam and Have Any Beam Upgrade
-          Missiles ≥ 10 and 10+ DMG Missiles
-          Missiles ≥ 2 and 45 DMG Missiles
+          Can Kill Tough Underwater Beam-Resistant Enemy
           # Upgradeless: https://youtu.be/FdeET1OemYw?t=19
           Combat (Intermediate)
+          # Damage boost through it
           Damage Boosts (Intermediate) and Normal Damage ≥ 95
 
 > Door to Flooded Access; Heals? False
@@ -1546,13 +1549,10 @@ Extra - room_id: [46]
   * Extra - door_idx: (116,)
   > Door to Flooded Airlock to Sector 4 (AQA)
       Any of the following:
-          Can Use Power Bombs
-          Gravity Suit and Screw Attack
-          Charge Beam and Have Any Beam Upgrade
-          Missiles ≥ 10 and 10+ DMG Missiles
-          Missiles ≥ 2 and 45 DMG Missiles
+          Can Kill Tough Underwater Beam-Resistant Enemy
           # Upgradeless: https://youtu.be/uGBnSMt72Jc
           Combat (Intermediate)
+          # Damage boost through it
           Damage Boosts (Intermediate) and Normal Damage ≥ 95
 
 ----------------
@@ -1566,12 +1566,12 @@ Extra - room_id: [47]
   * Extra - room: 47
   * Extra - blockx: 4
   * Extra - blocky: 10
-  > Door to Nightmare Hub West
+  > Other to Nightmare Hub West
       Trivial
 
-> Door to Nightmare Hub West; Heals? False
+> Other to Nightmare Hub West; Heals? False
   * Layers: default
-  * Open Hatch to Nightmare Hub West/Door to Ruined Break Room
+  * Destroyed Door to Nightmare Hub West/Other to Ruined Break Room
   * Extra - door_idx: (118,)
   > Pickup (Hidden Power Bomb Tank)
       Can Use Power Bombs
@@ -1580,6 +1580,7 @@ Extra - room_id: [47]
 Nightmare Recharge Room
 Extra - map_name: Sector 548
 Extra - room_id: [48]
+Extra - unlocked_save_recharge_station: True
 > Door to Nightmare Hub West; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Hub West/Door to Nightmare Recharge Room
@@ -1596,7 +1597,7 @@ Extra - room_id: [48]
 Nightmare Save Room
 Extra - map_name: Sector 549
 Extra - room_id: [49]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Nightmare Hub West; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Hub West/Door to Nightmare Save Room
@@ -1634,13 +1635,13 @@ Extra - room_id: [50]
           # This can safely not have Door Lock Rando check
           Gravity Suit and Speed Booster and Disabled Entrance Rando
           # Some way to kill the pirates
-          Combat (Expert) or Can Kill Tough Beam-Resistant Enemy
+          Combat (Expert) or Can Kill Tough Underwater Beam-Resistant Enemy
   > Area Transition to Sector 4 (AQA)
       All of the following:
           # This can safely not have Door Lock Rando check
           Gravity Suit and Speed Booster and Disabled Entrance Rando
           # Some way to kill the pirates
-          Combat (Expert) or Can Kill Tough Beam-Resistant Enemy
+          Combat (Expert) or Can Kill Tough Underwater Beam-Resistant Enemy
 
 > Area Transition to Sector 4 (AQA); Heals? False
   * Layers: default
@@ -1672,7 +1673,12 @@ Extra - room_id: [51]
       All of the following:
           Any of the following:
               Space Jump
-              Hi-Jump and Can Freeze Enemies With Any Weapon
+              All of the following:
+                  # Kill enemies and freeze them transformations
+                  Can Freeze Enemies With Any Weapon
+                  Any of the following:
+                      Hi-Jump
+                      Stand On Frozen Enemies (Beginner) and Wall Jump (Beginner)
           Any of the following:
               # Damage Reqs
               Varia Suit

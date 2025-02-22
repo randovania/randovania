@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 from randovania.game.game_enum import RandovaniaGame
 from randovania.games.blank.exporter.game_exporter import BlankGameExportParams
 from randovania.games.blank.exporter.options import BlankPerGameOptions
+from randovania.games.blank.layout import BlankConfiguration
 from randovania.gui.dialog.game_export_dialog import GameExportDialog, spoiler_path_for
 
 if TYPE_CHECKING:
@@ -14,7 +15,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import PerGameOptions
 
 
-class BlankGameExportDialog(GameExportDialog):
+class BlankGameExportDialog(GameExportDialog[BlankConfiguration]):
     """A window for asking the user for what is needed to export this specific game.
 
     The provided implementation assumes you need an ISO/ROM file, and produces a new ISO/ROM file."""

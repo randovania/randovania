@@ -11,6 +11,7 @@
     "areas": {
         "Transport to Burenia": {
             "default_node": "Elevator to Burenia",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -11000.0,
@@ -180,6 +181,7 @@
         },
         "Right Entrance": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -8000.0,
@@ -471,6 +473,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 97,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Transport to Burenia": {
                             "type": "and",
@@ -970,6 +973,7 @@
         },
         "Robot Fight Arena": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -11000.0,
@@ -1227,6 +1231,7 @@
         },
         "Left Entrance": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -15400.0,
@@ -1555,6 +1560,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 108,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Transport to Burenia": {
                             "type": "and",
@@ -1856,6 +1862,7 @@
         },
         "Blue EMMI Introduction": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -11000.0,
@@ -2298,6 +2305,7 @@
         },
         "Navigation Station Access": {
             "default_node": "Start Point 2",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -8000.0,
@@ -2473,6 +2481,7 @@
         },
         "Navigation Station": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -5000.0,
@@ -2637,6 +2646,7 @@
         },
         "Flipper Room": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -3000.0,
@@ -3109,12 +3119,29 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Knowledge",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranSupersRotatable",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -3232,6 +3259,7 @@
         },
         "Dairon Transport Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -1000.0,
@@ -3457,6 +3485,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 99,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Super Missile Room Access": {
                             "type": "and",
@@ -3579,6 +3608,7 @@
         },
         "Super Missile Room Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -3000.0,
@@ -3875,6 +3905,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 102,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Tunnel to Super Missile Room": {
                             "type": "and",
@@ -3999,6 +4030,7 @@
         },
         "Super Missile Room": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -5000.0,
@@ -4261,6 +4293,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 100,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -4347,6 +4380,7 @@
         },
         "EMMI Zone Exit Southeast": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -8000.0,
@@ -4979,6 +5013,7 @@
         },
         "Map Station Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -5000.0,
@@ -5330,6 +5365,7 @@
         },
         "Map Station": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -3000.0,
@@ -5434,6 +5470,7 @@
         },
         "EMMI Zone Exit West": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -10000.0,
@@ -5867,6 +5904,7 @@
         },
         "Early Ice Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -12000.0,
@@ -6111,6 +6149,7 @@
         },
         "EMMI Zone Exit Northwest": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -10000.0,
@@ -6265,6 +6304,7 @@
         },
         "Central Unit": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -9100.0,
@@ -6382,6 +6422,7 @@
         },
         "EMMI Zone Middle Path": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -8000.0,
@@ -6634,6 +6675,7 @@
         },
         "Central Unit Access": {
             "default_node": "Room Center",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -7000.0,
@@ -7327,6 +7369,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 146,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -7341,6 +7384,7 @@
         },
         "EMMI Zone Exit Northeast": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -3000.0,
@@ -7675,6 +7719,7 @@
         },
         "Spin Boost Tower": {
             "default_node": "Ammo Recharge",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -1000.0,
@@ -8232,6 +8277,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 96,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Ledge Below PB Tank": {
                             "type": "and",
@@ -8392,6 +8438,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 105,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Save Station Center": {
                             "type": "and",
@@ -8421,6 +8468,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 109,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "E-Tank Alcove": {
                             "type": "and",
@@ -9018,6 +9066,7 @@
         },
         "Save Station Center": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 2000.0,
@@ -9172,6 +9221,7 @@
         },
         "Chozo Warrior Arena": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 4000.0,
@@ -9500,6 +9550,7 @@
         },
         "Golzuna Tower": {
             "default_node": "Teleporter to Cataris",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 4000.0,
@@ -9998,6 +10049,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 112,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Inside Speed Booster Tunnel": {
                             "type": "and",
@@ -10027,6 +10079,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 113,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Save Station East": {
                             "type": "or",
@@ -10789,6 +10842,7 @@
         },
         "Teleport to Burenia": {
             "default_node": "Teleporter to Burenia",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 4000.0,
@@ -11262,6 +11316,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 103,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Teleporter to Burenia": {
                             "type": "and",
@@ -11406,6 +11461,7 @@
         },
         "Total Recharge Station North": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 6300.0,
@@ -11969,6 +12025,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 107,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Dock to Teleport to Burenia": {
                             "type": "resource",
@@ -12274,6 +12331,7 @@
         },
         "Golzuna Arena": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 7000.0,
@@ -13076,6 +13134,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 145,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Cross Bomb Tutorial": {
                             "type": "and",
@@ -13159,6 +13218,7 @@
         },
         "Transport to Ferenia": {
             "default_node": "Shuttle to Ferenia",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 10000.0,
@@ -13271,6 +13331,7 @@
         },
         "Map Station Access Secret": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -3000.0,
@@ -13318,6 +13379,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 101,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Tunnel to Map Station Access": {
                             "type": "and",
@@ -13462,6 +13524,7 @@
         },
         "Elun Transport Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -1000.0,
@@ -13605,6 +13668,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 111,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Flipper Room": {
                             "type": "and",
@@ -13667,6 +13731,7 @@
         },
         "Spin Boost Room": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 2000.0,
@@ -13715,6 +13780,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 104,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -13884,6 +13950,7 @@
         },
         "Energy Recharge Station": {
             "default_node": "Life Recharge",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 2000.0,
@@ -14610,6 +14677,7 @@
         },
         "Pulse Radar Room": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 2000.0,
@@ -14657,6 +14725,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 110,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -14771,6 +14840,7 @@
         },
         "Cross Bomb Tutorial": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 10000.0,
@@ -14818,6 +14888,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 98,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Right Alcove": {
                             "type": "and",
@@ -15114,6 +15185,7 @@
         },
         "Transport to Hanubia": {
             "default_node": "Shuttle to Hanubia",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 12000.0,
@@ -15276,6 +15348,7 @@
         },
         "Spider Magnet Elevator": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -5000.0,
@@ -15499,7 +15572,17 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Event - Lower Spider Magnet Platform": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "GhavoraSupersMagnetPlatformLowered",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Tunnel to Flipper Room (Cannon)": {
                     "node_type": "dock",
@@ -15661,6 +15744,7 @@
         },
         "Above Golzuna": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 7000.0,
@@ -15884,6 +15968,7 @@
         },
         "Transport to Elun": {
             "default_node": "Shuttle to Elun",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 4000.0,
@@ -16003,6 +16088,7 @@
         },
         "Transport to Dairon": {
             "default_node": "Elevator to Dairon",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 4000.0,
@@ -16122,6 +16208,7 @@
         },
         "Above Pulse Radar": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 2000.0,
@@ -16212,6 +16299,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 106,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Golzuna Tower": {
                             "type": "and",
@@ -16425,6 +16513,7 @@
         },
         "Save Station East": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 7000.0,

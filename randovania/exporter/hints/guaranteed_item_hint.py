@@ -1,14 +1,23 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+import typing
 
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
 from randovania.game_description.resources.resource_collection import ResourceCollection
 
-if TYPE_CHECKING:
+if typing.TYPE_CHECKING:
+    from collections.abc import Container
+
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.interface_common.players_configuration import PlayersConfiguration
+
+
+def _resource_in_item_list(
+    resource: ResourceInfo, items: Container[ItemResourceInfo]
+) -> typing.TypeGuard[ItemResourceInfo]:
+    return resource in items
 
 
 def find_locations_that_gives_items(
@@ -27,7 +36,7 @@ def find_locations_that_gives_items(
             db = patches.game.resource_database
             resources = ResourceCollection.from_resource_gain(db, target.pickup.resource_gain(ResourceCollection()))
             for resource, quantity in resources.as_resource_gain():
-                if quantity > 0 and resource in result:
+                if quantity > 0 and _resource_in_item_list(resource, result):
                     result[resource].append((other_player, PickupLocation(patches.configuration.game, pickup_index)))
 
     return result
@@ -40,10 +49,10 @@ def hint_text_if_items_are_starting(
     namer: HintNamer,
     with_color: bool,
 ) -> dict[ItemResourceInfo, str]:
-    result = {}
+    result: dict[ItemResourceInfo, str] = {}
 
     for resource, quantity in all_patches[player].starting_resources().as_resource_gain():
-        if quantity > 0 and resource in target_items:
+        if quantity > 0 and _resource_in_item_list(resource, target_items):
             result[resource] = namer.format_resource_is_starting(resource, with_color)
 
     return result
@@ -89,13 +98,13 @@ def create_guaranteed_hints_for_resources(
         if location is not None:
             used_locations.add(location)
 
-            player_name = None
+            world_name = None
             if players_config.is_multiworld:
-                player_name = players_config.player_names[location[0]]
+                world_name = players_config.player_names[location[0]]
 
             resulting_hints[resource] = namer.format_guaranteed_resource(
                 resource,
-                player_name,
+                world_name,
                 location[1],
                 hide_area,
                 with_color,

@@ -266,9 +266,7 @@ class OldGeneratorReach(GeneratorReach):
     def nodes(self) -> Iterator[Node]:
         for i, node in enumerate(typing.cast(tuple[Node, ...], self.all_nodes)):
             if i in self._digraph:
-                # entries in all_nodes can be None, but never for an index that's in _digraph
-                # We'd do `assert node is not None`, but we're skipping that here for speed
-                yield node  # type: ignore
+                yield node
 
     @property
     def safe_nodes(self) -> Iterator[Node]:
@@ -277,8 +275,7 @@ class OldGeneratorReach(GeneratorReach):
 
         all_nodes = typing.cast(tuple[Node, ...], self.all_nodes)
         for i in self._safe_nodes.as_list:
-            # safe disclaimer as `nodes`
-            yield all_nodes[i]  # type: ignore
+            yield all_nodes[i]
 
     def is_safe_node(self, node: Node) -> bool:
         node_index = node.node_index

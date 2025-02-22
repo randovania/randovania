@@ -11,6 +11,7 @@ from randovania.game_connection.executor.executor_to_connector_signals import Ex
 from randovania.game_connection.executor.msr_executor import MSRExecutor
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.network_common.remote_pickup import RemotePickup
 
 
 @pytest.fixture(name="connector")
@@ -104,8 +105,8 @@ async def test_new_received_pickups_received(connector: MSRRemoteConnector):
 async def test_set_remote_pickups(connector: MSRRemoteConnector, msr_ice_beam_pickup):
     connector.receive_remote_pickups = AsyncMock()
     remote_pickup = (
-        ("Dummy 1", msr_ice_beam_pickup, None),
-        ("Dummy 2", msr_ice_beam_pickup, None),
+        RemotePickup("Dummy 1", msr_ice_beam_pickup, None),
+        RemotePickup("Dummy 2", msr_ice_beam_pickup, None),
     )
     await connector.set_remote_pickups(remote_pickup)
     assert connector.remote_pickups == remote_pickup
@@ -114,8 +115,8 @@ async def test_set_remote_pickups(connector: MSRRemoteConnector, msr_ice_beam_pi
 async def test_receive_remote_pickups(connector: MSRRemoteConnector, msr_ice_beam_pickup):
     connector.in_cooldown = False
     remote_pickup = (
-        ("Dummy 1", msr_ice_beam_pickup, None),
-        ("Dummy 2", msr_ice_beam_pickup, None),
+        RemotePickup("Dummy 1", msr_ice_beam_pickup, None),
+        RemotePickup("Dummy 2", msr_ice_beam_pickup, PickupIndex(10)),
     )
     connector.remote_pickups = remote_pickup
     connector.executor.run_lua_code = AsyncMock()
@@ -145,19 +146,38 @@ async def test_receive_remote_pickups(connector: MSRRemoteConnector, msr_ice_bea
         "MultiworldPickup = MultiworldPickup or {}\\\n    "
         "function MultiworldPickup.main()\\\n    "
         "end\\\n\\\n    "
-        "function MultiworldPickup.OnPickedUp(progression, actorOrName)\\\n        "
-        "RandomizerPowerup.OnPickedUp(progression, actorOrName)\\\n    "
+        "function MultiworldPickup.OnPickedUp(progression, actorOrName, regionName)\\\n        "
+        "RandomizerPowerup.OnPickedUp(progression, actorOrName, regionName)\\\n    "
         "end\\\n    \\\n"
         'MultiworldPickup.OnPickedUp({\\\n{\\\n{\\\nitem_id = "ITEM_WEAPON_ICE_BEAM",\\\nquantity = 1,\\\n},\\\n},\\\n}'
-        ", nil)',0,2)"
+        ',nil,"")\',0,2)'
     )
     connector.executor.run_lua_code.assert_called_once_with(execute_string)
+
+    connector.in_cooldown = False
+    connector.received_pickups = 1
+    connector.inventory_index = 3
+    await connector.receive_remote_pickups()
+    assert connector.in_cooldown is True
+    execute_string = (
+        "RL.ReceivePickup('Received Ice Beam from Dummy 2.','\\\n    "
+        'Game.ImportLibrary("actors/items/randomizerpowerup/scripts/randomizerpowerup.lc", false)\\\n    '
+        "MultiworldPickup = MultiworldPickup or {}\\\n    "
+        "function MultiworldPickup.main()\\\n    "
+        "end\\\n\\\n    "
+        "function MultiworldPickup.OnPickedUp(progression, actorOrName, regionName)\\\n        "
+        "RandomizerPowerup.OnPickedUp(progression, actorOrName, regionName)\\\n    "
+        "end\\\n    \\\n"
+        'MultiworldPickup.OnPickedUp({\\\n{\\\n{\\\nitem_id = "ITEM_WEAPON_ICE_BEAM",\\\nquantity = 1,\\\n},\\\n},\\\n}'
+        ',nil,"s000_surface")\',1,3)'
+    )
+    connector.executor.run_lua_code.assert_called_with(execute_string)
 
 
 @pytest.mark.parametrize("is_coop", [False, True])
 async def test_receive_remote_pickups_coop_logic(connector: MSRRemoteConnector, msr_ice_beam_pickup, is_coop: bool):
     connector.in_cooldown = False
-    remote_pickup = (("Dummy 1", msr_ice_beam_pickup, PickupIndex(69) if is_coop else None),)
+    remote_pickup = (RemotePickup("Dummy 1", msr_ice_beam_pickup, PickupIndex(69) if is_coop else None),)
     connector.remote_pickups = remote_pickup
     connector.game_specific_execute = AsyncMock()
 

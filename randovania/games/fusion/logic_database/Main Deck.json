@@ -6,12 +6,14 @@
     "areas": {
         "Docking Bay Hangar": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck0",
                 "room_id": [
                     0,
                     63
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Docking Bay Access": {
@@ -70,24 +72,127 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Weapon Requirements - TODO: more beams",
+                                            "comment": "Weapon Requirements",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "WideBeam",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "Trickless",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "WideBeam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PlasmaBeam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": "Easy 1 Beam methods",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "WideBeam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "PlasmaBeam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Harder 1 Beam methods",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "IceBeam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "ChargeBeam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "WaveBeam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -103,7 +208,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "NormalDamage",
-                                                        "amount": 1000,
+                                                        "amount": 500,
                                                         "negate": false
                                                     }
                                                 },
@@ -112,7 +217,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
-                                                        "amount": 5,
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 },
@@ -127,58 +232,6 @@
                                                                     "type": "tricks",
                                                                     "name": "Combat",
                                                                     "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "NormalDamage",
-                                                                    "amount": 800,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "NormalDamage",
-                                                                    "amount": 600,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -204,7 +257,33 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Combat",
-                                                                    "amount": 4,
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "NormalDamage",
+                                                                    "amount": 200,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -247,13 +326,6 @@
                     "valid_starting_location": true,
                     "connections": {
                         "Door to Docking Bay Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - L0": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -311,36 +383,12 @@
                             }
                         }
                     }
-                },
-                "Event - L0": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 488.07,
-                        "y": 173.43,
-                        "z": 0.0
-                    },
-                    "description": "TODO: revise how this node gets into play",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Level0Locks",
-                    "connections": {
-                        "Ship": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
                 }
             }
         },
         "Docking Bay Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck3",
                 "room_id": [
@@ -381,7 +429,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Docking Bay Shaft": {
+                        "Door to Docking Bay Climb": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -390,7 +438,7 @@
                         }
                     }
                 },
-                "Door to Docking Bay Shaft": {
+                "Door to Docking Bay Climb": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -412,7 +460,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Docking Bay Shaft",
+                        "area": "Docking Bay Climb",
                         "node": "Door to Docking Bay Access"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -433,8 +481,9 @@
                 }
             }
         },
-        "Docking Bay Shaft": {
+        "Docking Bay Climb": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck6",
                 "room_id": [
@@ -464,7 +513,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Docking Bay Access",
-                        "node": "Door to Docking Bay Shaft"
+                        "node": "Door to Docking Bay Climb"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -523,7 +572,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Silo Entry",
-                        "node": "Other to Docking Bay Shaft"
+                        "node": "Other to Docking Bay Climb"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -560,7 +609,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Silo Entry",
-                        "node": "Door to Docking Bay Shaft"
+                        "node": "Door to Docking Bay Climb"
                     },
                     "default_dock_weakness": "L4 Hatch",
                     "exclude_from_dock_rando": false,
@@ -600,7 +649,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Station Entrance",
-                        "node": "Door to Docking Bay Shaft"
+                        "node": "Door to Docking Bay Climb"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -622,6 +671,7 @@
         },
         "Station Entrance": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck7",
                 "room_id": [
@@ -650,15 +700,16 @@
                     "valid_starting_location": false,
                     "pickup_index": 0,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
-                        "Door to Docking Bay Shaft": {
+                        "Door to Docking Bay Climb": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Other to Spitter Speedway": {
+                        "Other to Genesis Speedway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -667,7 +718,7 @@
                         }
                     }
                 },
-                "Door to Docking Bay Shaft": {
+                "Door to Docking Bay Climb": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -688,7 +739,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Docking Bay Shaft",
+                        "area": "Docking Bay Climb",
                         "node": "Door to Station Entrance"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -710,14 +761,14 @@
                                 ]
                             }
                         },
-                        "Door to Central Hub": {
+                        "Door to Central Nexus": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Other to Spitter Speedway": {
+                        "Other to Genesis Speedway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -796,7 +847,7 @@
                         }
                     }
                 },
-                "Door to Central Hub": {
+                "Door to Central Nexus": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -817,7 +868,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Central Hub",
+                        "area": "Central Nexus",
                         "node": "Door to Station Entrance"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -827,7 +878,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Docking Bay Shaft": {
+                        "Door to Docking Bay Climb": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -836,7 +887,7 @@
                         }
                     }
                 },
-                "Other to Spitter Speedway": {
+                "Other to Genesis Speedway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -857,7 +908,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Spitter Speedway",
+                        "area": "Genesis Speedway",
                         "node": "Other to Station Entrance"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -879,7 +930,7 @@
                                 ]
                             }
                         },
-                        "Door to Docking Bay Shaft": {
+                        "Door to Docking Bay Climb": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -912,7 +963,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Speedboost from Spitter Speedway",
+                                            "comment": "Speedboost from Genesis Speedway",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -942,13 +993,15 @@
                 }
             }
         },
-        "Main Deck Recharge Room": {
+        "Concourse Recharge Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck8",
                 "room_id": [
                     8
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Concourse": {
@@ -973,7 +1026,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Concourse",
-                        "node": "Door to Main Deck Recharge Room"
+                        "node": "Door to Concourse Recharge Room"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -1017,8 +1070,9 @@
                 }
             }
         },
-        "Main Deck Navigation Room East": {
+        "Crew Quarters Navigation Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck9",
                 "room_id": [
@@ -1048,7 +1102,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Crew Quarters West",
-                        "node": "Door to Main Deck Navigation Room East"
+                        "node": "Door to Crew Quarters Navigation Room"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -1088,7 +1142,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Concourse",
-                        "node": "Door to Main Deck Navigation Room East"
+                        "node": "Door to Crew Quarters Navigation Room"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -1172,6 +1226,7 @@
         },
         "Crew Quarters East": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck10",
                 "room_id": [
@@ -1179,7 +1234,7 @@
                 ]
             },
             "nodes": {
-                "Door to Operations Maintenance Shaft": {
+                "Door to Operations Ventilation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1200,7 +1255,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Operations Maintenance Shaft",
+                        "area": "Operations Ventilation",
                         "node": "Door to Crew Quarters East"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -1210,7 +1265,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Other to Operations Maintenance Shaft": {
+                        "Other to Operations Ventilation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1219,7 +1274,7 @@
                         }
                     }
                 },
-                "Other to Operations Maintenance Shaft": {
+                "Other to Operations Ventilation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1240,7 +1295,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Operations Maintenance Shaft",
+                        "area": "Operations Ventilation",
                         "node": "Other to Crew Quarters East"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -1250,7 +1305,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Operations Maintenance Shaft": {
+                        "Door to Operations Ventilation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1309,7 +1364,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Other to Operations Maintenance Shaft": {
+                        "Other to Operations Ventilation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1349,7 +1404,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Other to Operations Maintenance Shaft": {
+                        "Other to Operations Ventilation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1362,15 +1417,16 @@
         },
         "Habitation Deck Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck11",
                 "room_id": [
                     11
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
-                "Door to Elevator to Central Hub": {
+                "Door to Elevator to Central Nexus": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1391,7 +1447,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Central Hub",
+                        "area": "Elevator to Central Nexus",
                         "node": "Door to Habitation Deck Save Room"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -1428,7 +1484,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Elevator to Central Hub": {
+                        "Door to Elevator to Central Nexus": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1441,6 +1497,7 @@
         },
         "Crew Quarters West": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck12",
                 "room_id": [
@@ -1448,7 +1505,7 @@
                 ]
             },
             "nodes": {
-                "Door to Main Deck Navigation Room East": {
+                "Door to Crew Quarters Navigation Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1469,7 +1526,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Main Deck Navigation Room East",
+                        "area": "Crew Quarters Navigation Room",
                         "node": "Door to Crew Quarters West"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -1479,7 +1536,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Operations Maintenance Shaft": {
+                        "Door to Operations Ventilation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1495,7 +1552,7 @@
                         }
                     }
                 },
-                "Door to Operations Maintenance Shaft": {
+                "Door to Operations Ventilation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1516,7 +1573,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Operations Maintenance Shaft",
+                        "area": "Operations Ventilation",
                         "node": "Door to Crew Quarters West"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -1526,7 +1583,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Deck Navigation Room East": {
+                        "Door to Crew Quarters Navigation Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1566,7 +1623,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Deck Navigation Room East": {
+                        "Door to Crew Quarters Navigation Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1579,6 +1636,7 @@
         },
         "Operations Deck": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck13",
                 "room_id": [
@@ -1588,7 +1646,7 @@
                 ]
             },
             "nodes": {
-                "Other to Operations Maintenance Shaft": {
+                "Other to Operations Ventilation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1610,7 +1668,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Operations Maintenance Shaft",
+                        "area": "Operations Ventilation",
                         "node": "Other to Operations Deck"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -1638,7 +1696,7 @@
                             }
                         },
                         "Event - Missile Shield": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": "Kill the Shield from the reverse side",
                                 "items": [
@@ -1649,6 +1707,27 @@
                                             "name": "Missiles",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "After All Infants are collected, the hatch will despawn",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "All Infants Collected"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1688,7 +1767,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Other to Operations Maintenance Shaft": {
+                        "Other to Operations Ventilation": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1724,6 +1803,27 @@
                                             "name": "Missiles",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "After All Infants are collected, the hatch will despawn",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "All Infants Collected"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2032,7 +2132,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "SA-X Requirements - TODO: revise these. iirc plasma isnt needed anymore.",
+                                            "comment": "SA-X Requirements",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2044,26 +2144,77 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PlasmaBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
                                                     "type": "or",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "WideBeam",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "PlasmaBeam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "WideBeam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "PlasmaBeam",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "WideBeam",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
@@ -2084,32 +2235,11 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Core-X Requirements",
+                                            "comment": "Core-X Requirements (270HP)",
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "45 DMG Missiles"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "30 DMG Missiles"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
+                                                    "data": "30 DMG Missiles"
                                                 },
                                                 {
                                                     "type": "and",
@@ -2125,7 +2255,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Combat",
-                                                                    "amount": 2,
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -2146,7 +2276,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Combat",
-                                                                    "amount": 3,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -2162,12 +2292,20 @@
                                             "comment": "Health Requirements",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 5,
-                                                        "negate": false
+                                                        "comment": "Hitless: https://youtu.be/W5S4xK5cV-Q",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -2175,7 +2313,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "NormalDamage",
-                                                        "amount": 1000,
+                                                        "amount": 500,
                                                         "negate": false
                                                     }
                                                 },
@@ -2190,58 +2328,6 @@
                                                                     "type": "tricks",
                                                                     "name": "Combat",
                                                                     "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "NormalDamage",
-                                                                    "amount": 800,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "NormalDamage",
-                                                                    "amount": 600,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -2267,6 +2353,58 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "NormalDamage",
+                                                                    "amount": 350,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "NormalDamage",
+                                                                    "amount": 200,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
                                                                     "amount": 4,
                                                                     "negate": false
                                                                 }
@@ -2276,7 +2414,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "NormalDamage",
-                                                                    "amount": 150,
+                                                                    "amount": 100,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -2287,12 +2425,12 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
-                                            "comment": "Dodging Requirements",
+                                            "comment": "Dodging Requirements for Ice Beam",
                                             "items": [
                                                 {
-                                                    "type": "or",
+                                                    "type": "and",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
@@ -2308,9 +2446,9 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 3,
+                                                                    "type": "items",
+                                                                    "name": "VariaSuit",
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -2318,14 +2456,10 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
+                                                    "type": "and",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Freeze Enemies With Any Weapon"
-                                                            },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
@@ -2334,8 +2468,43 @@
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "ScrewAttack",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "VariaSuit",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 3,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -2375,6 +2544,7 @@
         },
         "Concourse Ventilation": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck14",
                 "room_id": [
@@ -2507,6 +2677,7 @@
         },
         "Habitation Deck Entrance": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck15",
                 "room_id": [
@@ -2514,7 +2685,7 @@
                 ]
             },
             "nodes": {
-                "Door to Elevator to Central Hub": {
+                "Door to Elevator to Central Nexus": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2535,7 +2706,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Central Hub",
+                        "area": "Elevator to Central Nexus",
                         "node": "Door to Habitation Deck Entrance"
                     },
                     "default_dock_weakness": "L2 Hatch",
@@ -2652,7 +2823,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "WallJump",
-                                                        "amount": 2,
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 },
@@ -2725,6 +2896,64 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Kill Funes and then SWJ up",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Screw Single Walljump"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Habitation Deck (Upper)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Kill Funes and then SWJ up",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Screw Single Walljump"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -2762,7 +2991,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Central Hub": {
+                        "Door to Elevator to Central Nexus": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2802,7 +3031,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Central Hub": {
+                        "Door to Elevator to Central Nexus": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2863,7 +3092,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Central Hub": {
+                        "Door to Elevator to Central Nexus": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2891,8 +3120,9 @@
                 }
             }
         },
-        "Main Deck Navigation Room West": {
+        "Nexus Navigation Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck16",
                 "room_id": [
@@ -2900,7 +3130,7 @@
                 ]
             },
             "nodes": {
-                "Door to Central Hub": {
+                "Door to Central Nexus": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2921,8 +3151,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Central Hub",
-                        "node": "Door to Main Deck Navigation Room West"
+                        "area": "Central Nexus",
+                        "node": "Door to Nexus Navigation Room"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -2931,7 +3161,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Western Hub": {
+                        "Door to Dark Stairwell": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2940,7 +3170,7 @@
                         }
                     }
                 },
-                "Door to Western Hub": {
+                "Door to Dark Stairwell": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2961,8 +3191,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Western Hub",
-                        "node": "Door to Main Deck Navigation Room West"
+                        "area": "Dark Stairwell",
+                        "node": "Door to Nexus Navigation Room"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -2971,7 +3201,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Central Hub": {
+                        "Door to Central Nexus": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3033,7 +3263,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Western Hub": {
+                        "Door to Dark Stairwell": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3046,6 +3276,7 @@
         },
         "Restricted Airlock": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck17",
                 "room_id": [
@@ -3075,6 +3306,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 1,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Restricted Navigation Room": {
                             "type": "or",
@@ -3284,8 +3516,9 @@
                 }
             }
         },
-        "Central Hub": {
+        "Central Nexus": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck18",
                 "room_id": [
@@ -3315,7 +3548,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Elevator to Habitation Deck",
-                        "node": "Door to Central Hub"
+                        "node": "Door to Central Nexus"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3355,7 +3588,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Station Entrance",
-                        "node": "Door to Central Hub"
+                        "node": "Door to Central Nexus"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -3378,14 +3611,14 @@
                                 "items": []
                             }
                         },
-                        "Door to Main Deck Navigation Room West": {
+                        "Door to Nexus Navigation Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Habitation Storage": {
+                        "Door to Nexus Storage": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3402,7 +3635,7 @@
                                 ]
                             }
                         },
-                        "Other to Western Hub": {
+                        "Other to Dark Stairwell": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3415,15 +3648,6 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Can Break Single Bomb Blocks"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "MorphBall",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
                                                 }
                                             ]
                                         }
@@ -3553,7 +3777,7 @@
                                 ]
                             }
                         },
-                        "Event - Central Hub PB Geron": {
+                        "Event - Central Nexus PB Geron": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3711,7 +3935,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Hornoad Hallway",
-                        "node": "Door to Central Hub"
+                        "node": "Door to Central Nexus"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3729,7 +3953,7 @@
                         }
                     }
                 },
-                "Door to Main Deck Navigation Room West": {
+                "Door to Nexus Navigation Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3750,8 +3974,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Main Deck Navigation Room West",
-                        "node": "Door to Central Hub"
+                        "area": "Nexus Navigation Room",
+                        "node": "Door to Central Nexus"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -3769,7 +3993,7 @@
                         }
                     }
                 },
-                "Door to Habitation Storage": {
+                "Door to Nexus Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3790,8 +4014,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Habitation Storage",
-                        "node": "Door to Central Hub"
+                        "area": "Nexus Storage",
+                        "node": "Door to Central Nexus"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3817,7 +4041,7 @@
                                 ]
                             }
                         },
-                        "Event - Central Hub PB Geron": {
+                        "Event - Central Nexus PB Geron": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3831,7 +4055,7 @@
                         }
                     }
                 },
-                "Other to Western Hub": {
+                "Other to Dark Stairwell": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3852,8 +4076,8 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Western Hub",
-                        "node": "Other to Central Hub"
+                        "area": "Dark Stairwell",
+                        "node": "Other to Central Nexus"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -3876,7 +4100,7 @@
                         }
                     }
                 },
-                "Event - Central Hub PB Geron": {
+                "Event - Central Nexus PB Geron": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -3903,8 +4127,9 @@
                 }
             }
         },
-        "Western Hub": {
+        "Dark Stairwell": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck20",
                 "room_id": [
@@ -3912,7 +4137,7 @@
                 ]
             },
             "nodes": {
-                "Door to Main Deck Navigation Room West": {
+                "Door to Nexus Navigation Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3933,8 +4158,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Main Deck Navigation Room West",
-                        "node": "Door to Western Hub"
+                        "area": "Nexus Navigation Room",
+                        "node": "Door to Dark Stairwell"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -3943,7 +4168,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Ruined Stairwell": {
+                        "Door to Quarantine Junction": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3974,7 +4199,7 @@
                                 ]
                             }
                         },
-                        "Other to Central Hub": {
+                        "Other to Central Nexus": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4006,7 +4231,7 @@
                         }
                     }
                 },
-                "Door to Ruined Stairwell": {
+                "Door to Quarantine Junction": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4027,8 +4252,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Ruined Stairwell",
-                        "node": "Door to Western Hub"
+                        "area": "Quarantine Junction",
+                        "node": "Door to Dark Stairwell"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -4037,7 +4262,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Deck Navigation Room West": {
+                        "Door to Nexus Navigation Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4068,7 +4293,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Sub-Zero Containment",
-                        "node": "Door to Western Hub"
+                        "node": "Door to Dark Stairwell"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4077,7 +4302,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Deck Navigation Room West": {
+                        "Door to Nexus Navigation Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4108,7 +4333,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Cubby Hole",
-                        "node": "Other to Western Hub"
+                        "node": "Other to Dark Stairwell"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -4117,7 +4342,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Deck Navigation Room West": {
+                        "Door to Nexus Navigation Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4136,7 +4361,7 @@
                         }
                     }
                 },
-                "Other to Central Hub": {
+                "Other to Central Nexus": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4157,8 +4382,8 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Central Hub",
-                        "node": "Other to Western Hub"
+                        "area": "Central Nexus",
+                        "node": "Other to Dark Stairwell"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -4167,7 +4392,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Deck Navigation Room West": {
+                        "Door to Nexus Navigation Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4208,6 +4433,7 @@
         },
         "Concourse": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck21",
                 "room_id": [
@@ -4215,7 +4441,7 @@
                 ]
             },
             "nodes": {
-                "Door to Main Deck Recharge Room": {
+                "Door to Concourse Recharge Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4236,7 +4462,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Main Deck Recharge Room",
+                        "area": "Concourse Recharge Room",
                         "node": "Door to Concourse"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -4246,7 +4472,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Deck Save Room": {
+                        "Door to Concourse Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": "Geron no longer here",
@@ -4263,7 +4489,7 @@
                         }
                     }
                 },
-                "Door to Main Deck Navigation Room East": {
+                "Door to Crew Quarters Navigation Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4284,7 +4510,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Main Deck Navigation Room East",
+                        "area": "Crew Quarters Navigation Room",
                         "node": "Door to Concourse"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -4294,7 +4520,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Deck Save Room": {
+                        "Door to Concourse Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4303,7 +4529,7 @@
                         }
                     }
                 },
-                "Door to Main Deck Save Room": {
+                "Door to Concourse Save Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4324,7 +4550,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Main Deck Save Room",
+                        "area": "Concourse Save Room",
                         "node": "Door to Concourse"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -4334,7 +4560,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Deck Recharge Room": {
+                        "Door to Concourse Recharge Room": {
                             "type": "and",
                             "data": {
                                 "comment": "Geron no longer here",
@@ -4349,7 +4575,7 @@
                                 ]
                             }
                         },
-                        "Door to Main Deck Navigation Room East": {
+                        "Door to Crew Quarters Navigation Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4396,7 +4622,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Deck Save Room": {
+                        "Door to Concourse Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4409,6 +4635,7 @@
         },
         "Habitation Ventilation": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck22",
                 "room_id": [
@@ -4508,7 +4735,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "TODO: check if you can do this with jump extneds",
+                                            "comment": "Kill Namihe's and then SWJ up.",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -4522,6 +4749,10 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
                                                 }
                                             ]
                                         }
@@ -4533,8 +4764,9 @@
                 }
             }
         },
-        "Ruined Stairwell": {
+        "Quarantine Junction": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck23",
                 "room_id": [
@@ -4542,7 +4774,7 @@
                 ]
             },
             "nodes": {
-                "Door to Western Hub": {
+                "Door to Dark Stairwell": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4563,8 +4795,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Western Hub",
-                        "node": "Door to Ruined Stairwell"
+                        "area": "Dark Stairwell",
+                        "node": "Door to Quarantine Junction"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -4665,7 +4897,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Main Elevator Access",
-                        "node": "Door to Ruined Stairwell"
+                        "node": "Door to Quarantine Junction"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4674,7 +4906,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Western Hub": {
+                        "Door to Dark Stairwell": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4759,7 +4991,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Quarantine Bay",
-                        "node": "Door to Ruined Stairwell"
+                        "node": "Door to Quarantine Junction"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -4768,7 +5000,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Western Hub": {
+                        "Door to Dark Stairwell": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4781,6 +5013,7 @@
         },
         "Sector Hub": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck24",
                 "room_id": [
@@ -4796,16 +5029,18 @@
                         "y": 344.0,
                         "z": 0.0
                     },
-                    "description": "TODO: future start location",
+                    "description": "",
                     "layers": [
                         "default"
                     ],
                     "extra": {
                         "door_idx": [
                             50
-                        ]
+                        ],
+                        "X": 24,
+                        "Y": 18
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Main Deck",
@@ -4951,6 +5186,7 @@
         },
         "Elevator to Sector 2 (TRO)": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck25",
                 "room_id": [
@@ -5089,6 +5325,7 @@
         },
         "Elevator to Sector 4 (AQA)": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck26",
                 "room_id": [
@@ -5227,6 +5464,7 @@
         },
         "Elevator to Sector 6 (NOC)": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck27",
                 "room_id": [
@@ -5318,6 +5556,7 @@
         },
         "Elevator to Sector 1 (SRX)": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck28",
                 "room_id": [
@@ -5456,6 +5695,7 @@
         },
         "Elevator to Sector 3 (PYR)": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck29",
                 "room_id": [
@@ -5594,6 +5834,7 @@
         },
         "Elevator to Sector 5 (ARC)": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck30",
                 "room_id": [
@@ -5685,6 +5926,7 @@
         },
         "Operations Deck Navigation Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck32",
                 "room_id": [
@@ -5817,14 +6059,15 @@
                 }
             }
         },
-        "Main Deck Save Room": {
+        "Concourse Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck33",
                 "room_id": [
                     33
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Hornoad Hallway": {
@@ -5849,7 +6092,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Hornoad Hallway",
-                        "node": "Door to Main Deck Save Room"
+                        "node": "Door to Concourse Save Room"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -5896,7 +6139,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Concourse",
-                        "node": "Door to Main Deck Save Room"
+                        "node": "Door to Concourse Save Room"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -5945,6 +6188,7 @@
         },
         "Main Elevator Shaft": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck34",
                 "room_id": [
@@ -6035,8 +6279,9 @@
                 }
             }
         },
-        "Operations Maintenance Shaft": {
+        "Operations Ventilation": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck35",
                 "room_id": [
@@ -6066,6 +6311,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 2,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Other to Crew Quarters East": {
                             "type": "and",
@@ -6098,7 +6344,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Crew Quarters East",
-                        "node": "Other to Operations Maintenance Shaft"
+                        "node": "Other to Operations Ventilation"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6114,7 +6360,7 @@
                                 "items": []
                             }
                         },
-                        "Other to Operations Maintenance Storage": {
+                        "Other to Operations Ventilation Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6145,7 +6391,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Operations Deck",
-                        "node": "Other to Operations Maintenance Shaft"
+                        "node": "Other to Operations Ventilation"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6256,7 +6502,7 @@
                         }
                     }
                 },
-                "Other to Operations Maintenance Storage": {
+                "Other to Operations Ventilation Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6277,8 +6523,8 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Operations Maintenance Storage",
-                        "node": "Other to Operations Maintenance Shaft"
+                        "area": "Operations Ventilation Storage",
+                        "node": "Other to Operations Ventilation"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6318,7 +6564,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Crew Quarters West",
-                        "node": "Door to Operations Maintenance Shaft"
+                        "node": "Door to Operations Ventilation"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -6451,7 +6697,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Crew Quarters East",
-                        "node": "Door to Operations Maintenance Shaft"
+                        "node": "Door to Operations Ventilation"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -6545,12 +6791,13 @@
         },
         "Crew Quarters Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck37",
                 "room_id": [
                     37
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Crew Quarters East": {
@@ -6624,6 +6871,7 @@
         },
         "Arachnus Arena": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck38",
                 "room_id": [
@@ -6652,31 +6900,13 @@
                     "valid_starting_location": false,
                     "pickup_index": 3,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
-                        "Beside Door": {
-                            "type": "or",
+                        "Next to Pickup": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "GeneratorHack",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "WallJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -6712,23 +6942,6 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Arena": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "GeneratorHack",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Beside Door": {
                             "type": "and",
                             "data": {
@@ -6852,7 +7065,7 @@
                         }
                     }
                 },
-                "Other to The Attic": {
+                "Other to Attic": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6873,7 +7086,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "The Attic",
+                        "area": "Attic",
                         "node": "Other to Arachnus Arena"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -6883,8 +7096,8 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Beside Door": {
-                            "type": "and",
+                        "Next to Pickup": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -6895,32 +7108,6 @@
                                             "name": "Missiles",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "GeneratorHack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "WallJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
                                         }
                                     }
                                 ]
@@ -6973,6 +7160,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 100,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Arena": {
                             "type": "and",
@@ -7080,24 +7268,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 586.43,
-                        "y": 275.19,
+                        "x": 601.02,
+                        "y": 318.22,
                         "z": 0.0
                     },
-                    "description": "FIXME: The connections to return back here technically arent trivial, but are\ncurrently assumed until a few generator issues have been figured out.",
+                    "description": "",
                     "layers": [
                         "default"
                     ],
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Pickup (Energy Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Crew Quarters East": {
                             "type": "or",
                             "data": {
@@ -7141,8 +7322,39 @@
                                 ]
                             }
                         },
-                        "Other to The Attic": {
-                            "type": "or",
+                        "Next to Pickup": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Next to Pickup": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 882.614442020445,
+                        "y": 481.7010122286583,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Other to Attic": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -7164,6 +7376,23 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Beside Door": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "WallJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
@@ -7171,6 +7400,7 @@
         },
         "Operations Deck Data Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck39",
                 "room_id": [
@@ -7238,6 +7468,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 15,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Operations Deck Navigation Room": {
                             "type": "and",
@@ -7252,6 +7483,7 @@
         },
         "Elevator to Sector Hub": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck40",
                 "room_id": [
@@ -7292,7 +7524,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Elevator Access": {
+                        "Other to Main Elevator Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7301,7 +7533,7 @@
                         }
                     }
                 },
-                "Door to Main Elevator Access": {
+                "Other to Main Elevator Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7320,13 +7552,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Main Elevator Access",
-                        "node": "Door to Elevator to Sector Hub"
+                        "node": "Other to Elevator to Sector Hub"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -7380,7 +7612,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Elevator Access": {
+                        "Other to Main Elevator Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7393,6 +7625,7 @@
         },
         "Main Elevator Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck42",
                 "room_id": [
@@ -7401,7 +7634,7 @@
                 ]
             },
             "nodes": {
-                "Door to Elevator to Sector Hub": {
+                "Other to Elevator to Sector Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7420,20 +7653,20 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Elevator to Sector Hub",
-                        "node": "Door to Main Elevator Access"
+                        "node": "Other to Main Elevator Access"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Ruined Stairwell": {
+                        "Door to Quarantine Junction": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7442,7 +7675,7 @@
                         }
                     }
                 },
-                "Door to Ruined Stairwell": {
+                "Door to Quarantine Junction": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7464,7 +7697,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Ruined Stairwell",
+                        "area": "Quarantine Junction",
                         "node": "Door to Main Elevator Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -7474,7 +7707,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Sector Hub": {
+                        "Other to Elevator to Sector Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7487,12 +7720,13 @@
         },
         "Operations Deck Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck44",
                 "room_id": [
                     44
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Operations Deck Recharge Room": {
@@ -7564,8 +7798,9 @@
                 }
             }
         },
-        "Operations Maintenance Storage": {
+        "Operations Ventilation Storage": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck45",
                 "room_id": [
@@ -7594,8 +7829,9 @@
                     "valid_starting_location": false,
                     "pickup_index": 4,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
-                        "Other to Operations Maintenance Shaft": {
+                        "Other to Operations Ventilation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7604,7 +7840,7 @@
                         }
                     }
                 },
-                "Other to Operations Maintenance Shaft": {
+                "Other to Operations Ventilation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7625,8 +7861,8 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Operations Maintenance Shaft",
-                        "node": "Other to Operations Maintenance Storage"
+                        "area": "Operations Ventilation",
+                        "node": "Other to Operations Ventilation Storage"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7648,6 +7884,7 @@
         },
         "Sub-Zero Containment": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck46",
                 "room_id": [
@@ -7655,7 +7892,7 @@
                 ]
             },
             "nodes": {
-                "Door to Western Hub": {
+                "Door to Dark Stairwell": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7676,7 +7913,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Western Hub",
+                        "area": "Dark Stairwell",
                         "node": "Door to Sub-Zero Containment"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -7689,8 +7926,9 @@
                 }
             }
         },
-        "Spitter Speedway": {
+        "Genesis Speedway": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck47",
                 "room_id": [
@@ -7719,6 +7957,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 5,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Other to Station Entrance": {
                             "type": "and",
@@ -7782,7 +8021,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Station Entrance",
-                        "node": "Other to Spitter Speedway"
+                        "node": "Other to Genesis Speedway"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7808,7 +8047,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": "PBs only requires two because one doesn't destroy all of them.",
+                                                        "comment": "These blocks require two PBs because one doesn't destroy all of them.",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -7832,7 +8071,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get up to item",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -7863,6 +8102,7 @@
         },
         "Silo Entry": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck48",
                 "room_id": [
@@ -7871,7 +8111,7 @@
                 ]
             },
             "nodes": {
-                "Door to Docking Bay Shaft": {
+                "Door to Docking Bay Climb": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7893,7 +8133,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Docking Bay Shaft",
+                        "area": "Docking Bay Climb",
                         "node": "Door to Silo Entry"
                     },
                     "default_dock_weakness": "L4 Hatch",
@@ -7903,7 +8143,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Other to Docking Bay Shaft": {
+                        "Other to Docking Bay Climb": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7912,7 +8152,7 @@
                         }
                     }
                 },
-                "Other to Docking Bay Shaft": {
+                "Other to Docking Bay Climb": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7933,7 +8173,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Docking Bay Shaft",
+                        "area": "Docking Bay Climb",
                         "node": "Other to Silo Entry"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -7943,7 +8183,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Docking Bay Shaft": {
+                        "Door to Docking Bay Climb": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8015,7 +8255,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Other to Docking Bay Shaft": {
+                        "Other to Docking Bay Climb": {
                             "type": "and",
                             "data": {
                                 "comment": "The cocoon has been moved",
@@ -8038,6 +8278,7 @@
         },
         "Central Reactor Core": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck49",
                 "room_id": [
@@ -8078,7 +8319,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Scaffolding Access": {
+                        "Door to Silo Catwalk": {
                             "type": "or",
                             "data": {
                                 "comment": "Jump on platform, don't fall down: https://youtu.be/tVICpkQOEh0",
@@ -8104,7 +8345,7 @@
                         }
                     }
                 },
-                "Door to Scaffolding Access": {
+                "Door to Silo Catwalk": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8126,7 +8367,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Scaffolding Access",
+                        "area": "Silo Catwalk",
                         "node": "Door to Central Reactor Core"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -8342,20 +8583,37 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Having only one beam makes this harder to hit / have only one attempt",
                                                         "items": [
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "Having only one beam makes this harder to hit / have only one attempt",
+                                                                    "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "items",
-                                                                                "name": "ChargeBeam",
-                                                                                "amount": 1,
-                                                                                "negate": false
+                                                                                "comment": "If you only have charge, you need to have access to the other side",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "ChargeBeam",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "events",
+                                                                                            "name": "ReactorControl",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         },
                                                                         {
@@ -8393,6 +8651,15 @@
                                                                     "type": "tricks",
                                                                     "name": "ShinesparkTrick",
                                                                     "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "ReactorControl",
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -8571,7 +8838,7 @@
                                 ]
                             }
                         },
-                        "Door to Scaffolding Access": {
+                        "Door to Silo Catwalk": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8620,8 +8887,9 @@
                 }
             }
         },
-        "Scaffolding Access": {
+        "Silo Catwalk": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck50",
                 "room_id": [
@@ -8650,6 +8918,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 6,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Other to Silo Scaffolding": {
                             "type": "and",
@@ -8689,7 +8958,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Central Reactor Core",
-                        "node": "Door to Scaffolding Access"
+                        "node": "Door to Silo Catwalk"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -8786,7 +9055,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Silo Scaffolding",
-                        "node": "Other to Scaffolding Access"
+                        "node": "Other to Silo Catwalk"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8862,7 +9131,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
-                                                        "amount": 2,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -8930,6 +9199,7 @@
         },
         "Silo Scaffolding": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck51",
                 "room_id": [
@@ -8958,6 +9228,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 7,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Beside Pickup": {
                             "type": "and",
@@ -8978,7 +9249,7 @@
                         }
                     }
                 },
-                "Other to Scaffolding Access": {
+                "Other to Silo Catwalk": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8999,7 +9270,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Scaffolding Access",
+                        "area": "Silo Catwalk",
                         "node": "Other to Silo Scaffolding"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -9069,7 +9340,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "With Power Bombs",
+                                                        "comment": "With Power Bombs hitless",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -9135,7 +9406,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
-                                                        "amount": 3,
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 }
@@ -9211,7 +9482,7 @@
                                 ]
                             }
                         },
-                        "Other to Scaffolding Access": {
+                        "Other to Silo Catwalk": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9256,52 +9527,13 @@
                                                         "comment": "Kill them",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "ScrewAttack",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Via normal methods. Taking/avoiding damage is accounted in connection to down here",
+                                                                    "comment": "Taking/avoiding damage is accounted in connection to down here",
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
                                                                             "data": "Can Kill Tough Beam-Resistant Enemy"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "With Power Bombs",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Can Use Power Bombs"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "PowerBombs",
-                                                                                "amount": 4,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Combat",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
                                                                         }
                                                                     ]
                                                                 }
@@ -9345,7 +9577,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Combat",
-                                                                    "amount": 3,
+                                                                    "amount": 4,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -9436,15 +9668,6 @@
                                                             {
                                                                 "type": "template",
                                                                 "data": "Can Kill Tough Beam-Resistant Enemy"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "ScrewAttack",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
                                                             }
                                                         ]
                                                     }
@@ -9485,7 +9708,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Combat",
-                                                                    "amount": 3,
+                                                                    "amount": 4,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -9504,6 +9727,7 @@
         },
         "Silo Checkpoint": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck52",
                 "room_id": [
@@ -9605,6 +9829,7 @@
         },
         "Auxiliary Power Station": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck54",
                 "room_id": [
@@ -9728,6 +9953,7 @@
         },
         "Silo Tunnel": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck55",
                 "room_id": [
@@ -9884,6 +10110,7 @@
         },
         "Auxiliary Navigation Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck56",
                 "room_id": [
@@ -10016,8 +10243,9 @@
                 }
             }
         },
-        "Habitation Storage": {
+        "Nexus Storage": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck57",
                 "room_id": [
@@ -10046,8 +10274,9 @@
                     "valid_starting_location": false,
                     "pickup_index": 8,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
-                        "Door to Central Hub": {
+                        "Door to Central Nexus": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10099,7 +10328,7 @@
                         }
                     }
                 },
-                "Door to Central Hub": {
+                "Door to Central Nexus": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10120,8 +10349,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Central Hub",
-                        "node": "Door to Habitation Storage"
+                        "area": "Central Nexus",
+                        "node": "Door to Nexus Storage"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -10148,12 +10377,13 @@
         },
         "Silo Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck58",
                 "room_id": [
                     58
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Central Reactor Core": {
@@ -10227,6 +10457,7 @@
         },
         "Elevator to Crew Quarters": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck60",
                 "room_id": [
@@ -10318,6 +10549,7 @@
         },
         "Elevator to Operations Deck": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck61",
                 "room_id": [
@@ -10409,6 +10641,7 @@
         },
         "Back Door to Sector 6 (NOC)": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck62",
                 "room_id": [
@@ -10518,7 +10751,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "SWJ - TODO: revisit with HJ only after SWJ is patched",
+                                                        "comment": "SWJ",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -10529,6 +10762,32 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "WallJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Equipment manip",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "MenuMod",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -10548,12 +10807,13 @@
         },
         "Restricted Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck64",
                 "room_id": [
                     64
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Back Door to Sector 6 (NOC)": {
@@ -10674,6 +10934,7 @@
         },
         "Restricted Corridor": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck65",
                 "room_id": [
@@ -10765,6 +11026,7 @@
         },
         "Restricted Navigation Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck66",
                 "room_id": [
@@ -10772,7 +11034,7 @@
                 ]
             },
             "nodes": {
-                "Door to Elevator to Sector 1 (TRN)": {
+                "Door to Elevator to Tourian (SRX)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10793,7 +11055,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Sector 1 (TRN)",
+                        "area": "Elevator to Tourian (SRX)",
                         "node": "Door to Restricted Navigation Room"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -10843,7 +11105,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Sector 1 (TRN)": {
+                        "Door to Elevator to Tourian (SRX)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10897,8 +11159,9 @@
                 }
             }
         },
-        "Elevator to Sector 1 (TRN)": {
+        "Elevator to Tourian (SRX)": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck67",
                 "room_id": [
@@ -10928,7 +11191,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Restricted Navigation Room",
-                        "node": "Door to Elevator to Sector 1 (TRN)"
+                        "node": "Door to Elevator to Tourian (SRX)"
                     },
                     "default_dock_weakness": "L4 Hatch",
                     "exclude_from_dock_rando": false,
@@ -10968,7 +11231,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Elevator to Restricted Zone",
-                        "node": "Elevator to Elevator to Sector 1 (TRN)"
+                        "node": "Elevator to Elevator to Tourian (SRX)"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -10990,6 +11253,7 @@
         },
         "Habitation Deck": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck69",
                 "room_id": [
@@ -11018,6 +11282,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 9,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Beside Pickup": {
                             "type": "and",
@@ -11420,6 +11685,7 @@
         },
         "Hornoad Hallway": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck70",
                 "room_id": [
@@ -11427,7 +11693,7 @@
                 ]
             },
             "nodes": {
-                "Door to Central Hub": {
+                "Door to Central Nexus": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11448,7 +11714,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Central Hub",
+                        "area": "Central Nexus",
                         "node": "Door to Hornoad Hallway"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -11458,7 +11724,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Deck Save Room": {
+                        "Door to Concourse Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11467,7 +11733,7 @@
                         }
                     }
                 },
-                "Door to Main Deck Save Room": {
+                "Door to Concourse Save Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11488,7 +11754,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Main Deck Save Room",
+                        "area": "Concourse Save Room",
                         "node": "Door to Hornoad Hallway"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -11498,7 +11764,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Central Hub": {
+                        "Door to Central Nexus": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11511,6 +11777,7 @@
         },
         "Quarantine Bay": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck71",
                 "room_id": [
@@ -11518,7 +11785,7 @@
                 ]
             },
             "nodes": {
-                "Door to Ruined Stairwell": {
+                "Door to Quarantine Junction": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11539,7 +11806,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Ruined Stairwell",
+                        "area": "Quarantine Junction",
                         "node": "Door to Quarantine Bay"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -11573,7 +11840,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Ruined Stairwell": {
+                        "Door to Quarantine Junction": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11586,6 +11853,7 @@
         },
         "Cubby Hole": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck72",
                 "room_id": [
@@ -11614,8 +11882,9 @@
                     "valid_starting_location": false,
                     "pickup_index": 10,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
-                        "Other to Western Hub": {
+                        "Other to Dark Stairwell": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11634,7 +11903,7 @@
                         }
                     }
                 },
-                "Other to Western Hub": {
+                "Other to Dark Stairwell": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11655,7 +11924,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Western Hub",
+                        "area": "Dark Stairwell",
                         "node": "Other to Cubby Hole"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -11688,6 +11957,7 @@
         },
         "Main Elevator Cache": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck73",
                 "room_id": [
@@ -11716,6 +11986,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 11,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Other to Elevator to Sector Hub": {
                             "type": "and",
@@ -11789,6 +12060,7 @@
         },
         "Elevator to Habitation Deck": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck75",
                 "room_id": [
@@ -11796,7 +12068,7 @@
                 ]
             },
             "nodes": {
-                "Door to Central Hub": {
+                "Door to Central Nexus": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11817,7 +12089,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Central Hub",
+                        "area": "Central Nexus",
                         "node": "Door to Elevator to Habitation Deck"
                     },
                     "default_dock_weakness": "L2 Hatch",
@@ -11827,7 +12099,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Elevator to Elevator to Central Hub": {
+                        "Elevator to Elevator to Central Nexus": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11836,7 +12108,7 @@
                         }
                     }
                 },
-                "Elevator to Elevator to Central Hub": {
+                "Elevator to Elevator to Central Nexus": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11857,7 +12129,7 @@
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Central Hub",
+                        "area": "Elevator to Central Nexus",
                         "node": "Elevator to Elevator to Habitation Deck"
                     },
                     "default_dock_weakness": "Elevator",
@@ -11867,7 +12139,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Central Hub": {
+                        "Door to Central Nexus": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11878,8 +12150,9 @@
                 }
             }
         },
-        "Elevator to Central Hub": {
+        "Elevator to Central Nexus": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck76",
                 "room_id": [
@@ -11909,7 +12182,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Habitation Deck Save Room",
-                        "node": "Door to Elevator to Central Hub"
+                        "node": "Door to Elevator to Central Nexus"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -11949,7 +12222,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Elevator to Habitation Deck",
-                        "node": "Elevator to Elevator to Central Hub"
+                        "node": "Elevator to Elevator to Central Nexus"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -11989,7 +12262,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Habitation Deck Entrance",
-                        "node": "Door to Elevator to Central Hub"
+                        "node": "Door to Elevator to Central Nexus"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -12018,11 +12291,13 @@
         },
         "Operations Deck Recharge Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck81",
                 "room_id": [
                     81
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Operations Deck": {
@@ -12140,6 +12415,7 @@
         },
         "Operations Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck82",
                 "room_id": [
@@ -12214,8 +12490,9 @@
                 }
             }
         },
-        "The Attic": {
+        "Attic": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck84",
                 "room_id": [
@@ -12244,6 +12521,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 12,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Other to Arachnus Arena": {
                             "type": "and",
@@ -12276,7 +12554,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Arachnus Arena",
-                        "node": "Other to The Attic"
+                        "node": "Other to Attic"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -12298,6 +12576,7 @@
         },
         "Yakuza Arena": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Main Deck86",
                 "room_id": [
@@ -12430,6 +12709,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 106,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Arena": {
                             "type": "and",

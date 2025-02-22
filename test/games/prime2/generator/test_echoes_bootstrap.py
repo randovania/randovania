@@ -13,7 +13,6 @@ from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters i
     PrimeTrilogyTeleporterConfiguration,
 )
 from randovania.games.prime2.generator.bootstrap import EchoesBootstrap
-from randovania.games.prime2.generator.pickup_pool import sky_temple_keys
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.generator.pickup_pool import pool_creator
 
@@ -78,9 +77,7 @@ def test_assign_pool_results(echoes_game_description, default_echoes_configurati
     )
 
     # Assert
-    shuffled_stks = [
-        pickup for pickup in pool_results.to_place if pickup.pickup_category == sky_temple_keys.SKY_TEMPLE_KEY_CATEGORY
-    ]
+    shuffled_stks = [pickup for pickup in pool_results.to_place if pickup.gui_category.name == "sky_temple_key"]
 
     assert result.starting_equipment == pool_results.starting
     if stk_mode == LayoutSkyTempleKeyMode.ALL_BOSSES:

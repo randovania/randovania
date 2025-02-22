@@ -34,10 +34,10 @@ class MSRRemoteConnector(MercuryConnector):
 
         self.logger.info("%d permanent pickups, magic %d. Next pickup: %s", len(remote_pickups), num_pickups, message)
 
-        from open_samus_returns_rando.multiworld_integration import get_lua_for_item
+        from open_samus_returns_rando.pickups.multiworld_integration import get_lua_for_item
 
-        lua_code = get_lua_for_item(items_list)
-        execute_string = f"RL.ReceivePickup({repr(message)},'{lua_code}'," f"{num_pickups},{self.inventory_index})"
+        lua_code = get_lua_for_item(items_list, f'"{scenario_id}"')
+        execute_string = f"RL.ReceivePickup({repr(message)},'{lua_code}',{num_pickups},{self.inventory_index})"
         await self.executor.run_lua_code(execute_string)
 
     async def display_arbitrary_message(self, message: str) -> None:

@@ -11,6 +11,7 @@
     "areas": {
         "Landing Site": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -23100.0,
@@ -300,13 +301,8 @@
                                             "comment": "Dealing Damage",
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Plasma",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Have All Beams"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -332,8 +328,22 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Shoot Spazer Beam"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Spazer",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Wave",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -584,6 +594,7 @@
         },
         "Transport to Area 8": {
             "default_node": "Elevator to Area 8",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -40700.0,
@@ -639,6 +650,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 169,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Above Elevator": {
                             "type": "and",
@@ -1307,6 +1319,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 170,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Below Ceiling Pickup": {
                             "type": "and",

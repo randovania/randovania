@@ -15,9 +15,9 @@ if TYPE_CHECKING:
     from collections.abc import Callable
     from random import Random
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.pickup.pickup_category import PickupCategory
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
@@ -129,7 +129,9 @@ class Bootstrap:
         starting_state = State(
             initial_resources,
             (),
-            self.create_damage_state(game, configuration),
+            self.create_damage_state(game, configuration).apply_collected_resource_difference(
+                initial_resources, ResourceCollection()
+            ),
             starting_node,
             patches,
             None,
@@ -251,14 +253,18 @@ class Bootstrap:
         rng: Random,
         locations: list[PickupNode],
         pool_results: PoolResults,
-        item_category: PickupCategory,
+        item_category: str,
+        game: RandovaniaGame,
     ) -> None:
         pre_placed_indices = list(pool_results.assignment.keys())
         reduced_locations = [loc for loc in locations if loc.pickup_index not in pre_placed_indices]
 
         rng.shuffle(reduced_locations)
 
-        all_artifacts = [pickup for pickup in list(pool_results.to_place) if pickup.pickup_category is item_category]
+        pickup_database = default_database.pickup_database_for_game(game)
+        category = pickup_database.pickup_categories[item_category]
+
+        all_artifacts = [pickup for pickup in list(pool_results.to_place) if pickup.gui_category is category]
         if len(all_artifacts) > len(reduced_locations):
             raise InvalidConfiguration(
                 f"Has {len(all_artifacts)} {item_category.long_name} in the pool, "

@@ -9,7 +9,7 @@ from randovania.games.prime3.layout.corruption_cosmetic_patches import Corruptio
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
 if TYPE_CHECKING:
-    import pytestqt.qtbot  # type: ignore[import]
+    import pytestqt.qtbot
 
 
 def test_random_welding_colors(skip_qtbot: pytestqt.qtbot.QtBot) -> None:

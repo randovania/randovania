@@ -11,6 +11,7 @@
     "areas": {
         "Security Site": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -4600.0,
@@ -58,6 +59,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 76,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Gamma Arena South": {
                             "type": "or",
@@ -250,6 +252,7 @@
         },
         "Gamma Arena South Access": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 2200.0,
@@ -479,6 +482,7 @@
         },
         "Paraby Periphery": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 10600.0,
@@ -526,6 +530,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 75,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Alpha Arena Access": {
                             "type": "template",
@@ -693,6 +698,7 @@
         },
         "Fan Control": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 6300.0,
@@ -740,6 +746,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 74,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Wallfire Watch": {
                             "type": "or",
@@ -774,8 +781,13 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Shoot Wave Beam"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Wave",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -838,13 +850,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PBAmmo",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
                                                 },
                                                 {
                                                     "type": "template",
@@ -862,6 +869,7 @@
         },
         "Grapple Circuit": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 6700.0,
@@ -1338,6 +1346,7 @@
         },
         "Factory Intersection": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 3500.0,
@@ -1397,6 +1406,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 73,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Tunnel to Grapple Circuit (Bottom)": {
                             "type": "template",
@@ -1478,6 +1488,15 @@
                                                         "type": "tricks",
                                                         "name": "UnmorphExtend",
                                                         "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -1730,6 +1749,7 @@
         },
         "Factory Interior Teleporter": {
             "default_node": "Teleporter",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 1300.0,
@@ -1877,6 +1897,7 @@
         },
         "Transport to Factory Exterior East": {
             "default_node": "Elevator to Area 3 Factory Exterior",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 6700.0,
@@ -2035,6 +2056,7 @@
         },
         "Alpha Arena Access": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 15600.0,
@@ -2741,6 +2763,7 @@
         },
         "Gamma Arena & Transport to Metroid Caverns East": {
             "default_node": "Elevator to Area 3 Metroid Caverns",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 6500.0,
@@ -3705,6 +3728,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 195,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Inside Arena": {
                             "type": "and",
@@ -3719,6 +3743,7 @@
         },
         "Ramulken Residence": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 5900.0,
@@ -3852,6 +3877,7 @@
         },
         "Wallfire Watch": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 6500.0,
@@ -4255,6 +4281,7 @@
         },
         "Alpha Arena": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 10800.0,
@@ -4351,6 +4378,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 77,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -4568,6 +4596,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 184,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -4582,6 +4611,7 @@
         },
         "Gamma Arena South": {
             "default_node": "Room Center",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -2000.0,
@@ -4913,6 +4943,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 196,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -4927,6 +4958,7 @@
         },
         "Dedicated Callisto Roost": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 2300.0,
@@ -5060,6 +5092,7 @@
         },
         "Factory Teleporter Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 3500.0,
@@ -5210,6 +5243,7 @@
         },
         "Gamma Arena Center Access": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 5000.0,

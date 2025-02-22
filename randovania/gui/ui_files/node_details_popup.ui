@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Item Configuration</string>
+   <string>Node Configuration</string>
   </property>
   <layout class="QVBoxLayout" name="main_layout">
    <property name="leftMargin">
@@ -245,7 +245,7 @@
    <item>
     <widget class="QTabWidget" name="tab_widget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_generic">
       <attribute name="title">
@@ -282,34 +282,10 @@
         <number>2</number>
        </property>
        <item row="5" column="0" rowspan="4">
-        <widget class="QGroupBox" name="dock_incompatible_box">
+        <widget class="EditableListView" name="dock_incompatible_box">
          <property name="title">
           <string>Incompatible Weaknesses for Dock Lock rando</string>
          </property>
-         <layout class="QVBoxLayout" name="dock_incompatible_layout">
-          <property name="leftMargin">
-           <number>2</number>
-          </property>
-          <property name="topMargin">
-           <number>2</number>
-          </property>
-          <property name="rightMargin">
-           <number>2</number>
-          </property>
-          <property name="bottomMargin">
-           <number>2</number>
-          </property>
-          <item>
-           <widget class="QListView" name="dock_incompatible_list"/>
-          </item>
-          <item>
-           <widget class="QPushButton" name="dock_incompatible_button">
-            <property name="text">
-             <string>Remove Selected</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
         </widget>
        </item>
        <item row="3" column="0" colspan="2">
@@ -463,6 +439,13 @@
        <property name="bottomMargin">
         <number>2</number>
        </property>
+       <item row="0" column="1">
+        <widget class="QSpinBox" name="pickup_index_spin">
+         <property name="maximum">
+          <number>999</number>
+         </property>
+        </widget>
+       </item>
        <item row="1" column="0">
         <widget class="QLabel" name="location_category_label">
          <property name="text">
@@ -470,30 +453,10 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="0" column="0">
         <widget class="QLabel" name="pickup_index_label">
          <property name="text">
           <string>Pickup Index:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QSpinBox" name="pickup_index_spin">
-         <property name="maximum">
-          <number>999</number>
          </property>
         </widget>
        </item>
@@ -506,6 +469,26 @@
        </item>
        <item row="1" column="1" colspan="2">
         <widget class="QComboBox" name="location_category_combo"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="HintFeatureListView" name="hint_feature_box">
+         <property name="title">
+          <string>Hint Features</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -826,6 +809,20 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>EditableListView</class>
+   <extends>QGroupBox</extends>
+   <header>randovania.gui.lib.editable_list_view</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HintFeatureListView</class>
+   <extends>QGroupBox</extends>
+   <header>randovania.gui.lib.hint_feature_list_view</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

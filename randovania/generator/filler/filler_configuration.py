@@ -32,6 +32,7 @@ class PlayerPool:
     configuration: BaseConfiguration
     patches: GamePatches
     pickups: list[PickupEntry]
+    pickups_in_world: list[PickupEntry]
 
 
 @dataclasses.dataclass(frozen=True)

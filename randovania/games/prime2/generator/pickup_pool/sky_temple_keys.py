@@ -2,29 +2,15 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from frozendict import frozendict
-
-from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.pickup import pickup_category
-from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
-from randovania.game_description.resources.location_category import LocationCategory
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
-from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import PoolResults
+from randovania.generator.pickup_pool.pickup_creator import create_generated_pickup
 from randovania.layout.exceptions import InvalidConfiguration
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.resources.resource_database import ResourceDatabase
-
-SKY_TEMPLE_KEY_CATEGORY = pickup_category.PickupCategory(
-    name="sky_temple_key",
-    long_name="Sky Temple Key",
-    hint_details=("a ", "Sky Temple Key"),
-    hinted_as_major=False,
-    is_key=True,
-)
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
 
 
 def pickup_nodes_for_stk_mode(game: GameDescription, mode: LayoutSkyTempleKeyMode) -> list[PickupNode]:
@@ -61,40 +47,12 @@ def add_sky_temple_key_distribution_logic(
             raise InvalidConfiguration(f"Unknown Sky Temple Key mode: {mode}")
 
     for key_number in range(keys_to_place):
-        item_pool.append(create_sky_temple_key(key_number, resource_database))
+        item_pool.append(create_generated_pickup("Sky Temple Key", resource_database, i=key_number + 1))
     first_automatic_key = keys_to_place
 
     starting = [
-        create_sky_temple_key(automatic_key_number, resource_database)
+        create_generated_pickup("Sky Temple Key", resource_database, i=automatic_key_number + 1)
         for automatic_key_number in range(first_automatic_key, 9)
     ]
 
     return PoolResults(item_pool, {}, starting)
-
-
-def create_sky_temple_key(
-    key_number: int,
-    resource_database: ResourceDatabase,
-) -> PickupEntry:
-    """
-
-    :param key_number:
-    :param resource_database:
-    :return:
-    """
-
-    return PickupEntry(
-        name=f"Sky Temple Key {key_number + 1}",
-        progression=((resource_database.get_item(echoes_items.SKY_TEMPLE_KEY_ITEMS[key_number]), 1),),
-        model=PickupModel(
-            game=resource_database.game_enum,
-            name=echoes_items.SKY_TEMPLE_KEY_MODEL,
-        ),
-        pickup_category=SKY_TEMPLE_KEY_CATEGORY,
-        broad_category=pickup_category.GENERIC_KEY_CATEGORY,
-        offworld_models=frozendict({RandovaniaGame.AM2R: "sItemSkyTempleKeyEchoes"}),
-        generator_params=PickupGeneratorParams(
-            preferred_location_category=LocationCategory.MAJOR,
-            probability_offset=3.0,
-        ),
-    )

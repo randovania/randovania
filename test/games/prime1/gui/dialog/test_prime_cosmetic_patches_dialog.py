@@ -11,7 +11,7 @@ from randovania.games.prime1.gui.dialog.prime_cosmetic_patches_dialog import (
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 
 if TYPE_CHECKING:
-    import pytestqt.qtbot  # type: ignore[import]
+    import pytestqt.qtbot
 
 
 def test_open_map(skip_qtbot: pytestqt.qtbot.QtBot) -> None:

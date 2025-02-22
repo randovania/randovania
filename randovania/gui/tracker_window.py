@@ -773,7 +773,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         for pickup, quantity in pickup_with_quantity.items():
             self._collected_pickups[pickup] = 0
-            parent_widget, parent_layout = parent_widgets.get(pickup.pickup_category.name, major_pickup_parent_widgets)
+            parent_widget, parent_layout = parent_widgets.get(pickup.gui_category.name, major_pickup_parent_widgets)
 
             row = row_for_parent[parent_widget]
 

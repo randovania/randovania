@@ -5,13 +5,15 @@ import dataclasses
 import re
 import typing
 
+from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import Hint
+from randovania.game_description.hint import BaseHint
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.generator.pickup_pool import PoolResults, pool_creator
@@ -21,6 +23,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.layout.base.base_configuration import BaseConfiguration
 
@@ -142,6 +145,7 @@ def decode_single(
     game: GameDescription,
     game_modifications: dict,
     configuration: BaseConfiguration,
+    all_games: dict[int, GameDescription],
 ) -> GamePatches:
     """
     Decodes a dict created by `serialize` back into a GamePatches.
@@ -256,7 +260,32 @@ def decode_single(
     # Hints
     hints = {}
     for identifier_str, hint in game_modifications["hints"].items():
-        hints[NodeIdentifier.from_string(identifier_str)] = Hint.from_json(hint)
+        extra = {}
+        if hint["hint_type"] == "location":
+            pickup_db = default_database.pickup_database_for_game(game.game)
+
+            def get_target_pickup_db(target: PickupTarget) -> PickupDatabase:
+                target_game = all_games[target.player]
+                target_pickup_db = default_database.pickup_database_for_game(target_game.game)
+                return target_pickup_db
+
+            if (relative := hint["precision"].get("relative")) is not None:
+                if "other_index" in relative:
+                    other_target = pickup_assignment.get(PickupIndex(relative["other_index"]))
+                    if other_target is not None:
+                        extra["other_pickup_db"] = get_target_pickup_db(other_target)
+                    else:
+                        extra["other_pickup_db"] = pickup_db
+
+            extra["game"] = game
+            target = pickup_assignment.get(PickupIndex(hint["target"]))
+
+            if target is not None:
+                extra["pickup_db"] = get_target_pickup_db(target)
+            else:
+                extra["pickup_db"] = pickup_db
+
+        hints[NodeIdentifier.from_string(identifier_str)] = BaseHint.from_json(hint, **extra)
 
     patches = GamePatches.create_from_game(game, player_index, configuration)
     patches = patches.assign_dock_connections(dock_connections)
@@ -285,7 +314,7 @@ def decode(
         for index, configuration in layout_configurations.items()
     }
     return {
-        index: decode_single(index, all_pools, all_games[index], modifications, layout_configurations[index])
+        index: decode_single(index, all_pools, all_games[index], modifications, layout_configurations[index], all_games)
         for index, modifications in enumerate(game_modifications)
     }
 

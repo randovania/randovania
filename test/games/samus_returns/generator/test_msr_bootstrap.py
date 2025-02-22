@@ -9,7 +9,6 @@ import pytest
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.samus_returns.generator import MSRBootstrap
-from randovania.games.samus_returns.generator.pool_creator import METROID_DNA_CATEGORY
 from randovania.games.samus_returns.layout.msr_configuration import MSRArtifactConfig
 from randovania.generator.pickup_pool import pool_creator
 
@@ -38,7 +37,7 @@ def test_assign_pool_results_predetermined(msr_game_description, msr_configurati
         pool_results,
     )
     # Assert
-    shuffled_dna = [pickup for pickup in pool_results.to_place if pickup.pickup_category == METROID_DNA_CATEGORY]
+    shuffled_dna = [pickup for pickup in pool_results.to_place if pickup.gui_category.name == "dna"]
     assert result.starting_equipment == pool_results.starting
     assert set(result.pickup_assignment.keys()) == {PickupIndex(i) for i in expected}
     assert shuffled_dna == []
@@ -68,7 +67,7 @@ def test_assign_pool_results_prefer_anywhere(msr_game_description, msr_configura
     )
 
     # Assert
-    shuffled_dna = [pickup for pickup in pool_results.to_place if pickup.pickup_category == METROID_DNA_CATEGORY]
+    shuffled_dna = [pickup for pickup in pool_results.to_place if pickup.gui_category.name == "dna"]
 
     assert pool_results.to_place == initial_starting_place
     assert len(shuffled_dna) == artifacts.placed_artifacts

@@ -10,6 +10,7 @@ from randovania.games.super_metroid.exporter.options import SuperMetroidPerGameO
 from randovania.games.super_metroid.gui.generated.super_metroid_game_export_dialog_ui import (
     Ui_SuperMetroidGameExportDialog,
 )
+from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     add_field_validation,
@@ -25,13 +26,22 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-class SuperMetroidGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_SuperMetroidGameExportDialog):
+class SuperMetroidGameExportDialog(
+    GameExportDialog[SuperMetroidConfiguration], MultiFormatOutputMixin, Ui_SuperMetroidGameExportDialog
+):
     @classmethod
     def game_enum(cls):
         return RandovaniaGame.SUPER_METROID
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
-        super().__init__(options, patch_data, word_hash, spoiler, games)
+    def __init__(
+        self,
+        options: Options,
+        configuration: SuperMetroidConfiguration,
+        word_hash: str,
+        spoiler: bool,
+        games: list[RandovaniaGame],
+    ):
+        super().__init__(options, configuration, word_hash, spoiler, games)
 
         self._base_output_name = f"SM Randomizer - {word_hash}"
         per_game = options.options_for_game(self.game_enum())

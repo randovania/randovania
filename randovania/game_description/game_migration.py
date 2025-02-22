@@ -5,29 +5,27 @@ from randovania.game_description import migration_data
 from randovania.lib import migration_lib
 
 
-def _migrate_v6(data: dict) -> dict:
+def _migrate_v6(data: dict, game: RandovaniaGame) -> None:
     lore_types = {"luminoth-lore": "requires-item", "luminoth-warrior": "specific-pickup", "pirate-lore": "generic"}
     for world in data["worlds"]:
         for area in world["areas"].values():
             for node in area["nodes"].values():
                 if node["node_type"] == "logbook":
                     node["lore_type"] = lore_types.get(node["lore_type"], node["lore_type"])
-    return data
 
 
-def _migrate_v7(data: dict) -> dict:
+def _migrate_v7(data: dict, game: RandovaniaGame) -> None:
     if data["minimal_logic"] is not None:
         data["minimal_logic"]["description"] = "Unknown text"
-    return data
 
 
-def _migrate_v8(data: dict) -> dict:
+def _migrate_v8(data: dict, game: RandovaniaGame) -> None:
     lock_type_mapping = {
         1: "front-blast-back-free-unlock",
         2: "front-blast-back-blast",
         3: "front-blast-back-impossible",
     }
-    if data["game"] == "dread":
+    if game == RandovaniaGame.METROID_DREAD:
         lock_type_mapping[3] = "front-blast-back-if-matching"
 
     for dock_type in data["dock_weakness_database"]["types"].values():
@@ -52,10 +50,8 @@ def _migrate_v8(data: dict) -> dict:
                     node["override_default_open_requirement"] = None
                     node["override_default_lock_requirement"] = None
 
-    return data
 
-
-def _migrate_v9(data: dict) -> dict:
+def _migrate_v9(data: dict, game: RandovaniaGame) -> None:
     data["layers"] = ["default"]
 
     for world in data["worlds"]:
@@ -63,27 +59,22 @@ def _migrate_v9(data: dict) -> dict:
             for node in area["nodes"].values():
                 node["layers"] = ["default"]
 
-    return data
 
-
-def _migrate_v10(data: dict) -> dict:
+def _migrate_v10(data: dict, game: RandovaniaGame) -> None:
     for dock_type in data["dock_weakness_database"]["types"].values():
         dock_type["dock_rando"] = {"unlocked": None, "locked": None, "change_from": [], "change_to": []}
 
-    return data
 
-
-def _migrate_v11(data: dict) -> dict:
+def _migrate_v11(data: dict, game: RandovaniaGame) -> None:
     data["dock_weakness_database"]["dock_rando"] = {
         "enable_one_way": False,
         "force_change_two_way": False,
         "resolver_attempts": 125,
         "to_shuffle_proportion": 1.0,
     }
-    return data
 
 
-def _migrate_v12(data: dict) -> dict:
+def _migrate_v12(data: dict, game: RandovaniaGame) -> None:
     for world in data["worlds"]:
         for area in world["areas"].values():
             for node in area["nodes"].values():
@@ -92,7 +83,7 @@ def _migrate_v12(data: dict) -> dict:
                     node["network"] = "default"
 
                     node["requirement_to_activate"] = {"type": "and", "data": {"comment": None, "items": []}}
-                    if data["game"] == "prime3":
+                    if game == RandovaniaGame.METROID_PRIME_CORRUPTION:
                         node["requirement_to_activate"]["data"]["items"].append(
                             {
                                 "type": "resource",
@@ -106,7 +97,7 @@ def _migrate_v12(data: dict) -> dict:
 
                     required_items = []
 
-                    if data["game"] == "prime2":
+                    if game == RandovaniaGame.METROID_PRIME_ECHOES:
                         required_items.append("Scan")
 
                     if lore_type == "requires-item":
@@ -129,10 +120,8 @@ def _migrate_v12(data: dict) -> dict:
                         },
                     }
 
-    return data
 
-
-def _migrate_v13(data: dict) -> dict:
+def _migrate_v13(data: dict, game: RandovaniaGame) -> None:
     for world in data["worlds"]:
         for area_name, area in world["areas"].items():
             old_valid_starting_location = area["valid_starting_location"]
@@ -148,25 +137,21 @@ def _migrate_v13(data: dict) -> dict:
                 else:
                     node["valid_starting_location"] = False
             del area["valid_starting_location"]
-    return data
 
 
-def _migrate_v14(data: dict) -> dict:
+def _migrate_v14(data: dict, game: RandovaniaGame) -> None:
     for world in data["worlds"]:
         for area_name, area in world["areas"].items():
             for node_name, node in area["nodes"].items():
                 if node["node_type"] == "pickup":
                     node["location_category"] = "major" if node.pop("major_location") else "minor"
 
-    return data
 
-
-def _migrate_v15(data: dict) -> dict:
+def _migrate_v15(data: dict, game: RandovaniaGame) -> None:
     del data["dock_weakness_database"]["dock_rando"]["enable_one_way"]
-    return data
 
 
-def _migrate_v16(data: dict) -> dict:
+def _migrate_v16(data: dict, game: RandovaniaGame) -> None:
     for world in data["worlds"]:
         for area_name, area in world["areas"].items():
             for node_name, node in area["nodes"].items():
@@ -174,10 +159,8 @@ def _migrate_v16(data: dict) -> dict:
                     node["exclude_from_dock_rando"] = node["extra"].pop("exclude_from_dock_rando", False)
                     node["incompatible_dock_weaknesses"] = node["extra"].pop("excluded_dock_weaknesses", [])
 
-    return data
 
-
-def _migrate_v17(data: dict) -> dict:
+def _migrate_v17(data: dict, game: RandovaniaGame) -> None:
     if "worlds" in data:
         data["regions"] = data.pop("worlds")
 
@@ -196,19 +179,15 @@ def _migrate_v17(data: dict) -> dict:
                 elif node["node_type"] == "teleporter":
                     _fix(node["destination"])
 
-    return data
 
-
-def _migrate_v18(data: dict) -> dict:
+def _migrate_v18(data: dict, game: RandovaniaGame) -> None:
     data["resource_database"].pop("item_percentage_index")
     data["resource_database"].pop("multiworld_magic_item_index")
-    return data
 
 
-def _migrate_v19(data: dict) -> dict:
-    game = data["game"]
-    if game in {"blank", "cave_story", "am2r"}:
-        return data
+def _migrate_v19(data: dict, game: RandovaniaGame) -> None:
+    if game in {RandovaniaGame.BLANK, RandovaniaGame.CAVE_STORY, RandovaniaGame.AM2R}:
+        return
 
     # changes TeleporterNode to DockNode
     def change_node(node_to_change: dict, regions_data: dict) -> None:
@@ -232,7 +211,7 @@ def _migrate_v19(data: dict) -> dict:
         node_to_change["dock_type"] = "teleporter"
 
     # adds the required weaknesses
-    def add_dock_weakness(data: dict, game: str) -> None:
+    def add_dock_weakness(data: dict, _game: RandovaniaGame) -> None:
         teleporter_weakness = {
             "name": "Teleporter",
             "extra": {"is_teleporter": True, "ignore_for_hints": True},
@@ -247,7 +226,7 @@ def _migrate_v19(data: dict) -> dict:
         }
 
         data["dock_weakness_database"]["types"]["teleporter"] = teleporter_weakness
-        if game == "prime2":
+        if _game == RandovaniaGame.METROID_PRIME_ECHOES:
             data["dock_weakness_database"]["types"]["portal"]["extra"]["ignore_for_hints"] = True
 
     regions_data = data["regions"]
@@ -265,24 +244,18 @@ def _migrate_v19(data: dict) -> dict:
 
     add_dock_weakness(data, game)
 
-    return data
 
-
-def _migrate_v20(data: dict) -> dict:
+def _migrate_v20(data: dict, game: RandovaniaGame) -> None:
     for type_data in data["dock_weakness_database"]["types"].values():
         if type_data["dock_rando"] is not None and type_data["dock_rando"]["locked"] is None:
             type_data["dock_rando"] = None
 
-    return data
 
-
-def _migrate_v21(data: dict) -> dict:
+def _migrate_v21(data: dict, game: RandovaniaGame) -> None:
     data["used_trick_levels"] = None
 
-    return data
 
-
-def _migrate_v22(data: dict) -> dict:
+def _migrate_v22(data: dict, game: RandovaniaGame) -> None:
     data["resource_database"]["requirement_template"] = {
         name: {
             "display_name": name,
@@ -291,19 +264,15 @@ def _migrate_v22(data: dict) -> dict:
         for name, requirement in data["resource_database"]["requirement_template"].items()
     }
 
-    return data
 
-
-def _migrate_v23(data: dict) -> dict:
+def _migrate_v23(data: dict, game: RandovaniaGame) -> None:
     for trick in data["resource_database"]["tricks"].values():
         trick["require_documentation_above"] = 0
 
-    return data
 
-
-def _migrate_v24(data: dict) -> dict:
+def _migrate_v24(data: dict, game: RandovaniaGame) -> None:
     regions_data = data["regions"]
-    migration_dict = migration_data.get_raw_data(RandovaniaGame(data["game"]))
+    migration_dict = migration_data.get_raw_data(game)
     elevator_custom_name: dict[str, str] | None = migration_dict.get("elevator_custom_names", None)
 
     for region in regions_data:
@@ -319,17 +288,23 @@ def _migrate_v24(data: dict) -> dict:
                     else:
                         node["ui_custom_name"] = None
 
-    return data
 
-
-def _migrate_v25(data: dict) -> dict:
+def _migrate_v25(data: dict, game: RandovaniaGame) -> None:
     data["flatten_to_set_on_patch"] = False
-    return data
 
 
-def _migrate_v26(data: dict) -> dict:
+def _migrate_v26(data: dict, game: RandovaniaGame) -> None:
     data.pop("initial_states")
-    return data
+
+
+def _migrate_v27(data: dict, game: RandovaniaGame) -> None:
+    data["hint_feature_database"] = {}
+    for region in data["regions"]:
+        for area in region["areas"].values():
+            area["hint_features"] = []
+            for node in area["nodes"].values():
+                if node["node_type"] == "pickup":
+                    node["hint_features"] = []
 
 
 _MIGRATIONS = [
@@ -359,9 +334,10 @@ _MIGRATIONS = [
     _migrate_v24,
     _migrate_v25,  # flatten_to_set_on_patch
     _migrate_v26,  # remove initial_states
+    _migrate_v27,  # add hint features
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
 
-def migrate_to_current(data: dict) -> dict:
-    return migration_lib.apply_migrations(data, _MIGRATIONS, copy_before_migrating=True)
+def migrate_to_current(data: dict, game: RandovaniaGame) -> dict:
+    return migration_lib.apply_migrations_with_game(data, _MIGRATIONS, game, copy_before_migrating=True)

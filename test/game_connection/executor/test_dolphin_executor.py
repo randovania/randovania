@@ -53,8 +53,7 @@ async def test_connect_pid_fail(executor: DolphinExecutor):
 
     # Assert
     assert result == (
-        "Another Randovania is connected to Dolphin already. Make sure you only have one instance of "
-        "Randovania running"
+        "Another Randovania is connected to Dolphin already. Make sure you only have one instance of Randovania running"
     )
     executor._pid.create.assert_called_once_with()
     executor.dolphin.hook.assert_not_called()

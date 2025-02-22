@@ -11,6 +11,7 @@
     "areas": {
         "Mines Intersection Terminal": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -2400.0,
@@ -106,6 +107,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 94,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Next to Upper Pickup": {
                             "type": "and",
@@ -742,29 +744,12 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": "Super Jump + UE:",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SuperJump",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "UnmorphExtend",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "tricks",
+                                            "name": "SuperJump",
+                                            "amount": 2,
+                                            "negate": false
                                         }
                                     },
                                     {
@@ -835,6 +820,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 101,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Space Jump Chamber (Bottom)": {
                             "type": "and",
@@ -1004,17 +990,17 @@
                                             "comment": null,
                                             "items": [
                                                 {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "PBAmmo",
+                                                        "name": "Wave",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Shoot Wave Beam"
                                                 }
                                             ]
                                         }
@@ -1512,6 +1498,7 @@
         },
         "Super Missile Chamber": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 2500.0,
@@ -1559,6 +1546,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 98,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Mines Intersection Terminal (Top)": {
                             "type": "or",
@@ -1804,6 +1792,7 @@
         },
         "Pink Crystal Preserve": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -8850.0,
@@ -1851,6 +1840,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 96,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Under Pickup": {
                             "type": "and",
@@ -2920,13 +2910,8 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Spider",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Use Spider Ball"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -3035,6 +3020,7 @@
         },
         "Transport to Central Caves": {
             "default_node": "Elevator to Area 4 Central Caves",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -7800.0,
@@ -3154,6 +3140,7 @@
         },
         "Lava Reservoir": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -2400.0,
@@ -3201,6 +3188,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 97,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Gemstone Gorge": {
                             "type": "and",
@@ -3220,12 +3208,29 @@
                             }
                         },
                         "Door to Mines Intersection Terminal": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Gravity",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3364,6 +3369,15 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -3374,6 +3388,7 @@
         },
         "Dual Pond Alcove": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 1900.0,
@@ -3421,6 +3436,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 92,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Tunnel to Mines Intersection Terminal": {
                             "type": "and",
@@ -3537,6 +3553,7 @@
         },
         "Zeta Arena": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -11400.0,
@@ -3839,6 +3856,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 203,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -3853,6 +3871,7 @@
         },
         "Gamma Arena": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 14400.0,
@@ -3980,6 +3999,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 198,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -4099,6 +4119,7 @@
         },
         "Gawron Groove": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 5500.0,
@@ -4248,12 +4269,29 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "UnmorphExtend",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Morph",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "UnmorphExtend",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -4367,6 +4405,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 100,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Green Crystal Dugout": {
                             "type": "and",
@@ -4468,15 +4507,6 @@
                                         "data": {
                                             "type": "items",
                                             "name": "SMAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -4829,6 +4859,7 @@
         },
         "Basalt Basin": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 11400.0,
@@ -5017,6 +5048,7 @@
         },
         "Mines Entrance": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -5500.0,
@@ -5208,6 +5240,7 @@
         },
         "Tsumuri Tunnel": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -3100.0,
@@ -5318,6 +5351,7 @@
         },
         "Mines Teleporter": {
             "default_node": "Teleporter",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -1900.0,
@@ -5805,6 +5839,7 @@
         },
         "Green Crystal Dugout": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 2500.0,
@@ -5945,6 +5980,7 @@
         },
         "Gemstone Gorge": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -5100.0,
@@ -6000,6 +6036,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 93,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Mines Intersection Terminal": {
                             "type": "and",
@@ -6361,6 +6398,7 @@
         },
         "Space Jump Chamber": {
             "default_node": "Bottom Floor",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 5000.0,
@@ -6436,6 +6474,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 99,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Bottom Floor": {
                             "type": "and",
@@ -7017,6 +7056,7 @@
         },
         "Diggernaut Excavation Tunnels": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -4000.0,
@@ -7092,6 +7132,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 89,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Top Level": {
                             "type": "or",
@@ -7156,6 +7197,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 90,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Middle Level": {
                             "type": "and",
@@ -7233,6 +7275,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 91,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Next to Middle item": {
                             "type": "or",
@@ -7267,6 +7310,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 95,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Bottom Level": {
                             "type": "template",
@@ -7885,12 +7929,29 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "UnmorphExtend",
-                                                                    "amount": 2,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Morph",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "UnmorphExtend",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]

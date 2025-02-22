@@ -11,6 +11,7 @@
     "areas": {
         "Tower Exterior": {
             "default_node": "Elevator to Area 5 Tower Interior",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -11000.0,
@@ -166,6 +167,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 111,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Overgrown Maze": {
                             "type": "resource",
@@ -227,6 +229,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 114,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Underwater": {
                             "type": "resource",
@@ -258,6 +261,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 115,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Save Station Left": {
                             "type": "resource",
@@ -1627,6 +1631,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 118,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Overgrown Maze": {
                             "type": "or",
@@ -1929,13 +1934,8 @@
                                                                 "data": "Lay Bomb"
                                                             },
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spring",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Use Spring Ball"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -2289,13 +2289,8 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Spring",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
+                                                                                        "type": "template",
+                                                                                        "data": "Use Spring Ball"
                                                                                     }
                                                                                 ]
                                                                             }
@@ -2329,6 +2324,49 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
+                        "Pickup (Super Missile Tank Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Spider Ball Clip on teleporter and do full spin jump to the left - https://youtu.be/ivMAaSUWJkk",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SpiderClip",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "OoB",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Teleporter": {
                             "type": "and",
                             "data": {
@@ -2504,7 +2542,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://youtu.be/olF7Zn1G8xU",
+                                            "comment": "Ice Clip: https://youtu.be/olF7Zn1G8xU",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2599,6 +2637,15 @@
                                                                 }
                                                             }
                                                         ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "OoB",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -3051,6 +3098,7 @@
         },
         "Overgrown Maze": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -4900.0,
@@ -3106,6 +3154,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 110,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Pickup (Power Bomb Tank)": {
                             "type": "and",
@@ -3290,6 +3339,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 116,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Pickup (Energy Tank)": {
                             "type": "and",
@@ -3563,6 +3613,7 @@
         },
         "Screw Attack Chamber": {
             "default_node": "Next to Pickup",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 200.0,
@@ -3610,6 +3661,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 117,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Next to Pickup": {
                             "type": "and",
@@ -3708,7 +3760,7 @@
                         "default"
                     ],
                     "extra": {
-                        "start_point_actor_name": "ST_Checkpoint_005"
+                        "start_point_actor_name": "ST_CheckPoint_005"
                     },
                     "valid_starting_location": true,
                     "connections": {
@@ -3741,6 +3793,7 @@
         },
         "Zeta Arena Access": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -2200.0,
@@ -3836,13 +3889,8 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spider",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Use Spider Ball"
                                                             },
                                                             {
                                                                 "type": "and",
@@ -4101,6 +4149,15 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "OoB",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -4185,6 +4242,7 @@
         },
         "Red Plant Maze": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 5200.0,
@@ -4232,6 +4290,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 112,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Tower Exterior": {
                             "type": "and",
@@ -4453,6 +4512,7 @@
         },
         "Transport to Tower Interior West": {
             "default_node": "Elevator to Area 5 Tower Interior",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -4700.0,
@@ -4564,6 +4624,7 @@
         },
         "Zeta Arena": {
             "default_node": "Room Center",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -4700.0,
@@ -4784,6 +4845,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 204,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -4798,6 +4860,7 @@
         },
         "Paraby Parlor": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -4500.0,
@@ -4941,6 +5004,7 @@
         },
         "Gamma Arena": {
             "default_node": "Inside Arena",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 4300.0,
@@ -4996,6 +5060,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 113,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Bottom of Climb": {
                             "type": "and",
@@ -5987,6 +6052,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 201,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Inside Arena": {
                             "type": "and",
@@ -6140,6 +6206,7 @@
         },
         "Screw Attack Chamber Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -2200.0,
@@ -6482,6 +6549,7 @@
         },
         "Gamma+ Arena Access": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 7600.0,
@@ -6991,6 +7059,7 @@
         },
         "Gamma+ Arena": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 10250.0,
@@ -7221,6 +7290,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 200,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Gamma+ Arena Access": {
                             "type": "and",

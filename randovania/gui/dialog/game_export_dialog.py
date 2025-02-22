@@ -2,12 +2,13 @@ from __future__ import annotations
 
 import os.path
 from pathlib import Path
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QMessageBox
 
 from randovania.gui.lib import async_dialog, common_qt_lib
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.layout_description import LayoutDescription
 
 if TYPE_CHECKING:
@@ -18,25 +19,23 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options, PerGameOptions
     from randovania.patching.patchers.exceptions import UnableToExportError
 
-T = TypeVar("T")
 
-
-def _try_get_field(obj, field_name: str, cls: type[T]) -> T | None:
+def _try_get_field[T](obj, field_name: str, cls: type[T]) -> T | None:
     return getattr(obj, field_name, None)
 
 
-class GameExportDialog(QtWidgets.QDialog):
+class GameExportDialog[Configuration: BaseConfiguration](QtWidgets.QDialog):
     _options: Options
-    _patch_data: dict
     _word_hash: str
     _has_spoiler: bool
     _games: list[RandovaniaGame]
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
+    def __init__(
+        self, options: Options, configuration: Configuration, word_hash: str, spoiler: bool, games: list[RandovaniaGame]
+    ):
         super().__init__()
         common_qt_lib.set_default_window_icon(self)
         self._options = options
-        self._patch_data = patch_data
         self._word_hash = word_hash
         self._has_spoiler = spoiler
         self._games = games

@@ -23,6 +23,7 @@ def _gui() -> randovania.game.gui.GameGui:
     )
     from randovania.games.prime2 import gui
     from randovania.games.prime2.layout import progressive_items
+    from randovania.gui.game_details.hint_details_tab import HintDetailsTab
 
     return randovania.game.gui.GameGui(
         tab_provider=gui.prime2_preset_tabs,
@@ -33,7 +34,7 @@ def _gui() -> randovania.game.gui.GameGui:
             PrimeTrilogyTeleporterDetailsTab,
             gui.TranslatorGateDetailsTab,
             gui.PortalDetailsTab,
-            gui.EchoesHintDetailsTab,
+            HintDetailsTab,
         ),
         game_tab=gui.EchoesGameTabWidget,
     )
@@ -125,6 +126,21 @@ This means you need Boost Ball to fight Spider Guardian.""",
         (
             "Why can't I use the Kinetic Orb Cannon in Sanctuary Entrance?",
             "The morph cannon will only be active once the scan post has been scanned and the room has been reloaded.",
+        ),
+        (
+            "How do I use the light energy transports?",
+            """To use a light energy transport, simply enter the light energy/holograms with Light Suit. The following rooms behave differently and do not require Light Suit, and may have additional requirements in order to use the transports:
+
+#### Energy Controllers
+The light energy transports that are unlocked upon returning the Sanctuary Energy and going back to Main Energy Controller.
+
+#### Sky Temple Gateway (Sky Temple Grounds)
+
+The light energy transport unlocked when returning all the Sky Temple Keys.
+
+#### Sky Temple Energy Controller (Sky Temple)
+
+Taking the transport hologram at the center of this room.""",
         ),
     ],
     web_info=randovania.game.web_info.GameWebInfo(

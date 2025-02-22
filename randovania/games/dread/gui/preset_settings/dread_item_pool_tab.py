@@ -14,7 +14,7 @@ from randovania.layout.base.standard_pickup_state import DEFAULT_MAXIMUM_SHUFFLE
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
@@ -27,14 +27,14 @@ class DreadPresetItemPool(PresetItemPool):
 
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
 
-        self._energy_item_to_starting_spinbox = {}
-        self._energy_item_to_shuffled_spinbox = {}
+        self._energy_item_to_starting_spinbox: dict[StandardPickupDefinition, ScrollProtectedSpinBox] = {}
+        self._energy_item_to_shuffled_spinbox: dict[StandardPickupDefinition, ScrollProtectedSpinBox] = {}
         self._energy_tank_item = pickup_database.standard_pickups["Energy Tank"]
         self._energy_part_item = pickup_database.standard_pickups["Energy Part"]
         self._create_energy_box()
         self._create_pickup_style_box(size_policy)
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         super().on_preset_changed(preset)
         layout = preset.configuration
         major_configuration = layout.standard_pickup_configuration
@@ -47,11 +47,11 @@ class DreadPresetItemPool(PresetItemPool):
             self._energy_item_to_starting_spinbox[item].setValue(state.num_included_in_starting_pickups)
             self._energy_item_to_shuffled_spinbox[item].setValue(state.num_shuffled_pickups)
 
-    def _create_pickup_style_box(self, size_policy):
+    def _create_pickup_style_box(self, size_policy: QtWidgets.QSizePolicy) -> None:
         self.pickup_style_widget = PickupStyleWidget(None, self._editor)
         self.item_pool_layout.insertWidget(1, self.pickup_style_widget)
 
-    def _create_energy_box(self):
+    def _create_energy_box(self) -> None:
         category_box, category_layout, _ = self._boxes_for_category["energy_tank"]
         game_description = default_database.game_description_for(self.game)
 
@@ -81,7 +81,7 @@ class DreadPresetItemPool(PresetItemPool):
 
             row += 1
 
-    def _on_update_starting(self, value: int, item: StandardPickupDefinition):
+    def _on_update_starting(self, value: int, item: StandardPickupDefinition) -> None:
         with self._editor as options:
             major_configuration = options.standard_pickup_configuration
             options.standard_pickup_configuration = major_configuration.replace_state_for_pickup(
@@ -89,7 +89,7 @@ class DreadPresetItemPool(PresetItemPool):
                 dataclasses.replace(major_configuration.pickups_state[item], num_included_in_starting_pickups=value),
             )
 
-    def _on_update_shuffled(self, value: int, item: StandardPickupDefinition):
+    def _on_update_shuffled(self, value: int, item: StandardPickupDefinition) -> None:
         with self._editor as options:
             major_configuration = options.standard_pickup_configuration
             options.standard_pickup_configuration = major_configuration.replace_state_for_pickup(

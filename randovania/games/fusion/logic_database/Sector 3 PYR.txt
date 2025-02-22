@@ -55,7 +55,7 @@ Extra - room_id: [0]
 Entrance Save Room
 Extra - map_name: Sector 31
 Extra - room_id: [1]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
@@ -147,6 +147,7 @@ Extra - room_id: [3]
   > Pickup (Hidden Missile Tank)
       Any of the following:
           All of the following:
+              # Eliminate Sidehoppers and get up
               # Deal with Sidehoppers
               Can Freeze Enemies With Any Weapon or Can Kill Tough Beam-Resistant Enemy
               Any of the following:
@@ -155,21 +156,23 @@ Extra - room_id: [3]
                   # Shoot item, then WJ up: https://youtu.be/jknWfAVlMEo
                   Wall Jump (Beginner)
                   # Charge Spark above: https://youtu.be/Jn-di994Ch8
-                  Speed Booster and Shinespark Tricks (Intermediate)
+                  Speed Booster and Shinespark Tricks (Advanced)
           # Freeze Sidehoppers and use them to get up: https://youtu.be/fzuFw1yJVTI
           Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
+          # Kill enemies with shinespark and then get up. Respark at the right for a while to lure the sidehoppers to jump to the right.
+          Speed Booster and Shinespark Tricks (Advanced)
   > Door to Entrance Lobby
       Speed Booster
   > Door to Level 2 Security Room
       Trivial
   > Other to Level 2 Security Room
       All of the following:
-          Morph Ball and Speed Booster
+          Speed Booster and Can Use Any Bombs
           Any of the following:
               # Need a bounce item to reach top tunnel
-              Can Bounce in Ball and Can Use Any Bombs
+              Can Bounce in Ball
               # Trick to break the front speedblocks without needing a bounce item: https://youtu.be/Z8tPaJjxEvE
-              Shinespark Tricks (Intermediate) and Can Use Power Bombs
+              Shinespark Tricks (Intermediate)
 
 ----------------
 Level 2 Security Room
@@ -219,7 +222,7 @@ Extra - room_id: [5]
           # Evade Fune
           Morph Ball or Wave Beam
           # Tank damage from Fune
-          Normal Damage ≥ 80
+          Damage Boosts (Beginner) and Normal Damage ≥ 80
           # Kill Fune
           Can Kill Tough Beam-Resistant Enemy
           # Charge shinespark from Entrance Lobby and kill Fune: https://youtu.be/3sm2XhRsRRI
@@ -254,6 +257,8 @@ Extra - room_id: [6, 24]
       Can Bounce in Ball and Can Use Any Bombs
   > Door to Red Tower
       Can Use Any Bombs
+  > Other to Namihe's Lair
+      Morph Ball and Can Break Single Bomb Blocks
 
 > Door to Checkpoint Crossing; Heals? False
   * Layers: default
@@ -340,10 +345,16 @@ Extra - room_id: [8]
   * L0 Hatch to Deserted Runway/Door to Alcove
   * Extra - door_idx: (18,)
   > Above E-Tank
-      Level 0 Keycard and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+      All of the following:
+          Level 0 Keycard and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+          # Deal with Sidehopper
+          Combat (Advanced) or Can Kill Tough Beam-Resistant Enemy
   > Below E-Tank
-      # Store shinespark from adjacent room: https://youtu.be/OzwrRjDZKXs
-      Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Kill Tough Beam-Resistant Enemy
+      All of the following:
+          # Store shinespark from adjacent room: https://youtu.be/OzwrRjDZKXs
+          Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+          # Deal with Sidehopper
+          Combat (Advanced) or Can Kill Tough Beam-Resistant Enemy
   > Bottom Right
       Trivial
 
@@ -417,7 +428,7 @@ Extra - room_id: [8]
           # HJ and Wall Jumps: https://youtu.be/vIQJEjCc5n0
           Hi-Jump and Wall Jump (Intermediate)
           # Single Wall Jump: https://youtu.be/Ge8yZuaVguo&t=21
-          Wall Jump (Beginner) and Can Single Walljump
+          Wall Jump (Intermediate) and Can Single Walljump
   > Below E-Tank
       All of the following:
           Can Break Single Bomb Blocks
@@ -452,9 +463,12 @@ Extra - room_id: [9]
   > Other to B.O.X. Arena
       Any of the following:
           # Get past enemies
-          Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
+          Can Kill Tough Beam-Resistant Enemy
+          # Damageless: https://youtu.be/Uh3011dLFT4
+          Combat (Intermediate)
+          # Damage boost through sidehoppers
           Damage Boosts (Intermediate) and Normal Damage ≥ 150
-  > Door to Chute Access
+  > Other to Chute Access
       Screw Attack
   > Door to Glass Tube to Sector 1 (SRX)
       All of the following:
@@ -472,12 +486,15 @@ Extra - room_id: [9]
   > Door to Alcove
       Any of the following:
           # Get past enemies
-          Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
+          Can Kill Tough Beam-Resistant Enemy
+          # Damageless: https://youtu.be/hTpd4NYrqiA
+          Combat (Intermediate)
+          # Damage boost through sidehoppers
           Damage Boosts (Intermediate) and Normal Damage ≥ 150
 
-> Door to Chute Access; Heals? False
+> Other to Chute Access; Heals? False
   * Layers: default
-  * Open Hatch to Chute Access/Other to Deserted Runway
+  * Open Passage to Chute Access/Other to Deserted Runway
   * Extra - door_idx: (83,)
   > Door to Alcove
       Screw Attack
@@ -650,7 +667,7 @@ Extra - room_id: [14]
                   Hi-Jump
                   # With WJ: https://youtu.be/vxQS1_ohmS4
                   Wall Jump (Beginner)
-          # Jump Extend SWJ Method
+          # Kill Funes, SWJ on right wall and jump extend to the left: https://youtu.be/oIyLsGRcNj4
           Jump Extends (Expert) and Wall Jump (Intermediate) and Can Kill Tough Beam-Resistant Enemy and Can Single Walljump
 
 > Door to Pyrochamber; Heals? False
@@ -675,8 +692,11 @@ Extra - room_id: [15]
               Varia Suit
               Damage Runs (Intermediate) and Heat Damage ≥ 160
           Any of the following:
-              # Deal with Namihe
-              Combat (Intermediate) or Can Freeze Enemies With Any Weapon or Can Kill Tough Beam-Resistant Enemy
+              # Deal with Namihe.
+              Can Freeze Enemies With Any Weapon or Can Kill Tough Beam-Resistant Enemy
+              # Damageless: https://youtu.be/HJT_F989zzI
+              Combat (Advanced)
+              # Boost past the namihe
               Damage Boosts (Beginner) and Normal Damage ≥ 75
 
 > Door to Boiler Access; Heals? False
@@ -691,8 +711,11 @@ Extra - room_id: [15]
               Damage Runs (Intermediate) and Heat Damage ≥ 150
           Any of the following:
               # Deal with Namihe
-              Combat (Intermediate) or Can Freeze Enemies With Any Weapon or Can Kill Tough Beam-Resistant Enemy
+              Can Freeze Enemies With Any Weapon or Can Kill Tough Beam-Resistant Enemy
+              # Damage boost past Namihe
               Damage Boosts (Beginner) and Normal Damage ≥ 75
+              # Damageless: https://youtu.be/gaBEq7WaHM4
+              Morph Ball and Combat (Intermediate)
 
 ----------------
 Boiler Access
@@ -848,7 +871,7 @@ Extra - room_id: [19]
                   Any of the following:
                       All of the following:
                           # From Lava: https://youtu.be/7x2j8QRAnCw
-                          Gravity Suit
+                          Gravity Suit and Screw Attack
                           Any of the following:
                               # Damage Reqs
                               Varia Suit
@@ -967,9 +990,8 @@ Extra - room_id: [23, 18]
       After Boss B.O.X. Defeated
   > Event - B.O.X.
       All of the following:
-          # TODO: xbox kills box
           Any of the following:
-              # Weapon Requirements
+              # B.O.X Weapon Requirements (300HP)
               Charge Beam
               Missiles ≥ 15 and 45 DMG Missiles
               Missiles ≥ 25 and 20 DMG Missiles
@@ -1009,7 +1031,7 @@ Extra - room_id: [25]
       After Boss Wide Core-X Defeated
   > Event - Wide Core-X
       All of the following:
-          # Core-X Requirements
+          # Core-X Requirements (160 HP)
           Missiles
           Combat (Beginner) or 20 DMG Missiles
           Any of the following:
@@ -1044,6 +1066,7 @@ Extra - room_id: [25]
 Entrance Recharge Room
 Extra - map_name: Sector 326
 Extra - room_id: [26]
+Extra - unlocked_save_recharge_station: True
 > Door to Entrance Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Save Room/Door to Entrance Recharge Room
@@ -1088,7 +1111,7 @@ Extra - room_id: [27]
                   Damage Runs (Intermediate) and Heat Damage ≥ 100
           All of the following:
               # Shinespark Across: https://youtu.be/3Ua3Z44EpUY
-              Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+              Level 0 Keycard and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
               Any of the following:
                   # Heat Reqs
                   Varia Suit
@@ -1113,6 +1136,8 @@ Extra - room_id: [27]
                   Damage Runs (Advanced) and Heat Damage ≥ 90 and Lava Damage ≥ 250
                   # Get past lava flares
                   Movement (Advanced) or Normal Damage ≥ 150
+          # Stay on the right side to slowly lure sidehoppers to you
+          Varia Suit and Combat (Advanced) and Can Kill Tough Beam-Resistant Enemy
 
 > Door to Fiery Storage; Heals? False
   * Layers: default
@@ -1133,7 +1158,7 @@ Extra - room_id: [27]
                   Damage Runs (Intermediate) and Heat Damage ≥ 100
           All of the following:
               # Shinespark Across: https://youtu.be/QASI5KxDmj8
-              Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Break Single Bomb Blocks
+              Level 0 Keycard and Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Break Single Bomb Blocks
               Any of the following:
                   # Heat Reqs
                   Varia Suit
@@ -1158,6 +1183,8 @@ Extra - room_id: [27]
                   Damage Runs (Advanced) and Heat Damage ≥ 90 and Lava Damage ≥ 250
                   # Get past lava flares
                   Movement (Advanced) or Normal Damage ≥ 150
+          # Stay on the left side to slowly lure Sidehoppers to you
+          Varia Suit and Combat (Advanced) and Can Kill Tough Beam-Resistant Enemy
 
 ----------------
 Fiery Storage
@@ -1209,7 +1236,7 @@ Extra - room_id: [28]
           Any of the following:
               Space Jump or Can Activate Pillar
               # Wall Jump and Shinespark straight up - https://youtu.be/Pvv2dYRZAj4
-              Shinespark Tricks (Advanced) and Wall Jump (Intermediate)
+              Level 0 Keycard and Shinespark Tricks (Advanced) and Wall Jump (Intermediate) and Disabled Door Lock Rando
               # Wall Jump and ignore the pillar - https://youtu.be/FJxCd30N2J4
               Wall Jump (Expert)
               # Single Wall Jump up to the E-Tank - https://youtu.be/_vfp_MNlHws
@@ -1217,7 +1244,7 @@ Extra - room_id: [28]
           Any of the following:
               # Account for Door Lock Rando
               Level 0 Keycard and Disabled Door Lock Rando
-              # If Door Lock Rando you may be forced to do the spark from the shortcut, the SA blocks do not reform
+              # Door Lock Rando may force you to do the spark from the shortcut: https://youtu.be/I5a5RUqrzn4
               Shinespark Tricks (Advanced)
   > Door to Monkey Bars of Fire
       Can Break Single Bomb Blocks
@@ -1242,6 +1269,7 @@ Extra - room_id: [30]
               Have Any Jump Upgrade
               # Same height as grabbing item: https://youtu.be/T8CZbxC6r6Y
               Jump Bombjump (Expert) and Can Use Bombs
+              # SWJ up
               Wall Jump (Beginner) and Can Single Walljump
 
 > Door to Red Tower; Heals? False
@@ -1256,7 +1284,7 @@ Extra - room_id: [30]
               # Kill Namihe then JBJ to ledge: https://youtu.be/T8CZbxC6r6Y
               Jump Bombjump (Expert) and Can Kill Tough Beam-Resistant Enemy and Can Use Bombs
               # Grab ledge with SWJ
-              Wall Jump (Intermediate) and Can Single Walljump
+              Wall Jump (Intermediate) and Can Kill Tough Beam-Resistant Enemy and Can Single Walljump
 
 > Other to Bob's Abode; Heals? False
   * Layers: default
@@ -1277,6 +1305,7 @@ Extra - room_id: [30]
 Data Recharge Room
 Extra - map_name: Sector 331
 Extra - room_id: [31]
+Extra - unlocked_save_recharge_station: True
 > Door to Data Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Data Save Room/Door to Data Recharge Room
@@ -1302,7 +1331,7 @@ Extra - room_id: [31]
 Data Save Room
 Extra - map_name: Sector 332
 Extra - room_id: [32]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to B.O.X. Access; Heals? False
   * Layers: default
   * L0 Hatch to B.O.X. Access/Door to Data Save Room
@@ -1392,10 +1421,15 @@ Extra - room_id: [34]
           Any of the following:
               # Need beams to kill the Owtches
               Charge Beam
-              Plasma Beam and Wide Beam
+              All of the following:
+                  Plasma Beam
+                  Wave Beam or Wide Beam
               All of the following:
                   Combat (Intermediate)
-                  Plasma Beam or Wave Beam or Wide Beam
+                  Any of the following:
+                      Wave Beam or Wide Beam
+                      # Very precise and needs lots of luck
+                      Plasma Beam and Combat (Expert)
 
 > Door to Sova Processing (Upper); Heals? False
   * Layers: default
@@ -1480,16 +1514,22 @@ Extra - room_id: [36]
   * Extra - door_idx: (81,)
   > Other to Deserted Runway
       Any of the following:
-          Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
+          Can Kill Tough Beam-Resistant Enemy
+          # Damageless: https://youtu.be/_3o2ESgGXjg
+          Combat (Intermediate)
+          # Damage boost through sidehoppers
           Damage Boosts (Beginner) and Normal Damage ≥ 110
 
 > Other to Deserted Runway; Heals? False
   * Layers: default
-  * Open Passage to Deserted Runway/Door to Chute Access
+  * Open Passage to Deserted Runway/Other to Chute Access
   * Extra - door_idx: (82,)
   > Door to Garbage Chute
       Any of the following:
-          Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
+          Can Kill Tough Beam-Resistant Enemy
+          # Damageless: https://youtu.be/cYxWd3P7R5c
+          Combat (Intermediate)
+          # Damage boost through sidehoppers
           Damage Boosts (Beginner) and Normal Damage ≥ 110
 
 ----------------
@@ -1514,11 +1554,13 @@ Extra - room_id: [37]
       Any of the following:
           Can Use Power Bombs
           All of the following:
+              # Get up with Bombs
               Can Use Bombs
               Any of the following:
                   Can Use Springball
                   # JBJ: https://youtu.be/xyR9PAwAMYM
                   Jump Bombjump (Expert)
+          # Get up with Screw
           Screw Attack and Knowledge (Beginner)
   > Area Transition to Sector 5 (ARC)
       Trivial

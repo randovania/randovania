@@ -6,6 +6,7 @@
     "areas": {
         "Entrance Lobby": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 50",
                 "room_id": [
@@ -229,12 +230,13 @@
         },
         "Entrance Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 51",
                 "room_id": [
                     1
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Entrance Recharge Room": {
@@ -355,6 +357,7 @@
         },
         "Entrance Navigation Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 52",
                 "room_id": [
@@ -499,6 +502,7 @@
         },
         "Nightmare Training Grounds": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 53",
                 "room_id": [
@@ -729,7 +733,7 @@
                         "Door to Gerubus Gully": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO",
+                                "comment": null,
                                 "items": []
                             }
                         }
@@ -790,7 +794,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Freeze Chute Leeches",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -811,6 +815,15 @@
                                                                 }
                                                             },
                                                             {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
                                                                 "type": "and",
                                                                 "data": {
                                                                     "comment": null,
@@ -818,8 +831,17 @@
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
-                                                                                "type": "items",
-                                                                                "name": "Hi-Jump",
+                                                                                "type": "tricks",
+                                                                                "name": "WallJump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "StandOnFrozenEnemies",
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
@@ -842,6 +864,7 @@
         },
         "Training Aerie": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 54",
                 "room_id": [
@@ -870,6 +893,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 73,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Nightmare Training Grounds": {
                             "type": "and",
@@ -901,6 +925,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 74,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Nightmare Training Grounds": {
                             "type": "and",
@@ -981,6 +1006,7 @@
         },
         "Arctic Containment": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 57",
                 "room_id": [
@@ -1142,7 +1168,7 @@
                         "Door to Arctic Underside": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Charge in previous room",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1172,32 +1198,12 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "VariaSuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Needed for charging in previous room",
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Kill PB Geron"
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     },
                                     {
@@ -1481,7 +1487,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get up",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1523,7 +1529,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Cold Reqs",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1537,7 +1543,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Damage Reqs",
+                                                        "comment": null,
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -1990,6 +1996,7 @@
         },
         "Geron Checkpoint": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 58",
                 "room_id": [
@@ -2084,10 +2091,6 @@
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Kill PB Geron"
                                     }
                                 ]
                             }
@@ -2130,10 +2133,6 @@
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Kill PB Geron"
-                                    },
                                     {
                                         "type": "or",
                                         "data": {
@@ -2186,6 +2185,7 @@
         },
         "Security Shaft West": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 59",
                 "room_id": [
@@ -2402,7 +2402,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get up",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2432,7 +2432,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Freeze Zeelas",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2462,6 +2462,7 @@
         },
         "Level 3 Security Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 510",
                 "room_id": [
@@ -2601,6 +2602,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 118,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Security Shaft East": {
                             "type": "and",
@@ -2615,6 +2617,7 @@
         },
         "Waver Ward": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 511",
                 "room_id": [
@@ -2802,6 +2805,7 @@
         },
         "Mimic Storage": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 512",
                 "room_id": [
@@ -2830,6 +2834,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 75,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Frozen Tower": {
                             "type": "or",
@@ -2903,6 +2908,7 @@
         },
         "Frozen Tower": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 513",
                 "room_id": [
@@ -3617,6 +3623,7 @@
         },
         "Mini-Fridge": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 514",
                 "room_id": [
@@ -3645,11 +3652,12 @@
                     "valid_starting_location": false,
                     "pickup_index": 76,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Other to Flooded Tower": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: varia / damage runs",
+                                "comment": null,
                                 "items": []
                             }
                         }
@@ -3689,7 +3697,7 @@
                         "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: varia / damage runs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -3734,6 +3742,32 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 170,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -3747,6 +3781,7 @@
         },
         "Data Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 516",
                 "room_id": [
@@ -3754,7 +3789,7 @@
                 ]
             },
             "nodes": {
-                "Door to Crow's Nest": {
+                "Other to Crow's Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3772,20 +3807,20 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Crow's Nest",
-                        "node": "Door to Data Room"
+                        "node": "Other to Data Room"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Ruined Corridor": {
+                        "Other to Ruined Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3841,7 +3876,7 @@
                         }
                     }
                 },
-                "Door to Ruined Corridor": {
+                "Other to Ruined Corridor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3859,20 +3894,20 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Ruined Corridor",
-                        "node": "Door to Data Room"
+                        "node": "Other to Data Room"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Crow's Nest": {
+                        "Other to Crow's Nest": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3901,6 +3936,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 113,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Data Checkpoint": {
                             "type": "and",
@@ -3955,6 +3991,7 @@
         },
         "Ruined Corridor": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 517",
                 "room_id": [
@@ -3962,7 +3999,7 @@
                 ]
             },
             "nodes": {
-                "Door to Data Room": {
+                "Other to Data Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3980,20 +4017,20 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Data Room",
-                        "node": "Door to Ruined Corridor"
+                        "node": "Other to Ruined Corridor"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Flooded Tower": {
+                        "Other to Flooded Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4002,7 +4039,7 @@
                         }
                     }
                 },
-                "Door to Flooded Tower": {
+                "Other to Flooded Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4020,20 +4057,20 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Flooded Tower",
-                        "node": "Door to Ruined Corridor"
+                        "node": "Other to Ruined Corridor"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Data Room": {
+                        "Other to Data Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4046,6 +4083,7 @@
         },
         "Nightmare Hub West": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 518",
                 "room_id": [
@@ -4074,6 +4112,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 77,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Nightmare Recharge Room": {
                             "type": "and",
@@ -4084,7 +4123,7 @@
                         }
                     }
                 },
-                "Door to Ruined Break Room": {
+                "Other to Ruined Break Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4102,20 +4141,20 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Ruined Break Room",
-                        "node": "Door to Nightmare Hub West"
+                        "node": "Other to Nightmare Hub West"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Nightmare Hub East": {
+                        "Other to Nightmare Hub East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4138,7 +4177,7 @@
                         }
                     }
                 },
-                "Door to Nightmare Hub East": {
+                "Other to Nightmare Hub East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4156,20 +4195,20 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Nightmare Hub East",
-                        "node": "Door to Nightmare Hub West"
+                        "node": "Other to Nightmare Hub West"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Ruined Break Room": {
+                        "Other to Ruined Break Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4249,7 +4288,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Ruined Break Room": {
+                        "Other to Ruined Break Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4261,7 +4300,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://youtu.be/lRKybDZdiA4",
+                                            "comment": "JBJ up: https://youtu.be/lRKybDZdiA4",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -4322,7 +4361,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Ruined Break Room": {
+                        "Other to Ruined Break Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4438,6 +4477,7 @@
         },
         "Nightmare Hub East": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 519",
                 "room_id": [
@@ -4445,7 +4485,7 @@
                 ]
             },
             "nodes": {
-                "Door to Nightmare Hub West": {
+                "Other to Nightmare Hub West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4463,13 +4503,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Nightmare Hub West",
-                        "node": "Door to Nightmare Hub East"
+                        "node": "Other to Nightmare Hub East"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4590,7 +4630,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Nightmare Hub West": {
+                        "Other to Nightmare Hub West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4603,6 +4643,7 @@
         },
         "Nightmare Arena": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 520",
                 "room_id": [
@@ -4939,7 +4980,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Core-X Requirements",
+                                            "comment": "Core-X Requirements (240HP)",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5238,6 +5279,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 109,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Arena": {
                             "type": "and",
@@ -5252,6 +5294,7 @@
         },
         "Security Shaft East": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 522",
                 "room_id": [
@@ -5281,6 +5324,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 78,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Groznyj Grad": {
                             "type": "and",
@@ -5418,7 +5462,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "https://youtu.be/a7A00q8XP9M",
+                                                                                "comment": "With WJ: https://youtu.be/a7A00q8XP9M",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -5450,7 +5494,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Single walljump",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -5891,6 +5935,7 @@
         },
         "Security Cache": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 523",
                 "room_id": [
@@ -5919,6 +5964,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 79,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Security Shaft East": {
                             "type": "and",
@@ -5973,6 +6019,7 @@
         },
         "Groznyj Shaft": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 524",
                 "room_id": [
@@ -6118,7 +6165,7 @@
                         "Door to Groznyj Grad": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kago disapears once you have PBs",
                                 "items": [
                                     {
                                         "type": "template",
@@ -6173,6 +6220,45 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Store spark in next room and carry it to here",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ShinesparkTrick",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Freeze Enemies With Any Weapon"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "VariaSuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -6222,6 +6308,7 @@
         },
         "Elevator to Main Deck": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 525",
                 "room_id": [
@@ -6313,6 +6400,7 @@
         },
         "Ripper Road": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 526",
                 "room_id": [
@@ -6341,11 +6429,12 @@
                     "valid_starting_location": false,
                     "pickup_index": 80,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Arctic Containment": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: varia / damage runs",
+                                "comment": null,
                                 "items": []
                             }
                         }
@@ -6506,6 +6595,10 @@
                                                             {
                                                                 "type": "template",
                                                                 "data": "Can Use Bombs"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Freeze Enemies With Any Weapon"
                                                             }
                                                         ]
                                                     }
@@ -6536,6 +6629,10 @@
                                                             {
                                                                 "type": "template",
                                                                 "data": "Can Use Springball"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Freeze Enemies With Any Weapon"
                                                             }
                                                         ]
                                                     }
@@ -6552,6 +6649,7 @@
         },
         "Nightmare Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 527",
                 "room_id": [
@@ -6699,6 +6797,7 @@
         },
         "Flooded Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 528",
                 "room_id": [
@@ -6778,105 +6877,8 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ChargeBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Have Any Beam Upgrade"
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
                                         "type": "template",
-                                        "data": "Can Use Power Bombs"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "10+ DMG Missiles"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missiles",
-                                                                    "amount": 10,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "45 DMG Missiles"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missiles",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "data": "Can Kill Tough Underwater Beam-Resistant Enemy"
                                     }
                                 ]
                             }
@@ -6946,107 +6948,6 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ChargeBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Have Any Beam Upgrade"
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Power Bombs"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missiles",
-                                                                    "amount": 10,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "10+ DMG Missiles"
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missiles",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "45 DMG Missiles"
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
@@ -7054,6 +6955,10 @@
                                             "amount": 2,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Tough Underwater Beam-Resistant Enemy"
                                     }
                                 ]
                             }
@@ -7064,12 +6969,13 @@
         },
         "Security Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 529",
                 "room_id": [
                     29
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Security Shaft West": {
@@ -7190,6 +7096,7 @@
         },
         "Magic Box": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 530",
                 "room_id": [
@@ -7218,6 +7125,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 81,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Entrance Lobby": {
                             "type": "and",
@@ -7339,6 +7247,7 @@
         },
         "Glass Tube to Sector 6 (NOC)": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 531",
                 "room_id": [
@@ -7430,11 +7339,13 @@
         },
         "Entrance Recharge Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 532",
                 "room_id": [
                     32
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Entrance Save Room": {
@@ -7552,6 +7463,7 @@
         },
         "Gerubus Gully": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 533",
                 "room_id": [
@@ -7580,6 +7492,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 82,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Entrance Lobby": {
                             "type": "and",
@@ -7683,7 +7596,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Hold right during climb and down+left during fanfare. 50/50 on success.",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -7699,7 +7612,16 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Knowledge",
-                                                                    "amount": 1,
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -7841,6 +7763,7 @@
         },
         "Nightmare Nook": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 534",
                 "room_id": [
@@ -7869,6 +7792,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 83,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Other to Nightmare Arena": {
                             "type": "and",
@@ -8065,6 +7989,7 @@
         },
         "Data Checkpoint": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 535",
                 "room_id": [
@@ -8166,6 +8091,7 @@
         },
         "Crow's Nest": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 536",
                 "room_id": [
@@ -8194,12 +8120,18 @@
                     "valid_starting_location": false,
                     "pickup_index": 84,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Glass Tube to Sector 3 (PYR)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Break Single Bomb Blocks"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -8612,7 +8544,7 @@
                                 ]
                             }
                         },
-                        "Door to Data Room": {
+                        "Other to Data Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8621,7 +8553,7 @@
                         }
                     }
                 },
-                "Door to Data Room": {
+                "Other to Data Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8639,13 +8571,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Data Room",
-                        "node": "Door to Crow's Nest"
+                        "node": "Other to Crow's Nest"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -8665,6 +8597,7 @@
         },
         "Glass Tube to Sector 3 (PYR)": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 537",
                 "room_id": [
@@ -8756,12 +8689,13 @@
         },
         "Save Room South": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 538",
                 "room_id": [
                     38
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Kago Blockade": {
@@ -8882,6 +8816,7 @@
         },
         "Kago Blockade": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 539",
                 "room_id": [
@@ -8974,6 +8909,7 @@
         },
         "Kago Speedway": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 541",
                 "room_id": [
@@ -9065,6 +9001,7 @@
         },
         "Arctic Underside": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 542",
                 "room_id": [
@@ -9313,6 +9250,7 @@
         },
         "Groznyj Grad": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 543",
                 "room_id": [
@@ -9473,6 +9411,7 @@
         },
         "Flooded Tower": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 545",
                 "room_id": [
@@ -9480,7 +9419,7 @@
                 ]
             },
             "nodes": {
-                "Door to Ruined Corridor": {
+                "Other to Ruined Corridor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9498,13 +9437,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Ruined Corridor",
-                        "node": "Door to Flooded Tower"
+                        "node": "Other to Flooded Tower"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -9642,7 +9581,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Freeze the Skullteras",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -9688,7 +9627,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Underwater Walljump",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -9722,7 +9661,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Ruined Corridor": {
+                        "Other to Ruined Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9739,7 +9678,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get up",
                                             "items": [
                                                 {
                                                     "type": "and",
@@ -9799,7 +9738,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "TODO: vid",
+                                                        "comment": "Get up with underwater + singlewalljumping TODO: vid",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -9813,6 +9752,15 @@
                                                             {
                                                                 "type": "template",
                                                                 "data": "Can Screw Single Walljump"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -9853,6 +9801,7 @@
         },
         "Zebesian Waters": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 546",
                 "room_id": [
@@ -10132,7 +10081,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "No template, because these pirates are stronger and there are 2 of them",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -10298,103 +10247,6 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ChargeBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Have Any Beam Upgrade"
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "10+ DMG Missiles"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missiles",
-                                                                    "amount": 10,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "45 DMG Missiles"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missiles",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
                                             "comment": "Upgradeless: https://youtu.be/FdeET1OemYw?t=19",
                                             "items": [
                                                 {
@@ -10411,12 +10263,12 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Can Use Power Bombs"
+                                        "data": "Can Kill Tough Underwater Beam-Resistant Enemy"
                                     },
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Damage boost through it",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -10481,105 +10333,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ChargeBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Have Any Beam Upgrade"
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "10+ DMG Missiles"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missiles",
-                                                                    "amount": 10,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "45 DMG Missiles"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missiles",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
                                         "type": "template",
-                                        "data": "Can Use Power Bombs"
+                                        "data": "Can Kill Tough Underwater Beam-Resistant Enemy"
                                     },
                                     {
                                         "type": "and",
@@ -10601,7 +10356,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Damage boost through it",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -10633,6 +10388,7 @@
         },
         "Ruined Break Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 547",
                 "room_id": [
@@ -10661,8 +10417,9 @@
                     "valid_starting_location": false,
                     "pickup_index": 85,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
-                        "Door to Nightmare Hub West": {
+                        "Other to Nightmare Hub West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10671,7 +10428,7 @@
                         }
                     }
                 },
-                "Door to Nightmare Hub West": {
+                "Other to Nightmare Hub West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10689,13 +10446,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Nightmare Hub West",
-                        "node": "Door to Ruined Break Room"
+                        "node": "Other to Ruined Break Room"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -10720,11 +10477,13 @@
         },
         "Nightmare Recharge Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 548",
                 "room_id": [
                     48
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Nightmare Hub West": {
@@ -10795,12 +10554,13 @@
         },
         "Nightmare Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 549",
                 "room_id": [
                     49
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Nightmare Hub West": {
@@ -10874,6 +10634,7 @@
         },
         "Flooded Airlock to Sector 4 (AQA)": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 550",
                 "room_id": [
@@ -10902,6 +10663,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 86,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Zebesian Waters": {
                             "type": "and",
@@ -10982,7 +10744,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
+                                                    "data": "Can Kill Tough Underwater Beam-Resistant Enemy"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -11038,7 +10800,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
+                                                    "data": "Can Kill Tough Underwater Beam-Resistant Enemy"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -11129,6 +10891,7 @@
         },
         "Transmutation Trial": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 551",
                 "room_id": [
@@ -11157,6 +10920,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 87,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Other to Frozen Tower": {
                             "type": "and",
@@ -11220,20 +10984,54 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Kill enemies and freeze them transformations",
                                                         "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Hi-Jump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
                                                             {
                                                                 "type": "template",
                                                                 "data": "Can Freeze Enemies With Any Weapon"
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Hi-Jump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "WallJump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "StandOnFrozenEnemies",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
                                                     }

@@ -464,7 +464,7 @@ jobs:
 
       -
         name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.8.0
+        uses: docker/setup-buildx-action@v3.9.0
 
       - name: Should Push
         id: decide_push
@@ -484,7 +484,7 @@ jobs:
       -
         name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v6.10.0
+        uses: docker/build-push-action@v6.14.0
         with:
           context: .
           file: ./Dockerfile.server
@@ -549,7 +549,7 @@ jobs:
           echo version=$(python tools/get_version_from_artifacts.py "packages/Randovania Linux Executable/") >> $GITHUB_OUTPUT
 
       - name: Create Sentry release
-        uses: getsentry/action-release@v1
+        uses: getsentry/action-release@v2
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: randovania

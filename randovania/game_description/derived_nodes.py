@@ -3,7 +3,6 @@ from __future__ import annotations
 import copy
 import dataclasses
 
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_description import GameDescription
 
@@ -27,11 +26,10 @@ def remove_inactive_layers(game: GameDescription, active_layers: set[str]) -> Ga
                         connection.pop(node, None)
 
             areas.append(
-                Area(
-                    name=area.name,
+                dataclasses.replace(
+                    area.duplicate(),
                     nodes=nodes,
                     connections=connections,
-                    extra=area.extra,
                 )
             )
 
@@ -42,6 +40,7 @@ def remove_inactive_layers(game: GameDescription, active_layers: set[str]) -> Ga
         resource_database=game.resource_database,
         layers=game.layers,
         dock_weakness_database=game.dock_weakness_database,
+        hint_feature_database=game.hint_feature_database,
         region_list=RegionList(regions, game.region_list.flatten_to_set_on_patch),
         victory_condition=game.victory_condition,
         starting_location=game.starting_location,

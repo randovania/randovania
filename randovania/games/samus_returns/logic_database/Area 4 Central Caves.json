@@ -11,6 +11,7 @@
     "areas": {
         "Caves Intersection Terminal": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 3100.0,
@@ -98,6 +99,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 82,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Save Station": {
                             "type": "resource",
@@ -764,6 +766,7 @@
         },
         "Spazer Beam Chamber": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -6400.0,
@@ -811,6 +814,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 84,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door from Amethyst Altars": {
                             "type": "and",
@@ -957,8 +961,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -5793.476044852192,
-                        "y": -3619.457186544342,
+                        "x": -5793.48,
+                        "y": -3619.46,
                         "z": 0.0
                     },
                     "description": "",
@@ -966,7 +970,7 @@
                         "default"
                     ],
                     "extra": {
-                        "start_point_actor_name": "ST_Checkpoint_003"
+                        "start_point_actor_name": "ST_CheckPoint_003"
                     },
                     "valid_starting_location": true,
                     "connections": {
@@ -983,6 +987,7 @@
         },
         "Crumble Catwalk": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 7400.0,
@@ -1030,6 +1035,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 81,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Tunnel to Caves Intersection Terminal": {
                             "type": "and",
@@ -1324,6 +1330,7 @@
         },
         "Lava Pond": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -850.0,
@@ -1602,6 +1609,7 @@
         },
         "Transport to Area 3 and Crystal Mines": {
             "default_node": "Elevator to Area 3 Factory Exterior",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 8100.0,
@@ -1701,6 +1709,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 78,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Next to Pickup": {
                             "type": "and",
@@ -2604,43 +2613,98 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Pull Right",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Get up",
+                                            "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Climb Rooms Vertically (High Jump)"
-                                                },
-                                                {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "Normal way",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Right",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "Get Up",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Climb Rooms Vertically (High Jump)"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "SuperJump",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "UnmorphExtend",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SWJ",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Space Jump OOB - https://youtu.be/YLPIWNV-5Fc",
                                                         "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spider Ball"
+                                                            },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "SuperJump",
-                                                                    "amount": 2,
+                                                                    "type": "items",
+                                                                    "name": "Space",
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -2648,21 +2712,21 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "UnmorphExtend",
+                                                                    "name": "SpiderClip",
                                                                     "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "OoB",
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             }
                                                         ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SWJ",
-                                                        "amount": 1,
-                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -2777,13 +2841,8 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bomb",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Lay Bomb"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -2809,13 +2868,8 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Spring",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Use Spring Ball"
                                                                         }
                                                                     ]
                                                                 }
@@ -3165,13 +3219,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Spider",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
                                     },
                                     {
                                         "type": "template",
@@ -3215,13 +3264,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Spider",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
                                     },
                                     {
                                         "type": "template",
@@ -3386,6 +3430,7 @@
         },
         "Alpha+ Arena": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 100.0,
@@ -3433,6 +3478,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 79,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Tunnel to Alpha+ Arena Access": {
                             "type": "and",
@@ -3741,12 +3787,29 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "UnmorphExtend",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnmorphExtend",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -3814,6 +3877,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 187,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -3828,6 +3892,7 @@
         },
         "Transit Tunnel": {
             "default_node": "Door to Caves Intersection Terminal",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 6500.0,
@@ -4044,6 +4109,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 88,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Next to Pickup": {
                             "type": "and",
@@ -4350,13 +4416,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Spider",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Use Spider Ball"
                                                 },
                                                 {
                                                     "type": "and",
@@ -4422,6 +4483,7 @@
         },
         "Fleech Swarm Cave": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 3100.0,
@@ -4469,6 +4531,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 80,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Tunnel to Caves Intersection Terminal": {
                             "type": "and",
@@ -4610,6 +4673,7 @@
         },
         "Hostile Hangout": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -6800.0,
@@ -4731,6 +4795,7 @@
         },
         "Gamma Arena": {
             "default_node": "Inside Arena",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -850.0,
@@ -4817,6 +4882,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 85,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Gamma Arena Access South": {
                             "type": "and",
@@ -5012,6 +5078,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 197,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Inside Arena": {
                             "type": "and",
@@ -5026,6 +5093,7 @@
         },
         "Gamma Arena Access South": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -7200.0,
@@ -5081,6 +5149,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 83,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Lava Pond": {
                             "type": "and",
@@ -5744,6 +5813,7 @@
         },
         "Outward Climb": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -9000.0,
@@ -5866,6 +5936,7 @@
         },
         "Amethyst Altars": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -4050.0,
@@ -5998,6 +6069,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 86,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Below Pickup": {
                             "type": "and",
@@ -6302,6 +6374,7 @@
         },
         "Gamma Arena Access North": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -7100.0,
@@ -6729,6 +6802,7 @@
         },
         "Alpha+ Arena Access": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 4900.0,
@@ -6964,6 +7038,7 @@
         },
         "Venomous Pond": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 14050.0,
@@ -7391,6 +7466,7 @@
         },
         "Transport to Area 5": {
             "default_node": "Elevator to Area 5 Tower Lobby",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 10100.0,
@@ -7592,6 +7668,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 87,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Next to Grapple Block": {
                             "type": "and",

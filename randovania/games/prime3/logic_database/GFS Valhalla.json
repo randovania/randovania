@@ -6,11 +6,12 @@
     "areas": {
         "Docking Bay 5": {
             "default_node": "Samus Ship",
+            "hint_features": [],
             "extra": {
                 "asset_id": 15622764306970326849
             },
             "nodes": {
-                "Door to Hangar A Access": {
+                "Dock to Hangar A Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -26,13 +27,13 @@
                         "dock_index": 0
                     },
                     "valid_starting_location": false,
-                    "dock_type": "door",
+                    "dock_type": "other",
                     "default_connection": {
                         "region": "G.F.S. Valhalla",
                         "area": "Hangar A Access",
-                        "node": "Door to Docking Bay 5"
+                        "node": "Dock to Docking Bay 5"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Hangar Bay Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -64,6 +65,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 11,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Samus Ship": {
                             "type": "and",
@@ -116,7 +118,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Hangar A Access": {
+                        "Dock to Hangar A Access": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -171,12 +173,13 @@
             }
         },
         "Hangar A Access": {
-            "default_node": "Door to Docking Bay 5",
+            "default_node": "Dock to Docking Bay 5",
+            "hint_features": [],
             "extra": {
                 "asset_id": 5398996635579069682
             },
             "nodes": {
-                "Door to Docking Bay 5": {
+                "Dock to Docking Bay 5": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -192,20 +195,20 @@
                         "dock_index": 0
                     },
                     "valid_starting_location": true,
-                    "dock_type": "door",
+                    "dock_type": "other",
                     "default_connection": {
                         "region": "G.F.S. Valhalla",
                         "area": "Docking Bay 5",
-                        "node": "Door to Hangar A Access"
+                        "node": "Dock to Hangar A Access"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Hangar Bay Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Repair Bay": {
+                        "Dock to Repair Bay": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -272,7 +275,7 @@
                         }
                     }
                 },
-                "Door to Repair Bay": {
+                "Dock to Repair Bay": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -288,20 +291,20 @@
                         "dock_index": 1
                     },
                     "valid_starting_location": false,
-                    "dock_type": "door",
+                    "dock_type": "other",
                     "default_connection": {
                         "region": "G.F.S. Valhalla",
                         "area": "Repair Bay",
-                        "node": "Door to Hangar A Access"
+                        "node": "Dock to Hangar A Access"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Hangar Bay Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Docking Bay 5": {
+                        "Dock to Docking Bay 5": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -371,12 +374,13 @@
             }
         },
         "Repair Bay": {
-            "default_node": "Door to Hangar A Access",
+            "default_node": "Dock to Hangar A Access",
+            "hint_features": [],
             "extra": {
                 "asset_id": 10896162079835248148
             },
             "nodes": {
-                "Door to Hangar A Access": {
+                "Dock to Hangar A Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -392,13 +396,13 @@
                         "dock_index": 0
                     },
                     "valid_starting_location": true,
-                    "dock_type": "door",
+                    "dock_type": "other",
                     "default_connection": {
                         "region": "G.F.S. Valhalla",
                         "area": "Hangar A Access",
-                        "node": "Door to Repair Bay"
+                        "node": "Dock to Repair Bay"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Hangar Bay Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -565,7 +569,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Hangar A Access": {
+                        "Dock to Hangar A Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -603,7 +607,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Hangar A Access": {
+                        "Dock to Hangar A Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -616,6 +620,7 @@
         },
         "Junction A": {
             "default_node": "Door to Port Observation Deck",
+            "hint_features": [],
             "extra": {
                 "asset_id": 7652878551953536007
             },
@@ -745,6 +750,7 @@
         },
         "Security Access": {
             "default_node": "Door to Security Station",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2123213449889105147
             },
@@ -994,6 +1000,7 @@
         },
         "Aurora Chamber": {
             "default_node": "Door to Aurora Access",
+            "hint_features": [],
             "extra": {
                 "asset_id": 6410596230384865511
             },
@@ -1434,6 +1441,7 @@
         },
         "Stairwell": {
             "default_node": "Door to Repair Bay",
+            "hint_features": [],
             "extra": {
                 "asset_id": 7569990525320728426
             },
@@ -1988,6 +1996,7 @@
         },
         "Weapons Cache": {
             "default_node": "Door to Stairwell",
+            "hint_features": [],
             "extra": {
                 "asset_id": 13634659891990625058
             },
@@ -2046,6 +2055,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 12,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Stairwell": {
                             "type": "and",
@@ -2060,6 +2070,7 @@
         },
         "Munitions Locker": {
             "default_node": "Door to Junction A",
+            "hint_features": [],
             "extra": {
                 "asset_id": 7265233133801437908
             },
@@ -2118,6 +2129,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 13,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Junction A": {
                             "type": "and",
@@ -2132,6 +2144,7 @@
         },
         "Xenoresearch Lab": {
             "default_node": "Door to Port Observation Deck",
+            "hint_features": [],
             "extra": {
                 "asset_id": 6078741217337776665
             },
@@ -2546,6 +2559,7 @@
         },
         "Ventilation Shaft": {
             "default_node": "Morph Ball Door to Xenoresearch Lab",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2774000464172079912
             },
@@ -2624,6 +2638,7 @@
         },
         "MedLab Alpha": {
             "default_node": "Door to Security Access",
+            "hint_features": [],
             "extra": {
                 "asset_id": 4052690289582601366
             },
@@ -2807,6 +2822,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 14,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Security Access": {
                             "type": "and",
@@ -2833,6 +2849,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 15,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Morph Ball Door to Security Access": {
                             "type": "and",
@@ -2875,6 +2892,7 @@
         },
         "Security Station": {
             "default_node": "Door to Repair Bay",
+            "hint_features": [],
             "extra": {
                 "asset_id": 7055596259548820837
             },
@@ -3115,6 +3133,7 @@
         },
         "Auxiliary Lift": {
             "default_node": "Door to Security Access",
+            "hint_features": [],
             "extra": {
                 "asset_id": 17479488334200413695
             },
@@ -3293,6 +3312,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 16,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Port Observation Deck": {
                             "type": "and",
@@ -3332,6 +3352,7 @@
         },
         "Aurora Access": {
             "default_node": "Door to Junction A",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1129937930833845921
             },
@@ -3416,6 +3437,7 @@
         },
         "Control Room": {
             "default_node": "Door to Control Room Access",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1605782415930376157
             },
@@ -3501,6 +3523,7 @@
         },
         "Port Observation Deck": {
             "default_node": "Room Center",
+            "hint_features": [],
             "extra": {
                 "asset_id": 13201618045565515280
             },
@@ -3867,6 +3890,7 @@
         },
         "Control Room Access": {
             "default_node": "Door to Control Room",
+            "hint_features": [],
             "extra": {
                 "asset_id": 16574561510686353296
             },

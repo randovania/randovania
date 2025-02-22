@@ -7,12 +7,14 @@ from typing import TYPE_CHECKING
 import json_delta
 
 from randovania.exporter import pickup_exporter
+from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout import filtered_database
 
 if TYPE_CHECKING:
+    from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
@@ -82,7 +84,7 @@ class PatchDataFactory:
         }
         return game_data
 
-    def create_memo_data(self) -> dict:
+    def create_memo_data(self) -> dict[str, str]:
         """Used to generate pickup collection messages."""
         return pickup_exporter.GenericAcquiredMemo()
 
@@ -92,7 +94,7 @@ class PatchDataFactory:
 
     def create_visual_nothing(self) -> PickupEntry:
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
-        return pickup_creator.create_visual_nothing(self.game_enum())
+        raise NotImplementedError
 
     def export_pickup_list(self) -> list[pickup_exporter.ExportedPickupDetails]:
         """
@@ -108,4 +110,38 @@ class PatchDataFactory:
             self.configuration.pickup_model_data_source,
             pickup_exporter.create_pickup_exporter(self.memo_data, self.players_config, self.game_enum()),
             self.create_visual_nothing(),
+        )
+
+    @classmethod
+    def hint_namer_type(cls) -> type[HintNamer]:
+        """The type of HintNamer this game uses."""
+        raise NotImplementedError
+
+    @classmethod
+    def get_hint_namer(
+        cls,
+        all_patches: dict[int, GamePatches],
+        players_config: PlayersConfiguration,
+    ) -> HintNamer:
+        """Return an instance of this game's HintNamer."""
+        return cls.hint_namer_type()(all_patches, players_config)
+
+    @classmethod
+    def hint_exporter_type(cls) -> type[HintExporter]:
+        """The type of HintExporter this game uses."""
+        return HintExporter
+
+    @classmethod
+    def get_hint_exporter(
+        cls,
+        all_patches: dict[int, GamePatches],
+        players_config: PlayersConfiguration,
+        rng: Random,
+        base_joke_hints: list[str],
+    ) -> HintExporter:
+        """Return an instance of this game's HintExporter."""
+        return cls.hint_exporter_type()(
+            cls.get_hint_namer(all_patches, players_config),
+            rng,
+            base_joke_hints,
         )

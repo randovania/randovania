@@ -132,7 +132,7 @@ async def test_connect(executor, mocker):
 
 
 async def test_connect_when_connected(executor: NintendontExecutor):
-    executor._socket = True
+    executor._socket = MagicMock()
     assert await executor.connect() is None
 
 
@@ -141,7 +141,9 @@ async def test_connect_invalid_ip(executor: NintendontExecutor):
     executor._ip = "127@0.0.1"
 
     # Run
-    assert "Unable to connect to 127@0.0.1:43673" in await executor.connect()
+    message = await executor.connect()
+    assert message is not None
+    assert "Unable to connect to 127@0.0.1:43673" in message
 
     # Assert
     assert executor._socket is None

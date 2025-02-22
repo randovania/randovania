@@ -21,4 +21,4 @@ class ItemHintMode(BitPackEnum, Enum):
 @dataclasses.dataclass(frozen=True)
 class HintConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCheck):
     artifacts: ItemHintMode
-    baby_metroid: ItemHintMode
+    final_boss_item: ItemHintMode

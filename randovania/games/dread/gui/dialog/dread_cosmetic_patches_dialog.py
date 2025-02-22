@@ -18,13 +18,17 @@ from randovania.gui.lib.signal_handling import set_combo_with_value
 if TYPE_CHECKING:
     from PySide6 import QtWidgets
 
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+
 
 class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatchesDialog):
     _cosmetic_patches: DreadCosmeticPatches
 
-    def __init__(self, parent: QtWidgets.QWidget | None, current: DreadCosmeticPatches):
-        super().__init__(parent)
+    def __init__(self, parent: QtWidgets.QWidget | None, current: BaseCosmeticPatches):
+        super().__init__(parent, current)
         self.setupUi(self)
+
+        assert isinstance(current, DreadCosmeticPatches)
         self._cosmetic_patches = current
 
         for room_gui_type in DreadRoomGuiType:

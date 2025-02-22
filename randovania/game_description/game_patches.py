@@ -239,3 +239,7 @@ class GamePatches:
 
     def set_cached_dock_connections_from(self, node: DockNode, cache: tuple[tuple[Node, Requirement], ...]) -> None:
         self.cached_dock_connections_from[node.node_index] = cache
+
+    def reset_cached_dock_connections_from(self) -> None:
+        for i in range(len(self.cached_dock_connections_from)):
+            self.cached_dock_connections_from[i] = None

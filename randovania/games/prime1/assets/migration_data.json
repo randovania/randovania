@@ -954,7 +954,7 @@
         "Magmoor Caverns/Transport to Chozo Ruins North/Teleporter to Chozo Ruins": "Lava Lake Elevator",
         "Magmoor Caverns/Transport to Phendrana Drifts North/Teleporter to Phendrana Drifts": "Monitor Station Elevator",
         "Magmoor Caverns/Transport to Tallon Overworld West/Teleporter to Tallon Overworld": "Twin Fires Elevator",
-        "Magmoor Caverns/Transport to Phazon Mines West/Teleporter to Phazon Mines": "Magmoor Workstation West Elevator (Debris)",        
+        "Magmoor Caverns/Transport to Phazon Mines West/Teleporter to Phazon Mines": "Magmoor Workstation West Elevator (Debris)",
         "Magmoor Caverns/Transport to Phendrana Drifts South/Teleporter to Phendrana Drifts": "Magmoor Workstation South Elevator (Save)",
         "Phazon Mines/Transport to Tallon Overworld South/Teleporter to Tallon Overworld": "Main Quarry Elevator",
         "Phazon Mines/Transport to Magmoor Caverns South/Teleporter to Magmoor Caverns": "Phazon Processing Elevator",
@@ -967,7 +967,1370 @@
         "Chozo Ruins/Transport to Magmoor Caverns North/Teleporter to Magmoor Caverns": "Sun Tower Elevator",
         "Chozo Ruins/Transport to Tallon Overworld East/Teleporter to Tallon Overworld": "Reflecting Pool West Elevator (Save)",
         "Chozo Ruins/Transport to Tallon Overworld South/Teleporter to Tallon Overworld": "Reflecting Pool South Elevator (Far)"
+    },
+    "generated_pickups": {
+        "categories": {
+            "artifact": {
+                "long_name": "Artifact",
+                "hint_details": [
+                    "an ",
+                    "artifact"
+                ],
+                "hinted_as_major": false,
+                "is_key": true
+            }
+        },
+        "pickups": {
+            "Chozo Artifact": {
+                "name_template": "Artifact of {name}",
+                "pickup_category": "artifact",
+                "model_name": "Artifact of {name}",
+                "offworld_models": {
+                    "am2r": "sItemArtifact{name}Prime"
+                },
+                "progression": [
+                    "{name}"
+                ],
+                "preferred_location_category": "major",
+                "probability_offset": 0.25,
+                "probability_multiplier": 1.2
+            }
+        }
+    },
+    "old_hint_categories": {
+        "Charge Beam": {
+            "precise-category": "beam",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Power Beam": {
+            "precise-category": "beam",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Wave Beam": {
+            "precise-category": "beam",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Ice Beam": {
+            "precise-category": "beam",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Plasma Beam": {
+            "precise-category": "beam",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Missile Launcher": {
+            "precise-category": "missile",
+            "broad-category": "missile_related",
+            "general-category": "major"
+        },
+        "Grapple Beam": {
+            "precise-category": "movement",
+            "broad-category": "movement",
+            "general-category": "major"
+        },
+        "Combat Visor": {
+            "precise-category": "visor",
+            "broad-category": "visor",
+            "general-category": "major"
+        },
+        "Scan Visor": {
+            "precise-category": "visor",
+            "broad-category": "visor",
+            "general-category": "major"
+        },
+        "Thermal Visor": {
+            "precise-category": "visor",
+            "broad-category": "visor",
+            "general-category": "major"
+        },
+        "X-Ray Visor": {
+            "precise-category": "visor",
+            "broad-category": "visor",
+            "general-category": "major"
+        },
+        "Space Jump Boots": {
+            "precise-category": "movement",
+            "broad-category": "movement",
+            "general-category": "major"
+        },
+        "Energy Tank": {
+            "precise-category": "energy_tank",
+            "broad-category": "life_support",
+            "general-category": "major"
+        },
+        "Morph Ball": {
+            "precise-category": "morph_ball",
+            "broad-category": "morph_ball_related",
+            "general-category": "major"
+        },
+        "Morph Ball Bomb": {
+            "precise-category": "morph_ball",
+            "broad-category": "morph_ball_related",
+            "general-category": "major"
+        },
+        "Boost Ball": {
+            "precise-category": "morph_ball",
+            "broad-category": "morph_ball_related",
+            "general-category": "major"
+        },
+        "Spider Ball": {
+            "precise-category": "morph_ball",
+            "broad-category": "morph_ball_related",
+            "general-category": "major"
+        },
+        "Power Bomb": {
+            "precise-category": "morph_ball",
+            "broad-category": "morph_ball_related",
+            "general-category": "major"
+        },
+        "Power Suit": {
+            "precise-category": "suit",
+            "broad-category": "life_support",
+            "general-category": "major"
+        },
+        "Varia Suit": {
+            "precise-category": "suit",
+            "broad-category": "life_support",
+            "general-category": "major"
+        },
+        "Gravity Suit": {
+            "precise-category": "suit",
+            "broad-category": "life_support",
+            "general-category": "major"
+        },
+        "Phazon Suit": {
+            "precise-category": "suit",
+            "broad-category": "life_support",
+            "general-category": "major"
+        },
+        "Super Missile": {
+            "precise-category": "charge_combo",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Wavebuster": {
+            "precise-category": "charge_combo",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Ice Spreader": {
+            "precise-category": "charge_combo",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Flamethrower": {
+            "precise-category": "charge_combo",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Chozo Artifact": {
+            "precise-category": "artifact",
+            "broad-category": "key",
+            "general-category": "key"
+        },
+        "Missile Expansion": {
+            "precise-category": "missile_related",
+            "broad-category": "missile_related",
+            "general-category": "expansion"
+        },
+        "Power Bomb Expansion": {
+            "precise-category": "morph_ball_related",
+            "broad-category": "morph_ball_related",
+            "general-category": "expansion"
+        },
+        "Energy Refill": {
+            "precise-category": "misc",
+            "broad-category": "misc",
+            "general-category": "expansion"
+        },
+        "Missile Refill": {
+            "precise-category": "misc",
+            "broad-category": "misc",
+            "general-category": "expansion"
+        },
+        "Power Bomb Refill": {
+            "precise-category": "misc",
+            "broad-category": "misc",
+            "general-category": "expansion"
+        }
+    },
+    "pickup_index_to_node": {
+        "168": {
+            "region": "Impact Crater",
+            "area_and_node": "Crater Entry Point/Pickup (Items Every Room)"
+        },
+        "169": {
+            "region": "Impact Crater",
+            "area_and_node": "Crater Tunnel A/Pickup (Items Every Room)"
+        },
+        "170": {
+            "region": "Impact Crater",
+            "area_and_node": "Phazon Core/Pickup (Items Every Room)"
+        },
+        "171": {
+            "region": "Impact Crater",
+            "area_and_node": "Crater Missile Station/Pickup (Items Every Room)"
+        },
+        "172": {
+            "region": "Impact Crater",
+            "area_and_node": "Crater Tunnel B/Pickup (Items Every Room)"
+        },
+        "173": {
+            "region": "Impact Crater",
+            "area_and_node": "Phazon Infusion Chamber/Pickup (Items Every Room)"
+        },
+        "174": {
+            "region": "Impact Crater",
+            "area_and_node": "Subchamber One/Pickup (Items Every Room)"
+        },
+        "175": {
+            "region": "Impact Crater",
+            "area_and_node": "Subchamber Two/Pickup (Items Every Room)"
+        },
+        "176": {
+            "region": "Impact Crater",
+            "area_and_node": "Subchamber Three/Pickup (Items Every Room)"
+        },
+        "177": {
+            "region": "Impact Crater",
+            "area_and_node": "Subchamber Four/Pickup (Items Every Room)"
+        },
+        "178": {
+            "region": "Impact Crater",
+            "area_and_node": "Subchamber Five/Pickup (Items Every Room)"
+        },
+        "179": {
+            "region": "Impact Crater",
+            "area_and_node": "Metroid Prime Lair/Pickup (Items Every Room)"
+        },
+        "226": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Transport to Magmoor Caverns West/Pickup (Items Every Room)"
+        },
+        "227": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Shoreline Entrance/Pickup (Items Every Room)"
+        },
+        "35": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Phendrana Shorelines/Pickup (Missile Behind Ice)"
+        },
+        "36": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Phendrana Shorelines/Pickup (Spider Track Missile)"
+        },
+        "228": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Temple Entryway/Pickup (Items Every Room)"
+        },
+        "229": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Save Station B/Pickup (Items Every Room)"
+        },
+        "230": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Ruins Entryway/Pickup (Items Every Room)"
+        },
+        "231": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Plaza Walkway/Pickup (Items Every Room)"
+        },
+        "232": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Ice Ruins Access/Pickup (Items Every Room)"
+        },
+        "37": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Chozo Ice Temple/Pickup (Artifact of Sun)"
+        },
+        "38": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Ice Ruins West/Pickup (Power Bomb)"
+        },
+        "40": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Ice Ruins East/Pickup (Spider Track Missile Expansion)"
+        },
+        "39": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Ice Ruins East/Pickup (Missile Expansion Behind Ice)"
+        },
+        "233": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Chapel Tunnel/Pickup (Items Every Room)"
+        },
+        "234": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Courtyard Entryway/Pickup (Items Every Room)"
+        },
+        "235": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Canyon Entryway/Pickup (Items Every Room)"
+        },
+        "41": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Chapel of the Elders/Pickup (Wave Beam)"
+        },
+        "42": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Ruined Courtyard/Pickup (Energy Tank)"
+        },
+        "43": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Phendrana Canyon/Pickup (Boost Ball)"
+        },
+        "236": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Save Station A/Pickup (Items Every Room)"
+        },
+        "237": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Specimen Storage/Pickup (Items Every Room)"
+        },
+        "238": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Quarantine Access/Pickup (Items Every Room)"
+        },
+        "239": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Research Entrance/Pickup (Items Every Room)"
+        },
+        "240": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "North Quarantine Tunnel/Pickup (Items Every Room)"
+        },
+        "241": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Map Station/Pickup (Items Every Room)"
+        },
+        "242": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Hydra Lab Entryway/Pickup (Items Every Room)"
+        },
+        "44": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Quarantine Cave/Pickup (Spider Ball)"
+        },
+        "45": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Research Lab Hydra/Pickup (Missile)"
+        },
+        "243": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "South Quarantine Tunnel/Pickup (Items Every Room)"
+        },
+        "46": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Quarantine Monitor/Pickup (Missile)"
+        },
+        "244": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Observatory Access/Pickup (Items Every Room)"
+        },
+        "245": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Transport to Magmoor Caverns South/Pickup (Items Every Room)"
+        },
+        "47": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Observatory/Pickup (Super Missile)"
+        },
+        "48": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Transport Access/Pickup (Energy Tank)"
+        },
+        "246": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "West Tower Entrance/Pickup (Items Every Room)"
+        },
+        "247": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Save Station D/Pickup (Items Every Room)"
+        },
+        "248": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Frozen Pike/Pickup (Items Every Room)"
+        },
+        "249": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "West Tower/Pickup (Items Every Room)"
+        },
+        "250": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Pike Access/Pickup (Items Every Room)"
+        },
+        "251": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Frost Cave Access/Pickup (Items Every Room)"
+        },
+        "252": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Hunter Cave Access/Pickup (Items Every Room)"
+        },
+        "49": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Control Tower/Pickup (Artifact of Elder)"
+        },
+        "50": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Research Core/Pickup (Thermal Visor)"
+        },
+        "51": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Frost Cave/Pickup (Missile)"
+        },
+        "253": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Hunter Cave/Pickup (Items Every Room)"
+        },
+        "254": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "East Tower/Pickup (Items Every Room)"
+        },
+        "255": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Research Core Access/Pickup (Items Every Room)"
+        },
+        "256": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Save Station C/Pickup (Items Every Room)"
+        },
+        "257": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Upper Edge Tunnel/Pickup (Items Every Room)"
+        },
+        "258": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Lower Edge Tunnel/Pickup (Items Every Room)"
+        },
+        "259": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Chamber Access/Pickup (Items Every Room)"
+        },
+        "260": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Lake Tunnel/Pickup (Items Every Room)"
+        },
+        "261": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Aether Lab Entryway/Pickup (Items Every Room)"
+        },
+        "52": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Research Lab Aether/Pickup (Energy Tank)"
+        },
+        "53": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Research Lab Aether/Pickup (Missile)"
+        },
+        "262": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Phendrana's Edge/Pickup (Items Every Room)"
+        },
+        "54": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Gravity Chamber/Pickup (Gravity Suit)"
+        },
+        "55": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Gravity Chamber/Pickup (Missile)"
+        },
+        "56": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Storage Cave/Pickup (Artifact of Spirit)"
+        },
+        "57": {
+            "region": "Phendrana Drifts",
+            "area_and_node": "Security Cave/Pickup (Power Bomb)"
+        },
+        "140": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Exterior Docking Hangar/Pickup (Items Every Room)"
+        },
+        "141": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Air Lock/Pickup (Items Every Room)"
+        },
+        "142": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Deck Alpha Access Hall/Pickup (Items Every Room)"
+        },
+        "143": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Deck Alpha Mech Shaft/Pickup (Items Every Room)"
+        },
+        "144": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Emergency Evacuation Area/Pickup (Items Every Room)"
+        },
+        "145": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Connection Elevator to Deck Alpha/Pickup (Items Every Room)"
+        },
+        "146": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Deck Alpha Umbilical Hall/Pickup (Items Every Room)"
+        },
+        "147": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Biotech Research Area 2/Pickup (Items Every Room)"
+        },
+        "148": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Map Facility/Pickup (Items Every Room)"
+        },
+        "149": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Main Ventilation Shaft Section F/Pickup (Items Every Room)"
+        },
+        "150": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Connection Elevator to Deck Beta/Pickup (Items Every Room)"
+        },
+        "151": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Main Ventilation Shaft Section E/Pickup (Items Every Room)"
+        },
+        "152": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Deck Beta Conduit Hall/Pickup (Items Every Room)"
+        },
+        "153": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Main Ventilation Shaft Section D/Pickup (Items Every Room)"
+        },
+        "154": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Biotech Research Area 1/Pickup (Items Every Room)"
+        },
+        "155": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Main Ventilation Shaft Section C/Pickup (Items Every Room)"
+        },
+        "156": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Deck Beta Security Hall/Pickup (Items Every Room)"
+        },
+        "157": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Connection Elevator to Deck Beta (2)/Pickup (Items Every Room)"
+        },
+        "158": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Subventilation Shaft Section A/Pickup (Items Every Room)"
+        },
+        "159": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Main Ventilation Shaft Section B/Pickup (Items Every Room)"
+        },
+        "160": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Biohazard Containment/Pickup (Items Every Room)"
+        },
+        "161": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Deck Gamma Monitor Hall/Pickup (Items Every Room)"
+        },
+        "162": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Subventilation Shaft Section B/Pickup (Items Every Room)"
+        },
+        "163": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Main Ventilation Shaft Section A/Pickup (Items Every Room)"
+        },
+        "164": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Deck Beta Transit Hall/Pickup (Items Every Room)"
+        },
+        "165": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Reactor Core/Pickup (Items Every Room)"
+        },
+        "166": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Cargo Freight Lift to Deck Gamma/Pickup (Items Every Room)"
+        },
+        "167": {
+            "region": "Frigate Orpheon",
+            "area_and_node": "Reactor Core Entrance/Pickup (Items Every Room)"
+        },
+        "180": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Transport to Chozo Ruins North/Pickup (Items Every Room)"
+        },
+        "181": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Burning Trail/Pickup (Items Every Room)"
+        },
+        "182": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Lake Tunnel/Pickup (Items Every Room)"
+        },
+        "183": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Save Station Magmoor A/Pickup (Items Every Room)"
+        },
+        "90": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Lava Lake/Pickup (Artifact of Nature)"
+        },
+        "184": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Pit Tunnel/Pickup (Items Every Room)"
+        },
+        "91": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Triclops Pit/Pickup (Missile Expansion)"
+        },
+        "185": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Monitor Tunnel/Pickup (Items Every Room)"
+        },
+        "92": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Storage Cavern/Pickup (Missile)"
+        },
+        "186": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Monitor Station/Pickup (Items Every Room)"
+        },
+        "93": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Transport Tunnel A/Pickup (Energy Tank)"
+        },
+        "94": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Warrior Shrine/Pickup (Artifact of Strength)"
+        },
+        "95": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Shore Tunnel/Pickup (Ice Spreader)"
+        },
+        "187": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Transport to Phendrana Drifts North/Pickup (Items Every Room)"
+        },
+        "97": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Fiery Shores/Pickup (Power Bomb)"
+        },
+        "96": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Fiery Shores/Pickup (Missile)"
+        },
+        "188": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Transport Tunnel B/Pickup (Items Every Room)"
+        },
+        "189": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Transport to Tallon Overworld West/Pickup (Items Every Room)"
+        },
+        "190": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Twin Fires Tunnel/Pickup (Items Every Room)"
+        },
+        "191": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Twin Fires/Pickup (Items Every Room)"
+        },
+        "192": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "North Core Tunnel/Pickup (Items Every Room)"
+        },
+        "193": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Geothermal Core/Pickup (Items Every Room)"
+        },
+        "98": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Plasma Processing/Pickup (Plasma Beam)"
+        },
+        "194": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "South Core Tunnel/Pickup (Items Every Room)"
+        },
+        "99": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Magmoor Workstation/Pickup (Energy Tank)"
+        },
+        "195": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Workstation Tunnel/Pickup (Items Every Room)"
+        },
+        "196": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Transport Tunnel C/Pickup (Items Every Room)"
+        },
+        "197": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Transport to Phazon Mines West/Pickup (Items Every Room)"
+        },
+        "198": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Transport to Phendrana Drifts South/Pickup (Items Every Room)"
+        },
+        "199": {
+            "region": "Magmoor Caverns",
+            "area_and_node": "Save Station Magmoor B/Pickup (Items Every Room)"
+        },
+        "200": {
+            "region": "Phazon Mines",
+            "area_and_node": "Transport to Tallon Overworld South/Pickup (Items Every Room)"
+        },
+        "201": {
+            "region": "Phazon Mines",
+            "area_and_node": "Quarry Access/Pickup (Items Every Room)"
+        },
+        "73": {
+            "region": "Phazon Mines",
+            "area_and_node": "Main Quarry/Pickup (Missile)"
+        },
+        "202": {
+            "region": "Phazon Mines",
+            "area_and_node": "Waste Disposal/Pickup (Items Every Room)"
+        },
+        "203": {
+            "region": "Phazon Mines",
+            "area_and_node": "Save Station Mines A/Pickup (Items Every Room)"
+        },
+        "74": {
+            "region": "Phazon Mines",
+            "area_and_node": "Security Access A/Pickup (Missile)"
+        },
+        "204": {
+            "region": "Phazon Mines",
+            "area_and_node": "Ore Processing/Pickup (Items Every Room)"
+        },
+        "205": {
+            "region": "Phazon Mines",
+            "area_and_node": "Mine Security Station/Pickup (Items Every Room)"
+        },
+        "206": {
+            "region": "Phazon Mines",
+            "area_and_node": "Research Access/Pickup (Items Every Room)"
+        },
+        "75": {
+            "region": "Phazon Mines",
+            "area_and_node": "Storage Depot B/Pickup (Grapple Beam)"
+        },
+        "207": {
+            "region": "Phazon Mines",
+            "area_and_node": "Elevator Access A/Pickup (Items Every Room)"
+        },
+        "208": {
+            "region": "Phazon Mines",
+            "area_and_node": "Security Access B/Pickup (Items Every Room)"
+        },
+        "76": {
+            "region": "Phazon Mines",
+            "area_and_node": "Storage Depot A/Pickup (Flamethrower)"
+        },
+        "78": {
+            "region": "Phazon Mines",
+            "area_and_node": "Elite Research/Pickup (Missile)"
+        },
+        "77": {
+            "region": "Phazon Mines",
+            "area_and_node": "Elite Research/Pickup (Artifact of Warrior)"
+        },
+        "209": {
+            "region": "Phazon Mines",
+            "area_and_node": "Elevator A/Pickup (Items Every Room)"
+        },
+        "79": {
+            "region": "Phazon Mines",
+            "area_and_node": "Elite Control Access/Pickup (Missile)"
+        },
+        "210": {
+            "region": "Phazon Mines",
+            "area_and_node": "Elite Control/Pickup (Items Every Room)"
+        },
+        "211": {
+            "region": "Phazon Mines",
+            "area_and_node": "Maintenance Tunnel/Pickup (Items Every Room)"
+        },
+        "80": {
+            "region": "Phazon Mines",
+            "area_and_node": "Ventilation Shaft/Pickup (Energy Tank)"
+        },
+        "81": {
+            "region": "Phazon Mines",
+            "area_and_node": "Phazon Processing Center/Pickup (Missile)"
+        },
+        "212": {
+            "region": "Phazon Mines",
+            "area_and_node": "Omega Research/Pickup (Items Every Room)"
+        },
+        "213": {
+            "region": "Phazon Mines",
+            "area_and_node": "Transport Access/Pickup (Items Every Room)"
+        },
+        "82": {
+            "region": "Phazon Mines",
+            "area_and_node": "Processing Center Access/Pickup (Energy Tank)"
+        },
+        "214": {
+            "region": "Phazon Mines",
+            "area_and_node": "Map Station Mines/Pickup (Items Every Room)"
+        },
+        "215": {
+            "region": "Phazon Mines",
+            "area_and_node": "Dynamo Access/Pickup (Items Every Room)"
+        },
+        "216": {
+            "region": "Phazon Mines",
+            "area_and_node": "Transport to Magmoor Caverns South/Pickup (Items Every Room)"
+        },
+        "83": {
+            "region": "Phazon Mines",
+            "area_and_node": "Elite Quarters/Pickup (Phazon Suit)"
+        },
+        "84": {
+            "region": "Phazon Mines",
+            "area_and_node": "Central Dynamo/Pickup (Main Power Bombs)"
+        },
+        "217": {
+            "region": "Phazon Mines",
+            "area_and_node": "Elite Quarters Access/Pickup (Items Every Room)"
+        },
+        "218": {
+            "region": "Phazon Mines",
+            "area_and_node": "Quarantine Access A/Pickup (Items Every Room)"
+        },
+        "219": {
+            "region": "Phazon Mines",
+            "area_and_node": "Save Station Mines B/Pickup (Items Every Room)"
+        },
+        "85": {
+            "region": "Phazon Mines",
+            "area_and_node": "Metroid Quarantine B/Pickup (Missile)"
+        },
+        "86": {
+            "region": "Phazon Mines",
+            "area_and_node": "Metroid Quarantine A/Pickup (Missile)"
+        },
+        "220": {
+            "region": "Phazon Mines",
+            "area_and_node": "Quarantine Access B/Pickup (Items Every Room)"
+        },
+        "221": {
+            "region": "Phazon Mines",
+            "area_and_node": "Save Station Mines C/Pickup (Items Every Room)"
+        },
+        "222": {
+            "region": "Phazon Mines",
+            "area_and_node": "Elevator Access B/Pickup (Items Every Room)"
+        },
+        "87": {
+            "region": "Phazon Mines",
+            "area_and_node": "Fungal Hall B/Pickup (Missile)"
+        },
+        "223": {
+            "region": "Phazon Mines",
+            "area_and_node": "Elevator B/Pickup (Items Every Room)"
+        },
+        "224": {
+            "region": "Phazon Mines",
+            "area_and_node": "Missile Station Mines/Pickup (Items Every Room)"
+        },
+        "88": {
+            "region": "Phazon Mines",
+            "area_and_node": "Phazon Mining Tunnel/Pickup (Artifact of Newborn)"
+        },
+        "89": {
+            "region": "Phazon Mines",
+            "area_and_node": "Fungal Hall Access/Pickup (Missile)"
+        },
+        "225": {
+            "region": "Phazon Mines",
+            "area_and_node": "Fungal Hall A/Pickup (Items Every Room)"
+        },
+        "58": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Landing Site/Pickup (Missile Expansion)"
+        },
+        "263": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Gully/Pickup (Items Every Room)"
+        },
+        "264": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Canyon Cavern/Pickup (Items Every Room)"
+        },
+        "265": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Temple Hall/Pickup (Items Every Room)"
+        },
+        "59": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Alcove/Pickup (Space Jump Boots)"
+        },
+        "266": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Waterfall Cavern/Pickup (Items Every Room)"
+        },
+        "267": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Tallon Canyon/Pickup (Items Every Room)"
+        },
+        "268": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Temple Security Station/Pickup (Items Every Room)"
+        },
+        "60": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Frigate Crash Site/Pickup (Missile Expansion)"
+        },
+        "269": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Transport Tunnel A/Pickup (Items Every Room)"
+        },
+        "270": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Root Tunnel/Pickup (Items Every Room)"
+        },
+        "271": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Temple Lobby/Pickup (Items Every Room)"
+        },
+        "272": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Frigate Access Tunnel/Pickup (Items Every Room)"
+        },
+        "61": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Overgrown Cavern/Pickup (Missile Expansion)"
+        },
+        "273": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Transport to Chozo Ruins West/Pickup (Items Every Room)"
+        },
+        "62": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Root Cave/Pickup (Missile Expansion)"
+        },
+        "63": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Artifact Temple/Pickup (Artifact of Truth)"
+        },
+        "274": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Main Ventilation Shaft Section C/Pickup (Items Every Room)"
+        },
+        "275": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Transport Tunnel C/Pickup (Items Every Room)"
+        },
+        "64": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Transport Tunnel B/Pickup (Missile Expansion)"
+        },
+        "65": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Arbor Chamber/Pickup (Missile Expansion)"
+        },
+        "276": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Main Ventilation Shaft Section B/Pickup (Items Every Room)"
+        },
+        "277": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Transport to Chozo Ruins East/Pickup (Items Every Room)"
+        },
+        "278": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Transport to Magmoor Caverns East/Pickup (Items Every Room)"
+        },
+        "279": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Main Ventilation Shaft Section A/Pickup (Items Every Room)"
+        },
+        "280": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Reactor Core/Pickup (Items Every Room)"
+        },
+        "281": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Reactor Access/Pickup (Items Every Room)"
+        },
+        "66": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Cargo Freight Lift to Deck Gamma/Pickup (Energy Tank)"
+        },
+        "282": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Savestation/Pickup (Items Every Room)"
+        },
+        "283": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Deck Beta Transit Hall/Pickup (Items Every Room)"
+        },
+        "67": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Biohazard Containment/Pickup (Missile Expansion)"
+        },
+        "284": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Deck Beta Security Hall/Pickup (Items Every Room)"
+        },
+        "285": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Biotech Research Area 1/Pickup (Items Every Room)"
+        },
+        "286": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Deck Beta Conduit Hall/Pickup (Items Every Room)"
+        },
+        "287": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Connection Elevator to Deck Beta/Pickup (Items Every Room)"
+        },
+        "68": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Hydro Access Tunnel/Pickup (Energy Tank)"
+        },
+        "288": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Great Tree Hall/Pickup (Items Every Room)"
+        },
+        "69": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Great Tree Chamber/Pickup (Missile Expansion)"
+        },
+        "289": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Transport Tunnel D/Pickup (Items Every Room)"
+        },
+        "70": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Life Grove Tunnel/Pickup (Missile Expansion)"
+        },
+        "290": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Transport Tunnel E/Pickup (Items Every Room)"
+        },
+        "291": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Transport to Chozo Ruins South/Pickup (Items Every Room)"
+        },
+        "71": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Life Grove/Pickup (X-Ray Visor)"
+        },
+        "72": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Life Grove/Pickup (Artifact of Chozo)"
+        },
+        "292": {
+            "region": "Tallon Overworld",
+            "area_and_node": "Transport to Phazon Mines East/Pickup (Items Every Room)"
+        },
+        "100": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Transport to Tallon Overworld North/Pickup (Items Every Room)"
+        },
+        "101": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Ruins Entrance/Pickup (Items Every Room)"
+        },
+        "3": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Main Plaza/Pickup (Energy Tank)"
+        },
+        "0": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Main Plaza/Pickup (Missile Expansion Half Pipe)"
+        },
+        "2": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Main Plaza/Pickup (Missile Expansion Tree)"
+        },
+        "1": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Main Plaza/Pickup (Missile Expansion Grapple Ledge)"
+        },
+        "102": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Ruined Fountain Access/Pickup (Items Every Room)"
+        },
+        "103": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Ruined Shrine Access/Pickup (Items Every Room)"
+        },
+        "104": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Nursery Access/Pickup (Items Every Room)"
+        },
+        "105": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Plaza Access/Pickup (Items Every Room)"
+        },
+        "106": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Piston Tunnel/Pickup (Items Every Room)"
+        },
+        "4": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Ruined Fountain/Pickup (Missile Expansion)"
+        },
+        "5": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Ruined Shrine/Pickup (Morph Ball)"
+        },
+        "6": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Ruined Shrine/Pickup (Missile Expansion Half Pipe)"
+        },
+        "7": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Ruined Shrine/Pickup (Missile Expansion Bomb Wall)"
+        },
+        "107": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Eyon Tunnel/Pickup (Items Every Room)"
+        },
+        "8": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Vault/Pickup (Missile Expansion)"
+        },
+        "9": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Training Chamber/Pickup (Energy Tank)"
+        },
+        "108": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Arboretum Access/Pickup (Items Every Room)"
+        },
+        "109": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Meditation Fountain/Pickup (Items Every Room)"
+        },
+        "110": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Tower of Light Access/Pickup (Items Every Room)"
+        },
+        "10": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Ruined Nursery/Pickup (Missile Expansion)"
+        },
+        "111": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Vault Access/Pickup (Items Every Room)"
+        },
+        "11": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Training Chamber Access/Pickup (Missile Expansion)"
+        },
+        "112": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Arboretum/Pickup (Items Every Room)"
+        },
+        "12": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Magma Pool/Pickup (Power Bomb Expansion)"
+        },
+        "13": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Tower of Light/Pickup (Wavebuster)"
+        },
+        "113": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Save Station 1/Pickup (Items Every Room)"
+        },
+        "114": {
+            "region": "Chozo Ruins",
+            "area_and_node": "North Atrium/Pickup (Items Every Room)"
+        },
+        "115": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Transport to Magmoor Caverns North/Pickup (Items Every Room)"
+        },
+        "116": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Sunchamber Lobby/Pickup (Items Every Room)"
+        },
+        "117": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Gathering Hall Access/Pickup (Items Every Room)"
+        },
+        "14": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Tower Chamber/Pickup (Artifact of Lifegiver)"
+        },
+        "15": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Ruined Gallery/Pickup (Missile Expansion)"
+        },
+        "16": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Ruined Gallery/Pickup (Missile Expansion 2)"
+        },
+        "118": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Sun Tower/Pickup (Items Every Room)"
+        },
+        "17": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Transport Access North/Pickup (Energy Tank)"
+        },
+        "119": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Sunchamber Access/Pickup (Items Every Room)"
+        },
+        "18": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Gathering Hall/Pickup (Missile Expansion)"
+        },
+        "120": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Totem Access/Pickup (Items Every Room)"
+        },
+        "121": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Map Station/Pickup (Items Every Room)"
+        },
+        "122": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Sun Tower Access/Pickup (Items Every Room)"
+        },
+        "19": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Hive Totem/Pickup (Missile Launcher)"
+        },
+        "20": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Sunchamber/Pickup (Varia Suit)"
+        },
+        "21": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Sunchamber/Pickup (Artifact of Wild)"
+        },
+        "22": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Watery Hall Access/Pickup (Missile Expansion)"
+        },
+        "123": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Save Station 2/Pickup (Items Every Room)"
+        },
+        "124": {
+            "region": "Chozo Ruins",
+            "area_and_node": "East Atrium/Pickup (Items Every Room)"
+        },
+        "23": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Watery Hall/Pickup (Charge Beam)"
+        },
+        "24": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Watery Hall/Pickup (Missile Expansion)"
+        },
+        "125": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Energy Core Access/Pickup (Items Every Room)"
+        },
+        "126": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Dynamo Access/Pickup (Items Every Room)"
+        },
+        "127": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Energy Core/Pickup (Items Every Room)"
+        },
+        "25": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Dynamo/Pickup (Missile Expansion)"
+        },
+        "26": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Dynamo/Pickup (Missile Expansion 2)"
+        },
+        "128": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Burn Dome Access/Pickup (Items Every Room)"
+        },
+        "129": {
+            "region": "Chozo Ruins",
+            "area_and_node": "West Furnace Access/Pickup (Items Every Room)"
+        },
+        "28": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Burn Dome/Pickup (Morph Ball Bombs)"
+        },
+        "27": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Burn Dome/Pickup (Missile Expansion)"
+        },
+        "29": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Furnace/Pickup (Missile Expansion)"
+        },
+        "30": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Furnace/Pickup (Energy Tank)"
+        },
+        "130": {
+            "region": "Chozo Ruins",
+            "area_and_node": "East Furnace Access/Pickup (Items Every Room)"
+        },
+        "131": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Crossway Access West/Pickup (Items Every Room)"
+        },
+        "31": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Hall of the Elders/Pickup (Energy Tank)"
+        },
+        "32": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Crossway/Pickup (Missile Expansion)"
+        },
+        "132": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Reflecting Pool Access/Pickup (Items Every Room)"
+        },
+        "133": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Elder Hall Access/Pickup (Items Every Room)"
+        },
+        "134": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Crossway Access South/Pickup (Items Every Room)"
+        },
+        "33": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Elder Chamber/Pickup (Artifact of World)"
+        },
+        "135": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Reflecting Pool/Pickup (Items Every Room)"
+        },
+        "136": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Save Station 3/Pickup (Items Every Room)"
+        },
+        "137": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Transport Access South/Pickup (Items Every Room)"
+        },
+        "34": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Antechamber/Pickup (Ice Beam)"
+        },
+        "138": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Transport to Tallon Overworld East/Pickup (Items Every Room)"
+        },
+        "139": {
+            "region": "Chozo Ruins",
+            "area_and_node": "Transport to Tallon Overworld South/Pickup (Items Every Room)"
+        }
     }
 }
-
-

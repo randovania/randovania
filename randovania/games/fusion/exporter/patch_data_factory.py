@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import math
 from collections import defaultdict
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
@@ -10,7 +10,7 @@ from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.hint_node import HintNode
-from randovania.games.fusion.exporter.hint_namer import FusionHintNamer
+from randovania.games.fusion.exporter.hint_namer import FusionColor, FusionHintNamer
 from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
@@ -26,6 +26,11 @@ class FusionPatchDataFactory(PatchDataFactory):
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.FUSION
+
+    @override
+    @classmethod
+    def hint_namer_type(cls) -> type[FusionHintNamer]:
+        return FusionHintNamer
 
     def _create_pickup_dict(self, pickup_list: list[ExportedPickupDetails]) -> dict:
         pickup_map_dict = {}
@@ -61,8 +66,8 @@ class FusionPatchDataFactory(PatchDataFactory):
         starting_location_dict = {
             "Area": self.game.region_list.nodes_to_region(starting_location_node).extra["area_id"],
             "Room": self.game.region_list.nodes_to_area(starting_location_node).extra["room_id"][0],
-            "X": starting_location_node.extra["X"],
-            "Y": starting_location_node.extra["Y"],
+            "BlockX": starting_location_node.extra["X"],
+            "BlockY": starting_location_node.extra["Y"],
         }
         return starting_location_dict
 
@@ -95,7 +100,7 @@ class FusionPatchDataFactory(PatchDataFactory):
                 continue
             # Special Case for E-Tanks
             elif category == "Energy":
-                starting_dict[category] += self.configuration.energy_per_tank
+                starting_dict[category] += self.configuration.energy_per_tank * quantity
                 continue
             # Normal Case
             starting_dict[category].append(item.extra["StartingItemName"])
@@ -149,7 +154,7 @@ class FusionPatchDataFactory(PatchDataFactory):
         nav_text_json = {}
         hint_lang_list = ["JapaneseKanji", "JapaneseHiragana", "English", "German", "French", "Italian", "Spanish"]
         # namer = FusionHintNamer(self.description.all_patches, self.players_config)
-        # exporter = HintExporter(namer, self.rng, ["A joke hint."])
+        # exporter = HintExporter(namer, self.rng, GENERIC_JOKE_HINTS)
 
         artifacts = [self.game.resource_database.get_item(f"Infant Metroid {i + 1}") for i in range(20)]
 
@@ -193,27 +198,46 @@ class FusionPatchDataFactory(PatchDataFactory):
             self.patches.configuration, self.patches.game, self.patches
         )
         starting_items_text = (
-            "HQ has provided you with the following starting items: " + ", ".join(starting_items_list) + ". "
-            if len(starting_items_list) > 0
-            else ""
+            f"Starting items: {(', '.join(starting_items_list))}. "
+            if self.configuration.short_intro_text
+            else f"HQ has provided you with the following starting items: {(', '.join(starting_items_list))}. "
         )
+        if len(starting_items_list) == 0:
+            starting_items_text = ""
         metroid_location_text = "anywhere" if self.configuration.artifacts.prefer_anywhere else "at bosses"
+        colorize_text = FusionHintNamer.colorize_text
+        long_intro = (
+            f"{starting_items_text}Your objective is as follows: the {colorize_text(FusionColor.YELLOW, 'SA-X', True)} "
+            f"has discovered and destroyed a top secret {colorize_text(FusionColor.YELLOW, 'Metroid', True)} "
+            f"breeding facility. It released {self.configuration.artifacts.placed_artifacts} "
+            "infant Metroids into the station. "
+            f"Initial scans indicate that they are hiding {metroid_location_text}. "
+            f"Find and capture {self.configuration.artifacts.required_artifacts} of them, "
+            "to lure out the SA-X. "
+            "Then initiate the station's self-destruct sequence. "
+            f"Uplink at {colorize_text(FusionColor.PINK, 'Navigation Rooms', True)} along the way. "
+            "I can scan the station for useful equipment from there.[OBJECTIVE]Good. Move out."
+        )
+        short_intro = (
+            f"{starting_items_text}"
+            f"{
+                (
+                    (
+                        f'Gather {self.configuration.artifacts.required_artifacts}/'
+                        f'{self.configuration.artifacts.placed_artifacts} Infant Metroids hiding '
+                        f'{metroid_location_text} to lure out the '
+                        f'{colorize_text(FusionColor.YELLOW, "SA-X", True)} and prepare for battle.'
+                    )
+                    if self.configuration.artifacts.required_artifacts > 0
+                    else f'Equip yourself to battle the {colorize_text(FusionColor.YELLOW, "SA-X", True)}.'
+                )
+            }"
+        )
         for lang in hint_lang_list:
             nav_text_json[lang] = {
                 "NavigationTerminals": hints,
                 "ShipText": {
-                    "InitialText": (
-                        f"{starting_items_text}Your objective is as follows: the [COLOR=3]SA-X[/COLOR] "
-                        f"has discovered and destroyed a top secret [COLOR=3]Metroid[/COLOR] breeding facility. "
-                        f"It released {self.configuration.artifacts.placed_artifacts} "
-                        "infant Metroids into the station. "
-                        f"Initial scans indicate that they are hiding {metroid_location_text}. "
-                        f"Find and capture {self.configuration.artifacts.required_artifacts} of them, "
-                        "to lure out the SA-X. "
-                        "Then initiate the station's self-destruct sequence. "
-                        "Uplink at [COLOR=2]Navigation Rooms[/COLOR] along the way. "
-                        "I can scan the station for useful equipment from there.[OBJECTIVE]Good. Move out."
-                    ),
+                    "InitialText": short_intro if self.configuration.short_intro_text else long_intro,
                     "ConfirmText": "Any Objections, Lady?",
                 },
             }
@@ -231,7 +255,7 @@ class FusionPatchDataFactory(PatchDataFactory):
                 pickup_node = region_list.node_from_pickup_index(location.location.location)
                 elements[pickup.name].append(
                     {
-                        "World": location.player_name,
+                        "World": location.world_name,
                         "Region": region_list.region_name_from_node(pickup_node),
                         "Area": region_list.nodes_to_area(pickup_node).name,
                     }
@@ -259,12 +283,42 @@ class FusionPatchDataFactory(PatchDataFactory):
                 credits_array.append({"LineType": "White1", "Text": location["Area"], "BlankLines": 1})
         return credits_array
 
+    def _create_nav_locks(self) -> dict:
+        locks = {
+            "MainDeckWest": "RED",
+            "MainDeckEast": "BLUE",
+            "OperationsDeck": "GREY",
+            "Sector1Entrance": "GREEN",
+            "Sector2Entrance": "GREEN",
+            "Sector3Entrance": "YELLOW",
+            "Sector4Entrance": "YELLOW",
+            "Sector5Entrance": "RED",
+            "Sector6Entrance": "RED",
+            "AuxiliaryPower": "OPEN",
+            "RestrictedLabs": "OPEN",
+        }
+        return locks
+
     def create_useless_pickup(self) -> PickupEntry:
         """Used for any location with no PickupEntry assigned to it."""
         return pickup_creator.create_nothing_pickup(
             self.game.resource_database,
             model_name="Empty",
         )
+
+    def _create_room_names(self) -> list[dict]:
+        names = []
+        for region in self.game.region_list.regions:
+            for area in region.areas:
+                for number in area.extra["room_id"]:
+                    names.append(
+                        {
+                            "Area": region.extra["area_id"],
+                            "Room": number,
+                            "Name": area.name,
+                        }
+                    )
+        return names
 
     def create_visual_nothing(self) -> PickupEntry:
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
@@ -284,8 +338,10 @@ class FusionPatchDataFactory(PatchDataFactory):
             "DoorLocks": self._create_door_locks(),
             "Palettes": self._create_palette(),
             "NavigationText": self._create_nav_text(),
+            "NavStationLocks": self._create_nav_locks(),
             "CreditsText": self._create_credits_text(),
             "DisableDemos": True,
+            "RoomNames": self._create_room_names(),
             "AntiSoftlockRoomEdits": self.configuration.anti_softlock,
             "PowerBombsWithoutBombs": True,
             "SkipDoorTransitions": self.configuration.instant_transitions,

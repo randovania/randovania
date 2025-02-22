@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import pytest
 
-from randovania.games.samus_returns.generator.pool_creator import artifact_pool, create_msr_artifact
+from randovania.games.samus_returns.generator.pool_creator import artifact_pool
 from randovania.games.samus_returns.layout.msr_configuration import MSRArtifactConfig
 from randovania.generator.pickup_pool import PoolResults
+from randovania.generator.pickup_pool.pickup_creator import create_generated_pickup
 from randovania.layout.exceptions import InvalidConfiguration
 
 
@@ -16,9 +17,9 @@ def test_msr_pool_creator(msr_game_description, required_dna, placed_dna):
 
     # Assert
     assert results == PoolResults(
-        [create_msr_artifact(i, db) for i in range(required_dna)],
+        [create_generated_pickup("Metroid DNA", db, i=i + 1) for i in range(required_dna)],
         {},
-        [create_msr_artifact(i, db) for i in range(placed_dna, 39)],
+        [create_generated_pickup("Metroid DNA", db, i=i + 1) for i in range(placed_dna, 39)],
     )
 
 

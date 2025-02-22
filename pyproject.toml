@@ -23,10 +23,10 @@ classifiers = [
     "Intended Audience :: End Users/Desktop",
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Topic :: Games/Entertainment",
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dynamic = ["version"]
 
 dependencies = [
@@ -82,7 +82,10 @@ exporters = [
     "factorio-randovania-mod>=0.5.0",
 
     # Metroid Dread
-    "open-dread-rando>=2.14.0",
+    "open-dread-rando>=2.16.0",
+
+    # Metroid Planets
+    "planets-yapr>=1.0.0",
 
     # Metroid Prime 1
     "py_randomprime>=1.27.0",
@@ -97,7 +100,7 @@ exporters = [
     "mp2hudcolor>=1.0.10",
 
     # Metroid: Samus Returns
-    "open-samus-returns-rando>=3.0.0",
+    "open-samus-returns-rando>=3.1.1",
 
     # Super Metroid
     "SuperDuperMetroid>=1.2.0",
@@ -130,6 +133,7 @@ server = [
     "cachetools",  # for TTLCache
 
     "py-cord>=2.3.1",  # for randovania/server/discord; 2.3.1+ is needed for Python 3.11
+    "audioop-lts; python_version>='3.13'",  # for py-cord
     "Pillow>=9.0.0",  # for randovania/server/discord/database_command
     "graphviz",  # for randovania/server/discord/database_command
 ]
@@ -151,7 +155,7 @@ typing = [
 ]
 
 website = [
-    "htmlmin",
+    "htmlmin2",
     "ruamel.yaml",
 ]
 
@@ -228,29 +232,24 @@ runtime-evaluated-base-classes = [
     "randovania.bitpacking.json_dataclass.JsonDataclass",
     "randovania.layout.base.base_configuration.BaseConfiguration",
     "randovania.exporter.game_exporter.GameExportParams",
+    "randovania.game_description.pickup.pickup_definition.base_pickup.BasePickupDefinition",
 ]
 
 [tool.mypy]
 files = [
     "randovania/bitpacking/",
     "randovania/cli/",
-    "randovania/game_connection/builder/cs_connector_builder.py",
-    "randovania/game_connection/builder/debug_connector_builder.py",
-    "randovania/game_connection/connector/cs_remote_connector.py",
-    "randovania/game_connection/connector/dread_remote_connector.py",
-    "randovania/game_connection/connector/mercury_remote_connector.py",
-    "randovania/game_connection/connector/msr_remote_connector.py",
-    "randovania/game_connection/executor/cs_executor.py",
-    "randovania/game_connection/executor/dread_executor.py",
-    "randovania/game_connection/executor/msr_executor.py",
+    "randovania/exporter/",
+    "randovania/game/",
+    "randovania/game_connection/",
     "randovania/game_description/",
     "randovania/games/am2r/gui/",
     "randovania/games/am2r/generator/",
     "randovania/games/am2r/layout/",
     "randovania/games/blank/",
     "randovania/games/cave_story/",
-    "randovania/games/dread/gui/dialog/dread_connector_prompt_dialog.py",
-    "randovania/games/dread/gui/dialog/dread_cosmetic_patches_dialog.py",
+    "randovania/games/dread/exporter/hint_namer.py",
+    "randovania/games/dread/gui/",
     "randovania/games/fusion/gui/",
     "randovania/games/fusion/generator/",
     "randovania/games/fusion/layout/",
@@ -263,6 +262,7 @@ files = [
     "randovania/games/super_metroid/gui/dialog/super_cosmetic_patches_dialog.py",
     "randovania/generator/",
     "randovania/gui/data_editor.py",
+    "randovania/gui/game_specific_gui.py",
     "randovania/gui/docks/resource_database_editor.py",
     "randovania/gui/dialog/base_cosmetic_patches_dialog.py",
     "randovania/gui/dialog/connections_editor.py",
@@ -273,7 +273,11 @@ files = [
     "randovania/gui/widgets/node_selector_widget.py",
     "randovania/lib/",
     "test/bitpacking/",
+    "test/game_connection",
     "test/game_description/",
+    "test/games/test_game.py",
+    "test/games/test_hashes.py",
+    "test/games/test_prime_binary_decoder.py",
     "test/games/blank/",
     "test/games/cave_story/",
     "test/games/dread/gui/test_dread_cosmetic_patches_dialog.py",
@@ -288,17 +292,37 @@ files = [
 follow_imports = "silent"
 disallow_untyped_defs = true
 local_partial_types = true
+warn_unused_ignores = true
+enable_error_code = [
+    "ignore-without-code",
+]
 
 [[tool.mypy.overrides]]
 module = "test.*"
 disallow_untyped_defs = false
 check_untyped_defs = true
-disable_error_code = "method-assign"
+disable_error_code = [
+    "method-assign",
+]
 
 [[tool.mypy.overrides]]
-module = "randovania.games.*.gui.generated.*"
+module = "randovania.*.gui.generated.*"
 disallow_untyped_defs = false
 
 [[tool.mypy.overrides]]
-module = "randovania.gui.generated.*"
-disallow_untyped_defs = false
+# any dependencies which we do not control but are missing types go here
+# not too much can be done about these, so they're not the end of the world
+# dependencies we DO control should use `type: ignore[import-untyped]`
+module = [
+    "bitstruct.*",
+    "construct.*",
+    "graphviz.*",
+    "htmlmin.*",
+    "json_delta.*",
+    "networkx.*",
+    "pid.*",
+    "pytest_localftpserver.*",
+    "pytestqt.*",
+    "qasync.*",
+]
+ignore_missing_imports = true

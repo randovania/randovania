@@ -56,9 +56,9 @@ def test_msr_format_params(artifacts) -> None:
     assert dict(result) == {
         "Logic Settings": ["All tricks disabled"],
         "Item Pool": [
-            f"Size: {174+artifacts.placed_artifacts} of 211",
+            f"Size: {174 + artifacts.placed_artifacts} of 211",
             "Starts with Scan Pulse",
-            "Progressive Beam, Progressive Suit, Progressive Jump",
+            "Progressive Jump",
             "Energy Reserve Tank, Aeion Reserve Tank, Missile Reserve Tank",
         ],
         "Gameplay": ["Starts at Surface East - Landing Site"],
@@ -74,7 +74,7 @@ def test_msr_format_params(artifacts) -> None:
             "Open Area 3 Factory Interior East Shortcut",
             "Change Surface Cavern Cavity Crumble Blocks, Change Area 1 Transport to Surface and Area 2 Crumble Blocks",
         ],
-        "Hints": ["Baby Metroid Hint: Area only", "DNA Hints: Area and room"],
+        "Hints": ["Final Boss Item Hint: Area only", "DNA Hints: Area and room"],
         "Environmental Damage": [
             "Heat: Constant 20 dmg/s",
             "Lava: Constant 20 dmg/s",

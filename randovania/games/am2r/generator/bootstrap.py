@@ -4,7 +4,6 @@ import dataclasses
 from functools import partial
 from typing import TYPE_CHECKING
 
-from randovania.games.am2r.generator.pool_creator import METROID_DNA_CATEGORY
 from randovania.games.am2r.layout import AM2RConfiguration
 from randovania.resolver.bootstrap import Bootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
@@ -108,6 +107,6 @@ class AM2RBootstrap(Bootstrap):
             return super().assign_pool_results(rng, patches, pool_results)
 
         locations = self.all_preplaced_item_locations(patches.game, patches.configuration, is_dna_node)
-        self.pre_place_items(rng, locations, pool_results, METROID_DNA_CATEGORY)
+        self.pre_place_items(rng, locations, pool_results, "dna", patches.game.game)
 
         return super().assign_pool_results(rng, patches, pool_results)

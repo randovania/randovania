@@ -212,6 +212,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
             image_path = game.data_path.joinpath("assets", "cover.png")
             logo = ClickableLabel(pack_tile)
+            logo.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
             logo.setPixmap(QtGui.QPixmap(os.fspath(image_path)))
             logo.setFrameStyle(QtWidgets.QFrame.Panel | QtWidgets.QFrame.Plain)
             logo.setScaledContents(True)

@@ -9,7 +9,7 @@ from randovania.game_description import migration_data
 from randovania.lib import migration_lib
 
 
-def _migrate_v1(preset: dict) -> dict:
+def _migrate_v1(preset: dict, game: RandovaniaGame) -> None:
     layout_configuration = preset["layout_configuration"]
     layout_configuration["beam_configuration"] = {
         "power": {
@@ -51,10 +51,9 @@ def _migrate_v1(preset: dict) -> dict:
     }
     layout_configuration["skip_final_bosses"] = False
     layout_configuration["energy_per_tank"] = 100
-    return preset
 
 
-def _migrate_v2(preset: dict) -> dict:
+def _migrate_v2(preset: dict, game: RandovaniaGame) -> None:
     level_renaming = {
         "trivial": "beginner",
         "easy": "intermediate",
@@ -67,19 +66,16 @@ def _migrate_v2(preset: dict) -> dict:
     for specific, value in trick_level["specific_levels"].items():
         trick_level["specific_levels"][specific] = level_renaming.get(value, value)
 
-    return preset
 
-
-def _migrate_v3(preset: dict) -> dict:
+def _migrate_v3(preset: dict, game: RandovaniaGame) -> None:
     preset["layout_configuration"]["safe_zone"] = {
         "fully_heal": True,
         "prevents_dark_aether": True,
         "heal_per_second": 1.0,
     }
-    return preset
 
 
-def _migrate_v4(preset: dict) -> dict:
+def _migrate_v4(preset: dict, game: RandovaniaGame) -> None:
     trick_name_mapping = {
         0: "Dash",
         1: "BombJump",
@@ -126,10 +122,8 @@ def _migrate_v4(preset: dict) -> dict:
 
     trick_level["specific_levels"] = specific_levels
 
-    return preset
 
-
-def _migrate_v5(preset: dict) -> dict:
+def _migrate_v5(preset: dict, game: RandovaniaGame) -> None:
     excluded_item = {
         "include_copy_in_original_location": False,
         "num_shuffled_pickups": 0,
@@ -195,28 +189,24 @@ def _migrate_v5(preset: dict) -> dict:
     preset["configuration"].update(preset.pop("patcher_configuration"))
     preset["configuration"]["varia_suit_damage"] = max(preset["configuration"]["varia_suit_damage"], 0.1)
 
-    return preset
 
-
-def _migrate_v6(preset: dict) -> dict:
+def _migrate_v6(preset: dict, game: RandovaniaGame) -> None:
     preset["configuration"]["dangerous_energy_tank"] = False
-    return preset
 
 
-def _migrate_v7(preset: dict) -> dict:
+def _migrate_v7(preset: dict, game: RandovaniaGame) -> None:
     default_items = {}
-    if preset["game"] == "prime2":
+    if game == RandovaniaGame.METROID_PRIME_ECHOES:
         default_items["visor"] = "Combat Visor"
         default_items["beam"] = "Power Beam"
 
     preset["configuration"]["major_items_configuration"]["default_items"] = default_items
-    return preset
 
 
-def _migrate_v8(preset: dict) -> dict:
-    migration = migration_data.get_raw_data(RandovaniaGame(preset["game"]))
+def _migrate_v8(preset: dict, game: RandovaniaGame) -> None:
+    migration = migration_data.get_raw_data(game)
 
-    def _name_to_location(name: str):
+    def _name_to_location(name: str) -> dict[str, int]:
         world_name, area_name = name.split("/", 1)
         return {
             "world_asset_id": migration["world_name_to_id"][world_name],
@@ -233,7 +223,7 @@ def _migrate_v8(preset: dict) -> dict:
     ]
 
     excluded_teleporters = []
-    if preset["game"] == "prime2":
+    if game == RandovaniaGame.METROID_PRIME_ECHOES:
         excluded_teleporters = [
             {"world_asset_id": 464164546, "area_asset_id": 3136899603, "instance_id": 204865660},
             {"world_asset_id": 2252328306, "area_asset_id": 2068511343, "instance_id": 589949},
@@ -254,10 +244,8 @@ def _migrate_v8(preset: dict) -> dict:
             "num_included_in_starting_items": 1
         }
 
-    return preset
 
-
-def _migrate_v9(preset: dict) -> dict:
+def _migrate_v9(preset: dict, game: RandovaniaGame) -> None:
     if preset.get("uuid") is None:
         preset["uuid"] = str(uuid.uuid4())
 
@@ -272,14 +260,12 @@ def _migrate_v9(preset: dict) -> dict:
     base_preset_name = preset.pop("base_preset_name")
     preset["base_preset_uuid"] = _name_to_uuid.get(base_preset_name, str(uuid.uuid4()))
 
-    if preset["game"] != "prime2":
+    if game != RandovaniaGame.METROID_PRIME_ECHOES:
         preset["configuration"].pop("dangerous_energy_tank")
 
-    return preset
 
-
-def _migrate_v10(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v10(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         major = preset["configuration"].pop("qol_major_cutscenes")
         minor = preset["configuration"].pop("qol_minor_cutscenes")
         if major:
@@ -290,7 +276,7 @@ def _migrate_v10(preset: dict) -> dict:
             cutscenes = "original"
         preset["configuration"]["qol_cutscenes"] = cutscenes
 
-    elif preset["game"] == "prime2":
+    elif game == RandovaniaGame.METROID_PRIME_ECHOES:
         preset["configuration"]["allow_jumping_on_dark_water"] = False
         fields = [
             "allow_vanilla_dark_beam",
@@ -306,59 +292,53 @@ def _migrate_v10(preset: dict) -> dict:
         for f in fields:
             preset["configuration"][f] = True
 
-    return preset
 
-
-def _migrate_v11(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v11(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         preset["configuration"]["warp_to_start"] = False
 
-    return preset
 
-
-def _migrate_v12(preset: dict) -> dict:
+def _migrate_v12(preset: dict, game: RandovaniaGame) -> None:
     preset["configuration"]["logical_resource_action"] = "randomly"
-    if preset["game"] == "prime1":
+    if game == RandovaniaGame.METROID_PRIME:
         preset["configuration"]["artifact_target"] = preset["configuration"].pop("artifacts")
         preset["configuration"]["artifact_minimum_progression"] = 0
         preset["configuration"]["qol_pickup_scans"] = False
 
-    return preset
 
-
-def _migrate_v13(preset: dict) -> dict:
+def _migrate_v13(preset: dict, game: RandovaniaGame) -> None:
     for config in preset["configuration"]["major_items_configuration"]["items_state"].values():
         config.pop("allowed_as_random_starting_item", None)
 
     maximum_ammo = preset["configuration"]["ammo_configuration"].pop("maximum_ammo")
     ammo_ids = {
-        "prime1": {
+        RandovaniaGame.METROID_PRIME: {
             "Missile Expansion": ["4"],
             "Power Bomb Expansion": ["7"],
         },
-        "prime2": {
+        RandovaniaGame.METROID_PRIME_ECHOES: {
             "Missile Expansion": ["44"],
             "Power Bomb Expansion": ["43"],
             "Dark Ammo Expansion": ["45"],
             "Light Ammo Expansion": ["46"],
             "Beam Ammo Expansion": ["45", "46"],
         },
-        "prime3": {
+        RandovaniaGame.METROID_PRIME_CORRUPTION: {
             "Missile Expansion": ["4"],
             "Ship Missile Expansion": ["45"],
         },
-        "super_metroid": {
+        RandovaniaGame.SUPER_METROID: {
             "Missile Expansion": ["5"],
             "Super Missile Expansion": ["6"],
             "Power Bomb Expansion": ["7"],
         },
-    }[preset["game"]]
+    }[game]
     main_items = {
-        "prime1": {
+        RandovaniaGame.METROID_PRIME: {
             "Missile Launcher": ["4"],
             "Power Bomb": ["7"],
         },
-        "prime2": {
+        RandovaniaGame.METROID_PRIME_ECHOES: {
             "Dark Beam": ["45"],
             "Light Beam": ["46"],
             "Annihilator Beam": ["45", "46"],
@@ -366,14 +346,14 @@ def _migrate_v13(preset: dict) -> dict:
             "Seeker Launcher": ["44"],
             "Power Bomb": ["43"],
         },
-        "prime3": {
+        RandovaniaGame.METROID_PRIME_CORRUPTION: {
             "Missile Launcher": ["4"],
             "Ship Missile": ["45"],
         },
-        "super_metroid": {},
+        RandovaniaGame.SUPER_METROID: {},
     }
 
-    for item, ids in main_items[preset["game"]].items():
+    for item, ids in main_items[game].items():
         item_state = preset["configuration"]["major_items_configuration"]["items_state"][item]
         count = item_state.get("num_shuffled_pickups", 0) + item_state.get("num_included_in_starting_items", 0)
         if item_state.get("include_copy_in_original_location", False):
@@ -388,12 +368,8 @@ def _migrate_v13(preset: dict) -> dict:
         ]
         config.pop("variance")
 
-    return preset
 
-
-def _migrate_v14(preset: dict) -> dict:
-    game = RandovaniaGame(preset["game"])
-
+def _migrate_v14(preset: dict, game: RandovaniaGame) -> None:
     def _migrate_area_location(old_loc: dict[str, int]) -> dict[str, str]:
         return migration_data.convert_area_loc_id_to_name(game, old_loc)
 
@@ -411,10 +387,8 @@ def _migrate_v14(preset: dict) -> dict:
 
         preset["configuration"]["elevators"] = elevators
 
-    return preset
 
-
-def _migrate_v15(preset: dict) -> dict:
+def _migrate_v15(preset: dict, game: RandovaniaGame) -> None:
     gate_mapping = {
         "Temple Grounds/Hive Access Tunnel/Translator Gate": 0,
         "Temple Grounds/Meeting Grounds/Translator Gate": 1,
@@ -435,26 +409,22 @@ def _migrate_v15(preset: dict) -> dict:
         "Sanctuary Fortress/Sanctuary Temple/Translator Gate": 16,
     }
 
-    if preset["game"] == "prime2":
+    if game == RandovaniaGame.METROID_PRIME_ECHOES:
         translator_configuration = preset["configuration"]["translator_configuration"]
         old = translator_configuration["translator_requirement"]
         translator_configuration["translator_requirement"] = {
             identifier: old[str(gate_index)] for identifier, gate_index in gate_mapping.items()
         }
 
-    return preset
 
-
-def _migrate_v16(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v16(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         art_hints = {"artifacts": "precise"}
         preset["configuration"]["hints"] = art_hints
 
-    return preset
 
-
-def _migrate_v17(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v17(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         preset["configuration"]["elevators"]["excluded_teleporters"].append(
             {"world_name": "Impact Crater", "area_name": "Metroid Prime Lair", "node_name": "Teleporter to Credits"}
         )
@@ -465,24 +435,22 @@ def _migrate_v17(preset: dict) -> dict:
                 "node_name": "Teleport to Landing Site",
             }
         )
-    return preset
 
 
-def _migrate_v18(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v18(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         preset["configuration"]["shuffle_item_pos"] = False
         preset["configuration"]["items_every_room"] = False
-    return preset
 
 
-def _migrate_v19(preset: dict) -> dict:
-    if preset["game"] == "cave_story":
+def _migrate_v19(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.CAVE_STORY:
         itemconfig = preset["configuration"]["major_items_configuration"]["items_state"]
         ammoconfig = preset["configuration"]["ammo_configuration"]["items_state"]
 
         if itemconfig.get("Base Missiles") is not None:
             # handles presets which were hand-migrated before this func was written
-            return preset
+            return
 
         itemconfig["Base Missiles"] = {
             "num_included_in_starting_items": 1,
@@ -502,45 +470,33 @@ def _migrate_v19(preset: dict) -> dict:
         preset["configuration"]["major_items_configuration"]["items_state"] = itemconfig
         preset["configuration"]["ammo_configuration"]["items_state"] = ammoconfig
 
-    return preset
 
-
-def _migrate_v20(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v20(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         preset["configuration"]["spring_ball"] = False
 
-    return preset
 
-
-def _migrate_v21(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v21(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         preset["configuration"]["deterministic_idrone"] = True
 
-    return preset
 
-
-def _migrate_v22(preset: dict) -> dict:
-    if preset["game"] == "dread":
+def _migrate_v22(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_DREAD:
         preset["configuration"].pop("disable_adam_convos")
 
-    return preset
 
-
-def _migrate_v23(preset: dict) -> dict:
+def _migrate_v23(preset: dict, game: RandovaniaGame) -> None:
     preset["configuration"]["first_progression_must_be_local"] = False
 
-    return preset
 
-
-def _migrate_v24(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v24(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         preset["configuration"]["deterministic_maze"] = True
 
-    return preset
 
-
-def _migrate_v25(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v25(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         preset["configuration"]["random_boss_sizes"] = False
         preset["configuration"]["no_doors"] = False
         preset["configuration"]["superheated_probability"] = 0
@@ -548,72 +504,53 @@ def _migrate_v25(preset: dict) -> dict:
         preset["configuration"]["room_rando"] = "None"
         preset["configuration"]["large_samus"] = False
 
-    return preset
 
-
-def _migrate_v26(preset: dict) -> dict:
+def _migrate_v26(preset: dict, game: RandovaniaGame) -> None:
     preset["configuration"]["minimum_available_locations_for_hint_placement"] = 0
     preset["configuration"]["minimum_location_weight_for_hint_placement"] = 0.0
-    if preset["game"] == "dread":
+    if game == RandovaniaGame.METROID_DREAD:
         preset["configuration"]["immediate_energy_parts"] = True
-    return preset
 
 
-def _migrate_v27(preset: dict) -> dict:
-    if preset["game"] == "prime1" and "phazon_suit" not in preset["configuration"]["hints"].keys():
+def _migrate_v27(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME and "phazon_suit" not in preset["configuration"]["hints"].keys():
         preset["configuration"]["hints"]["phazon_suit"] = "hide-area"
-    return preset
 
 
-def _migrate_v28(preset: dict) -> dict:
-    if preset["game"] == "dread":
+def _migrate_v28(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_DREAD:
         for config in ["hanubia_shortcut_no_grapple", "hanubia_easier_path_to_itorash", "extra_pickups_for_bosses"]:
             preset["configuration"][config] = True
 
-    return preset
 
-
-def _migrate_v29(preset: dict) -> dict:
-    if preset["game"] == "dread":
+def _migrate_v29(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_DREAD:
         preset["configuration"]["x_starts_released"] = False
 
-    return preset
 
-
-def _migrate_v30(preset: dict) -> dict:
-    if preset["game"] == "dread":
+def _migrate_v30(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_DREAD:
         for item in ("Metroid Suit", "Hyper Beam", "Power Suit", "Power Beam"):
             preset["configuration"]["major_items_configuration"]["items_state"].pop(item)
 
-    return preset
 
-
-def _migrate_v31(preset: dict) -> dict:
+def _migrate_v31(preset: dict, game: RandovaniaGame) -> None:
     preset["configuration"]["multi_pickup_new_weighting"] = False
 
-    return preset
+
+def _update_default_dock_rando(preset: dict, game: RandovaniaGame) -> None:
+    preset["configuration"]["dock_rando"] = {
+        "mode": "vanilla",
+        "types_state": copy.deepcopy(migration_data.get_default_dock_lock_settings(game)),
+    }
 
 
-def _update_default_dock_rando_for_game(preset: dict, game: RandovaniaGame) -> dict:
-    if preset["game"] == game.value:
-        preset["configuration"]["dock_rando"] = {
-            "mode": "vanilla",
-            "types_state": copy.deepcopy(migration_data.get_default_dock_lock_settings(game)),
-        }
-    return preset
+def _migrate_v32(preset: dict, game: RandovaniaGame) -> None:
+    _update_default_dock_rando(preset, game)
 
 
-def _update_default_dock_rando(preset: dict) -> dict:
-    game = RandovaniaGame(preset["game"])
-    return _update_default_dock_rando_for_game(preset, game)
-
-
-def _migrate_v32(preset: dict) -> dict:
-    return _update_default_dock_rando(preset)
-
-
-def _migrate_v33(preset: dict) -> dict:
-    if preset["game"] == "dread":
+def _migrate_v33(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_DREAD:
         preset["configuration"].pop("extra_pickups_for_bosses")
         preset["configuration"]["artifacts"] = {
             "prefer_emmi": True,
@@ -621,82 +558,67 @@ def _migrate_v33(preset: dict) -> dict:
             "required_artifacts": 0,
         }
 
-    return preset
 
-
-def _migrate_v34(preset: dict) -> dict:
+def _migrate_v34(preset: dict, game: RandovaniaGame) -> None:
     preset["configuration"].pop("multi_pickup_placement")
     preset["configuration"].pop("multi_pickup_new_weighting")
 
-    return preset
 
-
-def _migrate_v35(preset: dict) -> dict:
-    if preset["game"] == "dread":
+def _migrate_v35(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_DREAD:
         preset["configuration"]["linear_damage_runs"] = False
         preset["configuration"]["linear_dps"] = 20
-    return preset
 
 
-def _migrate_v36(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v36(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         preset["configuration"]["enemy_attributes"] = None
-    return preset
 
 
-def _migrate_v37(preset: dict) -> dict:
-    if preset["game"] == "dread":
+def _migrate_v37(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_DREAD:
         config = preset["configuration"]
         damage = config.pop("linear_dps")
         if not config.pop("linear_damage_runs"):
             damage = None
         config["constant_heat_damage"] = config["constant_cold_damage"] = config["constant_lava_damage"] = damage
 
-    return preset
 
-
-def _migrate_v38(preset: dict) -> dict:
+def _migrate_v38(preset: dict, game: RandovaniaGame) -> None:
     # New version since we don't write the base_preset_uuid to the preset itself anymore
     # But leave it there to migrate easily to options
-    return preset
+    return
 
 
-def _migrate_v39(preset: dict) -> dict:
-    if preset["game"] == "dread":
+def _migrate_v39(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_DREAD:
         preset["configuration"]["allow_highly_dangerous_logic"] = False
 
-    return preset
 
-
-def _migrate_v40(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v40(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         preset["configuration"]["blue_save_doors"] = False
-    return preset
 
 
-def _migrate_v41(preset: dict) -> dict:
-    if preset["game"] == "prime2":
+def _migrate_v41(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME_ECHOES:
         preset["configuration"]["use_new_patcher"] = False
         preset["configuration"]["inverted_mode"] = False
 
-    return preset
+
+def _migrate_v42(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_DREAD:
+        _update_default_dock_rando(preset, game)
 
 
-def _migrate_v42(preset: dict) -> dict:
-    if preset["game"] == "dread":
-        preset = _update_default_dock_rando(preset)
-    return preset
-
-
-def _migrate_v43(preset: dict) -> dict:
+def _migrate_v43(preset: dict, game: RandovaniaGame) -> None:
     preset["configuration"]["single_set_for_pickups_that_solve"] = False
     preset["configuration"]["staggered_multi_pickup_placement"] = False
-    return preset
 
 
-def _migrate_v44(preset: dict) -> dict:
-    def add_node_name(location):
-        node_name = migration_data.get_node_name_for_area(preset["game"], location["world_name"], location["area_name"])
+def _migrate_v44(preset: dict, game: RandovaniaGame) -> None:
+    def add_node_name(location: dict) -> None:
+        node_name = migration_data.get_node_name_for_area(game, location["world_name"], location["area_name"])
         location["node_name"] = node_name
 
     for loc in preset["configuration"]["starting_location"]:
@@ -715,33 +637,28 @@ def _migrate_v44(preset: dict) -> dict:
         for loc in preset["configuration"]["elevators"]["excluded_targets"]:
             add_node_name(loc)
 
-    return preset
 
-
-def _migrate_v45(preset: dict) -> dict:
-    if preset["game"] == "prime2":
+def _migrate_v45(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME_ECHOES:
         preset["configuration"]["portal_rando"] = False
-    return preset
 
 
-def _migrate_v46(preset: dict) -> dict:
-    if preset["game"] == "dread":
+def _migrate_v46(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_DREAD:
         preset["configuration"]["april_fools_hints"] = False
-    return preset
 
 
-def _migrate_v47(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v47(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         preset["configuration"].pop("deterministic_idrone")
         preset["configuration"].pop("deterministic_maze")
         preset["configuration"].pop("qol_game_breaking")
         preset["configuration"].pop("qol_pickup_scans")
         preset["configuration"].pop("heat_protection_only_varia")
         preset["configuration"]["legacy_mode"] = False
-    return preset
 
 
-def _migrate_v48(preset: dict) -> dict:
+def _migrate_v48(preset: dict, game: RandovaniaGame) -> None:
     ammo_pickup_config = preset["configuration"].pop("ammo_configuration")
     ammo_pickup_config["pickups_state"] = ammo_pickup_config.pop("items_state")
     for state in ammo_pickup_config["pickups_state"].values():
@@ -758,11 +675,9 @@ def _migrate_v48(preset: dict) -> dict:
     std_pickup_config["maximum_random_starting_pickups"] = std_pickup_config.pop("maximum_random_starting_items")
     preset["configuration"]["standard_pickup_configuration"] = std_pickup_config
 
-    return preset
 
-
-def _migrate_v49(preset: dict) -> dict:
-    if preset["game"] == "dread":
+def _migrate_v49(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_DREAD:
         config = preset["configuration"]
         flash_shift_config: dict = config["standard_pickup_configuration"]["pickups_state"]["Flash Shift"]
         ammo_config: dict = config["ammo_pickup_configuration"]["pickups_state"]
@@ -781,26 +696,21 @@ def _migrate_v49(preset: dict) -> dict:
             }
             preset["configuration"]["ammo_pickup_configuration"]["pickups_state"] = ammo_config
 
-    return preset
 
-
-def _migrate_v50(preset: dict) -> dict:
-    if preset["game"] == "dread":
+def _migrate_v50(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_DREAD:
         preset["configuration"]["raven_beak_damage_table_handling"] = "consistent_low"
-    return preset
 
 
-def _migrate_v51(preset: dict) -> dict:
+def _migrate_v51(preset: dict, game: RandovaniaGame) -> None:
     # and starting this version, `weaknesses` is also a valid value
     dock_rando = preset["configuration"]["dock_rando"]
     if dock_rando["mode"] in ("one-way", "two-way"):
         dock_rando["mode"] = "docks"
 
-    return preset
 
-
-def _migrate_v52(preset: dict) -> dict:
-    def _fix(target):
+def _migrate_v52(preset: dict, game: RandovaniaGame) -> None:
+    def _fix(target: dict) -> None:
         target["region"] = target.pop("world_name")
         target["area"] = target.pop("area_name")
         target["node"] = target.pop("node_name")
@@ -816,62 +726,61 @@ def _migrate_v52(preset: dict) -> dict:
         for location in config["elevators"]["excluded_targets"]:
             _fix(location)
 
-    return preset
+
+def _migrate_v53(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME_ECHOES:
+        _update_default_dock_rando(preset, RandovaniaGame.METROID_PRIME_ECHOES)
 
 
-def _migrate_v53(preset: dict) -> dict:
-    return _update_default_dock_rando_for_game(preset, RandovaniaGame.METROID_PRIME_ECHOES)
-
-
-def _migrate_v54(preset: dict) -> dict:
-    if preset["game"] == "prime2":
+def _migrate_v54(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME_ECHOES:
         preset["configuration"]["blue_save_doors"] = False
-    return preset
 
 
-def _migrate_v55(preset: dict) -> dict:
-    game = preset["game"]
-    if game in {"blank", "cave_story", "am2r"}:
-        return preset
+def _migrate_v55(preset: dict, game: RandovaniaGame) -> None:
+    if game in {RandovaniaGame.BLANK, RandovaniaGame.CAVE_STORY, RandovaniaGame.AM2R}:
+        return
     preset["configuration"]["dock_rando"]["types_state"]["teleporter"] = {"can_change_from": [], "can_change_to": []}
-    return preset
 
 
-def _migrate_v56(preset: dict) -> dict:
-    if preset["game"] in {"dread", "samus_returns", "prime3"}:
+def _migrate_v56(preset: dict, game: RandovaniaGame) -> None:
+    if game in {
+        RandovaniaGame.METROID_DREAD,
+        RandovaniaGame.METROID_SAMUS_RETURNS,
+        RandovaniaGame.METROID_PRIME_CORRUPTION,
+    }:
         preset["configuration"].pop("elevators")
 
-    return preset
 
-
-def _migrate_v57(preset: dict) -> dict:
+def _migrate_v57(preset: dict, game: RandovaniaGame) -> None:
     types_table = {
-        "am2r": ["tunnel", "teleporter", "other"],
-        "blank": ["other"],
-        "cave_story": ["door", "trigger", "entrance", "exit", "teleporter", "debug cat", "other"],
-        "dread": ["tunnel", "other", "teleporter"],
-        "prime1": ["morph_ball", "other", "teleporter"],
-        "prime2": ["morph_ball", "other", "teleporter"],
-        "prime3": ["door", "morph_ball", "other", "teleporter"],
-        "samus_returns": ["door", "tunnel", "other", "teleporter"],
-        "super_metroid": ["door", "morph_ball", "other", "teleporter"],
+        RandovaniaGame.AM2R: ["tunnel", "teleporter", "other"],
+        RandovaniaGame.BLANK: ["other"],
+        RandovaniaGame.CAVE_STORY: ["door", "trigger", "entrance", "exit", "teleporter", "debug cat", "other"],
+        RandovaniaGame.METROID_DREAD: ["tunnel", "other", "teleporter"],
+        RandovaniaGame.METROID_PRIME: ["morph_ball", "other", "teleporter"],
+        RandovaniaGame.METROID_PRIME_ECHOES: ["morph_ball", "other", "teleporter"],
+        RandovaniaGame.METROID_PRIME_CORRUPTION: ["door", "morph_ball", "other", "teleporter"],
+        RandovaniaGame.METROID_SAMUS_RETURNS: ["door", "tunnel", "other", "teleporter"],
+        RandovaniaGame.SUPER_METROID: ["door", "morph_ball", "other", "teleporter"],
     }
 
-    for type_name in types_table[preset["game"]]:
+    for type_name in types_table[game]:
         preset["configuration"]["dock_rando"]["types_state"].pop(type_name)
 
-    return preset
 
-
-def _migrate_v58(preset: dict) -> dict:
+def _migrate_v58(preset: dict, game: RandovaniaGame) -> None:
     config = preset["configuration"]
-    game = preset["game"]
 
-    if game in {"prime1", "prime2", "prime3"}:
-        mapping = migration_data.get_raw_data(RandovaniaGame(game))["rename_teleporter_nodes"]
+    if game in {
+        RandovaniaGame.METROID_PRIME,
+        RandovaniaGame.METROID_PRIME_ECHOES,
+        RandovaniaGame.METROID_PRIME_CORRUPTION,
+    }:
+        mapping = migration_data.get_raw_data(game)["rename_teleporter_nodes"]
 
-        def replace_location(old_location):
-            identifier = f'{old_location["region"]}/{old_location["area"]}/{old_location["node"]}'
+        def replace_location(old_location: dict) -> None:
+            identifier = f"{old_location['region']}/{old_location['area']}/{old_location['node']}"
             new_node_name = mapping.get(identifier, None)
             if new_node_name is not None:
                 old_location["node"] = new_node_name
@@ -879,7 +788,7 @@ def _migrate_v58(preset: dict) -> dict:
         for old_location in config["starting_location"]:
             replace_location(old_location)
 
-        if game in {"prime1", "prime2"}:
+        if game in {RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES}:
             elevators = config["elevators"]
             excluded_teleporters = elevators["excluded_teleporters"]
             for teleporter_obj in excluded_teleporters:
@@ -889,32 +798,28 @@ def _migrate_v58(preset: dict) -> dict:
             for target_obj in excluded_targets:
                 replace_location(target_obj)
 
-    return preset
 
-
-def _migrate_v59(preset: dict) -> dict:
-    game = preset["game"]
-
-    if game != "prime1":
-        return preset
+def _migrate_v59(preset: dict, game: RandovaniaGame) -> None:
+    if game != RandovaniaGame.METROID_PRIME:
+        return
 
     configuration = preset["configuration"]
 
     dock_rando = configuration.get("dock_rando")
     if dock_rando is None:
-        return preset
+        return
 
     types_state = dock_rando.get("types_state")
     if types_state is None:
-        return preset
+        return
 
     door = types_state.get("door")
     if door is None:
-        return preset
+        return
 
     can_change_to: list[str] = door.get("can_change_to")
     if can_change_to is None:
-        return preset
+        return
 
     for i, x in enumerate(can_change_to):
         if x == "Charge Beam Door":
@@ -922,30 +827,23 @@ def _migrate_v59(preset: dict) -> dict:
         elif x == "Bomb Door":
             can_change_to[i] = "Bomb Blast Shield"
 
-    return preset
 
-
-def _migrate_v60(preset: dict) -> dict:
+def _migrate_v60(preset: dict, game: RandovaniaGame) -> None:
     preset["configuration"]["check_if_beatable_after_base_patches"] = False
 
-    return preset
 
-
-def _migrate_v61(preset: dict) -> dict:
+def _migrate_v61(preset: dict, game: RandovaniaGame) -> None:
     config = preset["configuration"]
-    game = preset["game"]
 
-    if game in {"dread"}:
+    if game == RandovaniaGame.METROID_DREAD:
         config["elevators"] = {
             "mode": "vanilla",
             "excluded_teleporters": [],
             "excluded_targets": [],
         }
 
-    return preset
 
-
-def _migrate_v62(preset: dict) -> dict:
+def _migrate_v62(preset: dict, game: RandovaniaGame) -> None:
     config = preset["configuration"]
     if "elevators" in config:
         if config["elevators"]["mode"] == "one-way-elevator":
@@ -953,21 +851,18 @@ def _migrate_v62(preset: dict) -> dict:
         elif config["elevators"]["mode"] == "one-way-elevator-replacement":
             config["elevators"]["mode"] = "one-way-teleporter-replacement"
         config["teleporters"] = config.pop("elevators")
-    return preset
 
 
-def _migrate_v63(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v63(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         if preset["configuration"]["qol_cutscenes"] in ["original", "skippable"]:
             preset["configuration"]["qol_cutscenes"] = "skippable"
         else:
             preset["configuration"]["qol_cutscenes"] = "skippablecompetitive"
 
-    return preset
 
-
-def _migrate_v64(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v64(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         x: str = preset["configuration"]["qol_cutscenes"]
         if x == "skippablecompetitive":
             x = "SkippableCompetitive"
@@ -975,20 +870,17 @@ def _migrate_v64(preset: dict) -> dict:
             x = x.title()
 
         preset["configuration"]["qol_cutscenes"] = x
-    return preset
 
 
-def _migrate_v65(preset: dict) -> dict:
+def _migrate_v65(preset: dict, game: RandovaniaGame) -> None:
     config = preset["configuration"]
-    game = preset["game"]
 
-    if game == "dread":
+    if game == RandovaniaGame.METROID_DREAD:
         config["nerf_power_bombs"] = False
-    return preset
 
 
-def _migrate_v66(preset: dict) -> dict:
-    if preset["game"] == "cave_story":
+def _migrate_v66(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.CAVE_STORY:
         # Exclude the items in hell from having progression.
         # This could be very bad in multiworld
         excluded = set(preset["configuration"]["available_locations"]["excluded_indices"])
@@ -1000,59 +892,44 @@ def _migrate_v66(preset: dict) -> dict:
         )
         preset["configuration"]["available_locations"]["excluded_indices"] = sorted(excluded)
 
-    return preset
 
-
-def _migrate_v67(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v67(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         preset["configuration"]["ingame_difficulty"] = "Normal"
 
-    return preset
 
-
-def _migrate_v68(preset: dict) -> dict:
+def _migrate_v68(preset: dict, game: RandovaniaGame) -> None:
     preset["configuration"]["single_set_for_pickups_that_solve"] = True
     preset["configuration"]["staggered_multi_pickup_placement"] = True
-    return preset
 
 
-def _migrate_v69(preset: dict) -> dict:
-    if preset["game"] == "am2r":
+def _migrate_v69(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.AM2R:
         preset["configuration"]["artifacts"]["prefer_anywhere"] = False
 
-    return preset
 
-
-def _migrate_v70(preset: dict) -> dict:
-    if preset["game"] == "am2r":
+def _migrate_v70(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.AM2R:
         preset["configuration"]["blue_save_doors"] = False
 
-    return preset
 
-
-def _migrate_v71(preset: dict) -> dict:
-    if preset["game"] == "am2r":
+def _migrate_v71(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.AM2R:
         preset["configuration"]["force_blue_labs"] = False
 
-    return preset
 
-
-def _migrate_v72(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v72(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         preset["configuration"]["artifact_required"] = preset["configuration"]["artifact_target"]
 
-    return preset
 
-
-def _migrate_v73(preset: dict) -> dict:
-    if preset["game"] == "dread":
+def _migrate_v73(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_DREAD:
         preset["configuration"]["warp_to_start"] = True
 
-    return preset
 
-
-def _migrate_v74(preset: dict) -> dict:
-    if preset["game"] == "dread":
+def _migrate_v74(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_DREAD:
         difficulty_levels = ["beginner", "intermediate", "advanced", "expert", "hypermode"]
 
         floor_clips = [
@@ -1064,11 +941,9 @@ def _migrate_v74(preset: dict) -> dict:
         if floor_clips:
             preset["configuration"]["trick_level"]["specific_levels"]["FloorClip"] = difficulty_levels[min(floor_clips)]
 
-    return preset
 
-
-def _migrate_v75(preset: dict) -> dict:
-    if preset["game"] == "am2r":
+def _migrate_v75(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.AM2R:
         new_ammo_mapping = {
             "Missile Expansion": "Missile Tank",
             "Super Missile Expansion": "Super Missile Tank",
@@ -1079,51 +954,40 @@ def _migrate_v75(preset: dict) -> dict:
             if key in new_ammo_mapping:
                 pickups[new_ammo_mapping[key]] = pickups.pop(key)
 
-    return preset
+
+def _migrate_v76(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_SAMUS_RETURNS:
+        _update_default_dock_rando(preset, game)
 
 
-def _migrate_v76(preset: dict) -> dict:
-    if preset["game"] == "samus_returns":
-        preset = _update_default_dock_rando(preset)
-    return preset
-
-
-def _migrate_v77(preset: dict) -> dict:
-    if preset["game"] == "am2r":
+def _migrate_v77(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.AM2R:
         preset["configuration"]["teleporters"] = {"mode": "vanilla", "excluded_teleporters": [], "excluded_targets": []}
 
-    return preset
 
-
-def _migrate_v78(preset: dict) -> dict:
-    if preset["game"] == "samus_returns":
+def _migrate_v78(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_SAMUS_RETURNS:
         preset["configuration"]["teleporters"] = {"mode": "vanilla", "excluded_teleporters": [], "excluded_targets": []}
 
-    return preset
 
-
-def _migrate_v79(preset: dict) -> dict:
-    if preset["game"] == "am2r":
+def _migrate_v79(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.AM2R:
         preset["configuration"]["artifacts"]["placed_artifacts"] = preset["configuration"]["artifacts"][
             "required_artifacts"
         ]
 
-    return preset
 
-
-def _migrate_v80(preset: dict) -> dict:
-    if preset["game"] == "am2r":
+def _migrate_v80(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.AM2R:
         items = ["Long Beam", "Infinite Bomb Propulsion", "Walljump Boots"]
         for i in items:
             preset["configuration"]["standard_pickup_configuration"]["pickups_state"][i] = {
                 "num_included_in_starting_pickups": 1
             }
 
-    return preset
 
-
-def _migrate_v81(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v81(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         progressive_damage_reduction = preset["configuration"].pop("progressive_damage_reduction", False)
         if progressive_damage_reduction:
             damage_reduction = "Progressive"
@@ -1131,11 +995,9 @@ def _migrate_v81(preset: dict) -> dict:
             damage_reduction = "Default"
         preset["configuration"]["damage_reduction"] = damage_reduction
 
-    return preset
 
-
-def _migrate_v82(preset: dict) -> dict:
-    if preset["game"] == "am2r":
+def _migrate_v82(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.AM2R:
         config = preset["configuration"]
         config["darkness_chance"] = 0
         config["darkness_min"] = 0
@@ -1143,100 +1005,98 @@ def _migrate_v82(preset: dict) -> dict:
         config["submerged_water_chance"] = 0
         config["submerged_lava_chance"] = 0
 
-    return preset
 
-
-def _migrate_v83(preset: dict) -> dict:
-    if preset["game"] == "samus_returns":
+def _migrate_v83(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_SAMUS_RETURNS:
         config = preset["configuration"]
         config["constant_heat_damage"] = config["constant_lava_damage"] = 20
 
-    return preset
 
-
-def _migrate_v84(preset: dict) -> dict:
-    if preset["game"] == "samus_returns":
+def _migrate_v84(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_SAMUS_RETURNS:
         preset["configuration"]["hints"]["baby_metroid"] = "hide-area"
 
-    return preset
 
-
-def _migrate_v85(preset: dict) -> dict:
-    if preset["game"] == "am2r":
+def _migrate_v85(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.AM2R:
         config = preset["configuration"]
         config["first_suit_dr"] = 50
         config["second_suit_dr"] = 75
-    return preset
 
 
-def _migrate_v86(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v86(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         state = preset["configuration"]["ammo_pickup_configuration"]["pickups_state"]
         item_list = [("Energy Refill", 20), ("Missile Refill", 5), ("Power Bomb Refill", 1)]
         for item_name, count in item_list:
             state[item_name] = {"ammo_count": [count], "pickup_count": 0, "requires_main_item": False}
-    return preset
 
 
-def _migrate_v87(preset: dict) -> dict:
-    if preset["game"] == "am2r":
+def _migrate_v87(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.AM2R:
         config = preset["configuration"]
         config["vertically_flip_gameplay"] = False
         config["horizontally_flip_gameplay"] = False
 
-    return preset
 
-
-def _migrate_v88(preset: dict) -> dict:
-    if preset["game"] == "dread":
+def _migrate_v88(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_DREAD:
         config = preset["configuration"]
         config["freesink"] = False
 
-    return preset
 
-
-def _migrate_v89(preset: dict) -> dict:
-    if preset["game"] == "samus_returns":
+def _migrate_v89(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_SAMUS_RETURNS:
         artifacts = preset["configuration"]["artifacts"]
         artifacts["placed_artifacts"] = artifacts["required_artifacts"]
 
-    return preset
 
-
-def _migrate_v90(preset: dict) -> dict:
-    if preset["game"] == "samus_returns":
+def _migrate_v90(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_SAMUS_RETURNS:
         preset["configuration"]["final_boss"] = "Ridley"
 
-    return preset
 
-
-def _migrate_v91(preset: dict) -> dict:
+def _migrate_v91(preset: dict, game: RandovaniaGame) -> None:
     preset["configuration"]["two_sided_door_lock_search"] = False
 
-    return preset
 
-
-def _migrate_v92(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v92(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         preset["configuration"]["remove_bars_great_tree_hall"] = False
 
-    return preset
 
-
-def _migrate_v93(preset: dict) -> dict:
-    if preset["game"] == "prime1":
+def _migrate_v93(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
         preset["configuration"]["dock_rando"]["types_state"]["door"]["can_change_from"].remove("Missile Blast Shield")
         preset["configuration"]["dock_rando"]["types_state"]["door"]["can_change_from"].append(
             "Missile Blast Shield (randomprime)"
         )
 
-    return preset
 
-
-def _migrate_v94(preset: dict) -> dict:
+def _migrate_v94(preset: dict, game: RandovaniaGame) -> None:
     preset["configuration"]["logical_pickup_placement"] = "minimal"
 
-    return preset
+
+def _migrate_v95(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_SAMUS_RETURNS:
+        hints = preset["configuration"]["hints"]
+        hints["final_boss_item"] = hints["baby_metroid"]
+        hints.pop("baby_metroid")
+
+
+def _migrate_v96(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_DREAD:
+        preset["configuration"]["disabled_lights"] = {
+            "artaria": False,
+            "burenia": False,
+            "cataris": False,
+            "dairon": False,
+            "elun": False,
+            "ferenia": False,
+            "ghavoran": False,
+            "hanubia": False,
+            "itorash": False,
+        }
 
 
 _MIGRATIONS = [
@@ -1334,13 +1194,16 @@ _MIGRATIONS = [
     _migrate_v92,  # remove bars great tree hall
     _migrate_v93,  # update default dock_rando in Prime 1 to use RP Blast Shield Change
     _migrate_v94,
+    _migrate_v95,  # msr rename baby_metroid hint to final_boss_item hint
+    _migrate_v96,  # dread disable lights per region
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
 
-def convert_to_current_version(preset: dict) -> dict:
-    return migration_lib.apply_migrations(
+def convert_to_current_version(preset: dict, game: RandovaniaGame) -> dict:
+    return migration_lib.apply_migrations_with_game(
         preset,
         _MIGRATIONS,
+        game,
         version_name="preset version",
     )

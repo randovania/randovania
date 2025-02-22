@@ -8,7 +8,6 @@ import pytest
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.dread.generator.bootstrap import DreadBootstrap
-from randovania.games.dread.generator.pool_creator import DREAD_ARTIFACT_CATEGORY
 from randovania.games.dread.layout.dread_configuration import DreadArtifactConfig
 from randovania.generator.pickup_pool import pool_creator
 
@@ -39,7 +38,7 @@ def test_assign_pool_results(dread_game_description, dread_configuration, artifa
     )
 
     # Assert
-    shuffled_dna = [pickup for pickup in pool_results.to_place if pickup.pickup_category == DREAD_ARTIFACT_CATEGORY]
+    shuffled_dna = [pickup for pickup in pool_results.to_place if pickup.gui_category.name == "dna"]
 
     assert result.starting_equipment == pool_results.starting
     assert set(result.pickup_assignment.keys()) == {PickupIndex(i) for i in expected}

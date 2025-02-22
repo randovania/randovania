@@ -14,7 +14,7 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.hint import Hint
+from randovania.game_description.hint import BaseHint
 from randovania.game_description.pickup.pickup_entry import (
     PickupEntry,
     PickupModel,
@@ -44,7 +44,6 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
                 "Torvus Bog/Catacombs/Lore Scan",
                 {
                     "hint_type": "location",
-                    "dark_temple": None,
                     "precision": {
                         "location": "detailed",
                         "item": "detailed",
@@ -148,7 +147,10 @@ def patches_with_data(request, echoes_game_description, echoes_game_patches, ech
 
     if request.param.get("hint"):
         identifier, hint = request.param.get("hint")
-        patches = patches.assign_hint(NodeIdentifier.from_string(identifier), Hint.from_json(hint))
+        patches = patches.assign_hint(
+            NodeIdentifier.from_string(identifier),
+            BaseHint.from_json(hint, game=game, pickup_db=echoes_pickup_database),
+        )
         data["hints"][identifier] = hint
 
     return data, patches
@@ -173,7 +175,7 @@ def test_decode(patches_with_data, default_echoes_configuration):
     pool = pool_creator.calculate_pool_results(default_echoes_configuration, game)
 
     # Run
-    decoded = game_patches_serializer.decode_single(0, {0: pool}, game, encoded, default_echoes_configuration)
+    decoded = game_patches_serializer.decode_single(0, {0: pool}, game, encoded, default_echoes_configuration, [game])
 
     # Assert
     assert set(decoded.all_dock_connections()) == set(expected.all_dock_connections())
@@ -204,8 +206,8 @@ def test_bit_pack_pickup_entry(
             game=RandovaniaGame.METROID_PRIME_CORRUPTION,
             name="HyperMissile",
         ),
-        pickup_category=generic_pickup_category,
-        broad_category=generic_pickup_category,
+        gui_category=generic_pickup_category,
+        hint_features=frozenset((generic_pickup_category,)),
         progression=(
             (
                 find_resource_info_with_long_name(echoes_resource_database.item, "Morph Ball"),

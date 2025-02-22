@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from uuid import UUID
 
 import aiofiles
-import construct  # type: ignore[import-untyped]
+import construct
 import slugify
 
 from randovania.game.game_enum import RandovaniaGame
@@ -105,7 +105,7 @@ class VersionedPreset:
         if not self._converted:
             try:
                 self._preset = Preset.from_json_dict(
-                    preset_migration.convert_to_current_version(copy.deepcopy(self.data))
+                    preset_migration.convert_to_current_version(copy.deepcopy(self.data), self.game)
                 )
             except (ValueError, KeyError, TypeError) as e:
                 self.exception = InvalidPreset(e)

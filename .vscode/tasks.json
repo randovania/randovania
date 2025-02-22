@@ -4,25 +4,34 @@
     "version": "2.0.0",
     "tasks": [
         {
-            
             "label": "Create venv with all exporters",
             "type": "shell",
             "linux": {
-                "command": "${workspaceFolder}/tools/prepare_virtual_env.sh ; ${workspaceFolder}/venv/Scripts/activate ; pip install -r requirements.txt",
+                "command": "'${workspaceFolder}/tools/prepare_virtual_env.sh' ; source '${workspaceFolder}/venv/bin/activate' ; pip install -r requirements.txt",
             },
             "windows": {
-                "command": "@()|${workspaceFolder}/tools/prepare_virtual_env.bat ; ${workspaceFolder}/venv/Scripts/Activate.ps1 ; pip install -r requirements.txt",
+                "command": "@()|cmd /c '${workspaceFolder}/tools/prepare_virtual_env.bat' ; & '${workspaceFolder}/venv/Scripts/Activate.ps1'; pip install -r requirements.txt",
             }
         },
         {
             "label": "Build UI",
             "type": "shell",
-            "command": "${command:python.interpreterPath} ${workspaceFolder}/setup.py build_ui"
+            "linux": {
+                "command": "${command:python.interpreterPath} '${workspaceFolder}/setup.py' build_ui",
+            },
+            "windows": {
+                "command": "& '${command:python.interpreterPath}' '${workspaceFolder}/setup.py' build_ui"
+            }
         },
         {
             "label": "Run all tests on all cores",
             "type": "shell",
-            "command": "${command:python.interpreterPath} -m pytest -n auto ${workspaceFolder}/test"
+            "linux": {
+                "command": "${command:python.interpreterPath} -m pytest -n auto '${workspaceFolder}/test'"
+            },
+            "windows": {
+                "command": "& '${command:python.interpreterPath}' -m pytest -n auto '${workspaceFolder}/test'"
+            }
         }
     ]
 }

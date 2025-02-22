@@ -29,7 +29,7 @@ Extra - room_id: [0]
 Entrance Save Room
 Extra - map_name: Sector 41
 Extra - room_id: [1]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
@@ -94,22 +94,23 @@ Extra - room_id: [3]
       All of the following:
           Morph Ball
           Any of the following:
+              # Freeze Powamp
               Can Freeze Enemies With Diffusion
               Wave Beam and Can Freeze Enemies With Ice Beam
               All of the following:
                   # Freeze Middle Powamp via curving
                   Knowledge (Advanced) and Movement (Intermediate)
                   Any of the following:
-                      # Powamp Reqs
-                      # https://youtu.be/LtBms_eox-E&t=68
+                      # Freezing Reqs
+                      # Freeze with Ice Beam: https://youtu.be/LtBms_eox-E&t=68
                       Can Freeze Enemies With Ice Beam
-                      # https://youtu.be/LtBms_eox-E&t=6
+                      # Freeze with Ice Missiles: https://youtu.be/LtBms_eox-E&t=6
                       Can Freeze Enemies With Ice Missiles
                   Any of the following:
                       # Deal with Water
                       After Sector 4 Water Level Lowered
                       Damage Runs (Intermediate) and Electrified Water Damage ≥ 40
-                      Gravity Suit and Damage Runs (Beginner) and Electrified Water Damage ≥ 10
+                      Damage Runs (Beginner) and Electrified Water Damage ≥ 10 and Have Any Suit Upgrade
   > Other to Drain Pipe
       Any of the following:
           After Sector 4 Water Level Lowered
@@ -118,7 +119,7 @@ Extra - room_id: [3]
               Damage Runs (Beginner)
               Any of the following:
                   Electrified Water Damage ≥ 17
-                  Gravity Suit and Electrified Water Damage ≥ 4
+                  Electrified Water Damage ≥ 4 and Have Any Suit Upgrade
 
 > Door to Owtch Atrium; Heals? False
   * Layers: default
@@ -128,9 +129,11 @@ Extra - room_id: [3]
       All of the following:
           Morph Ball
           Any of the following:
+              # Freeze Powamp
               Can Freeze Enemies With Diffusion
               Wave Beam and Can Freeze Enemies With Ice Beam
           Any of the following:
+              # Get to Tunnel
               Space Jump or After Sector 4 Water Level Lowered or Jump Extends (Intermediate)
               # Damage Reqs
               Damage Runs (Beginner) and Electrified Water Damage ≥ 3
@@ -142,7 +145,7 @@ Extra - room_id: [3]
               Damage Runs (Beginner)
               Any of the following:
                   Electrified Water Damage ≥ 17
-                  Gravity Suit and Electrified Water Damage ≥ 2
+                  Electrified Water Damage ≥ 2 and Have Any Suit Upgrade
 
 > Door to Data Room; Heals? False
   * Layers: default
@@ -161,34 +164,31 @@ Extra - room_id: [3]
               # Damage Reqs
               After Sector 4 Water Level Lowered
               Damage Runs (Intermediate) and Electrified Water Damage ≥ 33
-              Gravity Suit and Damage Runs (Beginner) and Electrified Water Damage ≥ 3
+              Damage Runs (Beginner) and Electrified Water Damage ≥ 3 and Have Any Suit Upgrade
   > Other to Drain Pipe
       All of the following:
           Morph Ball
           Any of the following:
-              # Freeze Powamp by shooting through wall
-              Wave Beam and Can Freeze Enemies With Ice Beam
+              Any of the following:
+                  # Freeze Powamp by hitting it through the wall.
+                  Can Freeze Enemies With Diffusion
+                  Wave Beam and Can Freeze Enemies With Ice Beam
               All of the following:
-                  Missiles
+                  # Freeze by bending shot
+                  Knowledge (Advanced)
                   Any of the following:
-                      # Freeze Powamp with Diffusion
-                      Can Freeze Enemies With Diffusion
-                      All of the following:
-                          # Freeze Powamp by bending shot
-                          Knowledge (Advanced)
-                          Any of the following:
-                              # Freeze Requirements
-                              # w/ Ice Missiles: https://youtu.be/zdGZBI3tKAw
-                              Can Freeze Enemies With Ice Missiles
-                              # w/ Ice Beam: https://youtu.be/LtBms_eox-E&t=88
-                              Can Freeze Enemies With Ice Beam
-                          # Deal with water
-                          Gravity Suit or After Sector 4 Water Level Lowered
-                          Any of the following:
-                              # Movement Requirements
-                              # NHJ: https://youtu.be/DJHGcspkPhM
-                              Movement (Advanced) and Wall Jump (Advanced)
-                              Movement (Intermediate) and Have Any Jump Upgrade
+                      # Freeze Requirements
+                      # w/ Ice Missiles: https://youtu.be/zdGZBI3tKAw
+                      Can Freeze Enemies With Ice Missiles
+                      # w/ Ice Beam: https://youtu.be/LtBms_eox-E&t=88
+                      Can Freeze Enemies With Ice Beam
+                  # Deal with water
+                  Gravity Suit or After Sector 4 Water Level Lowered
+                  Any of the following:
+                      # Movement Requirements
+                      # NHJ: https://youtu.be/DJHGcspkPhM
+                      Movement (Advanced) and Wall Jump (Advanced)
+                      Movement (Intermediate) and Have Any Jump Upgrade
           Any of the following:
               # Damage Reqs
               After Sector 4 Water Level Lowered
@@ -196,7 +196,7 @@ Extra - room_id: [3]
                   Damage Runs (Beginner)
                   Any of the following:
                       Electrified Water Damage ≥ 40
-                      Gravity Suit and Electrified Water Damage ≥ 11
+                      Electrified Water Damage ≥ 11 and Have Any Suit Upgrade
 
 > Other to Drain Pipe; Heals? False
   * Layers: default
@@ -210,7 +210,7 @@ Extra - room_id: [3]
               Damage Runs (Beginner)
               Any of the following:
                   Electrified Water Damage ≥ 25
-                  Gravity Suit and Electrified Water Damage ≥ 6
+                  Electrified Water Damage ≥ 6 and Have Any Suit Upgrade
 
 ----------------
 Data Room
@@ -270,15 +270,20 @@ Extra - room_id: [6]
   * Extra - door_idx: (13,)
   > Pickup (Hidden Power Bomb Tank)
       All of the following:
-          Can Use Power Bombs
           Any of the following:
+              # Deal with water
               After Sector 4 Water Level Lowered
-              # Damage Reqs
-              Gravity Suit and Damage Runs (Beginner) and Damage Runs (Intermediate) and Electrified Water Damage ≥ 20 and Electrified Water Damage ≥ 80
-          Any of the following:
-              Power Bombs ≥ 3 or Can Use Bombs
-              # Get back before blocks respawn
-              Power Bombs ≥ 2 and Movement (Advanced)
+              Any of the following:
+                  # Damage Run
+                  Damage Runs (Beginner) and Electrified Water Damage ≥ 20 and Have Any Suit Upgrade
+                  Damage Runs (Intermediate) and Electrified Water Damage ≥ 80
+          All of the following:
+              # Get through blocks
+              Can Use Power Bombs
+              Any of the following:
+                  Power Bombs ≥ 3 or Can Use Bombs
+                  # Get back before blocks respawn
+                  Power Bombs ≥ 2 and Movement (Advanced)
   > Room Center
       Can Use Any Bombs
 
@@ -298,7 +303,7 @@ Extra - room_id: [6]
           Speed Booster and Disabled Entrance Rando
           Any of the following:
               After Sector 4 Water Level Lowered
-              # Damage Reqs
+              # Damage Run
               Gravity Suit and Damage Runs (Beginner) and Electrified Water Damage ≥ 5
 
 > Other to Serris Escape; Heals? False
@@ -321,7 +326,7 @@ Extra - room_id: [6]
                       Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon and Can Use Bombs
                       Mid-Air Morph (Beginner) or Can Use Springball
                   All of the following:
-                      # Reach blocks via PBs
+                      # Reach blocks via PBs. Let crab crawl to top of bomb blocks, freeze there, lay PB, refreeze when its falling down. TODO: rerecord this with out standards: https://discord.com/channels/119665192110915584/859978611981287465/1297220448563761183
                       Knowledge (Advanced) and Can Use Power Bombs
                       Any of the following:
                           All of the following:
@@ -334,7 +339,7 @@ Extra - room_id: [6]
                   # Reach sciser
                   Hi-Jump
                   # NHJ via ledge-grab jump: https://youtu.be/6RhuTs1mD1c
-                  Movement (Intermediate)
+                  Mid-Air Morph (Intermediate) and Movement (Intermediate) and Stand On Frozen Enemies (Intermediate)
           All of the following:
               # Destroy bomb blocks and go up with SJ
               Space Jump
@@ -355,7 +360,7 @@ Extra - room_id: [6]
           Speed Booster
           Any of the following:
               After Sector 4 Water Level Lowered
-              # Damage Reqs
+              # Damage Run
               Gravity Suit and Damage Runs (Beginner) and Electrified Water Damage ≥ 5
   > Other to Serris Escape
       Trivial
@@ -472,19 +477,21 @@ Extra - room_id: [10]
   * Extra - door_idx: (64,)
   > Door to Breeding Tank
       Any of the following:
-          Underwater Wall Jump (Expert)
           All of the following:
               # Grav methods
               Gravity Suit
               Any of the following:
                   Space Jump
                   Hi-Jump and Wall Jump (Intermediate)
+                  Wall Jump (Beginner) and Can Single Walljump
+          # Underwater Walljump out. Double WJ speed at around water level: https://youtu.be/CWyXKT_3JBE
+          Underwater Wall Jump (Expert)
 
 ----------------
 Escape Save Room
 Extra - map_name: Sector 411
 Extra - room_id: [11]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Serris Escape; Heals? False
   * Layers: default
   * L0 Hatch to Serris Escape/Door to Escape Save Room
@@ -508,20 +515,34 @@ Extra - room_id: [12]
   * L0 Hatch to Aquarium Hub/Door to Aquarium Speedway
   * Extra - door_idx: (88,)
   > Door to Powamp Shaft
-      Trivial
+      Any of the following:
+          # Kill Yarls
+          Can Freeze Enemies With Any Weapon or Can Kill Tough Underwater Beam-Resistant Enemy
+          # Damage boost through
+          Damage Boosts (Intermediate) and Normal Damage ≥ 120
+          # Dodge
+          Combat (Intermediate)
+  > Other to Aquarium Storage
+      Gravity Suit and Speed Booster
 
 > Door to Powamp Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Powamp Shaft/Door to Aquarium Speedway
   * Extra - door_idx: (89,)
   > Door to Aquarium Hub
-      Trivial
+      Any of the following:
+          # Kill Yarls
+          Can Freeze Enemies With Any Weapon or Can Kill Tough Underwater Beam-Resistant Enemy
+          # Damage boosting
+          Damage Boosts (Intermediate) and Normal Damage ≥ 120
+          # Dodge
+          Combat (Intermediate)
   > Other to Aquarium Storage
       Any of the following:
           All of the following:
               Gravity Suit
               Any of the following:
-                  Space Jump or Speed Booster
+                  Space Jump
                   # NHJ freeze Yard: https://youtu.be/AWajsYrYgbA
                   Stand On Frozen Enemies (Intermediate) and Wall Jump (Intermediate) and Can Freeze Enemies With Any Weapon
                   # HJ: https://youtu.be/ncBn4hyjC-A
@@ -694,10 +715,7 @@ Extra - room_id: [15]
   * Extra - door_idx: (35,)
   > Pickup (Missile Tank)
       Any of the following:
-          Missiles ≥ 10 or Combat (Advanced)
-          Charge Beam and Have Any Beam Upgrade
-          Gravity Suit and Screw Attack
-          Power Bombs ≥ 2 and Can Use Power Bombs
+          Combat (Advanced) or Can Freeze Enemies With Any Weapon or Can Kill Tough Underwater Beam-Resistant Enemy
           Damage Boosts (Advanced) and Normal Damage ≥ 150
 
 ----------------
@@ -711,6 +729,7 @@ Extra - room_id: [16]
   > Door to Aquarium Hub Access
       Any of the following:
           All of the following:
+              # With Gravity
               Gravity Suit
               Any of the following:
                   Space Jump
@@ -724,15 +743,25 @@ Extra - room_id: [16]
                           Wall Jump (Beginner)
                           # With HJ: https://youtu.be/M6cyTUajA1s
                           Hi-Jump
-          # Jump off of frozen Evir and perform many underwater WJs TODO: video
-          Stand On Frozen Enemies (Beginner) and Underwater Wall Jump (Expert) and Can Freeze Enemies With Any Weapon
+          All of the following:
+              # Jump off of frozen Evir and perform many underwater WJs TODO: video
+              Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
+              Any of the following:
+                  Underwater Wall Jump (Expert)
+                  Hi-Jump and Underwater Wall Jump (Advanced)
 
 > Door to Aquarium Hub Access; Heals? False
   * Layers: default
   * L4 Hatch to Aquarium Hub Access/Door to Evir Shaft
   * Extra - door_idx: (37,)
   > Door to Aquarium Tank
-      Trivial
+      Any of the following:
+          # Evir will be in the way
+          Can Kill Tough Underwater Beam-Resistant Enemy
+          # Damage boost through
+          Damage Boosts (Beginner) and Normal Damage ≥ 95
+          # Evirs move on a cycle, jump down when the Evir is out of the way
+          Combat (Advanced)
 
 ----------------
 Aquarium Tank
@@ -747,7 +776,7 @@ Extra - room_id: [17]
   * Extra - blocky: 20
   > Door to Aquarium Shaft West
       All of the following:
-          Can Kill Tough Beam-Resistant Enemy and Can Use Power Bombs
+          Can Kill Tough Underwater Beam-Resistant Enemy and Can Use Power Bombs
           Any of the following:
               All of the following:
                   # Grav method
@@ -771,8 +800,15 @@ Extra - room_id: [17]
   * Extra - door_idx: (38,)
   > Door to Aquarium Shaft West
       Any of the following:
-          Combat (Advanced) or Can Kill Tough Beam-Resistant Enemy
+          Combat (Advanced) or Can Kill Tough Underwater Beam-Resistant Enemy
           Damage Boosts (Intermediate) and Normal Damage ≥ 499
+          All of the following:
+              # Avoid Pirate
+              Gravity Suit
+              Any of the following:
+                  Space Jump
+                  # Dodge via Jumping
+                  Combat (Intermediate)
 
 > Door to Aquarium Shaft West; Heals? False
   * Layers: default
@@ -783,12 +819,19 @@ Extra - room_id: [17]
           Can Use Power Bombs
           Any of the following:
               # Deal with Pirate
-              Combat (Advanced) or Can Kill Tough Beam-Resistant Enemy
+              Combat (Advanced) or Can Kill Tough Underwater Beam-Resistant Enemy
               Damage Boosts (Intermediate) and Normal Damage ≥ 499
   > Door to Evir Shaft
       Any of the following:
-          Combat (Advanced) or Can Kill Tough Beam-Resistant Enemy
+          Combat (Advanced) or Can Kill Tough Underwater Beam-Resistant Enemy
           Damage Boosts (Intermediate) and Normal Damage ≥ 499
+          All of the following:
+              # Avoid Pirate
+              Gravity Suit
+              Any of the following:
+                  Space Jump
+                  # Dodge via jumping and crouching
+                  Combat (Advanced)
 
 ----------------
 Aquarium Hub Access
@@ -831,7 +874,7 @@ Extra - room_id: [19]
           Gravity Suit
           Any of the following:
               Screw Attack
-              # https://youtu.be/pKQF2grjqDw
+              # Shinespark from adjacent room: https://youtu.be/pKQF2grjqDw
               Level 0 Keycard and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Drain Pipe; Heals? False
@@ -843,7 +886,7 @@ Extra - room_id: [19]
           Gravity Suit and Level 0 Keycard and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
           Any of the following:
               After Sector 4 Water Level Lowered
-              Damage Runs (Beginner) and Electrified Water Damage ≥ 10
+              Damage Runs (Beginner) and Electrified Water Damage ≥ 20
   > Room Center
       Any of the following:
           # To destroy Powamp
@@ -898,11 +941,11 @@ Extra - room_id: [20]
       Any of the following:
           After Sector 4 Water Level Lowered
           All of the following:
-              # Damage Reqs
+              # Damage Run
               Damage Runs (Beginner)
               Any of the following:
                   Electrified Water Damage ≥ 31
-                  Gravity Suit and Electrified Water Damage ≥ 8
+                  Electrified Water Damage ≥ 8 and Have Any Suit Upgrade
 
 > Door to Pump Control Access; Heals? False
   * Layers: default
@@ -912,18 +955,18 @@ Extra - room_id: [20]
       Any of the following:
           Can Break Single Bomb Blocks
           # Shinespark from Pump Control Unit: https://youtu.be/GukqyHY3bHM
-          Level 0 Keycard and Level 1 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+          Level 0 Keycard and Level 1 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Bottom of Room
       All of the following:
           Morph Ball
           Any of the following:
               After Sector 4 Water Level Lowered
               All of the following:
-                  # Damage Reqs
+                  # Damage Run
                   Damage Runs (Beginner)
                   Any of the following:
                       Electrified Water Damage ≥ 14
-                      Gravity Suit and Electrified Water Damage ≥ 3
+                      Electrified Water Damage ≥ 3 and Have Any Suit Upgrade
 
 > Other to Waterway; Heals? False
   * Layers: default
@@ -952,27 +995,27 @@ Extra - room_id: [20]
       Any of the following:
           After Sector 4 Water Level Lowered
           All of the following:
-              # Damage Reqs
-              Damage Runs (Beginner)
+              # Damage Run
+              Damage Runs (Intermediate)
               Any of the following:
                   Electrified Water Damage ≥ 31
-                  Gravity Suit and Electrified Water Damage ≥ 8
+                  Electrified Water Damage ≥ 8 and Have Any Suit Upgrade
   > Door to Pump Control Access
       All of the following:
           Morph Ball
           Any of the following:
               After Sector 4 Water Level Lowered
-              # Damage Reqs
-              Gravity Suit and Damage Runs (Beginner) and Electrified Water Damage ≥ 9
+              # Damage Run
+              Damage Runs (Beginner) and Electrified Water Damage ≥ 9 and Have Any Suit Upgrade
           Any of the following:
               Jump Extends (Beginner) or Have Any Jump Upgrade
-              Speed Booster and Shinespark Tricks (Beginner)
+              Gravity Suit and Speed Booster and Shinespark Tricks (Beginner)
   > Other to Waterway
       All of the following:
           Speed Booster
           Any of the following:
               After Sector 4 Water Level Lowered
-              # Damage Reqs
+              # Damage Run
               Gravity Suit and Damage Runs (Beginner) and Electrified Water Damage ≥ 7
   > Other to Breeding Tank Access
       All of the following:
@@ -999,7 +1042,7 @@ Extra - room_id: [21]
               Damage Runs (Beginner)
               Any of the following:
                   Electrified Water Damage ≥ 28
-                  Gravity Suit and Electrified Water Damage ≥ 6
+                  Electrified Water Damage ≥ 6 and Have Any Suit Upgrade
   > Door to Pump Control Save Room
       Morph Ball
   > Door to Pump Control Unit
@@ -1017,7 +1060,7 @@ Extra - room_id: [21]
               Damage Runs (Beginner)
               Any of the following:
                   Electrified Water Damage ≥ 37
-                  Gravity Suit and Electrified Water Damage ≥ 7
+                  Electrified Water Damage ≥ 7 and Have Any Suit Upgrade
 
 > Door to Pump Control Save Room; Heals? False
   * Layers: default
@@ -1037,7 +1080,7 @@ Extra - room_id: [21]
 Pump Control Save Room
 Extra - map_name: Sector 422
 Extra - room_id: [22]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Pump Control Access; Heals? False
   * Layers: default
   * L0 Hatch to Pump Control Access/Door to Pump Control Save Room
@@ -1054,7 +1097,6 @@ Extra - unlocked_save_station: True
   * Tunnel to Breeding Tank Access/Other to Pump Control Save Room
   * Extra - door_idx: (69,)
   > Door to Pump Control Access
-      # TODO: test what happens with entrance rando
       Can Use Any Bombs
 
 > Save Station; Heals? False; Spawn Point
@@ -1120,6 +1162,7 @@ Extra - room_id: [23]
   > Door to Pump Control Access
       Any of the following:
           Gravity Suit or Hi-Jump or Underwater Wall Jump (Beginner)
+          # Freeze Skultera
           Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
   > Door to Aquarium Shaft West
       All of the following:
@@ -1169,12 +1212,20 @@ Extra - room_id: [24]
       Trivial
   > Other to Security Bypass
       All of the following:
-          Missiles
+          Missiles and Morph Ball
           Any of the following:
+              # Break Bomb Blocks
               Can Use Power Bombs
-              Can Use Bombs and Can Use Springball
+              All of the following:
+                  # Destroy with Bombs
+                  Can Use Bombs
+                  Any of the following:
+                      Can Use Springball
+                      Gravity Suit and Movement (Beginner)
               # You can Screw Attack these blocks
               Gravity Suit and Screw Attack and Knowledge (Beginner)
+              # Shinespark from Cargo Hold
+              Gravity Suit and Level 0 Keycard and Space Jump and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Hypermode) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Aquarium Shaft West; Heals? False
   * Layers: default
@@ -1191,7 +1242,7 @@ Extra - room_id: [24]
       Morph Ball
   > Door to Security Access
       All of the following:
-          Missiles
+          Missiles and Morph Ball
           Any of the following:
               Can Use Any Bombs
               Gravity Suit and Screw Attack and Knowledge (Beginner)
@@ -1207,9 +1258,7 @@ Extra - room_id: [25]
   > Door to Level 4 Security Room
       Trivial
   > Other to Security Bypass
-      Any of the following:
-          Movement (Beginner)
-          Gravity Suit and Space Jump
+      Trivial
   > By Hole
       Movement (Beginner)
 
@@ -1233,9 +1282,7 @@ Extra - room_id: [25]
   * Open Passage to Security Bypass/Other to Security Access
   * Extra - door_idx: (83,)
   > Door to Cheddar Bay
-      Any of the following:
-          Movement (Beginner)
-          Gravity Suit and Space Jump
+      Trivial
 
 > Other to Sciser Sanctuary; Heals? False
   * Layers: default
@@ -1344,17 +1391,17 @@ Extra - room_id: [28]
           Any of the following:
               # Damage Reqs
               After Sector 4 Water Level Lowered
-              Gravity Suit and Damage Runs (Beginner) and Electrified Water Damage ≥ 14
+              Damage Runs (Beginner) and Electrified Water Damage ≥ 14 and Have Any Suit Upgrade
               Damage Runs (Intermediate) and Electrified Water Damage ≥ 50
   > Other to Reservoir West
       Any of the following:
           After Sector 4 Water Level Lowered
           All of the following:
-              # Damage Reqs
+              # Damage Run
               Damage Runs (Beginner)
               Any of the following:
                   Electrified Water Damage ≥ 31
-                  Gravity Suit and Electrified Water Damage ≥ 6
+                  Electrified Water Damage ≥ 6 and Have Any Suit Upgrade
 
 > Other to Reservoir West; Heals? False
   * Layers: default
@@ -1364,16 +1411,17 @@ Extra - room_id: [28]
       Any of the following:
           After Sector 4 Water Level Lowered
           All of the following:
-              # Damage Reqs
+              # Damage Run
               Damage Runs (Beginner)
               Any of the following:
                   Electrified Water Damage ≥ 31
-                  Gravity Suit and Electrified Water Damage ≥ 6
+                  Electrified Water Damage ≥ 6 and Have Any Suit Upgrade
 
 ----------------
 Entrance Recharge Room
 Extra - map_name: Sector 429
 Extra - room_id: [29]
+Extra - unlocked_save_recharge_station: True
 > Door to Entrance Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Save Room/Door to Entrance Recharge Room
@@ -1449,7 +1497,7 @@ Extra - room_id: [31]
 Bridge Save Room
 Extra - map_name: Sector 432
 Extra - room_id: [32]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Bridge Access; Heals? False
   * Layers: default
   * L0 Hatch to Bridge Access/Door to Bridge Save Room
@@ -1482,7 +1530,7 @@ Extra - room_id: [33]
   * Layers: default
   * L1 Hatch to Pump Control Access/Door to Pump Control Unit
   * Extra - door_idx: (76,)
-  > Behind Speed Blocks
+  > Event - Pump Control Terminal
       Speed Booster
   > Next to Pickup
       All of the following:
@@ -1490,40 +1538,33 @@ Extra - room_id: [33]
           Any of the following:
               After Sector 4 Water Level Lowered
               # Damage Reqs
-              Gravity Suit and Damage Runs (Beginner) and Electrified Water Damage ≥ 11
-          Any of the following:
+              Damage Runs (Beginner) and Electrified Water Damage ≥ 11 and Have Any Suit Upgrade
+          All of the following:
               # Get Up
-              Space Jump
-              # https://youtu.be/5cASpPGdiig
-              Hi-Jump and Wall Jump (Intermediate)
-
-> Behind Speed Blocks; Heals? False
-  * Layers: default
-  > Event - Pump Control Terminal
-      Trivial
-  > Next to Pickup
-      All of the following:
-          Morph Ball
-          Any of the following:
-              After Sector 4 Water Level Lowered or Enabled Generator Workaround
-              All of the following:
-                  # Damage Reqs
-                  Damage Runs (Beginner)
-                  Any of the following:
-                      Electrified Water Damage ≥ 25
-                      Gravity Suit and Electrified Water Damage ≥ 7
+              Any of the following:
+                  Space Jump
+                  # WJ+HJ: https://youtu.be/5cASpPGdiig
+                  Hi-Jump and Wall Jump (Intermediate)
+              # Deal with water
+              Gravity Suit or After Sector 4 Water Level Lowered
 
 > Event - Pump Control Terminal; Heals? False
   * Layers: default
   * Event Sector 4 Water Level Lowered
-  > Behind Speed Blocks
-      Trivial
+  > Next to Pickup
+      All of the following:
+          Morph Ball
+          Any of the following:
+              After Sector 4 Water Level Lowered
+              All of the following:
+                  # Damage Run
+                  Damage Runs (Beginner)
+                  Any of the following:
+                      Electrified Water Damage ≥ 25
+                      Electrified Water Damage ≥ 7 and Have Any Suit Upgrade
 
 > Next to Pickup; Heals? False
   * Layers: default
-  * FIXME: Collecting the pump event is by the generator definition not considered
-safe. The generator workaround is assuming here that if you reach this PonR,
-that you were able to collect the event.
   > Pickup (Missile Tank)
       Trivial
   > Door to Pump Control Access
@@ -1533,31 +1574,31 @@ that you were able to collect the event.
               Can Use Springball
               All of the following:
                   Can Use Bombs
-                  Gravity Suit or After Sector 4 Water Level Lowered or Enabled Generator Workaround
+                  Gravity Suit or After Sector 4 Water Level Lowered
           Any of the following:
-              After Sector 4 Water Level Lowered or Enabled Generator Workaround
+              After Sector 4 Water Level Lowered
               All of the following:
-                  # Damage Reqs
+                  # Damage Run
                   Damage Runs (Beginner)
                   Any of the following:
                       Electrified Water Damage ≥ 44
-                      Gravity Suit and Electrified Water Damage ≥ 15
-  > Behind Speed Blocks
+                      Electrified Water Damage ≥ 15 and Have Any Suit Upgrade
+  > Event - Pump Control Terminal
       All of the following:
           Any of the following:
               # Get into tunnel
               Can Use Springball
               All of the following:
                   Can Use Bombs
-                  Gravity Suit or After Sector 4 Water Level Lowered or Enabled Generator Workaround
+                  Gravity Suit or After Sector 4 Water Level Lowered
           Any of the following:
-              After Sector 4 Water Level Lowered or Enabled Generator Workaround
+              After Sector 4 Water Level Lowered
               All of the following:
-                  # Damage Reqs
+                  # Damage Run
                   Damage Runs (Beginner)
                   Any of the following:
                       Electrified Water Damage ≥ 37
-                      Gravity Suit and Electrified Water Damage ≥ 9
+                      Electrified Water Damage ≥ 9 and Have Any Suit Upgrade
 
 ----------------
 Security Bypass
@@ -1653,6 +1694,8 @@ Extra - room_id: [35]
                   Space Jump
                   # Shinespark
                   Level 0 Keycard and Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+                  # Single walljump on the side and kill the powamps
+                  Screw Attack and Wall Jump (Intermediate) and Can Single Walljump
 
 > Door to Glass Tube to Sector 2 (TRO); Heals? False
   * Layers: default
@@ -1691,7 +1734,7 @@ Extra - room_id: [35]
   > Other to Diffusion Connection Access
       All of the following:
           Morph Ball
-          # https://youtu.be/kxyotciTTXM
+          # Get into tunnel: https://youtu.be/kxyotciTTXM
           Mid-Air Morph (Intermediate) or Can Bounce in Ball
   > Upper Ladder
       Missiles and Morph Ball and After Powamp Shaft Diffusion Blocks Destroyed
@@ -1742,7 +1785,7 @@ Extra - room_id: [36]
               After Sector 4 Water Level Lowered
               Any of the following:
                   # Damage Reqs
-                  Gravity Suit and Damage Runs (Beginner) and Electrified Water Damage ≥ 18
+                  Damage Runs (Beginner) and Electrified Water Damage ≥ 18 and Have Any Suit Upgrade
                   Damage Runs (Intermediate) and Electrified Water Damage ≥ 95
           Any of the following:
               Wave Beam
@@ -1751,8 +1794,10 @@ Extra - room_id: [36]
                   Missiles ≥ 3 and Super Missile Data
                   Morph Ball and Power Bombs ≥ 2 and Knowledge (Beginner)
               All of the following:
-                  Gravity Suit
+                  # Gravity / no water methods
+                  Gravity Suit or After Sector 4 Water Level Lowered
                   Any of the following:
+                      # Destroy Geron with Screw
                       Screw Attack and Knowledge (Beginner)
                       # Run past Geron spawning
                       Movement (Intermediate)
@@ -1764,7 +1809,7 @@ Extra - room_id: [36]
               After Sector 4 Water Level Lowered
               Any of the following:
                   # Damage Reqs
-                  Gravity Suit and Damage Runs (Beginner) and Electrified Water Damage ≥ 12
+                  Damage Runs (Beginner) and Electrified Water Damage ≥ 12 and Have Any Suit Upgrade
                   Damage Runs (Intermediate) and Electrified Water Damage ≥ 47
           Any of the following:
               # Freeze Powamp
@@ -1779,13 +1824,11 @@ Extra - room_id: [36]
       Any of the following:
           After Sector 4 Water Level Lowered
           All of the following:
-              # Damage Reqs
+              # Damage Run
               Damage Runs (Beginner)
               Any of the following:
                   Electrified Water Damage ≥ 13
-                  All of the following:
-                      Electrified Water Damage ≥ 5
-                      Gravity Suit or Varia Suit
+                  Electrified Water Damage ≥ 5 and Have Any Suit Upgrade
 
 > Door to Aquarium Storage; Heals? False
   * Layers: default
@@ -1799,7 +1842,7 @@ Extra - room_id: [36]
               After Sector 4 Water Level Lowered
               Any of the following:
                   # Damage Reqs
-                  Gravity Suit and Damage Runs (Beginner) and Electrified Water Damage ≥ 12
+                  Damage Runs (Beginner) and Electrified Water Damage ≥ 12 and Have Any Suit Upgrade
                   Damage Runs (Intermediate) and Electrified Water Damage ≥ 40
           Any of the following:
               # Freeze Powamp
@@ -1809,13 +1852,11 @@ Extra - room_id: [36]
       Any of the following:
           After Sector 4 Water Level Lowered
           All of the following:
-              # Damage Reqs
+              # Damage Run
               Damage Runs (Beginner)
               Any of the following:
                   Electrified Water Damage ≥ 13
-                  All of the following:
-                      Electrified Water Damage ≥ 5
-                      Gravity Suit or Varia Suit
+                  Electrified Water Damage ≥ 5 and Have Any Suit Upgrade
 
 ----------------
 Owtch Atrium
@@ -1869,7 +1910,9 @@ Extra - room_id: [38]
           Any of the following:
               Screw Attack
               All of the following:
-                  Level 0 Keycard and Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+                  Level 0 Keycard and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+                  # Either shinespark or jump before hitting the Yarl
+                  Movement (Beginner) or Shinespark Tricks (Beginner)
                   Any of the following:
                       After Sector 4 Water Level Lowered
                       Damage Runs (Beginner) and Electrified Water Damage ≥ 10
@@ -1887,6 +1930,7 @@ Extra - room_id: [38]
           Morph Ball and Knowledge (Beginner)
           Any of the following:
               All of the following:
+                  # With Gravity
                   Gravity Suit
                   Any of the following:
                       Space Jump
@@ -1895,6 +1939,7 @@ Extra - room_id: [38]
                       All of the following:
                           Disabled Entrance Rando
                           Any of the following:
+                              # Spark to item then jump down
                               Speed Booster
                               # Freeze Yard from room below and wall jump https://youtu.be/AWajsYrYgbA
                               Stand On Frozen Enemies (Intermediate) and Wall Jump (Intermediate) and Can Freeze Enemies With Any Weapon
@@ -1906,7 +1951,17 @@ Extra - room_id: [38]
   > Pickup (Missile Tank)
       Trivial
   > Door to Drain Pipe
-      Gravity Suit and Screw Attack
+      All of the following:
+          Gravity Suit
+          Any of the following:
+              Screw Attack
+              All of the following:
+                  # Charge Spark in bottom room, spark after tunnel here
+                  Hi-Jump and Morph Ball and Speed Booster and Knowledge (Beginner) and Shinespark Tricks (Advanced) and Disabled Entrance Rando
+                  # Get up into Tunnel
+                  Space Jump or Wall Jump (Intermediate)
+                  # Deal with Yarls in previous room
+                  Can Freeze Enemies With Any Weapon or Can Kill Tough Underwater Beam-Resistant Enemy
   > Other to Aquarium Speedway
       # Secret Tunnel
       Morph Ball and Knowledge (Beginner)
@@ -1915,7 +1970,7 @@ Extra - room_id: [38]
 Aquarium Save Room West
 Extra - map_name: Sector 439
 Extra - room_id: [39]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Aquarium Shaft West; Heals? False
   * Layers: default
   * L0 Hatch to Aquarium Shaft West/Door to Aquarium Save Room West
@@ -1946,13 +2001,17 @@ Extra - room_id: [40]
               # Shoot charge flare through wall https://youtu.be/IyAMH0n71bI
               Charge Beam and Knowledge (Intermediate)
           Any of the following:
-              # Get to the Gloden Scisers
-              Wave Beam
-              Missiles ≥ 2 and Morph Ball
-          Any of the following:
               # Kill the Golden Scisers
-              Charge Beam or Missiles
-              Gravity Suit and Screw Attack
+              # Kill from outside with Wave
+              Charge Beam and Wave Beam
+              All of the following:
+                  # Get into the cage
+                  Missiles ≥ 2 and Morph Ball
+                  Any of the following:
+                      Charge Beam or Missiles ≥ 5
+                      Gravity Suit and Screw Attack
+              # Kill from outside with Missiles
+              Missiles ≥ 10 and Combat (Intermediate)
 
 > Door to Sanctuary Cache; Heals? False
   * Layers: default
@@ -2032,9 +2091,14 @@ Extra - room_id: [42]
           Any of the following:
               # Serris Weapon Requirements (50HP)
               Charge Beam
-              Missiles ≥ 15 and 10+ DMG Missiles
-              Missiles ≥ 10 and 20 DMG Missiles
               All of the following:
+                  # Kill with Missiles
+                  Combat (Beginner)
+                  Any of the following:
+                      Missiles ≥ 15 and 10+ DMG Missiles
+                      Missiles ≥ 10 and 20 DMG Missiles
+              All of the following:
+                  # Don't miss any Missiles
                   Combat (Advanced)
                   Any of the following:
                       Missiles ≥ 5 and 10+ DMG Missiles
@@ -2096,7 +2160,7 @@ Extra - room_id: [45]
   * L0 Hatch to Glass Tube to Sector 6 (NOC)/Door to Diffusion Connection Access
   * Extra - door_idx: (110,)
   > Other to Powamp Shaft
-      Trivial
+      Morph Ball
 
 > Other to Powamp Shaft; Heals? False
   * Layers: default
@@ -2130,7 +2194,7 @@ Extra - room_id: [46]
 Aquarium Save Room East
 Extra - map_name: Sector 447
 Extra - room_id: [47]
-Extra - unlocked_save_station: True
+Extra - unlocked_save_recharge_station: True
 > Door to Aquarium Hub; Heals? False
   * Layers: default
   * L0 Hatch to Aquarium Hub/Door to Aquarium Save Room East

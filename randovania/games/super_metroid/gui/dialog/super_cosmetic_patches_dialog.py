@@ -11,14 +11,16 @@ from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatch
 if TYPE_CHECKING:
     from PySide6 import QtWidgets
 
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+
 
 class SuperCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_SuperCosmeticPatchesDialog):
     _cosmetic_patches: SuperMetroidCosmeticPatches
     checkboxes: dict[str, QtWidgets.QCheckBox]
     radio_buttons: dict[MusicMode, QtWidgets.QRadioButton]
 
-    def __init__(self, parent: QtWidgets.QWidget | None, current: SuperMetroidCosmeticPatches):
-        super().__init__(parent)
+    def __init__(self, parent: QtWidgets.QWidget | None, current: BaseCosmeticPatches):
+        super().__init__(parent, current)
         self.setupUi(self)
         self.checkboxes = {
             "colorblind_mode": self.colorblind_checkbox,
@@ -32,6 +34,7 @@ class SuperCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_SuperCosmeticPatc
             MusicMode.RANDOMIZED: self.random_music_option,
             MusicMode.OFF: self.no_music_option,
         }
+        assert isinstance(current, SuperMetroidCosmeticPatches)
         self._cosmetic_patches = current
 
         self.on_new_cosmetic_patches(current)

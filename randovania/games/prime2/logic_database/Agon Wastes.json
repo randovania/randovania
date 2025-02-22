@@ -7,6 +7,7 @@
     "areas": {
         "Transport to Temple Grounds": {
             "default_node": "Elevator to Temple Grounds",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1473133138,
                 "in_dark_aether": false
@@ -88,6 +89,7 @@
         },
         "Plaza Access": {
             "default_node": "Door to Transport to Temple Grounds",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2918746407,
                 "in_dark_aether": false
@@ -165,6 +167,11 @@
         },
         "Mining Plaza": {
             "default_node": "Door to Plaza Access",
+            "hint_features": [
+                "echo_lock",
+                "lore",
+                "translator_gate"
+            ],
             "extra": {
                 "asset_id": 1115663770,
                 "in_dark_aether": false
@@ -669,6 +676,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 25,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Plaza Access": {
                             "type": "and",
@@ -838,6 +846,7 @@
         },
         "Agon Map Station": {
             "default_node": "Morph Ball Door to Mining Plaza",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2220656039,
                 "in_dark_aether": false
@@ -905,6 +914,7 @@
         },
         "Transit Station": {
             "default_node": "Door to Mining Plaza",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2043266464,
                 "in_dark_aether": false
@@ -1106,6 +1116,7 @@
         },
         "Save Station A": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1342271826,
                 "unlocked_save_station": true,
@@ -1215,6 +1226,10 @@
         },
         "Mining Station Access": {
             "default_node": "Door to Mining Plaza",
+            "hint_features": [
+                "morph",
+                "orb_cannon"
+            ],
             "extra": {
                 "asset_id": 2373615500,
                 "in_dark_aether": false
@@ -1373,6 +1388,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 26,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Mining Plaza": {
                             "type": "resource",
@@ -1389,6 +1405,7 @@
         },
         "Duelling Range": {
             "default_node": "Door to Save Station 2",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1063051065,
                 "in_dark_aether": true
@@ -2000,6 +2017,14 @@
         },
         "Mining Station B": {
             "default_node": "Door to Transit Station",
+            "hint_features": [
+                "bomb_slot",
+                "half_pipe",
+                "lore",
+                "luminoth_corpse",
+                "orb_cannon",
+                "portal"
+            ],
             "extra": {
                 "asset_id": 3682282733,
                 "in_dark_aether": false
@@ -2311,6 +2336,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 27,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Transit Station": {
                             "type": "and",
@@ -3049,49 +3075,10 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Bombs",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Scan",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Use Screw Attack (Space Jump)"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "StandableTerrain",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
                                                 {
                                                     "type": "and",
                                                     "data": {
@@ -3101,8 +3088,89 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "SpaceJump",
+                                                                    "name": "Bombs",
                                                                     "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Scan",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "StandableTerrain",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Use Screw Attack (Space Jump)"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "SpaceJump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "SlopeJump",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://www.youtube.com/watch?v=CvU0QLIgzms",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "BomblessSlot",
+                                                                    "amount": 5,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -3110,8 +3178,119 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "SlopeJump",
-                                                                    "amount": 3,
+                                                                    "name": "Movement",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Boost",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "WallBoost",
+                                                                                            "amount": 5,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "InstantMorph",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Shoot Darkburst"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "template",
+                                                                                                    "data": "Shoot Sonic Boom"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "LightAmmo",
+                                                                                                        "amount": 60,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "DarkAmmo",
+                                                                                "amount": 60,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Missile",
+                                                                                "amount": 10,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Scan",
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -3189,6 +3368,11 @@
         },
         "Transport Center": {
             "default_node": "Portal to Crossroads",
+            "hint_features": [
+                "bomb_slot",
+                "half_pipe",
+                "portal"
+            ],
             "extra": {
                 "asset_id": 1272952761,
                 "in_dark_aether": false
@@ -3547,6 +3731,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 28,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Bottom of Halfpipe": {
                             "type": "resource",
@@ -3784,6 +3969,12 @@
         },
         "Mining Station A": {
             "default_node": "Door to Mining Station Access",
+            "hint_features": [
+                "lore",
+                "orb_cannon",
+                "spider",
+                "translator_gate"
+            ],
             "extra": {
                 "asset_id": 3820941951,
                 "in_dark_aether": false
@@ -3918,7 +4109,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "https://www.youtube.com/watch?v=aqyWUg1eiVI&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=41",
+                                                                    "comment": "https://www.youtube.com/watch?v=aqyWUg1eiVI",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -4234,7 +4425,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://www.youtube.com/watch?v=vJ_MaFqBo0E&list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&index=40",
+                                                        "comment": "https://www.youtube.com/watch?v=vJ_MaFqBo0E",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -4396,7 +4587,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://www.youtube.com/watch?v=Z17kkmEA-HE&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=39",
+                                                        "comment": "https://www.youtube.com/watch?v=Z17kkmEA-HE",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -4540,6 +4731,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 29,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -4788,6 +4980,7 @@
         },
         "Dark Transit Station": {
             "default_node": "Door to Trial Grounds",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3611217256,
                 "in_dark_aether": true
@@ -5049,6 +5242,7 @@
         },
         "Save Station 2": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2887798667,
                 "unlocked_save_station": true,
@@ -5345,6 +5539,9 @@
         },
         "Ing Cache 4": {
             "default_node": "Door to Duelling Range",
+            "hint_features": [
+                "morph"
+            ],
             "extra": {
                 "asset_id": 3318204883,
                 "in_dark_aether": true
@@ -5441,6 +5638,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 30,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Duelling Range": {
                             "type": "resource",
@@ -5457,6 +5655,11 @@
         },
         "Junction Site": {
             "default_node": "Door to Duelling Range",
+            "hint_features": [
+                "bomb_slot",
+                "morph",
+                "spider"
+            ],
             "extra": {
                 "asset_id": 369673571,
                 "in_dark_aether": true
@@ -5606,6 +5809,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 31,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Central Safe Zone": {
                             "type": "and",
@@ -5748,6 +5952,7 @@
         },
         "Storage A": {
             "default_node": "Door to Mining Station B",
+            "hint_features": [],
             "extra": {
                 "asset_id": 271726916,
                 "in_dark_aether": false
@@ -5825,6 +6030,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 32,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Mining Station B": {
                             "type": "and",
@@ -5839,6 +6045,9 @@
         },
         "Mine Shaft": {
             "default_node": "Door to Mining Station B",
+            "hint_features": [
+                "morph"
+            ],
             "extra": {
                 "asset_id": 3617674289,
                 "in_dark_aether": false
@@ -6072,6 +6281,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 33,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Mining Station B": {
                             "type": "resource",
@@ -6088,6 +6298,7 @@
         },
         "Trial Grounds": {
             "default_node": "Spawn Point",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2260839223,
                 "in_dark_aether": true
@@ -6832,6 +7043,7 @@
         },
         "Portal Terminal": {
             "default_node": "Door to Portal Access A",
+            "hint_features": [],
             "extra": {
                 "asset_id": 734872743,
                 "in_dark_aether": false
@@ -7262,6 +7474,7 @@
         },
         "Transport to Torvus Bog": {
             "default_node": "Elevator to Torvus Bog",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2806956034,
                 "in_dark_aether": false
@@ -7384,6 +7597,9 @@
         },
         "Crossroads": {
             "default_node": "Door to Portal Site",
+            "hint_features": [
+                "half_pipe"
+            ],
             "extra": {
                 "asset_id": 2384714559,
                 "in_dark_aether": true
@@ -7626,6 +7842,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 34,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Portal from Transport Center": {
                             "type": "and",
@@ -7841,7 +8058,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "https://www.youtube.com/watch?v=v68NS3FfSV4&list=PLZkUEWCHwYRyXIU-to88js2M6mEOBoHUy&index=29",
+                                                                    "comment": "https://www.youtube.com/watch?v=v68NS3FfSV4",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -8046,7 +8263,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://www.youtube.com/watch?v=3UaA3tgmzX8&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=14",
+                                            "comment": "https://www.youtube.com/watch?v=3UaA3tgmzX8",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -8109,6 +8326,7 @@
         },
         "Temple Access": {
             "default_node": "Door to Mining Station A",
+            "hint_features": [],
             "extra": {
                 "asset_id": 710454340,
                 "in_dark_aether": false
@@ -8186,6 +8404,7 @@
         },
         "Central Station Access": {
             "default_node": "Door to Mining Station A",
+            "hint_features": [],
             "extra": {
                 "asset_id": 4268351683,
                 "in_dark_aether": false
@@ -8393,6 +8612,7 @@
         },
         "Sand Cache": {
             "default_node": "Door to Mining Station A",
+            "hint_features": [],
             "extra": {
                 "asset_id": 4105303847,
                 "in_dark_aether": false
@@ -8470,6 +8690,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 35,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Mining Station A": {
                             "type": "and",
@@ -8484,6 +8705,10 @@
         },
         "Portal Access A": {
             "default_node": "Door to Mining Station A",
+            "hint_features": [
+                "morph",
+                "orb_cannon"
+            ],
             "extra": {
                 "asset_id": 588443165,
                 "in_dark_aether": false
@@ -8608,6 +8833,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 36,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Portal Terminal": {
                             "type": "resource",
@@ -8624,6 +8850,9 @@
         },
         "Judgment Pit": {
             "default_node": "Door to Junction Site",
+            "hint_features": [
+                "boss"
+            ],
             "extra": {
                 "asset_id": 1803024829,
                 "in_dark_aether": true
@@ -10028,6 +10257,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 37,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Central Safe Zone": {
                             "type": "and",
@@ -10263,6 +10493,10 @@
         },
         "Agon Temple": {
             "default_node": "Door to Temple Access",
+            "hint_features": [
+                "boss",
+                "temple"
+            ],
             "extra": {
                 "asset_id": 1979488942,
                 "in_dark_aether": false
@@ -10994,6 +11228,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 38,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -11554,6 +11789,7 @@
         },
         "Trial Tunnel": {
             "default_node": "Door to Dark Agon Temple",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1222921974,
                 "in_dark_aether": true
@@ -11632,6 +11868,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 39,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Dark Agon Temple": {
                             "type": "and",
@@ -11646,6 +11883,7 @@
         },
         "Portal Site": {
             "default_node": "Portal to Portal Terminal",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3212793644,
                 "in_dark_aether": true
@@ -12593,6 +12831,11 @@
         },
         "Central Mining Station": {
             "default_node": "Door to Central Station Access",
+            "hint_features": [
+                "keybearer",
+                "luminoth_corpse",
+                "spider"
+            ],
             "extra": {
                 "asset_id": 4121352562,
                 "in_dark_aether": false
@@ -13125,6 +13368,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 40,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Next to Pickup": {
                             "type": "resource",
@@ -13430,6 +13674,7 @@
         },
         "Dark Agon Temple Access": {
             "default_node": "Door to Judgment Pit",
+            "hint_features": [],
             "extra": {
                 "asset_id": 553896110,
                 "in_dark_aether": true
@@ -13595,6 +13840,9 @@
         },
         "Warrior's Walk": {
             "default_node": "Door to Judgment Pit",
+            "hint_features": [
+                "phazon"
+            ],
             "extra": {
                 "asset_id": 872074261,
                 "in_dark_aether": true
@@ -13773,6 +14021,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 41,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Safe Zone (Battleground Side)": {
                             "type": "or",
@@ -14255,6 +14504,7 @@
         },
         "Save Station 1": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1511345710,
                 "unlocked_save_station": true,
@@ -14323,6 +14573,7 @@
         },
         "Portal Access": {
             "default_node": "Door to Judgment Pit",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2312259325,
                 "in_dark_aether": true
@@ -14603,6 +14854,7 @@
         },
         "Controller Access": {
             "default_node": "Door to Agon Temple",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3209927104,
                 "in_dark_aether": false
@@ -14776,6 +15028,10 @@
         },
         "Sandcanyon": {
             "default_node": "Door to Agon Temple",
+            "hint_features": [
+                "abyss",
+                "orb_cannon"
+            ],
             "extra": {
                 "asset_id": 3853985320,
                 "in_dark_aether": false
@@ -14982,6 +15238,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 42,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Center Platform": {
                             "type": "and",
@@ -15173,6 +15430,10 @@
         },
         "Dark Agon Temple": {
             "default_node": "Door to Dark Agon Temple Access",
+            "hint_features": [
+                "boss",
+                "temple"
+            ],
             "extra": {
                 "asset_id": 1970603146,
                 "in_dark_aether": true
@@ -15771,6 +16032,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 43,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Safe Zone (Behind Key Gate)": {
                             "type": "resource",
@@ -16921,6 +17183,7 @@
         },
         "Command Center Access": {
             "default_node": "Door to Central Mining Station (Bottom)",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1887668217,
                 "in_dark_aether": false
@@ -17579,6 +17842,7 @@
         },
         "Battleground": {
             "default_node": "Door to Double Path (Bottom)",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3933819436,
                 "in_dark_aether": true
@@ -18116,6 +18380,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 44,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Double Path (Top)": {
                             "type": "or",
@@ -18469,6 +18734,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 45,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Warrior's Walk": {
                             "type": "and",
@@ -18629,7 +18895,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://www.youtube.com/watch?v=ZBsoXsayArI&list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&index=61",
+                                                        "comment": "https://www.youtube.com/watch?v=ZBsoXsayArI",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -18725,6 +18991,12 @@
         },
         "Agon Energy Controller": {
             "default_node": "Door to Controller Access",
+            "hint_features": [
+                "energy_controller",
+                "light_energy_transport",
+                "lore",
+                "luminoth_corpse"
+            ],
             "extra": {
                 "asset_id": 50083607,
                 "in_dark_aether": false
@@ -18851,6 +19123,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 46,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Controller Access": {
                             "type": "and",
@@ -19065,6 +19338,9 @@
         },
         "Ventilation Area A": {
             "default_node": "Door to Main Reactor",
+            "hint_features": [
+                "morph"
+            ],
             "extra": {
                 "asset_id": 2217754069,
                 "in_dark_aether": false
@@ -19268,6 +19544,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 47,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Main Reactor": {
                             "type": "and",
@@ -19282,6 +19559,7 @@
         },
         "Dark Controller Access": {
             "default_node": "Door to Dark Agon Temple",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2733852625,
                 "in_dark_aether": true
@@ -19489,6 +19767,11 @@
         },
         "Command Center": {
             "default_node": "Morph Ball Door to Command Center Access",
+            "hint_features": [
+                "elevator",
+                "morph",
+                "portal"
+            ],
             "extra": {
                 "asset_id": 834819415,
                 "in_dark_aether": false
@@ -19975,6 +20258,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 48,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Morph Ball Door to Command Center Access": {
                             "type": "resource",
@@ -20033,6 +20317,7 @@
         },
         "Double Path": {
             "default_node": "Door to Doomed Entry (Bottom)",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2146386747,
                 "in_dark_aether": true
@@ -20475,6 +20760,7 @@
         },
         "Transport to Sanctuary Fortress": {
             "default_node": "Elevator to Sanctuary Fortress",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3331021649,
                 "in_dark_aether": false
@@ -20556,6 +20842,13 @@
         },
         "Main Reactor": {
             "default_node": "Door to Sand Processing",
+            "hint_features": [
+                "elevator",
+                "keybearer",
+                "luminoth_corpse",
+                "phazon",
+                "spider"
+            ],
             "extra": {
                 "asset_id": 3436835742,
                 "in_dark_aether": false,
@@ -21048,7 +21341,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "https://www.youtube.com/watch?v=Yr-cCSIIWfM&list=PLZkUEWCHwYRyXIU-to88js2M6mEOBoHUy&index=19",
+                                                                                "comment": "https://www.youtube.com/watch?v=Yr-cCSIIWfM",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -21132,6 +21425,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 49,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Next to Pickup": {
                             "type": "and",
@@ -21747,6 +22041,7 @@
         },
         "Dark Agon Energy Controller": {
             "default_node": "Door to Dark Controller Access",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3084730374,
                 "in_dark_aether": true
@@ -21857,6 +22152,7 @@
         },
         "Biostorage Access": {
             "default_node": "Door to Command Center",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3739948648,
                 "in_dark_aether": false
@@ -21934,6 +22230,7 @@
         },
         "Security Station B": {
             "default_node": "Door to Command Center (First)",
+            "hint_features": [],
             "extra": {
                 "asset_id": 182082287,
                 "in_dark_aether": false
@@ -22158,6 +22455,9 @@
         },
         "Doomed Entry": {
             "default_node": "Portal from Command Center",
+            "hint_features": [
+                "phazon"
+            ],
             "extra": {
                 "asset_id": 2761919085,
                 "in_dark_aether": true
@@ -23028,7 +23328,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://www.youtube.com/watch?v=bEZGy9Fg6a8&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=21",
+                                            "comment": "https://www.youtube.com/watch?v=bEZGy9Fg6a8",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -23134,6 +23434,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 50,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Next to Key": {
                             "type": "and",
@@ -23441,6 +23742,10 @@
         },
         "Sand Processing": {
             "default_node": "Door to Save Station C",
+            "hint_features": [
+                "bomb_slot",
+                "half_pipe"
+            ],
             "extra": {
                 "asset_id": 2763180926,
                 "in_dark_aether": false
@@ -23592,6 +23897,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 51,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Bottom of Halfpipe": {
                             "type": "and",
@@ -23851,7 +24157,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "https://www.youtube.com/watch?v=1wn3oAxQg4I&list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&index=55",
+                                                                    "comment": "https://www.youtube.com/watch?v=1wn3oAxQg4I",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -23995,7 +24301,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://www.youtube.com/watch?v=CzhDj8MmERg&list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&index=54",
+                                                        "comment": "https://www.youtube.com/watch?v=CzhDj8MmERg",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -24030,7 +24336,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://www.youtube.com/watch?v=1Meg1C7X-1Q&list=PLZkUEWCHwYRyXIU-to88js2M6mEOBoHUy&index=27",
+                                                        "comment": "https://www.youtube.com/watch?v=1Meg1C7X-1Q",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -24115,7 +24421,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://www.youtube.com/watch?v=9i3Tc8UlFts&list=PL_plBDqKQVr8JAkV0Q2KYBl4JYxZPkfYo&index=5 Space Jump",
+                                                        "comment": null,
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -24133,24 +24439,40 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "https://youtu.be/cEghPZPy_AM?t=81 No Space Jump",
+                                                                    "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "items",
-                                                                                "name": "SpaceJump",
-                                                                                "amount": 1,
-                                                                                "negate": false
+                                                                                "comment": "With Space Jump: https://www.youtube.com/watch?v=9i3Tc8UlFts",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "SpaceJump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "SlopeJump",
-                                                                                "amount": 3,
-                                                                                "negate": false
+                                                                                "comment": "No Space Jump: https://youtu.be/cEghPZPy_AM?t=81",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "SlopeJump",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
@@ -24178,6 +24500,7 @@
         },
         "Storage D": {
             "default_node": "Door to Main Reactor",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1090496759,
                 "in_dark_aether": false
@@ -24293,6 +24616,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 52,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Main Reactor": {
                             "type": "and",
@@ -24307,6 +24631,11 @@
         },
         "Dark Oasis": {
             "default_node": "Door to Oasis Access",
+            "hint_features": [
+                "phazon",
+                "portal",
+                "water"
+            ],
             "extra": {
                 "asset_id": 2583401855,
                 "in_dark_aether": true
@@ -24794,6 +25123,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 53,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Oasis Access": {
                             "type": "and",
@@ -24863,7 +25193,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "https://www.youtube.com/watch?v=TJNbIv-HuY4&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=18",
+                                                                                "comment": "https://www.youtube.com/watch?v=TJNbIv-HuY4",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -24943,6 +25273,7 @@
         },
         "Biostorage Station": {
             "default_node": "Door to Biostorage Access",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2156489961,
                 "in_dark_aether": false
@@ -25159,6 +25490,7 @@
         },
         "Feeding Pit Access": {
             "default_node": "Spawn Point",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3761619109,
                 "in_dark_aether": true
@@ -25530,6 +25862,7 @@
         },
         "Oasis Access": {
             "default_node": "Door to Doomed Entry",
+            "hint_features": [],
             "extra": {
                 "asset_id": 4073505822,
                 "in_dark_aether": true
@@ -25726,6 +26059,7 @@
         },
         "Save Station C": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3111736876,
                 "unlocked_save_station": true,
@@ -25831,6 +26165,7 @@
         },
         "Hall of Stairs": {
             "default_node": "Door to Dark Oasis",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1830176640,
                 "in_dark_aether": true
@@ -26390,6 +26725,7 @@
         },
         "Ing Cache 3": {
             "default_node": "Door to Dark Oasis",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3122914805,
                 "in_dark_aether": true
@@ -26455,6 +26791,7 @@
         },
         "Security Station A": {
             "default_node": "Door to Biostorage Station",
+            "hint_features": [],
             "extra": {
                 "asset_id": 4146307738,
                 "in_dark_aether": false
@@ -26628,6 +26965,7 @@
         },
         "Storage B": {
             "default_node": "Door to Biostorage Station",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2527480810,
                 "in_dark_aether": false
@@ -26705,6 +27043,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 54,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Biostorage Station": {
                             "type": "and",
@@ -26719,6 +27058,10 @@
         },
         "Feeding Pit": {
             "default_node": "Door to Watering Hole",
+            "hint_features": [
+                "phazon",
+                "water"
+            ],
             "extra": {
                 "asset_id": 123369195,
                 "in_dark_aether": true
@@ -27005,7 +27348,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "https://www.youtube.com/watch?v=-T5Xhs6p9zQ&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=25",
+                                                                    "comment": "https://www.youtube.com/watch?v=-T5Xhs6p9zQ",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -27441,6 +27784,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 55,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Feeding Pit Access": {
                             "type": "and",
@@ -27589,6 +27933,7 @@
         },
         "Ventilation Area B": {
             "default_node": "Door to Bioenergy Production",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1498100491,
                 "in_dark_aether": false
@@ -27759,6 +28104,7 @@
         },
         "Save Station 3": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "asset_id": 41547759,
                 "unlocked_save_station": true,
@@ -27872,6 +28218,7 @@
         },
         "Bioenergy Production": {
             "default_node": "Door to Security Station A",
+            "hint_features": [],
             "extra": {
                 "asset_id": 323423656,
                 "in_dark_aether": false
@@ -28648,6 +28995,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 56,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Storage C": {
                             "type": "template",
@@ -28670,6 +29018,7 @@
         },
         "Watering Hole": {
             "default_node": "Door to Phazon Site",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2603303494,
                 "in_dark_aether": true
@@ -28897,6 +29246,9 @@
         },
         "Ing Cache 1": {
             "default_node": "Door to Feeding Pit",
+            "hint_features": [
+                "luminoth_corpse"
+            ],
             "extra": {
                 "asset_id": 1385574326,
                 "in_dark_aether": true
@@ -29046,6 +29398,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 57,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Feeding Pit": {
                             "type": "resource",
@@ -29062,6 +29415,7 @@
         },
         "Bitter Well": {
             "default_node": "Door to Phazon Site",
+            "hint_features": [],
             "extra": {
                 "asset_id": 82952664,
                 "in_dark_aether": true
@@ -29202,7 +29556,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://www.youtube.com/watch?v=_HOE7J2Vt1o&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=6",
+                                                        "comment": "https://www.youtube.com/watch?v=_HOE7J2Vt1o",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -29246,6 +29600,7 @@
         },
         "Storage C": {
             "default_node": "Door to Bioenergy Production",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1576704079,
                 "in_dark_aether": false
@@ -29323,6 +29678,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 58,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Bioenergy Production": {
                             "type": "and",
@@ -29337,6 +29693,7 @@
         },
         "Phazon Site": {
             "default_node": "Door to Bitter Well",
+            "hint_features": [],
             "extra": {
                 "asset_id": 537851367,
                 "in_dark_aether": true
@@ -30108,7 +30465,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://www.youtube.com/watch?v=niaVE36EbY4&list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&index=62",
+                                                        "comment": "https://www.youtube.com/watch?v=niaVE36EbY4",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -30225,6 +30582,7 @@
         },
         "Ing Cache 2": {
             "default_node": "Door to Phazon Site",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2467885174,
                 "in_dark_aether": true
@@ -30314,6 +30672,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 59,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Phazon Site": {
                             "type": "resource",

@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-JOKE_HINTS = [
+from randovania.exporter.hints.joke_hints import GENERIC_JOKE_HINTS
+
+MSR_JOKE_HINTS = GENERIC_JOKE_HINTS + [
     "The Chozo have Sealed this hint away.",
     "You hear a voice in the distance...\n'March Stabilization Rejected'.",
     "Spider Boosting can quickly cover large distances.\nTake advantage whenever possible!",

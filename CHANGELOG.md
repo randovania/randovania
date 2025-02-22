@@ -5,14 +5,193 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.8.x] - 2025-01-??
+## [8.10.x] - 2025-03-??
+
+- **Major** - Added: Featural Hints. Echoes and Cave Story now use a brand new hint system, where hints may refer to various Features of a pickup or of a location. Read the complete changelog for more details.
+- **Major** - Changed: Hints are now placed after pickup placement, rather than during. This should result in more interesting hints in all games.
+- **Major** - Added: Co-op as an additional Multiworld Mode. In Co-op, multiple people can share Worlds together, which means that they will share their inventory. This works for all games that support Multiworld.
+- Added: Every game now has a "Pickup Hint Features" tab where you can view which Features apply to which pickups.
+- Added: Cave Story and Echoes now have a "Pickup Location Features" tab where you can view which Features apply to which locations.
+- Added: Location Features can be viewed in the Database Viewer.
+- Added: 3 more joke hints.
+- Added: The Hints Spoiler tab now indicates which location a hint is pointing to.
+- Changed: The Hints Spoiler tab sorts its entries in a more helpful manner.
+- Changed: Some joke hints are now shared between all games that use them.
+- Fixed: It is now properly impossible for multiple hints to point to the same location.
+- Fixed: A recent regression in the resolver that made it significantly slower has been fixed.
+
+### Metroid Dread
+
+- Fixed: GUI formatting on the game page.
+- Fixed: Starter Preset now has a proper description.
+
+#### Logic Database
+
+##### Artaria
+
+- Added: Accessing the top pickup in Screw Attack Room with a Shinespark by going down through the water basin. Requires either Screw Attack or Morph Ball and Gravity Suit.
+- Added: Logically flipping the Screw Attack Room Spinner and using Shinespark to immediately reach the left side platform. Requires Highly Dangerous Logic or Screw Attack.
+- Added: Accessing Start Point 2 in Screw Attack Room using a Shinespark. Requires either Screw Attack or Morph Ball and Slide
+- Changed: Flipping the spinner in Screw Attack Room when by going from the door to the transport is now logically possible also after having flipped the spinner, unless Highly Dangerous Logic is enabled.
+- Changed: All other connections in Screw Attack Room that are only open before flipping the spinner are now only logical when Highly Dangerous Logic is enabled.
+- Changed: The conditions that depends on not having blown up the blob in Screw Attack Room are now only logical when Highly Dangerous Logic is enabled.
+- Changed: In White EMMI Arena: Reaching Door to EMMI Zone Spinner (Middle) from Door to Central Unit Access (Charge) with Spin Boost now requires Wall Jump (Beginner).
+- Changed: In EMMI First Chase End: Reaching Door to Teleport to Dairon (Top) with Spin Boost now requires Wall Jump (Beginner).
+- Changed: In Screw Attack Room: Reaching Next to Upper Tank from Total Recharge with Spin Boost no longer requires a Wall Jump trick.
+- Fixed: Using Speed Booster to Shinespark to the top pickup in Screw Attack Room now requires Door Lock Rando to be Disabled.
+
+##### Burenia
+
+- Added: In Main Hub Tower Bottom: Reach from Alcove Across Grapple Block to Ledge above Grapple Block using Spin Boost.
+- Added: In Main Hub Tower Bottom: Reach from Water Space Jump Platform to Door to Save Station South Access (Lower) using Gravity Suit, Spin Boost and Movement (Beginner).
+- Changed: In Main Hub Tower Bottom: Reaching Door to Save Station South Access (Lower) from Above Screw Attack Blocks with Spin Boost now requires Wall Jump (Beginner).
+- Changed: In Main Hub Tower Bottom: Reaching Ledge above Grapple Block from Water Space Jump Platform using Spin Boost now requires either the Grapple Block Event or Wall Jump (Beginner).
+
+##### Cataris
+
+- Added: The pillar in Moving Magnet Walls (Small) can now be crossed with Spin Boost and Wall Jump (Intermediate).
+- Changed: The Energy Part pickup in Thermal Device Room North no longer requires the Varia Suit if the "Cataris - Lower Lava Button" event has been triggered.
+- Changed: The blob in Z-57 Heat Room West (Right) now requires the Varia Suit to be destroyed.
+- Changed: Using Spin Boost in conjunction with the Slide Jump to reach the upper part of the Experiment-Z57 room now requires Wall Jump (Intermediate).
+- Changed: Using Spin Boost to do the First Blob event in Z-57 Heat Room West (Left) now requires Movement (Beginner).
+
+##### Dairon
+
+- Changed: Reaching the tunnel at the top of Central Unit Access with Spin Boost now requires Movement (Beginner), but remains trickless with Space Jump.
+
+### Metroid Prime 2: Echoes
+- Removed: Relative hints will no longer be placed.
+- Changed: Legacy multiworld sessions where an Echoes hint points to a Cave Story item may have very slightly altered wording.
+- Changed: A legacy relative hint pointing to a Nothing will now always refer to it by name.
+- Changed: Keybearer hints may refer to pickups using different categories than before.
+
+### Metroid: Samus Returns
+
+- Fixed: One Area 8 theme from not being included in music shuffle.
+- Removed: Enabling the automatic item tracker is no longer a cosmetic option, as it is now forced to always be enabled.
+
+#### Logic Database
+
+#### Area 4 Central Caves
+
+- Fixed: Starting in Spazer Beam Chamber now places Samus in the correct room.
+
+#### Area 5 Tower Exterior
+
+- Fixed: Starting in Screw Attack Chamber or Zeta Arena Access now places Samus in the correct room.
+
+##### Area 5 Tower Interior
+
+- Fixed: Grapple Shuffler - Coming back up from the pickup if it was reached via a Melee Clip.
+
+## [8.9.0] - 2025-02-02
+
+- Added: It is now possible to focus the game images in the "Games" tab via a Keyboard.
+- Added: Experimental option under Generation -> Logic Settings that makes an early check if the game is unbeatable due to options such as starting location, transports etc.
+- Changed: Wording on the Door Locks preset tab to be clearer.
+- Changed: The main Randovania window now doesn't have an unnecessary border.
+- Changed: The highlighted button in the cosmetic options is now `Accept` instead of `Reset to Defaults`.
+- Changed: Node details in the Data Visualizer now have word wrap.
+
+### AM2R
+
+#### Logic Database
+
+##### Main Caves
+
+- Added: Mining Facility Alpha Nest Access now has a Spider Ball method of crossing the room from either side.
+- Added: Mining Facility Gamma Nest Access now has a Spider Ball method of crossing the room from either side.
+
+### Metroid Dread
+
+- Added: There is now a preset option for each region that will remove all of its light sources when enabled, making the game very dark.
+
+#### Logic Database
+
+- Fixed: A typo in the event name Artaria - Prepare Speedboost in Map Station has been changed from Prepare Speeboost in Map Station.
+- Changed: Various locations listed below are altered in ways that improve the quality of generation and resolution. What is and isn't in logic should remain unchanged.
+
+##### Artaria
+
+- Added: In White EMMI Introduction: Climb from  Door to Teleport to Dairon (Lower) to Door to Teleport to Dairon (Thermal) by grapple-jumping on the falling magnet platform.
+- Added: It is now logical to blow up the Proto EMMI blob in Melee tutorial from the right, with Wave Beam, Diffusion beam or a Pseudo Wave Beam (Intermediate) using Morph Ball, Wide Beam and Charge Beam.
+- Changed: The logic surrounding the Single Use Slide in EMMI Zone Dome now makes it so that the event nodes remain logically accessible after collecting the event.
+- Changed: It is now logical to go back to the event node for blowing up the Proto EMMI Blob from the right.
+
+##### Cataris
+
+- Changed: It is now considered logical to go back into Kraid's area using the normal entrance after defeating Kraid, if all the blobs necessary to go around have been blown up.
+
+##### Dairon
+
+- Changed: The logic in the Freezer is changed so that traversing the right part of the room ignores the dangerousness of turning on the Freezer generator. Meanwhile, all connections in the left part of the room that can be used before turning on the generator now require Highly Dangerous Logic.
+
+##### Ghavoran
+
+- Changed: It is now logical to go back to the event node for flipping the Super Missile Rotatable from the tunnel under it.
+- Changed: It is now logical to go back to the event node for lowering the Super Missile Spider Magnet from the tunnel under it.
+
+### Metroid Prime 2: Echoes
+
+- Changed: Double Damage is now classified as a Beam instead of a Suit.
+- Fixed: Typo in the Differences tab.
+- Added: FAQ entry for light beam transport requirements.
+
+#### Logic Database
+
+##### Agon Wastes
+
+- Added: Mining Station B: Hypermode method to open the portal without Space Jump Boots or Morph Ball Bombs.
+
+##### Torvus Bog
+
+- Added: Torvus Grove: Two expert difficulty methods to cross the upper part of this room without Space Jump Boots.
+- Added: Torvus Plaza: Using Boost Ball and standables to reach the pickup without Spider or Screw Attack.
+
+##### Sanctuary Fortress
+
+- Added: Worker's Path: Advanced bomb jumps to get to the cannon platforms NSJ.
+- Added: Grand Abyss: Expert extended dashes and standables to cross from the Vault side to the Watch Station side.
+
+##### Ing Hive
+
+- Added: Hive Dynamo Works: Advanced/Expert NSJ Extended Dashes to go across the gap with the grapple point.
+- Added: Hive Entrance: Expert inbounds method to get to the item without Light Suit.
+- Changed: Temple Security Access: Crossing the room after the gates have been triggered with only Screw Attack no longer requires Screw Attack at Z-Axis.
+
+### Metroid: Samus Returns
+
+- **Major** - Added: Split beams and suits. When playing with non-progressive beams or suits, each individual upgrade provides a unique effect instead of providing the effects of all previous upgrades. For suits, protection against lava requires having both suits, whereas Gravity on its own just provides reduced damage and free movement.
+- Changed: The hinted item after collecting the last required DNA is now dependent on the final boss. The Baby Metroid is hinted for Proteus Ridley, the Ice Beam for Metroid Queen and the Bomb for Diggernaut.
+- Fixed: Prevented the block with a hidden item in Area 4 Central Caves - Transit Tunnel from being destroyed from another area, causing the item disappear.
+- Fixed: Incorrect rotation of a progressive item if the previous stage of the progressive item was received without leaving the area.
+- Fixed: Once you have collected all Metroid DNA, when traveling from Surface West to Surface East, a message will always appear asking if you want to fight Proteus Ridley or not. Canceling the message will load Surface East like normal. This is to prevent Surface East from being potentially inaccessible if the only entry point is from Surface West.
+- Fixed: Issue where reloading an area would retain the disconnected status regardless if the disconnect message was displayed or not.
+
+#### Logic Database
+
+##### Area 4 Central Caverns
+
+- Added: Transport to Area 3 and Crystal Mines: A beginner Spider Ball Clip to reach the elevator to Crystal Mines from the bottom Chozo Seal with Space Jump.
+
+##### Area 5 Tower Exterior
+
+- Added: Tower Exterior Spider Ball Clip added to traverse from Next to Teleporter to Pickup (Super Missile Tank Bottom).
+
+## [8.8.0] - 2025-01-02
 
 - Added: Experimental preset option to place all majors or pickups logically. This makes sure pickups that are not required can be collected.
 - Fixed: The map tracker no longer opens if the starting location prompt was cancelled.
 
 ### Metroid Prime
 
-- Changed: The refill pickups don't show the irrelevant explanation about how much underlying ammo will be provided.  
+- Changed: The refill pickups don't show the irrelevant explanation about how much underlying ammo will be provided.
+
+#### Logic Database
+
+##### Tallon Overworld
+
+- Fixed: Artifact Temple - Using the Artifact Temple Transport now expects Ridley to be defeated first.
 
 ### Metroid Prime 2: Echoes
 
@@ -22,7 +201,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: Area 2 Dam Exterior - Spike Ravine: Collecting the pickup from below with High Jump Boots, Super Jump (Expert), and Unmorph Extend (Advanced).
+##### Area 2 Dam Exterior
+
+- Added: Spike Ravine - Collecting the pickup from below with High Jump Boots, Super Jump (Expert), and Unmorph Extend (Advanced).
+
+##### Area 5 Tower Exterior
+
+- Fixed: Starting in Screw Attack Chamber now places Samus in the correct room.
 
 ## [8.7.1] - 2024-12-05
 
