@@ -37,7 +37,11 @@ class EchoesHintDistributor(HintDistributor):
 
     @override
     def is_pickup_interesting(self, pickup: PickupEntry) -> bool:
-        return not pickup.has_hint_feature("key")
+        non_interesting_features = ["key", "energy_tank"]
+        for feature in non_interesting_features:
+            if pickup.has_hint_feature(feature):
+                return False
+        return True
 
     @override
     async def get_guaranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
