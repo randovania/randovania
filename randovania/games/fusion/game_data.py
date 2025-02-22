@@ -93,6 +93,11 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
             "This will place you back at your start location with everything collected since your last save. "
             "Please note that this is never logical.",
         ),
+        (
+            "What is required to trigger and fight the SA-X?",
+            "To trigger the SA-X fight, you must have collected enough Infant Metroids and approach "
+            "the Operations Room door. To fight SA-X you will require Charge Beam and Missiles."
+        )
     ],
     hash_words=_hash_words(),
     layout=randovania.game.layout.GameLayout(
