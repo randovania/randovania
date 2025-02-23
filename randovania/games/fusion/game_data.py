@@ -96,8 +96,8 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
         (
             "What is required to trigger and fight the SA-X?",
             "To trigger the SA-X fight, you must have collected enough Infant Metroids and approach "
-            "the Operations Room hatch. To fight SA-X you will require Charge Beam and Missiles.\n"
-            "Reminder the Operations Room hatch is now a grey Level 0 hatch.",
+            "the Operations Room hatch. To fight the SA-X you will require Charge Beam and Missiles.\n"
+            "Reminder that the Operations Room hatch is now a grey Level 0 hatch.",
         ),
         (
             "How do the Missile Upgrades interact?",
@@ -112,9 +112,9 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
             "How do the Beam Upgrades interact?",
             "The beam upgrades have been split, allowing unique combinations of effects and damage.\n"
             "- Charge Beam - Adds the ability to charge Samus' beam and a minor damage increase\n"
-            "- Wide Beam - Makes the beam fire 3 projectiles and a large increase to damage\n"
+            "- Wide Beam - Makes the beam fire 3 projectiles and a major increase to damage\n"
             "- Plasma Beam - Adds the ability to penetrate enemies and a minor damage increase\n"
-            "- Wave Beam - Makes the beam fire 2 projectiles and a minor damage increase\n"
+            "- Wave Beam - Makes the beam fire 2 projectiles and a major damage increase\n"
             "- Ice Beam - Adds the ability to freeze enemies with the beam and a minor damage increase",
         ),
     ],
