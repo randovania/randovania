@@ -96,24 +96,26 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
         (
             "What is required to trigger and fight the SA-X?",
             "To trigger the SA-X fight, you must have collected enough Infant Metroids and approach "
-            "the Operations Room door. To fight SA-X you will require Charge Beam and Missiles.",
+            "the Operations Room hatch. To fight SA-X you will require Charge Beam and Missiles.\n"
+            "Reminder the Operations Room hatch is now a grey L0 hatch.",
         ),
         (
             "How do the Missile Upgrades interact?",
             "The missile upgrades functions have been split, allowing unique combinations of effects and damage.\n"
-            "- Missile Launcher Data - Allows Samus to fire missiles when Required Mains is enabled and +10dmg\n"
-            "- Super Missile Data - Adds +20dmg\n"
-            "- Ice Missile Data - Adds the ability to freeze enemies with direct hits and +10dmg\n"
-            "- Diffusion Missile Data - Adds the ability to charge a freezing blast and +5dmg",
+            "- Missile Launcher Data - Allows Samus to fire missiles when Required Mains is enabled "
+            "and adds 10 damage\n"
+            "- Super Missile Data - Adds 20 damage\n"
+            "- Ice Missile Data - Adds the ability to freeze enemies with direct hits and adds 10 damage\n"
+            "- Diffusion Missile Data - Adds the ability to charge a freezing blast and adds 5 damage",
         ),
         (
             "How do the Beam Upgrades interact?",
             "The beam upgrades have been split, allowing unique combinations of effects and damage.\n"
-            "- Charge Beam - Adds the ability to charge Samus' beam and a minor dmg increase\n"
-            "- Wide Beam - Makes the beam fire 3 projectiles and a large increase to dmg\n"
-            "- Plasma Beam - Adds the ability to penetrate enemies and a minor dmg increase\n"
-            "- Wave Beam - Makes the beam fire 2 projectiles and a minor dmg increase\n"
-            "- Ice Beam - Adds the ability to freeze enemies with the beam and a minor dmg increase",
+            "- Charge Beam - Adds the ability to charge Samus' beam and a minor damage increase\n"
+            "- Wide Beam - Makes the beam fire 3 projectiles and a large increase to damage\n"
+            "- Plasma Beam - Adds the ability to penetrate enemies and a minor damage increase\n"
+            "- Wave Beam - Makes the beam fire 2 projectiles and a minor damage increase\n"
+            "- Ice Beam - Adds the ability to freeze enemies with the beam and a minor damage increase",
         ),
     ],
     hash_words=_hash_words(),
