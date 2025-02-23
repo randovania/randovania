@@ -93,7 +93,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
         ],
         need_to_play=[
             (
-                "The game is included with Randovania. Windows or Wine is needed to play Freeware."
+                "The game is included with Randovania. Windows or Wine is needed to play Freeware. "
                 "Windows or Linux is needed to play Cave Story Tweaked"
             ),
         ],
