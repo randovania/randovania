@@ -97,7 +97,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
             "What is required to trigger and fight the SA-X?",
             "To trigger the SA-X fight, you must have collected enough Infant Metroids and approach "
             "the Operations Room hatch. To fight SA-X you will require Charge Beam and Missiles.\n"
-            "Reminder the Operations Room hatch is now a grey L0 hatch.",
+            "Reminder the Operations Room hatch is now a grey Level 0 hatch.",
         ),
         (
             "How do the Missile Upgrades interact?",
