@@ -18,7 +18,6 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
-    from randovania.gui.preset_settings.patcher_energy_tab import PresetPatcherEnergy
     from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
 
@@ -29,9 +28,8 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         PresetFusionHints,
         PresetLocationPool,
         MetroidPresetItemPool,
-        PresetPatcherEnergy,
-        PresetMetroidStartingArea,
         PresetFusionPatches,
+        PresetMetroidStartingArea,
     ]
 
     if not randovania.is_frozen():  # Tabs to only show when running from source
