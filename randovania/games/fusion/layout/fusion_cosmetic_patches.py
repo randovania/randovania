@@ -48,6 +48,7 @@ class FusionCosmeticPatches(BaseCosmeticPatches):
     disable_sfx: bool = False
     # Misc Options
     starting_map: bool = True
+    reveal_blocks: bool = True
 
     @classmethod
     def default(cls) -> FusionCosmeticPatches:
