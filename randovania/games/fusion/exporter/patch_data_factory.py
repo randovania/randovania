@@ -13,6 +13,7 @@ from randovania.game_description import default_database
 from randovania.game_description.db.hint_node import HintNode
 from randovania.games.fusion.exporter.hint_namer import FusionColor, FusionHintNamer
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.lib import json_lib
 
 if TYPE_CHECKING:
@@ -27,6 +28,8 @@ class FusionPatchDataFactory(PatchDataFactory):
     configuration: FusionConfiguration
     _placeholder_metroid_message = "placeholder metroid text"
     _lang_list = ["JapaneseKanji", "JapaneseHiragana", "English", "German", "French", "Italian", "Spanish"]
+    _easter_egg_bob = 64
+    _easter_egg_shiny = 1024
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.FUSION
@@ -51,10 +54,33 @@ class FusionPatchDataFactory(PatchDataFactory):
                 resource = "None"
 
             text = pickup.collection_text[0]
+            sprite = pickup.model.name
+
             custom_message = {}
             # Special case where we ignore metroid dna right now, because that needs more patcher work.
             if text != self._placeholder_metroid_message:
                 custom_message = {"Languages": {lang: text for lang in self._lang_list}}
+
+            # Shiny easter eggs
+            if (
+                not pickup.is_for_remote_player
+                and self.configuration.pickup_model_style == PickupModelStyle.ALL_VISIBLE
+            ):
+                if (
+                    pickup.index.index == 43
+                    and resource == "MissileTank"
+                    and self.rng.randint(0, self._easter_egg_bob) == 0
+                ):
+                    sprite = "ShinyMissileTank"
+                    custom_message = {
+                        "Languages": {lang: "Bob acquired.\nHe says hi to you." for lang in self._lang_list}
+                    }
+
+                if resource == "PowerBombTank" and self.rng.randint(0, self._easter_egg_shiny) == 0:
+                    sprite = "ShinyPowerBombTank"
+                    custom_message = {
+                        "Languages": {lang: "Shiny Power Bomb Tank acquired." for lang in self._lang_list}
+                    }
 
             if is_major:
                 major_pickup = {
@@ -71,7 +97,7 @@ class FusionPatchDataFactory(PatchDataFactory):
                     "BlockX": node.extra["blockx"],
                     "BlockY": node.extra["blocky"],
                     "Item": resource,
-                    "ItemSprite": pickup.model.name,
+                    "ItemSprite": sprite,
                 }
                 if custom_message:
                     minor_pickup["ItemMessages"] = custom_message
