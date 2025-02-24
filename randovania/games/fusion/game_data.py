@@ -102,8 +102,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
         (
             "How do the Missile Upgrades interact?",
             "The missile upgrades functions have been split, allowing unique combinations of effects and damage.\n"
-            "- Missile Launcher Data - Allows Samus to fire missiles when Required Mains is enabled "
-            "and adds 10 damage\n"
+            "- Missile Launcher Data - Allows Samus to fire missiles causing 10 damage with no other upgrades\n"
             "- Super Missile Data - Adds 20 damage\n"
             "- Ice Missile Data - Adds the ability to freeze enemies with direct hits and adds 10 damage\n"
             "- Diffusion Missile Data - Adds the ability to charge a freezing blast and adds 5 damage",
