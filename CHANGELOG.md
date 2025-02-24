@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: It is now properly impossible for multiple hints to point to the same location.
 - Added: The Hints Spoiler tab now indicates which location a hint is pointing to.
 - Changed: The Hints Spoiler tab sorts its entries in a more helpful manner.
+- Added: Experimental option under Generation -> Logic Settings that improves the results of generation but increases generation time.
 
 ### Metroid Dread
 

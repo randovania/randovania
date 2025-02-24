@@ -156,5 +156,6 @@ def advance_to_with_reach_copy(base_reach: GeneratorReach, state: State) -> Gene
     potential_reach = copy.deepcopy(base_reach)
     potential_reach.advance_to(state)
     collect_all_safe_resources_in_reach(potential_reach)
+    if state.patches.configuration.consider_possible_unsafe_resources:
+        return advance_reach_with_possible_unsafe_resources(potential_reach)
     return potential_reach
-    # return advance_reach_with_possible_unsafe_resources(potential_reach)
