@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>790</width>
-    <height>660</height>
+    <width>725</width>
+    <height>408</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,8 +43,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>788</width>
-         <height>658</height>
+         <width>709</width>
+         <height>422</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -91,7 +91,7 @@
            <item>
             <widget class="QLabel" name="etank_description_label">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -99,6 +99,9 @@
              <property name="text">
               <string>Configure how much energy each Energy Tank you collect will provide. Your base energy is always this quantity, minus 1.
 While logic will respect this value, only the original value (100) has been tested.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -153,8 +156,17 @@ While logic will respect this value, only the original value (100) has been test
            </item>
            <item>
             <widget class="QLabel" name="anti_softlock_label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string>Enabling this will modify certain rooms to prevent potential softlocks for the player.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -176,6 +188,12 @@ While logic will respect this value, only the original value (100) has been test
            </item>
            <item>
             <widget class="QLabel" name="instant_transitions_label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enabling this will skip the transition animation for hatches.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
@@ -193,8 +211,17 @@ While logic will respect this value, only the original value (100) has been test
            </item>
            <item>
             <widget class="QLabel" name="short_intro_text_label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string>Enabling this considerably shortens Adam's intro text. This setting is only recommended to players familiar with the randomizer and its settings.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
