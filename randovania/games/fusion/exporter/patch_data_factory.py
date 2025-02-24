@@ -355,7 +355,7 @@ class FusionPatchDataFactory(PatchDataFactory):
 
     def create_visual_nothing(self) -> PickupEntry:
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
-        return pickup_creator.create_visual_nothing(self.game_enum(), "Empty")
+        return pickup_creator.create_visual_nothing(self.game_enum(), "Anonymous")
 
     def create_game_specific_data(self) -> dict:
         pickup_list = self.export_pickup_list()
