@@ -41,6 +41,7 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_FusionCosmeticPa
 
         # Checkboxes for enabing Gameplay Options
         self._persist_check_field(self.map_check, "starting_map")
+        self._persist_check_field(self.reveal_blocks_check, "reveal_blocks")
         # Checkboxes for enabling Pallete Rando
         self._persist_check_field(self.suit_palette_check, "enable_suit_palette")
         self._persist_check_field(self.beam_palette_check, "enable_beam_palette")
@@ -66,6 +67,7 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_FusionCosmeticPa
 
     def on_new_cosmetic_patches(self, patches: FusionCosmeticPatches) -> None:
         self.map_check.setChecked(patches.starting_map)
+        self.reveal_blocks_check.setChecked(patches.reveal_blocks)
         self.suit_palette_check.setChecked(patches.enable_suit_palette)
         self.beam_palette_check.setChecked(patches.enable_beam_palette)
         self.enemy_palette_check.setChecked(patches.enable_enemy_palette)

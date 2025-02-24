@@ -346,6 +346,7 @@ class FusionPatchDataFactory(PatchDataFactory):
             "PowerBombsWithoutBombs": True,
             "SkipDoorTransitions": self.configuration.instant_transitions,
             "UnexploredMap": self.cosmetic_patches.starting_map,
+            "RevealHiddenTiles": self.cosmetic_patches.reveal_blocks,
             "StereoDefault": self.cosmetic_patches.stereo_default,
             "DisableMusic": self.cosmetic_patches.disable_music,
             "DisableSoundEffects": self.cosmetic_patches.disable_sfx,
