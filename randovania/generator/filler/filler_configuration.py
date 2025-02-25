@@ -23,6 +23,7 @@ class FillerConfiguration:
     single_set_for_pickups_that_solve: bool
     staggered_multi_pickup_placement: bool
     fallback_to_reweight_with_unsafe: bool
+    consider_possible_unsafe_resources: bool
 
 
 @dataclasses.dataclass(frozen=True)

@@ -142,7 +142,7 @@ class PlayerState:
         self.game = game
 
         self.reach = reach_lib.advance_reach_with_possible_unsafe_resources(
-            reach_lib.reach_with_all_safe_resources(game, initial_state)
+            reach_lib.reach_with_all_safe_resources(game, initial_state, configuration)
         )
         self.pickups_left = pickups_left
         self.configuration = configuration

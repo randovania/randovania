@@ -66,6 +66,7 @@ async def run_filler(
                     single_set_for_pickups_that_solve=config.single_set_for_pickups_that_solve,
                     staggered_multi_pickup_placement=config.staggered_multi_pickup_placement,
                     fallback_to_reweight_with_unsafe=False,
+                    consider_possible_unsafe_resources=config.consider_possible_unsafe_resources,
                 ),
             )
         )
