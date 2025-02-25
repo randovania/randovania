@@ -1,8 +1,13 @@
 from __future__ import annotations
 
+import copy
 import dataclasses
+import typing
 from pathlib import Path
 from typing import TYPE_CHECKING
+
+from mars_patcher import patcher
+from mars_patcher.auto_generated_types import Marsschema
 
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 
@@ -47,4 +52,6 @@ class FusionGameExporter(GameExporter):
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
         assert isinstance(export_params, FusionGameExportParams)
-        raise RuntimeError("Needs to be implemented")
+        new_patch = typing.cast(Marsschema, copy.copy(patch_data))
+        patcher.validate_patch_data(new_patch)
+        patcher.patch(export_params.input_path, export_params.output_path, new_patch, progress_update)

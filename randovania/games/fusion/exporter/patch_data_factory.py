@@ -410,9 +410,8 @@ class FusionPatchDataFactory(PatchDataFactory):
             "DisableMusic": self.cosmetic_patches.disable_music,
             "DisableSoundEffects": self.cosmetic_patches.disable_sfx,
         }
-
-        import json
-
-        print(json.dumps(mars_data))
+        ## Uncomment to spew the patch data into the terminal
+        # import json
+        # print(json.dumps(mars_data))
 
         return mars_data
