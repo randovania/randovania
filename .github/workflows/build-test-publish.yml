@@ -62,8 +62,8 @@ jobs:
       # pytest-async causes an error. Settings EVENTLET_IMPORT_VERSION_ONLY allows us to avoid that error, but this
       # instead causes the flask_socketio to fail importing. Setting FLASK_RUN_FROM_CLI causes it to default to the
       # threading async method instead, avoiding the issue
-      EVENTLET_IMPORT_VERSION_ONLY: ${{ fromJSON('[0, 1]')[matrix.os == 'macos-13'] }}
-      FLASK_RUN_FROM_CLI: ${{ fromJSON('[0, 1]')[matrix.os == 'macos-13'] }}
+      EVENTLET_IMPORT_VERSION_ONLY: ${{ matrix.os == 'macos-13' && '1' || '0' }}
+      FLASK_RUN_FROM_CLI: ${{ matrix.os == 'macos-13' && '1' || '0' }}
 
     steps:
       - name: Checkout
