@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -56,6 +56,12 @@
         <property name="text">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;Navigate ZDR, collecting your lost items to cure your &amp;quot;physical amnesia&amp;quot;, and collecting Metroid DNA to complete your transformation into a Metroid before fighting Raven Beak in Itorash.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;The default settings start with the Pulse Radar - use this to identify hidden blocks if you're unsure where they might be.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;Raven Beak won't fight you unless you've become sufficiently Metroid - to this end, you'll need to defeat certain major bosses and EMMIs to find Metroid DNA. The default settings require 3 Metroid DNA before Raven Beak will fight you.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;ADAM stations in Itorash as well as the uppermost part of Dairon will provide hints as to the locations of the Metroid DNA. Other ADAM stations provide generic hints for any items.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;Don't forget to check out our list of &lt;a href=&quot;tab://Known Crashes&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;known crashes&lt;/span&gt;&lt;/a&gt;, as well at the &lt;a href=&quot;tab://FAQ&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;FAQ&lt;/span&gt;&lt;/a&gt;. If you're curious, check the &lt;a href=&quot;tab://Differences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;differences&lt;/span&gt;&lt;/a&gt; with the original game.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;To get started, use the Quick Generate button below to generate a game using the default settings!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
+        <property name="textFormat">
+         <enum>Qt::AutoText</enum>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+        </property>
         <property name="wordWrap">
          <bool>true</bool>
         </property>
@@ -72,6 +78,9 @@
     </item>
     <item>
      <spacer name="intro_spacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
       <property name="sizeHint" stdset="0">
        <size>
         <width>40</width>
@@ -115,7 +124,7 @@
          <x>0</x>
          <y>0</y>
          <width>635</width>
-         <height>467</height>
+         <height>470</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_8">
@@ -137,7 +146,7 @@
   </widget>
   <widget class="QScrollArea" name="differences_tab">
    <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
@@ -154,7 +163,7 @@
       <x>0</x>
       <y>0</y>
       <width>635</width>
-      <height>467</height>
+      <height>470</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -162,6 +171,12 @@
       <widget class="QLabel" name="differences_label">
        <property name="text">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania makes some changes to the original game in order to improve the game experience or to simply fix bugs in the original game.&lt;/p&gt;&lt;p&gt;Many of these changes are optional and can be disabled in the many options Randovania provides, but the following are &lt;span style=&quot; font-weight:600;&quot;&gt;always&lt;/span&gt; there:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;White and Yellow EMMis are patrolling their zones by default, with no cutscene based first encounter. Please note this makes where you would first encounter them significantly harder to navigate.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Blue and Purple EMMIs do not require the X to be released (Quiet Robe does nothing in the original game!).&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Checkpoints for collecting items in major locations, such as Charge Beam room, were removed in order to avoid softlocks.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Raven Beak takes damage consistently between all beams and missiles, in order to not incentivize players to avoid picking an upgrade.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The water in First Tutorial that appears after using the water device and the water in Early Cloak Room that appears after breaking the blob have been removed to prevent softlocks.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::AutoText</enum>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
        </property>
        <property name="wordWrap">
         <bool>true</bool>
@@ -184,12 +199,18 @@
       <x>0</x>
       <y>0</y>
       <width>621</width>
-      <height>1106</height>
+      <height>544</height>
      </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
     </property>
     <layout class="QVBoxLayout" name="known_crashes_layout">
      <item>
       <widget class="QLabel" name="known_crashes_label">
+       <property name="mouseTracking">
+        <bool>true</bool>
+       </property>
        <property name="text">
         <string>Metroid Dread is known to crash in some circumstances. Make sure to read the following list and how to avoid these.
 
@@ -211,7 +232,7 @@ Always save before using warp to start so no progression is lost. After the cras
 
 ----
 
-## Crash after collecting a suit upgrade
+## After collecting a suit upgrade
 
 Changing the suit model while a visual effect is present on Samus crashes the game, and the certain room transitions causes the suit model to update.
 
@@ -230,13 +251,13 @@ Manually update your suit model by pressing ZL+ZR+D-Pad Up in a known safe state
 ## Random crashes in Ryujinx
 
 
-It has been reported that Metroid Dread in Ryujinx would crash at any point, with no indication, when using the Memory Manager Mode &quot;Host Unchecked&quot;.
+It has been reported that Metroid Dread in Ryujinx would crash at any point, with no indication, when using the Memory Manager Mode &amp;quot;Host Unchecked&amp;quot;.
 
 
 ### Workaround
 
 
-In Ryujinx configuration, do not use &quot;Host Unchecked&quot;.
+In Ryujinx configuration, do not use &amp;quot;Host Unchecked&amp;quot;.
 
 
 ----
@@ -251,12 +272,13 @@ Rare crashes in the Waterfall room in West Artaria has been reported when playin
 ### Workaround
 
 
-Save in the Save Station immediately west of Red Teleportal.
-
-</string>
+Save in the Save Station immediately west of Red Teleportal.</string>
        </property>
        <property name="textFormat">
-        <enum>Qt::PlainText</enum>
+        <enum>Qt::MarkdownText</enum>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
        </property>
        <property name="wordWrap">
         <bool>true</bool>
@@ -297,7 +319,7 @@ Save in the Save Station immediately west of Red Teleportal.
          <x>0</x>
          <y>0</y>
          <width>635</width>
-         <height>467</height>
+         <height>470</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hints_scroll_layout">
@@ -305,6 +327,12 @@ Save in the Save Station immediately west of Red Teleportal.
          <widget class="QLabel" name="hints_label">
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;In Metroid Dread, you can find hints from the following sources:&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Network Station&lt;/span&gt;: Contains one unique item hint per station. A single item can't be hinted twice by two network stations.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dairon - Navigation Station North&lt;/span&gt;: ADAM will provide a hint to the locations of all Metroid DNA.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Itorash&lt;/span&gt;: A new Navigation Station has been added to the elevator room. ADAM will provide a hint to the locations of all Metroid DNA.&lt;/p&gt;&lt;hr/&gt;&lt;p align=&quot;justify&quot;&gt;For more details with how hints are assigned, check Metroid Prime 2: Echoes page. Hints assigned to Network Stations follow the same logic as item hints assigned to Luminoth Lore.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::AutoText</enum>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -367,7 +395,7 @@ Save in the Save Station immediately west of Red Teleportal.
          <x>0</x>
          <y>0</y>
          <width>635</width>
-         <height>467</height>
+         <height>470</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hint_scroll_layout">

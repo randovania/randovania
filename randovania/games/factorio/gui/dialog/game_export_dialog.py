@@ -9,6 +9,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.games.factorio.exporter.game_exporter import FactorioGameExportParams
 from randovania.games.factorio.exporter.options import FactorioPerGameOptions
 from randovania.games.factorio.gui.generated.factorio_game_export_dialog_ui import Ui_FactorioGameExportDialog
+from randovania.games.factorio.layout import FactorioConfiguration
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     add_field_validation,
@@ -34,7 +35,7 @@ def get_global_user_data_dir() -> Path:
             raise RuntimeError("Unsupported platform")
 
 
-class FactorioGameExportDialog(GameExportDialog, Ui_FactorioGameExportDialog):
+class FactorioGameExportDialog(GameExportDialog[FactorioConfiguration], Ui_FactorioGameExportDialog):
     """A window for asking the user for what is needed to export this specific game.
 
     The provided implementation assumes you need an ISO/ROM file, and produces a new ISO/ROM file."""
@@ -43,8 +44,15 @@ class FactorioGameExportDialog(GameExportDialog, Ui_FactorioGameExportDialog):
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.FACTORIO
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
-        super().__init__(options, patch_data, word_hash, spoiler, games)
+    def __init__(
+        self,
+        options: Options,
+        configuration: FactorioConfiguration,
+        word_hash: str,
+        spoiler: bool,
+        games: list[RandovaniaGame],
+    ):
+        super().__init__(options, configuration, word_hash, spoiler, games)
         per_game = options.options_for_game(self.game_enum())
         assert isinstance(per_game, FactorioPerGameOptions)
 

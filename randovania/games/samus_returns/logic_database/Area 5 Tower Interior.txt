@@ -392,18 +392,21 @@ Extra - asset_id: collision_camera_007
           Morph Ball
           Any of the following:
               Grapple Beam and After Area 5 (Tower Interior) - Grapple Shuffler Grapple Block
-              # https://youtu.be/i9kuD1yPSSk
+              # Ice Clip using the left Glow Fly: https://youtu.be/i9kuD1yPSSk
               Charge Beam and Ice Beam and Ice Beam Clip (Expert) and Out of Bounds Movement (Intermediate)
   > Pickup (Missile Tank)
-      # https://youtu.be/wA-kNgVe_6c
+      # Ice Clip using the right Glow Fly: https://youtu.be/wA-kNgVe_6c
       Charge Beam and Ice Beam and Morph Ball and Ice Beam Clip (Expert) and Out of Bounds Movement (Intermediate) and Lay Any Bomb
   > Above Pickup
       All of the following:
           Morph Ball
           Any of the following:
-              Grapple Beam
-              # Top of big Grapple block
+              # Move the shuffler block both ways
+              Grapple Beam and After Area 5 Tower Interior - Grapple Shuffler Long Grapple Block
+              # Melee Clip from on top of big Grapple block: https://youtu.be/l5mTl6UJoNY
               Melee Clip (Intermediate) and Out of Bounds Movement (Intermediate)
+  > Event - Shuffler Long Grapple Block
+      Grapple Beam and Morph Ball
 
 > Door to Interior Teleporter (Top); Heals? False
   * Layers: default
@@ -418,11 +421,44 @@ Extra - asset_id: collision_camera_007
   * Pickup 127; Category? Minor
   * Extra - actor_name: HiddenPowerup002
   * Extra - actor_type: item_missiletank
-  > Door to Plasma Beam Chamber
-      Morph Ball and Screw Attack and After Area 5 (Tower Interior) - Grapple Shuffler Grapple Block
   > Door to Interior Teleporter (Bottom)
       # Requirements to prevent Screw Attack paths escaping this way
       Ice Beam and Morph Ball and Ice Beam Clip (Expert) and Out of Bounds Movement (Intermediate)
+  > Below Pickup
+      Morph Ball
+
+> Event - Grapple Block; Heals? False
+  * Layers: default
+  * Event Area 5 (Tower Interior) - Grapple Shuffler Grapple Block
+  > Above Pickup
+      Trivial
+
+> Above Pickup; Heals? False
+  * Layers: default
+  > Door to Interior Teleporter (Bottom)
+      Morph Ball and After Area 5 Tower Interior - Grapple Shuffler Long Grapple Block
+  > Pickup (Missile Tank)
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Lay Power Bomb
+              All of the following:
+                  Lay Bomb
+                  Any of the following:
+                      Phase Drift
+                      # Break the Screw Attack block then use spider
+                      Mid-Air Morph (Beginner) and Use Spider Ball
+                      # Morph to lay bomb and immediately unmorph to grab ledge: https://youtu.be/Kh03Ra2Qn7Q
+                      Movement (Advanced)
+  > Event - Grapple Block
+      Grapple Beam
+  > Below Pickup
+      Screw Attack
+
+> Below Pickup; Heals? False
+  * Layers: default
+  > Door to Plasma Beam Chamber
+      Morph Ball and Screw Attack and After Area 5 (Tower Interior) - Grapple Shuffler Grapple Block
   > Above Pickup
       All of the following:
           Morph Ball and Screw Attack
@@ -449,31 +485,11 @@ Extra - asset_id: collision_camera_007
               # Screw only: https://youtu.be/eI3DtHqx5dU?t=43
               Movement (Expert)
 
-> Event - Grapple Block; Heals? False
+> Event - Shuffler Long Grapple Block; Heals? False
   * Layers: default
-  * Event Area 5 (Tower Interior) - Grapple Shuffler Grapple Block
-  > Above Pickup
-      Trivial
-
-> Above Pickup; Heals? False
-  * Layers: default
+  * Event Area 5 Tower Interior - Grapple Shuffler Long Grapple Block
   > Door to Interior Teleporter (Bottom)
       Morph Ball
-  > Pickup (Missile Tank)
-      All of the following:
-          Screw Attack
-          Any of the following:
-              Lay Power Bomb
-              All of the following:
-                  Lay Bomb
-                  Any of the following:
-                      Phase Drift
-                      # Break the Screw Attack block then use spider
-                      Mid-Air Morph (Beginner) and Use Spider Ball
-                      # Morph to lay bomb and immediately unmorph to grab ledge: https://youtu.be/Kh03Ra2Qn7Q
-                      Movement (Advanced)
-  > Event - Grapple Block
-      Grapple Beam
 
 ----------------
 Autrack Acropolis

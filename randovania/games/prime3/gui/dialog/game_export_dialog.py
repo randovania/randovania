@@ -7,14 +7,14 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime3.exporter.game_exporter import CorruptionGameExportParams
 from randovania.games.prime3.exporter.options import CorruptionPerGameOptions
 from randovania.games.prime3.gui.generated.corruption_game_export_dialog_ui import Ui_CorruptionGameExportDialog
+from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.gui.dialog.game_export_dialog import GameExportDialog
-from randovania.gui.lib import common_qt_lib
 
 if TYPE_CHECKING:
     from randovania.interface_common.options import Options, PerGameOptions
 
 
-class CorruptionGameExportDialog(GameExportDialog, Ui_CorruptionGameExportDialog):
+class CorruptionGameExportDialog(GameExportDialog[CorruptionConfiguration], Ui_CorruptionGameExportDialog):
     """A window for asking the user for what is needed to export this specific game.
 
     The provided implementation assumes you need an ISO/ROM file, and produces a new ISO/ROM file."""
@@ -23,14 +23,21 @@ class CorruptionGameExportDialog(GameExportDialog, Ui_CorruptionGameExportDialog
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME_CORRUPTION
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
-        super().__init__(options, patch_data, word_hash, spoiler, games)
+    def __init__(
+        self,
+        options: Options,
+        configuration: CorruptionConfiguration,
+        word_hash: str,
+        spoiler: bool,
+        games: list[RandovaniaGame],
+    ):
+        super().__init__(options, configuration, word_hash, spoiler, games)
         per_game = options.options_for_game(self.game_enum())
         assert isinstance(per_game, CorruptionPerGameOptions)
 
-        commands = patch_data["commands"]
-        common_qt_lib.set_clipboard(commands)
-        self.commands_label.setText(commands)
+        # commands = patch_data["commands"]
+        # common_qt_lib.set_clipboard(commands)
+        # self.commands_label.setText(commands)
 
     def update_per_game_options(self, per_game: PerGameOptions) -> CorruptionPerGameOptions:
         assert isinstance(per_game, CorruptionPerGameOptions)

@@ -20,7 +20,7 @@ from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.resource_database_editor_ui import Ui_ResourceDatabaseEditor
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.connections_visualizer import create_tree_items_for_requirement
-from randovania.gui.lib.editable_table_model import EditableTableModel, FieldDefinition
+from randovania.gui.lib.editable_table_model import AppendableEditableTableModel, FieldDefinition
 from randovania.lib import frozen_lib
 
 if typing.TYPE_CHECKING:
@@ -39,7 +39,7 @@ def encode_extra(qt_value: str) -> tuple[bool, typing.Any]:
 
 
 GENERIC_FIELDS: list[FieldDefinition] = [
-    FieldDefinition[str, str]("Short Name", "short_name"),
+    FieldDefinition[str, str]("Short Name", "short_name", read_only=True),
     FieldDefinition[str, str]("Long Name", "long_name"),
     FieldDefinition[str, frozendict](
         "Extra", "extra", to_qt=lambda v: json.dumps(frozen_lib.unwrap(v)), from_qt=encode_extra
@@ -47,7 +47,7 @@ GENERIC_FIELDS: list[FieldDefinition] = [
 ]
 
 
-class ResourceDatabaseGenericModel(EditableTableModel[ResourceInfo]):
+class ResourceDatabaseGenericModel(AppendableEditableTableModel[ResourceInfo]):
     """Model for editing a database of ResourceInfo using a QTableView"""
 
     def __init__(self, db: ResourceDatabase, resource_type: ResourceType):

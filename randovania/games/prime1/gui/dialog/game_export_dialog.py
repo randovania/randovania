@@ -9,6 +9,7 @@ from randovania.games.common.prime_family.gui.export_validator import is_prime1_
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExportParams
 from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime1.gui.generated.prime_game_export_dialog_ui import Ui_PrimeGameExportDialog
+from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
@@ -26,17 +27,24 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGameExportDialog):
+class PrimeGameExportDialog(GameExportDialog[PrimeConfiguration], MultiFormatOutputMixin, Ui_PrimeGameExportDialog):
     _use_echoes_models: bool
 
     @classmethod
     def game_enum(cls):
         return RandovaniaGame.METROID_PRIME
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
-        super().__init__(options, patch_data, word_hash, spoiler, games)
+    def __init__(
+        self,
+        options: Options,
+        configuration: PrimeConfiguration,
+        word_hash: str,
+        spoiler: bool,
+        games: list[RandovaniaGame],
+    ):
+        super().__init__(options, configuration, word_hash, spoiler, games)
 
-        self.has_enemy_attribute_rando = patch_data["randEnemyAttributes"] is not None
+        self.has_enemy_attribute_rando = configuration.enemy_attributes is not None
 
         self._base_output_name = f"Prime Randomizer - {word_hash}"
         per_game = options.options_for_game(self.game_enum())

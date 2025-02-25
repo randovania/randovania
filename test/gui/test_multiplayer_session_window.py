@@ -987,7 +987,7 @@ async def test_game_export_listener(
 
     game.gui.export_dialog.assert_called_once_with(
         window._options,
-        patch_data,
+        mock_preset_from.return_value.get_preset.return_value.configuration,
         "Sessionx Name 51 - W1",
         False,
         [game],

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+import typing
 from collections import defaultdict
 from typing import TYPE_CHECKING, override
 
@@ -12,6 +13,8 @@ from randovania.game_description import default_database
 from randovania.game_description.db.hint_node import HintNode
 from randovania.games.fusion.exporter.hint_namer import FusionColor, FusionHintNamer
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.base.pickup_model import PickupModelStyle
+from randovania.lib import json_lib
 
 if TYPE_CHECKING:
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
@@ -23,6 +26,10 @@ if TYPE_CHECKING:
 class FusionPatchDataFactory(PatchDataFactory):
     cosmetic_patches: FusionCosmeticPatches
     configuration: FusionConfiguration
+    _placeholder_metroid_message = "placeholder metroid text"
+    _lang_list = ["JapaneseKanji", "JapaneseHiragana", "English", "German", "French", "Italian", "Spanish"]
+    _easter_egg_bob = 64
+    _easter_egg_shiny = 1024
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.FUSION
@@ -45,19 +52,56 @@ class FusionPatchDataFactory(PatchDataFactory):
                 resource = pickup.conditional_resources[0].resources[-1][0].extra["item"]
             else:
                 resource = "None"
-            if is_major:
-                major_pickup_list.append({"Source": node.extra["source"], "Item": resource})
-            else:
-                minor_pickup_list.append(
-                    {
-                        "Area": self.game.region_list.nodes_to_region(node).extra["area_id"],
-                        "Room": self.game.region_list.nodes_to_area(node).extra["room_id"][0],
-                        "BlockX": node.extra["blockx"],
-                        "BlockY": node.extra["blocky"],
-                        "Item": resource,
-                        "ItemSprite": pickup.model.name,
+
+            text = pickup.collection_text[0]
+            sprite = pickup.model.name
+
+            custom_message = {}
+            # Special case where we ignore metroid dna right now, because that needs more patcher work.
+            if text != self._placeholder_metroid_message:
+                custom_message = {"Languages": {lang: text for lang in self._lang_list}}
+
+            # Shiny easter eggs
+            if (
+                not pickup.is_for_remote_player
+                and self.configuration.pickup_model_style == PickupModelStyle.ALL_VISIBLE
+            ):
+                if (
+                    pickup.index.index == 43
+                    and resource == "MissileTank"
+                    and self.rng.randint(0, self._easter_egg_bob) == 0
+                ):
+                    sprite = "ShinyMissileTank"
+                    custom_message = {
+                        "Languages": {lang: "Bob acquired.\nHe says hi to you." for lang in self._lang_list}
                     }
-                )
+
+                if resource == "PowerBombTank" and self.rng.randint(0, self._easter_egg_shiny) == 0:
+                    sprite = "ShinyPowerBombTank"
+                    custom_message = {
+                        "Languages": {lang: "Shiny Power Bomb Tank acquired." for lang in self._lang_list}
+                    }
+
+            if is_major:
+                major_pickup = {
+                    "Source": node.extra["source"],
+                    "Item": resource,
+                }
+                if custom_message:
+                    major_pickup["ItemMessages"] = custom_message
+                major_pickup_list.append(major_pickup)
+            else:
+                minor_pickup = {
+                    "Area": self.game.region_list.nodes_to_region(node).extra["area_id"],
+                    "Room": self.game.region_list.nodes_to_area(node).extra["room_id"][0],
+                    "BlockX": node.extra["blockx"],
+                    "BlockY": node.extra["blocky"],
+                    "Item": resource,
+                    "ItemSprite": sprite,
+                }
+                if custom_message:
+                    minor_pickup["ItemMessages"] = custom_message
+                minor_pickup_list.append(minor_pickup)
         pickup_map_dict = {"MajorLocations": major_pickup_list, "MinorLocations": minor_pickup_list}
         return pickup_map_dict
 
@@ -152,9 +196,8 @@ class FusionPatchDataFactory(PatchDataFactory):
 
     def _create_nav_text(self) -> dict:
         nav_text_json = {}
-        hint_lang_list = ["JapaneseKanji", "JapaneseHiragana", "English", "German", "French", "Italian", "Spanish"]
         # namer = FusionHintNamer(self.description.all_patches, self.players_config)
-        # exporter = HintExporter(namer, self.rng, ["A joke hint."])
+        # exporter = HintExporter(namer, self.rng, GENERIC_JOKE_HINTS)
 
         artifacts = [self.game.resource_database.get_item(f"Infant Metroid {i + 1}") for i in range(20)]
 
@@ -233,7 +276,7 @@ class FusionPatchDataFactory(PatchDataFactory):
                 )
             }"
         )
-        for lang in hint_lang_list:
+        for lang in self._lang_list:
             nav_text_json[lang] = {
                 "NavigationTerminals": hints,
                 "ShipText": {
@@ -299,13 +342,6 @@ class FusionPatchDataFactory(PatchDataFactory):
         }
         return locks
 
-    def create_useless_pickup(self) -> PickupEntry:
-        """Used for any location with no PickupEntry assigned to it."""
-        return pickup_creator.create_nothing_pickup(
-            self.game.resource_database,
-            model_name="Empty",
-        )
-
     def _create_room_names(self) -> list[dict]:
         names = []
         for region in self.game.region_list.regions:
@@ -320,9 +356,32 @@ class FusionPatchDataFactory(PatchDataFactory):
                     )
         return names
 
+    def create_memo_data(self) -> dict:
+        """Used to generate pickup collection messages."""
+        memo_data: dict = typing.cast(
+            dict, json_lib.read_path(RandovaniaGame.FUSION.data_path.joinpath("pickup_database", "memo_data.json"))
+        )
+
+        for i in range(1, 21):
+            memo_data[f"Infant Metroid {i}"] = memo_data["Infant Metroid"]
+
+        memo_data["Missiles"] = memo_data["Missile Tank"]
+        memo_data["Power Bombs"] = memo_data["Power Bomb Tank"]
+        memo_data["EnergyTransferModule"] = memo_data["Nothing"]
+        memo_data["Energy Tank"] = memo_data["Energy Tank"].format(Energy=self.configuration.energy_per_tank)
+
+        return memo_data
+
+    def create_useless_pickup(self) -> PickupEntry:
+        """Used for any location with no PickupEntry assigned to it."""
+        return pickup_creator.create_nothing_pickup(
+            self.game.resource_database,
+            model_name="Empty",
+        )
+
     def create_visual_nothing(self) -> PickupEntry:
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
-        return pickup_creator.create_visual_nothing(self.game_enum(), "Empty")
+        return pickup_creator.create_visual_nothing(self.game_enum(), "Anonymous")
 
     def create_game_specific_data(self) -> dict:
         pickup_list = self.export_pickup_list()
@@ -346,6 +405,7 @@ class FusionPatchDataFactory(PatchDataFactory):
             "PowerBombsWithoutBombs": True,
             "SkipDoorTransitions": self.configuration.instant_transitions,
             "UnexploredMap": self.cosmetic_patches.starting_map,
+            "RevealHiddenTiles": self.cosmetic_patches.reveal_blocks,
             "StereoDefault": self.cosmetic_patches.stereo_default,
             "DisableMusic": self.cosmetic_patches.disable_music,
             "DisableSoundEffects": self.cosmetic_patches.disable_sfx,

@@ -25,9 +25,9 @@ def artifact_pool(game: GameDescription, config: MSRArtifactConfig) -> PoolResul
     if config.prefer_anywhere:
         max_artifacts = 39
     if config.prefer_metroids:
-        max_artifacts += 25
+        max_artifacts += 24
     if config.prefer_stronger_metroids:
-        max_artifacts += 14
+        max_artifacts += 15
     if config.prefer_bosses and max_artifacts < 36:
         max_artifacts += 4
     if config.required_artifacts > max_artifacts:

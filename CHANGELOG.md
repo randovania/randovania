@@ -9,23 +9,65 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Major** - Added: Featural Hints. Echoes and Cave Story now use a brand new hint system, where hints may refer to various Features of a pickup or of a location. Read the complete changelog for more details.
 - **Major** - Changed: Hints are now placed after pickup placement, rather than during. This should result in more interesting hints in all games.
+- **Major** - Added: Co-op as an additional Multiworld Mode. In Co-op, multiple people can share Worlds together, which means that they will share their inventory. This works for all games that support Multiworld.
 - Added: Every game now has a "Pickup Hint Features" tab where you can view which Features apply to which pickups.
 - Added: Cave Story and Echoes now have a "Pickup Location Features" tab where you can view which Features apply to which locations.
 - Added: Location Features can be viewed in the Database Viewer.
-- Fixed: It is now properly impossible for multiple hints to point to the same location.
+- Added: 3 more joke hints.
 - Added: The Hints Spoiler tab now indicates which location a hint is pointing to.
-- Changed: The Hints Spoiler tab sorts its entries in a more helpful manner.
 - Added: Experimental option under Generation -> Logic Settings that improves the results of generation but increases generation time.
+- Changed: The Hints Spoiler tab sorts its entries in a more helpful manner.
+- Changed: Some joke hints are now shared between all games that use them.
+- Fixed: It is now properly impossible for multiple hints to point to the same location.
+- Fixed: A recent regression in the resolver that made it significantly slower has been fixed.
 
 ### Metroid Dread
+
+- Fixed: GUI formatting on the game page.
+- Fixed: Starter Preset now has a proper description.
 
 #### Logic Database
 
 ##### Artaria
 
-- Changed: Flipping the spinner. in Screw Attack Room when by going from the door to the transport is now logically possible also after having flipped the spinner.
+- Added: Accessing the top pickup in Screw Attack Room with a Shinespark by going down through the water basin. Requires either Screw Attack or Morph Ball and Gravity Suit.
+- Added: Logically flipping the Screw Attack Room Spinner and using Shinespark to immediately reach the left side platform. Requires Highly Dangerous Logic or Screw Attack.
+- Added: Accessing Start Point 2 in Screw Attack Room using a Shinespark. Requires either Screw Attack or Morph Ball and Slide
+- Changed: Flipping the spinner in Screw Attack Room when by going from the door to the transport is now logically possible also after having flipped the spinner, unless Highly Dangerous Logic is enabled.
 - Changed: All other connections in Screw Attack Room that are only open before flipping the spinner are now only logical when Highly Dangerous Logic is enabled.
 - Changed: The conditions that depends on not having blown up the blob in Screw Attack Room are now only logical when Highly Dangerous Logic is enabled.
+- Changed: In White EMMI Arena: Reaching Door to EMMI Zone Spinner (Middle) from Door to Central Unit Access (Charge) with Spin Boost now requires Wall Jump (Beginner).
+- Changed: In EMMI First Chase End: Reaching Door to Teleport to Dairon (Top) with Spin Boost now requires Wall Jump (Beginner).
+- Changed: In Screw Attack Room: Reaching Next to Upper Tank from Total Recharge with Spin Boost no longer requires a Wall Jump trick.
+- Fixed: Using Speed Booster to Shinespark to the top pickup in Screw Attack Room now requires Door Lock Rando to be Disabled.
+
+##### Burenia
+
+- Added: In Main Hub Tower Bottom: Reach from Alcove Across Grapple Block to Ledge above Grapple Block using Spin Boost.
+- Added: In Main Hub Tower Bottom: Reach from Water Space Jump Platform to Door to Save Station South Access (Lower) using Gravity Suit, Spin Boost and Movement (Beginner).
+- Changed: In Main Hub Tower Bottom: Reaching Door to Save Station South Access (Lower) from Above Screw Attack Blocks with Spin Boost now requires Wall Jump (Beginner).
+- Changed: In Main Hub Tower Bottom: Reaching Ledge above Grapple Block from Water Space Jump Platform using Spin Boost now requires either the Grapple Block Event or Wall Jump (Beginner).
+
+##### Cataris
+
+- Added: The pillar in Moving Magnet Walls (Small) can now be crossed with Spin Boost and Wall Jump (Intermediate).
+- Changed: The Energy Part pickup in Thermal Device Room North no longer requires the Varia Suit if the "Cataris - Lower Lava Button" event has been triggered.
+- Changed: The blob in Z-57 Heat Room West (Right) now requires the Varia Suit to be destroyed.
+- Changed: Using Spin Boost in conjunction with the Slide Jump to reach the upper part of the Experiment-Z57 room now requires Wall Jump (Intermediate).
+- Changed: Using Spin Boost to do the First Blob event in Z-57 Heat Room West (Left) now requires Movement (Beginner).
+
+##### Dairon
+
+- Changed: Reaching the tunnel at the top of Central Unit Access with Spin Boost now requires Movement (Beginner), but remains trickless with Space Jump.
+
+### Metroid Prime
+
+#### Logic Database
+
+##### Phazon Mines
+
+- Fixed: Metroid Quarantine A: Getting the Missile Expansion via using the Spider Ball Track now requires Morph Ball.
+- Fixed: Ore Processing: Getting from Door to Elevator Access A to Door to Storage Depot B via Power Bombs, Space Jump and L-Jumps now requires Morph Ball.
 
 ### Metroid Prime 2: Echoes
 - Removed: Relative hints will no longer be placed.
@@ -36,6 +78,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid: Samus Returns
 
 - Fixed: One Area 8 theme from not being included in music shuffle.
+- Removed: Enabling the automatic item tracker is no longer a cosmetic option, as it is now forced to always be enabled.
 
 #### Logic Database
 
@@ -43,9 +86,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Starting in Spazer Beam Chamber now places Samus in the correct room.
 
+#### Area 4 Crystal Mines
+
+- Fixed: Renamed the room "Gamma Arena" to "Gamma+ Arena".
+- Fixed: The Gamma+ Metroid being classified as a Gamma Metroid, thus having the wrong requirements.
+
 #### Area 5 Tower Exterior
 
 - Fixed: Starting in Screw Attack Chamber or Zeta Arena Access now places Samus in the correct room.
+
+##### Area 5 Tower Interior
+
+- Fixed: Grapple Shuffler - Coming back up from the pickup if it was reached via a Melee Clip.
 
 ## [8.9.0] - 2025-02-02
 
