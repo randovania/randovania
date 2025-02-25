@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Self
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -9,6 +9,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.requirement_set import RequirementSet
+    from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.resolver.state import State
 
 
@@ -18,7 +19,8 @@ class GeneratorReach:
         cls,
         game: GameDescription,
         initial_state: State,
-    ) -> GeneratorReach:
+        filler_config: FillerConfiguration,
+    ) -> Self:
         raise NotImplementedError
 
     # Game related methods
@@ -79,4 +81,8 @@ class GeneratorReach:
         raise NotImplementedError
 
     def unreachable_nodes_with_requirements(self) -> dict[Node, RequirementSet]:
+        raise NotImplementedError
+
+    @property
+    def filler_config(self) -> FillerConfiguration:
         raise NotImplementedError

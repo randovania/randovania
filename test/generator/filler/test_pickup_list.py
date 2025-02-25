@@ -221,7 +221,12 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
 
 @pytest.mark.parametrize("has_light_beam", [False, True])
 async def test_get_pickups_that_solves_unreachable_quad(
-    small_echoes_game_description, echoes_pickup_database, default_echoes_preset, mocker, has_light_beam
+    small_echoes_game_description,
+    echoes_pickup_database,
+    default_echoes_preset,
+    mocker,
+    has_light_beam,
+    default_filler_config,
 ):
     # Setup
     mocker.patch(
@@ -259,7 +264,7 @@ async def test_get_pickups_that_solves_unreachable_quad(
     state = state.assign_pickups_resources(pickups_to_add)
 
     reach = reach_lib.advance_reach_with_possible_unsafe_resources(
-        reach_lib.reach_with_all_safe_resources(new_game, state)
+        reach_lib.reach_with_all_safe_resources(new_game, state, default_filler_config)
     )
 
     # Run

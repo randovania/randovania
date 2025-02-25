@@ -12,6 +12,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.node import Node, NodeContext
     from randovania.game_description.game_description import GameDescription
+    from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.generator_reach import GeneratorReach
     from randovania.resolver.state import State
 
@@ -93,7 +94,9 @@ def collect_all_safe_resources_in_reach(reach: GeneratorReach) -> None:
                 reach.advance_to(reach.state.act_on_node(action), is_safe=True)
 
 
-def reach_with_all_safe_resources(game: GameDescription, initial_state: State) -> GeneratorReach:
+def reach_with_all_safe_resources(
+    game: GameDescription, initial_state: State, filler_config: FillerConfiguration
+) -> GeneratorReach:
     """
     Creates a new GeneratorReach using the given state and then collect all safe resources
     :param game:
@@ -103,7 +106,7 @@ def reach_with_all_safe_resources(game: GameDescription, initial_state: State) -
     from randovania.generator.old_generator_reach import OldGeneratorReach as GR
 
     # from randovania.generator.trust_generator_reach import TrustGeneratorReach as GR
-    reach = GR.reach_from_state(game, initial_state)
+    reach = GR.reach_from_state(game, initial_state, filler_config)
     collect_all_safe_resources_in_reach(reach)
     return reach
 
@@ -135,7 +138,7 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
             next_next_state = next_reach.state.copy()
             next_next_state.node = initial_state.node
 
-            next_reach = reach_with_all_safe_resources(game, next_next_state)
+            next_reach = reach_with_all_safe_resources(game, next_next_state, previous_reach.filler_config)
             if previous_safe_nodes <= set(next_reach.safe_nodes):
                 # print("Non-safe {} could reach back to where we were".format(logic.game.node_name(action)))
                 return advance_reach_with_possible_unsafe_resources(next_reach)
@@ -155,6 +158,10 @@ def advance_to_with_reach_copy(base_reach: GeneratorReach, state: State) -> Gene
     """
     potential_reach = copy.deepcopy(base_reach)
     potential_reach.advance_to(state)
-    collect_all_safe_resources_in_reach(potential_reach)
-    return potential_reach
-    # return advance_reach_with_possible_unsafe_resources(potential_reach)
+
+    if potential_reach.filler_config.consider_possible_unsafe_resources:
+        return advance_reach_with_possible_unsafe_resources(potential_reach)
+
+    else:
+        collect_all_safe_resources_in_reach(potential_reach)
+        return potential_reach

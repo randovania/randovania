@@ -57,25 +57,25 @@ def make_dummy(cls: type[T]) -> T:
 @pytest.fixture(
     params=[
         {
-            "encoded": b"@\x00\x0cX\xc7\xf1p\xc0K\x00?\xe0",
+            "encoded": b"@\x00\x0c,c\xf8\xb8`%\x80\x1f\xf0",
             "sky_temple_keys": LayoutSkyTempleKeyMode.NINE.value,
         },
         {
-            "encoded": b"@\x00\x0c\x00\xc7\xf1p\xc0K\x00?\xe0",
+            "encoded": b"@\x00\x0c\x00c\xf8\xb8`%\x80\x1f\xf0",
             "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_BOSSES.value,
         },
         {
-            "encoded": b'@\x00\x0c"/\xf1p\xc0K\x00?\xe0',
+            "encoded": b"@\x00\x0c\x11\x17\xf8\xb8`%\x80\x1f\xf0",
             "sky_temple_keys": LayoutSkyTempleKeyMode.TWO.value,
             "energy_per_tank": 280,
         },
         {
-            "encoded": b"@\x00\x0c\x08\xc7\xf4^\xc0K\x00?\xe0",
+            "encoded": b"@\x00\x0c\x04c\xfa/`%\x80\x1f\xf0",
             "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS.value,
             "varia_suit_damage": 18.0,
         },
         {
-            "encoded": b"\x10\x00\x0c\x08\xc7\xf1p\xc0K\x00?\xe0",
+            "encoded": b"\x10\x00\x0c\x04c\xf8\xb8`%\x80\x1f\xf0",
             "pickup_model_style": PickupModelStyle.HIDE_MODEL.value,
             "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS.value,
             "damage_strictness": LayoutDamageStrictness.STRICT.value,
