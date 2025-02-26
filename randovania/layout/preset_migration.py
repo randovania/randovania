@@ -250,7 +250,6 @@ def _migrate_v9(preset: dict, game: RandovaniaGame) -> None:
         preset["uuid"] = str(uuid.uuid4())
 
     _name_to_uuid = {
-        "Corruption Preset": "5682c9ef-d447-4327-b473-ba1216d83439",
         "Darkszero's Deluxe": "ea1eced4-53b8-4bb3-a08f-27ac1afe6aab",
         "Fewest Changes": "bba48268-0710-4ac5-baae-dcd5fcd31d80",
         "Prime Preset": "e36f52b3-ccd9-4dd7-a18f-b57b25f6b079",
