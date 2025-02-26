@@ -7,8 +7,8 @@ import randovania
 
 class DevelopmentState(Enum):
     STABLE = "stable"
-    EXPERIMENTAL = "experimental"
-    DEVELOPMENT = "development"
+    STAGING = "staging"
+    SOURCE = "source"
 
     @property
     def is_stable(self) -> bool:
@@ -18,7 +18,7 @@ class DevelopmentState(Enum):
         if self.is_stable:
             return True
 
-        if self == DevelopmentState.EXPERIMENTAL:
+        if self == DevelopmentState.STAGING:
             return randovania.is_dev_version()
 
         return not randovania.is_frozen()

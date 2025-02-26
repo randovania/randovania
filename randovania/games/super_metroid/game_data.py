@@ -64,7 +64,7 @@ def _hash_words() -> list[str]:
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="SM",
     long_name="Super Metroid",
-    development_state=randovania.game.development_state.DevelopmentState.DEVELOPMENT,
+    development_state=randovania.game.development_state.DevelopmentState.SOURCE,
     presets=[{"path": "starter_preset.rdvpreset"}],
     faq=[
         (
