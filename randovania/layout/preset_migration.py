@@ -323,10 +323,6 @@ def _migrate_v13(preset: dict, game: RandovaniaGame) -> None:
             "Light Ammo Expansion": ["46"],
             "Beam Ammo Expansion": ["45", "46"],
         },
-        RandovaniaGame.METROID_PRIME_CORRUPTION: {
-            "Missile Expansion": ["4"],
-            "Ship Missile Expansion": ["45"],
-        },
         RandovaniaGame.SUPER_METROID: {
             "Missile Expansion": ["5"],
             "Super Missile Expansion": ["6"],
@@ -345,10 +341,6 @@ def _migrate_v13(preset: dict, game: RandovaniaGame) -> None:
             "Missile Launcher": ["44"],
             "Seeker Launcher": ["44"],
             "Power Bomb": ["43"],
-        },
-        RandovaniaGame.METROID_PRIME_CORRUPTION: {
-            "Missile Launcher": ["4"],
-            "Ship Missile": ["45"],
         },
         RandovaniaGame.SUPER_METROID: {},
     }
@@ -747,7 +739,6 @@ def _migrate_v56(preset: dict, game: RandovaniaGame) -> None:
     if game in {
         RandovaniaGame.METROID_DREAD,
         RandovaniaGame.METROID_SAMUS_RETURNS,
-        RandovaniaGame.METROID_PRIME_CORRUPTION,
     }:
         preset["configuration"].pop("elevators")
 
@@ -760,7 +751,6 @@ def _migrate_v57(preset: dict, game: RandovaniaGame) -> None:
         RandovaniaGame.METROID_DREAD: ["tunnel", "other", "teleporter"],
         RandovaniaGame.METROID_PRIME: ["morph_ball", "other", "teleporter"],
         RandovaniaGame.METROID_PRIME_ECHOES: ["morph_ball", "other", "teleporter"],
-        RandovaniaGame.METROID_PRIME_CORRUPTION: ["door", "morph_ball", "other", "teleporter"],
         RandovaniaGame.METROID_SAMUS_RETURNS: ["door", "tunnel", "other", "teleporter"],
         RandovaniaGame.SUPER_METROID: ["door", "morph_ball", "other", "teleporter"],
     }
@@ -775,7 +765,6 @@ def _migrate_v58(preset: dict, game: RandovaniaGame) -> None:
     if game in {
         RandovaniaGame.METROID_PRIME,
         RandovaniaGame.METROID_PRIME_ECHOES,
-        RandovaniaGame.METROID_PRIME_CORRUPTION,
     }:
         mapping = migration_data.get_raw_data(game)["rename_teleporter_nodes"]
 
