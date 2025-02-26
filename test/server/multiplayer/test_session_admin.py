@@ -19,7 +19,7 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.layout.layout_description import InvalidLayoutDescription
 from randovania.network_common import error
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
-from randovania.network_common.multiplayer_session import GameDetails
+from randovania.network_common.game_details import GameDetails
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.server import database
 from randovania.server.multiplayer import session_admin
