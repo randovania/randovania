@@ -70,10 +70,10 @@ def _get_next_player(
     }
 
     max_actions = max(player_state.num_actions for player_state in player_states)
-    max_uncollected = max(len(uncollected.indices) for uncollected in all_uncollected.values())
+    max_uncollected = max(len(uncollected.pickup_indices) for uncollected in all_uncollected.values())
 
     def _calculate_weight(player: PlayerState) -> float:
-        return 1 + (max_actions - player.num_actions) * (max_uncollected - len(all_uncollected[player].indices))
+        return 1 + (max_actions - player.num_actions) * (max_uncollected - len(all_uncollected[player].pickup_indices))
 
     weighted_players = {
         player_state: _calculate_weight(player_state)
@@ -468,7 +468,7 @@ def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> We
         # print(f"** {player_state.name} -- {player_weight}")
 
         pickup_index_weights = _calculate_uncollected_index_weights(
-            player_state.all_indices & UncollectedState.from_reach(player_state.reach).indices,
+            player_state.all_indices & UncollectedState.from_reach(player_state.reach).pickup_indices,
             set(player_state.reach.state.patches.pickup_assignment),
             player_state.pickup_index_ages,
             player_state.indices_groups,
@@ -502,19 +502,23 @@ def _calculate_weights_for(
         nodes = typing.cast(tuple[Node, ...], potential_reach.game.region_list.all_nodes)
 
         print(f">>> {evaluation.action}")
-        print(f"indices: {potential_uncollected.indices}")
+        print(f"indices: {potential_uncollected.pickup_indices}")
         print(f"events: {[event.long_name for event in potential_uncollected.events]}")
         print(f"hints: {[hint.as_string for hint in potential_uncollected.hints]}")
         print(f"nodes: {[nodes[n].identifier.as_string for n in potential_uncollected.nodes]}")
         print()
 
-    return sum(
-        (
-            action_weights.indices_weight * int(bool(potential_uncollected.indices)),
-            action_weights.events_weight * int(bool(potential_uncollected.events)),
-            action_weights.hints_weight * int(bool(potential_uncollected.hints)),
-        )
-    )
+    pickups_weight = action_weights.pickup_indices_weight * int(bool(potential_uncollected.pickup_indices))
+    events_weight = action_weights.events_weight * int(bool(potential_uncollected.events))
+    hints_weight = action_weights.hints_weight * int(bool(potential_uncollected.hints))
+
+    # we're only concerned about *something* being unlocked by this action
+    # so we just take the maximum instead of summing them together
+    total_weight = max(pickups_weight, events_weight)
+    # hints are actually an added bonus, so they get *added* to the total weight
+    total_weight += hints_weight
+
+    return total_weight
 
 
 def pickup_placement_spoiler_entry(
