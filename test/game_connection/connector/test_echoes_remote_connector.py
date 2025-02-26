@@ -148,7 +148,7 @@ async def test_get_inventory_invalid_amount(connector: EchoesRemoteConnector):
 
 
 @pytest.mark.parametrize("capacity", [0, 10])
-async def test_known_collected_locations_nothing(connector: EchoesRemoteConnector, capacity: int):
+async def test_check_for_collected_location_nothing(connector: EchoesRemoteConnector, capacity: int):
     # Setup
     assert isinstance(connector.executor, AsyncMock)
 
@@ -156,15 +156,14 @@ async def test_known_collected_locations_nothing(connector: EchoesRemoteConnecto
     connector.execute_remote_patches = AsyncMock()
 
     # Run
-    locations = await connector.known_collected_locations()
+    assert not await connector.check_for_collected_location()
 
     # Assert
-    assert locations == set()
     connector.execute_remote_patches.assert_not_awaited()
 
 
 @pytest.mark.parametrize("capacity", [0, 10])
-async def test_known_collected_locations_location(
+async def test_check_for_collected_location_found(
     connector: EchoesRemoteConnector, version: EchoesDolVersion, mocker, capacity
 ):
     # Setup
@@ -176,16 +175,17 @@ async def test_known_collected_locations_location(
 
     connector.executor.perform_single_memory_operation.return_value = struct.pack(">II", 10, 10 + capacity)
     connector.execute_remote_patches = AsyncMock()
+    connector.PickupIndexCollected = MagicMock()
 
     # Run
-    locations = await connector.known_collected_locations()
+    assert await connector.check_for_collected_location()
 
     # Assert
     mock_item_patch.assert_called_once_with(
         version.powerup_functions, RDSGame.ECHOES, connector.multiworld_magic_item.extra["item_id"], -10
     )
 
-    assert locations == {PickupIndex(9)}
+    connector.PickupIndexCollected.emit.assert_called_once_with(PickupIndex(9))
     connector.execute_remote_patches.assert_awaited_once_with([DolRemotePatch([], mock_item_patch.return_value)])
 
 
