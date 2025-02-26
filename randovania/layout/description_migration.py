@@ -123,8 +123,6 @@ def _migrate_v6(json_dict: dict) -> None:
     area_name_heuristic = {
         "Tallon Overworld": "prime1",
         "Agon Wastes": "prime2",
-        "Bryyo - Fire": "prime3",
-        "Norfair": "super_metroid",
         "Artaria": "dread",
     }
 

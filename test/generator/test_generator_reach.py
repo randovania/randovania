@@ -112,7 +112,6 @@ def _compare_actions(
 _ignore_events_for_game = {
     RandovaniaGame.METROID_PRIME: {"Event33"},
     RandovaniaGame.METROID_PRIME_ECHOES: {"Event91", "Event92", "Event97"},
-    RandovaniaGame.SUPER_METROID: {"Event6"},
     RandovaniaGame.METROID_DREAD: {},
     RandovaniaGame.CAVE_STORY: {
         "camp",
@@ -137,8 +136,6 @@ _include_tricks_for_game = {
     RandovaniaGame.AM2R: {("Shinesparking", LayoutTrickLevel.ADVANCED)},
     # Same reasons as above, with some still trickless
     RandovaniaGame.METROID_DREAD: {("Speedbooster", LayoutTrickLevel.BEGINNER)},
-    # Same reasons as above
-    RandovaniaGame.SUPER_METROID: {("Shinespark", LayoutTrickLevel.BEGINNER)},
     # Some items require Spider Boosting to reach in vanilla, but since it is never explained there,
     # it has been made into a trick.
     RandovaniaGame.METROID_SAMUS_RETURNS: {("Spider Boost", LayoutTrickLevel.BEGINNER)},
