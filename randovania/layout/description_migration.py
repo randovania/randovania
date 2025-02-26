@@ -300,7 +300,7 @@ def _migrate_v19(data: dict) -> None:
     game_mod = data["game_modifications"]
     for game in game_mod:
         game_name = game["game"]
-        if game_name in {"prime1", "prime2", "prime3"}:
+        if game_name in {"prime1", "prime2"}:
             mapping = migration_data.get_raw_data(RandovaniaGame(game_name))["rename_teleporter_nodes"]
 
             # starting location migration
