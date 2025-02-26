@@ -27,7 +27,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.layout.base.base_configuration import BaseConfiguration
 
-_ETM_NAME = "Energy Transfer Module"
+_ETM_NAME = "Nothing"
 
 
 def _pickup_assignment_to_item_locations(
