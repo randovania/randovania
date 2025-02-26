@@ -53,7 +53,7 @@ class AsyncRaceRoomListEntry(JsonDataclass):
     creation_date: datetime.datetime
     start_date: datetime.datetime
     end_date: datetime.datetime
-    visibility: MultiplayerSessionVisibility
+    visibility: "MultiplayerSessionVisibility"
     race_status: AsyncRaceRoomRaceStatus
 
 
@@ -114,7 +114,6 @@ class AsyncRaceRoomAdminData(JsonDataclass):
 
 
 class AsyncRaceRoomUserStatus(enum.Enum):
-    ROOM_NOT_OPEN = "room-not-open"
     NOT_MEMBER = "not-member"
     JOINED = "joined"
     STARTED = "started"
