@@ -41,7 +41,7 @@ def print_retcon_loop_start(
             f"From {player.game.region_list.node_name(reach.state.node, with_region=True)}, "
             f"{sum(1 for n in reach.nodes if reach.is_reachable_node(n))} reachable nodes, "
             f"{sum(1 for n in reach.nodes if reach.is_safe_node(n))} safe nodes, "
-            f"{len(current_uncollected.indices)} open pickup indices, "
+            f"{len(current_uncollected.pickup_indices)} open pickup indices, "
             f"{len(current_uncollected.events)} open events{extra}"
         )
 
