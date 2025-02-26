@@ -249,7 +249,7 @@ def decode_single(
                 if (pickup_name, target_player) != (pickup.name, player_index):
                     raise ValueError(f"{area_node_name} should be vanilla based on configuration")
 
-            elif pickup_name != _ETM_NAME:
+            elif pickup_name != _NOTHING_NAME:
                 pickup = _get_pickup_from_pool(all_pools[target_player].to_place, pickup_name)
             else:
                 pickup = None
