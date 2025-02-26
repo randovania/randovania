@@ -48,7 +48,7 @@ def _pickup_assignment_to_item_locations(
             else:
                 item_name = f"{target.pickup.name}"
         else:
-            item_name = _ETM_NAME
+            item_name = "Nothing"
 
         items_locations[region.correct_name(area.in_dark_aether)][region_list.node_name(node)] = item_name
 
@@ -230,7 +230,7 @@ def decode_single(
     pickup_assignment: PickupAssignment = {}
     for world_name, world_data in game_modifications["locations"].items():
         for area_node_name, target_name in typing.cast(dict[str, str], world_data).items():
-            if target_name == _ETM_NAME:
+            if target_name == "Nothing":
                 continue
 
             pickup_name_match = target_name_re.match(target_name)
