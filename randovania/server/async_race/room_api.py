@@ -23,7 +23,7 @@ from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import (
     MAX_SESSION_NAME_LENGTH,
 )
-from randovania.server import database
+from randovania.server import database, lib
 from randovania.server.database import (
     AsyncRaceEntryPause,
     AsyncRaceRoom,
@@ -59,7 +59,7 @@ def _verify_authorization(sa: ServerApp, room: AsyncRaceRoom, auth_token: str) -
 
 
 def list_rooms(sa: ServerApp, limit: int | None) -> JsonType:
-    now = datetime.datetime.now(datetime.UTC)
+    now = lib.datetime_now()
 
     def construct_helper(**args: typing.Any) -> AsyncRaceRoomListEntry:
         args["creation_date"] = datetime.datetime.fromisoformat(args["creation_date"])
@@ -103,19 +103,20 @@ def create_room(sa: ServerApp, layout_bin: bytes, settings_json: JsonObject) -> 
         raise error.InvalidActionError("Only single world games allowed")
 
     with database.db.atomic():
-        new_room: AsyncRaceRoom = AsyncRaceRoom.create(
+        new_room_id = AsyncRaceRoom.create(
             name=settings.name,
             password=settings.password,
             visibility=settings.visibility,
             layout_description_json=layout_bin,
             game_details_json=json.dumps(GameDetails.from_layout(layout).as_json),
             creator=current_user,
+            creation_date=lib.datetime_now(),
             start_date=settings.start_date,
             end_date=settings.end_date,
             allow_pause=settings.allow_pause,
-        )
+        ).id
 
-    return new_room.create_session_entry(sa).as_json
+    return AsyncRaceRoom.get_by_id(new_room_id).create_session_entry(sa).as_json
 
 
 def change_room_settings(sa: ServerApp, room_id: int, settings_json: JsonObject) -> JsonObject:
@@ -137,7 +138,7 @@ def change_room_settings(sa: ServerApp, room_id: int, settings_json: JsonObject)
     if not (0 < len(settings.name) <= MAX_SESSION_NAME_LENGTH):
         raise error.InvalidActionError("Invalid session name length")
 
-    now = datetime.datetime.now(datetime.UTC)
+    now = lib.datetime_now()
     old_status = AsyncRaceRoomRaceStatus.from_dates(room.start_datetime, room.end_datetime, now)
     new_status = AsyncRaceRoomRaceStatus.from_dates(settings.start_date, settings.end_date, now)
 
@@ -194,7 +195,7 @@ def get_leaderboard(sa: ServerApp, room_id: int, auth_token: str) -> JsonType:
     room = AsyncRaceRoom.get_by_id(room_id)
     _verify_authorization(sa, room, auth_token)
 
-    if room.end_datetime > datetime.datetime.now(datetime.UTC):
+    if room.end_datetime > lib.datetime_now():
         raise error.NotAuthorizedForActionError
 
     entries = []
@@ -230,13 +231,10 @@ def get_layout(sa: ServerApp, room_id: int, auth_token: str) -> bytes:
     :param auth_token:
     :return: A LayoutDescription, byte-encoded
     """
-
-    sa.decrypt_dict(auth_token)
-
     room = AsyncRaceRoom.get_by_id(room_id)
     _verify_authorization(sa, room, auth_token)
 
-    if room.end_datetime > datetime.datetime.now(datetime.UTC):
+    if room.end_datetime > lib.datetime_now():
         raise error.NotAuthorizedForActionError
 
     return room.layout_description_json
@@ -301,6 +299,9 @@ def join_and_export(sa: ServerApp, room_id: int, auth_token: str, cosmetic_json:
     room = AsyncRaceRoom.get_by_id(room_id)
     _verify_authorization(sa, room, auth_token)
 
+    if room.get_race_status(lib.datetime_now()) != AsyncRaceRoomRaceStatus.ACTIVE:
+        raise error.NotAuthorizedForActionError("Room is not active")
+
     database.AsyncRaceEntry.get_or_create(
         room=room,
         user=user,
@@ -341,7 +342,7 @@ def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
     old_state = entry.user_status()
     new_state = AsyncRaceRoomUserStatus(new_state)
 
-    now = datetime.datetime.now(datetime.UTC)
+    now = lib.datetime_now()
 
     things_to_save = [entry]
 
