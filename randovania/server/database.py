@@ -33,6 +33,7 @@ from randovania.network_common.multiplayer_session import (
 )
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.network_common.user import RandovaniaUser
+from randovania.server import lib
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator, Sequence
@@ -130,15 +131,11 @@ class User(BaseModel):
         return RandovaniaUser(id=self.id, name=self.name)
 
 
-def _datetime_now() -> datetime.datetime:
-    return datetime.datetime.now(datetime.UTC)
-
-
 class UserAccessToken(BaseModel):
     user = peewee.ForeignKeyField(User, backref="access_tokens")
     name = peewee.CharField()
-    creation_date = peewee.DateTimeField(default=_datetime_now)
-    last_used = peewee.DateTimeField(default=_datetime_now)
+    creation_date = peewee.DateTimeField(default=lib.datetime_now)
+    last_used = peewee.DateTimeField(default=lib.datetime_now)
 
     class Meta:
         primary_key = peewee.CompositeKey("user", "name")
@@ -166,7 +163,7 @@ class MultiplayerSession(BaseModel):
     layout_description_json: bytes | None = peewee.BlobField(null=True)
     game_details_json: str | None = peewee.CharField(null=True)
     creator: User = peewee.ForeignKeyField(User)
-    creation_date: str = peewee.DateTimeField(default=_datetime_now)
+    creation_date: str = peewee.DateTimeField(default=lib.datetime_now)
     generation_in_progress: User | None = peewee.ForeignKeyField(User, null=True)
     dev_features: str | None = peewee.CharField(null=True)
 
@@ -426,7 +423,7 @@ class WorldUserAssociation(BaseModel):
     connection_state: GameConnectionStatus = EnumField(
         choices=GameConnectionStatus, default=GameConnectionStatus.Disconnected
     )
-    last_activity: datetime.datetime = peewee.DateTimeField(default=_datetime_now)
+    last_activity: datetime.datetime = peewee.DateTimeField(default=lib.datetime_now)
     inventory = peewee.BlobField(null=True)
 
     @classmethod
@@ -471,7 +468,7 @@ class MultiplayerMembership(BaseModel):
     session_id: int
     admin: bool = peewee.BooleanField(default=False)
     ready: bool = peewee.BooleanField(default=False)
-    join_date = peewee.DateTimeField(default=_datetime_now)
+    join_date = peewee.DateTimeField(default=lib.datetime_now)
 
     can_help_layout_generation: bool = peewee.BooleanField(default=False)
 
@@ -499,7 +496,7 @@ class WorldAction(BaseModel):
     session_id: int
     receiver: World = peewee.ForeignKeyField(World)
     receiver_id: int
-    time: str = peewee.DateTimeField(default=_datetime_now)
+    time: str = peewee.DateTimeField(default=lib.datetime_now)
 
     class Meta:
         primary_key = peewee.CompositeKey("provider", "location")
@@ -509,7 +506,7 @@ class MultiplayerAuditEntry(BaseModel):
     session: MultiplayerSession = peewee.ForeignKeyField(MultiplayerSession, backref="audit_log")
     user: User = peewee.ForeignKeyField(User)
     message: str = peewee.TextField()
-    time: str = peewee.DateTimeField(default=_datetime_now)
+    time: str = peewee.DateTimeField(default=lib.datetime_now)
 
     def as_entry(self) -> AuditEntry:
         time = datetime.datetime.fromisoformat(self.time)
@@ -531,7 +528,7 @@ class AsyncRaceRoom(BaseModel):
     layout_description_json: bytes = peewee.BlobField()
     game_details_json: str = peewee.CharField()
     creator: User = peewee.ForeignKeyField(User)
-    creation_date: str = peewee.DateTimeField(default=_datetime_now)
+    creation_date: str = peewee.DateTimeField(default=lib.datetime_now)
     start_date: str = peewee.DateTimeField()
     end_date: str = peewee.DateTimeField()
     allow_pause: bool = peewee.BooleanField()
@@ -572,18 +569,23 @@ class AsyncRaceRoom(BaseModel):
     def end_datetime(self, value: datetime.datetime | None) -> None:
         self.end_date = value
 
+    def get_race_status(self, now: datetime.datetime) -> AsyncRaceRoomRaceStatus:
+        return AsyncRaceRoomRaceStatus.from_dates(
+            self.start_datetime,
+            self.end_datetime,
+            now,
+        )
+
     def create_session_entry(self, sa: ServerApp) -> async_race_room.AsyncRaceRoomEntry:
         game_details = self.game_details()
 
-        now = _datetime_now()
+        now = lib.datetime_now()
         for_user = sa.get_current_user()
 
         if (entry := AsyncRaceEntry.entry_for(self, for_user)) is not None:
             status = entry.user_status()
-        elif self.start_datetime <= now:
-            status = async_race_room.AsyncRaceRoomUserStatus.NOT_MEMBER
         else:
-            status = async_race_room.AsyncRaceRoomUserStatus.ROOM_NOT_OPEN
+            status = async_race_room.AsyncRaceRoomUserStatus.NOT_MEMBER
 
         return async_race_room.AsyncRaceRoomEntry(
             id=self.id,
@@ -594,11 +596,7 @@ class AsyncRaceRoom(BaseModel):
             creation_date=self.creation_datetime,
             start_date=self.start_datetime,
             end_date=self.end_datetime,
-            race_status=AsyncRaceRoomRaceStatus.from_dates(
-                self.start_datetime,
-                self.end_datetime,
-                now,
-            ),
+            race_status=self.get_race_status(now),
             auth_token=sa.encrypt_dict(
                 {
                     "room_id": self.id,
@@ -620,7 +618,7 @@ class AsyncRaceAuditEntry(BaseModel):
     room: AsyncRaceRoom = peewee.ForeignKeyField(AsyncRaceRoom, backref="audit_log")
     user: User = peewee.ForeignKeyField(User)
     message: str = peewee.TextField()
-    time: str = peewee.DateTimeField(default=_datetime_now)
+    time: str = peewee.DateTimeField(default=lib.datetime_now)
 
     def as_entry(self) -> AuditEntry:
         time = datetime.datetime.fromisoformat(self.time)
@@ -636,7 +634,7 @@ class AsyncRaceEntry(BaseModel):
     room: AsyncRaceRoom = peewee.ForeignKeyField(AsyncRaceRoom, backref="entries")
     user: User = peewee.ForeignKeyField(User)
     user_id: int
-    join_date = peewee.DateTimeField(default=_datetime_now)
+    join_date = peewee.DateTimeField(default=lib.datetime_now)
     start_date = peewee.DateTimeField(null=True)
     finish_date = peewee.DateTimeField(null=True)
     paused: bool = peewee.BooleanField(default=False)
@@ -708,7 +706,7 @@ class AsyncRaceEntry(BaseModel):
 
 class AsyncRaceEntryPause(BaseModel):
     entry: AsyncRaceEntry = peewee.ForeignKeyField(AsyncRaceEntry, backref="pauses")
-    start = peewee.DateTimeField(default=_datetime_now)
+    start = peewee.DateTimeField(default=lib.datetime_now)
     end = peewee.DateTimeField(null=True)
 
     @property

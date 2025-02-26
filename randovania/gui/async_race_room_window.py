@@ -95,13 +95,9 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         can_participate = room.race_status == AsyncRaceRoomRaceStatus.ACTIVE
 
         self.ui.customize_cosmetic_button.setEnabled(self.preset.game.gui.cosmetic_dialog is not None)
-        self.ui.join_and_export_button.setEnabled(
-            can_participate and room.self_status != AsyncRaceRoomUserStatus.ROOM_NOT_OPEN
-        )
+        self.ui.join_and_export_button.setEnabled(can_participate)
         self.ui.join_and_export_button.setText(
-            "Join and export game"
-            if room.self_status in {AsyncRaceRoomUserStatus.ROOM_NOT_OPEN, AsyncRaceRoomUserStatus.NOT_MEMBER}
-            else "Re-export"
+            "Join and export game" if room.self_status == AsyncRaceRoomUserStatus.NOT_MEMBER else "Re-export"
         )
         self.ui.start_button.setEnabled(
             can_participate and room.self_status in {AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.JOINED}
