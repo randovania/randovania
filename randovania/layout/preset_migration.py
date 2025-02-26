@@ -323,11 +323,6 @@ def _migrate_v13(preset: dict, game: RandovaniaGame) -> None:
             "Light Ammo Expansion": ["46"],
             "Beam Ammo Expansion": ["45", "46"],
         },
-        RandovaniaGame.SUPER_METROID: {
-            "Missile Expansion": ["5"],
-            "Super Missile Expansion": ["6"],
-            "Power Bomb Expansion": ["7"],
-        },
     }[game]
     main_items = {
         RandovaniaGame.METROID_PRIME: {
@@ -342,7 +337,6 @@ def _migrate_v13(preset: dict, game: RandovaniaGame) -> None:
             "Seeker Launcher": ["44"],
             "Power Bomb": ["43"],
         },
-        RandovaniaGame.SUPER_METROID: {},
     }
 
     for item, ids in main_items[game].items():
@@ -752,7 +746,6 @@ def _migrate_v57(preset: dict, game: RandovaniaGame) -> None:
         RandovaniaGame.METROID_PRIME: ["morph_ball", "other", "teleporter"],
         RandovaniaGame.METROID_PRIME_ECHOES: ["morph_ball", "other", "teleporter"],
         RandovaniaGame.METROID_SAMUS_RETURNS: ["door", "tunnel", "other", "teleporter"],
-        RandovaniaGame.SUPER_METROID: ["door", "morph_ball", "other", "teleporter"],
     }
 
     for type_name in types_table[game]:
