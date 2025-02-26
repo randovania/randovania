@@ -2,16 +2,27 @@ FROM python:3.12
 
 WORKDIR /usr/src/app
 
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+ENV UV_LINK_MODE=copy
+
 RUN apt-get update && apt-get install -y \
     graphviz \
  && rm -rf /var/lib/apt/lists/*
 
-COPY requirements-setuptools.txt ./
-RUN pip install --no-cache-dir -r requirements-setuptools.txt
+# Install dependencies
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --frozen --no-install-project --extra server --extra exporters
 
+# Copy the project into the image
 COPY . .
-RUN pip install --no-cache-dir -e .[server,exporters] -c requirements.txt
+
+# Sync the project
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --extra server --extra exporters
 
 VOLUME ["/data"]
-ENTRYPOINT ["python", "-m", "randovania"]
+ENTRYPOINT ["/usr/src/app/.venv/bin/python", "-m", "randovania"]
 CMD ["--configuration", "/data/configuration.json", "server", "flask"]
