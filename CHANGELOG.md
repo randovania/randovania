@@ -21,6 +21,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: It is now properly impossible for multiple hints to point to the same location.
 - Fixed: A recent regression in the resolver that made it significantly slower has been fixed.
 
+### Door Lock Randomizer
+
+- Fixed: Bug in the revised door solver that would result in permanently locked doors being placed when they shouldn't.
+
 ### Metroid Dread
 
 - Fixed: GUI formatting on the game page.

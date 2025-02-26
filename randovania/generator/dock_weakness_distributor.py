@@ -279,7 +279,9 @@ def _determine_valid_weaknesses(
 
     if state is not None:
         reach = ResolverReach.calculate_reach(logic, state)
-        if state.node == target:
+        if state.node == target or isinstance(state.node, DockLockType) and state.node.dock == target:
+            # When using two sided door search, the state could be pointing at either dock or target.
+            # Simply swap dock and target if we found the target side.
             target, dock = dock, target
         ctx = state.node_context()
 
