@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Some joke hints are now shared between all games that use them.
 - Fixed: It is now properly impossible for multiple hints to point to the same location.
 - Fixed: A recent regression in the resolver that made it significantly slower has been fixed.
-- Fixed: An issue with calculating generator action weights has been resolved.
+- Fixed: Generator action weights were being incorrectly calculated.
 
 ### Metroid Dread
 

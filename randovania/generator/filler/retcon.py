@@ -508,13 +508,16 @@ def _calculate_weights_for(
         print(f"nodes: {[nodes[n].identifier.as_string for n in potential_uncollected.nodes]}")
         print()
 
-    pickups_weight = action_weights.pickup_indices_weight * int(bool(potential_uncollected.pickup_indices))
-    events_weight = action_weights.events_weight * int(bool(potential_uncollected.events))
-    hints_weight = action_weights.hints_weight * int(bool(potential_uncollected.hints))
+    # this used to weigh actions according to *how many* resources were unlocked, but we've determined
+    # that the results are more fun if we only care about something being unlocked at all
+    pickups_weight = action_weights.pickup_indices_weight if potential_uncollected.pickup_indices else 0.0
+    events_weight = action_weights.events_weight if potential_uncollected.events else 0.0
+    hints_weight = action_weights.hints_weight if potential_uncollected.hints else 0.0
 
     # we're only concerned about *something* being unlocked by this action
     # so we just take the maximum instead of summing them together
     total_weight = max(pickups_weight, events_weight)
+
     # hints are actually an added bonus, so they get *added* to the total weight
     total_weight += hints_weight
 
