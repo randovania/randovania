@@ -141,6 +141,9 @@ class GamePresetDescriber:
                 f"{configuration.logical_resource_action.long_name} dangerous actions"
             )
 
+        if configuration.consider_possible_unsafe_resources:
+            template_strings["Logic Settings"].append("Considers possible unsafe resources")
+
         if randomization_mode != RandomizationMode.default():
             template_strings["Item Pool"].append(randomization_mode.description)
 

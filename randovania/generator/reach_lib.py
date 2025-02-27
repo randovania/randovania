@@ -122,7 +122,7 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
     collect_all_safe_resources_in_reach(previous_reach)
     initial_state = previous_reach.state
 
-    previous_safe_nodes = set(previous_reach.safe_nodes)
+    previous_safe_nodes = set(previous_reach.safe_uncollected_resource_nodes)
 
     for action in get_collectable_resource_nodes_of_reach(previous_reach):
         # print("Trying to collect {} and it's not dangerous. Copying...".format(action.name))
@@ -130,7 +130,7 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
         next_reach.act_on(action)
         collect_all_safe_resources_in_reach(next_reach)
 
-        if previous_safe_nodes <= set(next_reach.safe_nodes):
+        if previous_safe_nodes <= set(next_reach.safe_uncollected_resource_nodes):
             # print("Non-safe {} was good".format(logic.game.node_name(action)))
             return advance_reach_with_possible_unsafe_resources(next_reach)
 
@@ -139,7 +139,7 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
             next_next_state.node = initial_state.node
 
             next_reach = reach_with_all_safe_resources(game, next_next_state, previous_reach.filler_config)
-            if previous_safe_nodes <= set(next_reach.safe_nodes):
+            if previous_safe_nodes <= set(next_reach.safe_uncollected_resource_nodes):
                 # print("Non-safe {} could reach back to where we were".format(logic.game.node_name(action)))
                 return advance_reach_with_possible_unsafe_resources(next_reach)
         else:
