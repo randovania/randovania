@@ -36,7 +36,8 @@ def test_current_state_report(state_for_blank):
     result = state_for_blank.current_state_report()
     assert result == (
         "At Intro/Starting Area/Event - Post Weapon after 0 actions and 0 pickups, "
-        "with 4 collected locations, 24 safe nodes.\n\n"
+        "with 4 collected locations, 24 safe nodes, "
+        "0 safe uncollected resource nodes.\n\n"
         "Pickups still available: \n\n"
         "Resources to progress: Blue Key, Double Jump, Jump, Missile, Weapon\n\n"
         "Paths to be opened:\n"
