@@ -6,22 +6,27 @@ from unittest.mock import ANY, AsyncMock, MagicMock
 
 import pytest
 from PySide6 import QtWidgets
+from PySide6.QtCore import Qt
 
 from randovania.gui.async_race_room_window import AsyncRaceRoomWindow
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.async_race_room import (
+    AsyncRaceEntryData,
+    AsyncRaceRoomAdminData,
     AsyncRaceRoomEntry,
     AsyncRaceRoomRaceStatus,
     AsyncRaceRoomUserStatus,
 )
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
+from randovania.network_common.user import RandovaniaUser
 
 if TYPE_CHECKING:
     import pytest_mock
     from pytestqt.qtbot import QtBot
 
+    from randovania.gui.dialog.async_race_admin_dialog import AsyncRaceAdminDialog
     from randovania.layout.preset import Preset
 
 
@@ -198,3 +203,64 @@ async def test_on_join_and_forfeit(
     )
 
     window.refresh_data.assert_awaited_once_with()
+
+
+async def test_on_view_user_entries(skip_qtbot, default_blank_preset, mocker: pytest_mock.MockFixture):
+    def execute_dialog_effect(dialog: AsyncRaceAdminDialog):
+        dialog.model.setData(dialog.model.index(1, 4), "true", Qt.ItemDataRole.EditRole)
+        return QtWidgets.QDialog.DialogCode.Accepted
+
+    mock_dialog = mocker.patch(
+        "randovania.gui.lib.async_dialog.execute_dialog",
+        autospec=True,
+        side_effect=execute_dialog_effect,
+    )
+
+    window = create_window(skip_qtbot, create_room(default_blank_preset, self_status=AsyncRaceRoomUserStatus.JOINED))
+    window._network_client.async_race_admin_update_entries = AsyncMock(return_value=window.room)
+    window._network_client.async_race_admin_get_admin_data.return_value = AsyncRaceRoomAdminData(
+        [
+            AsyncRaceEntryData(
+                user=RandovaniaUser(id=1235, name="user"),
+                join_date=datetime.datetime(2020, 5, 6, 0, 0, tzinfo=datetime.UTC),
+                start_date=datetime.datetime(2020, 6, 6, 0, 0, tzinfo=datetime.UTC),
+                finish_date=datetime.datetime(2020, 7, 7, 0, 0, tzinfo=datetime.UTC),
+                forfeit=False,
+                pauses=[],
+                submission_notes="notes",
+                proof_url="url",
+            ),
+            AsyncRaceEntryData(
+                user=RandovaniaUser(id=2000, name="user2"),
+                join_date=datetime.datetime(2020, 5, 6, 0, 0, tzinfo=datetime.UTC),
+                start_date=datetime.datetime(2020, 6, 6, 0, 0, tzinfo=datetime.UTC),
+                finish_date=datetime.datetime(2020, 7, 7, 0, 0, tzinfo=datetime.UTC),
+                forfeit=False,
+                pauses=[],
+                submission_notes="",
+                proof_url="",
+            ),
+        ]
+    )
+
+    # Run
+    await window._on_view_user_entries()
+
+    # Assert
+    window._network_client.async_race_admin_get_admin_data.assert_awaited_once_with(window.room.id)
+    mock_dialog.assert_awaited_once()
+    window._network_client.async_race_admin_update_entries.assert_awaited_once_with(
+        window.room.id,
+        [
+            AsyncRaceEntryData(
+                user=RandovaniaUser(id=2000, name="user2"),
+                join_date=datetime.datetime(2020, 5, 6, 0, 0, tzinfo=datetime.UTC),
+                start_date=datetime.datetime(2020, 6, 6, 0, 0, tzinfo=datetime.UTC),
+                finish_date=datetime.datetime(2020, 7, 7, 0, 0, tzinfo=datetime.UTC),
+                forfeit=True,
+                pauses=[],
+                submission_notes="",
+                proof_url="",
+            ),
+        ],
+    )
