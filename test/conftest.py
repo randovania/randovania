@@ -198,16 +198,6 @@ def prime_game_description() -> GameDescription:
 
 
 @pytest.fixture(scope="session")
-def corruption_game_data() -> dict:
-    return default_data.read_json_then_binary(RandovaniaGame.METROID_PRIME_CORRUPTION)[1]
-
-
-@pytest.fixture(scope="session")
-def corruption_game_description(corruption_game_data: dict) -> GameDescription:
-    return default_database.game_description_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
-
-
-@pytest.fixture(scope="session")
 def dread_game_description() -> GameDescription:
     return default_database.game_description_for(RandovaniaGame.METROID_DREAD)
 
