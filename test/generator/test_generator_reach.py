@@ -112,8 +112,6 @@ def _compare_actions(
 _ignore_events_for_game = {
     RandovaniaGame.METROID_PRIME: {"Event33"},
     RandovaniaGame.METROID_PRIME_ECHOES: {"Event91", "Event92", "Event97"},
-    RandovaniaGame.METROID_PRIME_CORRUPTION: {"Event1", "Event146", "Event147", "Event148", "Event154"},
-    RandovaniaGame.SUPER_METROID: {"Event6"},
     RandovaniaGame.METROID_DREAD: {},
     RandovaniaGame.CAVE_STORY: {
         "camp",
@@ -129,8 +127,6 @@ _ignore_events_for_game = {
 }
 
 _ignore_pickups_for_game = {
-    # These 3 indices are in Olympus and are unreachable given the default preset
-    RandovaniaGame.METROID_PRIME_CORRUPTION: {0, 1, 2},
     # Unknown reason why
     RandovaniaGame.CAVE_STORY: {30, 31, 41, 45},
 }
@@ -140,8 +136,6 @@ _include_tricks_for_game = {
     RandovaniaGame.AM2R: {("Shinesparking", LayoutTrickLevel.ADVANCED)},
     # Same reasons as above, with some still trickless
     RandovaniaGame.METROID_DREAD: {("Speedbooster", LayoutTrickLevel.BEGINNER)},
-    # Same reasons as above
-    RandovaniaGame.SUPER_METROID: {("Shinespark", LayoutTrickLevel.BEGINNER)},
     # Some items require Spider Boosting to reach in vanilla, but since it is never explained there,
     # it has been made into a trick.
     RandovaniaGame.METROID_SAMUS_RETURNS: {("Spider Boost", LayoutTrickLevel.BEGINNER)},

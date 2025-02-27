@@ -11,7 +11,6 @@ from randovania.resolver import debug, resolver
     "seed_name",
     [
         "seed_a.rdvgame",
-        "corruption_seed_a.rdvgame",
         "prime1-vanilla.rdvgame",
         "prime2_seed_b.rdvgame",
         "blank/issue-3717.rdvgame",

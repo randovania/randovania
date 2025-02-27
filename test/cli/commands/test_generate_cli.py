@@ -39,7 +39,7 @@ def test_generate_logic(
         "randovania.generator.generator.generate_and_validate_description", new_callable=MagicMock
     )
     mock_from_str: MagicMock = mocker.patch("randovania.layout.permalink.Permalink.from_str", autospec=True)
-    test_preset_file = test_files_dir.joinpath("presets", "super_test_preset.rdvpreset")
+    test_preset_file = test_files_dir.joinpath("presets", "echoes-v44-migration-preset.rdvpreset")
 
     args = MagicMock()
     args.output_file = Path("asdfasdf/qwerqwerqwer/zxcvzxcv.json")

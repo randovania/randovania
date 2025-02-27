@@ -52,7 +52,7 @@ def _generator() -> randovania.game.generator.GameGenerator:
         bootstrap=EchoesBootstrap(),
         base_patches_factory=EchoesBasePatchesFactory(),
         hint_distributor=EchoesHintDistributor(),
-        action_weights=ActionWeights(),
+        action_weights=ActionWeights(hints_weight=2.0),
     )
 
 
