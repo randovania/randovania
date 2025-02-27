@@ -1,14 +1,14 @@
+from __future__ import annotations
+
 import datetime
+from typing import TYPE_CHECKING
 from unittest.mock import ANY, AsyncMock, MagicMock
 
 import pytest
-import pytest_mock
 from PySide6 import QtWidgets
-from pytestqt.qtbot import QtBot
 
 from randovania.gui.async_race_room_window import AsyncRaceRoomWindow
 from randovania.gui.lib.qt_network_client import QtNetworkClient
-from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.async_race_room import (
     AsyncRaceRoomEntry,
@@ -17,6 +17,12 @@ from randovania.network_common.async_race_room import (
 )
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
+
+if TYPE_CHECKING:
+    import pytest_mock
+    from pytestqt.qtbot import QtBot
+
+    from randovania.layout.preset import Preset
 
 
 def create_room(

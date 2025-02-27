@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import datetime
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
@@ -6,8 +9,11 @@ from randovania.gui.dialog.async_race_leaderboard_dialog import AsyncRaceLeaderb
 from randovania.network_common.async_race_room import RaceRoomLeaderboard, RaceRoomLeaderboardEntry
 from randovania.network_common.user import RandovaniaUser
 
+if TYPE_CHECKING:
+    from pytestqt.qtbot import QtBot
 
-def test_create_widget(skip_qtbot):
+
+def test_create_widget(skip_qtbot: QtBot):
     parent = QtWidgets.QMainWindow()
     skip_qtbot.add_widget(parent)
 
