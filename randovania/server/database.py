@@ -610,7 +610,6 @@ class AsyncRaceRoom(BaseModel):
             is_admin=for_user == self.creator,
             self_status=status,
             allow_pause=self.allow_pause,
-            leaderboard=None,
         )
 
 
