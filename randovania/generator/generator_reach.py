@@ -85,7 +85,7 @@ class GeneratorReach:
         for node in self.safe_nodes:
             if node.is_resource_node:
                 res = typing.cast(ResourceNode, node)
-                if res.should_collect(self.node_context()) and res.requirement_to_collect().satisfied(
+                if res.should_collect(context) and res.requirement_to_collect().satisfied(
                     context, self.state.health_for_damage_requirements
                 ):
                     yield res
