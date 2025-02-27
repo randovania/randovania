@@ -44,7 +44,6 @@ def get_teleporter_area_to_node_mapping() -> dict[str, str]:
     for g in [
         RandovaniaGame.METROID_PRIME,
         RandovaniaGame.METROID_PRIME_ECHOES,
-        RandovaniaGame.METROID_PRIME_CORRUPTION,
     ]:
         result.update(get_raw_data(g)["teleporter_mapping"])
     return result

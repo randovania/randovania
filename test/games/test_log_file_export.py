@@ -132,8 +132,6 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "samus_returns/queen_boss_custom_required_dna.rdvgame",  # queen final boss + custom required dna 20/30
         "samus_returns/starter_preset.rdvgame",  # starter preset
         "samus_returns/progressive_beams_and_suits.rdvgame",  # starter preset + progressive beam and suit
-        # Super Metroid
-        "sdm_test_game.rdvgame",
     ]
 
     coop_names = [

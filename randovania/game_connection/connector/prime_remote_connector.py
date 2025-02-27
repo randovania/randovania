@@ -49,7 +49,6 @@ class DolRemotePatch:
 _RDS_TO_RDV_GAME = {
     RDSGame.PRIME: RandovaniaGame.METROID_PRIME,
     RDSGame.ECHOES: RandovaniaGame.METROID_PRIME_ECHOES,
-    RDSGame.CORRUPTION: RandovaniaGame.METROID_PRIME_CORRUPTION,
 }
 
 

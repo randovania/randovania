@@ -203,8 +203,8 @@ def test_bit_pack_pickup_entry(
     pickup = PickupEntry(
         name=name,
         model=PickupModel(
-            game=RandovaniaGame.METROID_PRIME_CORRUPTION,
-            name="HyperMissile",
+            game=RandovaniaGame.METROID_DREAD,
+            name="powerup_widebeam",
         ),
         gui_category=generic_pickup_category,
         hint_features=frozenset((generic_pickup_category,)),
