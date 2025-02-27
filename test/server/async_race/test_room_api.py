@@ -161,7 +161,6 @@ def test_create_room(clean_database, test_files_dir, mocker: pytest_mock.MockFix
         "has_password": False,
         "id": 1,
         "is_admin": True,
-        "leaderboard": None,
         "name": "TheRoom",
         "presets_raw": [ANY],
         "race_status": "scheduled",
@@ -258,7 +257,6 @@ def test_change_room_settings_valid(simple_room, mocker: pytest_mock.MockFixture
         "race_status": "scheduled",
         "self_status": "not-member",
         "visibility": "visible",
-        "leaderboard": None,
         "allow_pause": True,
     }
 
@@ -294,7 +292,6 @@ def test_get_room_valid_password(simple_room, mocker: pytest_mock.MockFixture, p
         "race_status": "scheduled",
         "self_status": "not-member",
         "visibility": "visible",
-        "leaderboard": None,
         "allow_pause": True,
     }
 
@@ -347,7 +344,6 @@ def test_refresh_room(simple_room, mocker: pytest_mock.MockFixture):
         "race_status": "scheduled",
         "self_status": "not-member",
         "visibility": "visible",
-        "leaderboard": None,
         "allow_pause": True,
     }
 
@@ -623,7 +619,6 @@ def test_admin_update_entries(simple_room, mocker: pytest_mock.MockFixture):
         "race_status": "scheduled",
         "self_status": "not-member",
         "visibility": "visible",
-        "leaderboard": None,
         "allow_pause": True,
     }
 
