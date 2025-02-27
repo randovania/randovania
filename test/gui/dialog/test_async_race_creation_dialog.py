@@ -58,9 +58,9 @@ def test_settings_dialog(skip_qtbot) -> None:
             name="Async Room",
             has_password=False,
             creator="TheCreator",
-            creation_date=datetime.datetime(2020, 1, 1, tzinfo=datetime.UTC),
-            start_date=datetime.datetime(2020, 2, 1, tzinfo=datetime.UTC),
-            end_date=datetime.datetime(2020, 3, 1, tzinfo=datetime.UTC),
+            creation_date=datetime.datetime(2020, 1, 1),
+            start_date=datetime.datetime(2020, 2, 1),
+            end_date=datetime.datetime(2020, 3, 1),
             visibility=MultiplayerSessionVisibility.HIDDEN,
             race_status=AsyncRaceRoomRaceStatus.SCHEDULED,
             auth_token="Token",
@@ -75,8 +75,8 @@ def test_settings_dialog(skip_qtbot) -> None:
     assert dialog.create_settings_object() == AsyncRaceSettings(
         name="Async Room",
         password=None,
-        start_date=datetime.datetime(2020, 2, 1, 2, 0),
-        end_date=datetime.datetime(2020, 3, 1, 2, 0),
+        start_date=datetime.datetime(2020, 2, 1, 0, 0),
+        end_date=datetime.datetime(2020, 3, 1, 0, 0),
         visibility=MultiplayerSessionVisibility.HIDDEN,
         allow_pause=False,
     )
