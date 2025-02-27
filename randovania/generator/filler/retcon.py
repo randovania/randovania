@@ -185,12 +185,13 @@ def weighted_potential_actions(
     }
 
     # Everything has weight 0, so try collecting potentially unsafe resources
+    # FIXME: this can be removed if `consider_possible_unsafe_resources` is enabled permanently
     if sum(actions_weights.values()) == 0 and player_state.configuration.fallback_to_reweight_with_unsafe:
         debug.debug_print("Re-weighting with possible unsafe")
         options_considered = 0
         for action, evaluation in evaluated_actions.items():
             evaluated_actions[action] = evaluation.replace_reach(
-                reach_lib.advance_reach_with_possible_unsafe_resources(evaluation.reach)
+                reach_lib.advance_reach_with_possible_unsafe_resources(evaluation.reach, filter_resource_nodes=True)
             )
             update_for_option()
 
