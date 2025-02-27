@@ -40,7 +40,6 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
         tricks_in_use = trick_lib.used_tricks(self.game_description)
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Preferred)
 
-        self.trick_level_line_1.setVisible(self.game_enum != RandovaniaGame.METROID_PRIME_CORRUPTION)
         self.underwater_abuse_label.setText(self.underwater_abuse_label.text().replace("color:#0000ff;", ""))
 
         if self.game_enum != RandovaniaGame.METROID_PRIME:

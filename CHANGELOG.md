@@ -20,6 +20,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Some joke hints are now shared between all games that use them.
 - Fixed: It is now properly impossible for multiple hints to point to the same location.
 - Fixed: A recent regression in the resolver that made it significantly slower has been fixed.
+- Fixed: Generator action weights were being incorrectly calculated.
+- Fixed: Typo in dialog about generated game hash being different from expected.
+
+### Door Lock Randomizer
+
+- Fixed: Bug in the revised door solver that would result in permanently locked doors being placed when they shouldn't.
 
 ### Metroid Dread
 
