@@ -134,7 +134,6 @@ class AsyncRaceRoomEntry(AsyncRaceRoomListEntry):
     is_admin: bool
     self_status: AsyncRaceRoomUserStatus
     allow_pause: bool
-    leaderboard: RaceRoomLeaderboard | None
 
     @property
     def presets(self) -> list[VersionedPreset]:
