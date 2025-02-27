@@ -188,7 +188,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
     @asyncSlot()
     async def _on_join_and_export(self) -> None:
         """Called when the `Join and export game` button is pressed."""
-        if not await async_dialog.yes_no_prompt(
+        if self.room.self_status == AsyncRaceRoomUserStatus.NOT_MEMBER and not await async_dialog.yes_no_prompt(
             self,
             "Confirm Join?",
             "After confirming this dialog and export settings, "
@@ -199,7 +199,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         game = self.preset.game
         dialog = game.gui.export_dialog(
             self._options,
-            {},
+            self.preset.get_preset().configuration,
             self.room.game_details.word_hash,
             False,
             [game],

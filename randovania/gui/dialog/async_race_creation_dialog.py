@@ -32,6 +32,7 @@ class AsyncRaceCreationDialog(QtWidgets.QDialog):
         self.ui.end_time_edit.setDateTime(_from_date(datetime.datetime.now() + datetime.timedelta(days=1)))
 
         self.ui.name_edit.textChanged.connect(self.validate)
+        self.ui.password_edit.textChanged.connect(self.validate)
         self.ui.start_time_edit.dateTimeChanged.connect(self.validate)
         self.ui.end_time_edit.dateTimeChanged.connect(self.validate)
 
