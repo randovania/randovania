@@ -130,8 +130,8 @@ def copy_files_code(
             code = code.replace('long_name="Blank Development Game"', f'long_name="{long_name}"')
             code = code.replace("defaults_available_in_game_sessions=randovania.is_dev_version(),", "")
             code = code.replace(
-                "development_state=game.DevelopmentState.EXPERIMENTAL",
-                "development_state=game.DevelopmentState.DEVELOPMENT",
+                "development_state=game.DevelopmentState.STAGING",
+                "development_state=game.DevelopmentState.SOURCE_ONLY",
             )
 
         if file.name == "progressive_items.py":
