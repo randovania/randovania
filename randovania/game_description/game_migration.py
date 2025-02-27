@@ -299,6 +299,15 @@ def _migrate_v27(data: dict, game: RandovaniaGame) -> None:
                     node["hint_features"] = []
 
 
+def _migrate_v28(data: dict, game: RandovaniaGame) -> None:
+    for world in data["worlds"]:
+        for area in world["areas"].values():
+            for node in area["nodes"].values():
+                if node["node_type"] == "pickup" and node.get("pickup_type") == "Energy Transfer Module":
+                    node["pickup_type"] = "Nothing"
+
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -327,9 +336,11 @@ _MIGRATIONS = [
     _migrate_v25,  # flatten_to_set_on_patch
     _migrate_v26,  # remove initial_states
     _migrate_v27,  # add hint features
+    _migrate_v28,  
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
 
 def migrate_to_current(data: dict, game: RandovaniaGame) -> dict:
     return migration_lib.apply_migrations_with_game(data, _MIGRATIONS, game, copy_before_migrating=True)
+
