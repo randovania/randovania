@@ -271,10 +271,16 @@ def admin_update_entries(sa: ServerApp, room_id: int, raw_new_entries: JsonType)
         raise error.NotAuthorizedForActionError
 
     new_entries = [AsyncRaceEntryData.from_json(e) for e in raw_new_entries]
+    max_date_start = datetime.datetime(datetime.MAXYEAR, 1, 1, tzinfo=datetime.UTC)
+    max_date_finish = datetime.datetime(datetime.MAXYEAR, 1, 2, tzinfo=datetime.UTC)
 
     with database.db.atomic():
         for modification in new_entries:
-            if not (modification.join_date < modification.start_date < modification.finish_date):
+            if not (
+                modification.join_date
+                < (modification.start_date or max_date_start)
+                < (modification.finish_date or max_date_finish)
+            ):
                 raise error.InvalidActionError(f"Invalid dates for {modification.user.name}")
 
             entry = database.AsyncRaceEntry.entry_for(room, modification.user.id)
