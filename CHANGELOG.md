@@ -83,6 +83,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Keybearer hints may refer to pickups using different categories than before.
 - Fixed: When using the new experimental generator setting to consider possible unsafe resources, the Starter Preset can once again see Missile Launcher placed in the GFMC Compound crate.
 
+#### Logic Database
+
+##### Agon Wastes
+
+- Changed: Mining Plaza: Climbing the room with Screw Attack and no Space Jump bumped up to intermediate movement.
+- Changed: Trial Grounds: Climbing the room with Screw Attack and no Space Jump bumped up to intermediate movement.
+
+##### Temple Grounds
+
+- Changed: Temple Assembly Site: Reaching the pickup location with Screw Attack and no Space Jump lowered to beginner movement.
+
 ### Metroid: Samus Returns
 
 - Fixed: One Area 8 theme from not being included in music shuffle.
