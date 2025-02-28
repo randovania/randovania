@@ -9347,6 +9347,32 @@
                     "location_category": "minor",
                     "hint_features": [],
                     "connections": {
+                        "Door to Oasis Storage": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Roll off as morph, unmorph in mid-air and hold left: https://youtu.be/Whe4Vq8TKLg",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Cathedral": {
                             "type": "and",
                             "data": {
@@ -9615,13 +9641,8 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Hi-Jump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Have Any Jump Upgrade"
                                                             }
                                                         ]
                                                     }
