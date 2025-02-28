@@ -4,6 +4,8 @@ import dataclasses
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+import requests
+
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 
 if TYPE_CHECKING:
@@ -46,7 +48,16 @@ class FactorioGameExporter(GameExporter[FactorioGameExportParams]):
     ) -> None:
         import factorio_randovania_mod
 
-        factorio_randovania_mod.create(
-            patch_data=patch_data,
-            output_folder=export_params.output_path,
+        export_params.output_path.mkdir(parents=True, exist_ok=True)
+
+        assets_mod = factorio_randovania_mod.export_mod(
+            patch_data,
+            export_params.output_path,
         )
+        if assets_mod is not None:
+            assets_path, assets_url = assets_mod
+            with requests.get(assets_url, stream=True) as r:
+                r.raise_for_status()
+                with assets_path.open("wb") as f:
+                    for chunk in r.iter_content(chunk_size=8192):
+                        f.write(chunk)

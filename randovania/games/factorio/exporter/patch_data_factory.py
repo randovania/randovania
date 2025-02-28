@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import copy
 import typing
 
 from randovania.exporter.patch_data_factory import PatchDataFactory
@@ -59,6 +58,7 @@ class FactorioPatchDataFactory(PatchDataFactory):
                 "description": exported.description,
                 "icon": exported.model.name,
                 "icon_size": 64 if exported.model.name.startswith("__base__/graphics/icons") else 256,
+                "cost_reference": node.extra["original_tech"],
                 "prerequisites": prerequisites,
                 "unlocks": [
                     conditional.resources[0][0].short_name
@@ -66,14 +66,6 @@ class FactorioPatchDataFactory(PatchDataFactory):
                     if conditional.resources
                 ],
             }
-            if "research_trigger" in node.extra:
-                new_tech["research_trigger"] = copy.deepcopy(node.extra["research_trigger"])
-            else:
-                new_tech["cost"] = {
-                    "count": node.extra["count"],
-                    "time": node.extra["time"],
-                    "ingredients": list(node.extra["ingredients"]),
-                }
 
             technologies.append(new_tech)
 
