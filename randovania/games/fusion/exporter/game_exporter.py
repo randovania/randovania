@@ -10,12 +10,12 @@ from mars_patcher import patcher
 from mars_patcher.auto_generated_types import Marsschema
 
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
+from randovania.lib import json_lib
 
 if TYPE_CHECKING:
     from randovania.lib import status_update_lib
 
 
-# TODO
 @dataclasses.dataclass(frozen=True)
 class FusionGameExportParams(GameExportParams):
     input_path: Path
@@ -54,4 +54,9 @@ class FusionGameExporter(GameExporter):
         assert isinstance(export_params, FusionGameExportParams)
         new_patch = typing.cast(Marsschema, copy.copy(patch_data))
         patcher.validate_patch_data(new_patch)
-        patcher.patch(export_params.input_path, export_params.output_path, new_patch, progress_update)
+        try:
+            patcher.patch(export_params.input_path, export_params.output_path, new_patch, progress_update)
+        finally:
+            json_lib.write_path(
+                export_params.output_path.parent.joinpath(f"{export_params.output_path.stem}_mars.json"), patch_data
+            )
