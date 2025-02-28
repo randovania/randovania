@@ -88,6 +88,8 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
 
         signal_handling.set_combo_with_value(self.logical_pickup_placement_combo, layout.logical_pickup_placement)
 
+        self.consider_unsafe_check.setChecked(layout.consider_possible_unsafe_resources)
+
         self.trick_level_minimal_logic_check.setChecked(layout.trick_level.minimal_logic)
         signal_handling.set_combo_with_value(self.dangerous_combo, layout.logical_resource_action)
 
