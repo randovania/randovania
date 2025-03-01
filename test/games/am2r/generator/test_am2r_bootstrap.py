@@ -27,14 +27,14 @@ _boss_indices = [111, 3, 6, 14, 11, 50]
     ],
 )
 def test_assign_pool_results_predetermined(am2r_game_description, am2r_configuration, artifacts, expected):
-    patches = GamePatches.create_from_game(
-        am2r_game_description, 0, dataclasses.replace(am2r_configuration, artifacts=artifacts)
-    )
+    am2r_configuration = dataclasses.replace(am2r_configuration, artifacts=artifacts)
+    patches = GamePatches.create_from_game(am2r_game_description, 0, am2r_configuration)
     pool_results = pool_creator.calculate_pool_results(patches.configuration, patches.game)
 
     # Run
     result = AM2RBootstrap().assign_pool_results(
         Random(8000),
+        am2r_configuration,
         patches,
         pool_results,
     )
@@ -57,15 +57,15 @@ def test_assign_pool_results_predetermined(am2r_game_description, am2r_configura
     ],
 )
 def test_assign_pool_results_prefer_anywhere(am2r_game_description, am2r_configuration, artifacts):
-    patches = GamePatches.create_from_game(
-        am2r_game_description, 0, dataclasses.replace(am2r_configuration, artifacts=artifacts)
-    )
+    am2r_configuration = dataclasses.replace(am2r_configuration, artifacts=artifacts)
+    patches = GamePatches.create_from_game(am2r_game_description, 0, am2r_configuration)
     pool_results = pool_creator.calculate_pool_results(patches.configuration, patches.game)
     initial_starting_place = copy(pool_results.to_place)
 
     # Run
     result = AM2RBootstrap().assign_pool_results(
         Random(8000),
+        am2r_configuration,
         patches,
         pool_results,
     )

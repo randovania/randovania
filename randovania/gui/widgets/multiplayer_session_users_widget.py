@@ -286,7 +286,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
         game_enum = self._get_preset(world_uid).game
         patch_data = await self._session_api.create_patcher_file(
-            world_uid, options.options_for_game(game_enum).cosmetic_patches.as_json
+            world_uid, options.generic_per_game_options(game_enum).cosmetic_patches.as_json
         )
         self.GameExportRequested.emit(world_uid, patch_data)
 

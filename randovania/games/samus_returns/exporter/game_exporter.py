@@ -25,7 +25,7 @@ class MSRGameExportParams(GameExportParams):
     post_export: Callable[[status_update_lib.ProgressUpdateCallable], None] | None
 
 
-class MSRGameExporter(GameExporter):
+class MSRGameExporter(GameExporter[MSRGameExportParams]):
     _busy: bool = False
 
     @property
@@ -42,7 +42,7 @@ class MSRGameExporter(GameExporter):
         """
         return False
 
-    def export_params_type(self) -> type[GameExportParams]:
+    def export_params_type(self) -> type[MSRGameExportParams]:
         """
         Returns the type of the GameExportParams expected by this exporter.
         """
@@ -58,10 +58,9 @@ class MSRGameExporter(GameExporter):
     def _do_export_game(
         self,
         patch_data: dict,
-        export_params: GameExportParams,
+        export_params: MSRGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
-        assert isinstance(export_params, MSRGameExportParams)
         export_params.output_path.mkdir(parents=True, exist_ok=True)
 
         monitoring.set_tag("msr_target_platform", export_params.target_platform.value)

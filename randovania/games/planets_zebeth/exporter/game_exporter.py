@@ -23,7 +23,7 @@ class PlanetsZebethGameExportParams(GameExportParams):
     output_path: Path
 
 
-class PlanetsZebethGameExporter(GameExporter):
+class PlanetsZebethGameExporter(GameExporter[PlanetsZebethGameExportParams]):
     _busy: bool = False
 
     @property
@@ -40,7 +40,7 @@ class PlanetsZebethGameExporter(GameExporter):
         """
         return False
 
-    def export_params_type(self) -> type[GameExportParams]:
+    def export_params_type(self) -> type[PlanetsZebethGameExportParams]:
         """
         Returns the type of the GameExportParams expected by this exporter.
         """
@@ -49,11 +49,9 @@ class PlanetsZebethGameExporter(GameExporter):
     def _do_export_game(
         self,
         patch_data: dict,
-        export_params: GameExportParams,
+        export_params: PlanetsZebethGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
-        assert isinstance(export_params, PlanetsZebethGameExportParams)
-
         # Check if dotnet is available
         # Raises error in case it's not set up
         is_dotnet_set_up()

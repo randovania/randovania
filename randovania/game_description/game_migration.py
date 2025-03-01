@@ -81,15 +81,7 @@ def _migrate_v12(data: dict, game: RandovaniaGame) -> None:
                 if node["node_type"] == "player_ship":
                     node["node_type"] = "teleporter_network"
                     node["network"] = "default"
-
                     node["requirement_to_activate"] = {"type": "and", "data": {"comment": None, "items": []}}
-                    if game == RandovaniaGame.METROID_PRIME_CORRUPTION:
-                        node["requirement_to_activate"]["data"]["items"].append(
-                            {
-                                "type": "resource",
-                                "data": {"type": "items", "name": "CommandVisor", "amount": 1, "negate": False},
-                            }
-                        )
 
                 elif node["node_type"] == "logbook":
                     node["node_type"] = "hint"

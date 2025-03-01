@@ -26,13 +26,13 @@ from randovania.generator.pickup_pool import pool_creator
     ],
 )
 def test_assign_pool_results_predetermined(msr_game_description, msr_configuration, artifacts, expected):
-    patches = GamePatches.create_from_game(
-        msr_game_description, 0, dataclasses.replace(msr_configuration, artifacts=artifacts)
-    )
-    pool_results = pool_creator.calculate_pool_results(patches.configuration, patches.game)
+    msr_configuration = dataclasses.replace(msr_configuration, artifacts=artifacts)
+    patches = GamePatches.create_from_game(msr_game_description, 0, msr_configuration)
+    pool_results = pool_creator.calculate_pool_results(msr_configuration, patches.game)
     # Run
     result = MSRBootstrap().assign_pool_results(
         Random(8000),
+        msr_configuration,
         patches,
         pool_results,
     )
@@ -44,7 +44,7 @@ def test_assign_pool_results_predetermined(msr_game_description, msr_configurati
 
 
 @pytest.mark.parametrize(
-    ("artifacts"),
+    "artifacts",
     [
         (MSRArtifactConfig(False, False, False, True, 5, 5)),
         (MSRArtifactConfig(True, False, False, True, 10, 10)),
@@ -53,15 +53,15 @@ def test_assign_pool_results_predetermined(msr_game_description, msr_configurati
     ],
 )
 def test_assign_pool_results_prefer_anywhere(msr_game_description, msr_configuration, artifacts):
-    patches = GamePatches.create_from_game(
-        msr_game_description, 0, dataclasses.replace(msr_configuration, artifacts=artifacts)
-    )
-    pool_results = pool_creator.calculate_pool_results(patches.configuration, patches.game)
+    msr_configuration = dataclasses.replace(msr_configuration, artifacts=artifacts)
+    patches = GamePatches.create_from_game(msr_game_description, 0, msr_configuration)
+    pool_results = pool_creator.calculate_pool_results(msr_configuration, patches.game)
     initial_starting_place = copy(pool_results.to_place)
 
     # Run
     result = MSRBootstrap().assign_pool_results(
         Random(8000),
+        msr_configuration,
         patches,
         pool_results,
     )

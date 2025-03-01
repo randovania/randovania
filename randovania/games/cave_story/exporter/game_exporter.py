@@ -21,7 +21,7 @@ class CSGameExportParams(GameExportParams):
     platform: CSPlatform
 
 
-class CSGameExporter(GameExporter):
+class CSGameExporter(GameExporter[CSGameExportParams]):
     _busy: bool = False
 
     @property
@@ -38,7 +38,7 @@ class CSGameExporter(GameExporter):
         """
         return False
 
-    def export_params_type(self) -> type[GameExportParams]:
+    def export_params_type(self) -> type[CSGameExportParams]:
         """
         Returns the type of the GameExportParams expected by this exporter.
         """
@@ -54,10 +54,9 @@ class CSGameExporter(GameExporter):
     def _do_export_game(
         self,
         patch_data: dict,
-        export_params: GameExportParams,
+        export_params: CSGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
-        assert isinstance(export_params, CSGameExportParams)
         new_patch = typing.cast(CaverData, copy.copy(patch_data))
         if new_patch["mychar"] is not None:
             new_patch["mychar"] = str(RandovaniaGame.CAVE_STORY.data_path.joinpath(patch_data["mychar"]))

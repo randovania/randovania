@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 from unittest.mock import ANY, MagicMock
 
-import open_dread_rando.dread_patcher
+import open_dread_rando.dread_patcher  # type: ignore[import-untyped]
 import pytest
 
 from randovania.games.dread.exporter.game_exporter import DreadGameExporter, DreadGameExportParams, DreadModPlatform

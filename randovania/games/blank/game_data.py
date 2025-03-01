@@ -73,7 +73,7 @@ def _hash_words() -> list[str]:
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Blank",
     long_name="Blank Development Game",
-    development_state=randovania.game.development_state.DevelopmentState.EXPERIMENTAL,
+    development_state=randovania.game.development_state.DevelopmentState.STAGING,
     presets=[
         {"path": "starter_preset.rdvpreset"},
     ],

@@ -49,7 +49,6 @@ class DolRemotePatch:
 _RDS_TO_RDV_GAME = {
     RDSGame.PRIME: RandovaniaGame.METROID_PRIME,
     RDSGame.ECHOES: RandovaniaGame.METROID_PRIME_ECHOES,
-    RDSGame.CORRUPTION: RandovaniaGame.METROID_PRIME_CORRUPTION,
 }
 
 
@@ -165,14 +164,12 @@ class PrimeRemoteConnector(RemoteConnector):
 
         return Inventory(inventory)
 
-    async def known_collected_locations(self) -> set[PickupIndex]:
-        """Fetches pickup indices that have been collected.
-        The list may return less than all collected locations, depending on implementation details.
-        This function also returns a list of remote patches that must be performed via `execute_remote_patches`.
+    async def check_for_collected_location(self) -> bool:
+        """
+        Queries the game for the multiworld magic item and checks if a new location was collected.
+        :return: True, if a new location was found and remote patches were executed. False otherwise.
         """
         multiworld_magic_item = self.multiworld_magic_item
-        if multiworld_magic_item is None:
-            return set()
 
         memory_ops = await self._memory_op_for_items([multiworld_magic_item])
         op_result = await self.executor.perform_single_memory_operation(*memory_ops)
@@ -181,7 +178,7 @@ class PrimeRemoteConnector(RemoteConnector):
         magic_inv = InventoryItem(*struct.unpack(">II", op_result))
         if magic_inv.amount > 0:
             self.logger.info(f"magic item was at {magic_inv.amount}/{magic_inv.capacity}")
-            locations = {PickupIndex(magic_inv.amount - 1)}
+            self.PickupIndexCollected.emit(PickupIndex(magic_inv.amount - 1))
             patches = [
                 DolRemotePatch(
                     [],
@@ -194,9 +191,9 @@ class PrimeRemoteConnector(RemoteConnector):
                 )
             ]
             await self.execute_remote_patches(patches)
-            return locations
-        else:
-            return set()
+            return True
+
+        return False
 
     async def receive_remote_pickups(
         self,
@@ -359,10 +356,7 @@ class PrimeRemoteConnector(RemoteConnector):
 
     async def _multiworld_interaction(self) -> bool:
         """Returns true if an operation was sent."""
-        locations = await self.known_collected_locations()
-        if len(locations) != 0:
-            for location in locations:
-                self.PickupIndexCollected.emit(location)
+        if await self.check_for_collected_location():
             return True
         else:
             return await self.receive_remote_pickups(self.last_inventory, self.remote_pickups)

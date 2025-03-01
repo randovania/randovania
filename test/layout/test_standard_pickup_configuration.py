@@ -52,18 +52,6 @@ def prime2_data(request, test_files_dir):
     )
 
 
-@pytest.fixture(
-    params=[
-        {"encoded": b"\x00\x00", "replace": {}},
-    ],
-)
-def prime3_data(request, test_files_dir):
-    return (
-        request.param["encoded"],
-        *_create_config_for(test_files_dir, RandovaniaGame.METROID_PRIME_CORRUPTION, request.param["replace"]),
-    )
-
-
 def test_decode_prime2(prime2_data):
     # Setup
     data, default, expected = prime2_data
@@ -79,17 +67,6 @@ def test_decode_prime2(prime2_data):
 def test_encode_prime2(prime2_data):
     # Setup
     expected, default, value = prime2_data
-
-    # Run
-    result = bitpacking.pack_value(value, {"reference": default})
-
-    # Assert
-    assert result == expected
-
-
-def test_encode_prime3(prime3_data):
-    # Setup
-    expected, default, value = prime3_data
 
     # Run
     result = bitpacking.pack_value(value, {"reference": default})

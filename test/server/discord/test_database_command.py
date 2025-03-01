@@ -36,11 +36,11 @@ async def test_database_command():
     # Setup
     cog = DatabaseCommandCog({"guild": 1234}, MagicMock())
     cog.database_inspect.cog = cog
-    cog._select_split_region_view[RandovaniaGame.METROID_PRIME_CORRUPTION] = view = MagicMock()
+    cog._select_split_region_view[RandovaniaGame.BLANK] = view = MagicMock()
     ctx = AsyncMock()
 
     # Run
-    await cog.database_inspect(ctx, game=RandovaniaGame.METROID_PRIME_CORRUPTION)
+    await cog.database_inspect(ctx, game=RandovaniaGame.BLANK)
 
     # Assert
     ctx.respond.assert_awaited_once_with(
@@ -57,13 +57,13 @@ async def test_on_database_world_selected():
 
     view = MagicMock()
     item = SelectSplitRegionItem(
-        RandovaniaGame.METROID_PRIME_CORRUPTION,
+        RandovaniaGame.BLANK,
         [
             SplitRegion(
                 MagicMock(),
                 "The World",
                 [area],
-                f"{RandovaniaGame.METROID_PRIME_CORRUPTION.value}_world_1",
+                f"{RandovaniaGame.BLANK.value}_world_1",
                 view,
             )
         ],
@@ -71,7 +71,7 @@ async def test_on_database_world_selected():
 
     ctx = AsyncMock()
     ctx.response = MagicMock(spec=discord.InteractionResponse)
-    ctx.data = {"values": [f"{RandovaniaGame.METROID_PRIME_CORRUPTION.value}_world_1"]}
+    ctx.data = {"values": [f"{RandovaniaGame.BLANK.value}_world_1"]}
 
     # Run
     item.refresh_state(ctx)

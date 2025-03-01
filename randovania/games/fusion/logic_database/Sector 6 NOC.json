@@ -386,7 +386,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "When standing on frozen Menu's, use bomb jumps/spring ball to break them",
+                                                        "comment": "When standing on frozen Menu's, use bomb jumps/spring ball to break them: https://youtu.be/Mb5FyoDE9VM",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -1538,7 +1538,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Mimic Access": {
+                        "Door to Blue-X Blockade": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1560,7 +1560,7 @@
                             }
                         },
                         "Door to Glass Tube to Sector 5 (ARC)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -1572,13 +1572,65 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "VariaSuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoosts",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 70,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
                         }
                     }
                 },
-                "Door to Mimic Access": {
+                "Door to Blue-X Blockade": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1599,7 +1651,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Mimic Access",
+                        "area": "Blue-X Blockade",
                         "node": "Door to Nocturnal Shaft"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -1656,7 +1708,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Pillar Puzzle": {
+                        "Door to Pillar Highway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1998,7 +2050,7 @@
                         }
                     }
                 },
-                "Door to Pillar Puzzle": {
+                "Door to Pillar Highway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2019,7 +2071,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Pillar Puzzle",
+                        "area": "Pillar Highway",
                         "node": "Door to Nocturnal Shaft"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -2051,7 +2103,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Wave beam is hard to control for completing the puzzle",
+                                                        "comment": "Wave beam is hard to control for completing the puzzle: https://youtu.be/7EqFwO03BAs",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2097,7 +2149,7 @@
                 }
             }
         },
-        "Mimic Access": {
+        "Blue-X Blockade": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -2129,7 +2181,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Nocturnal Shaft",
-                        "node": "Door to Mimic Access"
+                        "node": "Door to Blue-X Blockade"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -2138,7 +2190,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Mimic Storage": {
+                        "Door to Missile Mimic Lodge": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2212,13 +2264,30 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Dodge all the X: https://youtu.be/4dmxLfHq0OM",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
                         }
                     }
                 },
-                "Door to Mimic Storage": {
+                "Door to Missile Mimic Lodge": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2239,8 +2308,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Mimic Storage",
-                        "node": "Door to Mimic Access"
+                        "area": "Missile Mimic Lodge",
+                        "node": "Door to Blue-X Blockade"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -2323,6 +2392,23 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Dodge all the X: https://youtu.be/xBAhWbWrlBs",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -2341,7 +2427,7 @@
                 ]
             },
             "nodes": {
-                "Door to X-B.O.X. Access": {
+                "Door to X-B.O.X. Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2362,7 +2448,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "X-B.O.X. Access",
+                        "area": "X-B.O.X. Arena Access",
                         "node": "Door to Forbidden Entrance"
                     },
                     "default_dock_weakness": "L4 Hatch",
@@ -2565,7 +2651,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to X-B.O.X. Access": {
+                        "Door to X-B.O.X. Arena Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2777,7 +2863,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Maintenance Annex": {
+                        "Door to Maintenance Wing": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2898,7 +2984,7 @@
                         }
                     }
                 },
-                "Door to Maintenance Annex": {
+                "Door to Maintenance Wing": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2919,7 +3005,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Maintenance Annex",
+                        "area": "Maintenance Wing",
                         "node": "Door to Nocturnal Playground"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -3234,7 +3320,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Shell Access": {
+                        "Door to Catacombs": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3313,7 +3399,7 @@
                         }
                     }
                 },
-                "Door to Shell Access": {
+                "Door to Catacombs": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3335,7 +3421,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Shell Access",
+                        "area": "Catacombs",
                         "node": "Door to Clogged Cavern"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -3464,7 +3550,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Shell Access": {
+                        "Door to Catacombs": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3475,7 +3561,7 @@
                 }
             }
         },
-        "Blue X Blockade": {
+        "Warehouse": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -3507,7 +3593,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Data Save Room",
-                        "node": "Door to Blue X Blockade"
+                        "node": "Door to Warehouse"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3516,7 +3602,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Big Shell 2": {
+                        "Door to Warehouse Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3547,7 +3633,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Data Access",
-                        "node": "Door to Blue X Blockade"
+                        "node": "Door to Warehouse"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3573,7 +3659,7 @@
                                 ]
                             }
                         },
-                        "Door to Big Shell 2": {
+                        "Door to Warehouse Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3639,7 +3725,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Zozoro Wine Cellar",
-                        "node": "Other to Blue X Blockade"
+                        "node": "Other to Warehouse"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -3760,7 +3846,7 @@
                         }
                     }
                 },
-                "Door to Big Shell 2": {
+                "Door to Warehouse Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3781,8 +3867,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Big Shell 2",
-                        "node": "Door to Blue X Blockade"
+                        "area": "Warehouse Access",
+                        "node": "Door to Warehouse"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3820,7 +3906,7 @@
                 "unlocked_save_recharge_station": true
             },
             "nodes": {
-                "Door to Blue X Blockade": {
+                "Door to Warehouse": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3841,7 +3927,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Blue X Blockade",
+                        "area": "Warehouse",
                         "node": "Door to Data Save Room"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -3878,7 +3964,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Blue X Blockade": {
+                        "Door to Warehouse": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3899,7 +3985,7 @@
                 ]
             },
             "nodes": {
-                "Door to Blue X Blockade": {
+                "Door to Warehouse": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3920,7 +4006,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Blue X Blockade",
+                        "area": "Warehouse",
                         "node": "Door to Data Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -3975,7 +4061,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Blue X Blockade": {
+                        "Door to Warehouse": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4415,7 +4501,7 @@
                 }
             }
         },
-        "X-B.O.X. Access": {
+        "X-B.O.X. Arena Access": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -4447,7 +4533,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Forbidden Entrance",
-                        "node": "Door to X-B.O.X. Access"
+                        "node": "Door to X-B.O.X. Arena Access"
                     },
                     "default_dock_weakness": "L4 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4691,7 +4777,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "X-B.O.X. Arena",
-                        "node": "Door to X-B.O.X. Access"
+                        "node": "Door to X-B.O.X. Arena Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4842,7 +4928,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Spaceboost Alley",
-                        "node": "Door to X-B.O.X. Access"
+                        "node": "Door to X-B.O.X. Arena Access"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -4947,7 +5033,7 @@
                     "location_category": "minor",
                     "hint_features": [],
                     "connections": {
-                        "Other to Blue X Blockade": {
+                        "Other to Warehouse": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4961,7 +5047,7 @@
                         }
                     }
                 },
-                "Other to Blue X Blockade": {
+                "Other to Warehouse": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4982,7 +5068,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Blue X Blockade",
+                        "area": "Warehouse",
                         "node": "Other to Zozoro Wine Cellar"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -5113,7 +5199,7 @@
                 ]
             },
             "nodes": {
-                "Door to X-B.O.X. Access": {
+                "Door to X-B.O.X. Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5134,7 +5220,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "X-B.O.X. Access",
+                        "area": "X-B.O.X. Arena Access",
                         "node": "Door to X-B.O.X. Arena"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -5354,7 +5440,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to X-B.O.X. Access": {
+                        "Door to X-B.O.X. Arena Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7219,7 +7305,7 @@
                 }
             }
         },
-        "Mimic Storage": {
+        "Missile Mimic Lodge": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -7252,7 +7338,7 @@
                     "location_category": "minor",
                     "hint_features": [],
                     "connections": {
-                        "Door to Mimic Access": {
+                        "Door to Blue-X Blockade": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7266,7 +7352,7 @@
                         }
                     }
                 },
-                "Door to Mimic Access": {
+                "Door to Blue-X Blockade": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7287,8 +7373,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Mimic Access",
-                        "node": "Door to Mimic Storage"
+                        "area": "Blue-X Blockade",
+                        "node": "Door to Missile Mimic Lodge"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -7405,7 +7491,7 @@
                 }
             }
         },
-        "Shell Access": {
+        "Catacombs": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -7469,7 +7555,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Clogged Cavern",
-                        "node": "Door to Shell Access"
+                        "node": "Door to Catacombs"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -7485,7 +7571,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Big Shell 1": {
+                        "Door to Weapons Testing Grounds": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7499,7 +7585,7 @@
                         }
                     }
                 },
-                "Door to Big Shell 1": {
+                "Door to Weapons Testing Grounds": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7520,8 +7606,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Big Shell 1",
-                        "node": "Door to Shell Access"
+                        "area": "Weapons Testing Grounds",
+                        "node": "Door to Catacombs"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -7546,7 +7632,7 @@
                 }
             }
         },
-        "Big Shell 1": {
+        "Weapons Testing Grounds": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -7556,7 +7642,7 @@
                 ]
             },
             "nodes": {
-                "Door to Shell Access": {
+                "Door to Catacombs": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7577,8 +7663,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Shell Access",
-                        "node": "Door to Big Shell 1"
+                        "area": "Catacombs",
+                        "node": "Door to Weapons Testing Grounds"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -7587,7 +7673,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Big Shell 2": {
+                        "Door to Warehouse Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7601,7 +7687,7 @@
                         }
                     }
                 },
-                "Door to Big Shell 2": {
+                "Door to Warehouse Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7622,8 +7708,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Big Shell 2",
-                        "node": "Door to Big Shell 1"
+                        "area": "Warehouse Access",
+                        "node": "Door to Weapons Testing Grounds"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -7632,7 +7718,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Shell Access": {
+                        "Door to Catacombs": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7737,7 +7823,7 @@
                 }
             }
         },
-        "Big Shell 2": {
+        "Warehouse Access": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -7747,7 +7833,7 @@
                 ]
             },
             "nodes": {
-                "Door to Big Shell 1": {
+                "Door to Weapons Testing Grounds": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7768,8 +7854,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Big Shell 1",
-                        "node": "Door to Big Shell 2"
+                        "area": "Weapons Testing Grounds",
+                        "node": "Door to Warehouse Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -7778,7 +7864,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Blue X Blockade": {
+                        "Door to Warehouse": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7797,7 +7883,7 @@
                         }
                     }
                 },
-                "Door to Blue X Blockade": {
+                "Door to Warehouse": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7818,8 +7904,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Blue X Blockade",
-                        "node": "Door to Big Shell 2"
+                        "area": "Warehouse",
+                        "node": "Door to Warehouse Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -7828,7 +7914,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Big Shell 1": {
+                        "Door to Weapons Testing Grounds": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8588,7 +8674,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Maintenance Annex": {
+                        "Door to Maintenance Wing": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8642,7 +8728,7 @@
                         }
                     }
                 },
-                "Door to Maintenance Annex": {
+                "Door to Maintenance Wing": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8663,7 +8749,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Maintenance Annex",
+                        "area": "Maintenance Wing",
                         "node": "Door to Twin Caverns East"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -8825,7 +8911,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Maintenance Annex": {
+                        "Door to Maintenance Wing": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8951,7 +9037,7 @@
                 }
             }
         },
-        "Maintenance Annex": {
+        "Maintenance Wing": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -8983,7 +9069,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Twin Caverns East",
-                        "node": "Door to Maintenance Annex"
+                        "node": "Door to Maintenance Wing"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -9023,7 +9109,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Nocturnal Playground",
-                        "node": "Door to Maintenance Annex"
+                        "node": "Door to Maintenance Wing"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -9401,7 +9487,7 @@
                 }
             }
         },
-        "Pillar Puzzle": {
+        "Pillar Highway": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -9465,7 +9551,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Nocturnal Shaft",
-                        "node": "Door to Pillar Puzzle"
+                        "node": "Door to Pillar Highway"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -9645,7 +9731,7 @@
                         }
                     }
                 },
-                "Door to X-B.O.X. Access": {
+                "Door to X-B.O.X. Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9666,7 +9752,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "X-B.O.X. Access",
+                        "area": "X-B.O.X. Arena Access",
                         "node": "Door to Spaceboost Alley"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -9794,7 +9880,7 @@
                                 ]
                             }
                         },
-                        "Door to X-B.O.X. Access": {
+                        "Door to X-B.O.X. Arena Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,

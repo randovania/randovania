@@ -4,7 +4,6 @@ import dataclasses
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.dread.layout.dread_configuration import DreadArtifactConfig, DreadConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
 
@@ -16,7 +15,7 @@ def test_has_unsupported_features(preset_manager):
     configuration = preset.configuration
 
     gd = default_database.game_description_for(preset.game)
-    suitless = gd.resource_database.get_by_type_and_index(ResourceType.TRICK, "Suitless")
+    suitless = gd.resource_database.get_trick("Suitless")
 
     configuration = dataclasses.replace(
         configuration,

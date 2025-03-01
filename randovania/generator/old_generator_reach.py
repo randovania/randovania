@@ -3,7 +3,7 @@ from __future__ import annotations
 import copy
 import functools
 import typing
-from typing import TYPE_CHECKING, NamedTuple
+from typing import TYPE_CHECKING, NamedTuple, Self, override
 
 from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.resource_node import ResourceNode
@@ -18,6 +18,7 @@ if TYPE_CHECKING:
     from collections.abc import Iterator
 
     from randovania.game_description.game_description import GameDescription
+    from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.resolver.state import State
 
 
@@ -70,9 +71,10 @@ class OldGeneratorReach(GeneratorReach):
     _uncollectable_nodes: dict[int, RequirementSet]
     _safe_nodes: _SafeNodes | None
     _is_node_safe_cache: dict[int, bool]
+    _filler_config: FillerConfiguration
 
     def __deepcopy__(self, memodict: dict) -> OldGeneratorReach:
-        reach = OldGeneratorReach(self._game, self._state, self._digraph.copy())
+        reach = OldGeneratorReach(self._game, self._state, self._digraph.copy(), copy.copy(self._filler_config))
         reach._unreachable_paths = copy.copy(self._unreachable_paths)
         reach._uncollectable_nodes = copy.copy(self._uncollectable_nodes)
         reach._reachable_paths = self._reachable_paths
@@ -83,7 +85,9 @@ class OldGeneratorReach(GeneratorReach):
         reach._is_node_safe_cache = copy.copy(self._is_node_safe_cache)
         return reach
 
-    def __init__(self, game: GameDescription, state: State, graph: graph_module.BaseGraph):
+    def __init__(
+        self, game: GameDescription, state: State, graph: graph_module.BaseGraph, filler_config: FillerConfiguration
+    ):
         self._game = game
         self.all_nodes = game.region_list.all_nodes
         self._state = state
@@ -93,14 +97,16 @@ class OldGeneratorReach(GeneratorReach):
         self._reachable_paths = None
         self._node_reachable_cache = {}
         self._is_node_safe_cache = {}
+        self._filler_config = filler_config
 
     @classmethod
     def reach_from_state(
         cls,
         game: GameDescription,
         initial_state: State,
-    ) -> GeneratorReach:
-        reach = cls(game, initial_state, graph_module.RandovaniaGraph.new())
+        filler_config: FillerConfiguration,
+    ) -> Self:
+        reach = cls(game, initial_state, graph_module.RandovaniaGraph.new(), filler_config)
         game.region_list.ensure_has_node_cache()
         reach._expand_graph([GraphPath(None, initial_state.node, RequirementSet.trivial())])
         return reach
@@ -377,3 +383,12 @@ class OldGeneratorReach(GeneratorReach):
         return self.game.victory_condition_as_set(context).satisfied(
             context, self._state.health_for_damage_requirements
         )
+
+    @override
+    @property
+    def filler_config(self) -> FillerConfiguration:
+        return self._filler_config
+
+    @filler_config.setter
+    def filler_config(self, config: FillerConfiguration) -> None:
+        self._filler_config = config

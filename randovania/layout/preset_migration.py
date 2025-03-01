@@ -250,7 +250,6 @@ def _migrate_v9(preset: dict, game: RandovaniaGame) -> None:
         preset["uuid"] = str(uuid.uuid4())
 
     _name_to_uuid = {
-        "Corruption Preset": "5682c9ef-d447-4327-b473-ba1216d83439",
         "Darkszero's Deluxe": "ea1eced4-53b8-4bb3-a08f-27ac1afe6aab",
         "Fewest Changes": "bba48268-0710-4ac5-baae-dcd5fcd31d80",
         "Prime Preset": "e36f52b3-ccd9-4dd7-a18f-b57b25f6b079",
@@ -323,15 +322,6 @@ def _migrate_v13(preset: dict, game: RandovaniaGame) -> None:
             "Light Ammo Expansion": ["46"],
             "Beam Ammo Expansion": ["45", "46"],
         },
-        RandovaniaGame.METROID_PRIME_CORRUPTION: {
-            "Missile Expansion": ["4"],
-            "Ship Missile Expansion": ["45"],
-        },
-        RandovaniaGame.SUPER_METROID: {
-            "Missile Expansion": ["5"],
-            "Super Missile Expansion": ["6"],
-            "Power Bomb Expansion": ["7"],
-        },
     }[game]
     main_items = {
         RandovaniaGame.METROID_PRIME: {
@@ -346,11 +336,6 @@ def _migrate_v13(preset: dict, game: RandovaniaGame) -> None:
             "Seeker Launcher": ["44"],
             "Power Bomb": ["43"],
         },
-        RandovaniaGame.METROID_PRIME_CORRUPTION: {
-            "Missile Launcher": ["4"],
-            "Ship Missile": ["45"],
-        },
-        RandovaniaGame.SUPER_METROID: {},
     }
 
     for item, ids in main_items[game].items():
@@ -747,7 +732,6 @@ def _migrate_v56(preset: dict, game: RandovaniaGame) -> None:
     if game in {
         RandovaniaGame.METROID_DREAD,
         RandovaniaGame.METROID_SAMUS_RETURNS,
-        RandovaniaGame.METROID_PRIME_CORRUPTION,
     }:
         preset["configuration"].pop("elevators")
 
@@ -760,9 +744,7 @@ def _migrate_v57(preset: dict, game: RandovaniaGame) -> None:
         RandovaniaGame.METROID_DREAD: ["tunnel", "other", "teleporter"],
         RandovaniaGame.METROID_PRIME: ["morph_ball", "other", "teleporter"],
         RandovaniaGame.METROID_PRIME_ECHOES: ["morph_ball", "other", "teleporter"],
-        RandovaniaGame.METROID_PRIME_CORRUPTION: ["door", "morph_ball", "other", "teleporter"],
         RandovaniaGame.METROID_SAMUS_RETURNS: ["door", "tunnel", "other", "teleporter"],
-        RandovaniaGame.SUPER_METROID: ["door", "morph_ball", "other", "teleporter"],
     }
 
     for type_name in types_table[game]:
@@ -775,7 +757,6 @@ def _migrate_v58(preset: dict, game: RandovaniaGame) -> None:
     if game in {
         RandovaniaGame.METROID_PRIME,
         RandovaniaGame.METROID_PRIME_ECHOES,
-        RandovaniaGame.METROID_PRIME_CORRUPTION,
     }:
         mapping = migration_data.get_raw_data(game)["rename_teleporter_nodes"]
 
@@ -1099,6 +1080,10 @@ def _migrate_v96(preset: dict, game: RandovaniaGame) -> None:
         }
 
 
+def _migrate_v97(preset: dict, game: RandovaniaGame) -> None:
+    preset["configuration"]["consider_possible_unsafe_resources"] = False
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1196,6 +1181,7 @@ _MIGRATIONS = [
     _migrate_v94,
     _migrate_v95,  # msr rename baby_metroid hint to final_boss_item hint
     _migrate_v96,  # dread disable lights per region
+    _migrate_v97,  # consider possible unsafe resources
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

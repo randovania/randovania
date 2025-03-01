@@ -62,6 +62,10 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
             self.check_if_beatable_after_base_patches_check,
             self._persist_bool_layout_field("check_if_beatable_after_base_patches"),
         )
+        signal_handling.on_checked(
+            self.consider_unsafe_check,
+            self._persist_bool_layout_field("consider_possible_unsafe_resources"),
+        )
 
         # Damage strictness
         self.damage_strictness_combo.setItemData(0, LayoutDamageStrictness.STRICT)
@@ -83,6 +87,8 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         )
 
         signal_handling.set_combo_with_value(self.logical_pickup_placement_combo, layout.logical_pickup_placement)
+
+        self.consider_unsafe_check.setChecked(layout.consider_possible_unsafe_resources)
 
         self.trick_level_minimal_logic_check.setChecked(layout.trick_level.minimal_logic)
         signal_handling.set_combo_with_value(self.dangerous_combo, layout.logical_resource_action)
@@ -121,6 +127,8 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         yield self.logical_pickup_placement_combo
         yield self.logical_pickup_placement_label
         yield self.logical_pickup_placement_description
+        yield self.consider_unsafe_check
+        yield self.consider_unsafe_description
 
     def _persist_major_minor(self, value: bool):
         mode = RandomizationMode.MAJOR_MINOR_SPLIT if value else RandomizationMode.FULL

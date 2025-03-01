@@ -45,8 +45,7 @@ class PlanetsZebethGameExportDialog(GameExportDialog[PlanetsZebethConfiguration]
         games: list[RandovaniaGame],
     ):
         super().__init__(options, configuration, word_hash, spoiler, games)
-        per_game = options.options_for_game(self.game_enum())
-        assert isinstance(per_game, PlanetsZebethPerGameOptions)
+        per_game = options.per_game_options(PlanetsZebethPerGameOptions)
 
         # Input
         self.input_folder_button.clicked.connect(self._on_input_folder_button)

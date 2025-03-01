@@ -47,8 +47,7 @@ class PrimeGameExportDialog(GameExportDialog[PrimeConfiguration], MultiFormatOut
         self.has_enemy_attribute_rando = configuration.enemy_attributes is not None
 
         self._base_output_name = f"Prime Randomizer - {word_hash}"
-        per_game = options.options_for_game(self.game_enum())
-        assert isinstance(per_game, PrimePerGameOptions)
+        per_game = options.per_game_options(PrimePerGameOptions)
 
         # Input
         self.input_file_button.clicked.connect(self._on_input_file_button)
@@ -73,8 +72,7 @@ class PrimeGameExportDialog(GameExportDialog[PrimeConfiguration], MultiFormatOut
             self._on_echoes_models_check()
             self.echoes_models_check.clicked.connect(self._on_echoes_models_check)
 
-            echoes_options = options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
-            assert isinstance(echoes_options, EchoesPerGameOptions)
+            echoes_options = options.per_game_options(EchoesPerGameOptions)
             if echoes_options.input_path is not None:
                 self.echoes_file_edit.setText(str(echoes_options.input_path))
 
@@ -140,12 +138,9 @@ class PrimeGameExportDialog(GameExportDialog[PrimeConfiguration], MultiFormatOut
         with self._options as options:
             from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 
-            echoes_options = options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
-            assert isinstance(echoes_options, EchoesPerGameOptions)
-            options.set_options_for_game(
-                RandovaniaGame.METROID_PRIME_ECHOES,
+            options.set_per_game_options(
                 dataclasses.replace(
-                    echoes_options,
+                    options.per_game_options(EchoesPerGameOptions),
                     input_path=self.echoes_file,
                 ),
             )

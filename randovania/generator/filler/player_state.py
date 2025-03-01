@@ -111,7 +111,7 @@ class HintState:
             if (
                 owner == state
                 and weight >= self.configuration.minimum_location_weight_for_hint_placement
-                and index in current_uncollected.indices
+                and index in current_uncollected.pickup_indices
             )
         ]
 
@@ -142,7 +142,7 @@ class PlayerState:
         self.game = game
 
         self.reach = reach_lib.advance_reach_with_possible_unsafe_resources(
-            reach_lib.reach_with_all_safe_resources(game, initial_state)
+            reach_lib.reach_with_all_safe_resources(game, initial_state, configuration)
         )
         self.pickups_left = pickups_left
         self.configuration = configuration
@@ -301,7 +301,8 @@ class PlayerState:
         ]
 
         return (
-            "At {} after {} actions and {} pickups, with {} collected locations, {} safe nodes.\n\n"
+            "At {} after {} actions and {} pickups, "
+            "with {} collected locations, {} safe nodes, {} safe uncollected resource nodes.\n\n"
             "Pickups still available: {}\n\n"
             "Resources to progress: {}\n\n"
             "Paths to be opened:\n{}\n\n"
@@ -311,8 +312,9 @@ class PlayerState:
             self.game.region_list.node_name(self.reach.state.node, with_region=True, distinguish_dark_aether=True),
             self.num_actions,
             self.num_assigned_pickups,
-            len(state.indices),
-            sum(1 for n in self.reach.iterate_nodes if self.reach.is_safe_node(n)),
+            len(state.pickup_indices),
+            sum(1 for n in self.reach.safe_nodes),
+            sum(1 for n in self.reach.safe_uncollected_resource_nodes),
             ", ".join(
                 name if quantity == 1 else f"{name} x{quantity}"
                 for name, quantity in sorted(pickups_by_name_and_quantity.items())

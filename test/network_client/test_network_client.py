@@ -246,12 +246,12 @@ def test_update_timeout_with_decrease_on_success(client: NetworkClient):
     assert client._current_timeout == 40
 
 
-async def test_refresh_received_pickups(client: NetworkClient, corruption_game_description, mocker):
-    db = corruption_game_description.resource_database
+async def test_refresh_received_pickups(client: NetworkClient, blank_game_description, mocker):
+    db = blank_game_description.resource_database
 
     data = {
         "world": "00000000-0000-1111-0000-000000000000",
-        "game": RandovaniaGame.METROID_PRIME_CORRUPTION.value,
+        "game": db.game_enum.value,
         "pickups": [
             {
                 "provider_name": "Message A",
@@ -283,7 +283,7 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
     client.on_world_pickups_update.assert_awaited_once_with(
         MultiplayerWorldPickups(
             world_id=uuid.UUID("00000000-0000-1111-0000-000000000000"),
-            game=RandovaniaGame.METROID_PRIME_CORRUPTION,
+            game=db.game_enum,
             pickups=(
                 RemotePickup("Message A", pickups[0], None),
                 RemotePickup("Message B", pickups[1], None),

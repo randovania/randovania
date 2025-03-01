@@ -141,7 +141,7 @@ def make_one_map(filepath: Path, level_data: dict, region: Region, dock_types_to
     create_map_using_matplotlib(room_connections, filepath)
 
 
-class PrimeGameExporter(GameExporter):
+class PrimeGameExporter(GameExporter[PrimeGameExportParams]):
     @property
     def can_start_new_export(self) -> bool:
         """
@@ -156,7 +156,7 @@ class PrimeGameExporter(GameExporter):
         """
         return False
 
-    def export_params_type(self) -> type[GameExportParams]:
+    def export_params_type(self) -> type[PrimeGameExportParams]:
         """
         Returns the type of the GameExportParams expected by this exporter.
         """
@@ -181,11 +181,9 @@ class PrimeGameExporter(GameExporter):
     def _do_export_game(
         self,
         patch_data: dict,
-        export_params: GameExportParams,
+        export_params: PrimeGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
-        assert isinstance(export_params, PrimeGameExportParams)
-
         input_file = export_params.input_path
         output_file = export_params.output_path
 

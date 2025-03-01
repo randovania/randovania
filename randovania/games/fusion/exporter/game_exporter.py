@@ -22,7 +22,7 @@ class FusionGameExportParams(GameExportParams):
     output_path: Path
 
 
-class FusionGameExporter(GameExporter):
+class FusionGameExporter(GameExporter[FusionGameExportParams]):
     _busy: bool = False
 
     @property
@@ -39,7 +39,7 @@ class FusionGameExporter(GameExporter):
         """
         return False
 
-    def export_params_type(self) -> type[GameExportParams]:
+    def export_params_type(self) -> type[FusionGameExportParams]:
         """
         Returns the type of the GameExportParams expected by this exporter.
         """
@@ -48,10 +48,9 @@ class FusionGameExporter(GameExporter):
     def _do_export_game(
         self,
         patch_data: dict,
-        export_params: GameExportParams,
+        export_params: FusionGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
-        assert isinstance(export_params, FusionGameExportParams)
         new_patch = typing.cast(Marsschema, copy.copy(patch_data))
         patcher.validate_patch_data(new_patch)
         try:

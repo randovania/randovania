@@ -144,9 +144,6 @@ def setup_logging(default_level: str, log_to_file: Path | None, quiet: bool = Fa
                 "EchoesRemoteConnector": {
                     "level": "DEBUG",
                 },
-                "CorruptionRemoteConnector": {
-                    "level": "DEBUG",
-                },
                 "randovania.gui.qt": {
                     "level": "INFO",
                 },
