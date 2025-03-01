@@ -15,12 +15,12 @@ if TYPE_CHECKING:
 
 
 @dataclasses.dataclass(frozen=True)
-class Preset(BitPackValue):
+class Preset[Configuration: BaseConfiguration](BitPackValue):
     name: str
     uuid: uuid_module.UUID
     description: str
     game: RandovaniaGame
-    configuration: BaseConfiguration
+    configuration: Configuration
 
     @property
     def as_json(self) -> dict:

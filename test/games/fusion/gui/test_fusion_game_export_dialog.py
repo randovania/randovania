@@ -6,7 +6,6 @@ from unittest.mock import MagicMock
 import pytest
 from PySide6 import QtCore
 
-from randovania.game.game_enum import RandovaniaGame
 from randovania.games.fusion.exporter.game_exporter import FusionGameExportParams
 from randovania.games.fusion.exporter.options import FusionPerGameOptions
 from randovania.games.fusion.gui.dialog.game_export_dialog import FusionGameExportDialog
@@ -28,7 +27,7 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
         expected_default_name = "Fusion - MyHash"
 
     options = MagicMock()
-    options.options_for_game.return_value = FusionPerGameOptions(
+    options.per_game_options.return_value = FusionPerGameOptions(
         cosmetic_patches=FusionCosmeticPatches.default(),
         output_path=output_path,
     )
@@ -50,7 +49,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmp_path, mocker):
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
 
     options = MagicMock()
-    options.options_for_game.return_value = FusionPerGameOptions(
+    options.per_game_options.return_value = FusionPerGameOptions(
         cosmetic_patches=FusionCosmeticPatches.default(),
         output_path=None,
     )
@@ -76,14 +75,14 @@ def test_save_options(skip_qtbot, tmp_path):
     window.save_options()
 
     # Assert
-    assert options.options_for_game(RandovaniaGame.FUSION).output_path == Path("somewhere")
+    assert options.per_game_options(FusionPerGameOptions).output_path == Path("somewhere")
 
 
 @pytest.mark.parametrize("save_spoiler", [False, True])
 def test_get_game_export_params(skip_qtbot, tmp_path, save_spoiler: bool):
     # Setup
     options = MagicMock()
-    options.options_for_game.return_value = FusionPerGameOptions(
+    options.per_game_options.return_value = FusionPerGameOptions(
         cosmetic_patches=FusionCosmeticPatches.default(),
         input_path=tmp_path.joinpath("input/game.gba"),
         output_path=tmp_path.joinpath("output"),

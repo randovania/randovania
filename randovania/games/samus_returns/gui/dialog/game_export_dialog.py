@@ -88,8 +88,7 @@ class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDi
     ):
         super().__init__(options, configuration, word_hash, spoiler, games)
 
-        per_game = options.options_for_game(self.game_enum())
-        assert isinstance(per_game, MSRPerGameOptions)
+        per_game = options.per_game_options(MSRPerGameOptions)
 
         self._validate_input_file()
         self._validate_custom_path()

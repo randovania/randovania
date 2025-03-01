@@ -60,7 +60,7 @@ async def test_add_default_hints_to_patches(echoes_game_description, echoes_game
             PickupIndex(number),
         )
 
-    expected = {
+    base_expected = {
         # Keybearer
         "Temple Grounds/Landing Site/Keybearer Corpse (M-Dhe)": _keybearer_hint(11),
         "Temple Grounds/Industrial Site/Keybearer Corpse (J-Fme)": _keybearer_hint(15),
@@ -87,7 +87,8 @@ async def test_add_default_hints_to_patches(echoes_game_description, echoes_game
         "Torvus Bog/Gathering Hall/Lore Scan": JokeHint(),
         "Torvus Bog/Training Chamber/Lore Scan": JokeHint(),
     }
-    expected = {NodeIdentifier.from_string(ident_s): hint for ident_s, hint in expected.items()}
+
+    expected = {NodeIdentifier.from_string(ident_s): hint for ident_s, hint in base_expected.items()}
 
     # Run
     result = await hint_distributor.assign_pre_filler_hints(

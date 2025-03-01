@@ -9,8 +9,6 @@ from unittest.mock import MagicMock, call, patch
 import pytest
 
 import randovania.interface_common.options
-from randovania.game.game_enum import RandovaniaGame
-from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.interface_common import persisted_options
 from randovania.interface_common.options import DecodeFailedException, InfoAlert, Options
 from randovania.lib import migration_lib, version_lib
@@ -130,22 +128,6 @@ def test_getting_unknown_game_should_error(option: Options):
 
     # Assert
     assert str(exception.value) == "game_unknown_game"
-
-
-def test_set_options_for_game_with_wrong_type(option: Options):
-    err = (
-        "Expected <class 'randovania.games.prime1.exporter.options.PrimePerGameOptions'>, "
-        "got <class 'randovania.games.prime2.exporter.options.EchoesPerGameOptions'>"
-    )
-
-    # Run
-    with pytest.raises(ValueError, match=err):
-        option.set_options_for_game(
-            RandovaniaGame.METROID_PRIME,
-            EchoesPerGameOptions(
-                cosmetic_patches=RandovaniaGame.METROID_PRIME_ECHOES.data.layout.cosmetic_patches.default(),
-            ),
-        )
 
 
 def test_load_from_disk_no_data(tmp_path, mocker):

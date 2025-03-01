@@ -535,6 +535,13 @@ def obfuscator_no_secret(monkeypatch: pytest.MonkeyPatch):
     obfuscator._encrypt = None
 
 
+@pytest.fixture
+def options(tmp_path):
+    from randovania.interface_common.options import Options
+
+    return Options(tmp_path)
+
+
 def pytest_addoption(parser: pytest.Parser) -> None:
     parser.addoption(
         "--skip-generation-tests",

@@ -39,8 +39,7 @@ class CSGameExportDialog(GameExportDialog[CSConfiguration], Ui_CSGameExportDialo
     ):
         super().__init__(options, configuration, word_hash, spoiler, games)
 
-        per_game = options.options_for_game(self.game_enum())
-        assert isinstance(per_game, CSPerGameOptions)
+        per_game = options.per_game_options(CSPerGameOptions)
 
         # Output
         self.output_file_button.clicked.connect(self._on_output_file_button)

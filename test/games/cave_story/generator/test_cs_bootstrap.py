@@ -51,7 +51,7 @@ def test_assign_pool_results(default_cs_configuration: CSConfiguration, puppies,
     ).assign_starting_location(starting_area)
 
     pool_result = pool_creator.calculate_pool_results(default_cs_configuration, game_description)
-    result = CSBootstrap().assign_pool_results(Random(5000), patches, pool_result)
+    result = CSBootstrap().assign_pool_results(Random(5000), default_cs_configuration, patches, pool_result)
 
     # Puppies
     expected_puppies = {"Hajime", "Nene", "Mick", "Shinobu", "Kakeru"}

@@ -14,7 +14,6 @@ from randovania.games.prime2.exporter.export_params import EchoesGameExportParam
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.games.prime2.gui.dialog.game_export_dialog import EchoesGameExportDialog
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
-from randovania.interface_common.options import Options
 from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
@@ -22,7 +21,9 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.parametrize("has_output_dir", [False, True])
-def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_dir):
+def test_on_output_file_button_exists(
+    skip_qtbot, tmp_path, mocker, has_output_dir, default_echoes_configuration, options
+):
     # Setup
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
 
@@ -34,13 +35,15 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
         output_directory = None
         expected_default_name = "Echoes Randomizer - MyHash"
 
-    options = MagicMock()
-    options.options_for_game.return_value = EchoesPerGameOptions(
-        cosmetic_patches=EchoesCosmeticPatches.default(),
-        output_directory=output_directory,
-    )
+    with options:
+        options.set_per_game_options(
+            EchoesPerGameOptions(
+                cosmetic_patches=EchoesCosmeticPatches.default(),
+                output_directory=output_directory,
+            )
+        )
 
-    window = EchoesGameExportDialog(options, {}, "MyHash", True, [])
+    window = EchoesGameExportDialog(options, default_echoes_configuration, "MyHash", True, [])
     mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
 
     # Run
@@ -52,16 +55,18 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
     assert tmp_path.joinpath("foo").is_dir()
 
 
-def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
+def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker, default_echoes_configuration, options):
     # Setup
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
+    with options:
+        options.set_per_game_options(
+            EchoesPerGameOptions(
+                cosmetic_patches=EchoesCosmeticPatches.default(),
+                output_directory=None,
+            )
+        )
 
-    options = MagicMock()
-    options.options_for_game.return_value = EchoesPerGameOptions(
-        cosmetic_patches=EchoesCosmeticPatches.default(),
-        output_directory=None,
-    )
-    window = EchoesGameExportDialog(options, {}, "MyHash", True, [])
+    window = EchoesGameExportDialog(options, default_echoes_configuration, "MyHash", True, [])
     mock_prompt.return_value = None
 
     # Run
@@ -73,12 +78,11 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
 
 
 @pytest.mark.parametrize("is_prime_multi", [False, True])
-def test_save_options(skip_qtbot, tmp_path, is_prime_multi):
-    options = Options(tmp_path)
+def test_save_options(skip_qtbot, tmp_path, is_prime_multi, default_echoes_configuration, options):
     games = [RandovaniaGame.METROID_PRIME_ECHOES]
     if is_prime_multi:
         games.append(RandovaniaGame.METROID_PRIME)
-    window = EchoesGameExportDialog(options, {}, "MyHash", True, games)
+    window = EchoesGameExportDialog(options, default_echoes_configuration, "MyHash", True, games)
     window.output_file_edit.setText("somewhere/game.iso")
     if is_prime_multi:
         skip_qtbot.mouseClick(window.prime_models_check, QtCore.Qt.MouseButton.LeftButton)
@@ -88,15 +92,13 @@ def test_save_options(skip_qtbot, tmp_path, is_prime_multi):
     window.save_options()
 
     # Assert
-    assert options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES).output_directory == Path("somewhere")
+    assert options.per_game_options(EchoesPerGameOptions).output_directory == Path("somewhere")
     if is_prime_multi:
-        assert options.options_for_game(RandovaniaGame.METROID_PRIME).input_path == Path("somewhere/prime.iso")
-        assert options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES).use_external_models == {
-            RandovaniaGame.METROID_PRIME
-        }
+        assert options.per_game_options(PrimePerGameOptions).input_path == Path("somewhere/prime.iso")
+        assert options.per_game_options(EchoesPerGameOptions).use_external_models == {RandovaniaGame.METROID_PRIME}
 
 
-def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
+def test_on_input_file_button(skip_qtbot, tmp_path, mocker, default_echoes_configuration, options):
     # Setup
     tmp_path.joinpath("existing.iso").write_bytes(b"foo")
     mock_discover: MagicMock = mocker.patch(
@@ -115,12 +117,13 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
         ],
     )
 
-    options = MagicMock()
-    options.internal_copies_path = tmp_path.joinpath("internal_copies")
-    options.options_for_game.return_value = EchoesPerGameOptions(
-        cosmetic_patches=EchoesCosmeticPatches.default(),
-        input_path=None,
-    )
+    with options:
+        options.set_per_game_options(
+            EchoesPerGameOptions(
+                cosmetic_patches=EchoesCosmeticPatches.default(),
+                input_path=None,
+            )
+        )
 
     contents_path = tmp_path.joinpath("internal_copies", "prime2", "contents")
     contents_path.mkdir(parents=True)
@@ -132,7 +135,7 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
         ],
     )
 
-    window = EchoesGameExportDialog(options, {}, "MyHash", True, [])
+    window = EchoesGameExportDialog(options, default_echoes_configuration, "MyHash", True, [])
     assert window.input_file_edit.text() == "(internal game copy)"
     assert not window.input_file_edit.has_error
 
@@ -171,7 +174,9 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
 
 @pytest.mark.parametrize("is_prime_multi", [False, True])
 @pytest.mark.parametrize("use_external_models", [False, True])
-def test_get_game_export_params(skip_qtbot, tmp_path, is_prime_multi, use_external_models):
+def test_get_game_export_params(
+    skip_qtbot, tmp_path, is_prime_multi, use_external_models, default_echoes_configuration, options
+):
     # Setup
     games = [RandovaniaGame.METROID_PRIME_ECHOES]
     if is_prime_multi:
@@ -183,23 +188,26 @@ def test_get_game_export_params(skip_qtbot, tmp_path, is_prime_multi, use_extern
     if use_external_models:
         models = {RandovaniaGame.METROID_PRIME}
     else:
-        models = {}
+        models = set()
 
-    options = MagicMock()
-    options.internal_copies_path = tmp_path.joinpath("internal_copies")
-    options.options_for_game.side_effect = [
-        EchoesPerGameOptions(
-            cosmetic_patches=EchoesCosmeticPatches.default(),
-            input_path=tmp_path.joinpath("input/game.iso"),
-            output_directory=tmp_path.joinpath("output"),
-            use_external_models=models,
-        ),
-        PrimePerGameOptions(
-            cosmetic_patches=PrimeCosmeticPatches.default(),
-            input_path=prime_path,
-        ),
-    ]
-    window = EchoesGameExportDialog(options, {}, "MyHash", True, games)
+    with options:
+        options.auto_save_spoiler = True
+        options.set_per_game_options(
+            EchoesPerGameOptions(
+                cosmetic_patches=EchoesCosmeticPatches.default(),
+                input_path=tmp_path.joinpath("input/game.iso"),
+                output_directory=tmp_path.joinpath("output"),
+                use_external_models=models,
+            )
+        )
+        options.set_per_game_options(
+            PrimePerGameOptions(
+                cosmetic_patches=PrimeCosmeticPatches.default(),
+                input_path=prime_path,
+            )
+        )
+
+    window = EchoesGameExportDialog(options, default_echoes_configuration, "MyHash", True, games)
 
     # Run
     result = window.get_game_export_params()
@@ -217,20 +225,23 @@ def test_get_game_export_params(skip_qtbot, tmp_path, is_prime_multi, use_extern
     )
 
 
-async def test_handle_unable_to_export(skip_qtbot, tmp_path: Path, mocker: pytest_mock.MockerFixture) -> None:
-    options = MagicMock()
-    options.internal_copies_path = tmp_path.joinpath("internal_copies")
-    options.options_for_game.return_value = EchoesPerGameOptions(
-        cosmetic_patches=EchoesCosmeticPatches.default(),
-        output_directory=None,
-    )
+async def test_handle_unable_to_export(
+    skip_qtbot, tmp_path: Path, mocker: pytest_mock.MockerFixture, default_echoes_configuration, options
+) -> None:
+    with options:
+        options.set_per_game_options(
+            EchoesPerGameOptions(
+                cosmetic_patches=EchoesCosmeticPatches.default(),
+                output_directory=None,
+            )
+        )
 
     tmp_path.joinpath("internal_copies", "prime2").mkdir(parents=True)
     tmp_path.joinpath("internal_copies", "prime2", "example_file.txt").write_text("hey I'm a game")
 
     mock_message_box = mocker.patch("randovania.gui.lib.async_dialog.message_box", new_callable=AsyncMock)
 
-    window = EchoesGameExportDialog(options, {}, "MyHash", True, [])
+    window = EchoesGameExportDialog(options, default_echoes_configuration, "MyHash", True, [])
 
     # Run
     await window.handle_unable_to_export(UnableToExportError("I dunno, something broke"))

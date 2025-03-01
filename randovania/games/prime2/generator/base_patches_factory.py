@@ -20,7 +20,6 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
-    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 @dataclasses.dataclass(frozen=True)
@@ -66,17 +65,16 @@ WORLDS = [
 ]
 
 
-class EchoesBasePatchesFactory(BasePatchesFactory):
+class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
     def create_base_patches(
         self,
-        configuration: BaseConfiguration,
+        configuration: EchoesConfiguration,
         rng: Random,
         game: GameDescription,
         is_multiworld: bool,
         player_index: int,
         rng_required: bool = True,
     ) -> GamePatches:
-        assert isinstance(configuration, EchoesConfiguration)
         parent = super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
         return self.assign_save_door_weaknesses(parent, configuration, game)
 

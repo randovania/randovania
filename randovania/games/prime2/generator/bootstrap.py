@@ -24,12 +24,10 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
-    from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.damage_state import DamageState
 
 
-def is_boss_location(node: PickupNode, config: BaseConfiguration) -> bool:
-    assert isinstance(config, EchoesConfiguration)
+def is_boss_location(node: PickupNode, config: EchoesConfiguration) -> bool:
     mode = config.sky_temple_keys
     boss = node.extra.get("boss")
     if boss is not None:
@@ -40,8 +38,7 @@ def is_boss_location(node: PickupNode, config: BaseConfiguration) -> bool:
 
 
 class EchoesBootstrap(Bootstrap):
-    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
-        assert isinstance(configuration, EchoesConfiguration)
+    def create_damage_state(self, game: GameDescription, configuration: EchoesConfiguration) -> DamageState:
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
@@ -51,11 +48,9 @@ class EchoesBootstrap(Bootstrap):
 
     def event_resources_for_configuration(
         self,
-        configuration: BaseConfiguration,
+        configuration: EchoesConfiguration,
         resource_database: ResourceDatabase,
     ) -> ResourceGain:
-        assert isinstance(configuration, EchoesConfiguration)
-
         yield resource_database.get_event("Event2"), 1  # Hive Tunnel Web
         yield resource_database.get_event("Event4"), 1  # Command Chamber Gate
         yield resource_database.get_event("Event71"), 1  # Landing Site Webs
@@ -67,9 +62,8 @@ class EchoesBootstrap(Bootstrap):
             yield resource_database.get_event("Event20"), 1  # Security Station B DS Appearance
 
     def _get_enabled_misc_resources(
-        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+        self, configuration: EchoesConfiguration, resource_database: ResourceDatabase
     ) -> set[str]:
-        assert isinstance(configuration, EchoesConfiguration)
         enabled_resources = set()
         allow_vanilla = {
             "allow_jumping_on_dark_water": "DarkWaterJump",
@@ -97,9 +91,7 @@ class EchoesBootstrap(Bootstrap):
 
         return enabled_resources
 
-    def patch_resource_database(self, db: ResourceDatabase, configuration: BaseConfiguration) -> ResourceDatabase:
-        assert isinstance(configuration, EchoesConfiguration)
-
+    def patch_resource_database(self, db: ResourceDatabase, configuration: EchoesConfiguration) -> ResourceDatabase:
         damage_reductions = copy.copy(db.damage_reductions)
         damage_reductions[db.get_by_type_and_index(ResourceType.DAMAGE, "DarkWorld1")] = [
             DamageReduction(None, configuration.varia_suit_damage / 6.0),
@@ -108,21 +100,20 @@ class EchoesBootstrap(Bootstrap):
         ]
         return dataclasses.replace(db, damage_reductions=damage_reductions)
 
-    def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
-        assert isinstance(patches.configuration, EchoesConfiguration)
-        mode = patches.configuration.sky_temple_keys
+    def assign_pool_results(
+        self, rng: Random, configuration: EchoesConfiguration, patches: GamePatches, pool_results: PoolResults
+    ) -> GamePatches:
+        mode = configuration.sky_temple_keys
 
         if mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
-            locations = self.all_preplaced_item_locations(patches.game, patches.configuration, is_boss_location)
-            self.pre_place_items(rng, locations, pool_results, "sky_temple_key", patches.game.game)
+            locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_boss_location)
+            self.pre_place_pickups(rng, locations, pool_results, "sky_temple_key", patches.game.game)
 
-        return super().assign_pool_results(rng, patches, pool_results)
+        return super().assign_pool_results(rng, configuration, patches, pool_results)
 
     def apply_game_specific_patches(
-        self, configuration: BaseConfiguration, game: GameDescription, patches: GamePatches
+        self, configuration: EchoesConfiguration, game: GameDescription, patches: GamePatches
     ) -> None:
-        assert isinstance(configuration, EchoesConfiguration)
-
         scan_visor = search.find_resource_info_with_long_name(game.resource_database.item, "Scan Visor")
         scan_visor_req = ResourceRequirement.simple(scan_visor)
 

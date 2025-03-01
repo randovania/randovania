@@ -135,8 +135,7 @@ class DreadGameExportDialog(GameExportDialog[DreadConfiguration], Ui_DreadGameEx
     ):
         super().__init__(options, configuration, word_hash, spoiler, games)
 
-        per_game = options.options_for_game(self.game_enum())
-        assert isinstance(per_game, DreadPerGameOptions)
+        per_game = options.per_game_options(DreadPerGameOptions)
 
         self._validate_input_file()
         self._validate_custom_path()

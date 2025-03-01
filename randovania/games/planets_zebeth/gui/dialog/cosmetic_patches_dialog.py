@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.games.planets_zebeth.gui.generated.planets_zebeth_cosmetic_patches_dialog_ui import (
     Ui_PlanetsZebethCosmeticPatchesDialog,
@@ -14,23 +14,24 @@ from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatch
 if TYPE_CHECKING:
     from PySide6 import QtWidgets
 
-    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
-
-class PlanetsZebethCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PlanetsZebethCosmeticPatchesDialog):
-    _cosmetic_patches: PlanetsZebethCosmeticPatches
-
-    def __init__(self, parent: QtWidgets.QWidget | None, current: BaseCosmeticPatches):
+class PlanetsZebethCosmeticPatchesDialog(
+    BaseCosmeticPatchesDialog[PlanetsZebethCosmeticPatches], Ui_PlanetsZebethCosmeticPatchesDialog
+):
+    def __init__(self, parent: QtWidgets.QWidget | None, current: PlanetsZebethCosmeticPatches):
         super().__init__(parent, current)
         self.setupUi(self)
 
-        assert isinstance(current, PlanetsZebethCosmeticPatches)
-        self._cosmetic_patches = current
         for room_gui_type in PlanetsZebethRoomGuiType:
             self.room_name_dropdown.addItem(room_gui_type.long_name, room_gui_type)
 
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
+
+    @classmethod
+    @override
+    def cosmetic_patches_type(cls) -> type[PlanetsZebethCosmeticPatches]:
+        return PlanetsZebethCosmeticPatches
 
     def connect_signals(self) -> None:
         super().connect_signals()

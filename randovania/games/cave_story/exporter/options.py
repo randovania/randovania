@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from pathlib import Path
-from typing import TYPE_CHECKING, Self
+from typing import TYPE_CHECKING, Self, override
 
 if TYPE_CHECKING:
     from randovania.lib.json_lib import JsonObject
@@ -39,3 +39,8 @@ class CSPerGameOptions(PerGameOptions):
             output_directory=decode_if_not_none(value["output_directory"], Path),
             platform=CSPlatform(value["platform"]),
         )
+
+    @classmethod
+    @override
+    def game_enum(cls) -> RandovaniaGame:
+        return RandovaniaGame.CAVE_STORY
