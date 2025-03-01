@@ -168,6 +168,6 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
     @override
     def inform_connected_tracker(self, tracker_details: dict | None) -> None:
         if tracker_details is not None:
-            self._should_read_object_count = tracker_details.get("read_object_count", False)
+            self._should_read_object_count = tracker_details.get("extra", {}).get("read_object_count", False)
         else:
             self._should_read_object_count = False
