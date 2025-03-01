@@ -14,7 +14,7 @@ from randovania.lib.ftp_uploader import FtpUploader
 
 
 @pytest.mark.parametrize("has_custom_path", [False, True])
-def test_on_custom_path_button_exists(skip_qtbot, tmp_path, mocker, has_custom_path, options):
+def test_on_custom_path_button_exists(skip_qtbot, tmp_path, mocker, has_custom_path, msr_configuration, options):
     # Setup
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
 
@@ -43,7 +43,7 @@ def test_on_custom_path_button_exists(skip_qtbot, tmp_path, mocker, has_custom_p
             )
         )
 
-    window = MSRGameExportDialog(options, {}, "MyHash", True, [])
+    window = MSRGameExportDialog(options, msr_configuration, "MyHash", True, [])
     mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
 
     # Run
@@ -55,7 +55,7 @@ def test_on_custom_path_button_exists(skip_qtbot, tmp_path, mocker, has_custom_p
     assert tmp_path.joinpath("foo").is_dir()
 
 
-def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker, options):
+def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker, msr_configuration, options):
     # Setup
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
 
@@ -76,7 +76,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker, options):
             )
         )
 
-    window = MSRGameExportDialog(options, {}, "MyHash", True, [])
+    window = MSRGameExportDialog(options, msr_configuration, "MyHash", True, [])
     mock_prompt.return_value = None
 
     # Run
@@ -87,8 +87,8 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker, options):
     assert window.custom_path_edit.text() == ""
 
 
-def test_save_options(skip_qtbot, options):
-    window = MSRGameExportDialog(options, {}, "MyHash", True, [])
+def test_save_options(skip_qtbot, msr_configuration, options):
+    window = MSRGameExportDialog(options, msr_configuration, "MyHash", True, [])
     window.luma_radio.setChecked(True)
 
     # Run
@@ -99,7 +99,7 @@ def test_save_options(skip_qtbot, options):
     assert game_options.target_platform == MSRModPlatform.LUMA
 
 
-def test_on_input_file_button(skip_qtbot, tmp_path, mocker, options):
+def test_on_input_file_button(skip_qtbot, tmp_path, mocker, msr_configuration, options):
     # Setup
     tmp_path.joinpath("existing.iso").write_bytes(b"foo")
     tmp_path.joinpath("existing-folder").mkdir()
@@ -124,7 +124,7 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker, options):
             )
         )
 
-    window = MSRGameExportDialog(options, {}, "MyHash", True, [])
+    window = MSRGameExportDialog(options, msr_configuration, "MyHash", True, [])
     # Empty text field is an error
     assert window.input_file_edit.text() == ""
     assert window.input_file_edit.has_error
@@ -165,7 +165,7 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker, options):
     )
 
 
-def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, options):
+def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, msr_configuration, options):
     # Setup
     mocker.patch("randovania.games.samus_returns.gui.dialog.game_export_dialog.get_path_to_citra")
     mocker.patch("platform.system", return_value="Windows")
@@ -177,6 +177,7 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, options):
     drive = tmp_path.joinpath("drive")
 
     with options:
+        options.auto_save_spoiler = True
         options.set_per_game_options(
             MSRPerGameOptions(
                 cosmetic_patches=MSRCosmeticPatches.default(),
@@ -195,7 +196,7 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, options):
                 ),
             )
         )
-    window = MSRGameExportDialog(options, {}, "MyHash", True, [])
+    window = MSRGameExportDialog(options, msr_configuration, "MyHash", True, [])
     window.title_id = "00040000001BB200"
 
     # Run
@@ -214,7 +215,7 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, options):
     )
 
 
-def test_get_game_export_params_citra(skip_qtbot, tmp_path, mocker, options):
+def test_get_game_export_params_citra(skip_qtbot, tmp_path, mocker, msr_configuration, options):
     # Setup
     mocker.patch("platform.system", return_value="Windows")
     citra_path = tmp_path.joinpath("citra_mod")
@@ -223,6 +224,7 @@ def test_get_game_export_params_citra(skip_qtbot, tmp_path, mocker, options):
     )
 
     with options:
+        options.auto_save_spoiler = True
         options.set_per_game_options(
             MSRPerGameOptions(
                 cosmetic_patches=MSRCosmeticPatches.default(),
@@ -231,7 +233,7 @@ def test_get_game_export_params_citra(skip_qtbot, tmp_path, mocker, options):
                 output_preference=json.dumps({"selected_tab": "citra", "tab_options": {}}),
             )
         )
-    window = MSRGameExportDialog(options, {}, "MyHash", True, [])
+    window = MSRGameExportDialog(options, msr_configuration, "MyHash", True, [])
 
     # Run
     result = window.get_game_export_params()
@@ -247,10 +249,11 @@ def test_get_game_export_params_citra(skip_qtbot, tmp_path, mocker, options):
     )
 
 
-def test_get_game_export_params_ftp(skip_qtbot, tmp_path, options):
+def test_get_game_export_params_ftp(skip_qtbot, tmp_path, options, msr_configuration):
     # Setup
 
     with options:
+        options.auto_save_spoiler = True
         options.set_per_game_options(
             MSRPerGameOptions(
                 cosmetic_patches=MSRCosmeticPatches.default(),
@@ -272,7 +275,7 @@ def test_get_game_export_params_ftp(skip_qtbot, tmp_path, options):
                 ),
             )
         )
-    window = MSRGameExportDialog(options, {}, "MyHash", True, [])
+    window = MSRGameExportDialog(options, msr_configuration, "MyHash", True, [])
     window.title_id = "00040000001BFB00"
 
     # Run
@@ -280,24 +283,25 @@ def test_get_game_export_params_ftp(skip_qtbot, tmp_path, options):
 
     # Assert
     assert result == MSRGameExportParams(
-        spoiler_output=tmp_path.joinpath("internal", "msr", "contents", "spoiler.rdvgame"),
+        spoiler_output=tmp_path.joinpath("internal_copies", "msr", "contents", "spoiler.rdvgame"),
         input_file=tmp_path.joinpath("input_file.3ds"),
-        output_path=tmp_path.joinpath("internal", "msr", "contents"),
+        output_path=tmp_path.joinpath("internal_copies", "msr", "contents"),
         target_platform=MSRModPlatform.LUMA,
         clean_output_path=True,
         post_export=FtpUploader(
             auth=("admin", "1234"),
             ip="192.168.1.2",
             port=5000,
-            local_path=tmp_path.joinpath("internal", "msr", "contents"),
+            local_path=tmp_path.joinpath("internal_copies", "msr", "contents"),
             remote_path="/luma/titles/00040000001BFB00",
         ),
     )
 
 
-def test_get_game_export_params_custom(skip_qtbot, tmp_path, options):
+def test_get_game_export_params_custom(skip_qtbot, tmp_path, msr_configuration, options):
     # Setup
     with options:
+        options.auto_save_spoiler = True
         options.set_per_game_options(
             MSRPerGameOptions(
                 cosmetic_patches=MSRCosmeticPatches.default(),
@@ -314,7 +318,7 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path, options):
                 ),
             )
         )
-    window = MSRGameExportDialog(options, {}, "MyHash", True, [])
+    window = MSRGameExportDialog(options, msr_configuration, "MyHash", True, [])
 
     # Run
     result = window.get_game_export_params()
@@ -330,7 +334,7 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path, options):
     )
 
 
-def test_export_button(skip_qtbot, tmp_path, mocker, options):
+def test_export_button(skip_qtbot, tmp_path, mocker, msr_configuration, options):
     # Setup
     mocker.patch("platform.system", return_value="Windows")
     citra_path = tmp_path.joinpath("citra_mod")
@@ -345,7 +349,7 @@ def test_export_button(skip_qtbot, tmp_path, mocker, options):
             )
         )
 
-    window = MSRGameExportDialog(options, {}, "MyHash", True, [])
+    window = MSRGameExportDialog(options, msr_configuration, "MyHash", True, [])
 
     # force that input_file_edit is valid
     window.input_file_edit.has_error = False

@@ -7,25 +7,25 @@ from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmet
 
 def test_invalid_tuple_sizes():
     with pytest.raises(ValueError, match="Laser Locked color must be a tuple of 3 ints."):
-        MSRCosmeticPatches(laser_locked_color=(0, 0, 0, 0))  # type: ignore
+        MSRCosmeticPatches(laser_locked_color=(0, 0, 0, 0))  # type: ignore[arg-type]
 
     with pytest.raises(ValueError, match="Laser Unlocked color must be a tuple of 3 ints."):
-        MSRCosmeticPatches(laser_unlocked_color=(0, 0, 0, 0))  # type: ignore
+        MSRCosmeticPatches(laser_unlocked_color=(0, 0, 0, 0))  # type: ignore[arg-type]
 
     with pytest.raises(ValueError, match="Grapple Laser Locked color must be a tuple of 3 ints."):
-        MSRCosmeticPatches(grapple_laser_locked_color=(0, 0, 0, 0))  # type: ignore
+        MSRCosmeticPatches(grapple_laser_locked_color=(0, 0, 0, 0))  # type: ignore[arg-type]
 
     with pytest.raises(ValueError, match="Grapple Laser Unlocked color must be a tuple of 3 ints."):
-        MSRCosmeticPatches(grapple_laser_unlocked_color=(0, 0, 0, 0))  # type: ignore
+        MSRCosmeticPatches(grapple_laser_unlocked_color=(0, 0, 0, 0))  # type: ignore[arg-type]
 
     with pytest.raises(ValueError, match="Energy Tank color must be a tuple of 3 ints."):
-        MSRCosmeticPatches(energy_tank_color=(0, 0, 0, 0))  # type: ignore
+        MSRCosmeticPatches(energy_tank_color=(0, 0, 0, 0))  # type: ignore[arg-type]
 
     with pytest.raises(ValueError, match="Aeion Bar color must be a tuple of 3 ints."):
-        MSRCosmeticPatches(aeion_bar_color=(0, 0, 0, 0))  # type: ignore
+        MSRCosmeticPatches(aeion_bar_color=(0, 0, 0, 0))  # type: ignore[arg-type]
 
     with pytest.raises(ValueError, match="Ammo HUD color must be a tuple of 3 ints."):
-        MSRCosmeticPatches(ammo_hud_color=(0, 0, 0, 0))  # type: ignore
+        MSRCosmeticPatches(ammo_hud_color=(0, 0, 0, 0))  # type: ignore[arg-type]
 
 
 def test_valid_construction():
