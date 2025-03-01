@@ -170,8 +170,6 @@ class PrimeRemoteConnector(RemoteConnector):
         :return: True, if a new location was found and remote patches were executed. False otherwise.
         """
         multiworld_magic_item = self.multiworld_magic_item
-        if multiworld_magic_item is None:
-            return False
 
         memory_ops = await self._memory_op_for_items([multiworld_magic_item])
         op_result = await self.executor.perform_single_memory_operation(*memory_ops)
