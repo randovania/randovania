@@ -1,16 +1,21 @@
 from __future__ import annotations
 
+import copy
 import dataclasses
+import typing
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from mars_patcher import patcher
+from mars_patcher.auto_generated_types import Marsschema
+
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
+from randovania.lib import json_lib
 
 if TYPE_CHECKING:
     from randovania.lib import status_update_lib
 
 
-# TODO
 @dataclasses.dataclass(frozen=True)
 class FusionGameExportParams(GameExportParams):
     input_path: Path
@@ -46,4 +51,11 @@ class FusionGameExporter(GameExporter[FusionGameExportParams]):
         export_params: FusionGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
-        raise RuntimeError("Needs to be implemented")
+        new_patch = typing.cast(Marsschema, copy.copy(patch_data))
+        patcher.validate_patch_data(new_patch)
+        try:
+            patcher.patch(export_params.input_path, export_params.output_path, new_patch, progress_update)
+        finally:
+            json_lib.write_path(
+                export_params.output_path.parent.joinpath(f"{export_params.output_path.stem}_mars.json"), patch_data
+            )
