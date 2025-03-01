@@ -26,10 +26,10 @@ class MissingRng(Exception):
 HintTargetPrecision = tuple[PickupIndex, HintLocationPrecision, HintItemPrecision]
 
 
-class BasePatchesFactory:
+class BasePatchesFactory[Configuration: BaseConfiguration]:
     def create_base_patches(
         self,
-        configuration: BaseConfiguration,
+        configuration: Configuration,
         rng: Random,
         game: GameDescription,
         is_multiworld: bool,
@@ -66,7 +66,7 @@ class BasePatchesFactory:
 
         return patches
 
-    def check_item_pool(self, configuration: BaseConfiguration) -> None:
+    def check_item_pool(self, configuration: Configuration) -> None:
         """
         Raises an InvalidConfiguration Exception if there are more items in the pool than allowed
         :param configuration:
@@ -80,7 +80,7 @@ class BasePatchesFactory:
             )
 
     def dock_connections_assignment(
-        self, configuration: BaseConfiguration, game: GameDescription, rng: Random
+        self, configuration: Configuration, game: GameDescription, rng: Random
     ) -> Iterable[tuple[DockNode, Node]]:
         """
         Adds dock connections if a game's patcher factory overwrites it. e.g. add teleporters
@@ -93,7 +93,7 @@ class BasePatchesFactory:
 
     def starting_location_for_configuration(
         self,
-        configuration: BaseConfiguration,
+        configuration: Configuration,
         game: GameDescription,
         rng: Random,
     ) -> NodeIdentifier:
@@ -109,5 +109,5 @@ class BasePatchesFactory:
 
         return location
 
-    def create_game_specific(self, configuration: BaseConfiguration, game: GameDescription, rng: Random) -> dict:
+    def create_game_specific(self, configuration: Configuration, game: GameDescription, rng: Random) -> dict:
         return {}

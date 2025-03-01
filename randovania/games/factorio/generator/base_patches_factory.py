@@ -15,7 +15,6 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.game_description import GameDescription
-    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class RecipeIngredient(typing.TypedDict):
@@ -31,12 +30,10 @@ class FactorioGameSpecific(typing.TypedDict):
     recipes: dict[str, CustomRecipe]
 
 
-class FactorioBasePatchesFactory(BasePatchesFactory):
+class FactorioBasePatchesFactory(BasePatchesFactory[FactorioConfiguration]):
     def create_game_specific(
-        self, configuration: BaseConfiguration, game: GameDescription, rng: Random
+        self, configuration: FactorioConfiguration, game: GameDescription, rng: Random
     ) -> FactorioGameSpecific:
-        assert isinstance(configuration, FactorioConfiguration)
-
         recipes_raw = data_parser.load_recipes_raw()
         techs_raw = data_parser.load_techs_raw()
         item_cost = cost_calculator(recipes_raw, techs_raw)

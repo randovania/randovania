@@ -106,8 +106,7 @@ async def create_player_pool(
         )
 
         pool_results = pool_creator.calculate_pool_results(configuration, game)
-
-        patches = game_generator.bootstrap.assign_pool_results(rng, patches, pool_results)
+        patches = game_generator.bootstrap.assign_pool_results(rng, configuration, patches, pool_results)
 
         if configuration.check_if_beatable_after_base_patches and not await check_if_beatable(patches, pool_results):
             continue
