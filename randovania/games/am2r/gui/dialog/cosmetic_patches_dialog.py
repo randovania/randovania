@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import functools
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from PySide6.QtGui import QColor
 
@@ -13,8 +13,6 @@ from randovania.gui.lib.signal_handling import set_combo_with_value
 
 if TYPE_CHECKING:
     from PySide6 import QtWidgets
-
-    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
 DEFAULT_HEALTH_COLOR = (255, 225, 0)
 DEFAULT_ETANK_COLOR = (112, 222, 250)
@@ -36,18 +34,13 @@ def hue_rotate_color(original_color: tuple[int, int, int], rotation: int) -> tup
         h += 360
 
     rotated_color = QColor.fromHsv(h, s, v)
-    return (rotated_color.red(), rotated_color.green(), rotated_color.blue())
+    return rotated_color.red(), rotated_color.green(), rotated_color.blue()
 
 
-class AM2RCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_AM2RCosmeticPatchesDialog):
-    _cosmetic_patches: AM2RCosmeticPatches
-
-    def __init__(self, parent: QtWidgets.QWidget | None, current: BaseCosmeticPatches):
+class AM2RCosmeticPatchesDialog(BaseCosmeticPatchesDialog[AM2RCosmeticPatches], Ui_AM2RCosmeticPatchesDialog):
+    def __init__(self, parent: QtWidgets.QWidget | None, current: AM2RCosmeticPatches):
         super().__init__(parent, current)
         self.setupUi(self)
-
-        assert isinstance(current, AM2RCosmeticPatches)
-        self._cosmetic_patches = current
 
         for room_gui_type in AM2RRoomGuiType:
             self.room_name_dropdown.addItem(room_gui_type.long_name, room_gui_type)
@@ -61,6 +54,11 @@ class AM2RCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_AM2RCosmeticPatche
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
         self._update_color_squares()
+
+    @classmethod
+    @override
+    def cosmetic_patches_type(cls) -> type[AM2RCosmeticPatches]:
+        return AM2RCosmeticPatches
 
     def _update_color_squares(self) -> None:
         box_color_rotation_mapping = [
