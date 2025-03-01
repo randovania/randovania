@@ -4,11 +4,10 @@ import dataclasses
 import functools
 from typing import TYPE_CHECKING, override
 
-from PySide6.QtGui import QColor
-
 from randovania.games.am2r.gui.generated.am2r_cosmetic_patches_dialog_ui import Ui_AM2RCosmeticPatchesDialog
 from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches, AM2RRoomGuiType, MusicMode
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+from randovania.gui.lib import color_lib
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
 if TYPE_CHECKING:
@@ -17,24 +16,6 @@ if TYPE_CHECKING:
 DEFAULT_HEALTH_COLOR = (255, 225, 0)
 DEFAULT_ETANK_COLOR = (112, 222, 250)
 DEFAULT_DNA_COLOR = (46, 208, 5)
-
-
-# TODO: This function currently exists both in prime's cosmetic options and here with the exact same implementation
-# In order to avoid code smell, this should be put somewhere shared where both can access it, like base_cosmetic_patches
-# or by making it another lib, obviously with the tests these two have implemented.
-# Context: https://github.com/randovania/randovania/pull/4864#discussion_r1271434389
-def hue_rotate_color(original_color: tuple[int, int, int], rotation: int) -> tuple[int, int, int]:
-    color = QColor.fromRgb(*original_color)
-    h = color.hue() + rotation
-    s = color.saturation()
-    v = color.value()
-    while h >= 360:
-        h -= 360
-    while h < 0:
-        h += 360
-
-    rotated_color = QColor.fromHsv(h, s, v)
-    return rotated_color.red(), rotated_color.green(), rotated_color.blue()
 
 
 class AM2RCosmeticPatchesDialog(BaseCosmeticPatchesDialog[AM2RCosmeticPatches], Ui_AM2RCosmeticPatchesDialog):
@@ -68,7 +49,7 @@ class AM2RCosmeticPatchesDialog(BaseCosmeticPatchesDialog[AM2RCosmeticPatches], 
         ]
 
         for box, orig_color, rotation in box_color_rotation_mapping:
-            color = hue_rotate_color(orig_color, rotation)
+            color = color_lib.hue_rotate_color(orig_color, rotation)
             style = "background-color: rgb({},{},{})".format(*color)
             box.setStyleSheet(style)
 

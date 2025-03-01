@@ -7,7 +7,6 @@ from PySide6 import QtCore
 
 from randovania.games.am2r.gui.dialog.cosmetic_patches_dialog import (
     AM2RCosmeticPatchesDialog,
-    hue_rotate_color,
 )
 from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches, MusicMode
 
@@ -98,19 +97,6 @@ def test_custom_hud_colors(skip_qtbot: QtBot) -> None:
     assert dialog.custom_health_rotation_square.styleSheet() == "background-color: rgb(76,255,0)"
     assert dialog.custom_etank_rotation_square.styleSheet() == "background-color: rgb(116,112,250)"
     assert dialog.custom_dna_rotation_square.styleSheet() == "background-color: rgb(5,208,130)"
-
-
-def test_hue_rotate_color():
-    initial_color = (240, 128, 97)
-    color = hue_rotate_color(initial_color, 360)
-    assert color == initial_color
-
-    color_2 = hue_rotate_color(initial_color, 380)
-    color_3 = hue_rotate_color(initial_color, 20)
-    assert color_2 == color_3
-
-    color_4 = hue_rotate_color(initial_color, 0)
-    assert color_4 == initial_color
 
 
 def test_rotate_tilesets_and_backgrounds(skip_qtbot: QtBot) -> None:

@@ -10,7 +10,7 @@ from randovania.games.prime1.gui.generated.prime_cosmetic_patches_dialog_ui impo
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.layout.prime_user_preferences import PrimeUserPreferences, SoundMode
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
-from randovania.gui.lib import slider_updater
+from randovania.gui.lib import color_lib, slider_updater
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
 SUIT_DEFAULT_COLORS = [
@@ -19,20 +19,6 @@ SUIT_DEFAULT_COLORS = [
     [(170, 170, 145), (70, 25, 50), (40, 20, 90), (140, 240, 240)],  # Gravity
     [(50, 50, 50), (20, 20, 20), (230, 50, 62)],  # Phazon
 ]
-
-
-def hue_rotate_color(original_color: tuple[int, int, int], rotation: int) -> tuple[int, int, int]:
-    color = QtGui.QColor.fromRgb(*original_color)
-    h = color.hue() + rotation
-    s = color.saturation()
-    v = color.value()
-    while h >= 360:
-        h -= 360
-    while h < 0:
-        h += 360
-
-    rotated_color = QtGui.QColor.fromHsv(h, s, v)
-    return rotated_color.red(), rotated_color.green(), rotated_color.blue()
 
 
 class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches], Ui_PrimeCosmeticPatchesDialog):
@@ -174,7 +160,7 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches]
 
         for i, suit_colors in enumerate(SUIT_DEFAULT_COLORS):
             for j, color in enumerate(suit_colors):
-                color = hue_rotate_color(color, self._cosmetic_patches.suit_color_rotations[i])
+                color = color_lib.hue_rotate_color(color, self._cosmetic_patches.suit_color_rotations[i])
                 style = "background-color: rgb({},{},{})".format(*color)
                 self.suit_color_preview_squares[i][j].setStyleSheet(style)
 
