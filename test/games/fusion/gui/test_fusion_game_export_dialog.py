@@ -6,7 +6,6 @@ from unittest.mock import MagicMock
 import pytest
 from PySide6 import QtCore
 
-from randovania.game.game_enum import RandovaniaGame
 from randovania.games.fusion.exporter.game_exporter import FusionGameExportParams
 from randovania.games.fusion.exporter.options import FusionPerGameOptions
 from randovania.games.fusion.gui.dialog.game_export_dialog import FusionGameExportDialog
@@ -76,7 +75,7 @@ def test_save_options(skip_qtbot, tmp_path):
     window.save_options()
 
     # Assert
-    assert options.options_for_game(RandovaniaGame.FUSION).output_path == Path("somewhere")
+    assert options.per_game_options(FusionPerGameOptions).output_path == Path("somewhere")
 
 
 @pytest.mark.parametrize("save_spoiler", [False, True])

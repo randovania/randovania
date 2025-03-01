@@ -16,7 +16,7 @@ if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.preset_settings.preset_tab import PresetTab
-    from randovania.interface_common.options import Options
+    from randovania.interface_common.options import Options, PerGameOptions
     from randovania.interface_common.preset_editor import PresetEditor
 
 
@@ -32,7 +32,7 @@ async def customize_cosmetic_patcher_button(
     :return:
     """
     monitoring.metrics.incr(monitoring_label, tags={"game": game.short_name})
-    per_game_options = options.options_for_game(game)
+    per_game_options: PerGameOptions = options.generic_per_game_options(game)
 
     assert game.gui.cosmetic_dialog is not None
     dialog = game.gui.cosmetic_dialog(parent, per_game_options.cosmetic_patches)
@@ -40,8 +40,7 @@ async def customize_cosmetic_patcher_button(
 
     if result == QtWidgets.QDialog.DialogCode.Accepted:
         with options as options_editor:
-            options_editor.set_options_for_game(
-                game,
+            options_editor.set_per_game_options(
                 dataclasses.replace(per_game_options, cosmetic_patches=dialog.cosmetic_patches),
             )
 

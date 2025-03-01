@@ -6,7 +6,6 @@ from unittest.mock import MagicMock, call
 import pytest
 from PySide6 import QtCore
 
-from randovania.game.game_enum import RandovaniaGame
 from randovania.games.samus_returns.exporter.game_exporter import MSRGameExportParams, MSRModPlatform
 from randovania.games.samus_returns.exporter.options import MSRPerGameOptions
 from randovania.games.samus_returns.gui.dialog.game_export_dialog import MSRGameExportDialog, serialize_path
@@ -95,8 +94,7 @@ def test_save_options(skip_qtbot, tmp_path):
     window.save_options()
 
     # Assert
-    game_options = options.options_for_game(RandovaniaGame.METROID_SAMUS_RETURNS)
-    assert isinstance(game_options, MSRPerGameOptions)
+    game_options = options.per_game_options(MSRPerGameOptions)
     assert game_options.target_platform == MSRModPlatform.LUMA
 
 

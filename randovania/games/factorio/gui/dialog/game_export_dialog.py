@@ -53,8 +53,7 @@ class FactorioGameExportDialog(GameExportDialog[FactorioConfiguration], Ui_Facto
         games: list[RandovaniaGame],
     ):
         super().__init__(options, configuration, word_hash, spoiler, games)
-        per_game = options.options_for_game(self.game_enum())
-        assert isinstance(per_game, FactorioPerGameOptions)
+        per_game = options.per_game_options(FactorioPerGameOptions)
 
         # Output
         self.use_default_button.clicked.connect(self._on_use_default_button)

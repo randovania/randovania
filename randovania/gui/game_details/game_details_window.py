@@ -195,7 +195,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
             return
         dialog.save_options()
 
-        cosmetic_patches = options.options_for_game(game).cosmetic_patches
+        cosmetic_patches = options.generic_per_game_options(game).cosmetic_patches
         data_factory = game.patch_data_factory(layout, self.players_configuration, cosmetic_patches)
         patch_data = data_factory.create_data()
 

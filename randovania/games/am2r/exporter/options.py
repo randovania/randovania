@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from pathlib import Path
-from typing import Self
+from typing import Self, override
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.interface_common.options import PerGameOptions, decode_if_not_none
@@ -30,3 +30,8 @@ class AM2RPerGameOptions(PerGameOptions):
             input_path=decode_if_not_none(value["input_path"], Path),
             output_path=decode_if_not_none(value["output_path"], Path),
         )
+
+    @classmethod
+    @override
+    def game_enum(cls) -> RandovaniaGame:
+        return RandovaniaGame.AM2R

@@ -7,7 +7,6 @@ from unittest.mock import MagicMock
 import pytest
 from PySide6 import QtCore
 
-from randovania.game.game_enum import RandovaniaGame
 from randovania.games.am2r.exporter.game_exporter import AM2RGameExportParams
 from randovania.games.am2r.exporter.options import AM2RPerGameOptions
 from randovania.games.am2r.gui.dialog.game_export_dialog import AM2RGameExportDialog, _is_valid_input_dir
@@ -102,7 +101,7 @@ def test_save_options(skip_qtbot, tmp_path):
     window.save_options()
 
     # Assert
-    assert options.options_for_game(RandovaniaGame.AM2R).output_path == Path("somewhere/foo")
+    assert options.per_game_options(AM2RPerGameOptions).output_path == Path("somewhere/foo")
 
 
 @pytest.mark.parametrize("save_spoiler", [False, True])

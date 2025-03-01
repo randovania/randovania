@@ -58,8 +58,7 @@ class AM2RGameExportDialog(GameExportDialog[AM2RConfiguration], Ui_AM2RGameExpor
         games: list[RandovaniaGame],
     ):
         super().__init__(options, configuration, word_hash, spoiler, games)
-        per_game = options.options_for_game(self.game_enum())
-        assert isinstance(per_game, AM2RPerGameOptions)
+        per_game = options.per_game_options(AM2RPerGameOptions)
 
         # Input
         self.input_file_button.clicked.connect(self._on_input_file_button)

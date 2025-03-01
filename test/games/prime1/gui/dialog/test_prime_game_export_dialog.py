@@ -87,12 +87,12 @@ def test_save_options(skip_qtbot, default_prime_configuration, tmp_path, is_prim
     window.save_options()
 
     # Assert
-    assert options.options_for_game(RandovaniaGame.METROID_PRIME).output_directory == Path("somewhere")
+    assert options.per_game_options(PrimePerGameOptions).output_directory == Path("somewhere")
     if is_prime_multi:
-        assert options.options_for_game(RandovaniaGame.METROID_PRIME).use_external_models == {
+        assert options.per_game_options(PrimePerGameOptions).use_external_models == {
             RandovaniaGame.METROID_PRIME_ECHOES
         }
-        assert options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES).input_path == Path("somewhere/echoes.iso")
+        assert options.per_game_options(EchoesPerGameOptions).input_path == Path("somewhere/echoes.iso")
 
 
 @pytest.mark.parametrize("test_echoes", [False, True])

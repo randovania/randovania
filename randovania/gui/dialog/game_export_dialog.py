@@ -72,8 +72,8 @@ class GameExportDialog[Configuration: BaseConfiguration](QtWidgets.QDialog):
             if self._has_spoiler:
                 options.auto_save_spoiler = self.auto_save_spoiler
 
-            per_game = options.options_for_game(self.game_enum())
-            options.set_options_for_game(self.game_enum(), self.update_per_game_options(per_game))
+            per_game = options.generic_per_game_options(self.game_enum())
+            options.set_per_game_options(self.update_per_game_options(per_game))
 
     def get_game_export_params(self) -> GameExportParams:
         """Get the export params defined by the user. It'll be sent over to the `GameExporter`."""

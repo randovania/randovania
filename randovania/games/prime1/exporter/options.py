@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from pathlib import Path
+from typing import override
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.interface_common.options import PerGameOptions, decode_if_not_none
@@ -35,3 +36,8 @@ class PrimePerGameOptions(PerGameOptions):
             output_format=value["output_format"],
             use_external_models={RandovaniaGame(g) for g in value["use_external_models"]},
         )
+
+    @classmethod
+    @override
+    def game_enum(cls) -> RandovaniaGame:
+        return RandovaniaGame.METROID_PRIME

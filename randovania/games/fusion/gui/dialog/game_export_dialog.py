@@ -65,8 +65,7 @@ class FusionGameExportDialog(GameExportDialog[FusionConfiguration], Ui_FusionGam
         super().__init__(options, configuration, word_hash, spoiler, games)
 
         self._base_output_name = f"Fusion - {word_hash}.{self.valid_file_type}"
-        fusion_options = options.options_for_game(self.game_enum())
-        assert isinstance(fusion_options, FusionPerGameOptions)
+        fusion_options = options.per_game_options(FusionPerGameOptions)
 
         # Input
         self.input_file_button.clicked.connect(self._on_input_file_button)

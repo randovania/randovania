@@ -7,7 +7,6 @@ import pytest
 from caver.patcher import CSPlatform
 from PySide6 import QtCore
 
-from randovania.game.game_enum import RandovaniaGame
 from randovania.games.cave_story.exporter.game_exporter import CSGameExportParams
 from randovania.games.cave_story.exporter.options import CSPerGameOptions
 from randovania.games.cave_story.gui.dialog.game_export_dialog import CSGameExportDialog
@@ -75,8 +74,7 @@ def test_save_options(skip_qtbot, default_cs_configuration, tmp_path):
 
     # Run
     window.save_options()
-    game_options = options.options_for_game(RandovaniaGame.CAVE_STORY)
-    assert isinstance(game_options, CSPerGameOptions)
+    game_options = options.per_game_options(CSPerGameOptions)
 
     # Assert
     assert game_options.output_directory == Path("somewhere/foo")

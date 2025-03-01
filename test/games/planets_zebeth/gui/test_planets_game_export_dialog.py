@@ -6,7 +6,6 @@ from unittest.mock import MagicMock
 import pytest
 from PySide6 import QtCore
 
-from randovania.game.game_enum import RandovaniaGame
 from randovania.games.planets_zebeth.exporter.game_exporter import PlanetsZebethGameExportParams
 from randovania.games.planets_zebeth.exporter.options import PlanetsZebethPerGameOptions
 from randovania.games.planets_zebeth.gui.dialog.game_export_dialog import PlanetsZebethGameExportDialog
@@ -76,7 +75,7 @@ def test_save_options(skip_qtbot, tmp_path):
     window.save_options()
 
     # Assert
-    assert options.options_for_game(RandovaniaGame.METROID_PLANETS_ZEBETH).output_path == Path("somewhere/foo")
+    assert options.per_game_options(PlanetsZebethPerGameOptions).output_path == Path("somewhere/foo")
 
 
 @pytest.mark.parametrize("save_spoiler", [False, True])

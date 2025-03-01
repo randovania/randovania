@@ -33,6 +33,7 @@ from randovania.lib import json_lib
 if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
     from randovania.game_description.game_description import GameDescription
+    from randovania.lib.json_lib import JsonObject
 
 
 @pytest.fixture
@@ -138,7 +139,7 @@ def test_add_header_data_to_result():
         "shareable_hash": "<shareable_hash>",
         "shareable_word_hash": "<shareable_word_hash>",
     }
-    result = {}
+    result: JsonObject = {}
 
     # Run
     patch_data_factory._add_header_data_to_result(description, result)
@@ -398,7 +399,7 @@ def test_create_translator_gates_field(echoes_game_description):
 @pytest.mark.parametrize("teleporters", [TeleporterShuffleMode.VANILLA, TeleporterShuffleMode.TWO_WAY_RANDOMIZED])
 def test_apply_translator_gate_patches(teleporters):
     # Setup
-    target = {}
+    target: JsonObject = {}
 
     # Run
     patch_data_factory._apply_translator_gate_patches(target, teleporters)
@@ -591,7 +592,7 @@ def test_run_validated_hud_text(multiworld_item):
             name="EnergyTransferModule",
         ),
         is_for_remote_player=False,
-        original_pickup=None,
+        original_pickup=MagicMock(),
     )
 
     # Run
@@ -649,7 +650,7 @@ def test_create_string_patches(
         namer,
         player_config,
         rng,
-        None,
+        MagicMock(),
     )
 
     # Assert

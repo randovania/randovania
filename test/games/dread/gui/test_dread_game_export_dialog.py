@@ -7,7 +7,6 @@ from unittest.mock import MagicMock, call
 import pytest
 from PySide6 import QtCore
 
-from randovania.game.game_enum import RandovaniaGame
 from randovania.games.dread.exporter.game_exporter import DreadGameExportParams, DreadModPlatform, LinuxRyujinxPath
 from randovania.games.dread.exporter.options import DreadPerGameOptions
 from randovania.games.dread.gui.dialog.game_export_dialog import DreadGameExportDialog, serialize_path
@@ -102,8 +101,7 @@ def test_save_options(skip_qtbot, tmp_path, dread_configuration):
     window.save_options()
 
     # Assert
-    game_options = options.options_for_game(RandovaniaGame.METROID_DREAD)
-    assert isinstance(game_options, DreadPerGameOptions)
+    game_options = options.per_game_options(DreadPerGameOptions)
     assert game_options.target_platform == DreadModPlatform.ATMOSPHERE
 
 
