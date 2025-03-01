@@ -53,7 +53,7 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
         expected_default_name = "AM2R Randomizer"
 
     options = MagicMock()
-    options.options_for_game.return_value = AM2RPerGameOptions(
+    options.per_game_options.return_value = AM2RPerGameOptions(
         cosmetic_patches=AM2RCosmeticPatches.default(),
         output_path=output_directory,
     )
@@ -75,7 +75,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
 
     options = MagicMock()
-    options.options_for_game.return_value = AM2RPerGameOptions(
+    options.per_game_options.return_value = AM2RPerGameOptions(
         cosmetic_patches=AM2RCosmeticPatches.default(),
         output_path=None,
     )
@@ -108,7 +108,7 @@ def test_save_options(skip_qtbot, tmp_path):
 def test_get_game_export_params(skip_qtbot, tmp_path, save_spoiler: bool):
     # Setup
     options = MagicMock()
-    options.options_for_game.return_value = AM2RPerGameOptions(
+    options.per_game_options.return_value = AM2RPerGameOptions(
         cosmetic_patches=AM2RCosmeticPatches.default(),
         input_path=tmp_path.joinpath("input"),
         output_path=tmp_path.joinpath("output"),

@@ -30,7 +30,7 @@ def test_on_output_file_button_exists(skip_qtbot, default_prime_configuration, t
         expected_default_name = "Prime Randomizer - MyHash"
 
     options = MagicMock()
-    options.options_for_game.return_value = PrimePerGameOptions(
+    options.per_game_options.return_value = PrimePerGameOptions(
         cosmetic_patches=PrimeCosmeticPatches.default(),
         output_directory=output_directory,
         output_format="iso",
@@ -53,7 +53,7 @@ def test_on_output_file_button_cancel(skip_qtbot, default_prime_configuration, t
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
 
     options = MagicMock()
-    options.options_for_game.return_value = PrimePerGameOptions(
+    options.per_game_options.return_value = PrimePerGameOptions(
         cosmetic_patches=PrimeCosmeticPatches.default(),
         output_directory=None,
         output_format="iso",
@@ -115,7 +115,7 @@ def test_on_input_file_button(skip_qtbot, default_prime_configuration, tmp_path,
     )
 
     options = MagicMock()
-    options.options_for_game.side_effect = [
+    options.per_game_options.side_effect = [
         PrimePerGameOptions(
             cosmetic_patches=PrimeCosmeticPatches.default(),
             input_path=None,
@@ -195,7 +195,7 @@ def test_get_game_export_params(
 
     options = MagicMock()
     options.internal_copies_path = tmp_path.joinpath("internal_copies")
-    options.options_for_game.side_effect = [
+    options.per_game_options.side_effect = [
         PrimePerGameOptions(
             cosmetic_patches=PrimeCosmeticPatches.default(),
             input_path=tmp_path.joinpath("input/game.iso"),

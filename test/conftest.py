@@ -24,6 +24,7 @@ from randovania.games.fusion.layout.fusion_configuration import FusionConfigurat
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.preset import Preset
 from randovania.lib import json_lib
@@ -533,6 +534,11 @@ def obfuscator_no_secret(monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setattr(obfuscator, "_secret", None)
     yield None
     obfuscator._encrypt = None
+
+
+@pytest.fixture
+def options(tmp_path) -> Options:
+    return Options(tmp_path)
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:

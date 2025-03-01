@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import typing
-from unittest.mock import MagicMock, call
+from unittest.mock import call
 
 import pytest
 from PySide6 import QtCore
@@ -11,7 +11,6 @@ from randovania.games.dread.exporter.game_exporter import DreadGameExportParams,
 from randovania.games.dread.exporter.options import DreadPerGameOptions
 from randovania.games.dread.gui.dialog.game_export_dialog import DreadGameExportDialog, serialize_path
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
-from randovania.interface_common.options import Options
 from randovania.lib.ftp_uploader import FtpUploader
 
 if typing.TYPE_CHECKING:
@@ -22,7 +21,7 @@ if typing.TYPE_CHECKING:
 
 
 @pytest.mark.parametrize("has_custom_path", [False, True])
-def test_on_custom_path_button_exists(skip_qtbot, tmp_path, mocker, has_custom_path, dread_configuration):
+def test_on_custom_path_button_exists(skip_qtbot, tmp_path, mocker, has_custom_path, dread_configuration, options):
     # Setup
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
 
@@ -34,20 +33,22 @@ def test_on_custom_path_button_exists(skip_qtbot, tmp_path, mocker, has_custom_p
         output_directory = None
         expected_default_name = "DreadRandovania"
 
-    options = MagicMock()
-    options.options_for_game.return_value = DreadPerGameOptions(
-        cosmetic_patches=DreadCosmeticPatches.default(),
-        output_preference=json.dumps(
-            {
-                "selected_tab": "custom",
-                "tab_options": {
-                    "custom": {
-                        "path": serialize_path(output_directory),
+    with options:
+        options.set_per_game_options(
+            DreadPerGameOptions(
+                cosmetic_patches=DreadCosmeticPatches.default(),
+                output_preference=json.dumps(
+                    {
+                        "selected_tab": "custom",
+                        "tab_options": {
+                            "custom": {
+                                "path": serialize_path(output_directory),
+                            }
+                        },
                     }
-                },
-            }
-        ),
-    )
+                ),
+            )
+        )
 
     window = DreadGameExportDialog(options, dread_configuration, "MyHash", True, [])
     mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
@@ -61,24 +62,26 @@ def test_on_custom_path_button_exists(skip_qtbot, tmp_path, mocker, has_custom_p
     assert tmp_path.joinpath("foo").is_dir()
 
 
-def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker, dread_configuration):
+def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker, dread_configuration, options):
     # Setup
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
 
-    options = MagicMock()
-    options.options_for_game.return_value = DreadPerGameOptions(
-        cosmetic_patches=DreadCosmeticPatches.default(),
-        output_preference=json.dumps(
-            {
-                "selected_tab": "custom",
-                "tab_options": {
-                    "custom": {
-                        "path": None,
-                    },
-                },
-            }
-        ),
-    )
+    with options:
+        options.set_per_game_options(
+            DreadPerGameOptions(
+                cosmetic_patches=DreadCosmeticPatches.default(),
+                output_preference=json.dumps(
+                    {
+                        "selected_tab": "custom",
+                        "tab_options": {
+                            "custom": {
+                                "path": None,
+                            },
+                        },
+                    }
+                ),
+            )
+        )
 
     window = DreadGameExportDialog(options, dread_configuration, "MyHash", True, [])
     mock_prompt.return_value = None
@@ -91,9 +94,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker, dread_configur
     assert window.custom_path_edit.text() == ""
 
 
-def test_save_options(skip_qtbot, tmp_path, dread_configuration):
-    options = Options(tmp_path)
-
+def test_save_options(skip_qtbot, tmp_path, dread_configuration, options):
     window = DreadGameExportDialog(options, dread_configuration, "MyHash", True, [])
     window.atmosphere_radio.setChecked(True)
 
@@ -105,7 +106,7 @@ def test_save_options(skip_qtbot, tmp_path, dread_configuration):
     assert game_options.target_platform == DreadModPlatform.ATMOSPHERE
 
 
-def test_on_input_file_button(skip_qtbot, tmp_path, mocker, dread_configuration):
+def test_on_input_file_button(skip_qtbot, tmp_path, mocker, dread_configuration, options):
     # Setup
     tmp_path.joinpath("existing.iso").write_bytes(b"foo")
     tmp_path.joinpath("existing-folder").mkdir()
@@ -132,11 +133,13 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker, dread_configuration)
         ],
     )
 
-    options = MagicMock()
-    options.options_for_game.return_value = DreadPerGameOptions(
-        cosmetic_patches=DreadCosmeticPatches.default(),
-        input_directory=None,
-    )
+    with options:
+        options.set_per_game_options(
+            DreadPerGameOptions(
+                cosmetic_patches=DreadCosmeticPatches.default(),
+                input_directory=None,
+            )
+        )
 
     window = DreadGameExportDialog(options, dread_configuration, "MyHash", True, [])
     # Empty text field is an error
@@ -180,7 +183,7 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker, dread_configuration)
 
 
 @pytest.mark.parametrize("mod_manager", [False, True])
-def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, mod_manager, dread_configuration):
+def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, mod_manager, dread_configuration, options):
     # Setup
     mocker.patch("randovania.games.dread.gui.dialog.game_export_dialog.DreadGameExportDialog.get_path_to_ryujinx")
     mocker.patch("platform.system", return_value="Windows")
@@ -191,24 +194,27 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, mod_manage
     )
     drive = tmp_path.joinpath("drive")
 
-    options = MagicMock()
-    options.options_for_game.return_value = DreadPerGameOptions(
-        cosmetic_patches=DreadCosmeticPatches.default(),
-        input_directory=tmp_path.joinpath("input"),
-        target_platform=DreadModPlatform.ATMOSPHERE,
-        output_preference=json.dumps(
-            {
-                "selected_tab": "sd",
-                "tab_options": {
-                    "sd": {
-                        "drive": str(drive),
-                        "non_removable": False,
-                        "mod_manager": mod_manager,
+    with options:
+        options.auto_save_spoiler = True
+        options.set_per_game_options(
+            DreadPerGameOptions(
+                cosmetic_patches=DreadCosmeticPatches.default(),
+                input_directory=tmp_path.joinpath("input"),
+                target_platform=DreadModPlatform.ATMOSPHERE,
+                output_preference=json.dumps(
+                    {
+                        "selected_tab": "sd",
+                        "tab_options": {
+                            "sd": {
+                                "drive": str(drive),
+                                "non_removable": False,
+                                "mod_manager": mod_manager,
+                            }
+                        },
                     }
-                },
-            }
-        ),
-    )
+                ),
+            )
+        )
     window = DreadGameExportDialog(options, dread_configuration, "MyHash", True, [])
 
     # Run
@@ -231,7 +237,7 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, mod_manage
     )
 
 
-def test_get_game_export_params_ryujinx(skip_qtbot, tmp_path, mocker, dread_configuration):
+def test_get_game_export_params_ryujinx(skip_qtbot, tmp_path, mocker, dread_configuration, options):
     # Setup
     ryujinx_path = tmp_path.joinpath("ryujinx_mod")
     mocker.patch(
@@ -239,13 +245,16 @@ def test_get_game_export_params_ryujinx(skip_qtbot, tmp_path, mocker, dread_conf
         return_value=ryujinx_path,
     )
 
-    options = MagicMock()
-    options.options_for_game.return_value = DreadPerGameOptions(
-        cosmetic_patches=DreadCosmeticPatches.default(),
-        input_directory=tmp_path.joinpath("input"),
-        target_platform=DreadModPlatform.RYUJINX,
-        output_preference=json.dumps({"selected_tab": "ryujinx", "tab_options": {}}),
-    )
+    with options:
+        options.auto_save_spoiler = True
+        options.set_per_game_options(
+            DreadPerGameOptions(
+                cosmetic_patches=DreadCosmeticPatches.default(),
+                input_directory=tmp_path.joinpath("input"),
+                target_platform=DreadModPlatform.RYUJINX,
+                output_preference=json.dumps({"selected_tab": "ryujinx", "tab_options": {}}),
+            )
+        )
     window = DreadGameExportDialog(options, dread_configuration, "MyHash", True, [])
 
     # Run
@@ -263,30 +272,31 @@ def test_get_game_export_params_ryujinx(skip_qtbot, tmp_path, mocker, dread_conf
     )
 
 
-def test_get_game_export_params_ftp(skip_qtbot, tmp_path, dread_configuration):
+def test_get_game_export_params_ftp(skip_qtbot, tmp_path, dread_configuration, options):
     # Setup
-    options = MagicMock()
-    options.internal_copies_path = tmp_path.joinpath("internal")
-
-    options.options_for_game.return_value = DreadPerGameOptions(
-        cosmetic_patches=DreadCosmeticPatches.default(),
-        input_directory=tmp_path.joinpath("input"),
-        target_platform=DreadModPlatform.ATMOSPHERE,
-        output_preference=json.dumps(
-            {
-                "selected_tab": "ftp",
-                "tab_options": {
-                    "ftp": {
-                        "anonymous": False,
-                        "username": "admin",
-                        "password": "1234",
-                        "ip": "192.168.1.2",
-                        "port": 5000,
+    with options:
+        options.auto_save_spoiler = True
+        options.set_per_game_options(
+            DreadPerGameOptions(
+                cosmetic_patches=DreadCosmeticPatches.default(),
+                input_directory=tmp_path.joinpath("input"),
+                target_platform=DreadModPlatform.ATMOSPHERE,
+                output_preference=json.dumps(
+                    {
+                        "selected_tab": "ftp",
+                        "tab_options": {
+                            "ftp": {
+                                "anonymous": False,
+                                "username": "admin",
+                                "password": "1234",
+                                "ip": "192.168.1.2",
+                                "port": 5000,
+                            }
+                        },
                     }
-                },
-            }
-        ),
-    )
+                ),
+            )
+        )
     window = DreadGameExportDialog(options, dread_configuration, "MyHash", True, [])
 
     # Run
@@ -294,9 +304,9 @@ def test_get_game_export_params_ftp(skip_qtbot, tmp_path, dread_configuration):
 
     # Assert
     assert result == DreadGameExportParams(
-        spoiler_output=tmp_path.joinpath("internal", "dread", "contents", "spoiler.rdvgame"),
+        spoiler_output=tmp_path.joinpath("internal_copies", "dread", "contents", "spoiler.rdvgame"),
         input_path=tmp_path.joinpath("input"),
-        output_path=tmp_path.joinpath("internal", "dread", "contents"),
+        output_path=tmp_path.joinpath("internal_copies", "dread", "contents"),
         target_platform=DreadModPlatform.ATMOSPHERE,
         use_exlaunch=True,
         clean_output_path=True,
@@ -304,29 +314,32 @@ def test_get_game_export_params_ftp(skip_qtbot, tmp_path, dread_configuration):
             auth=("admin", "1234"),
             ip="192.168.1.2",
             port=5000,
-            local_path=tmp_path.joinpath("internal", "dread", "contents"),
+            local_path=tmp_path.joinpath("internal_copies", "dread", "contents"),
             remote_path="/mods/Metroid Dread/Randovania MyHash",
         ),
     )
 
 
-def test_get_game_export_params_custom(skip_qtbot, tmp_path, dread_configuration):
+def test_get_game_export_params_custom(skip_qtbot, tmp_path, dread_configuration, options):
     # Setup
-    options = MagicMock()
-    options.options_for_game.return_value = DreadPerGameOptions(
-        cosmetic_patches=DreadCosmeticPatches.default(),
-        input_directory=tmp_path.joinpath("input"),
-        output_preference=json.dumps(
-            {
-                "selected_tab": "custom",
-                "tab_options": {
-                    "custom": {
-                        "path": serialize_path(tmp_path.joinpath("output")),
-                    },
-                },
-            }
-        ),
-    )
+    with options:
+        options.auto_save_spoiler = True
+        options.set_per_game_options(
+            DreadPerGameOptions(
+                cosmetic_patches=DreadCosmeticPatches.default(),
+                input_directory=tmp_path.joinpath("input"),
+                output_preference=json.dumps(
+                    {
+                        "selected_tab": "custom",
+                        "tab_options": {
+                            "custom": {
+                                "path": serialize_path(tmp_path.joinpath("output")),
+                            },
+                        },
+                    }
+                ),
+            )
+        )
     window = DreadGameExportDialog(options, dread_configuration, "MyHash", True, [])
 
     # Run
@@ -345,15 +358,17 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path, dread_configuration
 
 
 def test_linux_controls_changing(
-    skip_qtbot: QtBot, mocker: pytest_mock.MockerFixture, tmp_path: Path, dread_configuration
+    skip_qtbot: QtBot, mocker: pytest_mock.MockerFixture, tmp_path: Path, dread_configuration, options
 ) -> None:
     # Setup
     mocker.patch("platform.system", return_value="Linux")
-    options = MagicMock()
-    options.options_for_game.return_value = DreadPerGameOptions(
-        cosmetic_patches=DreadCosmeticPatches.default(),
-        linux_ryujinx_path=LinuxRyujinxPath.FLATPAK,
-    )
+    with options:
+        options.set_per_game_options(
+            DreadPerGameOptions(
+                cosmetic_patches=DreadCosmeticPatches.default(),
+                linux_ryujinx_path=LinuxRyujinxPath.FLATPAK,
+            )
+        )
     label_template = (
         "<html><head/><body><p>The game will be exported directly to Ryujinx's mod folder for Metroid "
         'Dread in this computer.</p><p>Path to be used:<br/><span style=" font-size:8pt;">{'

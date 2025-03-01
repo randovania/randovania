@@ -10,12 +10,11 @@ from randovania.games.samus_returns.exporter.game_exporter import MSRGameExportP
 from randovania.games.samus_returns.exporter.options import MSRPerGameOptions
 from randovania.games.samus_returns.gui.dialog.game_export_dialog import MSRGameExportDialog, serialize_path
 from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches
-from randovania.interface_common.options import Options
 from randovania.lib.ftp_uploader import FtpUploader
 
 
 @pytest.mark.parametrize("has_custom_path", [False, True])
-def test_on_custom_path_button_exists(skip_qtbot, tmp_path, mocker, has_custom_path):
+def test_on_custom_path_button_exists(skip_qtbot, tmp_path, mocker, has_custom_path, options):
     # Setup
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
 
@@ -27,20 +26,22 @@ def test_on_custom_path_button_exists(skip_qtbot, tmp_path, mocker, has_custom_p
         output_directory = None
         expected_default_name = "MSRRandovania"
 
-    options = MagicMock()
-    options.options_for_game.return_value = MSRPerGameOptions(
-        cosmetic_patches=MSRCosmeticPatches.default(),
-        output_preference=json.dumps(
-            {
-                "selected_tab": "custom",
-                "tab_options": {
-                    "custom": {
-                        "path": serialize_path(output_directory),
+    with options:
+        options.set_per_game_options(
+            MSRPerGameOptions(
+                cosmetic_patches=MSRCosmeticPatches.default(),
+                output_preference=json.dumps(
+                    {
+                        "selected_tab": "custom",
+                        "tab_options": {
+                            "custom": {
+                                "path": serialize_path(output_directory),
+                            }
+                        },
                     }
-                },
-            }
-        ),
-    )
+                ),
+            )
+        )
 
     window = MSRGameExportDialog(options, {}, "MyHash", True, [])
     mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
@@ -54,24 +55,26 @@ def test_on_custom_path_button_exists(skip_qtbot, tmp_path, mocker, has_custom_p
     assert tmp_path.joinpath("foo").is_dir()
 
 
-def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
+def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker, options):
     # Setup
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
 
-    options = MagicMock()
-    options.options_for_game.return_value = MSRPerGameOptions(
-        cosmetic_patches=MSRCosmeticPatches.default(),
-        output_preference=json.dumps(
-            {
-                "selected_tab": "custom",
-                "tab_options": {
-                    "custom": {
-                        "path": None,
-                    },
-                },
-            }
-        ),
-    )
+    with options:
+        options.set_per_game_options(
+            MSRPerGameOptions(
+                cosmetic_patches=MSRCosmeticPatches.default(),
+                output_preference=json.dumps(
+                    {
+                        "selected_tab": "custom",
+                        "tab_options": {
+                            "custom": {
+                                "path": None,
+                            },
+                        },
+                    }
+                ),
+            )
+        )
 
     window = MSRGameExportDialog(options, {}, "MyHash", True, [])
     mock_prompt.return_value = None
@@ -84,9 +87,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
     assert window.custom_path_edit.text() == ""
 
 
-def test_save_options(skip_qtbot, tmp_path):
-    options = Options(tmp_path)
-
+def test_save_options(skip_qtbot, options):
     window = MSRGameExportDialog(options, {}, "MyHash", True, [])
     window.luma_radio.setChecked(True)
 
@@ -98,7 +99,7 @@ def test_save_options(skip_qtbot, tmp_path):
     assert game_options.target_platform == MSRModPlatform.LUMA
 
 
-def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
+def test_on_input_file_button(skip_qtbot, tmp_path, mocker, options):
     # Setup
     tmp_path.joinpath("existing.iso").write_bytes(b"foo")
     tmp_path.joinpath("existing-folder").mkdir()
@@ -115,11 +116,13 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
         ],
     )
 
-    options = MagicMock()
-    options.options_for_game.return_value = MSRPerGameOptions(
-        cosmetic_patches=MSRCosmeticPatches.default(),
-        input_file=None,
-    )
+    with options:
+        options.set_per_game_options(
+            MSRPerGameOptions(
+                cosmetic_patches=MSRCosmeticPatches.default(),
+                input_file=None,
+            )
+        )
 
     window = MSRGameExportDialog(options, {}, "MyHash", True, [])
     # Empty text field is an error
@@ -162,7 +165,7 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
     )
 
 
-def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker):
+def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, options):
     # Setup
     mocker.patch("randovania.games.samus_returns.gui.dialog.game_export_dialog.get_path_to_citra")
     mocker.patch("platform.system", return_value="Windows")
@@ -173,23 +176,25 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker):
     )
     drive = tmp_path.joinpath("drive")
 
-    options = MagicMock()
-    options.options_for_game.return_value = MSRPerGameOptions(
-        cosmetic_patches=MSRCosmeticPatches.default(),
-        input_file=tmp_path.joinpath("input_file.3ds"),
-        target_platform=MSRModPlatform.LUMA,
-        output_preference=json.dumps(
-            {
-                "selected_tab": "sd",
-                "tab_options": {
-                    "sd": {
-                        "drive": str(drive),
-                        "non_removable": False,
+    with options:
+        options.set_per_game_options(
+            MSRPerGameOptions(
+                cosmetic_patches=MSRCosmeticPatches.default(),
+                input_file=tmp_path.joinpath("input_file.3ds"),
+                target_platform=MSRModPlatform.LUMA,
+                output_preference=json.dumps(
+                    {
+                        "selected_tab": "sd",
+                        "tab_options": {
+                            "sd": {
+                                "drive": str(drive),
+                                "non_removable": False,
+                            }
+                        },
                     }
-                },
-            }
-        ),
-    )
+                ),
+            )
+        )
     window = MSRGameExportDialog(options, {}, "MyHash", True, [])
     window.title_id = "00040000001BB200"
 
@@ -209,7 +214,7 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker):
     )
 
 
-def test_get_game_export_params_citra(skip_qtbot, tmp_path, mocker):
+def test_get_game_export_params_citra(skip_qtbot, tmp_path, mocker, options):
     # Setup
     mocker.patch("platform.system", return_value="Windows")
     citra_path = tmp_path.joinpath("citra_mod")
@@ -217,13 +222,15 @@ def test_get_game_export_params_citra(skip_qtbot, tmp_path, mocker):
         "randovania.games.samus_returns.gui.dialog.game_export_dialog.get_path_to_citra", return_value=citra_path
     )
 
-    options = MagicMock()
-    options.options_for_game.return_value = MSRPerGameOptions(
-        cosmetic_patches=MSRCosmeticPatches.default(),
-        input_file=tmp_path.joinpath("input_file.3ds"),
-        target_platform=MSRModPlatform.CITRA,
-        output_preference=json.dumps({"selected_tab": "citra", "tab_options": {}}),
-    )
+    with options:
+        options.set_per_game_options(
+            MSRPerGameOptions(
+                cosmetic_patches=MSRCosmeticPatches.default(),
+                input_file=tmp_path.joinpath("input_file.3ds"),
+                target_platform=MSRModPlatform.CITRA,
+                output_preference=json.dumps({"selected_tab": "citra", "tab_options": {}}),
+            )
+        )
     window = MSRGameExportDialog(options, {}, "MyHash", True, [])
 
     # Run
@@ -240,30 +247,31 @@ def test_get_game_export_params_citra(skip_qtbot, tmp_path, mocker):
     )
 
 
-def test_get_game_export_params_ftp(skip_qtbot, tmp_path):
+def test_get_game_export_params_ftp(skip_qtbot, tmp_path, options):
     # Setup
-    options = MagicMock()
-    options.internal_copies_path = tmp_path.joinpath("internal")
 
-    options.options_for_game.return_value = MSRPerGameOptions(
-        cosmetic_patches=MSRCosmeticPatches.default(),
-        input_file=tmp_path.joinpath("input_file.3ds"),
-        target_platform=MSRModPlatform.LUMA,
-        output_preference=json.dumps(
-            {
-                "selected_tab": "ftp",
-                "tab_options": {
-                    "ftp": {
-                        "anonymous": False,
-                        "username": "admin",
-                        "password": "1234",
-                        "ip": "192.168.1.2",
-                        "port": 5000,
+    with options:
+        options.set_per_game_options(
+            MSRPerGameOptions(
+                cosmetic_patches=MSRCosmeticPatches.default(),
+                input_file=tmp_path.joinpath("input_file.3ds"),
+                target_platform=MSRModPlatform.LUMA,
+                output_preference=json.dumps(
+                    {
+                        "selected_tab": "ftp",
+                        "tab_options": {
+                            "ftp": {
+                                "anonymous": False,
+                                "username": "admin",
+                                "password": "1234",
+                                "ip": "192.168.1.2",
+                                "port": 5000,
+                            }
+                        },
                     }
-                },
-            }
-        ),
-    )
+                ),
+            )
+        )
     window = MSRGameExportDialog(options, {}, "MyHash", True, [])
     window.title_id = "00040000001BFB00"
 
@@ -287,23 +295,25 @@ def test_get_game_export_params_ftp(skip_qtbot, tmp_path):
     )
 
 
-def test_get_game_export_params_custom(skip_qtbot, tmp_path):
+def test_get_game_export_params_custom(skip_qtbot, tmp_path, options):
     # Setup
-    options = MagicMock()
-    options.options_for_game.return_value = MSRPerGameOptions(
-        cosmetic_patches=MSRCosmeticPatches.default(),
-        input_file=tmp_path.joinpath("input_file.3ds"),
-        output_preference=json.dumps(
-            {
-                "selected_tab": "custom",
-                "tab_options": {
-                    "custom": {
-                        "path": serialize_path(tmp_path.joinpath("output")),
-                    },
-                },
-            }
-        ),
-    )
+    with options:
+        options.set_per_game_options(
+            MSRPerGameOptions(
+                cosmetic_patches=MSRCosmeticPatches.default(),
+                input_file=tmp_path.joinpath("input_file.3ds"),
+                output_preference=json.dumps(
+                    {
+                        "selected_tab": "custom",
+                        "tab_options": {
+                            "custom": {
+                                "path": serialize_path(tmp_path.joinpath("output")),
+                            },
+                        },
+                    }
+                ),
+            )
+        )
     window = MSRGameExportDialog(options, {}, "MyHash", True, [])
 
     # Run
@@ -320,7 +330,7 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path):
     )
 
 
-def test_export_button(skip_qtbot, tmp_path, mocker):
+def test_export_button(skip_qtbot, tmp_path, mocker, options):
     # Setup
     mocker.patch("platform.system", return_value="Windows")
     citra_path = tmp_path.joinpath("citra_mod")
@@ -328,10 +338,13 @@ def test_export_button(skip_qtbot, tmp_path, mocker):
         "randovania.games.samus_returns.gui.dialog.game_export_dialog.get_path_to_citra", return_value=citra_path
     )
 
-    options = MagicMock()
-    options.options_for_game.return_value = MSRPerGameOptions(
-        cosmetic_patches=MSRCosmeticPatches.default(),
-    )
+    with options:
+        options.set_per_game_options(
+            MSRPerGameOptions(
+                cosmetic_patches=MSRCosmeticPatches.default(),
+            )
+        )
+
     window = MSRGameExportDialog(options, {}, "MyHash", True, [])
 
     # force that input_file_edit is valid
