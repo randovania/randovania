@@ -11,7 +11,7 @@ from retro_data_structures.asset_manager import AssetManager, PathFileProvider
 from retro_data_structures.game_check import Game as RDSGame
 
 from randovania import monitoring
-from randovania.exporter.game_exporter import GameExporter, GameExportParams
+from randovania.exporter.game_exporter import GameExporter
 from randovania.games.common.prime_family.exporter import good_hashes
 from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
 from randovania.games.prime2.exporter.export_params import EchoesGameExportParams
@@ -25,7 +25,7 @@ if TYPE_CHECKING:
     from pathlib import Path
 
 
-class EchoesGameExporter(GameExporter):
+class EchoesGameExporter(GameExporter[EchoesGameExportParams]):
     _busy: bool = False
 
     @property
@@ -42,7 +42,7 @@ class EchoesGameExporter(GameExporter):
         """
         return True
 
-    def export_params_type(self) -> type[GameExportParams]:
+    def export_params_type(self) -> type[EchoesGameExportParams]:
         """
         Returns the type of the GameExportParams expected by this exporter.
         """
@@ -64,10 +64,9 @@ class EchoesGameExporter(GameExporter):
     def _do_export_game(
         self,
         patch_data: dict,
-        export_params: GameExportParams,
+        export_params: EchoesGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ):
-        assert isinstance(export_params, EchoesGameExportParams)
         new_patcher = patch_data.pop("new_patcher", None)
         monitoring.set_tag("echoes_new_patcher", new_patcher is not None)
 

@@ -23,7 +23,7 @@ class AM2RGameExportParams(GameExportParams):
     output_path: Path
 
 
-class AM2RGameExporter(GameExporter):
+class AM2RGameExporter(GameExporter[AM2RGameExportParams]):
     _busy: bool = False
 
     @property
@@ -40,7 +40,7 @@ class AM2RGameExporter(GameExporter):
         """
         return False
 
-    def export_params_type(self) -> type[GameExportParams]:
+    def export_params_type(self) -> type[AM2RGameExportParams]:
         """
         Returns the type of the GameExportParams expected by this exporter.
         """
@@ -49,11 +49,9 @@ class AM2RGameExporter(GameExporter):
     def _do_export_game(
         self,
         patch_data: dict,
-        export_params: GameExportParams,
+        export_params: AM2RGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
-        assert isinstance(export_params, AM2RGameExportParams)
-
         # Check if dotnet is available
         # Raises error in case it's not set up
         is_dotnet_set_up()
