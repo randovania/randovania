@@ -191,7 +191,7 @@ def weighted_potential_actions(
         options_considered = 0
         for action, evaluation in evaluated_actions.items():
             evaluated_actions[action] = evaluation.replace_reach(
-                reach_lib.advance_reach_with_possible_unsafe_resources(evaluation.reach, filter_resource_nodes=True)
+                reach_lib.advance_reach_with_possible_unsafe_resources(evaluation.reach)
             )
             update_for_option()
 
