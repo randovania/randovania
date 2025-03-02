@@ -110,7 +110,7 @@ class UncollectedState(NamedTuple):
     def hints_weight(self, weights: ActionWeights) -> float:
         return weights.hints_weight if self.hints else 0.0
 
-    def __sub__(self, other: UncollectedState) -> Self:
+    def __sub__(self, other: UncollectedState) -> UncollectedState:
         return UncollectedState(
             self.pickup_indices - other.pickup_indices,
             self.hints - other.hints,
