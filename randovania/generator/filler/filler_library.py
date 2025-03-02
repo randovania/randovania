@@ -93,7 +93,7 @@ class UncollectedState(NamedTuple):
         )
 
     @classmethod
-    def from_reach_only_unsafe(cls, reach: GeneratorReach) -> Self:
+    def from_reach_only_unsafe(cls, reach: GeneratorReach) -> UncollectedState:
         """Creates an UncollectedState reflecting only the unsafe uncollected resources in the reach."""
 
         safe_state = cls.from_reach(reach)
