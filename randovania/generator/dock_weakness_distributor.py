@@ -226,7 +226,7 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
     return unassigned_docks
 
 
-async def _run_resolver(state: State, logic: Logic, max_attempts: int) -> State | None:
+async def _run_resolver(state: State, logic: Logic, max_attempts: int | None) -> State | None:
     with debug.with_level(0):
         return await resolver.advance_depth(state, logic, lambda s: None, max_attempts=max_attempts)
 
@@ -417,6 +417,43 @@ async def distribute_post_fill_weaknesses(
         new_patches[player] = patches.assign_dock_weakness(new_assignment)
 
     debug.debug_print(f"Dock weakness distribution finished in {int(time.perf_counter() - start_time)}s")
+
+    new_results = dataclasses.replace(
+        filler_results,
+        player_results={
+            player: dataclasses.replace(result, patches=new_patches[player])
+            for player, result in filler_results.player_results.items()
+        },
+    )
+    return await assign_dock_rando_hints(rng, new_results, status_update)
+
+
+async def assign_dock_rando_hints(
+    rng: Random, filler_results: FillerResults, status_update: Callable[[str], None]
+) -> FillerResults:
+    new_patches: dict[int, GamePatches] = {
+        player: result.patches for player, result in filler_results.player_results.items()
+    }
+
+    for player, result in filler_results.player_results.items():
+        patches = result.patches
+
+        if patches.configuration.dock_rando.mode != DockRandoMode.DOCKS:
+            continue
+
+        hint_distributor = patches.game.game.generator.hint_distributor
+
+        status_update(f"Preparing resolver-based hints for player {player + 1}.")
+        with debug.with_level(0):
+            new_state = await resolver.resolve(patches.configuration, patches)
+        new_patches[player] = await hint_distributor.assign_post_filler_hints(
+            patches,
+            rng,
+            result.pool,
+            result.patches.game.region_list,
+            new_state.hint_state,
+            filler_results.player_pools,
+        )
 
     return dataclasses.replace(
         filler_results,

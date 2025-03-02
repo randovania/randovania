@@ -247,15 +247,16 @@ class HintDistributor(ABC):
         patches: GamePatches,
         rng: Random,
         player_pool: PlayerPool,
-        player_state: PlayerState,
+        region_list: RegionList,
+        hint_state: HintState,
         player_pools: list[PlayerPool],
     ) -> GamePatches:
         # Since we haven't added expansions yet, these hints will always be for items added by the filler.
         full_hints_patches = self.fill_unassigned_hints(
             patches,
-            player_state.game.region_list,
+            region_list,
             rng,
-            player_state.hint_state,
+            hint_state,
             player_pools,
         )
         return await self.assign_precision_to_hints(full_hints_patches, rng, player_pool, player_pools)
@@ -651,9 +652,11 @@ class AllJokesHintDistributor(HintDistributor):
 
 
 async def distribute_specific_location_hints(
-    rng: Random, filler_results: FillerResults, player_pools: list[PlayerPool]
+    rng: Random,
+    filler_results: FillerResults,
 ) -> FillerResults:
     """Distribute HintNodeKind.SPECIFIC_PICKUP hints *after* all items have been placed."""
+    player_pools = filler_results.player_pools
     old_patches: dict[int, GamePatches] = {
         player: result.patches for player, result in filler_results.player_results.items()
     }

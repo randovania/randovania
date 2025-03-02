@@ -15,7 +15,9 @@ from randovania.game_description.requirements.requirement_set import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.layout import filtered_database
+from randovania.resolver.hint_state import ResolverHintState
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
 
@@ -227,6 +229,9 @@ async def _inner_advance_depth(
     logic.start_new_attempt(state, max_attempts)
     context = state.node_context()
 
+    if state.hint_state is not None:
+        state.hint_state.advance_hint_seen_count(state)
+
     if logic.victory_condition(state).satisfied(context, state.health_for_damage_requirements):
         return state, True
 
@@ -286,8 +291,12 @@ async def _inner_advance_depth(
         if not action_additional_requirements.satisfied(context, damage_state.health_for_damage_requirements()):
             logic.log_skip_action_missing_requirement(action, logic.game)
             continue
+        new_state = state.act_on_node(action, path=reach.path_to_node(action), new_damage_state=damage_state)
+        if new_state.hint_state is not None and isinstance(action, PickupNode):
+            available = new_state.hint_state.valid_available_locations_for_hint(new_state, logic.game)
+            new_state.hint_state.assign_available_locations(action.pickup_index, available)
         new_result = await _inner_advance_depth(
-            state=state.act_on_node(action, path=reach.path_to_node(action), new_damage_state=damage_state),
+            state=new_state,
             logic=logic,
             status_update=status_update,
             max_attempts=max_attempts,
@@ -370,4 +379,8 @@ async def resolve(
         status_update = _quiet_print
 
     starting_state, logic = setup_resolver(configuration, patches)
+    starting_state.hint_state = ResolverHintState(
+        FillerConfiguration.from_configuration(configuration),
+        patches.game,
+    )
     return await advance_depth(starting_state, logic, status_update)

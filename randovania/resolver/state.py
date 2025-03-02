@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 from typing import TYPE_CHECKING, Self
 
 from randovania.game_description.db.hint_node import HintNode
@@ -21,6 +22,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.resolver.damage_state import DamageState
+    from randovania.resolver.hint_state import ResolverHintState
 
 
 class State:
@@ -31,6 +33,8 @@ class State:
     patches: GamePatches
     previous_state: Self | None
     path_from_previous_state: tuple[Node, ...]
+
+    hint_state: ResolverHintState | None
 
     @property
     def resource_database(self) -> ResourceDatabase:
@@ -48,6 +52,7 @@ class State:
         node: Node,
         patches: GamePatches,
         previous: Self | None,
+        hint_state: ResolverHintState | None = None,
     ):
         self.resources = resources
         self.collected_resource_nodes = collected_resource_nodes
@@ -55,6 +60,7 @@ class State:
         self.patches = patches
         self.path_from_previous_state = ()
         self.previous_state = previous
+        self.hint_state = hint_state
 
         # We place this last because we need resource_database set
         self.damage_state = damage_state.limited_by_maximum(self.resources)
@@ -67,6 +73,7 @@ class State:
             self.node,
             self.patches,
             self.previous_state,
+            copy.copy(self.hint_state),
         )
 
     @property
@@ -122,6 +129,7 @@ class State:
             self.node,
             self.patches,
             self,
+            copy.copy(self.hint_state),
         )
 
     def act_on_node(
@@ -149,6 +157,7 @@ class State:
             self.node,
             self.patches,
             self,
+            copy.copy(self.hint_state),
         )
 
     def assign_pickup_to_starting_items(self, pickup: PickupEntry) -> Self:
@@ -166,6 +175,7 @@ class State:
             self.node,
             self.patches.assign_extra_starting_pickups([pickup]),
             self,
+            copy.copy(self.hint_state),
         )
 
     def node_context(self) -> NodeContext:
