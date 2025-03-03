@@ -28,6 +28,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Bug in the revised door solver that would result in permanently locked doors being placed when they shouldn't.
 
+### Resolver
+
+- Fixed: Some seeds being considered impossible when finding a progressive item in an area where a later item in the progressive chain is required to leave.
+
 ### Metroid Dread
 
 - Fixed: GUI formatting on the game page.
@@ -82,6 +86,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: A legacy relative hint pointing to a Nothing will now always refer to it by name.
 - Changed: Keybearer hints may refer to pickups using different categories than before.
 - Fixed: When using the new experimental generator setting to consider possible unsafe resources, the Starter Preset can once again see Missile Launcher placed in the GFMC Compound crate.
+
+#### Logic Database
+
+##### Agon Wastes
+
+- Changed: Mining Plaza: Climbing the room with Screw Attack and no Space Jump bumped up to intermediate movement.
+- Changed: Trial Grounds: Climbing the room with Screw Attack and no Space Jump bumped up to intermediate movement.
+
+##### Temple Grounds
+
+- Changed: Temple Assembly Site: Reaching the pickup location with Screw Attack and no Space Jump lowered to beginner movement.
 
 ### Metroid: Samus Returns
 
