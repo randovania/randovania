@@ -24,5 +24,5 @@ class ResolverHintState(HintState):
         return [
             node.pickup_index
             for node in game.region_list.iterate_nodes()
-            if isinstance(node, PickupNode) and node.pickup_index not in collected
+            if isinstance(node, PickupNode) and node.pickup_index in collected
         ]

@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
+from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_list import RequirementList
@@ -27,10 +28,21 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node import Node, NodeContext
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.state import State
+
+
+AnyPickupNode = PickupNode | EventPickupNode
+AnyEventNode = EventNode | EventPickupNode
+
+
+def _pickup_index_for_node(node: AnyPickupNode) -> PickupIndex:
+    if isinstance(node, EventPickupNode):
+        node = node.pickup_node
+    return node.pickup_index
 
 
 def _is_later_progression_item(
@@ -147,7 +159,7 @@ def _should_check_if_action_is_safe(
     :return:
     """
     return not _is_action_dangerous(state, action, dangerous_resources) and (
-        isinstance(action, EventNode | EventPickupNode) or _is_major_or_key_pickup_node(action, state)
+        isinstance(action, AnyEventNode) or _is_major_or_key_pickup_node(action, state) or isinstance(action, HintNode)
     )
 
 
@@ -156,6 +168,9 @@ class ActionPriority(enum.IntEnum):
     Priority values for how important acting on any given ResourceNode should be.
     Lesser values are higher priority.
     """
+
+    PRIORITIZED_HINT = enum.auto()
+    """This node gives a hint. Only used when `Logic.prioritize_hints` is true."""
 
     MAJOR_PICKUP = enum.auto()
     """This node gives a pickup that is considered major or a key."""
@@ -176,9 +191,11 @@ class ActionPriority(enum.IntEnum):
 def _priority_for_resource_action(action: ResourceNode, state: State, logic: Logic) -> ActionPriority:
     if _is_dangerous_event(state, action, logic.game.dangerous_resources):
         return ActionPriority.DANGEROUS
+    elif logic.prioritize_hints and isinstance(action, HintNode):
+        return ActionPriority.PRIORITIZED_HINT
     elif _is_major_or_key_pickup_node(action, state):
         return ActionPriority.MAJOR_PICKUP
-    elif isinstance(action, DockLockNode | EventNode | EventPickupNode):
+    elif isinstance(action, DockLockNode | AnyEventNode):
         return ActionPriority.LOCK_ACTION
     else:
         return ActionPriority.EVERYTHING_ELSE
@@ -217,6 +234,12 @@ def _progressive_chain_info(node: Node, context: NodeContext) -> None | tuple[li
     if isinstance(node, PickupNode):
         return _progressive_chain_info_from_pickup_node(node, context)
     return None
+
+
+def _assign_hint_available_locations(state: State, action: ResourceNode, logic: Logic) -> None:
+    if state.hint_state is not None and isinstance(action, AnyPickupNode):
+        available = state.hint_state.valid_available_locations_for_hint(state, logic.game)
+        state.hint_state.assign_available_locations(_pickup_index_for_node(action), available)
 
 
 async def _inner_advance_depth(
@@ -260,6 +283,7 @@ async def _inner_advance_depth(
     for action, damage_state in reach.possible_actions(state):
         if _should_check_if_action_is_safe(state, action, logic.game.dangerous_resources):
             potential_state = state.act_on_node(action, path=reach.path_to_node(action), new_damage_state=damage_state)
+            _assign_hint_available_locations(potential_state, action, logic)
             potential_reach = ResolverReach.calculate_reach(logic, potential_state)
 
             # If we can go back to where we were, it's a simple safe node
@@ -302,9 +326,7 @@ async def _inner_advance_depth(
             logic.log_skip_action_missing_requirement(action, logic.game)
             continue
         new_state = state.act_on_node(action, path=reach.path_to_node(action), new_damage_state=damage_state)
-        if new_state.hint_state is not None and isinstance(action, PickupNode):
-            available = new_state.hint_state.valid_available_locations_for_hint(new_state, logic.game)
-            new_state.hint_state.assign_available_locations(action.pickup_index, available)
+        _assign_hint_available_locations(new_state, action, logic)
         new_result = await _inner_advance_depth(
             state=new_state,
             logic=logic,
@@ -384,13 +406,19 @@ async def resolve(
     configuration: BaseConfiguration,
     patches: GamePatches,
     status_update: Callable[[str], None] | None = None,
+    *,
+    collect_hint_data: bool = False,
 ) -> State | None:
     if status_update is None:
         status_update = _quiet_print
 
     starting_state, logic = setup_resolver(configuration, patches)
-    starting_state.hint_state = ResolverHintState(
-        FillerConfiguration.from_configuration(configuration),
-        patches.game,
-    )
+
+    if collect_hint_data:
+        logic.prioritize_hints = True
+        starting_state.hint_state = ResolverHintState(
+            FillerConfiguration.from_configuration(configuration),
+            patches.game,
+        )
+
     return await advance_depth(starting_state, logic, status_update)

@@ -4,6 +4,7 @@ import collections
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.hint_node import HintNode
+from randovania.resolver import debug
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -66,4 +67,5 @@ class HintState:
         """
 
         available = frozenset(locations)
+        debug.debug_print(f"Available locations for {pickup_index}: {available}")
         self.pickup_available_indices_when_collected[pickup_index] = available

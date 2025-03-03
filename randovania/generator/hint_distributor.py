@@ -338,7 +338,8 @@ class HintDistributor(ABC):
             real_potential_targets = {
                 target
                 for target in sorted(potential_targets)
-                if self.hint_suitability_for_target(patches.pickup_assignment[target], player_pools)
+                if target in patches.pickup_assignment
+                and self.hint_suitability_for_target(patches.pickup_assignment[target], player_pools)
                 >= HintSuitability.MORE_INTERESTING
             }
             # don't hint things twice

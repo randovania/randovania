@@ -444,8 +444,15 @@ async def assign_dock_rando_hints(
         hint_distributor = patches.game.game.generator.hint_distributor
 
         status_update(f"Preparing resolver-based hints for player {player + 1}.")
+
         with debug.with_level(0):
-            new_state = await resolver.resolve(patches.configuration, patches)
+            new_state = await resolver.resolve(patches.configuration, patches, collect_hint_data=True)
+
+        if new_state is None:
+            raise UnableToGenerate(f"Unable to solve game for player {player + 1} after placing doors.")
+        else:
+            debug.debug_print(f">> Player {player + 1} is solve-able after door placement. Beginning hint placement.")
+
         new_patches[player] = await hint_distributor.assign_post_filler_hints(
             patches,
             rng,
