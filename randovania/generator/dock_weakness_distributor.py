@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import dataclasses
 import itertools
+import logging
 import time
 from functools import lru_cache
 from typing import TYPE_CHECKING, Self
@@ -34,6 +35,9 @@ if TYPE_CHECKING:
     from randovania.generator.filler.filler_configuration import FillerResults
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.state import State
+
+
+logger = logging.getLogger(__name__)
 
 
 def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePatches:
@@ -449,7 +453,10 @@ async def assign_dock_rando_hints(
             new_state = await resolver.resolve(patches.configuration, patches, collect_hint_data=True)
 
         if new_state is None:
-            raise UnableToGenerate(f"Unable to solve game for player {player + 1} after placing doors.")
+            logger.warning(
+                f"Unable to solve game for player {player + 1} after placing doors. Hints will be fully random."
+            )
+            continue
         else:
             debug.debug_print(f">> Player {player + 1} is solve-able after door placement. Beginning hint placement.")
 
