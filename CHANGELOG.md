@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Door Lock Randomizer
 
 - Fixed: Bug in the revised door solver that would result in permanently locked doors being placed when they shouldn't.
+- Added: Hint placement for seeds with individual door lock randomization now uses the resolver to help determine what to hint. This should result in significantly more useful hints in these seeds.
 
 ### Resolver
 
