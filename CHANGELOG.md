@@ -28,6 +28,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Bug in the revised door solver that would result in permanently locked doors being placed when they shouldn't.
 
+### Resolver
+
+- Fixed: Some seeds being considered impossible when finding a progressive item in an area where a later item in the progressive chain is required to leave.
+
 ### Metroid Dread
 
 - Fixed: GUI formatting on the game page.

@@ -400,7 +400,7 @@ async def distribute_post_fill_weaknesses(
             )
 
         # Assign the dock (and its target if desired/possible)
-        weakness = random_lib.select_element_with_weight(weighted_weaknesses, rng)
+        weakness = random_lib.select_element_with_weight(rng, weighted_weaknesses)
         new_assignment = [
             (dock, weakness),
         ]

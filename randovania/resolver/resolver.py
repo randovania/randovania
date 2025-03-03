@@ -187,16 +187,26 @@ def _priority_for_resource_action(action: ResourceNode, state: State, logic: Log
 def _progressive_chain_info_from_pickup_node(
     node: PickupNode, context: NodeContext
 ) -> None | tuple[list[ItemResourceInfo], int]:
+    """
+
+    :param node:
+    :param context:
+    :return: When the node is a PickUp Node that has been assigned a Progressive item: Tuple containing the items in
+     that item chain, as well as an index pointing to last one of those items that has been obtained. If there is no
+      progressive item on that node or none of the progressive items have been obtained, then returns None.
+    """
     patches = context.patches
     assert patches is not None
     target = patches.pickup_assignment.get(node.pickup_index)
     if target is not None and target.player == patches.player_index and len(target.pickup.progression) > 1:
         progressives = [item for item, _ in target.pickup.progression if item is not None]
 
-        return next(
-            ((progressives, index) for index, item in enumerate(progressives) if context.current_resources[item] == 0),
-            None,
-        )
+        last_obtained_index = -1
+        for index, item in enumerate(progressives):
+            if context.current_resources[item] == 0:
+                break
+            last_obtained_index = index
+        return (progressives, last_obtained_index) if last_obtained_index > -1 else None
 
     return None
 
@@ -267,7 +277,7 @@ async def _inner_advance_depth(
 
                     resources = [x for x, _ in action.resource_gain_on_collect(state.node_context())]
 
-                    progressive_chain_info = _progressive_chain_info(action, state.node_context())
+                    progressive_chain_info = _progressive_chain_info(state.node, state.node_context())
 
                     logic.set_additional_requirements(
                         state.node,
