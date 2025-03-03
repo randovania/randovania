@@ -453,6 +453,7 @@ async def assign_dock_rando_hints(
         else:
             debug.debug_print(f">> Player {player + 1} is solve-able after door placement. Beginning hint placement.")
 
+        assert new_state.hint_state is not None
         new_patches[player] = await hint_distributor.assign_post_filler_hints(
             patches,
             rng,
