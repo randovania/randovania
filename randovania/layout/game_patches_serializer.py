@@ -27,7 +27,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.layout.base.base_configuration import BaseConfiguration
 
-_ETM_NAME = "Energy Transfer Module"
+    _NOTHING_NAME = "Nothing"
 
 
 def _pickup_assignment_to_item_locations(
@@ -48,7 +48,7 @@ def _pickup_assignment_to_item_locations(
             else:
                 item_name = f"{target.pickup.name}"
         else:
-            item_name = _ETM_NAME
+            item_name = _NOTHING_NAME
 
         items_locations[region.correct_name(area.in_dark_aether)][region_list.node_name(node)] = item_name
 
@@ -230,7 +230,7 @@ def decode_single(
     pickup_assignment: PickupAssignment = {}
     for world_name, world_data in game_modifications["locations"].items():
         for area_node_name, target_name in typing.cast(dict[str, str], world_data).items():
-            if target_name == _ETM_NAME:
+            if target_name == _NOTHING_NAME:
                 continue
 
             pickup_name_match = target_name_re.match(target_name)
@@ -249,7 +249,7 @@ def decode_single(
                 if (pickup_name, target_player) != (pickup.name, player_index):
                     raise ValueError(f"{area_node_name} should be vanilla based on configuration")
 
-            elif pickup_name != _ETM_NAME:
+            elif pickup_name != _NOTHING_NAME:
                 pickup = _get_pickup_from_pool(all_pools[target_player].to_place, pickup_name)
             else:
                 pickup = None
