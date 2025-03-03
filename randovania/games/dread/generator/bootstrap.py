@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.games.dread.generator.pool_creator import DREAD_ARTIFACT_CATEGORY
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.resolver.bootstrap import Bootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
@@ -16,12 +15,10 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
-    from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.damage_state import DamageState
 
 
-def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:
-    assert isinstance(config, DreadConfiguration)
+def is_dna_node(node: PickupNode, config: DreadConfiguration) -> bool:
     artifact_config = config.artifacts
     return (
         # must be a boss
@@ -38,9 +35,8 @@ def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:
     )
 
 
-class DreadBootstrap(Bootstrap):
-    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
-        assert isinstance(configuration, DreadConfiguration)
+class DreadBootstrap(Bootstrap[DreadConfiguration]):
+    def create_damage_state(self, game: GameDescription, configuration: DreadConfiguration) -> DamageState:
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
@@ -49,10 +45,8 @@ class DreadBootstrap(Bootstrap):
         )
 
     def _get_enabled_misc_resources(
-        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+        self, configuration: DreadConfiguration, resource_database: ResourceDatabase
     ) -> set[str]:
-        assert isinstance(configuration, DreadConfiguration)
-
         enabled_resources = {"SeparateBeams", "SeparateMissiles"}
 
         logical_patches = {
@@ -73,11 +67,9 @@ class DreadBootstrap(Bootstrap):
 
     def event_resources_for_configuration(
         self,
-        configuration: BaseConfiguration,
+        configuration: DreadConfiguration,
         resource_database: ResourceDatabase,
     ) -> ResourceGain:
-        assert isinstance(configuration, DreadConfiguration)
-
         if configuration.hanubia_shortcut_no_grapple:
             for name in ["s080_shipyard:default:grapplepulloff1x2_000", "s080_shipyard:default:grapplepulloff1x2"]:
                 yield resource_database.get_event(name), 1
@@ -88,8 +80,9 @@ class DreadBootstrap(Bootstrap):
         if configuration.x_starts_released:
             yield resource_database.get_event("ElunReleaseX"), 1
 
-    def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
-        assert isinstance(patches.configuration, DreadConfiguration)
-        locations = self.all_preplaced_item_locations(patches.game, patches.configuration, is_dna_node)
-        self.pre_place_items(rng, locations, pool_results, DREAD_ARTIFACT_CATEGORY)
-        return super().assign_pool_results(rng, patches, pool_results)
+    def assign_pool_results(
+        self, rng: Random, configuration: DreadConfiguration, patches: GamePatches, pool_results: PoolResults
+    ) -> GamePatches:
+        locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_dna_node)
+        self.pre_place_pickups(rng, locations, pool_results, "dna", patches.game.game)
+        return super().assign_pool_results(rng, configuration, patches, pool_results)

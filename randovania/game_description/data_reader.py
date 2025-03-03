@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import typing
 from typing import TYPE_CHECKING, TypeVar
 
 from randovania.game.game_enum import RandovaniaGame
@@ -28,6 +29,7 @@ from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.game_description import GameDescription, IndexWithReason, MinimalLogicData
+from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
@@ -281,9 +283,15 @@ def location_from_json(location: dict[str, float]) -> NodeLocation:
     return NodeLocation(float(location["x"]), float(location["y"]), float(location["z"]))
 
 
+# Hint Features
+def read_hint_feature_database(data: dict[str, dict]) -> dict[str, HintFeature]:
+    return {name: HintFeature.from_json(feature, name=name) for name, feature in data.items()}
+
+
 class RegionReader:
     resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
+    hint_feature_database: dict[str, HintFeature]
     current_region_name: str
     current_area_name: str
     next_node_index: int
@@ -292,9 +300,11 @@ class RegionReader:
         self,
         resource_database: ResourceDatabase,
         dock_weakness_database: DockWeaknessDatabase,
+        hint_feature_database: dict[str, HintFeature],
     ):
         self.resource_database = resource_database
         self.dock_weakness_database = dock_weakness_database
+        self.hint_feature_database = hint_feature_database
         self.next_node_index = 0
 
     def _get_item(self, item_name: str | None) -> ItemResourceInfo | None:
@@ -354,6 +364,7 @@ class RegionReader:
                     **generic_args,
                     pickup_index=PickupIndex(data["pickup_index"]),
                     location_category=LocationCategory(data["location_category"]),
+                    hint_features=frozenset(self.hint_feature_database[feature] for feature in data["hint_features"]),
                 )
 
             elif node_type == "event":
@@ -425,7 +436,14 @@ class RegionReader:
             self.next_node_index += 1
 
         try:
-            return Area(area_name, nodes, connections, data["extra"], data["default_node"])
+            return Area(
+                name=area_name,
+                nodes=nodes,
+                connections=connections,
+                extra=data["extra"],
+                default_node=data["default_node"],
+                hint_features=frozenset(self.hint_feature_database[feature] for feature in data["hint_features"]),
+            )
         except KeyError as e:
             raise KeyError(f"Missing key `{e}` for area `{area_name}`")
 
@@ -497,15 +515,15 @@ def read_used_trick_levels(
 
 
 def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescription]:
-    data = game_migration.migrate_to_current(data)
-
     game = RandovaniaGame(data["game"])
+    data = game_migration.migrate_to_current(data, game)
 
     resource_database = read_resource_database(game, data["resource_database"])
     dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
+    hint_feature_database = read_hint_feature_database(data["hint_feature_database"])
 
     layers = frozen_lib.wrap(data["layers"])
-    region_reader = RegionReader(resource_database, dock_weakness_database)
+    region_reader = RegionReader(resource_database, dock_weakness_database, hint_feature_database)
     region_list = region_reader.read_region_list(data["regions"], data["flatten_to_set_on_patch"])
 
     victory_condition = read_requirement(data["victory_condition"], resource_database)
@@ -518,6 +536,7 @@ def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescri
         resource_database=resource_database,
         layers=layers,
         dock_weakness_database=dock_weakness_database,
+        hint_feature_database=hint_feature_database,
         region_list=region_list,
         victory_condition=victory_condition,
         starting_location=starting_location,
@@ -539,7 +558,7 @@ def read_split_file(dir_path: Path) -> dict:
         # This code runs before we can run old data migration, so we need to handle this difference here
         key_name = "worlds"
 
-    regions = data.pop(key_name)
+    regions = typing.cast(list[str], data.pop(key_name))
 
     data[key_name] = [
         json_lib.read_path(dir_path.joinpath(region_file_name), raise_on_duplicate_keys=True)

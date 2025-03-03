@@ -1,5 +1,12 @@
 from __future__ import annotations
 
+import typing
+
+if typing.TYPE_CHECKING:
+    from typing import Self
+
+    from randovania.game.game_enum import RandovaniaGame
+
 import dataclasses
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
@@ -11,9 +18,9 @@ class BaseCosmeticPatches(JsonDataclass):
     Commonly used for player's model/sprite, hud color, defaults for in-game settings."""
 
     @classmethod
-    def default(cls) -> BaseCosmeticPatches:
+    def default(cls) -> Self:
         return cls()
 
     @classmethod
-    def game(cls):
+    def game(cls) -> RandovaniaGame:
         raise NotImplementedError

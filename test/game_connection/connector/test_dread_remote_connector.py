@@ -11,6 +11,7 @@ from randovania.game_connection.executor.dread_executor import DreadExecutor
 from randovania.game_connection.executor.executor_to_connector_signals import ExecutorToConnectorSignals
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.network_common.remote_pickup import RemotePickup
 
 
 @pytest.fixture(name="connector")
@@ -50,6 +51,7 @@ async def test_new_player_location(connector: DreadRemoteConnector):
 
     assert connector.current_region is None
     connector.new_player_location_received("s010_cave")
+    assert connector.current_region is not None
     assert connector.current_region.name == "Artaria"
     location_changed.assert_called_once_with(PlayerLocationEvent(connector.current_region, None))
     assert await connector.current_game_status() == (True, connector.current_region)
@@ -99,15 +101,21 @@ async def test_new_received_pickups_received(connector: DreadRemoteConnector):
 
 async def test_set_remote_pickups(connector: DreadRemoteConnector, dread_spider_pickup):
     connector.receive_remote_pickups = AsyncMock()
-    pickup_entry_with_owner = (("Dummy 1", dread_spider_pickup), ("Dummy 2", dread_spider_pickup))
-    await connector.set_remote_pickups(pickup_entry_with_owner)
-    assert connector.remote_pickups == pickup_entry_with_owner
+    remote_pickup = (
+        RemotePickup("Dummy 1", dread_spider_pickup, None),
+        RemotePickup("Dummy 2", dread_spider_pickup, None),
+    )
+    await connector.set_remote_pickups(remote_pickup)
+    assert connector.remote_pickups == remote_pickup
 
 
 async def test_receive_remote_pickups(connector: DreadRemoteConnector, dread_spider_pickup):
     connector.in_cooldown = False
-    pickup_entry_with_owner = (("Dummy 1", dread_spider_pickup), ("Dummy 2", dread_spider_pickup))
-    connector.remote_pickups = pickup_entry_with_owner
+    remote_pickup = (
+        RemotePickup("Dummy 1", dread_spider_pickup, None),
+        RemotePickup("Dummy 2", dread_spider_pickup, None),
+    )
+    connector.remote_pickups = remote_pickup
     connector.executor.run_lua_code = AsyncMock()
 
     connector.received_pickups = None

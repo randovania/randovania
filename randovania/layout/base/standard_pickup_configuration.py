@@ -13,8 +13,8 @@ if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
     from randovania.game.game_enum import RandovaniaGame
-    from randovania.game_description.pickup.pickup_category import PickupCategory
-    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.game_description.hint_features import HintFeature
+    from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
 
 T = TypeVar("T")
 
@@ -30,7 +30,7 @@ def _check_matching_pickups(actual: Iterable[T], reference: Iterable[T]):
 class StandardPickupConfiguration(BitPackValue):
     game: RandovaniaGame
     pickups_state: dict[StandardPickupDefinition, StandardPickupState]
-    default_pickups: dict[PickupCategory, StandardPickupDefinition]
+    default_pickups: dict[HintFeature, StandardPickupDefinition]
     minimum_random_starting_pickups: int
     maximum_random_starting_pickups: int
 
@@ -104,7 +104,7 @@ class StandardPickupConfiguration(BitPackValue):
 
         # default_items
         for category, default in self.default_pickups.items():
-            all_standard = [pickup for pickup in reference.pickups_state.keys() if pickup.pickup_category == category]
+            all_standard = [pickup for pickup in reference.pickups_state.keys() if pickup.gui_category == category]
             yield from bitpacking.pack_array_element(default, all_standard)
 
         # random starting items
@@ -130,7 +130,7 @@ class StandardPickupConfiguration(BitPackValue):
         # default_pickups
         default_pickups = {}
         for category in reference.default_pickups.keys():
-            all_standard = [pickup for pickup in reference.pickups_state.keys() if pickup.pickup_category == category]
+            all_standard = [pickup for pickup in reference.pickups_state.keys() if pickup.gui_category == category]
             default_pickups[category] = decoder.decode_element(all_standard)
 
         # random starting items
@@ -177,7 +177,7 @@ class StandardPickupConfiguration(BitPackValue):
 
     def replace_default_pickup(
         self,
-        category: PickupCategory,
+        category: HintFeature,
         pickup: StandardPickupDefinition,
     ) -> StandardPickupConfiguration:
         """

@@ -139,6 +139,7 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
   * [Henrique "Darkszero" Gemignani](https://github.com/henriquegemignani/)
   * [duncathan_salt](https://twitter.com/duncathan_salt)
   * Merikatt
+  * [Athebyne](https://github.com/f-raZ0R)
 
 * Logic Database by:
   * [Dyceron](https://www.twitch.tv/dyceron)
@@ -242,6 +243,8 @@ Suggested IDE: [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
 Clone this repository and open the folder in Visual Studio Code. It suggests several useful plugins for developing which you should download and install.
 
 If your Python is setup properly, you can use the `Create venv with all exporters` task by pressing CTRL+SHIFT+P, type in `Task`, select `Tasks: Run task` and then select the task. It will create the venv with all the dependencies installed for you.
+
+Then make sure that the Python extension is installed and select the Python installation from the venv via CTRL+SHIFT+P and `Select Python: Interpreter`.
 
 There is also a task defined to run all tests. To run individual tests you can utilise the `Testing` section of Visual Studio Code. You can simply run or debug a test there.
 

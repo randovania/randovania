@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+from typing import override
 
 from PySide6 import QtGui, QtWidgets
 
@@ -17,19 +18,21 @@ from randovania.gui.lib import signal_handling
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
 
-class CSCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CSCosmeticPatchesDialog):
-    _cosmetic_patches: CSCosmeticPatches
-
+class CSCosmeticPatchesDialog(BaseCosmeticPatchesDialog[CSCosmeticPatches], Ui_CSCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: CSCosmeticPatches):
-        super().__init__(parent)
+        super().__init__(parent, current)
         self.setupUi(self)
-        self._cosmetic_patches = current
 
         for i, value in enumerate(MusicRandoType):
             self.music_type_combo.setItemData(i, value)
 
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
+
+    @classmethod
+    @override
+    def cosmetic_patches_type(cls) -> type[CSCosmeticPatches]:
+        return CSCosmeticPatches
 
     def connect_signals(self) -> None:
         super().connect_signals()

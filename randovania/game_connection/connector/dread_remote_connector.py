@@ -25,11 +25,13 @@ class DreadRemoteConnector(MercuryConnector):
     ) -> list:
         return get_resources_for_details(pickup, conditional_resources, other_player)
 
-    async def game_specific_execute(self, item_name: str, items_list: list, provider_name: str) -> None:
+    async def game_specific_execute(
+        self, item_name: str, items_list: list, provider_name: str, scenario_id: str
+    ) -> None:
         remote_pickups = self.remote_pickups
         num_pickups = self.received_pickups
 
-        from open_dread_rando.misc_patches.lua_util import lua_convert  # type: ignore
+        from open_dread_rando.misc_patches.lua_util import lua_convert  # type: ignore[import-untyped]
 
         progression_as_lua = lua_convert(items_list, True)
         message = self.format_received_item(item_name, provider_name)
@@ -37,9 +39,10 @@ class DreadRemoteConnector(MercuryConnector):
         self.logger.info("%d permanent pickups, magic %d. Next pickup: %s", len(remote_pickups), num_pickups, message)
 
         main_item_id = items_list[0][0]["item_id"]
-        from open_dread_rando.pickups.lua_editor import LuaEditor  # type: ignore
+        from open_dread_rando.pickups.lua_editor import LuaEditor  # type: ignore[import-untyped]
 
-        parent = LuaEditor.get_parent_for(None, main_item_id)
+        # use any none 0 quantity
+        parent = LuaEditor.get_parent_for(None, main_item_id, 1)
 
         execute_string = (
             f"RL.ReceivePickup({repr(message)},{parent},{repr(progression_as_lua)},"

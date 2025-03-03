@@ -280,14 +280,13 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 self,
                 QtWidgets.QMessageBox.Icon.Information,
                 "Multiworld FAQ",
-                "Have you read the Multiworld FAQ?\n"
-                "It can be found in the main Randovania window → Help → Multiworld",
+                "Have you read the Multiworld FAQ?\nIt can be found in the main Randovania window → Help → Multiworld",
             )
             options.mark_alert_as_displayed(InfoAlert.MULTIWORLD_FAQ)
 
         game_enum = self._get_preset(world_uid).game
         patch_data = await self._session_api.create_patcher_file(
-            world_uid, options.options_for_game(game_enum).cosmetic_patches.as_json
+            world_uid, options.generic_per_game_options(game_enum).cosmetic_patches.as_json
         )
         self.GameExportRequested.emit(world_uid, patch_data)
 
@@ -313,17 +312,14 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         await self._session_api.create_new_world(new_name, preset, user_id)
 
     @asyncSlot()
-    async def _customize_cosmetic(self, world_uid: uuid.UUID):
+    async def _customize_cosmetic(self, world_uid: uuid.UUID) -> None:
         preset = self._get_preset(world_uid)
-        per_game_options = self._options.options_for_game(preset.game)
-
-        dialog = game_specific_gui.create_dialog_for_cosmetic_patches(self, per_game_options.cosmetic_patches)
-        result = await async_dialog.execute_dialog(dialog)
-        if result == QtWidgets.QDialog.DialogCode.Accepted:
-            with self._options as options:
-                options.set_options_for_game(
-                    preset.game, dataclasses.replace(per_game_options, cosmetic_patches=dialog.cosmetic_patches)
-                )
+        await game_specific_gui.customize_cosmetic_patcher_button(
+            self,
+            preset.game,
+            self._options,
+            "multiplayer_session_window_cosmetic_clicked",
+        )
 
     def _register_debug_connector(self, world_uid: uuid.UUID):
         common_qt_lib.get_game_connection().add_connection_builder(
@@ -379,7 +375,8 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             export_action.setEnabled(has_layout)
             connect_to(export_action, self.world_export, world_id)
 
-            connect_to(world_menu.addAction("Customize cosmetic options"), self._customize_cosmetic, world_id)
+            if self._session.get_world(world_id).preset.game.gui.cosmetic_dialog is not None:
+                connect_to(world_menu.addAction("Customize cosmetic options"), self._customize_cosmetic, world_id)
             if ConnectorBuilderChoice.DEBUG.is_usable():
                 connect_to(
                     world_menu.addAction("Connect via debug connector"), self._register_debug_connector, world_id

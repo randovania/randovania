@@ -4,7 +4,6 @@ import dataclasses
 from functools import partial
 from typing import TYPE_CHECKING
 
-from randovania.games.am2r.generator.pool_creator import METROID_DNA_CATEGORY
 from randovania.games.am2r.layout import AM2RConfiguration
 from randovania.resolver.bootstrap import Bootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
@@ -18,12 +17,10 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.generator.pickup_pool import PoolResults
-    from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.damage_state import DamageState
 
 
-def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:
-    assert isinstance(config, AM2RConfiguration)
+def is_dna_node(node: PickupNode, config: AM2RConfiguration) -> bool:
     artifact_config = config.artifacts
     name = node.extra["object_name"]
     _boss_items = ["oItemM_111", "oItemJumpBall", "oItemSpaceJump", "oItemPBeam", "oItemIBeam", "oItemETank_50"]
@@ -35,9 +32,8 @@ def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:
     )
 
 
-class AM2RBootstrap(Bootstrap):
-    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
-        assert isinstance(configuration, AM2RConfiguration)
+class AM2RBootstrap(Bootstrap[AM2RConfiguration]):
+    def create_damage_state(self, game: GameDescription, configuration: AM2RConfiguration) -> DamageState:
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
@@ -46,7 +42,7 @@ class AM2RBootstrap(Bootstrap):
         )
 
     def _get_enabled_misc_resources(
-        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+        self, configuration: AM2RConfiguration, resource_database: ResourceDatabase
     ) -> set[str]:
         enabled_resources = set()
 
@@ -81,10 +77,8 @@ class AM2RBootstrap(Bootstrap):
         return enabled_resources
 
     def _damage_reduction(
-        self, configuration: BaseConfiguration, db: ResourceDatabase, current_resources: ResourceCollection
+        self, configuration: AM2RConfiguration, db: ResourceDatabase, current_resources: ResourceCollection
     ) -> float:
-        assert isinstance(configuration, AM2RConfiguration)
-
         num_suits = sum(
             (1 if current_resources[db.get_item_by_name(suit)] else 0) for suit in ("Varia Suit", "Gravity Suit")
         )
@@ -97,17 +91,16 @@ class AM2RBootstrap(Bootstrap):
         damage_reduction = 1 - (dr / 100)
         return damage_reduction
 
-    def patch_resource_database(self, db: ResourceDatabase, configuration: BaseConfiguration) -> ResourceDatabase:
+    def patch_resource_database(self, db: ResourceDatabase, configuration: AM2RConfiguration) -> ResourceDatabase:
         return dataclasses.replace(db, base_damage_reduction=partial(self._damage_reduction, configuration))
 
-    def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
-        assert isinstance(patches.configuration, AM2RConfiguration)
-        config = patches.configuration.artifacts
+    def assign_pool_results(
+        self, rng: Random, configuration: AM2RConfiguration, patches: GamePatches, pool_results: PoolResults
+    ) -> GamePatches:
+        if configuration.artifacts.prefer_anywhere:
+            return super().assign_pool_results(rng, configuration, patches, pool_results)
 
-        if config.prefer_anywhere:
-            return super().assign_pool_results(rng, patches, pool_results)
+        locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_dna_node)
+        self.pre_place_pickups(rng, locations, pool_results, "dna", patches.game.game)
 
-        locations = self.all_preplaced_item_locations(patches.game, patches.configuration, is_dna_node)
-        self.pre_place_items(rng, locations, pool_results, METROID_DNA_CATEGORY)
-
-        return super().assign_pool_results(rng, patches, pool_results)
+        return super().assign_pool_results(rng, configuration, patches, pool_results)

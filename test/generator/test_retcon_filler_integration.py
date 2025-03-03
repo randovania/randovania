@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import dataclasses
 from unittest.mock import MagicMock
 
 import pytest
@@ -7,13 +8,10 @@ import pytest
 import randovania.generator.filler.player_state
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.generator.filler.filler_configuration import FillerConfiguration
-from randovania.layout.base.available_locations import RandomizationMode
-from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 
 
 @pytest.mark.parametrize("has_exclusion", [False, True])
-def test_build_available_indices(has_exclusion: bool):
+def test_build_available_indices(has_exclusion: bool, default_filler_config):
     # Setup
     world_a = MagicMock()
     world_a.pickup_indices = [PickupIndex(1), PickupIndex(2)]
@@ -30,19 +28,7 @@ def test_build_available_indices(has_exclusion: bool):
         exclusion = frozenset([PickupIndex(3)])
     else:
         exclusion = frozenset()
-    configuration = FillerConfiguration(
-        randomization_mode=RandomizationMode.FULL,
-        minimum_random_starting_pickups=0,
-        maximum_random_starting_pickups=0,
-        indices_to_exclude=exclusion,
-        logical_resource_action=LayoutLogicalResourceAction.RANDOMLY,
-        first_progression_must_be_local=False,
-        minimum_available_locations_for_hint_placement=0,
-        minimum_location_weight_for_hint_placement=0,
-        single_set_for_pickups_that_solve=False,
-        staggered_multi_pickup_placement=False,
-        fallback_to_reweight_with_unsafe=False,
-    )
+    configuration = dataclasses.replace(default_filler_config, indices_to_exclude=exclusion)
 
     # Run
     indices_per_world, all_indices = randovania.generator.filler.player_state.build_available_indices(

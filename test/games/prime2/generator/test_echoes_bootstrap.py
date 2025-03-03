@@ -13,7 +13,6 @@ from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters i
     PrimeTrilogyTeleporterConfiguration,
 )
 from randovania.games.prime2.generator.bootstrap import EchoesBootstrap
-from randovania.games.prime2.generator.pickup_pool import sky_temple_keys
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.generator.pickup_pool import pool_creator
 
@@ -65,22 +64,20 @@ def test_misc_resources_for_configuration(
 
 @pytest.mark.parametrize("stk_mode", LayoutSkyTempleKeyMode)
 def test_assign_pool_results(echoes_game_description, default_echoes_configuration, stk_mode: LayoutSkyTempleKeyMode):
-    patches = GamePatches.create_from_game(
-        echoes_game_description, 0, dataclasses.replace(default_echoes_configuration, sky_temple_keys=stk_mode)
-    )
-    pool_results = pool_creator.calculate_pool_results(patches.configuration, patches.game)
+    default_echoes_configuration = dataclasses.replace(default_echoes_configuration, sky_temple_keys=stk_mode)
+    patches = GamePatches.create_from_game(echoes_game_description, 0, default_echoes_configuration)
+    pool_results = pool_creator.calculate_pool_results(default_echoes_configuration, patches.game)
 
     # Run
     result = EchoesBootstrap().assign_pool_results(
         Random(1000),
+        default_echoes_configuration,
         patches,
         pool_results,
     )
 
     # Assert
-    shuffled_stks = [
-        pickup for pickup in pool_results.to_place if pickup.pickup_category == sky_temple_keys.SKY_TEMPLE_KEY_CATEGORY
-    ]
+    shuffled_stks = [pickup for pickup in pool_results.to_place if pickup.gui_category.name == "sky_temple_key"]
 
     assert result.starting_equipment == pool_results.starting
     if stk_mode == LayoutSkyTempleKeyMode.ALL_BOSSES:

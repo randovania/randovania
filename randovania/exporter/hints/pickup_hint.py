@@ -8,13 +8,13 @@ from randovania.exporter.hints.determiner import Determiner
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.hint import HintItemPrecision
-from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY
-from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
-from randovania.game_description.resources.location_category import LocationCategory
+from randovania.game_description.hint_features import HintDetails, HintFeature
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
     from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.interface_common.players_configuration import PlayersConfiguration
 
 _DET_AN = [
@@ -30,7 +30,7 @@ _DET_AN = [
     "X-Ray Visor",
 ]
 
-_DET_NULL = []
+_DET_NULL: list[str] = []
 _DET_NULL.extend(f"{temple} Key {i}" for i in range(1, 4) for temple in ("Dark Agon", "Dark Torvus", "Ing Hive"))
 _DET_NULL.extend(f"Sky Temple Key {i}" for i in range(1, 10))
 
@@ -38,12 +38,12 @@ _DET_NULL.extend(f"Sky Temple Key {i}" for i in range(1, 10))
 @dataclasses.dataclass(frozen=True)
 class PickupHint:
     determiner: Determiner
-    player_name: str | None
+    world_name: str | None
     pickup_name: str
 
 
 def _calculate_determiner(pickup_assignment: PickupAssignment, pickup: PickupEntry, region_list: RegionList) -> str:
-    name_count = collections.defaultdict(int)
+    name_count: dict[str, int] = collections.defaultdict(int)
     for i in range(region_list.num_pickup_nodes):
         index = PickupIndex(i)
         if index in pickup_assignment:
@@ -67,7 +67,7 @@ def _calculate_determiner(pickup_assignment: PickupAssignment, pickup: PickupEnt
 def create_pickup_hint(
     pickup_assignment: PickupAssignment,
     region_list: RegionList,
-    precision: HintItemPrecision,
+    precision: HintItemPrecision | HintFeature,
     target: PickupTarget | None,
     players_config: PlayersConfiguration,
     include_owner: bool,
@@ -83,37 +83,19 @@ def create_pickup_hint(
     :return:
     """
     if target is None:
+        # FIXME: adjust per game
         target = PickupTarget(
-            pickup=PickupEntry(
-                name="Energy Transfer Module",
-                progression=(),
-                model=PickupModel(
-                    game=RandovaniaGame.METROID_PRIME_ECHOES,
-                    name="EnergyTransferModule",
-                ),
-                pickup_category=USELESS_PICKUP_CATEGORY,
-                broad_category=USELESS_PICKUP_CATEGORY,
-                generator_params=PickupGeneratorParams(
-                    preferred_location_category=LocationCategory.MAJOR,
-                ),
+            pickup=pickup_creator.create_visual_nothing(
+                RandovaniaGame.METROID_PRIME_ECHOES, "EnergyTransferModule", "Energy Transfer Module"
             ),
             player=players_config.player_index,
         )
 
-    if precision is HintItemPrecision.GENERAL_CATEGORY:
-        details = target.pickup.pickup_category.general_details
-
-    elif precision is HintItemPrecision.PRECISE_CATEGORY:
-        details = target.pickup.pickup_category.hint_details
-
-    elif precision is HintItemPrecision.BROAD_CATEGORY:
-        details = target.pickup.broad_category.hint_details
+    if isinstance(precision, HintFeature):
+        details = precision.hint_details
 
     elif precision is HintItemPrecision.DETAILED:
-        details = _calculate_determiner(pickup_assignment, target.pickup, region_list), target.pickup.name
-
-    elif precision is HintItemPrecision.NOTHING:
-        details = "an ", "item"
+        details = HintDetails(_calculate_determiner(pickup_assignment, target.pickup, region_list), target.pickup.name)
 
     else:
         raise ValueError(f"Unknown precision: {precision}")

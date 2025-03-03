@@ -1,13 +1,11 @@
 from __future__ import annotations
 
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 from caver.patcher import CSPlatform
 from PySide6 import QtCore
 
-from randovania.game.game_enum import RandovaniaGame
 from randovania.games.cave_story.exporter.game_exporter import CSGameExportParams
 from randovania.games.cave_story.exporter.options import CSPerGameOptions
 from randovania.games.cave_story.gui.dialog.game_export_dialog import CSGameExportDialog
@@ -16,7 +14,7 @@ from randovania.interface_common.options import Options
 
 
 @pytest.mark.parametrize("has_output_dir", [False, True])
-def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_dir):
+def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, default_cs_configuration, has_output_dir, options):
     # Setup
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
 
@@ -28,13 +26,15 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
         output_directory = None
         expected_default_name = "Cave Story Randomizer"
 
-    options = MagicMock()
-    options.options_for_game.return_value = CSPerGameOptions(
-        cosmetic_patches=CSCosmeticPatches.default(),
-        output_directory=output_directory,
-    )
+    with options:
+        options.set_per_game_options(
+            CSPerGameOptions(
+                cosmetic_patches=CSCosmeticPatches.default(),
+                output_directory=output_directory,
+            )
+        )
 
-    window = CSGameExportDialog(options, {}, "MyHash", True, [])
+    window = CSGameExportDialog(options, default_cs_configuration, "MyHash", True, [])
     mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
 
     # Run
@@ -46,17 +46,19 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
     assert tmp_path.joinpath("foo").is_dir()
 
 
-def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
+def test_on_output_file_button_cancel(skip_qtbot, default_cs_configuration, tmpdir, mocker, options):
     # Setup
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
 
-    options = MagicMock()
-    options.options_for_game.return_value = CSPerGameOptions(
-        cosmetic_patches=CSCosmeticPatches.default(),
-        output_directory=None,
-    )
+    with options:
+        options.set_per_game_options(
+            CSPerGameOptions(
+                cosmetic_patches=CSCosmeticPatches.default(),
+                output_directory=None,
+            )
+        )
 
-    window = CSGameExportDialog(options, {}, "MyHash", True, [])
+    window = CSGameExportDialog(options, default_cs_configuration, "MyHash", True, [])
     mock_prompt.return_value = None
 
     # Run
@@ -67,29 +69,33 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
     assert window.output_file_edit.text() == ""
 
 
-def test_save_options(skip_qtbot, tmp_path):
+def test_save_options(skip_qtbot, default_cs_configuration, tmp_path):
     options = Options(tmp_path)
 
-    window = CSGameExportDialog(options, {}, "MyHash", True, [])
+    window = CSGameExportDialog(options, default_cs_configuration, "MyHash", True, [])
     window.output_file_edit.setText("somewhere/foo")
 
     # Run
     window.save_options()
+    game_options = options.per_game_options(CSPerGameOptions)
 
     # Assert
-    assert options.options_for_game(RandovaniaGame.CAVE_STORY).output_directory == Path("somewhere/foo")
+    assert game_options.output_directory == Path("somewhere/foo")
 
 
 @pytest.mark.parametrize("export_platform", [CSPlatform.FREEWARE, CSPlatform.TWEAKED])
-def test_get_game_export_params(skip_qtbot, tmp_path, export_platform):
+def test_get_game_export_params(skip_qtbot, default_cs_configuration, tmp_path, export_platform, options):
     # Setup
-    options = MagicMock()
-    options.options_for_game.return_value = CSPerGameOptions(
-        cosmetic_patches=CSCosmeticPatches.default(),
-        output_directory=tmp_path.joinpath("output"),
-        platform=export_platform,
-    )
-    window = CSGameExportDialog(options, {}, "MyHash", True, [])
+    with options:
+        options.auto_save_spoiler = True
+        options.set_per_game_options(
+            CSPerGameOptions(
+                cosmetic_patches=CSCosmeticPatches.default(),
+                output_directory=tmp_path.joinpath("output"),
+                platform=export_platform,
+            )
+        )
+    window = CSGameExportDialog(options, default_cs_configuration, "MyHash", True, [])
 
     # Run
     result = window.get_game_export_params()

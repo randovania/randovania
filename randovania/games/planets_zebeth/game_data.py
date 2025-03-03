@@ -69,7 +69,7 @@ def _hash_words() -> list[str]:
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Planets Zebeth",
     long_name="Metroid Planets (Zebeth)",
-    development_state=randovania.game.development_state.DevelopmentState.DEVELOPMENT,
+    development_state=randovania.game.development_state.DevelopmentState.SOURCE_ONLY,
     presets=[
         {"path": "starter_preset.rdvpreset"},
         {"path": "starter_preset_shuffle_keys.rdvpreset"},
@@ -77,7 +77,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     faq=[
         (
             "Which versions of Metroid Planets are supported?",
-            "Only version 1.27g is supported. " "Any other versions will fail to export. ",
+            "Only version 1.27g is supported. Any other versions will fail to export. ",
         )
     ],
     hash_words=_hash_words(),

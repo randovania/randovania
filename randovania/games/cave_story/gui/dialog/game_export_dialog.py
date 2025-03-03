@@ -10,6 +10,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.games.cave_story.exporter.game_exporter import CSGameExportParams
 from randovania.games.cave_story.exporter.options import CSPerGameOptions
 from randovania.games.cave_story.gui.generated.cs_game_export_dialog_ui import Ui_CSGameExportDialog
+from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     add_field_validation,
@@ -20,19 +21,25 @@ from randovania.gui.dialog.game_export_dialog import (
 
 if TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExportParams
-    from randovania.interface_common.options import Options
+    from randovania.interface_common.options import Options, PerGameOptions
 
 
-class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
+class CSGameExportDialog(GameExportDialog[CSConfiguration], Ui_CSGameExportDialog):
     @classmethod
-    def game_enum(cls):
+    def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.CAVE_STORY
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
-        super().__init__(options, patch_data, word_hash, spoiler, games)
+    def __init__(
+        self,
+        options: Options,
+        configuration: CSConfiguration,
+        word_hash: str,
+        spoiler: bool,
+        games: list[RandovaniaGame],
+    ):
+        super().__init__(options, configuration, word_hash, spoiler, games)
 
-        per_game = options.options_for_game(self.game_enum())
-        assert isinstance(per_game, CSPerGameOptions)
+        per_game = options.per_game_options(CSPerGameOptions)
 
         # Output
         self.output_file_button.clicked.connect(self._on_output_file_button)
@@ -58,7 +65,8 @@ class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
             },
         )
 
-    def update_per_game_options(self, per_game: CSPerGameOptions) -> CSPerGameOptions:
+    def update_per_game_options(self, per_game: PerGameOptions) -> CSPerGameOptions:
+        assert isinstance(per_game, CSPerGameOptions)
         return dataclasses.replace(per_game, output_directory=self.output_file, platform=self.target_platform)
 
     # Getters
@@ -78,12 +86,12 @@ class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
         return self.auto_save_spoiler_check.isChecked()
 
     # Output File
-    def _on_output_file_button(self):
+    def _on_output_file_button(self) -> None:
         output_file = prompt_for_output_directory(self, "Cave Story Randomizer", self.output_file_edit)
         if output_file is not None:
             self.output_file_edit.setText(str(output_file))
 
-    def _on_platform_radio_clicked(self):
+    def _on_platform_radio_clicked(self) -> None:
         if self.freeware_radio.isChecked():
             self.description_label.setText(
                 "The original release of Cave Story. Compatible with Windows and Linux via Wine."

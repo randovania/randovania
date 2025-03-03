@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from collections.abc import Iterator
 
     from randovania.game.game_enum import RandovaniaGame
-    from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
+    from randovania.game_description.pickup.pickup_definition.ammo_pickup import AmmoPickupDefinition
 
 
 @dataclass(frozen=True)

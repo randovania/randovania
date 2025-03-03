@@ -14,11 +14,13 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect, _decode_pickup
 from randovania.network_common import connection_headers, remote_inventory
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.error import InvalidSessionError, RequestTimeoutError, ServerError
 from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, WorldUserInventory
+from randovania.network_common.remote_pickup import RemotePickup
 
 if TYPE_CHECKING:
     import pytest_mock
@@ -244,16 +246,28 @@ def test_update_timeout_with_decrease_on_success(client: NetworkClient):
     assert client._current_timeout == 40
 
 
-async def test_refresh_received_pickups(client: NetworkClient, corruption_game_description, mocker):
-    db = corruption_game_description.resource_database
+async def test_refresh_received_pickups(client: NetworkClient, blank_game_description, mocker):
+    db = blank_game_description.resource_database
 
     data = {
         "world": "00000000-0000-1111-0000-000000000000",
-        "game": RandovaniaGame.METROID_PRIME_CORRUPTION.value,
+        "game": db.game_enum.value,
         "pickups": [
-            {"provider_name": "Message A", "pickup": "VtI6Bb3p"},
-            {"provider_name": "Message B", "pickup": "VtI6Bb3y"},
-            {"provider_name": "Message C", "pickup": "VtI6Bb3*"},
+            {
+                "provider_name": "Message A",
+                "pickup": "VtI6Bb3p",
+                "coop_location": None,
+            },
+            {
+                "provider_name": "Message B",
+                "pickup": "VtI6Bb3y",
+                "coop_location": None,
+            },
+            {
+                "provider_name": "Message C",
+                "pickup": "VtI6Bb3*",
+                "coop_location": 3,
+            },
         ],
     }
 
@@ -269,11 +283,11 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
     client.on_world_pickups_update.assert_awaited_once_with(
         MultiplayerWorldPickups(
             world_id=uuid.UUID("00000000-0000-1111-0000-000000000000"),
-            game=RandovaniaGame.METROID_PRIME_CORRUPTION,
+            game=db.game_enum,
             pickups=(
-                ("Message A", pickups[0]),
-                ("Message B", pickups[1]),
-                ("Message C", pickups[2]),
+                RemotePickup("Message A", pickups[0], None),
+                RemotePickup("Message B", pickups[1], None),
+                RemotePickup("Message C", pickups[2], PickupIndex(3)),
             ),
         )
     )
@@ -285,7 +299,7 @@ def test_decode_pickup(
 ):
     data = (
         "h^WxYK%Bzb%2NU&w=%giys9}cw>h&ixhA)=I<_*yXJu|>a%p3j6&;nimC2=yfhEzEw1EwU(UqOO$>p%O5KI8-+"
-        "~(lQ#?s8v%E&;{=*rqdXJu|>a%p3j6&;nimC2=yfhEzEw1EwU(UqOO$>p%O5KI8-+~(lQ#?s8v%E&;{=*rpvSO"
+        "~(lQ#?s8v%E&;{=*rp#8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu350I>i"
     )
     expected_pickup = PickupEntry(
         name="The Name",
@@ -293,8 +307,8 @@ def test_decode_pickup(
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
-        pickup_category=generic_pickup_category,
-        broad_category=generic_pickup_category,
+        gui_category=generic_pickup_category,
+        hint_features=frozenset((generic_pickup_category,)),
         progression=(),
         generator_params=default_generator_params,
     )

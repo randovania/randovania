@@ -19,6 +19,7 @@ if typing.TYPE_CHECKING:
 _FIELDS = [
     "instant_transitions",
     "anti_softlock",
+    "short_intro_text",
 ]
 
 
@@ -32,14 +33,15 @@ class PresetFusionPatches(PresetTab, Ui_PresetFusionPatches):
         # Signals
         for f in _FIELDS:
             self._add_persist_option(getattr(self, f"{f}_check"), f)
+        self.etank_capacity_spin_box.valueChanged.connect(self._persist_tank_capacity)
 
     @classmethod
     def tab_title(cls) -> str:
-        return "Other"
+        return "Gameplay"
 
     @classmethod
     def header_name(cls) -> str | None:
-        return None
+        return cls.GAME_MODIFICATIONS_HEADER
 
     def _add_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str) -> None:
         def persist(value: bool) -> None:
@@ -48,8 +50,13 @@ class PresetFusionPatches(PresetTab, Ui_PresetFusionPatches):
 
         signal_handling.on_checked(check, persist)
 
+    def _persist_tank_capacity(self) -> None:
+        with self._editor as editor:
+            editor.set_configuration_field("energy_per_tank", int(self.etank_capacity_spin_box.value()))
+
     def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration
         assert isinstance(config, FusionConfiguration)
         for f in _FIELDS:
             typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))
+        self.etank_capacity_spin_box.setValue(config.energy_per_tank)

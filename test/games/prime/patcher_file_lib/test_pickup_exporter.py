@@ -11,8 +11,6 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.pickup.ammo_pickup import AMMO_PICKUP_CATEGORY
-from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY
 from randovania.game_description.pickup.pickup_entry import (
     ConditionalResources,
     PickupEntry,
@@ -66,7 +64,7 @@ def test_calculate_hud_text(order: tuple[str, str], generic_pickup_category, def
         "A",
         PickupModel(game, "1"),
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=(((resource_a, 1),)),
         generator_params=default_generator_params,
     )
@@ -74,7 +72,7 @@ def test_calculate_hud_text(order: tuple[str, str], generic_pickup_category, def
         "Y",
         PickupModel(game, "2"),
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=(
             (resource_b, 1),
             (resource_a, 5),
@@ -85,7 +83,7 @@ def test_calculate_hud_text(order: tuple[str, str], generic_pickup_category, def
         "Z",
         PickupModel(game, "2"),
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=(
             (resource_a, 1),
             (resource_b, 5),
@@ -119,7 +117,12 @@ def test_calculate_hud_text(order: tuple[str, str], generic_pickup_category, def
 
 @pytest.mark.parametrize("model_style", PickupModelStyle)
 def test_create_pickup_list(
-    model_style: PickupModelStyle, empty_patches, generic_pickup_category, blank_resource_db, default_generator_params
+    model_style: PickupModelStyle,
+    empty_patches,
+    generic_pickup_category,
+    ammo_pickup_category,
+    useless_pickup_category,
+    default_generator_params,
 ):
     # Setup
     has_scan_text = model_style in {PickupModelStyle.ALL_VISIBLE, PickupModelStyle.HIDE_MODEL}
@@ -145,7 +148,7 @@ def test_create_pickup_list(
         "P-A",
         model_1,
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=((resource_a, 1),),
         generator_params=default_generator_params,
     )
@@ -153,49 +156,52 @@ def test_create_pickup_list(
         "P-B",
         model_2,
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=((resource_b, 1), (resource_a, 5)),
         generator_params=default_generator_params,
     )
     pickup_c = PickupEntry(
         "P-C",
         model_2,
-        AMMO_PICKUP_CATEGORY,
-        generic_pickup_category,
+        ammo_pickup_category,
+        frozenset((ammo_pickup_category,)),
         progression=(),
         extra_resources=((resource_a, 1), (resource_c, -3)),
         unlocks_resource=True,
         resource_lock=ResourceLock(resource_a, resource_a, useless_resource),
         generator_params=default_generator_params,
+        is_expansion=True,
     )
     pickup_d = PickupEntry(
         "P-D",
         model_2,
-        AMMO_PICKUP_CATEGORY,
-        generic_pickup_category,
+        ammo_pickup_category,
+        frozenset((ammo_pickup_category,)),
         progression=(),
         extra_resources=((resource_b, 2), (resource_a, 1)),
         unlocks_resource=True,
         resource_lock=ResourceLock(resource_a, resource_a, useless_resource),
         generator_params=default_generator_params,
+        is_expansion=True,
     )
     pickup_e = PickupEntry(
         "P-E",
         model_3,
-        AMMO_PICKUP_CATEGORY,
-        generic_pickup_category,
+        ammo_pickup_category,
+        frozenset((ammo_pickup_category,)),
         progression=(),
         extra_resources=((resource_c, -3),),
         unlocks_resource=True,
         resource_lock=ResourceLock(resource_c, resource_c, useless_resource),
         generator_params=default_generator_params,
+        is_expansion=True,
     )
 
     useless_pickup = PickupEntry(
         "P-Useless",
         model_0,
-        USELESS_PICKUP_CATEGORY,
-        USELESS_PICKUP_CATEGORY,
+        useless_pickup_category,
+        frozenset((useless_pickup_category,)),
         progression=((useless_resource, 1),),
         generator_params=default_generator_params,
     )
@@ -365,7 +371,7 @@ def test_create_pickup_list(
 
 @pytest.mark.parametrize("has_memo_data", [False, True])
 def test_create_pickup_list_random_data_source(
-    has_memo_data: bool, empty_patches, generic_pickup_category, default_generator_params
+    has_memo_data: bool, empty_patches, generic_pickup_category, useless_pickup_category, default_generator_params
 ):
     # Setup
     rng = Random(5000)
@@ -381,7 +387,7 @@ def test_create_pickup_list_random_data_source(
         "A",
         model_1,
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=(),
         generator_params=default_generator_params,
     )
@@ -389,7 +395,7 @@ def test_create_pickup_list_random_data_source(
         "B",
         model_2,
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=((resource_b, 1), (resource_b, 1)),
         generator_params=default_generator_params,
     )
@@ -397,15 +403,15 @@ def test_create_pickup_list_random_data_source(
         "C",
         model_2,
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=(),
         generator_params=default_generator_params,
     )
     useless_pickup = PickupEntry(
         "Useless",
         useless_model,
-        USELESS_PICKUP_CATEGORY,
-        USELESS_PICKUP_CATEGORY,
+        useless_pickup_category,
+        frozenset((useless_pickup_category,)),
         progression=(),
         generator_params=default_generator_params,
     )
@@ -583,7 +589,7 @@ def pickup_for_create_pickup_data(generic_pickup_category, default_generator_par
         "Cake",
         PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "theModel"),
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=(
             (resource_a, 1),
             (resource_b, 1),

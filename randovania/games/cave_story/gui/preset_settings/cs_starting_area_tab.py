@@ -9,7 +9,7 @@ class PresetCSStartingArea(PresetStartingArea):
     def header_name(cls) -> str | None:
         return cls.GAME_MODIFICATIONS_HEADER
 
-    def create_quick_fill_buttons(self):
+    def create_quick_fill_buttons(self) -> None:
         super().create_quick_fill_buttons()
 
         self.starting_area_quick_fill_classic = self._quick_fill_button(
@@ -32,7 +32,7 @@ class PresetCSStartingArea(PresetStartingArea):
             ]
         )
 
-    def _starting_location_on_select_classic(self):
+    def _starting_location_on_select_classic(self) -> None:
         classics = [
             NodeIdentifier.create("Mimiga Village", "Start Point", "Room Spawn"),
             NodeIdentifier.create("Mimiga Village", "Arthur's House", "Room Spawn"),
@@ -44,7 +44,7 @@ class PresetCSStartingArea(PresetStartingArea):
                 "starting_location", editor.configuration.starting_location.with_elements(classics, self.game_enum)
             )
 
-    def _starting_location_on_select_save_point(self):
+    def _starting_location_on_select_save_point(self) -> None:
         region_list = self.game_description.region_list
         save_points = [node.identifier for node in region_list.iterate_nodes() if "Save Point" in node.name]
 

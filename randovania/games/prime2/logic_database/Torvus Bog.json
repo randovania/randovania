@@ -7,6 +7,7 @@
     "areas": {
         "Transport to Temple Grounds": {
             "default_node": "Elevator to Temple Grounds",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1868895730,
                 "in_dark_aether": false
@@ -88,6 +89,7 @@
         },
         "Temple Transport Access": {
             "default_node": "Door to Transport to Temple Grounds",
+            "hint_features": [],
             "extra": {
                 "asset_id": 668125336,
                 "in_dark_aether": false
@@ -165,6 +167,11 @@
         },
         "Torvus Lagoon": {
             "default_node": "Door to Temple Transport Access",
+            "hint_features": [
+                "keybearer",
+                "luminoth_corpse",
+                "water"
+            ],
             "extra": {
                 "asset_id": 2114709145,
                 "in_dark_aether": false
@@ -578,6 +585,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 60,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Temple Transport Access": {
                             "type": "and",
@@ -654,6 +662,7 @@
         },
         "Ruined Alcove": {
             "default_node": "Door to Torvus Lagoon",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3548128276,
                 "in_dark_aether": false
@@ -731,6 +740,9 @@
         },
         "Portal Chamber (Light)": {
             "default_node": "Door to Great Bridge",
+            "hint_features": [
+                "portal"
+            ],
             "extra": {
                 "asset_id": 4092483679,
                 "in_dark_aether": false
@@ -1012,6 +1024,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 61,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Portal to Portal Chamber (Dark)": {
                             "type": "and",
@@ -1026,6 +1039,10 @@
         },
         "Path of Roots": {
             "default_node": "Door to Torvus Lagoon",
+            "hint_features": [
+                "grapple",
+                "lore"
+            ],
             "extra": {
                 "asset_id": 1950913308,
                 "in_dark_aether": false
@@ -1199,6 +1216,32 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://www.youtube.com/watch?v=EB_tvB6dOd8",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "EDash",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -1257,6 +1300,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 62,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Next to Pickup": {
                             "type": "and",
@@ -1520,7 +1564,7 @@
                                                                                     {
                                                                                         "type": "and",
                                                                                         "data": {
-                                                                                            "comment": "https://www.youtube.com/watch?v=-H1PQGAef3c&list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&index=64&ab_channel=erinexplosives",
+                                                                                            "comment": "https://www.youtube.com/watch?v=-H1PQGAef3c",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "resource",
@@ -1552,7 +1596,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "https://www.youtube.com/watch?v=hLQ3NtoI0PE&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=48",
+                                                                    "comment": "https://www.youtube.com/watch?v=hLQ3NtoI0PE",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -1640,6 +1684,7 @@
         },
         "Save Station A": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3681435765,
                 "unlocked_save_station": true,
@@ -1704,6 +1749,11 @@
         },
         "Forgotten Bridge": {
             "default_node": "Door to Ruined Alcove",
+            "hint_features": [
+                "bomb_slot",
+                "boost_spinner",
+                "portal"
+            ],
             "extra": {
                 "asset_id": 165596961,
                 "in_dark_aether": false
@@ -2027,7 +2077,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "https://www.youtube.com/watch?v=BCb3WfJMm10&list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&index=71",
+                                                                    "comment": "https://www.youtube.com/watch?v=BCb3WfJMm10",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -2330,6 +2380,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 63,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Abandoned Worksite": {
                             "type": "and",
@@ -2516,7 +2567,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://www.youtube.com/watch?v=QKOaevks1mg&list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&index=72",
+                                                        "comment": "https://www.youtube.com/watch?v=QKOaevks1mg",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2702,6 +2753,7 @@
         },
         "Portal Chamber (Dark)": {
             "default_node": "Door to Poisoned Bog",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2921206585,
                 "in_dark_aether": true
@@ -3119,6 +3171,10 @@
         },
         "Great Bridge": {
             "default_node": "Door to Path of Roots",
+            "hint_features": [
+                "orb_cannon",
+                "translator_gate"
+            ],
             "extra": {
                 "asset_id": 3822429534,
                 "in_dark_aether": false
@@ -3487,7 +3543,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://www.youtube.com/watch?v=0WkUqBFjGOo&list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&index=64",
+                                                        "comment": "https://www.youtube.com/watch?v=0WkUqBFjGOo",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -4158,6 +4214,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 64,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Temple Access (Top)": {
                             "type": "and",
@@ -4349,6 +4406,41 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://www.youtube.com/watch?v=nSHgMLE9k8o",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "EDash",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SlopeJump",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -4477,6 +4569,7 @@
         },
         "Cache A": {
             "default_node": "Door to Poisoned Bog",
+            "hint_features": [],
             "extra": {
                 "asset_id": 212528838,
                 "in_dark_aether": true
@@ -4557,6 +4650,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 65,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Poisoned Bog": {
                             "type": "resource",
@@ -4573,6 +4667,11 @@
         },
         "Plaza Access": {
             "default_node": "Door to Forgotten Bridge",
+            "hint_features": [
+                "bomb_slot",
+                "half_pipe",
+                "morph"
+            ],
             "extra": {
                 "asset_id": 3250751238,
                 "in_dark_aether": false
@@ -4896,6 +4995,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 66,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Torvus Plaza": {
                             "type": "resource",
@@ -5029,7 +5129,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "https://www.youtube.com/watch?v=5PAqDbouU8M&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=50 Out of Bounds",
+                                            "comment": "https://www.youtube.com/watch?v=5PAqDbouU8M",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5101,6 +5201,9 @@
         },
         "Abandoned Worksite": {
             "default_node": "Door to Forgotten Bridge",
+            "hint_features": [
+                "grapple"
+            ],
             "extra": {
                 "asset_id": 1423634263,
                 "in_dark_aether": false
@@ -5227,21 +5330,29 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": "https://www.youtube.com/watch?v=pJlUeNML-vo No Space Jump",
+                                                        "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "BSJ",
-                                                                    "amount": 3,
-                                                                    "negate": false
+                                                                    "comment": "No Space Jump: https://www.youtube.com/watch?v=pJlUeNML-vo",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "BSJ",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "https://www.youtube.com/watch?v=A_XrsfGgRpE",
+                                                                    "comment": "With Space Jump: https://www.youtube.com/watch?v=A_XrsfGgRpE",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -5563,6 +5674,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 67,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Great Bridge": {
                             "type": "and",
@@ -5815,7 +5927,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "https://www.youtube.com/watch?v=L-6SW6uZx8o&list=PLZkUEWCHwYRyXIU-to88js2M6mEOBoHUy&index=54",
+                                                                    "comment": "https://www.youtube.com/watch?v=L-6SW6uZx8o",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -5853,6 +5965,7 @@
         },
         "Dark Forgotten Bridge": {
             "default_node": "Door to Putrid Alcove",
+            "hint_features": [],
             "extra": {
                 "asset_id": 39024685,
                 "in_dark_aether": true
@@ -7929,6 +8042,7 @@
         },
         "Grove Access": {
             "default_node": "Door to Torvus Grove",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1180978245,
                 "in_dark_aether": false
@@ -8006,6 +8120,9 @@
         },
         "Poisoned Bog": {
             "default_node": "Door to Cache A",
+            "hint_features": [
+                "water"
+            ],
             "extra": {
                 "asset_id": 350405542,
                 "in_dark_aether": true
@@ -8439,6 +8556,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 68,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Central Safe Zone (Beacon)": {
                             "type": "and",
@@ -8958,6 +9076,9 @@
         },
         "Venomous Pond": {
             "default_node": "Door to Brooding Ground",
+            "hint_features": [
+                "grapple"
+            ],
             "extra": {
                 "asset_id": 2240736467,
                 "in_dark_aether": true
@@ -10030,6 +10151,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 69,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Save Station 1": {
                             "type": "resource",
@@ -11047,6 +11169,9 @@
         },
         "Temple Access": {
             "default_node": "Door to Great Bridge (Top)",
+            "hint_features": [
+                "morph"
+            ],
             "extra": {
                 "asset_id": 121681107,
                 "in_dark_aether": false
@@ -11230,6 +11355,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 70,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Below Pickup": {
                             "type": "and",
@@ -11481,6 +11607,7 @@
         },
         "Torvus Map Station": {
             "default_node": "Door to Great Bridge",
+            "hint_features": [],
             "extra": {
                 "asset_id": 673929343,
                 "in_dark_aether": false
@@ -11544,6 +11671,11 @@
         },
         "Torvus Plaza": {
             "default_node": "Door to Plaza Access",
+            "hint_features": [
+                "half_pipe",
+                "orb_cannon",
+                "spider"
+            ],
             "extra": {
                 "asset_id": 1978751231,
                 "in_dark_aether": false
@@ -11728,6 +11860,77 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://www.youtube.com/watch?v=pUYX81KhsGg",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MorphBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boost",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bombs",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "BSJ",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "StandableTerrain",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -11772,6 +11975,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 71,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Plaza Access": {
                             "type": "and",
@@ -11873,6 +12077,7 @@
         },
         "Dark Arena Tunnel": {
             "default_node": "Door to Dark Forgotten Bridge",
+            "hint_features": [],
             "extra": {
                 "asset_id": 957217977,
                 "in_dark_aether": true
@@ -12259,6 +12464,7 @@
         },
         "Putrid Alcove": {
             "default_node": "Door to Poisoned Bog",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3418828153,
                 "in_dark_aether": true
@@ -12842,6 +13048,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 72,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Poisoned Bog": {
                             "type": "and",
@@ -13161,6 +13368,7 @@
         },
         "Brooding Ground": {
             "default_node": "Door to Dark Forgotten Bridge",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3706669497,
                 "in_dark_aether": true
@@ -13591,6 +13799,7 @@
         },
         "Dark Falls": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "asset_id": 774215801,
                 "in_dark_aether": true
@@ -13969,6 +14178,9 @@
         },
         "Torvus Grove": {
             "default_node": "Door to Underground Tunnel",
+            "hint_features": [
+                "half_pipe"
+            ],
             "extra": {
                 "asset_id": 3896048152,
                 "in_dark_aether": false
@@ -14048,28 +14260,10 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Boost",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "and",
                                                     "data": {
@@ -14079,10 +14273,137 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "ScrewAttack",
+                                                                    "name": "Boost",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "SpaceJump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Bombs",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "or",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "and",
+                                                                                                    "data": {
+                                                                                                        "comment": "https://www.youtube.com/watch?v=JTfbOmmyfZ8",
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "BSJ",
+                                                                                                                    "amount": 4,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "or",
+                                                                                                                "data": {
+                                                                                                                    "comment": null,
+                                                                                                                    "items": [
+                                                                                                                        {
+                                                                                                                            "type": "resource",
+                                                                                                                            "data": {
+                                                                                                                                "type": "tricks",
+                                                                                                                                "name": "Dash",
+                                                                                                                                "amount": 2,
+                                                                                                                                "negate": false
+                                                                                                                            }
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "type": "resource",
+                                                                                                                            "data": {
+                                                                                                                                "type": "tricks",
+                                                                                                                                "name": "SlopeJump",
+                                                                                                                                "amount": 3,
+                                                                                                                                "negate": false
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "and",
+                                                                                                    "data": {
+                                                                                                        "comment": "https://www.youtube.com/watch?v=pXscSB2QLcQ",
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "template",
+                                                                                                                "data": "Use Screw Attack (No Space Jump)"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "BombJump",
+                                                                                                                    "amount": 4,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "Movement",
+                                                                                                                    "amount": 4,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Screw Attack (Space Jump)"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -14266,6 +14587,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 73,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Underground Tunnel": {
                             "type": "and",
@@ -14301,6 +14623,7 @@
         },
         "Dark Torvus Temple Access": {
             "default_node": "Door to Venomous Pond",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3851937017,
                 "in_dark_aether": true
@@ -14536,6 +14859,7 @@
         },
         "Save Station 1": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2591519810,
                 "unlocked_save_station": true,
@@ -14604,6 +14928,11 @@
         },
         "Torvus Temple": {
             "default_node": "Door to Temple Access (Top)",
+            "hint_features": [
+                "elevator",
+                "temple",
+                "translator_gate"
+            ],
             "extra": {
                 "asset_id": 3863006870,
                 "in_dark_aether": false,
@@ -15008,6 +15337,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 74,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Controller Access": {
                             "type": "and",
@@ -15246,6 +15576,10 @@
         },
         "Dark Torvus Arena": {
             "default_node": "Door to Dark Arena Tunnel",
+            "hint_features": [
+                "half_pipe",
+                "luminoth_corpse"
+            ],
             "extra": {
                 "asset_id": 2761578287,
                 "in_dark_aether": true
@@ -15520,6 +15854,9 @@
                     "valid_starting_location": false,
                     "pickup_index": 75,
                     "location_category": "major",
+                    "hint_features": [
+                        "boss"
+                    ],
                     "connections": {
                         "Central Safe Zone": {
                             "type": "and",
@@ -15588,6 +15925,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 76,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Dark Arena Tunnel": {
                             "type": "and",
@@ -15767,7 +16105,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "https://www.youtube.com/watch?v=iD_vx63DDxM&list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&index=82",
+                                                                                "comment": "https://www.youtube.com/watch?v=iD_vx63DDxM",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -16213,6 +16551,7 @@
         },
         "Polluted Mire": {
             "default_node": "Door to Gloom Vista",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2208154870,
                 "in_dark_aether": true
@@ -16415,7 +16754,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://www.youtube.com/watch?v=kbCS_aLOOL4&list=PLZkUEWCHwYRyXIU-to88js2M6mEOBoHUy&index=29",
+                                            "comment": "https://www.youtube.com/watch?v=kbCS_aLOOL4",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -16503,6 +16842,10 @@
         },
         "Underground Tunnel": {
             "default_node": "Door to Torvus Temple",
+            "hint_features": [
+                "lore",
+                "morph"
+            ],
             "extra": {
                 "asset_id": 2162589584,
                 "in_dark_aether": false
@@ -16595,7 +16938,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "https://www.youtube.com/watch?v=IHkf9X3T9CQ&list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&index=69",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "and",
@@ -16654,12 +16997,20 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "InstantMorph",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": "https://www.youtube.com/watch?v=IHkf9X3T9CQ",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "InstantMorph",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -16715,6 +17066,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 77,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Torvus Temple": {
                             "type": "resource",
@@ -16781,6 +17133,10 @@
         },
         "Meditation Vista": {
             "default_node": "Door to Torvus Grove",
+            "hint_features": [
+                "abyss",
+                "portal"
+            ],
             "extra": {
                 "asset_id": 1576678107,
                 "in_dark_aether": false
@@ -16931,7 +17287,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "https://www.youtube.com/watch?v=_NFaoQt_TYk&list=PLxePOLCPdhSgBR8QlxphIKyHI2xfmJKR5&index=32",
+                                                                                "comment": "https://www.youtube.com/watch?v=_NFaoQt_TYk",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -16963,7 +17319,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://www.youtube.com/watch?v=4orR9WMtUEk&list=PLPFZVy8SRe3tAkQMzVw8vWt_w_AF2_l91&index=33",
+                                                        "comment": "https://www.youtube.com/watch?v=4orR9WMtUEk",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -17032,6 +17388,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 78,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Torvus Grove": {
                             "type": "or",
@@ -17060,6 +17417,12 @@
         },
         "Dark Torvus Temple": {
             "default_node": "Central Safe Zone (Top)",
+            "hint_features": [
+                "boss",
+                "elevator",
+                "grapple",
+                "temple"
+            ],
             "extra": {
                 "asset_id": 912503189,
                 "in_dark_aether": true
@@ -17367,6 +17730,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 79,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Central Safe Zone (Top)": {
                             "type": "and",
@@ -18202,6 +18566,7 @@
         },
         "Transport to Agon Wastes": {
             "default_node": "Elevator to Agon Wastes",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3479543630,
                 "in_dark_aether": false
@@ -18324,6 +18689,7 @@
         },
         "Underground Transport": {
             "default_node": "Door to Torvus Temple",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2455297154,
                 "in_dark_aether": false
@@ -18422,6 +18788,7 @@
         },
         "Controller Access": {
             "default_node": "Door to Torvus Temple",
+            "hint_features": [],
             "extra": {
                 "asset_id": 720788297,
                 "in_dark_aether": false
@@ -18595,6 +18962,7 @@
         },
         "Gloom Vista": {
             "default_node": "Door to Polluted Mire",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2504558791,
                 "in_dark_aether": true
@@ -18718,6 +19086,7 @@
         },
         "Ammo Station": {
             "default_node": "Door to Dark Torvus Temple",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2258105898,
                 "in_dark_aether": true
@@ -18785,6 +19154,7 @@
         },
         "Cache B": {
             "default_node": "Door to Dark Torvus Temple",
+            "hint_features": [],
             "extra": {
                 "asset_id": 7688697,
                 "in_dark_aether": true
@@ -18864,6 +19234,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 80,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Dark Torvus Temple": {
                             "type": "or",
@@ -18922,6 +19293,7 @@
         },
         "Dark Controller Access": {
             "default_node": "Door to Dark Torvus Temple",
+            "hint_features": [],
             "extra": {
                 "asset_id": 298078827,
                 "in_dark_aether": true
@@ -19129,6 +19501,9 @@
         },
         "Hydrodynamo Station": {
             "default_node": "Door to Underground Transport",
+            "hint_features": [
+                "water"
+            ],
             "extra": {
                 "asset_id": 3585454182,
                 "in_dark_aether": false
@@ -20053,6 +20428,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 81,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Training Access": {
                             "type": "and",
@@ -20748,6 +21124,12 @@
         },
         "Torvus Energy Controller": {
             "default_node": "Door to Controller Access",
+            "hint_features": [
+                "energy_controller",
+                "light_energy_transport",
+                "lore",
+                "luminoth_corpse"
+            ],
             "extra": {
                 "asset_id": 322696632,
                 "in_dark_aether": false
@@ -20877,6 +21259,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 82,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Controller Access": {
                             "type": "and",
@@ -21091,6 +21474,7 @@
         },
         "Undertemple Shaft": {
             "default_node": "Spawn Point",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3000230508,
                 "in_dark_aether": true
@@ -22374,6 +22758,7 @@
         },
         "Dark Torvus Energy Controller": {
             "default_node": "Door to Dark Controller Access",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1591201049,
                 "in_dark_aether": true
@@ -22526,6 +22911,7 @@
         },
         "Gathering Access": {
             "default_node": "Door to Hydrodynamo Station",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1393426305,
                 "in_dark_aether": false
@@ -22605,6 +22991,7 @@
         },
         "Training Access": {
             "default_node": "Door to Hydrodynamo Station",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2007998417,
                 "in_dark_aether": false
@@ -22684,6 +23071,7 @@
         },
         "Catacombs Access": {
             "default_node": "Door to Catacombs",
+            "hint_features": [],
             "extra": {
                 "asset_id": 2999623881,
                 "in_dark_aether": false
@@ -22834,6 +23222,7 @@
         },
         "Save Station B": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3407240152,
                 "unlocked_save_station": true,
@@ -22898,6 +23287,7 @@
         },
         "Hydrodynamo Shaft": {
             "default_node": "Door to Hydrodynamo Station",
+            "hint_features": [],
             "extra": {
                 "asset_id": 813912549,
                 "in_dark_aether": false
@@ -23150,6 +23540,7 @@
         },
         "Crypt Tunnel": {
             "default_node": "Door to Undertemple Shaft",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1304699309,
                 "in_dark_aether": true
@@ -23315,6 +23706,7 @@
         },
         "Sacrificial Chamber Tunnel": {
             "default_node": "Door to Undertemple Shaft",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1709535693,
                 "in_dark_aether": true
@@ -23532,6 +23924,7 @@
         },
         "Save Station 2": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "asset_id": 321212102,
                 "unlocked_save_station": true,
@@ -23600,6 +23993,9 @@
         },
         "Undertemple Access": {
             "default_node": "Door to Undertemple Shaft",
+            "hint_features": [
+                "portal"
+            ],
             "extra": {
                 "asset_id": 700027128,
                 "in_dark_aether": true
@@ -24142,6 +24538,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 83,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Portal to Hydrodynamo Shaft": {
                             "type": "resource",
@@ -24158,6 +24555,15 @@
         },
         "Gathering Hall": {
             "default_node": "Door to Transit Tunnel West",
+            "hint_features": [
+                "bomb_slot",
+                "grapple",
+                "half_pipe",
+                "lore",
+                "orb_cannon",
+                "portal",
+                "spider"
+            ],
             "extra": {
                 "asset_id": 889276218,
                 "in_dark_aether": false
@@ -24855,6 +25261,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 84,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Transit Tunnel South": {
                             "type": "and",
@@ -25681,7 +26088,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://www.youtube.com/watch?v=DSs_SAAp65s&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=25",
+                                                        "comment": "https://www.youtube.com/watch?v=DSs_SAAp65s",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -25837,7 +26244,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "https://www.youtube.com/watch?v=DtRteGK5390&list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&index=77 Roll Jumps",
+                                                                                "comment": "https://www.youtube.com/watch?v=DtRteGK5390",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -25941,7 +26348,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "https://youtu.be/DtRteGK5390?list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&t=6",
+                                                                                "comment": "https://youtu.be/DtRteGK5390&t=6",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -26359,6 +26766,13 @@
         },
         "Training Chamber": {
             "default_node": "Door to Training Access",
+            "hint_features": [
+                "bomb_slot",
+                "boost_spinner",
+                "lore",
+                "spider",
+                "water"
+            ],
             "extra": {
                 "asset_id": 1270197856,
                 "in_dark_aether": false
@@ -26831,7 +27245,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://www.youtube.com/watch?v=jWFJYKaP680&list=PLZkUEWCHwYRyXIU-to88js2M6mEOBoHUy&index=36",
+                                            "comment": "https://www.youtube.com/watch?v=jWFJYKaP680",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -27074,6 +27488,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 85,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -28074,7 +28489,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://www.youtube.com/watch?v=I7DVJ3KwI3w&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=62",
+                                            "comment": "https://www.youtube.com/watch?v=I7DVJ3KwI3w",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -28176,6 +28591,7 @@
         },
         "Catacombs": {
             "default_node": "Door to Transit Tunnel East",
+            "hint_features": [],
             "extra": {
                 "asset_id": 4217540043,
                 "in_dark_aether": false
@@ -28565,7 +28981,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://www.youtube.com/watch?v=2M7rPNLelJo&list=PLZkUEWCHwYRyXIU-to88js2M6mEOBoHUy&index=75",
+                                            "comment": "https://www.youtube.com/watch?v=2M7rPNLelJo",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -29059,6 +29475,7 @@
         },
         "Main Hydrochamber": {
             "default_node": "Door to Hydrochamber Storage",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3468345533,
                 "in_dark_aether": false
@@ -29306,7 +29723,7 @@
                                                                                     {
                                                                                         "type": "and",
                                                                                         "data": {
-                                                                                            "comment": "https://www.youtube.com/watch?v=tDa-PxtRTzo&list=PLZkUEWCHwYRyXIU-to88js2M6mEOBoHUy&index=41",
+                                                                                            "comment": "https://www.youtube.com/watch?v=tDa-PxtRTzo",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "resource",
@@ -30069,6 +30486,7 @@
         },
         "Crypt": {
             "default_node": "Portal to Gathering Hall",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3366472600,
                 "in_dark_aether": true
@@ -31025,7 +31443,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "https://www.youtube.com/watch?v=sXP6vYiec4s&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=16",
+                                                                    "comment": "https://www.youtube.com/watch?v=sXP6vYiec4s",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -31125,6 +31543,10 @@
         },
         "Sacrificial Chamber": {
             "default_node": "Door to Sacrificial Chamber Tunnel",
+            "hint_features": [
+                "boss",
+                "grapple"
+            ],
             "extra": {
                 "asset_id": 1654100212,
                 "in_dark_aether": true
@@ -31450,6 +31872,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 86,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Front of Broken Statue": {
                             "type": "resource",
@@ -32151,6 +32574,12 @@
         },
         "Undertemple": {
             "default_node": "Portal to Main Hydrochamber",
+            "hint_features": [
+                "bomb_slot",
+                "portal",
+                "screw_attack_wall",
+                "spider"
+            ],
             "extra": {
                 "asset_id": 2242084895,
                 "in_dark_aether": true
@@ -32381,6 +32810,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 87,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Portal to Main Hydrochamber": {
                             "type": "resource",
@@ -32442,6 +32872,9 @@
                     "valid_starting_location": false,
                     "pickup_index": 88,
                     "location_category": "major",
+                    "hint_features": [
+                        "boss"
+                    ],
                     "connections": {
                         "Door to Undertemple Access": {
                             "type": "or",
@@ -32908,6 +33341,11 @@
         },
         "Transit Tunnel South": {
             "default_node": "Door to Catacombs",
+            "hint_features": [
+                "bomb_slot",
+                "morph",
+                "water"
+            ],
             "extra": {
                 "asset_id": 3072694950,
                 "in_dark_aether": false
@@ -33135,6 +33573,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 89,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Catacombs": {
                             "type": "and",
@@ -33168,6 +33607,7 @@
         },
         "Transit Tunnel West": {
             "default_node": "Door to Gathering Hall",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3780180813,
                 "in_dark_aether": false
@@ -33285,6 +33725,11 @@
         },
         "Transit Tunnel East": {
             "default_node": "Door to Training Chamber",
+            "hint_features": [
+                "bomb_slot",
+                "morph",
+                "water"
+            ],
             "extra": {
                 "asset_id": 1727410190,
                 "in_dark_aether": false
@@ -33566,6 +34011,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 90,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Training Chamber": {
                             "type": "and",
@@ -33580,6 +34026,7 @@
         },
         "Fortress Transport Access": {
             "default_node": "Door to Training Chamber",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1662585441,
                 "in_dark_aether": false
@@ -33613,7 +34060,7 @@
                         "Door to Transport to Sanctuary Fortress": {
                             "type": "or",
                             "data": {
-                                "comment": "https://www.youtube.com/watch?v=0_NXx98d3aQ&list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&index=81 Expert",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -33625,12 +34072,20 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 4,
-                                            "negate": false
+                                            "comment": "https://www.youtube.com/watch?v=0_NXx98d3aQ",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -33746,6 +34201,10 @@
         },
         "Dungeon": {
             "default_node": "Spawn Point",
+            "hint_features": [
+                "portal",
+                "water"
+            ],
             "extra": {
                 "asset_id": 3152327598,
                 "in_dark_aether": true
@@ -33862,6 +34321,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 91,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Safe Zones": {
                             "type": "and",
@@ -34238,6 +34698,10 @@
         },
         "Hydrochamber Storage": {
             "default_node": "Door to Main Hydrochamber",
+            "hint_features": [
+                "boss",
+                "water"
+            ],
             "extra": {
                 "asset_id": 2527519102,
                 "in_dark_aether": false
@@ -34346,6 +34810,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 92,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Main Hydrochamber": {
                             "type": "and",
@@ -34381,6 +34846,9 @@
         },
         "Undertransit One": {
             "default_node": "Door to Sacrificial Chamber",
+            "hint_features": [
+                "morph"
+            ],
             "extra": {
                 "asset_id": 1557447417,
                 "in_dark_aether": true
@@ -34548,6 +35016,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 93,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Central Safe Zone": {
                             "type": "and",
@@ -34731,6 +35200,7 @@
         },
         "Undertransit Two": {
             "default_node": "Door to Sacrificial Chamber",
+            "hint_features": [],
             "extra": {
                 "asset_id": 1274848825,
                 "in_dark_aether": true
@@ -34983,6 +35453,7 @@
         },
         "Transport to Sanctuary Fortress": {
             "default_node": "Elevator to Sanctuary Fortress",
+            "hint_features": [],
             "extra": {
                 "asset_id": 3205424168,
                 "in_dark_aether": false

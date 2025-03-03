@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 class PrimeConnectorBuilder(ConnectorBuilder):
     _last_status_message: str | None = None
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.logger = logging.getLogger(type(self).__name__)
 
@@ -37,11 +37,9 @@ class PrimeConnectorBuilder(ConnectorBuilder):
             return None
 
         # Delay importing these to avoid too many early imports in startup
-        from open_prime_rando.dol_patching.corruption import dol_versions as corruption_dol_versions
         from open_prime_rando.dol_patching.echoes import dol_versions as echoes_dol_versions
         from open_prime_rando.dol_patching.prime1 import dol_versions as prime1_dol_versions
 
-        from randovania.game_connection.connector.corruption_remote_connector import CorruptionRemoteConnector
         from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
         from randovania.game_connection.connector.prime1_remote_connector import Prime1RemoteConnector
 
@@ -59,9 +57,6 @@ class PrimeConnectorBuilder(ConnectorBuilder):
         ]
         all_connectors.extend(
             [EchoesRemoteConnector(version, executor) for version in echoes_dol_versions.ALL_VERSIONS]
-        )
-        all_connectors.extend(
-            [CorruptionRemoteConnector(version, executor) for version in corruption_dol_versions.ALL_VERSIONS]
         )
         read_first_ops = [
             MemoryOperation(
@@ -86,7 +81,7 @@ class PrimeConnectorBuilder(ConnectorBuilder):
             try:
                 is_version = await connector.check_for_world_uid()
             except (RuntimeError, MemoryOperationException) as e:
-                self._status_message(e)
+                self._status_message(str(e))
                 executor.disconnect()
                 return None
 
@@ -99,7 +94,7 @@ class PrimeConnectorBuilder(ConnectorBuilder):
         executor.disconnect()
         return None
 
-    def _status_message(self, msg: str, log: bool = True):
+    def _status_message(self, msg: str, log: bool = True) -> None:
         self._last_status_message = msg
         if log:
             self.logger.info(msg)

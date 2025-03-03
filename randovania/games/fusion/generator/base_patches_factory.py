@@ -12,20 +12,18 @@ if TYPE_CHECKING:
     from randovania.game_description.db.dock import DockWeakness
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
-    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-class FusionBasePatchesFactory(BasePatchesFactory):
+class FusionBasePatchesFactory(BasePatchesFactory[FusionConfiguration]):
     def create_base_patches(
         self,
-        configuration: BaseConfiguration,
+        configuration: FusionConfiguration,
         rng: Random,
         game: GameDescription,
         is_multiworld: bool,
         player_index: int,
         rng_required: bool = True,
     ) -> GamePatches:
-        assert isinstance(configuration, FusionConfiguration)
         parent = super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
 
         get_node = game.region_list.typed_node_by_identifier
@@ -33,9 +31,9 @@ class FusionBasePatchesFactory(BasePatchesFactory):
         dock_weakness: list[tuple[DockNode, DockWeakness]] = []
         open_transition_door = game.dock_weakness_database.get_by_weakness("Door", "Open Hatch")
 
-        if configuration.open_save_hatches:
+        if configuration.open_save_recharge_hatches:
             for area in game.region_list.all_areas:
-                if configuration.open_save_hatches and area.extra.get("unlocked_save_station"):
+                if configuration.open_save_recharge_hatches and area.extra.get("unlocked_save_recharge_station"):
                     for node in area.nodes:
                         if isinstance(node, DockNode) and node.dock_type.short_name == "Door":
                             if node.default_dock_weakness != open_transition_door:

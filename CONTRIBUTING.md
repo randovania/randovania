@@ -33,12 +33,20 @@ If a feature changes multiple times in development, the existing entry should be
 - Code refactoring
 - Dependency changes (except for patcher dependencies, since these can change the results!)
 
-## How to write a good Changelog Entry
+### How to write a good Changelog Entry
 
 - Use the full name of areas
 - Mention all new tricks/difficulty pair and in which areas.
 - It should be discernable which areas are affected when reading the Changelog alone.
 It is acceptable if users need to open the Data Visualizer to understand the exact details of what changed in those areas, however.
+
+## Best practices for static typing
+- Avoid using `isinstance()` to resolve typing errors whenever possible. Using it for type-narrowing on game-specific subclasses in function arguments is acceptable.
+- Use `typing.cast()` as necessary when resolving type errors regarding mixtures of `JsonType`, `TypeDict`, and regular `dict`. Since `dict` type arguments are invariant, you may sometimes get errors when mixing such types without appropriate casting.
+- Make use of `TypedDict` when doing substantial work with `extra` dicts in the database.
+- If possible, include `TypedDict` definitions in the patcher repo for use in the `PatchDataFactory`. (See https://github.com/henriquegemignani/jsonschema-to-typeddict for one way to achieve this.)
+- Avoid heavily nested collections. Instead use type aliases, `dataclass`es, `NamedTuple`s, `TypedDict`s, etc.
+- Use or create semantic type aliases instead of primitive types where appropriate. For example, when working with JSON data, use the semantic `JsonType` type alias instead of just `dict`.
 
 ## Need some help?
 

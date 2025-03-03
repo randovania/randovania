@@ -6,7 +6,7 @@ from randovania.games.blank.gui.dialog.cosmetic_patches_dialog import BlankCosme
 from randovania.games.blank.layout import BlankCosmeticPatches
 
 if TYPE_CHECKING:
-    import pytestqt.qtbot  # type: ignore[import]
+    import pytestqt.qtbot
 
 
 def test_reset(skip_qtbot: pytestqt.qtbot.QtBot) -> None:

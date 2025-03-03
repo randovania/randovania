@@ -15,7 +15,7 @@ class FactorioGameExportParams(GameExportParams):
     output_path: Path
 
 
-class FactorioGameExporter(GameExporter):
+class FactorioGameExporter(GameExporter[FactorioGameExportParams]):
     _busy: bool = False
 
     @property
@@ -32,7 +32,7 @@ class FactorioGameExporter(GameExporter):
         """
         return False
 
-    def export_params_type(self) -> type[GameExportParams]:
+    def export_params_type(self) -> type[FactorioGameExportParams]:
         """
         Returns the type of the GameExportParams expected by this exporter.
         """
@@ -41,11 +41,9 @@ class FactorioGameExporter(GameExporter):
     def _do_export_game(
         self,
         patch_data: dict,
-        export_params: GameExportParams,
+        export_params: FactorioGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
-        assert isinstance(export_params, FactorioGameExportParams)
-
         import factorio_randovania_mod
 
         factorio_randovania_mod.create(

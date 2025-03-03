@@ -1,14 +1,17 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+import typing
+from typing import TYPE_CHECKING, Self
+
+from randovania.game_description.db.resource_node import ResourceNode
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
     from randovania.game_description.db.node import Node, NodeContext
-    from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.requirement_set import RequirementSet
+    from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.resolver.state import State
 
 
@@ -18,7 +21,8 @@ class GeneratorReach:
         cls,
         game: GameDescription,
         initial_state: State,
-    ) -> GeneratorReach:
+        filler_config: FillerConfiguration,
+    ) -> Self:
         raise NotImplementedError
 
     # Game related methods
@@ -75,8 +79,23 @@ class GeneratorReach:
     def safe_nodes(self) -> Iterator[Node]:
         raise NotImplementedError
 
+    @property
+    def safe_uncollected_resource_nodes(self) -> Iterator[Node]:
+        context = self.node_context()
+        for node in self.safe_nodes:
+            if node.is_resource_node:
+                res = typing.cast(ResourceNode, node)
+                if res.should_collect(context) and res.requirement_to_collect().satisfied(
+                    context, self.state.health_for_damage_requirements
+                ):
+                    yield res
+
     def is_safe_node(self, node: Node) -> bool:
         raise NotImplementedError
 
     def unreachable_nodes_with_requirements(self) -> dict[Node, RequirementSet]:
+        raise NotImplementedError
+
+    @property
+    def filler_config(self) -> FillerConfiguration:
         raise NotImplementedError

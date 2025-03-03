@@ -11,6 +11,7 @@
     "areas": {
         "Landing Site": {
             "default_node": "Ship",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -23100.0,
@@ -569,6 +570,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 211,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Ship": {
                             "type": "and",
@@ -619,6 +621,7 @@
         },
         "Twisty Tunnel": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 0.0,
@@ -698,6 +701,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 5,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Morph Ball Chamber": {
                             "type": "and",
@@ -876,6 +880,7 @@
         },
         "Morph Ball Chamber": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 9300.0,
@@ -939,6 +944,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 12,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Twisty Tunnel": {
                             "type": "and",
@@ -1086,30 +1092,21 @@
                                             "comment": "Defeating the Gravitt",
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PBAmmo",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Any Bomb"
                                                 },
                                                 {
                                                     "type": "template",
                                                     "data": "Shoot Any Missile"
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Shoot Wave Beam"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wave",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "and",
@@ -1311,6 +1308,7 @@
         },
         "Chozo Seal": {
             "default_node": "Chozo Seal",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 4550.0,
@@ -1374,6 +1372,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 4,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Tunnel to Transport to Area 1": {
                             "type": "and",
@@ -1463,6 +1462,15 @@
                                             "type": "tricks",
                                             "name": "MeleeClip",
                                             "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
                                             "negate": false
                                         }
                                     }
@@ -1818,6 +1826,7 @@
         },
         "Transport to Area 1": {
             "default_node": "Elevator to Area 1",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 6400.0,
@@ -1865,6 +1874,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 3,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Next to Teleporter": {
                             "type": "and",
@@ -2216,6 +2226,7 @@
         },
         "Chozo Cache East": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 1400.0,
@@ -2263,6 +2274,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 6,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Tunnel to Charge Beam Chamber Access": {
                             "type": "resource",
@@ -2317,6 +2329,7 @@
         },
         "Charge Beam Chamber": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 1400.0,
@@ -2364,6 +2377,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 11,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Charge Beam Chamber Access (Lower)": {
                             "type": "and",
@@ -2536,6 +2550,7 @@
         },
         "Alpha Arena": {
             "default_node": "Save Station",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -5900.0,
@@ -2603,6 +2618,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 0,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Tunnel to Moheek Market": {
                             "type": "resource",
@@ -2965,6 +2981,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 172,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Inside Arena": {
                             "type": "and",
@@ -2979,6 +2996,7 @@
         },
         "Scan Pulse Chamber": {
             "default_node": "Start Point - Right of Statue",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -1700.0,
@@ -3046,6 +3064,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 13,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Chozo Seal": {
                             "type": "and",
@@ -3357,6 +3376,7 @@
         },
         "Chozo Cache West": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -4600.0,
@@ -3404,6 +3424,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 7,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Door to Alpha Arena": {
                             "type": "and",
@@ -3457,6 +3478,7 @@
         },
         "Moheek Market": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -7100.0,
@@ -3565,6 +3587,7 @@
         },
         "Cavern Cavity": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -3800.0,
@@ -4010,6 +4033,7 @@
         },
         "Charge Beam Chamber Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -200.0,
@@ -4057,6 +4081,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 8,
                     "location_category": "major",
+                    "hint_features": [],
                     "connections": {
                         "Door to Ammo Recharge Station": {
                             "type": "or",
@@ -4315,6 +4340,7 @@
         },
         "Hornoad Hallway": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -3400.0,
@@ -4699,6 +4725,7 @@
         },
         "Surface Stash": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -19000.0,
@@ -4746,6 +4773,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 1,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -5025,13 +5053,8 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spider",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Use Spider Ball"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -5102,13 +5125,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Spider",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Use Spider Ball"
                                                 },
                                                 {
                                                     "type": "and",
@@ -5116,13 +5134,8 @@
                                                         "comment": "Phase Drift Skip",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bomb",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Lay Bomb"
                                                             },
                                                             {
                                                                 "type": "or",
@@ -5389,13 +5402,8 @@
                                                     "data": "Lay Bomb"
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Spider",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Use Spider Ball"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -5418,6 +5426,7 @@
         },
         "Surface Crumble Block Challenge": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -24800.0,
@@ -5465,6 +5474,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 2,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Dock to Landing Site (Top)": {
                             "type": "or",
@@ -5617,6 +5627,7 @@
         },
         "Transport Cache": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": 5200.0,
@@ -5664,6 +5675,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 10,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Dock to Transport to Area 1": {
                             "type": "or",
@@ -5728,6 +5740,7 @@
         },
         "Cavern Alcove": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -2400.0,
@@ -5775,6 +5788,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 9,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Tunnel to Cavern Cavity": {
                             "type": "resource",
@@ -5829,6 +5843,7 @@
         },
         "Energy Recharge Station Shaft": {
             "default_node": "Start Point",
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -1700.0,
@@ -6017,6 +6032,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 14,
                     "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Energy Recharge Station": {
                             "type": "and",
@@ -6112,6 +6128,7 @@
         },
         "Ammo Recharge Station": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "total_boundings": {
                     "x1": -1400.0,

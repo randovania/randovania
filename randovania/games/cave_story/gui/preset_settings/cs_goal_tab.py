@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from PySide6 import QtCore
 
 from randovania.games.cave_story.gui.generated.preset_cs_objective_ui import Ui_PresetCSObjective
-from randovania.games.cave_story.layout.cs_configuration import CSObjective
+from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
@@ -41,17 +41,19 @@ class PresetCSObjective(PresetTab, Ui_PresetCSObjective):
     def header_name(cls) -> str | None:
         return None
 
-    def _on_objective_changed(self):
+    def _on_objective_changed(self) -> None:
         combo_enum = self.goal_combo.currentData()
         with self._editor as editor:
             editor.set_configuration_field("objective", combo_enum)
             self.b2_check.setVisible(combo_enum.enters_hell)
 
-    def _on_blocks_changed(self):
+    def _on_blocks_changed(self) -> None:
         disabled = self.b2_check.isChecked()
         with self._editor as editor:
             editor.set_configuration_field("no_blocks", disabled)
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
+        assert isinstance(preset.configuration, CSConfiguration)
+
         set_combo_with_value(self.goal_combo, preset.configuration.objective)
         self.b2_check.setChecked(preset.configuration.no_blocks)

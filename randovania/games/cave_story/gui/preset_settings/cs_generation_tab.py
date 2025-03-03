@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 
 class PresetCSGeneration(PresetGeneration):
-    def setupUi(self, obj):
+    def setupUi(self, obj: QtWidgets.QWidget) -> None:
         super().setupUi(obj)
         self._create_puppy_checkbox()
 
@@ -22,12 +22,12 @@ class PresetCSGeneration(PresetGeneration):
     def game_specific_widgets(self) -> Iterable[QtWidgets.QWidget]:
         yield self._puppy_widget
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         assert isinstance(preset.configuration, CSConfiguration)
         super().on_preset_changed(preset)
         self._puppy_widget.setChecked(preset.configuration.puppies_anywhere)
 
-    def _create_puppy_checkbox(self):
+    def _create_puppy_checkbox(self) -> None:
         puppy = QtWidgets.QCheckBox("Shuffle puppies anywhere")
         puppy.setToolTip(
             "When disabled, puppies will only be shuffled within the Sand Zone. "
@@ -36,7 +36,7 @@ class PresetCSGeneration(PresetGeneration):
         puppy.stateChanged.connect(self._on_puppy_changed)
         self._puppy_widget = puppy
 
-    def _on_puppy_changed(self):
+    def _on_puppy_changed(self) -> None:
         anywhere = self._puppy_widget.isChecked()
         with self._editor as editor:
             editor.set_configuration_field("puppies_anywhere", anywhere)

@@ -14,7 +14,7 @@ from frozendict import frozendict
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.pickup.pickup_category import PickupCategory
+from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
@@ -107,6 +107,11 @@ def blank_resource_db(blank_game_description: GameDescription) -> ResourceDataba
     return blank_game_description.resource_database
 
 
+@pytest.fixture(scope="session")
+def blank_pickup_database() -> PickupDatabase:
+    return default_database.pickup_database_for_game(RandovaniaGame.BLANK)
+
+
 @pytest.fixture
 def blank_game_patches(
     default_blank_configuration: BlankConfiguration, blank_game_description: GameDescription
@@ -193,16 +198,6 @@ def prime_game_description() -> GameDescription:
 
 
 @pytest.fixture(scope="session")
-def corruption_game_data() -> dict:
-    return default_data.read_json_then_binary(RandovaniaGame.METROID_PRIME_CORRUPTION)[1]
-
-
-@pytest.fixture(scope="session")
-def corruption_game_description(corruption_game_data: dict) -> GameDescription:
-    return default_database.game_description_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
-
-
-@pytest.fixture(scope="session")
 def dread_game_description() -> GameDescription:
     return default_database.game_description_for(RandovaniaGame.METROID_DREAD)
 
@@ -277,12 +272,29 @@ def is_frozen(request: pytest.FixtureRequest, mocker: pytest_mock.MockerFixture)
 
 
 @pytest.fixture
-def generic_pickup_category() -> PickupCategory:
-    return PickupCategory(
+def generic_pickup_category() -> HintFeature:
+    return HintFeature(
         name="generic",
         long_name="Generic Item Category",
         hint_details=("an ", "unspecified item"),
-        hinted_as_major=False,
+    )
+
+
+@pytest.fixture
+def useless_pickup_category() -> HintFeature:
+    return HintFeature(
+        name="useless",
+        long_name="Useless",
+        hint_details=("", "nothing"),
+    )
+
+
+@pytest.fixture
+def ammo_pickup_category() -> HintFeature:
+    return HintFeature(
+        name="expansion",
+        long_name="Expansion",
+        hint_details=("an ", "expansion"),
     )
 
 
@@ -290,6 +302,13 @@ def generic_pickup_category() -> PickupCategory:
 def default_generator_params() -> PickupGeneratorParams:
     return PickupGeneratorParams(
         preferred_location_category=LocationCategory.MAJOR,
+    )
+
+
+@pytest.fixture
+def default_generator_params_minor() -> PickupGeneratorParams:
+    return PickupGeneratorParams(
+        preferred_location_category=LocationCategory.MINOR,
     )
 
 
@@ -303,8 +322,14 @@ def blank_pickup(
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
-        pickup_category=echoes_pickup_database.pickup_categories["suit"],
-        broad_category=echoes_pickup_database.pickup_categories["life_support"],
+        gui_category=echoes_pickup_database.pickup_categories["suit"],
+        hint_features=frozenset(
+            (
+                echoes_pickup_database.pickup_categories["suit"],
+                echoes_pickup_database.pickup_categories["life_support"],
+                echoes_pickup_database.pickup_categories["major"],
+            )
+        ),
         progression=(),
         generator_params=default_generator_params,
         resource_lock=None,
@@ -321,8 +346,13 @@ def dread_spider_pickup(default_generator_params: PickupGeneratorParams) -> Pick
             game=RandovaniaGame.METROID_DREAD,
             name="powerup_spidermagnet",
         ),
-        pickup_category=dread_pickup_database.pickup_categories["misc"],
-        broad_category=dread_pickup_database.pickup_categories["misc"],
+        gui_category=dread_pickup_database.pickup_categories["misc"],
+        hint_features=frozenset(
+            (
+                dread_pickup_database.pickup_categories["misc"],
+                dread_pickup_database.pickup_categories["major"],
+            )
+        ),
         progression=(
             (
                 ItemResourceInfo(
@@ -350,8 +380,13 @@ def msr_ice_beam_pickup(default_generator_params: PickupGeneratorParams) -> Pick
             game=RandovaniaGame.METROID_SAMUS_RETURNS,
             name="powerup_icebeam",
         ),
-        pickup_category=msr_pickup_database.pickup_categories["misc"],
-        broad_category=msr_pickup_database.pickup_categories["misc"],
+        gui_category=msr_pickup_database.pickup_categories["misc"],
+        hint_features=frozenset(
+            (
+                msr_pickup_database.pickup_categories["misc"],
+                msr_pickup_database.pickup_categories["major"],
+            )
+        ),
         progression=(
             (
                 ItemResourceInfo(
@@ -379,8 +414,14 @@ def am2r_varia_pickup(default_generator_params: PickupGeneratorParams) -> Pickup
             game=RandovaniaGame.AM2R,
             name="sItemVariaSuit",
         ),
-        pickup_category=am2r_pickup_database.pickup_categories["suit"],
-        broad_category=am2r_pickup_database.pickup_categories["life_support"],
+        gui_category=am2r_pickup_database.pickup_categories["suit"],
+        hint_features=frozenset(
+            (
+                am2r_pickup_database.pickup_categories["suit"],
+                am2r_pickup_database.pickup_categories["life_support"],
+                am2r_pickup_database.pickup_categories["major"],
+            )
+        ),
         progression=(
             (
                 ItemResourceInfo(
@@ -407,8 +448,8 @@ def cs_panties_pickup(default_generator_params: PickupGeneratorParams) -> Pickup
             game=RandovaniaGame.CAVE_STORY,
             name="",
         ),
-        pickup_category=cs_pickup_database.pickup_categories["useless"],
-        broad_category=cs_pickup_database.pickup_categories["useless"],
+        gui_category=cs_pickup_database.pickup_categories["useless"],
+        hint_features=frozenset((cs_pickup_database.pickup_categories["useless"],)),
         progression=(
             (
                 ItemResourceInfo(
@@ -492,6 +533,13 @@ def obfuscator_no_secret(monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setattr(obfuscator, "_secret", None)
     yield None
     obfuscator._encrypt = None
+
+
+@pytest.fixture
+def options(tmp_path):
+    from randovania.interface_common.options import Options
+
+    return Options(tmp_path)
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:

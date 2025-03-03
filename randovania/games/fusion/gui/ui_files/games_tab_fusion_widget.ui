@@ -96,8 +96,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>96</width>
-         <height>48</height>
+         <width>499</width>
+         <height>363</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="faq_scroll_layout">
@@ -135,18 +135,57 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>132</width>
-         <height>1650</height>
+         <width>467</width>
+         <height>775</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <widget class="QLabel" name="differences_label">
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania and the MARS patcher make some changes to the original game in order to improve the game experience or to simply fix bugs in the original game.&lt;br/&gt;Many changes are optional and can be disabled in the options Randovania provides, but the following are &lt;span style=&quot; font-weight:600;&quot;&gt;always&lt;/span&gt; there:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;An option has been added to the pause menu that allows loading your last save from your starting location.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;An option has been added to cycle the Sectors on the map by pressing SELECT.&lt;/li&gt;&lt;/ul&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The Security Rooms are now item locations and the locks can be shuffled into the item pool.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Hints have been placed at Navigation Stations.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Main Deck Maintenance Shaft now has a connection between Crew Quarters East/West&lt;/li&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sector 5 will always remain in it's unbroken state, some rooms have been modified to account for this.&lt;/li&gt;&lt;/ul&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The upper right door in S5 Arctic Containment is now a Yellow Door.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sector 6 Varia Core-X always spawns regardless of having Charge Beam or not.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>Randovania and the MARS patcher make some changes to the original game in order to improve the game experience or to simply fix bugs in the original game. Key differences are: 
+
+### Gameplay
+
+- The vanilla event system has been replaced with a non-linear one.
+
+- Missiles, Beams, and Suit upgrades have been split. More details found on the FAQ tab.
+
+- Screw Attack will no longer allow Single Wall Jumps. Wall Jump behaviour is now the same as without Screw Attack. 
+
+- Red X drop chances have been slightly increased. Red X drops are now guaranteed when both Health and Missiles are full to help replenish Power Bombs.
+
+- Hints have been placed at Navigation Stations. More details found on the Hints tab.
+
+- In order to fight the SA-X, you will need to collect a configurable amount of infant Metroids, a way to approach the door to the Operations Room, Charge Beam and Missiles. Plasma Beam is not required to defeat the SA-X, and the Level 4 Keycard is not required to go to the Operations Room.
+
+- During the escape, hatches no longer lock and the timer only activates upon entering the hangar to fight the Omega Metroid.
+
+### Room Changes
+
+- Main Deck Operations Room - is now a grey Level 0 hatch, this means the Level 4 Keycard is not hard required to beat the game.
+
+- Main Deck - now has a connection between Crew Quarters East/West.
+
+- Main Deck Central Reactor Core - now has a platform near the top to make traversal still possible after the vines have been removed.
+
+- The destruction of Sector 5 has been changed to always be consistent. Everything in West Sector 5 will always be undamaged, while everything East will be destroyed.
+
+- Sector 5 - The red Level 4 hatch between Arctic Containment and Crows Nest has been changed to a yellow Level 3 hatch.
+
+### Quality of Life
+
+- You can now warp to start by pressing L on the map screen. All progress since your last save will be lost. This is NEVER considered logical.
+
+- On the inventory screen, you can now enable/disable acquired powerups. Infant Metroid count is also displayed.
+
+- On the map screen, you can now cycle the Sectors on the map by pressing SELECT and show the current room name by pressing A. In-game Time (IGT) and Level 0 security status is also displayed.</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::MarkdownText</enum>
           </property>
           <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -195,8 +234,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>672</width>
-         <height>596</height>
+         <width>675</width>
+         <height>565</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -345,7 +384,6 @@
            </property>
            <property name="font">
             <font>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -356,7 +394,6 @@
            </property>
            <property name="font">
             <font>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -367,7 +404,6 @@
            </property>
            <property name="font">
             <font>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -578,9 +614,9 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="hint_item_names_tab">
+  <widget class="PickupHintFeatureTab" name="pickup_hint_features_tab">
    <attribute name="title">
-    <string>Hint Item Names</string>
+    <string>Pickup Hint Features</string>
    </attribute>
    <layout class="QVBoxLayout" name="hint_item_names_layout_4">
     <property name="spacing">
@@ -598,75 +634,6 @@
     <property name="bottomMargin">
      <number>0</number>
     </property>
-    <item>
-     <widget class="QScrollArea" name="hint_item_names_scroll_area">
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-      </property>
-      <widget class="QWidget" name="hint_item_names_scroll_contents">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>100</width>
-         <height>462</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="hint_item_names_scroll_layout_4">
-        <item>
-         <widget class="QLabel" name="hint_item_names_label">
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When
-                                                items are referenced in a hint, multiple names can be
-                                                used depending on how precise the hint is. The names
-                                                each item can use are the following:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-                                            </string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableWidget" name="hint_item_names_tree_widget">
-          <property name="editTriggers">
-           <set>QAbstractItemView::NoEditTriggers</set>
-          </property>
-          <property name="sortingEnabled">
-           <bool>true</bool>
-          </property>
-          <column>
-           <property name="text">
-            <string>Item</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Precise Category</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>General Category</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Broad Category</string>
-           </property>
-          </column>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-    </item>
    </layout>
   </widget>
  </widget>
@@ -676,6 +643,12 @@
    <class>GenerateGameWidget</class>
    <extends>QWidget</extends>
    <header location="global">randovania/gui/widgets/generate_game_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PickupHintFeatureTab</class>
+   <extends>QWidget</extends>
+   <header location="global">randovania.gui.widgets.hint_feature_tab</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

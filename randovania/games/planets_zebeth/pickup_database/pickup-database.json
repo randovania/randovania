@@ -1,91 +1,131 @@
 {
-    "schema_version": 9,
+    "schema_version": 13,
     "pickup_categories": {
         "beam": {
             "long_name": "Beams",
             "hint_details": [
                 "a ",
                 "beam"
-            ],
-            "hinted_as_major": true
+            ]
         },
         "missile": {
             "long_name": "Missiles",
             "hint_details": [
                 "a ",
                 "missile system"
-            ],
-            "hinted_as_major": true
+            ]
         },
         "morph_ball": {
             "long_name": "Morph Ball",
             "hint_details": [
                 "a ",
                 "morph ball system"
-            ],
-            "hinted_as_major": true
+            ]
         },
         "movement": {
             "long_name": "Movement",
             "hint_details": [
                 "a ",
                 "movement system"
-            ],
-            "hinted_as_major": true
+            ]
         },
         "suit": {
             "long_name": "Suits",
             "hint_details": [
                 "a ",
                 "suit"
-            ],
-            "hinted_as_major": true
+            ]
         },
         "energy_tank": {
             "long_name": "Energy Tanks",
             "hint_details": [
                 "an ",
                 "Energy Tank"
-            ],
-            "hinted_as_major": false
+            ]
         },
         "morph_ball_related": {
             "long_name": "Morph Ball Related",
             "hint_details": [
                 "a ",
                 "morph ball-related upgrade"
-            ],
-            "hinted_as_major": false
+            ]
         },
         "beam_related": {
             "long_name": "Beam Related",
             "hint_details": [
                 "a ",
                 "beam-related upgrade"
-            ],
-            "hinted_as_major": false
+            ]
         },
         "missile_related": {
             "long_name": "Missile Related",
             "hint_details": [
                 "a ",
                 "missile-related upgrade"
-            ],
-            "hinted_as_major": false
+            ]
         },
         "life_support": {
             "long_name": "Life Support",
             "hint_details": [
                 "a ",
                 "life support system"
+            ]
+        },
+        "tourian_key": {
+            "long_name": "Tourian Key",
+            "hint_details": [
+                "a ",
+                "key"
+            ]
+        },
+        "major": {
+            "long_name": "Major Item",
+            "hint_details": [
+                "a ",
+                "major item"
+            ]
+        },
+        "expansion": {
+            "long_name": "Expansion",
+            "hint_details": [
+                "an ",
+                "expansion"
+            ]
+        },
+        "key": {
+            "long_name": "Key",
+            "hint_details": [
+                "a ",
+                "key"
+            ]
+        }
+    },
+    "generated_pickups": {
+        "Tourian Key": {
+            "name_template": "Tourian Key {i}",
+            "gui_category": "tourian_key",
+            "hint_features": [
+                "key",
+                "tourian_key"
             ],
-            "hinted_as_major": false
+            "model_name": "spr_ITEM_Tourian_Key",
+            "offworld_models": {},
+            "preferred_location_category": "major",
+            "probability_offset": 0.25,
+            "progression": [
+                "Tourian Key"
+            ],
+            "expected_case_for_describer": "shuffled"
         }
     },
     "standard_pickups": {
         "Bombs": {
-            "pickup_category": "morph_ball",
-            "broad_category": "morph_ball_related",
+            "gui_category": "morph_ball",
+            "hint_features": [
+                "major",
+                "morph_ball",
+                "morph_ball_related"
+            ],
             "model_name": "spr_ITEM_Bomb",
             "offworld_models": {
                 "prime1": "Morph Ball Bomb",
@@ -93,36 +133,43 @@
                 "dread": "powerup_bomb",
                 "am2r": "sItemBomb"
             },
+            "preferred_location_category": "major",
             "progression": [
                 "Bombs"
             ],
             "expected_case_for_describer": "shuffled",
-            "preferred_location_category": "major",
             "original_locations": [
                 6
             ]
         },
         "Screw Attack": {
-            "pickup_category": "movement",
-            "broad_category": "movement",
+            "gui_category": "movement",
+            "hint_features": [
+                "major",
+                "movement"
+            ],
             "model_name": "spr_ITEM_Screw_Attack",
             "offworld_models": {
                 "prime2": "ScrewAttack",
                 "dread": "powerup_screwattack",
                 "am2r": "sItemScrewAttack"
             },
+            "preferred_location_category": "major",
             "progression": [
                 "Screw Attack"
             ],
             "expected_case_for_describer": "shuffled",
-            "preferred_location_category": "major",
             "original_locations": [
                 23
             ]
         },
         "Varia Suit": {
-            "pickup_category": "suit",
-            "broad_category": "life_support",
+            "gui_category": "suit",
+            "hint_features": [
+                "life_support",
+                "major",
+                "suit"
+            ],
             "model_name": "spr_ITEM_Varia",
             "offworld_models": {
                 "prime1": "Varia Suit",
@@ -130,18 +177,21 @@
                 "dread": "powerup_variasuit",
                 "am2r": "sItemVariaSuit"
             },
+            "preferred_location_category": "major",
             "progression": [
                 "Varia Suit"
             ],
             "expected_case_for_describer": "shuffled",
-            "preferred_location_category": "major",
             "original_locations": [
                 3
             ]
         },
         "Hi-Jump Boots": {
-            "pickup_category": "movement",
-            "broad_category": "movement",
+            "gui_category": "movement",
+            "hint_features": [
+                "major",
+                "movement"
+            ],
             "model_name": "spr_ITEM_Jump_Boots",
             "offworld_models": {
                 "prime1": "Space Jump Boots",
@@ -149,89 +199,109 @@
                 "dread": "powerup_doublejump",
                 "am2r": "sItemHijump"
             },
+            "preferred_location_category": "major",
             "progression": [
                 "Hi-Jump"
             ],
             "expected_case_for_describer": "shuffled",
-            "preferred_location_category": "major",
             "original_locations": [
                 16
             ]
         },
         "Ice Beam": {
-            "pickup_category": "beam",
-            "broad_category": "beam_related",
+            "gui_category": "beam",
+            "hint_features": [
+                "beam",
+                "beam_related",
+                "major"
+            ],
             "model_name": "spr_ITEM_Ice_Beam",
             "offworld_models": {
                 "prime1": "Ice Beam",
                 "am2r": "sItemIceBeam"
             },
+            "preferred_location_category": "major",
             "progression": [
                 "Ice Beam"
             ],
             "expected_case_for_describer": "shuffled",
             "custom_count_for_shuffled_case": 2,
-            "preferred_location_category": "major",
             "original_locations": [
                 8,
                 10
             ]
         },
         "Wave Beam": {
-            "pickup_category": "beam",
-            "broad_category": "beam_related",
+            "gui_category": "beam",
+            "hint_features": [
+                "beam",
+                "beam_related",
+                "major"
+            ],
             "model_name": "spr_ITEM_Wave_Beam",
             "offworld_models": {
                 "prime1": "Wave Beam",
                 "dread": "powerup_wavebeam",
                 "am2r": "sItemWaveBeam"
             },
+            "preferred_location_category": "major",
             "progression": [
                 "Wave Beam"
             ],
             "expected_case_for_describer": "shuffled",
-            "preferred_location_category": "major",
             "original_locations": [
                 24
             ]
         },
         "Long Beam": {
-            "pickup_category": "beam",
-            "broad_category": "beam_related",
+            "gui_category": "beam",
+            "hint_features": [
+                "beam",
+                "beam_related",
+                "major"
+            ],
             "model_name": "spr_ITEM_Long_Beam",
             "offworld_models": {
                 "am2r": "sItemLongBeam"
             },
+            "preferred_location_category": "major",
             "progression": [
                 "Long Beam"
             ],
             "expected_case_for_describer": "shuffled",
-            "preferred_location_category": "major",
             "original_locations": [
                 2
             ]
         },
         "Morph Ball": {
-            "pickup_category": "morph_ball",
-            "broad_category": "morph_ball_related",
+            "gui_category": "morph_ball",
+            "hint_features": [
+                "major",
+                "morph_ball",
+                "morph_ball_related"
+            ],
             "model_name": "spr_ITEM_Morph",
             "offworld_models": {
                 "prime1": "Morph Ball",
                 "dread": "powerup_morphball",
                 "am2r": "sItemMorphBall"
             },
+            "preferred_location_category": "major",
             "progression": [
                 "Morph Ball"
             ],
             "expected_case_for_describer": "shuffled",
-            "preferred_location_category": "major",
             "original_locations": [
                 0
             ]
         },
         "Missile Launcher": {
-            "pickup_category": "missile",
-            "broad_category": "missile_related",
+            "gui_category": "missile",
+            "hint_features": [
+                "major",
+                "missile",
+                "missile_related"
+            ],
             "model_name": "spr_ITEM_Missile",
             "offworld_models": {
                 "prime1": "Missile",
@@ -239,22 +309,26 @@
                 "dread": "powerup_icemissile",
                 "am2r": "sItemMissileLauncher"
             },
+            "preferred_location_category": "major",
             "progression": [
                 "Missile Launcher"
             ],
-            "expected_case_for_describer": "shuffled",
-            "preferred_location_category": "major",
             "ammo": [
                 "Missiles"
             ],
             "unlocks_ammo": true,
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 9
             ]
         },
         "Energy Tank": {
-            "pickup_category": "energy_tank",
-            "broad_category": "life_support",
+            "gui_category": "energy_tank",
+            "hint_features": [
+                "energy_tank",
+                "life_support",
+                "major"
+            ],
             "model_name": "spr_ITEM_Energy_Tank",
             "offworld_models": {
                 "prime1": "Energy Tank",
@@ -262,17 +336,22 @@
                 "dread": "item_energytank",
                 "am2r": "sItemEnergyTank"
             },
+            "preferred_location_category": "minor",
             "progression": [
                 "Energy Tank"
             ],
+            "show_in_credits_spoiler": false,
             "expected_case_for_describer": "shuffled",
-            "custom_count_for_shuffled_case": 8,
-            "preferred_location_category": "minor"
+            "custom_count_for_shuffled_case": 8
         }
     },
     "ammo_pickups": {
         "Missile Tank": {
-            "broad_category": "missile_related",
+            "gui_category": "missile",
+            "hint_features": [
+                "expansion",
+                "missile_related"
+            ],
             "model_name": "spr_ITEM_Missile",
             "offworld_models": {
                 "prime1": "Missile",
@@ -280,16 +359,20 @@
                 "dread": "item_missiletank",
                 "am2r": "sItemMissile"
             },
+            "preferred_location_category": "minor",
             "items": [
                 "Missiles"
             ],
-            "preferred_location_category": "minor",
             "unlocked_by": "Missile Launcher",
             "temporary": "Locked Missiles",
             "allows_negative": true
         },
         "Big Missile Tank": {
-            "broad_category": "missile_related",
+            "gui_category": "missile",
+            "hint_features": [
+                "expansion",
+                "missile_related"
+            ],
             "model_name": "spr_ITEM_Big_Missile",
             "offworld_models": {
                 "prime1": "Missile",
@@ -297,10 +380,10 @@
                 "dread": "item_missiletankplus",
                 "am2r": "sItemSuperMissile"
             },
+            "preferred_location_category": "major",
             "items": [
                 "Missiles"
             ],
-            "preferred_location_category": "major",
             "unlocked_by": "Missile Launcher",
             "temporary": "Locked Missiles",
             "allows_negative": true

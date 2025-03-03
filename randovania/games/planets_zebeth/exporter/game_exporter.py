@@ -1,12 +1,19 @@
 from __future__ import annotations
 
 import dataclasses
+import multiprocessing
+from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
+import randovania
+from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
+from randovania.games.common.dotnet import is_dotnet_set_up
 
 if TYPE_CHECKING:
+    from multiprocessing.connection import Connection
+
     from randovania.lib import status_update_lib
 
 
@@ -16,7 +23,7 @@ class PlanetsZebethGameExportParams(GameExportParams):
     output_path: Path
 
 
-class PlanetsZebethGameExporter(GameExporter):
+class PlanetsZebethGameExporter(GameExporter[PlanetsZebethGameExportParams]):
     _busy: bool = False
 
     @property
@@ -33,7 +40,7 @@ class PlanetsZebethGameExporter(GameExporter):
         """
         return False
 
-    def export_params_type(self) -> type[GameExportParams]:
+    def export_params_type(self) -> type[PlanetsZebethGameExportParams]:
         """
         Returns the type of the GameExportParams expected by this exporter.
         """
@@ -42,8 +49,51 @@ class PlanetsZebethGameExporter(GameExporter):
     def _do_export_game(
         self,
         patch_data: dict,
-        export_params: GameExportParams,
+        export_params: PlanetsZebethGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
-        assert isinstance(export_params, PlanetsZebethGameExportParams)
-        raise RuntimeError("Needs to be implemented")
+        # Check if dotnet is available
+        # Raises error in case it's not set up
+        is_dotnet_set_up()
+
+        receiving_pipe, output_pipe = multiprocessing.Pipe(True)
+
+        def on_done(_: Any) -> None:
+            output_pipe.send(None)
+
+        with ProcessPoolExecutor(max_workers=1) as executor:
+            future = executor.submit(_run_patcher, patch_data, export_params, output_pipe)
+            future.add_done_callback(on_done)
+            while not future.done():
+                result = receiving_pipe.recv()
+                if result is None:
+                    break
+                message, progress = result
+                if message is not None:
+                    try:
+                        progress_update(message, progress)
+                    except Exception:
+                        # This should only get triggered when user wants to cancel exporting.
+                        # Cancelling is currently broken and thus disabled. If it gets fixed, then this should be
+                        # revisited and a test case should be written for this.
+                        receiving_pipe.send("close")
+                        raise
+            future.result()
+
+
+# TODO: implement some json validation in the patcher and call it here
+@monitoring.trace_function
+def _run_patcher(patch_data: dict, export_params: PlanetsZebethGameExportParams, output_pipe: Connection) -> None:
+    # Delay this, so that we only load CLR/dotnet when exporting
+    import planets_yapr  # type: ignore[import-untyped]
+
+    def status_update(message: str, progress: float) -> None:
+        output_pipe.send((message, progress))
+        if output_pipe.poll():
+            raise RuntimeError(output_pipe.recv())
+
+    with planets_yapr.load_wrapper() as wrapper:
+        patch_data["configuration_identifier"] = {}
+        patch_data["configuration_identifier"]["randovania_version"] = f"Randovania {randovania.VERSION}"
+        patch_data["configuration_identifier"]["patcher_version"] = f"YAPR {wrapper.get_csharp_version()}"
+        wrapper.patch_game(export_params.input_path, export_params.output_path, patch_data, status_update)

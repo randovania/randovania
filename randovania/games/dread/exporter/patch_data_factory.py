@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 from copy import deepcopy
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
-from randovania.exporter.hints.hint_exporter import HintExporter
+from randovania.exporter.hints.joke_hints import GENERIC_JOKE_HINTS
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.dock_node import DockNode
@@ -105,6 +105,11 @@ class DreadPatchDataFactory(PatchDataFactory):
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_DREAD
+
+    @override
+    @classmethod
+    def hint_namer_type(cls) -> type[DreadHintNamer]:
+        return DreadHintNamer
 
     def _calculate_starting_inventory(self, resources: ResourceCollection):
         result = {}
@@ -259,8 +264,12 @@ class DreadPatchDataFactory(PatchDataFactory):
         return details
 
     def _encode_hints(self) -> list[dict]:
-        namer = DreadHintNamer(self.description.all_patches, self.players_config)
-        exporter = HintExporter(namer, self.rng, ["A joke hint."])
+        exporter = self.get_hint_exporter(
+            self.description.all_patches,
+            self.players_config,
+            self.rng,
+            GENERIC_JOKE_HINTS,
+        )
 
         return [
             {
@@ -268,8 +277,6 @@ class DreadPatchDataFactory(PatchDataFactory):
                 "hint_id": hint_node.extra["hint_id"],
                 "text": exporter.create_message_for_hint(
                     self.patches.hints[hint_node.identifier],
-                    self.description.all_patches,
-                    self.players_config,
                     True,
                 ),
             }
@@ -486,6 +493,18 @@ class DreadPatchDataFactory(PatchDataFactory):
             }
         ]
 
+    def _light_patches(self):
+        config = self.configuration.disabled_lights.as_json
+        patches = []
+
+        for region_name, is_disabled in config.items():
+            if is_disabled:
+                scenario_id = self.game.region_list.region_with_name(region_name.capitalize()).extra["scenario_id"]
+
+                patches.append({"scenario": scenario_id, "actor_layer": "rLightsLayer", "method": "all"})
+
+        return patches
+
     def create_memo_data(self) -> dict:
         """Used to generate pickup collection messages."""
         tank = self.configuration.energy_per_tank
@@ -564,6 +583,9 @@ class DreadPatchDataFactory(PatchDataFactory):
             "tile_group_patches": self._tilegroup_patches(),
             "new_spawn_points": list(self.new_spawn_points.values()),
             "objective": self._objective_patches(),
+            "mass_delete_actors": {
+                "to_remove": self._light_patches(),
+            },
             "layout_uuid": str(self.players_config.get_own_uuid()),
         }
 

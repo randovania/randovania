@@ -194,7 +194,7 @@ def find_region_errors(game: GameDescription, region: Region) -> Iterator[str]:
 
 
 def find_invalid_strongly_connected_components(game: GameDescription) -> Iterator[str]:
-    import networkx  # type: ignore
+    import networkx
 
     graph = networkx.DiGraph()
 
@@ -281,9 +281,7 @@ def find_duplicated_pickup_index(region_list: RegionList) -> Iterator[str]:
         if isinstance(node, PickupNode):
             name = region_list.node_name(node, with_region=True, distinguish_dark_aether=True)
             if node.pickup_index in known_indices:
-                yield (
-                    f"{name} has {node.pickup_index}, " f"but it was already used in {known_indices[node.pickup_index]}"
-                )
+                yield (f"{name} has {node.pickup_index}, but it was already used in {known_indices[node.pickup_index]}")
             else:
                 known_indices[node.pickup_index] = name
 
@@ -386,6 +384,26 @@ def check_for_resources_to_use_together(
             continue
 
 
+def find_incompatible_video_links(game: GameDescription) -> Iterator[str]:
+    for region in game.region_list.regions:
+        for area in region.areas:
+            for node in area.nodes:
+                for target, requirement in area.connections.get(node, {}).items():
+                    yield from get_videos(requirement, node, target)
+
+
+def get_videos(req: Requirement, node: Node, target: Node) -> Iterator[str]:
+    if isinstance(req, RequirementArrayBase):
+        if req.comment is not None:
+            for word in req.comment.split(" "):
+                if "youtu" not in word:
+                    continue
+                if "&list" in word:
+                    yield f"YouTube Playlist linked in {node.identifier.as_string} -> {target.name}."
+        for i in req.items:
+            yield from get_videos(i, node, target)
+
+
 def find_database_errors(game: GameDescription) -> list[str]:
     result = []
 
@@ -399,5 +417,6 @@ def find_database_errors(game: GameDescription) -> list[str]:
     result.extend(find_recursive_templates(game))
     result.extend(find_duplicated_pickup_index(game.region_list))
     result.extend(game.game.data.logic_db_integrity(game))
+    result.extend(find_incompatible_video_links(game))
 
     return result

@@ -8,6 +8,7 @@ from PySide6 import QtWidgets
 from PySide6.QtWidgets import QComboBox
 
 from randovania.games.prime2.gui.generated.preset_echoes_beam_configuration_ui import Ui_PresetEchoesBeamConfiguration
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
@@ -26,7 +27,7 @@ _BEAMS = {
 }
 
 
-class PresetEchoesBeamConfiguration(PresetTab, Ui_PresetEchoesBeamConfiguration):
+class PresetEchoesBeamConfiguration(PresetTab[EchoesConfiguration], Ui_PresetEchoesBeamConfiguration):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)

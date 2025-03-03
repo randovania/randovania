@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import dataclasses
 from typing import TYPE_CHECKING
 
-from randovania.games.samus_returns.generator.pool_creator import METROID_DNA_CATEGORY
 from randovania.games.samus_returns.layout import MSRConfiguration
 from randovania.games.samus_returns.layout.msr_configuration import FinalBossConfiguration
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
@@ -15,17 +15,16 @@ if TYPE_CHECKING:
     from randovania.game_description.db.pickup_node import PickupNode
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
-    from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.damage_state import DamageState
 
 
-def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:
-    assert isinstance(config, MSRConfiguration)
+def is_dna_node(node: PickupNode, config: MSRConfiguration) -> bool:
     artifact_config = config.artifacts
-    _stronger_metroid_indices = [177, 178, 181, 185, 186, 187, 188, 192, 193, 199, 200, 202, 205, 209]
+    _stronger_metroid_indices = [177, 178, 181, 185, 186, 187, 188, 192, 193, 198, 199, 200, 202, 205, 209]
     _boss_indices = [37, 99, 139, 171, 211]
     _boss_mapping = {
         FinalBossConfiguration.ARACHNUS: 0,
@@ -54,9 +53,8 @@ def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:
     return False
 
 
-class MSRBootstrap(Bootstrap):
-    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
-        assert isinstance(configuration, MSRConfiguration)
+class MSRBootstrap(Bootstrap[MSRConfiguration]):
+    def create_damage_state(self, game: GameDescription, configuration: MSRConfiguration) -> DamageState:
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
@@ -65,10 +63,9 @@ class MSRBootstrap(Bootstrap):
         )
 
     def _get_enabled_misc_resources(
-        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+        self, configuration: MSRConfiguration, resource_database: ResourceDatabase
     ) -> set[str]:
         enabled_resources = set()
-        assert isinstance(configuration, MSRConfiguration)
 
         logical_patches = {
             "allow_highly_dangerous_logic": "HighDanger",
@@ -105,11 +102,9 @@ class MSRBootstrap(Bootstrap):
 
     def event_resources_for_configuration(
         self,
-        configuration: BaseConfiguration,
+        configuration: MSRConfiguration,
         resource_database: ResourceDatabase,
     ) -> ResourceGain:
-        assert isinstance(configuration, MSRConfiguration)
-
         if configuration.elevator_grapple_blocks:
             for name in [
                 "Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Pull Right",
@@ -135,14 +130,28 @@ class MSRBootstrap(Bootstrap):
             ]:
                 yield resource_database.get_event(name), 1
 
-    def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
-        assert isinstance(patches.configuration, MSRConfiguration)
-        config = patches.configuration.artifacts
+    def _damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection) -> float:
+        num_suits = sum(
+            (1 if current_resources[db.get_item_by_name(suit)] else 0) for suit in ("Varia Suit", "Gravity Suit")
+        )
+        dr = 1.0
+        if num_suits == 1:
+            dr = 0.50
+        elif num_suits >= 2:
+            dr = 0.25
 
-        if config.prefer_anywhere:
-            return super().assign_pool_results(rng, patches, pool_results)
+        return dr
 
-        locations = self.all_preplaced_item_locations(patches.game, patches.configuration, is_dna_node)
-        self.pre_place_items(rng, locations, pool_results, METROID_DNA_CATEGORY)
+    def patch_resource_database(self, db: ResourceDatabase, configuration: MSRConfiguration) -> ResourceDatabase:
+        return dataclasses.replace(db, base_damage_reduction=self._damage_reduction)
 
-        return super().assign_pool_results(rng, patches, pool_results)
+    def assign_pool_results(
+        self, rng: Random, configuration: MSRConfiguration, patches: GamePatches, pool_results: PoolResults
+    ) -> GamePatches:
+        if configuration.artifacts.prefer_anywhere:
+            return super().assign_pool_results(rng, configuration, patches, pool_results)
+
+        locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_dna_node)
+        self.pre_place_pickups(rng, locations, pool_results, "dna", patches.game.game)
+
+        return super().assign_pool_results(rng, configuration, patches, pool_results)

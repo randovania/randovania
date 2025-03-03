@@ -32,7 +32,7 @@ def distances_to_node(
     :param patches:
     :return: Dict keyed by area to shortest distance to starting_node.
     """
-    import networkx  # type: ignore
+    import networkx
 
     g = networkx.DiGraph()
 

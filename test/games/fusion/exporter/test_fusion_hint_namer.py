@@ -6,7 +6,12 @@ from randovania.exporter.hints.determiner import Determiner
 from randovania.exporter.hints.hint_namer import PickupLocation
 from randovania.exporter.hints.pickup_hint import PickupHint
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.hint import Hint, HintItemPrecision, HintLocationPrecision, HintType, PrecisionPair
+from randovania.game_description.hint import (
+    HintItemPrecision,
+    HintLocationPrecision,
+    LocationHint,
+    PrecisionPair,
+)
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.fusion.exporter.hint_namer import FusionHintNamer
@@ -85,8 +90,7 @@ def test_format_location_hint(fusion_game_patches, default_fusion_configuration,
     hint = namer.format_location_hint(
         RandovaniaGame.FUSION,
         PickupHint(Determiner("item", True), "Player1", "Screw Attack"),
-        Hint(
-            HintType.LOCATION,
+        LocationHint(
             PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, True),
             PickupIndex(116),
         ),
@@ -144,7 +148,7 @@ def test_format_player(fusion_game_patches, default_fusion_configuration, player
     expected = f"[COLOR=1]{player}[/COLOR]" if color else f"{player}"
     players = PlayersConfiguration(0, {0: player})
     namer = FusionHintNamer({0: fusion_game_patches}, players)
-    hint = namer.format_player(player, color)
+    hint = namer.format_world(player, color)
     assert hint == expected
 
 

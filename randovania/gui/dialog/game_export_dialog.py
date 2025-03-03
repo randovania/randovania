@@ -2,12 +2,13 @@ from __future__ import annotations
 
 import os.path
 from pathlib import Path
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QMessageBox
 
 from randovania.gui.lib import async_dialog, common_qt_lib
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.layout_description import LayoutDescription
 
 if TYPE_CHECKING:
@@ -18,25 +19,23 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options, PerGameOptions
     from randovania.patching.patchers.exceptions import UnableToExportError
 
-T = TypeVar("T")
 
-
-def _try_get_field(obj, field_name: str, cls: type[T]) -> T | None:
+def _try_get_field[T](obj, field_name: str, cls: type[T]) -> T | None:
     return getattr(obj, field_name, None)
 
 
-class GameExportDialog(QtWidgets.QDialog):
+class GameExportDialog[Configuration: BaseConfiguration](QtWidgets.QDialog):
     _options: Options
-    _patch_data: dict
     _word_hash: str
     _has_spoiler: bool
     _games: list[RandovaniaGame]
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
+    def __init__(
+        self, options: Options, configuration: Configuration, word_hash: str, spoiler: bool, games: list[RandovaniaGame]
+    ):
         super().__init__()
         common_qt_lib.set_default_window_icon(self)
         self._options = options
-        self._patch_data = patch_data
         self._word_hash = word_hash
         self._has_spoiler = spoiler
         self._games = games
@@ -73,8 +72,8 @@ class GameExportDialog(QtWidgets.QDialog):
             if self._has_spoiler:
                 options.auto_save_spoiler = self.auto_save_spoiler
 
-            per_game = options.options_for_game(self.game_enum())
-            options.set_options_for_game(self.game_enum(), self.update_per_game_options(per_game))
+            per_game = options.generic_per_game_options(self.game_enum())
+            options.set_per_game_options(self.update_per_game_options(per_game))
 
     def get_game_export_params(self) -> GameExportParams:
         """Get the export params defined by the user. It'll be sent over to the `GameExporter`."""

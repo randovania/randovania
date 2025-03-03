@@ -1,41 +1,29 @@
 from __future__ import annotations
 
 from random import Random
-from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.hint_node import HintNode, HintNodeKind
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.hint import (
-    Hint,
     HintItemPrecision,
     HintLocationPrecision,
-    HintRelativeAreaName,
-    HintType,
+    LocationHint,
     PrecisionPair,
-    RelativeData,
-    RelativeDataArea,
-    RelativeDataItem,
 )
-from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
 from randovania.generator.filler import runner
+from randovania.generator.filler.player_state import HintState
 from randovania.generator.generator import create_player_pool
-
-if TYPE_CHECKING:
-    from randovania.game_description.pickup.pickup_category import PickupCategory
 
 
 async def test_run_filler(
-    echoes_game_description,
-    echoes_game_patches,
-    default_echoes_configuration,
+    blank_game_description,
+    blank_game_patches,
+    default_blank_configuration,
     mocker,
 ):
     # Setup
@@ -43,21 +31,26 @@ async def test_run_filler(
     status_update = MagicMock()
 
     hint_identifiers = [
-        node.identifier for node in echoes_game_description.region_list.iterate_nodes() if isinstance(node, HintNode)
+        node.identifier for node in blank_game_description.region_list.iterate_nodes() if isinstance(node, HintNode)
     ]
 
     player_pools = [
-        await create_player_pool(rng, default_echoes_configuration, 0, 1, "World 1", MagicMock()),
+        await create_player_pool(rng, default_blank_configuration, 0, 1, "World 1", MagicMock()),
     ]
     initial_pickup_count = len(player_pools[0].pickups)
 
-    patches = echoes_game_patches.assign_hint(hint_identifiers[0], Hint(HintType.LOCATION, None, PickupIndex(0)))
+    patches = blank_game_patches.assign_hint(hint_identifiers[0], LocationHint.unassigned(PickupIndex(0)))
     action_log = (MagicMock(), MagicMock())
     player_state = MagicMock()
     player_state.index = 0
     player_state.game = player_pools[0].game
     player_state.pickups_left = list(player_pools[0].pickups)
-    player_state.scan_asset_initial_pickups = {}
+
+    filler_config = MagicMock()
+    filler_config.minimum_available_locations_for_hint_placement = 0
+    player_state.hint_state = HintState(filler_config, blank_game_description)
+    empty_set: frozenset[PickupIndex] = frozenset()
+    player_state.hint_state.hint_initial_pickups = {identifier: empty_set for identifier in hint_identifiers}
 
     mocker.patch(
         "randovania.generator.filler.runner.retcon_playthrough_filler",
@@ -75,150 +68,93 @@ async def test_run_filler(
 
     # Assert
     assert len(result_patches.hints) == len(hint_identifiers)
-    assert [hint for hint in result_patches.hints.values() if hint.precision is None] == []
+    assert [
+        hint for hint in result_patches.hints.values() if isinstance(hint, LocationHint) and hint.precision is None
+    ] == []
     assert initial_pickup_count == len(remaining_items) + len(result_patches.pickup_assignment.values())
 
 
-def test_fill_unassigned_hints_empty_assignment(echoes_game_description, echoes_game_patches):
+async def test_fill_unassigned_hints_empty_assignment(echoes_game_description, echoes_game_patches):
     # Setup
     rng = Random(5000)
-    expected_hints = sum(
-        1 for node in echoes_game_description.region_list.iterate_nodes() if isinstance(node, HintNode)
-    )
+    hint_nodes = [
+        node
+        for node in echoes_game_description.region_list.iterate_nodes()
+        if isinstance(node, HintNode) and node.kind == HintNodeKind.GENERIC
+    ]
     hint_distributor = echoes_game_description.game.generator.hint_distributor
+
+    filler_config = MagicMock()
+    filler_config.minimum_available_locations_for_hint_placement = 0
+    hint_state = HintState(filler_config, echoes_game_description)
+
+    player_pools = [
+        await create_player_pool(rng, echoes_game_patches.configuration, 0, 1, "World 1", MagicMock()),
+    ]
 
     # Run
     result = hint_distributor.fill_unassigned_hints(
         echoes_game_patches,
         echoes_game_description.region_list,
         rng,
-        {},
+        hint_state,
+        player_pools,
     )
 
     # Assert
-    assert len(result.hints) == expected_hints
+    assert len(result.hints) == len(hint_nodes)
 
 
-def test_add_hints_precision(empty_patches):
-    failed_relative_provider = MagicMock(return_value=None)
-    relative_hint_provider = MagicMock()
-    player_state = MagicMock()
+@pytest.mark.parametrize(
+    "pickups_to_assign",
+    [
+        [1, 2, 3],
+        [1, 3],  # test case for a Nothing being hinted
+    ],
+)
+def test_add_hints_precision(empty_patches, blank_pickup, pickups_to_assign):
+    player_pools = [MagicMock()]
     rng = MagicMock()
+    rng.gauss.return_value = 0.0
+    rng.random.return_value = 0.0
+
     hints = [
-        Hint(
-            HintType.LOCATION,
+        LocationHint(
             PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, include_owner=False),
             PickupIndex(1),
         ),
-        Hint(HintType.LOCATION, None, PickupIndex(2)),
-        Hint(HintType.LOCATION, None, PickupIndex(3)),
+        LocationHint.unassigned(PickupIndex(2)),
     ]
+
+    assignment = [(PickupIndex(i), blank_pickup) for i in pickups_to_assign]
+
     nc = NodeIdentifier.create
+    identifiers = [
+        nc("Intro", "Hint Room", "Hint no Translator"),
+        nc("Intro", "Hint Room", "Hint with Translator"),
+    ]
 
     initial_patches = empty_patches
-    for i, hint in enumerate(hints):
-        initial_patches = initial_patches.assign_hint(nc("w", "a", f"{i}"), hint)
+    for identifier, hint in zip(identifiers, hints, strict=True):
+        initial_patches = initial_patches.assign_hint(identifier, hint)
+
+    initial_patches = initial_patches.assign_own_pickups(assignment)
 
     hint_distributor = EchoesHintDistributor()
-    hint_distributor._get_relative_hint_providers = MagicMock(  # type: ignore[method-assign]
-        return_value=[failed_relative_provider, relative_hint_provider]
-    )
+
+    expected_feature = empty_patches.game.hint_feature_database["hint1"]
 
     # Run
-    result = hint_distributor.add_hints_precision(player_state, initial_patches, rng)
+    result = hint_distributor.add_hints_precision(initial_patches, rng, player_pools)
 
     # Assert
-    failed_relative_provider.assert_called_once_with(player_state, initial_patches, rng, PickupIndex(2))
-    relative_hint_provider.assert_called_once_with(player_state, initial_patches, rng, PickupIndex(3))
     assert result.hints == {
-        nc("w", "a", "0"): Hint(
-            HintType.LOCATION,
+        nc("Intro", "Hint Room", "Hint no Translator"): LocationHint(
             PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, include_owner=False),
             PickupIndex(1),
         ),
-        nc("w", "a", "1"): Hint(
-            HintType.LOCATION,
-            PrecisionPair(HintLocationPrecision.REGION_ONLY, HintItemPrecision.PRECISE_CATEGORY, include_owner=True),
+        nc("Intro", "Hint Room", "Hint with Translator"): LocationHint(
+            PrecisionPair(expected_feature, HintItemPrecision.DETAILED, include_owner=True),
             PickupIndex(2),
         ),
-        nc("w", "a", "2"): relative_hint_provider.return_value,
     }
-
-
-def _make_pickup(pickup_category: PickupCategory, generator_params: PickupGeneratorParams):
-    return PickupEntry(
-        name="Pickup",
-        model=PickupModel(
-            game=RandovaniaGame.METROID_PRIME_ECHOES,
-            name="EnergyTransferModule",
-        ),
-        pickup_category=pickup_category,
-        broad_category=pickup_category,
-        progression=(),
-        generator_params=generator_params,
-    )
-
-
-@pytest.mark.parametrize("precise_distance", [False, True])
-@pytest.mark.parametrize(
-    "location_precision", [HintLocationPrecision.RELATIVE_TO_AREA, HintLocationPrecision.RELATIVE_TO_INDEX]
-)
-def test_add_relative_hint(
-    echoes_game_description,
-    echoes_game_patches,
-    precise_distance,
-    location_precision,
-    echoes_pickup_database,
-    default_generator_params,
-):
-    # Setup
-    rng = Random(5000)
-    target_precision = HintItemPrecision.PRECISE_CATEGORY
-    patches = echoes_game_patches.assign_new_pickups(
-        [
-            (
-                PickupIndex(8),
-                PickupTarget(
-                    _make_pickup(echoes_pickup_database.pickup_categories["movement"], default_generator_params), 0
-                ),
-            ),
-        ]
-    )
-    hint_distributor = EchoesHintDistributor()
-    precision: HintItemPrecision | HintRelativeAreaName
-    data: RelativeData
-
-    if location_precision == HintLocationPrecision.RELATIVE_TO_AREA:
-        max_distance = 8
-        precision = HintRelativeAreaName.NAME
-        data = RelativeDataArea(
-            None if precise_distance else 3,
-            # Was Industrial Site
-            AreaIdentifier("Temple Grounds", "Hive Chamber A"),
-            precision,
-        )
-    else:
-        max_distance = 20
-        precision = HintItemPrecision.GENERAL_CATEGORY
-        data = RelativeDataItem(
-            None if precise_distance else 11,
-            PickupIndex(8),
-            precision,
-        )
-
-    # Run
-    result = hint_distributor.add_relative_hint(
-        echoes_game_description.region_list,
-        patches,
-        rng,
-        PickupIndex(1),
-        target_precision,
-        location_precision,
-        precise_distance,
-        precision,
-        max_distance=max_distance,
-    )
-
-    # Assert
-    pair = PrecisionPair(location_precision, target_precision, include_owner=False, relative=data)
-    assert result == Hint(HintType.LOCATION, pair, PickupIndex(1))

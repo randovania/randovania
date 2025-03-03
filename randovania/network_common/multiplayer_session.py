@@ -15,8 +15,8 @@ from randovania.network_common.game_connection_status import GameConnectionStatu
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
 if TYPE_CHECKING:
-    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.network_common.remote_inventory import RemoteInventory
+    from randovania.network_common.remote_pickup import RemotePickup
 
 MAX_SESSION_NAME_LENGTH = 50
 MAX_WORLD_NAME_LENGTH = 30
@@ -75,7 +75,7 @@ class MultiplayerWorld(JsonDataclass):
 class MultiplayerWorldPickups:
     world_id: uuid.UUID
     game: RandovaniaGame
-    pickups: tuple[tuple[str, PickupEntry], ...]
+    pickups: tuple[RemotePickup, ...]
 
 
 @dataclasses.dataclass(frozen=True)

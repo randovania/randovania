@@ -6,11 +6,10 @@ import typing
 import uuid
 from typing import TYPE_CHECKING
 
-from qasync import asyncSlot  # type: ignore
+from qasync import asyncSlot
 
 from randovania.exporter.pickup_exporter import _conditional_resources_for_pickup
 from randovania.game_connection.connector.remote_connector import (
-    PickupEntryWithOwner,
     PlayerLocationEvent,
     RemoteConnector,
 )
@@ -24,6 +23,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region import Region
     from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupEntry
     from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.network_common.remote_pickup import RemotePickup
 
 
 class MercuryConnector(RemoteConnector):
@@ -63,7 +63,7 @@ class MercuryConnector(RemoteConnector):
 
     # reset all values on init, disconnect or after switching back to main menu
     def reset_values(self) -> None:
-        self.remote_pickups: tuple[PickupEntryWithOwner, ...] = ()
+        self.remote_pickups: tuple[RemotePickup, ...] = ()
         self.last_inventory = Inventory.empty()
         self.in_cooldown = True
         self.received_pickups: int | None = None
@@ -101,7 +101,8 @@ class MercuryConnector(RemoteConnector):
         try:
             inventory_json = json.loads(json_string)
             self.inventory_index = inventory_json["index"]
-            inventory_ints: list[int] = inventory_json["inventory"]
+            # just round the values to ints because aeion can be a float in MSR
+            inventory_ints: list[int] = [round(inv_float) for inv_float in inventory_json["inventory"]]
         except Exception as e:
             self.logger.error("Unknown response: %s (got %s)", json_string, e)
             return
@@ -122,7 +123,7 @@ class MercuryConnector(RemoteConnector):
         self.received_pickups = new_recv_as_int
         await self.receive_remote_pickups()
 
-    async def set_remote_pickups(self, remote_pickups: tuple[PickupEntryWithOwner, ...]) -> None:
+    async def set_remote_pickups(self, remote_pickups: tuple[RemotePickup, ...]) -> None:
         self.remote_pickups = remote_pickups
         await self.receive_remote_pickups()
 
@@ -141,14 +142,21 @@ class MercuryConnector(RemoteConnector):
 
         self.in_cooldown = True
 
-        provider_name, pickup = remote_pickups[num_pickups]
+        provider_name, pickup, coop_location = remote_pickups[num_pickups]
         item_name, items_list = self.resources_to_give_for_pickup(self.game.resource_database, pickup, inventory)
+
+        scenario_id = ""
+        if coop_location is not None:
+            location_node = self.game.region_list.node_from_pickup_index(coop_location)
+            scenario_id = self.game.region_list.nodes_to_region(location_node).extra["scenario_id"]
 
         self.logger.debug("Resource changes for %s from %s", pickup.name, provider_name)
 
-        await self.game_specific_execute(item_name, items_list, provider_name)
+        await self.game_specific_execute(item_name, items_list, provider_name, scenario_id)
 
-    async def game_specific_execute(self, item_name: str, items_list: list, provider_name: str) -> None:
+    async def game_specific_execute(
+        self, item_name: str, items_list: list, provider_name: str, scenario_id: str
+    ) -> None:
         raise NotImplementedError
 
     async def display_arbitrary_message(self, message: str) -> None:

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from functools import partial
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from PySide6 import QtCore, QtGui, QtWidgets
 
@@ -17,13 +17,10 @@ if TYPE_CHECKING:
     from randovania.games.prime2.layout.echoes_cosmetic_suits import EchoesSuitPreferences, SuitColor
 
 
-class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPatchesDialog):
-    _cosmetic_patches: EchoesCosmeticPatches
-
+class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog[EchoesCosmeticPatches], Ui_EchoesCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: EchoesCosmeticPatches):
-        super().__init__(parent)
+        super().__init__(parent, current)
         self.setupUi(self)
-        self._cosmetic_patches = current
 
         self.options_foldable.set_content_layout(self.options_foldable_layout)
         self.suits_foldable.set_content_layout(self.suits_foldable_layout)
@@ -61,6 +58,11 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
         self.connect_signals()
         self.on_new_cosmetic_patches(current)
         self._update_color_squares()
+
+    @classmethod
+    @override
+    def cosmetic_patches_type(cls) -> type[EchoesCosmeticPatches]:
+        return EchoesCosmeticPatches
 
     def connect_signals(self) -> None:
         super().connect_signals()

@@ -57,7 +57,7 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
             "Default", self._starting_location_on_select_default
         )
 
-    def _quick_fill_button(self, text: str, connection: Callable[[PresetStartingArea], None]) -> QtWidgets.QPushButton:
+    def _quick_fill_button(self, text: str, connection: Callable[[], None]) -> QtWidgets.QPushButton:
         self._num_quick_fill_buttons += 1
         button = QtWidgets.QPushButton(text)
         self.starting_area_quick_fill_layout.addWidget(button)

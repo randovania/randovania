@@ -49,7 +49,7 @@ class PresetDreadEnergy(PresetTab, Ui_PresetDreadEnergy):
     def header_name(cls) -> str | None:
         return None
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration
         assert isinstance(config, DreadConfiguration)
         self.energy_tank_capacity_spin_box.setEnabled(config.immediate_energy_parts)
@@ -64,14 +64,16 @@ class PresetDreadEnergy(PresetTab, Ui_PresetDreadEnergy):
             if constant_enabled:
                 spin.setValue(config_value)
 
-    def _persist_tank_capacity(self):
+    def _persist_tank_capacity(self) -> None:
         with self._editor as editor:
             editor.set_configuration_field("energy_per_tank", int(self.energy_tank_capacity_spin_box.value()))
 
-    def _persist_immediate_energy_parts(self, checked: bool):
+    def _persist_immediate_energy_parts(self, checked: bool) -> None:
         with self._editor as editor:
             editor.set_configuration_field("immediate_energy_parts", checked)
 
-    def _persist_constant_environment_damage_enabled(self, field_name: str, spin: QtWidgets.QSpinBox, checked: bool):
+    def _persist_constant_environment_damage_enabled(
+        self, field_name: str, spin: QtWidgets.QSpinBox, checked: bool
+    ) -> None:
         with self._editor as editor:
             editor.set_configuration_field(field_name, spin.value() if checked else None)

@@ -12,8 +12,8 @@ from randovania.games.prime1.patcher import prime_items
 
 if TYPE_CHECKING:
     from open_prime_rando.dol_patching.prime1.dol_patches import Prime1DolVersion
-    from ppc_asm import assembler
 
+    from randovania.game_connection.connector.prime_remote_connector import PatchInstructions, PickupPatches
     from randovania.game_description.db.region import Region
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.inventory import Inventory
@@ -48,7 +48,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
     def __init__(self, version: Prime1DolVersion, executor: MemoryOperationExecutor):
         super().__init__(version, executor)
 
-    def _asset_id_format(self):
+    def _asset_id_format(self) -> str:
         return ">I"
 
     @property
@@ -83,15 +83,15 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         self,
         items: list[ItemResourceInfo],
     ) -> list[MemoryOperation]:
-        player_state_pointer = int.from_bytes(
-            await self.executor.perform_single_memory_operation(
-                MemoryOperation(
-                    address=self.version.cstate_manager_global + 0x8B8,
-                    read_byte_count=4,
-                )
-            ),
-            "big",
+        op = await self.executor.perform_single_memory_operation(
+            MemoryOperation(
+                address=self.version.cstate_manager_global + 0x8B8,
+                read_byte_count=4,
+            )
         )
+        assert op is not None
+        player_state_pointer = int.from_bytes(op, "big")
+
         return [
             MemoryOperation(
                 address=player_state_pointer,
@@ -101,14 +101,12 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
             for item in items
         ]
 
-    async def _patches_for_pickup(
-        self, provider_name: str, pickup: PickupEntry, inventory: Inventory
-    ) -> tuple[list[list[assembler.BaseInstruction]], str]:
+    async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory) -> PickupPatches:
         item_name, resources_to_give = self._resources_to_give_for_pickup(pickup, inventory)
 
         self.logger.debug(f"Resource changes for {pickup.name} from {provider_name}: {resources_to_give}")
 
-        patches: list[list[assembler.BaseInstruction]] = []
+        patches: list[PatchInstructions] = []
 
         for item, delta in resources_to_give.as_resource_gain():
             if delta == 0:

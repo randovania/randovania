@@ -14,6 +14,7 @@ from randovania.games.dread.gui.preset_settings.dread_generation_tab import Pres
 from randovania.games.prime1.gui.preset_settings.prime_generation_tab import PresetPrimeGeneration
 from randovania.gui.preset_settings.generation_tab import PresetGeneration
 from randovania.interface_common.preset_editor import PresetEditor
+from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 
 
 @pytest.mark.parametrize(
@@ -57,4 +58,20 @@ def test_persist_local_first_progression(skip_qtbot, preset_manager):
     # Assert
     editor.__enter__.return_value.set_configuration_field.assert_called_once_with(
         "first_progression_must_be_local", True
+    )
+
+
+def test_persist_logical_pickup_placement(skip_qtbot, preset_manager):
+    game = RandovaniaGame.BLANK
+
+    editor = MagicMock()
+    window = PresetGeneration(editor, default_database.game_description_for(game), MagicMock())
+    skip_qtbot.addWidget(window)
+
+    # Run
+    skip_qtbot.keyClicks(window.logical_pickup_placement_combo, "Major pickups")
+
+    # Assert
+    editor.__enter__.return_value.set_configuration_field.assert_called_once_with(
+        "logical_pickup_placement", LogicalPickupPlacementConfiguration.MAJORS
     )

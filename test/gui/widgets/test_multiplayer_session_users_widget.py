@@ -258,4 +258,4 @@ def test_widgets_in_coop_session(skip_qtbot, preset_manager):
     assert all_worlds.text(0) == "All Worlds"
     assert all_worlds.childCount() == 3
     for i in range(all_worlds.childCount()):
-        assert all_worlds.child(i).text(0) == f"W{i+1}"
+        assert all_worlds.child(i).text(0) == f"W{i + 1}"

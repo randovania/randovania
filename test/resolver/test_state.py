@@ -51,7 +51,7 @@ def test_add_pickup_to_state(state_game_data, empty_patches, generic_pickup_cate
         "B",
         2,
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=(
             (resource_a, 1),
             (resource_b, 1),
@@ -87,7 +87,7 @@ def test_assign_pickup_to_starting_items(
         "A",
         2,
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=((resource_a, 5),),
         generator_params=default_generator_params,
         extra_resources=(),

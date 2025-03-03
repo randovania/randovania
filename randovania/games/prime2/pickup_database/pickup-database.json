@@ -1,69 +1,61 @@
 {
-    "schema_version": 9,
+    "schema_version": 13,
     "pickup_categories": {
         "visor": {
             "long_name": "Visors",
             "hint_details": [
                 "a ",
                 "visor"
-            ],
-            "hinted_as_major": true
+            ]
         },
         "suit": {
             "long_name": "Suits",
             "hint_details": [
                 "a ",
                 "suit"
-            ],
-            "hinted_as_major": true
+            ]
         },
         "beam": {
             "long_name": "Beams",
             "hint_details": [
                 "a ",
                 "beam"
-            ],
-            "hinted_as_major": true
+            ]
         },
         "morph_ball": {
             "long_name": "Morph Ball",
             "hint_details": [
                 "a ",
                 "morph ball system"
-            ],
-            "hinted_as_major": true
+            ]
         },
         "movement": {
             "long_name": "Movement",
             "hint_details": [
                 "a ",
                 "movement system"
-            ],
-            "hinted_as_major": true
+            ]
         },
         "missile": {
             "long_name": "Missile",
             "hint_details": [
                 "a ",
                 "missile system"
-            ],
-            "hinted_as_major": true
+            ]
         },
         "charge_combo": {
             "long_name": "Charge Combos",
             "hint_details": [
                 "a ",
                 "charge combo"
-            ],
-            "hinted_as_major": true
+            ]
         },
         "translator": {
             "long_name": "Translators",
             "hint_details": [
                 "a ",
                 "translator"
-            ],
-            "hinted_as_major": true
+            ]
         },
         "energy_tank": {
             "long_name": "Energy Tanks",
@@ -71,7 +63,7 @@
                 "an ",
                 "Energy Tank"
             ],
-            "hinted_as_major": false
+            "hidden": true
         },
         "missile_related": {
             "long_name": "Missile Related",
@@ -79,7 +71,7 @@
                 "a ",
                 "missile-related upgrade"
             ],
-            "hinted_as_major": false
+            "hidden": true
         },
         "morph_ball_related": {
             "long_name": "Morph Ball Related",
@@ -87,7 +79,7 @@
                 "a ",
                 "morph ball-related upgrade"
             ],
-            "hinted_as_major": false
+            "hidden": true
         },
         "beam_related": {
             "long_name": "Beam Related",
@@ -95,7 +87,7 @@
                 "a ",
                 "beam-related upgrade"
             ],
-            "hinted_as_major": false
+            "hidden": true
         },
         "life_support": {
             "long_name": "Life Support",
@@ -103,7 +95,7 @@
                 "a ",
                 "life support system"
             ],
-            "hinted_as_major": false
+            "hidden": true
         },
         "hud": {
             "long_name": "HUD System",
@@ -111,85 +103,259 @@
                 "a ",
                 "HUD system"
             ],
-            "hinted_as_major": false
+            "hidden": true
+        },
+        "temple_key": {
+            "long_name": "Dark Temple Key",
+            "hint_details": [
+                "a ",
+                "red Temple Key"
+            ],
+            "hidden": true
+        },
+        "sky_temple_key": {
+            "long_name": "Sky Temple Key",
+            "hint_details": [
+                "a ",
+                "Sky Temple Key"
+            ],
+            "hidden": true
+        },
+        "major": {
+            "long_name": "Major Item",
+            "hint_details": [
+                "a ",
+                "major item"
+            ],
+            "hidden": true
+        },
+        "expansion": {
+            "long_name": "Expansion",
+            "hint_details": [
+                "an ",
+                "expansion"
+            ],
+            "hidden": true
+        },
+        "key": {
+            "long_name": "Key",
+            "hint_details": [
+                "a ",
+                "key"
+            ]
+        },
+        "chozo": {
+            "long_name": "Chozo Technology",
+            "hint_details": [
+                "some ",
+                "Chozo technology"
+            ]
+        },
+        "luminoth": {
+            "long_name": "Luminoth Technology",
+            "hint_details": [
+                "some ",
+                "Luminoth technology"
+            ]
+        },
+        "light": {
+            "long_name": "Light-Aligned",
+            "hint_details": [
+                "a ",
+                "light-aligned upgrade"
+            ]
+        },
+        "dark": {
+            "long_name": "Dark-Aligned",
+            "hint_details": [
+                "a ",
+                "dark-aligned upgrade"
+            ]
+        },
+        "cheat": {
+            "long_name": "Cheating",
+            "hint_details": [
+                "a ",
+                "cheater's delight"
+            ]
+        }
+    },
+    "generated_pickups": {
+        "Sky Temple Key": {
+            "name_template": "Sky Temple Key {i}",
+            "gui_category": "sky_temple_key",
+            "hint_features": [
+                "key",
+                "sky_temple_key"
+            ],
+            "model_name": "SkyTempleKey",
+            "offworld_models": {
+                "am2r": "sItemSkyTempleKeyEchoes"
+            },
+            "preferred_location_category": "major",
+            "probability_offset": 3.0,
+            "progression": [
+                "TempleKey{i}"
+            ],
+            "expected_case_for_describer": "shuffled"
+        },
+        "Dark Agon Key": {
+            "name_template": "Dark Agon Key {i}",
+            "gui_category": "temple_key",
+            "hint_features": [
+                "key",
+                "temple_key"
+            ],
+            "model_name": "DarkTempleKey",
+            "offworld_models": {
+                "am2r": "sItemDarkAgonKeyEchoes"
+            },
+            "preferred_location_category": "major",
+            "probability_offset": 3.0,
+            "progression": [
+                "AgonKey{i}"
+            ],
+            "expected_case_for_describer": "shuffled"
+        },
+        "Dark Torvus Key": {
+            "name_template": "Dark Torvus Key {i}",
+            "gui_category": "temple_key",
+            "hint_features": [
+                "key",
+                "temple_key"
+            ],
+            "model_name": "DarkTempleKey",
+            "offworld_models": {
+                "am2r": "sItemDarkTorvusKeyEchoes"
+            },
+            "preferred_location_category": "major",
+            "probability_offset": 3.0,
+            "progression": [
+                "TorvusKey{i}"
+            ],
+            "expected_case_for_describer": "shuffled"
+        },
+        "Ing Hive Key": {
+            "name_template": "Ing Hive Key {i}",
+            "gui_category": "temple_key",
+            "hint_features": [
+                "key",
+                "temple_key"
+            ],
+            "model_name": "DarkTempleKey",
+            "offworld_models": {
+                "am2r": "sItemIngHiveKeyEchoes"
+            },
+            "preferred_location_category": "major",
+            "probability_offset": 3.0,
+            "progression": [
+                "HiveKey{i}"
+            ],
+            "expected_case_for_describer": "shuffled"
         }
     },
     "standard_pickups": {
         "Combat Visor": {
-            "pickup_category": "visor",
-            "broad_category": "hud",
+            "gui_category": "visor",
+            "hint_features": [
+                "chozo",
+                "hud",
+                "major",
+                "visor"
+            ],
             "model_name": "ScanVisor INCOMPLETE",
             "offworld_models": {
                 "am2r": "sItemCombatVisorPrime",
                 "prime1": "Combat Visor"
             },
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
             "progression": [
                 "Combat"
             ],
-            "preferred_location_category": "major",
-            "expected_case_for_describer": "starting_item",
-            "additional_resources": {
-                "Percent": 1
-            }
+            "expected_case_for_describer": "starting_item"
         },
         "Scan Visor": {
-            "pickup_category": "visor",
-            "broad_category": "hud",
+            "gui_category": "visor",
+            "hint_features": [
+                "chozo",
+                "hud",
+                "major",
+                "visor"
+            ],
             "model_name": "ScanVisor INCOMPLETE",
             "offworld_models": {
                 "am2r": "sItemScanVisorPrime",
                 "prime1": "Scan Visor"
             },
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
             "progression": [
                 "Scan"
             ],
-            "preferred_location_category": "major",
-            "expected_case_for_describer": "starting_item",
-            "additional_resources": {
-                "Percent": 1
-            }
+            "expected_case_for_describer": "starting_item"
         },
         "Dark Visor": {
-            "pickup_category": "visor",
-            "broad_category": "hud",
+            "gui_category": "visor",
+            "hint_features": [
+                "dark",
+                "hud",
+                "luminoth",
+                "major",
+                "visor"
+            ],
             "model_name": "DarkVisor",
             "offworld_models": {
                 "am2r": "sItemDarkVisorEchoes"
             },
-            "progression": [
-                "DarkVisor"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "DarkVisor"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 79
             ]
         },
         "Echo Visor": {
-            "pickup_category": "visor",
-            "broad_category": "hud",
+            "gui_category": "visor",
+            "hint_features": [
+                "hud",
+                "luminoth",
+                "major",
+                "visor"
+            ],
             "model_name": "EchoVisor",
             "offworld_models": {
                 "am2r": "sItemEchoVisorEchoes"
             },
-            "progression": [
-                "Echo"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "Echo"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 118
             ]
         },
         "Varia Suit": {
-            "pickup_category": "suit",
-            "broad_category": "life_support",
+            "gui_category": "suit",
+            "hint_features": [
+                "chozo",
+                "life_support",
+                "major",
+                "suit"
+            ],
             "model_name": "VariaSuit INCOMPLETE",
             "offworld_models": {
                 "am2r": "sItemVariaSuitPrime",
@@ -197,20 +363,26 @@
                 "dread": "powerup_variasuit",
                 "samus_returns": "powerup_variasuit"
             },
-            "progression": [
-                "Varia"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "starting_item",
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "Varia"
+            ],
+            "expected_case_for_describer": "starting_item",
             "hide_from_gui": true,
             "must_be_starting": true
         },
         "Dark Suit": {
-            "pickup_category": "suit",
-            "broad_category": "life_support",
+            "gui_category": "suit",
+            "hint_features": [
+                "dark",
+                "life_support",
+                "luminoth",
+                "major",
+                "suit"
+            ],
             "model_name": "DarkSuit",
             "offworld_models": {
                 "am2r": "sItemDarkSuitEchoes",
@@ -218,21 +390,27 @@
                 "dread": "powerup_variasuit",
                 "samus_returns": "offworld_suit"
             },
-            "progression": [
-                "DarkSuit"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "missing",
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "DarkSuit"
+            ],
+            "expected_case_for_describer": "missing",
             "original_locations": [
                 43
             ]
         },
         "Light Suit": {
-            "pickup_category": "suit",
-            "broad_category": "life_support",
+            "gui_category": "suit",
+            "hint_features": [
+                "life_support",
+                "light",
+                "luminoth",
+                "major",
+                "suit"
+            ],
             "model_name": "LightSuit",
             "offworld_models": {
                 "am2r": "sItemLightSuitEchoes",
@@ -240,22 +418,27 @@
                 "dread": "powerup_variasuit",
                 "samus_returns": "offworld_suit"
             },
-            "progression": [
-                "LightSuit"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "missing",
             "additional_resources": {
                 "Percent": 1
             },
+            "probability_offset": -1.0,
+            "progression": [
+                "LightSuit"
+            ],
+            "expected_case_for_describer": "missing",
             "original_locations": [
                 24
-            ],
-            "probability_offset": -1.0
+            ]
         },
         "Progressive Suit": {
-            "pickup_category": "suit",
-            "broad_category": "life_support",
+            "gui_category": "suit",
+            "hint_features": [
+                "life_support",
+                "luminoth",
+                "major",
+                "suit"
+            ],
             "model_name": "VariaSuit INCOMPLETE",
             "offworld_models": {
                 "am2r": "sItemProgressiveSuitEchoes",
@@ -263,56 +446,52 @@
                 "dread": "powerup_variasuit",
                 "samus_returns": "offworld_suit"
             },
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
             "progression": [
                 "DarkSuit",
                 "LightSuit"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
-            "additional_resources": {
-                "Percent": 1
-            },
             "original_locations": [
-                43, 24
+                43,
+                24
             ]
         },
-        "Double Damage": {
-            "pickup_category": "suit",
-            "broad_category": "beam_related",
-            "model_name": "UnlimitedBeamAmmo",
-            "offworld_models": {},
-            "progression": [
-                "DoubleDamage"
-            ],
-            "preferred_location_category": "major",
-            "expected_case_for_describer": "missing",
-            "additional_resources": {
-                "Percent": 1
-            },
-            "description": "Doubles all damage dealt by Samus.\nThis uses a big un-split Beam Ammo Expansion model in-game."
-        },
         "Power Beam": {
-            "pickup_category": "beam",
-            "broad_category": "beam_related",
+            "gui_category": "beam",
+            "hint_features": [
+                "beam",
+                "beam_related",
+                "chozo",
+                "major"
+            ],
             "model_name": "CoinChest",
             "offworld_models": {
                 "am2r": "sItemPowerBeamPrime",
                 "prime1": "Power Beam",
                 "samus_returns": "offworld_beam"
             },
-            "progression": [
-                "Power"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "starting_item",
             "additional_resources": {
                 "Percent": 1
             },
-            "description": "This uses the Coin Chest model in-game."
+            "description": "This uses the Coin Chest model in-game.",
+            "progression": [
+                "Power"
+            ],
+            "expected_case_for_describer": "starting_item"
         },
         "Charge Beam": {
-            "pickup_category": "beam",
-            "broad_category": "beam_related",
+            "gui_category": "beam",
+            "hint_features": [
+                "beam",
+                "beam_related",
+                "chozo",
+                "major"
+            ],
             "model_name": "ChargeBeam INCOMPLETE",
             "offworld_models": {
                 "am2r": "sItemChargeBeam",
@@ -320,103 +499,146 @@
                 "prime1": "Charge Beam",
                 "samus_returns": "powerup_chargebeam"
             },
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
             "progression": [
                 "Charge"
             ],
-            "preferred_location_category": "major",
-            "expected_case_for_describer": "starting_item",
-            "additional_resources": {
-                "Percent": 1
-            }
+            "expected_case_for_describer": "starting_item"
         },
         "Dark Beam": {
-            "pickup_category": "beam",
-            "broad_category": "beam_related",
+            "gui_category": "beam",
+            "hint_features": [
+                "beam",
+                "beam_related",
+                "dark",
+                "luminoth",
+                "major"
+            ],
             "model_name": "DarkBeam",
             "offworld_models": {
                 "am2r": "sItemDarkBeamEchoes",
                 "samus_returns": "offworld_beam"
             },
-            "progression": [
-                "Dark"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
-            "ammo": [
-                "DarkAmmo"
-            ],
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "Dark"
+            ],
+            "ammo": [
+                "DarkAmmo"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 52
             ]
         },
         "Light Beam": {
-            "pickup_category": "beam",
-            "broad_category": "beam_related",
+            "gui_category": "beam",
+            "hint_features": [
+                "beam",
+                "beam_related",
+                "light",
+                "luminoth",
+                "major"
+            ],
             "model_name": "LightBeam",
             "offworld_models": {
                 "am2r": "sItemLightBeamEchoes",
                 "samus_returns": "offworld_beam"
             },
-            "progression": [
-                "Light"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
-            "ammo": [
-                "LightAmmo"
-            ],
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "Light"
+            ],
+            "ammo": [
+                "LightAmmo"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 57
             ]
         },
         "Annihilator Beam": {
-            "pickup_category": "beam",
-            "broad_category": "beam_related",
+            "gui_category": "beam",
+            "hint_features": [
+                "beam",
+                "beam_related",
+                "dark",
+                "light",
+                "luminoth",
+                "major"
+            ],
             "model_name": "AnnihilatorBeam",
             "offworld_models": {
                 "am2r": "sItemAnnihilatorEchoes",
                 "samus_returns": "offworld_beam"
             },
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
             "progression": [
                 "Annihilator"
             ],
-            "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "ammo": [
                 "DarkAmmo",
                 "LightAmmo"
             ],
-            "additional_resources": {
-                "Percent": 1
-            },
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 115
             ]
         },
-        "Unlimited Beam Ammo": {
-            "pickup_category": "beam",
-            "broad_category": "beam_related",
+        "Double Damage": {
+            "gui_category": "beam",
+            "hint_features": [
+                "cheat"
+            ],
             "model_name": "UnlimitedBeamAmmo",
             "offworld_models": {},
-            "progression": [
-                "UnlimitedBeamAmmo"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "missing",
             "additional_resources": {
                 "Percent": 1
             },
-            "description": "This uses a big un-split Beam Ammo Expansion model in-game."
+            "description": "Doubles all damage dealt by Samus.\nThis uses a big un-split Beam Ammo Expansion model in-game.",
+            "progression": [
+                "DoubleDamage"
+            ],
+            "expected_case_for_describer": "missing"
+        },
+        "Unlimited Beam Ammo": {
+            "gui_category": "beam",
+            "hint_features": [
+                "cheat"
+            ],
+            "model_name": "UnlimitedBeamAmmo",
+            "offworld_models": {},
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "description": "This uses a big un-split Beam Ammo Expansion model in-game.",
+            "progression": [
+                "UnlimitedBeamAmmo"
+            ],
+            "expected_case_for_describer": "missing"
         },
         "Morph Ball": {
-            "pickup_category": "morph_ball",
-            "broad_category": "morph_ball_related",
+            "gui_category": "morph_ball",
+            "hint_features": [
+                "chozo",
+                "major",
+                "morph_ball",
+                "morph_ball_related"
+            ],
             "model_name": "CoinChest",
             "offworld_models": {
                 "am2r": "sItemMorphBallPrime",
@@ -424,19 +646,24 @@
                 "dread": "powerup_morphball",
                 "samus_returns": "powerup_morphball"
             },
-            "progression": [
-                "MorphBall"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "starting_item",
             "additional_resources": {
                 "Percent": 1
             },
-            "description": "This uses the Coin Chest model in-game."
+            "description": "This uses the Coin Chest model in-game.",
+            "progression": [
+                "MorphBall"
+            ],
+            "expected_case_for_describer": "starting_item"
         },
         "Morph Ball Bomb": {
-            "pickup_category": "morph_ball",
-            "broad_category": "morph_ball_related",
+            "gui_category": "morph_ball",
+            "hint_features": [
+                "chozo",
+                "major",
+                "morph_ball",
+                "morph_ball_related"
+            ],
             "model_name": "MorphBallBomb",
             "offworld_models": {
                 "am2r": "sItemBomb",
@@ -444,21 +671,26 @@
                 "dread": "powerup_bomb",
                 "samus_returns": "powerup_bomb"
             },
-            "progression": [
-                "Bombs"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "Bombs"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 38
             ]
         },
         "Boost Ball": {
-            "pickup_category": "morph_ball",
-            "broad_category": "morph_ball_related",
+            "gui_category": "morph_ball",
+            "hint_features": [
+                "chozo",
+                "major",
+                "morph_ball",
+                "morph_ball_related"
+            ],
             "model_name": "BoostBall",
             "offworld_models": {
                 "am2r": "sItemBoostBallPrime",
@@ -466,21 +698,26 @@
                 "dread": "powerup_speedbooster",
                 "samus_returns": "offworld_speedbooster"
             },
-            "progression": [
-                "Boost"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "Boost"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 75
             ]
         },
         "Spider Ball": {
-            "pickup_category": "morph_ball",
-            "broad_category": "morph_ball_related",
+            "gui_category": "morph_ball",
+            "hint_features": [
+                "chozo",
+                "major",
+                "morph_ball",
+                "morph_ball_related"
+            ],
             "model_name": "SpiderBall",
             "offworld_models": {
                 "am2r": "sItemSpiderBall",
@@ -488,21 +725,26 @@
                 "dread": "poweurp_spidermagnet",
                 "samus_returns": "powerup_spiderball"
             },
-            "progression": [
-                "Spider"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "Spider"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 102
             ]
         },
         "Power Bomb": {
-            "pickup_category": "morph_ball",
-            "broad_category": "morph_ball_related",
+            "gui_category": "morph_ball",
+            "hint_features": [
+                "chozo",
+                "major",
+                "morph_ball",
+                "morph_ball_related"
+            ],
             "model_name": "PowerBomb",
             "offworld_models": {
                 "am2r": "sItemPowerBombLauncherEchoes",
@@ -510,25 +752,27 @@
                 "dread": "powerup_powerbomb",
                 "samus_returns": "powerup_powerbomb"
             },
-            "progression": [],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
-            "custom_count_for_shuffled_case": 1,
+            "additional_resources": {
+                "Percent": 1
+            },
+            "probability_multiplier": 0.5,
+            "progression": [],
             "ammo": [
                 "PowerBomb"
             ],
             "unlocks_ammo": true,
-            "additional_resources": {
-                "Percent": 1
-            },
+            "expected_case_for_describer": "shuffled",
+            "custom_count_for_shuffled_case": 1,
             "original_locations": [
                 88
-            ],
-            "probability_multiplier": 0.5
+            ]
         },
         "Cannon Ball": {
-            "pickup_category": "morph_ball",
-            "broad_category": "morph_ball_related",
+            "gui_category": "morph_ball",
+            "hint_features": [
+                "cheat"
+            ],
             "model_name": "BoostBall",
             "offworld_models": {
                 "am2r": "sItemCannonBallEchoes",
@@ -536,19 +780,23 @@
                 "dread": "powerup_speedbooster",
                 "samus_returns": "offworld_speedbooster"
             },
-            "progression": [
-                "CannonBall"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "missing",
             "additional_resources": {
                 "Percent": 1
             },
-            "description": "Collecting this pickup will provide you with the Cannon Ball state until you die, quit the game or use a Kinetic Orb Cannon. It's possible to softlock while doing certain Morph Ball puzzles with Cannon Ball enabled. \nThis uses Boost Ball model in-game."
+            "description": "Collecting this pickup will provide you with the Cannon Ball state until you die, quit the game or use a Kinetic Orb Cannon. It's possible to softlock while doing certain Morph Ball puzzles with Cannon Ball enabled. \nThis uses Boost Ball model in-game.",
+            "progression": [
+                "CannonBall"
+            ],
+            "expected_case_for_describer": "missing"
         },
         "Space Jump Boots": {
-            "pickup_category": "movement",
-            "broad_category": "movement",
+            "gui_category": "movement",
+            "hint_features": [
+                "chozo",
+                "major",
+                "movement"
+            ],
             "model_name": "SpaceJumpBoots",
             "offworld_models": {
                 "am2r": "sItemSpaceJump",
@@ -556,42 +804,50 @@
                 "dread": "powerup_spacejump",
                 "samus_returns": "powerup_spacejump"
             },
-            "progression": [
-                "SpaceJump"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "SpaceJump"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 37
             ]
         },
         "Gravity Boost": {
-            "pickup_category": "movement",
-            "broad_category": "movement",
+            "gui_category": "movement",
+            "hint_features": [
+                "luminoth",
+                "major",
+                "movement"
+            ],
             "model_name": "GravityBoost",
             "offworld_models": {
                 "am2r": "sItemGravitySuitPrime",
                 "dread": "powerup_gravitysuit",
                 "samus_returns": "powerup_gravitysuit"
             },
-            "progression": [
-                "Gravity"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "Gravity"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 92
             ]
         },
         "Grapple Beam": {
-            "pickup_category": "movement",
-            "broad_category": "movement",
+            "gui_category": "movement",
+            "hint_features": [
+                "chozo",
+                "major",
+                "movement"
+            ],
             "model_name": "GrappleBeam",
             "offworld_models": {
                 "am2r": "sItemGrappleBeamPrime",
@@ -599,42 +855,50 @@
                 "dread": "powerup_grapplebeam",
                 "samus_returns": "powerup_grapplebeam"
             },
-            "progression": [
-                "Grapple"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "Grapple"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 86
             ]
         },
         "Screw Attack": {
-            "pickup_category": "movement",
-            "broad_category": "movement",
+            "gui_category": "movement",
+            "hint_features": [
+                "chozo",
+                "major",
+                "movement"
+            ],
             "model_name": "ScrewAttack",
             "offworld_models": {
                 "am2r": "sItemScrewAttackEchoes",
                 "dread": "powerup_screwattack",
                 "samus_returns": "powerup_screwattack"
             },
-            "progression": [
-                "ScrewAttack"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "ScrewAttack"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 112
             ]
         },
         "Progressive Grapple": {
-            "pickup_category": "movement",
-            "broad_category": "movement",
+            "gui_category": "movement",
+            "hint_features": [
+                "chozo",
+                "major",
+                "movement"
+            ],
             "model_name": "GrappleBeam",
             "offworld_models": {
                 "am2r": "sItemGrappleBeamPrime",
@@ -642,23 +906,29 @@
                 "dread": "powerup_grapplebeam",
                 "samus_returns": "powerup_grapplebeam"
             },
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "probability_offset": 0.5,
             "progression": [
                 "Grapple",
                 "ScrewAttack"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "missing",
-            "additional_resources": {
-                "Percent": 1
-            },
             "original_locations": [
-                86, 112
-            ],
-            "probability_offset": 0.5
+                86,
+                112
+            ]
         },
         "Missile Launcher": {
-            "pickup_category": "missile",
-            "broad_category": "missile_related",
+            "gui_category": "missile",
+            "hint_features": [
+                "chozo",
+                "major",
+                "missile",
+                "missile_related"
+            ],
             "model_name": "MissileLauncher",
             "offworld_models": {
                 "am2r": "sItemMissileLauncher",
@@ -666,64 +936,77 @@
                 "dread": "powerup_missile",
                 "samus_returns": "powerup_missilelauncher"
             },
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
             "progression": [
                 "MissileLauncher"
             ],
-            "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "ammo": [
                 "Missile"
             ],
             "unlocks_ammo": true,
-            "additional_resources": {
-                "Percent": 1
-            },
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 13
             ]
         },
         "Seeker Launcher": {
-            "pickup_category": "missile",
-            "broad_category": "missile_related",
+            "gui_category": "missile",
+            "hint_features": [
+                "luminoth",
+                "major",
+                "missile",
+                "missile_related"
+            ],
             "model_name": "SeekerLauncher",
             "offworld_models": {
                 "am2r": "sItemSeekerMissileEchoes",
                 "dread": "powerup_stormmissile",
                 "samus_returns": "offworld_missile"
             },
-            "progression": [
-                "Seekers"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
-            "ammo": [
-                "Missile"
-            ],
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "Seekers"
+            ],
+            "ammo": [
+                "Missile"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 1
             ]
         },
         "Unlimited Missiles": {
-            "pickup_category": "missile",
-            "broad_category": "missile_related",
+            "gui_category": "missile",
+            "hint_features": [
+                "cheat"
+            ],
             "model_name": "UnlimitedMissiles",
             "offworld_models": {},
-            "progression": [
-                "UnlimitedMissiles"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "missing",
             "additional_resources": {
                 "Percent": 1
             },
-            "description": "This uses a big Missile Launcher model in-game."
+            "description": "This uses a big Missile Launcher model in-game.",
+            "progression": [
+                "UnlimitedMissiles"
+            ],
+            "expected_case_for_describer": "missing"
         },
         "Super Missile": {
-            "pickup_category": "charge_combo",
-            "broad_category": "beam_related",
+            "gui_category": "charge_combo",
+            "hint_features": [
+                "beam_related",
+                "charge_combo",
+                "chozo",
+                "major",
+                "missile"
+            ],
             "model_name": "SuperMissile",
             "offworld_models": {
                 "am2r": "sItemSuperMissileEchoes",
@@ -731,156 +1014,202 @@
                 "dread": "powerup_supermissile",
                 "samus_returns": "powerup_supermissile"
             },
-            "progression": [
-                "Supers"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "Supers"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 74
             ]
         },
         "Sunburst": {
-            "pickup_category": "charge_combo",
-            "broad_category": "beam_related",
+            "gui_category": "charge_combo",
+            "hint_features": [
+                "beam_related",
+                "charge_combo",
+                "light",
+                "luminoth",
+                "major",
+                "missile"
+            ],
             "model_name": "Sunburst",
             "offworld_models": {
                 "samus_returns": "offworld_missile"
             },
-            "progression": [
-                "Sunburst"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "Sunburst"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 7
             ]
         },
         "Darkburst": {
-            "pickup_category": "charge_combo",
-            "broad_category": "beam_related",
+            "gui_category": "charge_combo",
+            "hint_features": [
+                "beam_related",
+                "charge_combo",
+                "dark",
+                "luminoth",
+                "major",
+                "missile"
+            ],
             "model_name": "Darkburst",
             "offworld_models": {
                 "am2r": "sItemDarkburstEchoes",
                 "samus_returns": "offworld_missile"
             },
-            "progression": [
-                "Darkburst"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "Darkburst"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 27
             ]
         },
         "Sonic Boom": {
-            "pickup_category": "charge_combo",
-            "broad_category": "beam_related",
+            "gui_category": "charge_combo",
+            "hint_features": [
+                "beam_related",
+                "charge_combo",
+                "dark",
+                "light",
+                "luminoth",
+                "major",
+                "missile"
+            ],
             "model_name": "SonicBoom",
             "offworld_models": {
                 "am2r": "sItemSonicBoomEchoes",
                 "samus_returns": "offworld_missile"
             },
-            "progression": [
-                "SonicBoom"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "SonicBoom"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 59
             ]
         },
         "Violet Translator": {
-            "pickup_category": "translator",
-            "broad_category": "hud",
+            "gui_category": "translator",
+            "hint_features": [
+                "hud",
+                "luminoth",
+                "major",
+                "translator"
+            ],
             "model_name": "VioletTranslator",
             "offworld_models": {
                 "am2r": "sItemVioletEchoes"
             },
-            "progression": [
-                "Violet"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "Violet"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 23
             ]
         },
         "Amber Translator": {
-            "pickup_category": "translator",
-            "broad_category": "hud",
+            "gui_category": "translator",
+            "hint_features": [
+                "hud",
+                "luminoth",
+                "major",
+                "translator"
+            ],
             "model_name": "AmberTranslator",
             "offworld_models": {
                 "am2r": "sItemAmberEchoes"
             },
-            "progression": [
-                "Amber"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "Amber"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 46
             ]
         },
         "Emerald Translator": {
-            "pickup_category": "translator",
-            "broad_category": "hud",
+            "gui_category": "translator",
+            "hint_features": [
+                "hud",
+                "luminoth",
+                "major",
+                "translator"
+            ],
             "model_name": "EmeraldTranslator",
             "offworld_models": {
                 "am2r": "sItemEmeraldEchoes"
             },
-            "progression": [
-                "Emerald"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "Emerald"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 82
             ]
         },
         "Cobalt Translator": {
-            "pickup_category": "translator",
-            "broad_category": "hud",
+            "gui_category": "translator",
+            "hint_features": [
+                "hud",
+                "luminoth",
+                "major",
+                "translator"
+            ],
             "model_name": "CobaltTranslator",
             "offworld_models": {
                 "am2r": "sItemCobaltEchoes"
             },
-            "progression": [
-                "Cobalt"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
+            "progression": [
+                "Cobalt"
+            ],
+            "expected_case_for_describer": "shuffled",
             "original_locations": [
                 116
             ]
         },
         "Energy Tank": {
-            "pickup_category": "energy_tank",
-            "broad_category": "life_support",
+            "gui_category": "energy_tank",
+            "hint_features": [
+                "chozo",
+                "energy_tank",
+                "life_support"
+            ],
             "model_name": "EnergyTank",
             "offworld_models": {
                 "am2r": "sItemEnergyTank",
@@ -888,22 +1217,28 @@
                 "dread": "item_energytank",
                 "samus_returns": "item_energytank"
             },
-            "progression": [
-                "EnergyTank"
-            ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
-            "custom_count_for_shuffled_case": 14,
             "additional_resources": {
                 "Percent": 1
             },
             "probability_offset": 1.0,
-            "probability_multiplier": 2.0
+            "probability_multiplier": 2.0,
+            "progression": [
+                "EnergyTank"
+            ],
+            "show_in_credits_spoiler": false,
+            "expected_case_for_describer": "shuffled",
+            "custom_count_for_shuffled_case": 14
         }
     },
     "ammo_pickups": {
         "Missile Expansion": {
-            "broad_category": "missile_related",
+            "gui_category": "missile",
+            "hint_features": [
+                "chozo",
+                "expansion",
+                "missile_related"
+            ],
             "model_name": "MissileExpansion",
             "offworld_models": {
                 "am2r": "sItemMissile",
@@ -911,19 +1246,24 @@
                 "dread": "item_missiletank",
                 "samus_returns": "item_missiletank"
             },
-            "items": [
-                "Missile"
-            ],
             "preferred_location_category": "minor",
             "additional_resources": {
                 "Percent": 1
             },
+            "items": [
+                "Missile"
+            ],
             "unlocked_by": "MissileLauncher",
             "temporary": "Temporary1",
             "allows_negative": true
         },
         "Power Bomb Expansion": {
-            "broad_category": "morph_ball_related",
+            "gui_category": "morph_ball",
+            "hint_features": [
+                "chozo",
+                "expansion",
+                "morph_ball_related"
+            ],
             "model_name": "PowerBombExpansion",
             "offworld_models": {
                 "am2r": "sItemPowerBomb",
@@ -931,64 +1271,79 @@
                 "dread": "item_powerbombtank",
                 "samus_returns": "item_powerbombtank"
             },
-            "items": [
-                "PowerBomb"
-            ],
             "preferred_location_category": "minor",
             "additional_resources": {
                 "Percent": 1
             },
+            "items": [
+                "PowerBomb"
+            ],
             "unlocked_by": "PowerBomb",
             "temporary": "Temporary2",
             "allows_negative": true
         },
         "Dark Ammo Expansion": {
-            "broad_category": "beam_related",
+            "gui_category": "beam",
+            "hint_features": [
+                "beam_related",
+                "expansion",
+                "luminoth"
+            ],
             "model_name": "DarkBeamAmmoExpansion",
             "offworld_models": {
                 "am2r": "sItemDarkAmmoEchoes",
                 "samus_returns": "item_senergytank"
             },
-            "items": [
-                "DarkAmmo"
-            ],
             "preferred_location_category": "minor",
             "additional_resources": {
                 "Percent": 1
             },
+            "items": [
+                "DarkAmmo"
+            ],
             "allows_negative": true
         },
         "Light Ammo Expansion": {
-            "broad_category": "beam_related",
+            "gui_category": "beam",
+            "hint_features": [
+                "beam_related",
+                "expansion",
+                "luminoth"
+            ],
             "model_name": "LightBeamAmmoExpansion",
             "offworld_models": {
                 "am2r": "sItemLightAmmoEchoes",
                 "samus_returns": "item_senergytank"
             },
-            "items": [
-                "LightAmmo"
-            ],
             "preferred_location_category": "minor",
             "additional_resources": {
                 "Percent": 1
             },
+            "items": [
+                "LightAmmo"
+            ],
             "allows_negative": true
         },
         "Beam Ammo Expansion": {
-            "broad_category": "beam_related",
+            "gui_category": "beam",
+            "hint_features": [
+                "beam_related",
+                "expansion",
+                "luminoth"
+            ],
             "model_name": "BeamAmmoExpansion",
             "offworld_models": {
                 "am2r": "sItemBeamAmmoEchoes",
                 "samus_returns": "item_senergytank"
             },
-            "items": [
-                "DarkAmmo",
-                "LightAmmo"
-            ],
             "preferred_location_category": "minor",
             "additional_resources": {
                 "Percent": 1
             },
+            "items": [
+                "DarkAmmo",
+                "LightAmmo"
+            ],
             "allows_negative": true
         }
     },

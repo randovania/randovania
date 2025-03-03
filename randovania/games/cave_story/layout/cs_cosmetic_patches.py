@@ -75,8 +75,7 @@ class MusicRandoType(BitPackEnum, Enum):
             )
         if self == MusicRandoType.RANDOM:
             return (
-                "Remap every cue to a new song. "
-                "For example, entering the Egg Corridor by any means plays *Meltdown 2*."
+                "Remap every cue to a new song. For example, entering the Egg Corridor by any means plays *Meltdown 2*."
             )
         if self == MusicRandoType.CHAOS:
             return (
@@ -229,9 +228,5 @@ class CSCosmeticPatches(BaseCosmeticPatches):
     music_rando: CSMusic = CSMusic.default()
 
     @classmethod
-    def default(cls) -> CSCosmeticPatches:
-        return cls()
-
-    @classmethod
-    def game(cls):
+    def game(cls) -> RandovaniaGame:
         return RandovaniaGame.CAVE_STORY

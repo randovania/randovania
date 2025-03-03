@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.games.cave_story.layout.cs_configuration import CSObjective
+from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 
@@ -18,15 +18,16 @@ class CSPresetItemPool(PresetItemPool):
         super().__init__(editor, game_description, window_manager)
         self.previousObj = CSObjective.NORMAL_ENDING
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         super().on_preset_changed(preset)
+        assert isinstance(preset.configuration, CSConfiguration)
 
         if self.previousObj != preset.configuration.objective:
             if self.previousObj == CSObjective.BAD_ENDING or preset.configuration.objective == CSObjective.BAD_ENDING:
                 self._update_explosive(preset.configuration.objective == CSObjective.BAD_ENDING)
             self.previousObj = preset.configuration.objective
 
-    def _update_explosive(self, bad_ending: bool):
+    def _update_explosive(self, bad_ending: bool) -> None:
         items = self._boxes_for_category["items"][2]
         explosive = next(item for item in items.keys() if item.name == "Explosive")
         explosive_box = items[explosive]

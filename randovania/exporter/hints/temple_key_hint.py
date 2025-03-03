@@ -9,15 +9,15 @@ from randovania.game_description.hint import HintDarkTemple
 from randovania.games.prime2.patcher import echoes_items
 
 if TYPE_CHECKING:
-    from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.game_description.game_patches import GamePatches
+    from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 
 
 def create_temple_key_hint(
     all_patches: dict[int, GamePatches],
     player_index: int,
     temple: HintDarkTemple,
-    namer: HintNamer,
+    namer: EchoesHintNamer,
     with_color: bool,
 ) -> str:
     """

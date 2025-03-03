@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import re
 from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
@@ -11,6 +10,7 @@ from randovania.game_description.resources.resource_collection import ResourceCo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.generated.trick_usage_popup_ui import Ui_TrickUsagePopup
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
+from randovania.gui.lib.data_editor_links import data_editor_href, on_click_data_editor_link
 from randovania.layout import filtered_database
 from randovania.layout.base.trick_level import LayoutTrickLevel
 
@@ -92,7 +92,12 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
             )
 
         # setup
-        self.area_list_label.linkActivated.connect(self._on_click_link_to_data_editor)
+        self.area_list_label.linkActivated.connect(
+            on_click_data_editor_link(
+                self._window_manager,
+                self._game_description.game,
+            )
+        )
         self.setWindowTitle(f"{self.windowTitle()} for preset {preset.name}")
         self.title_label.setText(self.title_label.text().format(trick_levels=trick_usage_description))
 
@@ -116,19 +121,9 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
             for area in sorted(region.areas, key=lambda it: it.name):
                 used_tricks = _check_used_tricks(area, trick_resources, context)
                 if used_tricks:
-                    lines.append(
-                        f'<p><a href="data-editor://{region.correct_name(area.in_dark_aether)}/{area.name}">'
-                        f"{region.correct_name(area.in_dark_aether)} - {area.name}</a>"
-                        f'<br />{"<br />".join(used_tricks)}</p>'
-                    )
+                    lines.append(data_editor_href(region, area) + f"<br />{'<br />'.join(used_tricks)}</p>")
 
         self.area_list_label.setText("".join(lines))
 
     def button_box_close(self):
         self.reject()
-
-    def _on_click_link_to_data_editor(self, link: str):
-        info = re.match(r"^data-editor://([^)]+)/([^)]+)$", link)
-        if info:
-            region_name, area_name = info.group(1, 2)
-            self._window_manager.open_data_visualizer_at(region_name, area_name, game=self._game_description.game)

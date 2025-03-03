@@ -212,6 +212,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
             image_path = game.data_path.joinpath("assets", "cover.png")
             logo = ClickableLabel(pack_tile)
+            logo.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
             logo.setPixmap(QtGui.QPixmap(os.fspath(image_path)))
             logo.setFrameStyle(QtWidgets.QFrame.Panel | QtWidgets.QFrame.Plain)
             logo.setScaledContents(True)
@@ -472,7 +473,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             response = await async_dialog.warning(
                 self,
                 "Unexpected hash",
-                f"Expected has to be {expected}. got {new_layout.shareable_hash}. Do you wish to continue?",
+                f"Expected hash to be {expected}. got {new_layout.shareable_hash}. Do you wish to continue?",
                 QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
             )
             if response != QtWidgets.QMessageBox.StandardButton.Yes:
@@ -671,7 +672,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             QtWidgets.QMessageBox.critical(self, "Unsupported configuration for Tracker", str(e))
             return
 
-        self._map_tracker.show()
+        if self._map_tracker.confirm_open:
+            self._map_tracker.show()
 
     # Difficulties stuff
 

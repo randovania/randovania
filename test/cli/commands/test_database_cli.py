@@ -131,3 +131,15 @@ def test_trick_usage_documentation_logic_blank(tmp_path: Path) -> None:
             "- (Documented) Combat (Beginner)",
         ]
     )
+
+
+def test_features_per_node_blank(tmp_path: Path) -> None:
+    # Setup
+    args = argparse.Namespace()
+    args.json_database = None
+    args.game = "blank"
+
+    # Run
+    database.features_per_node_command_logic(args)
+
+    # Don't assert anything, just run

@@ -26,6 +26,9 @@
      <property name="text">
       <string>Accept</string>
      </property>
+     <property name="default">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item row="2" column="1">
@@ -45,8 +48,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>404</width>
-        <height>374</height>
+        <width>390</width>
+        <height>390</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -86,7 +89,7 @@
                 <string/>
                </property>
                <property name="alignment">
-                <set>Qt::AlignCenter</set>
+                <set>Qt::AlignmentFlag::AlignCenter</set>
                </property>
               </widget>
              </item>
@@ -102,7 +105,7 @@
                 <string>Quote</string>
                </property>
                <property name="alignment">
-                <set>Qt::AlignCenter</set>
+                <set>Qt::AlignmentFlag::AlignCenter</set>
                </property>
               </widget>
              </item>
@@ -165,7 +168,7 @@
              <string/>
             </property>
             <property name="textFormat">
-             <enum>Qt::MarkdownText</enum>
+             <enum>Qt::TextFormat::MarkdownText</enum>
             </property>
            </widget>
           </item>
@@ -190,7 +193,7 @@
              <string>Music will not be randomized.</string>
             </property>
             <property name="textFormat">
-             <enum>Qt::MarkdownText</enum>
+             <enum>Qt::TextFormat::MarkdownText</enum>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -298,7 +301,7 @@
        <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+          <enum>Qt::Orientation::Horizontal</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>

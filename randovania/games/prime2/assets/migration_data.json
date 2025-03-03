@@ -955,7 +955,7 @@
         "Sanctuary Fortress/Sanctuary Energy Controller/Teleport to Agon Wastes - Agon Energy Controller": "Teleporter to Agon Wastes",
         "Sanctuary Fortress/Sanctuary Energy Controller/Teleport to Torvus Bog - Torvus Energy Controller": "Teleporter to Torvus Bog",
         "Sanctuary Fortress/Aerie/Elevator to Sanctuary Fortress - Aerie Transport Station": "Elevator to Aerie Transport Station"
-      },
+    },
     "dock_connection_fixes": {
         "Sanctuary Fortress/Aerie Transport Station/Door to Checkpoint Station": "Sanctuary Fortress/Aerie Transport Station/Elevator to Aerie",
         "Sanctuary Fortress/Aerie/Dock to Aerie Access": "Sanctuary Fortress/Aerie/Elevator to Aerie Transport Station"
@@ -972,12 +972,808 @@
         "Great Temple/Temple Transport B/Elevator to Temple Grounds": "Temple Transport Violet",
         "Agon Wastes/Transport to Temple Grounds/Elevator to Temple Grounds": "Agon Entrance",
         "Agon Wastes/Transport to Torvus Bog/Elevator to Torvus Bog": "Agon Portal Access",
-        "Agon Wastes/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress": "Agon Temple Access",        
+        "Agon Wastes/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress": "Agon Temple Access",
         "Torvus Bog/Transport to Temple Grounds/Elevator to Temple Grounds": "Torvus Entrance",
         "Torvus Bog/Transport to Agon Wastes/Elevator to Agon Wastes": "Torvus Temple Access",
-        "Torvus Bog/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress": "Lower Torvus Access",        
+        "Torvus Bog/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress": "Lower Torvus Access",
         "Sanctuary Fortress/Transport to Temple Grounds/Elevator to Temple Grounds": "Sanctuary Entrance",
         "Sanctuary Fortress/Transport to Agon Wastes/Elevator to Agon Wastes": "Sanctuary Spider side",
         "Sanctuary Fortress/Transport to Torvus Bog/Elevator to Torvus Bog": "Sanctuary Vault side"
+    },
+    "generated_pickups": {
+        "categories": {
+            "temple_key": {
+                "long_name": "Dark Temple Key",
+                "hint_details": [
+                    "a ",
+                    "red Temple Key"
+                ],
+                "hinted_as_major": false,
+                "is_key": true
+            },
+            "sky_temple_key": {
+                "long_name": "Sky Temple Key",
+                "hint_details": [
+                    "a ",
+                    "Sky Temple Key"
+                ],
+                "hinted_as_major": false,
+                "is_key": true
+            }
+        },
+        "pickups": {
+            "Sky Temple Key": {
+                "name_template": "Sky Temple Key {i}",
+                "pickup_category": "sky_temple_key",
+                "model_name": "SkyTempleKey",
+                "offworld_models": {
+                    "am2r": "sItemSkyTempleKeyEchoes"
+                },
+                "progression": [
+                    "TempleKey{i}"
+                ],
+                "preferred_location_category": "major",
+                "probability_offset": 3.0
+            },
+            "Dark Agon Key": {
+                "name_template": "Dark Agon Key {i}",
+                "pickup_category": "temple_key",
+                "model_name": "DarkTempleKey",
+                "offworld_models": {
+                    "am2r": "sItemDarkAgonKeyEchoes"
+                },
+                "progression": [
+                    "AgonKey{i}"
+                ],
+                "preferred_location_category": "major",
+                "probability_offset": 3.0
+            },
+            "Dark Torvus Key": {
+                "name_template": "Dark Torvus Key {i}",
+                "pickup_category": "temple_key",
+                "model_name": "DarkTempleKey",
+                "offworld_models": {
+                    "am2r": "sItemDarkTorvusKeyEchoes"
+                },
+                "progression": [
+                    "TorvusKey{i}"
+                ],
+                "preferred_location_category": "major",
+                "probability_offset": 3.0
+            },
+            "Ing Hive Key": {
+                "name_template": "Ing Hive Key {i}",
+                "pickup_category": "temple_key",
+                "model_name": "DarkTempleKey",
+                "offworld_models": {
+                    "am2r": "sItemIngHiveKeyEchoes"
+                },
+                "progression": [
+                    "HiveKey{i}"
+                ],
+                "preferred_location_category": "major",
+                "probability_offset": 3.0
+            }
+        }
+    },
+    "hint_location_precision": {
+        "keybearer": "specific_hint_keybearer",
+        "guardian": "specific_hint_guardian",
+        "light-suit-location": "specific_hint_2mos"
+    },
+    "old_hint_categories": {
+        "Combat Visor": {
+            "precise-category": "visor",
+            "broad-category": "hud",
+            "general-category": "major"
+        },
+        "Scan Visor": {
+            "precise-category": "visor",
+            "broad-category": "hud",
+            "general-category": "major"
+        },
+        "Dark Visor": {
+            "precise-category": "visor",
+            "broad-category": "hud",
+            "general-category": "major"
+        },
+        "Echo Visor": {
+            "precise-category": "visor",
+            "broad-category": "hud",
+            "general-category": "major"
+        },
+        "Varia Suit": {
+            "precise-category": "suit",
+            "broad-category": "life_support",
+            "general-category": "major"
+        },
+        "Dark Suit": {
+            "precise-category": "suit",
+            "broad-category": "life_support",
+            "general-category": "major"
+        },
+        "Light Suit": {
+            "precise-category": "suit",
+            "broad-category": "life_support",
+            "general-category": "major"
+        },
+        "Progressive Suit": {
+            "precise-category": "suit",
+            "broad-category": "life_support",
+            "general-category": "major"
+        },
+        "Power Beam": {
+            "precise-category": "beam",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Charge Beam": {
+            "precise-category": "beam",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Dark Beam": {
+            "precise-category": "beam",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Light Beam": {
+            "precise-category": "beam",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Annihilator Beam": {
+            "precise-category": "beam",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Double Damage": {
+            "precise-category": "beam",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Unlimited Beam Ammo": {
+            "precise-category": "beam",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Morph Ball": {
+            "precise-category": "morph_ball",
+            "broad-category": "morph_ball_related",
+            "general-category": "major"
+        },
+        "Morph Ball Bomb": {
+            "precise-category": "morph_ball",
+            "broad-category": "morph_ball_related",
+            "general-category": "major"
+        },
+        "Boost Ball": {
+            "precise-category": "morph_ball",
+            "broad-category": "morph_ball_related",
+            "general-category": "major"
+        },
+        "Spider Ball": {
+            "precise-category": "morph_ball",
+            "broad-category": "morph_ball_related",
+            "general-category": "major"
+        },
+        "Power Bomb": {
+            "precise-category": "morph_ball",
+            "broad-category": "morph_ball_related",
+            "general-category": "major"
+        },
+        "Cannon Ball": {
+            "precise-category": "morph_ball",
+            "broad-category": "morph_ball_related",
+            "general-category": "major"
+        },
+        "Space Jump Boots": {
+            "precise-category": "movement",
+            "broad-category": "movement",
+            "general-category": "major"
+        },
+        "Gravity Boost": {
+            "precise-category": "movement",
+            "broad-category": "movement",
+            "general-category": "major"
+        },
+        "Grapple Beam": {
+            "precise-category": "movement",
+            "broad-category": "movement",
+            "general-category": "major"
+        },
+        "Screw Attack": {
+            "precise-category": "movement",
+            "broad-category": "movement",
+            "general-category": "major"
+        },
+        "Progressive Grapple": {
+            "precise-category": "movement",
+            "broad-category": "movement",
+            "general-category": "major"
+        },
+        "Missile Launcher": {
+            "precise-category": "missile",
+            "broad-category": "missile_related",
+            "general-category": "major"
+        },
+        "Seeker Launcher": {
+            "precise-category": "missile",
+            "broad-category": "missile_related",
+            "general-category": "major"
+        },
+        "Unlimited Missiles": {
+            "precise-category": "missile",
+            "broad-category": "missile_related",
+            "general-category": "major"
+        },
+        "Super Missile": {
+            "precise-category": "charge_combo",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Sunburst": {
+            "precise-category": "charge_combo",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Darkburst": {
+            "precise-category": "charge_combo",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Sonic Boom": {
+            "precise-category": "charge_combo",
+            "broad-category": "beam_related",
+            "general-category": "major"
+        },
+        "Violet Translator": {
+            "precise-category": "translator",
+            "broad-category": "hud",
+            "general-category": "major"
+        },
+        "Amber Translator": {
+            "precise-category": "translator",
+            "broad-category": "hud",
+            "general-category": "major"
+        },
+        "Emerald Translator": {
+            "precise-category": "translator",
+            "broad-category": "hud",
+            "general-category": "major"
+        },
+        "Cobalt Translator": {
+            "precise-category": "translator",
+            "broad-category": "hud",
+            "general-category": "major"
+        },
+        "Energy Tank": {
+            "precise-category": "energy_tank",
+            "broad-category": "life_support",
+            "general-category": "major"
+        },
+        "Sky Temple Key": {
+            "precise-category": "sky_temple_key",
+            "broad-category": "key",
+            "general-category": "key"
+        },
+        "Dark Agon Key": {
+            "precise-category": "temple_key",
+            "broad-category": "key",
+            "general-category": "key"
+        },
+        "Dark Torvus Key": {
+            "precise-category": "temple_key",
+            "broad-category": "key",
+            "general-category": "key"
+        },
+        "Ing Hive Key": {
+            "precise-category": "temple_key",
+            "broad-category": "key",
+            "general-category": "key"
+        },
+        "Missile Expansion": {
+            "precise-category": "missile_related",
+            "broad-category": "missile_related",
+            "general-category": "expansion"
+        },
+        "Power Bomb Expansion": {
+            "precise-category": "morph_ball_related",
+            "broad-category": "morph_ball_related",
+            "general-category": "expansion"
+        },
+        "Dark Ammo Expansion": {
+            "precise-category": "beam_related",
+            "broad-category": "beam_related",
+            "general-category": "expansion"
+        },
+        "Light Ammo Expansion": {
+            "precise-category": "beam_related",
+            "broad-category": "beam_related",
+            "general-category": "expansion"
+        },
+        "Beam Ammo Expansion": {
+            "precise-category": "beam_related",
+            "broad-category": "beam_related",
+            "general-category": "expansion"
+        }
+    },
+    "pickup_index_to_node": {
+        "0": {
+            "region": "Temple Grounds",
+            "area_and_node": "Hive Chamber A/Pickup (Missile)"
+        },
+        "1": {
+            "region": "Temple Grounds",
+            "area_and_node": "Hall of Honored Dead/Pickup (Seeker Launcher)"
+        },
+        "2": {
+            "region": "Temple Grounds",
+            "area_and_node": "Hive Chamber B/Pickup (Missile)"
+        },
+        "3": {
+            "region": "Sky Temple Grounds",
+            "area_and_node": "War Ritual Grounds/Pickup (Missile)"
+        },
+        "4": {
+            "region": "Temple Grounds",
+            "area_and_node": "Windchamber Gateway/Pickup (Energy Tank)"
+        },
+        "5": {
+            "region": "Temple Grounds",
+            "area_and_node": "Transport to Agon Wastes/Pickup (Missile)"
+        },
+        "6": {
+            "region": "Temple Grounds",
+            "area_and_node": "Temple Assembly Site/Pickup (Missile)"
+        },
+        "7": {
+            "region": "Temple Grounds",
+            "area_and_node": "Grand Windchamber/Pickup (Sunburst)"
+        },
+        "8": {
+            "region": "Temple Grounds",
+            "area_and_node": "Dynamo Chamber/Pickup (Power Bomb)"
+        },
+        "9": {
+            "region": "Temple Grounds",
+            "area_and_node": "Storage Cavern B/Pickup (Energy Tank)"
+        },
+        "10": {
+            "region": "Sky Temple Grounds",
+            "area_and_node": "Plain of Dark Worship/Pickup (Missile)"
+        },
+        "11": {
+            "region": "Sky Temple Grounds",
+            "area_and_node": "Defiled Shrine/Pickup (Sky Temple Key 8)"
+        },
+        "12": {
+            "region": "Temple Grounds",
+            "area_and_node": "Communication Area/Pickup (Missile)"
+        },
+        "13": {
+            "region": "Temple Grounds",
+            "area_and_node": "GFMC Compound/Pickup (Missile Launcher)"
+        },
+        "14": {
+            "region": "Temple Grounds",
+            "area_and_node": "GFMC Compound/Pickup 2 (Missile On Ship)"
+        },
+        "15": {
+            "region": "Sky Temple Grounds",
+            "area_and_node": "Accursed Lake/Pickup (Sky Temple Key 9)"
+        },
+        "16": {
+            "region": "Temple Grounds",
+            "area_and_node": "Fortress Transport Access/Pickup (Energy Tank)"
+        },
+        "17": {
+            "region": "Sky Temple Grounds",
+            "area_and_node": "Profane Path/Pickup (Dark Ammo)"
+        },
+        "18": {
+            "region": "Sky Temple Grounds",
+            "area_and_node": "Phazon Grounds/Pickup (Missile)"
+        },
+        "19": {
+            "region": "Sky Temple Grounds",
+            "area_and_node": "Ing Reliquary/Pickup (Sky Temple Key 7)"
+        },
+        "20": {
+            "region": "Great Temple",
+            "area_and_node": "Transport A Access/Pickup (Missile)"
+        },
+        "21": {
+            "region": "Great Temple",
+            "area_and_node": "Temple Sanctuary/Pickup (Energy Transfer Module)"
+        },
+        "22": {
+            "region": "Great Temple",
+            "area_and_node": "Transport B Access/Pickup (Missile)"
+        },
+        "23": {
+            "region": "Great Temple",
+            "area_and_node": "Main Energy Controller/Pickup (Violet Translator)"
+        },
+        "24": {
+            "region": "Great Temple",
+            "area_and_node": "Main Energy Controller/Pickup (Light Suit)"
+        },
+        "25": {
+            "region": "Agon Wastes",
+            "area_and_node": "Mining Plaza/Pickup (Energy Tank)"
+        },
+        "26": {
+            "region": "Agon Wastes",
+            "area_and_node": "Mining Station Access/Pickup (Energy Tank)"
+        },
+        "27": {
+            "region": "Agon Wastes",
+            "area_and_node": "Mining Station B/Pickup (Darkburst)"
+        },
+        "28": {
+            "region": "Agon Wastes",
+            "area_and_node": "Transport Center/Pickup (Missile)"
+        },
+        "29": {
+            "region": "Agon Wastes",
+            "area_and_node": "Mining Station A/Pickup (Missile)"
+        },
+        "30": {
+            "region": "Dark Agon Wastes",
+            "area_and_node": "Ing Cache 4/Pickup (Missile)"
+        },
+        "31": {
+            "region": "Dark Agon Wastes",
+            "area_and_node": "Junction Site/Pickup (Missile)"
+        },
+        "32": {
+            "region": "Agon Wastes",
+            "area_and_node": "Storage A/Pickup (Missile)"
+        },
+        "33": {
+            "region": "Agon Wastes",
+            "area_and_node": "Mine Shaft/Pickup (Energy Tank)"
+        },
+        "34": {
+            "region": "Dark Agon Wastes",
+            "area_and_node": "Crossroads/Pickup (Missile)"
+        },
+        "35": {
+            "region": "Agon Wastes",
+            "area_and_node": "Sand Cache/Pickup (Missile)"
+        },
+        "36": {
+            "region": "Agon Wastes",
+            "area_and_node": "Portal Access A/Pickup (Missile)"
+        },
+        "37": {
+            "region": "Dark Agon Wastes",
+            "area_and_node": "Judgment Pit/Pickup (Space Jump Boots)"
+        },
+        "38": {
+            "region": "Agon Wastes",
+            "area_and_node": "Agon Temple/Pickup (Morph Ball Bomb)"
+        },
+        "39": {
+            "region": "Dark Agon Wastes",
+            "area_and_node": "Trial Tunnel/Pickup (Dark Agon Key 1)"
+        },
+        "40": {
+            "region": "Agon Wastes",
+            "area_and_node": "Central Mining Station/Pickup (Dark Ammo)"
+        },
+        "41": {
+            "region": "Dark Agon Wastes",
+            "area_and_node": "Warrior's Walk/Pickup (Missile)"
+        },
+        "42": {
+            "region": "Agon Wastes",
+            "area_and_node": "Sandcanyon/Pickup (Power Bomb)"
+        },
+        "43": {
+            "region": "Dark Agon Wastes",
+            "area_and_node": "Dark Agon Temple/Pickup (Dark Suit)"
+        },
+        "44": {
+            "region": "Dark Agon Wastes",
+            "area_and_node": "Battleground/Pickup (Dark Agon Key 3)"
+        },
+        "45": {
+            "region": "Dark Agon Wastes",
+            "area_and_node": "Battleground/Pickup 2 (Sky Temple Key 1)"
+        },
+        "46": {
+            "region": "Agon Wastes",
+            "area_and_node": "Agon Energy Controller/Pickup (Amber Translator)"
+        },
+        "47": {
+            "region": "Agon Wastes",
+            "area_and_node": "Ventilation Area A/Pickup (Missile)"
+        },
+        "48": {
+            "region": "Agon Wastes",
+            "area_and_node": "Command Center/Pickup (Missile)"
+        },
+        "49": {
+            "region": "Agon Wastes",
+            "area_and_node": "Main Reactor/Pickup (Missile)"
+        },
+        "50": {
+            "region": "Dark Agon Wastes",
+            "area_and_node": "Doomed Entry/Pickup (Dark Agon Key 2)"
+        },
+        "51": {
+            "region": "Agon Wastes",
+            "area_and_node": "Sand Processing/Pickup (Missile)"
+        },
+        "52": {
+            "region": "Agon Wastes",
+            "area_and_node": "Storage D/Pickup (Dark Beam)"
+        },
+        "53": {
+            "region": "Dark Agon Wastes",
+            "area_and_node": "Dark Oasis/Pickup (Sky Temple Key 2)"
+        },
+        "54": {
+            "region": "Agon Wastes",
+            "area_and_node": "Storage B/Pickup (Missile)"
+        },
+        "55": {
+            "region": "Dark Agon Wastes",
+            "area_and_node": "Feeding Pit/Pickup (Power Bomb)"
+        },
+        "56": {
+            "region": "Agon Wastes",
+            "area_and_node": "Bioenergy Production/Pickup (Energy Tank)"
+        },
+        "57": {
+            "region": "Dark Agon Wastes",
+            "area_and_node": "Ing Cache 1/Pickup (Light Beam)"
+        },
+        "58": {
+            "region": "Agon Wastes",
+            "area_and_node": "Storage C/Pickup (Missile)"
+        },
+        "59": {
+            "region": "Dark Agon Wastes",
+            "area_and_node": "Ing Cache 2/Pickup (Sonic Boom)"
+        },
+        "60": {
+            "region": "Torvus Bog",
+            "area_and_node": "Torvus Lagoon/Pickup (Missile)"
+        },
+        "61": {
+            "region": "Torvus Bog",
+            "area_and_node": "Portal Chamber (Light)/Pickup (Missile)"
+        },
+        "62": {
+            "region": "Torvus Bog",
+            "area_and_node": "Path of Roots/Pickup (Missile)"
+        },
+        "63": {
+            "region": "Torvus Bog",
+            "area_and_node": "Forgotten Bridge/Pickup (Missile)"
+        },
+        "64": {
+            "region": "Torvus Bog",
+            "area_and_node": "Great Bridge/Pickup (Power Bomb)"
+        },
+        "65": {
+            "region": "Dark Torvus Bog",
+            "area_and_node": "Cache A/Pickup (Dark Ammo)"
+        },
+        "66": {
+            "region": "Torvus Bog",
+            "area_and_node": "Plaza Access/Pickup (Missile)"
+        },
+        "67": {
+            "region": "Torvus Bog",
+            "area_and_node": "Abandoned Worksite/Pickup (Missile)"
+        },
+        "68": {
+            "region": "Dark Torvus Bog",
+            "area_and_node": "Poisoned Bog/Pickup (Sky Temple Key 3)"
+        },
+        "69": {
+            "region": "Dark Torvus Bog",
+            "area_and_node": "Venomous Pond/Pickup (Dark Torvus Key 3)"
+        },
+        "70": {
+            "region": "Torvus Bog",
+            "area_and_node": "Temple Access/Pickup (Energy Tank)"
+        },
+        "71": {
+            "region": "Torvus Bog",
+            "area_and_node": "Torvus Plaza/Pickup (Energy Tank)"
+        },
+        "72": {
+            "region": "Dark Torvus Bog",
+            "area_and_node": "Putrid Alcove/Pickup (Power Bomb)"
+        },
+        "73": {
+            "region": "Torvus Bog",
+            "area_and_node": "Torvus Grove/Pickup (Missile)"
+        },
+        "74": {
+            "region": "Torvus Bog",
+            "area_and_node": "Torvus Temple/Pickup (Super Missile)"
+        },
+        "75": {
+            "region": "Dark Torvus Bog",
+            "area_and_node": "Dark Torvus Arena/Pickup (Boost Ball)"
+        },
+        "76": {
+            "region": "Dark Torvus Bog",
+            "area_and_node": "Dark Torvus Arena/Pickup 2 (Dark Torvus Key 1)"
+        },
+        "77": {
+            "region": "Torvus Bog",
+            "area_and_node": "Underground Tunnel/Pickup (Missile)"
+        },
+        "78": {
+            "region": "Torvus Bog",
+            "area_and_node": "Meditation Vista/Pickup (Energy Tank)"
+        },
+        "79": {
+            "region": "Dark Torvus Bog",
+            "area_and_node": "Dark Torvus Temple/Pickup (Dark Visor)"
+        },
+        "80": {
+            "region": "Dark Torvus Bog",
+            "area_and_node": "Cache B/Pickup (Energy Tank)"
+        },
+        "81": {
+            "region": "Torvus Bog",
+            "area_and_node": "Hydrodynamo Station/Pickup (Missile)"
+        },
+        "82": {
+            "region": "Torvus Bog",
+            "area_and_node": "Torvus Energy Controller/Pickup (Emerald Translator)"
+        },
+        "83": {
+            "region": "Dark Torvus Bog",
+            "area_and_node": "Undertemple Access/Pickup (Dark Torvus Key 2)"
+        },
+        "84": {
+            "region": "Torvus Bog",
+            "area_and_node": "Gathering Hall/Pickup (Missile)"
+        },
+        "85": {
+            "region": "Torvus Bog",
+            "area_and_node": "Training Chamber/Pickup (Missile)"
+        },
+        "86": {
+            "region": "Dark Torvus Bog",
+            "area_and_node": "Sacrificial Chamber/Pickup (Grapple Beam)"
+        },
+        "87": {
+            "region": "Dark Torvus Bog",
+            "area_and_node": "Undertemple/Pickup (Missile)"
+        },
+        "88": {
+            "region": "Dark Torvus Bog",
+            "area_and_node": "Undertemple/Pickup 2 (Power Bomb)"
+        },
+        "89": {
+            "region": "Torvus Bog",
+            "area_and_node": "Transit Tunnel South/Pickup (Missile)"
+        },
+        "90": {
+            "region": "Torvus Bog",
+            "area_and_node": "Transit Tunnel East/Pickup (Energy Tank)"
+        },
+        "91": {
+            "region": "Dark Torvus Bog",
+            "area_and_node": "Dungeon/Pickup (Sky Temple Key 4)"
+        },
+        "92": {
+            "region": "Torvus Bog",
+            "area_and_node": "Hydrochamber Storage/Pickup (Gravity Boost)"
+        },
+        "93": {
+            "region": "Dark Torvus Bog",
+            "area_and_node": "Undertransit One/Pickup (Missile)"
+        },
+        "94": {
+            "region": "Sanctuary Fortress",
+            "area_and_node": "Sanctuary Entrance/Pickup (Power Bomb)"
+        },
+        "95": {
+            "region": "Sanctuary Fortress",
+            "area_and_node": "Reactor Core/Pickup (Energy Tank)"
+        },
+        "96": {
+            "region": "Sanctuary Fortress",
+            "area_and_node": "Transit Station/Pickup (Power Bomb)"
+        },
+        "97": {
+            "region": "Sanctuary Fortress",
+            "area_and_node": "Sanctuary Map Station/Pickup (Missile)"
+        },
+        "98": {
+            "region": "Sanctuary Fortress",
+            "area_and_node": "Hall of Combat Mastery/Pickup (Missile)"
+        },
+        "99": {
+            "region": "Sanctuary Fortress",
+            "area_and_node": "Main Research/Pickup (Missile)"
+        },
+        "100": {
+            "region": "Ing Hive",
+            "area_and_node": "Culling Chamber/Pickup (Ing Hive Key 1)"
+        },
+        "101": {
+            "region": "Sanctuary Fortress",
+            "area_and_node": "Central Area Transport West/Pickup (Missile)"
+        },
+        "102": {
+            "region": "Sanctuary Fortress",
+            "area_and_node": "Dynamo Works/Pickup (Spider Ball)"
+        },
+        "103": {
+            "region": "Sanctuary Fortress",
+            "area_and_node": "Dynamo Works/Pickup 2 (Missile)"
+        },
+        "104": {
+            "region": "Ing Hive",
+            "area_and_node": "Hazing Cliff/Pickup (Missile)"
+        },
+        "105": {
+            "region": "Sanctuary Fortress",
+            "area_and_node": "Watch Station/Pickup (Dark Ammo)"
+        },
+        "106": {
+            "region": "Ing Hive",
+            "area_and_node": "Hive Dynamo Works/Pickup (Sky Temple Key 6)"
+        },
+        "107": {
+            "region": "Sanctuary Fortress",
+            "area_and_node": "Sentinel's Path/Pickup (Missile)"
+        },
+        "108": {
+            "region": "Sanctuary Fortress",
+            "area_and_node": "Watch Station Access/Pickup (Energy Tank)"
+        },
+        "109": {
+            "region": "Ing Hive",
+            "area_and_node": "Aerial Training Site/Pickup (Ing Hive Key 3)"
+        },
+        "110": {
+            "region": "Ing Hive",
+            "area_and_node": "Aerial Training Site/Pickup 2 (Missile)"
+        },
+        "111": {
+            "region": "Sanctuary Fortress",
+            "area_and_node": "Main Gyro Chamber/Pickup (Power Bomb)"
+        },
+        "112": {
+            "region": "Sanctuary Fortress",
+            "area_and_node": "Vault/Pickup (Screw Attack)"
+        },
+        "113": {
+            "region": "Sanctuary Fortress",
+            "area_and_node": "Temple Access/Pickup (Missile)"
+        },
+        "114": {
+            "region": "Ing Hive",
+            "area_and_node": "Hive Gyro Chamber/Pickup (Ing Hive Key 2)"
+        },
+        "115": {
+            "region": "Ing Hive",
+            "area_and_node": "Hive Temple/Pickup (Annihilator Beam)"
+        },
+        "116": {
+            "region": "Sanctuary Fortress",
+            "area_and_node": "Sanctuary Energy Controller/Pickup (Cobalt Translator)"
+        },
+        "117": {
+            "region": "Ing Hive",
+            "area_and_node": "Hive Entrance/Pickup (Sky Temple Key 5)"
+        },
+        "118": {
+            "region": "Sanctuary Fortress",
+            "area_and_node": "Aerie/Pickup (Echo Visor)"
+        }
     }
 }

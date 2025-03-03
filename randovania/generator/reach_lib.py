@@ -12,6 +12,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.node import Node, NodeContext
     from randovania.game_description.game_description import GameDescription
+    from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.generator_reach import GeneratorReach
     from randovania.resolver.state import State
 
@@ -93,7 +94,9 @@ def collect_all_safe_resources_in_reach(reach: GeneratorReach) -> None:
                 reach.advance_to(reach.state.act_on_node(action), is_safe=True)
 
 
-def reach_with_all_safe_resources(game: GameDescription, initial_state: State) -> GeneratorReach:
+def reach_with_all_safe_resources(
+    game: GameDescription, initial_state: State, filler_config: FillerConfiguration
+) -> GeneratorReach:
     """
     Creates a new GeneratorReach using the given state and then collect all safe resources
     :param game:
@@ -103,15 +106,18 @@ def reach_with_all_safe_resources(game: GameDescription, initial_state: State) -
     from randovania.generator.old_generator_reach import OldGeneratorReach as GR
 
     # from randovania.generator.trust_generator_reach import TrustGeneratorReach as GR
-    reach = GR.reach_from_state(game, initial_state)
+    reach = GR.reach_from_state(game, initial_state, filler_config)
     collect_all_safe_resources_in_reach(reach)
     return reach
 
 
-def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach) -> GeneratorReach:
+def advance_reach_with_possible_unsafe_resources(
+    previous_reach: GeneratorReach, *, filter_resource_nodes: bool = False
+) -> GeneratorReach:
     """
     Create a new GeneratorReach that collected actions not considered safe, but expanded the safe_nodes set
     :param previous_reach:
+    :param filter_resource_nodes: When true, use `reach.safe_uncollected_resource_nodes` instead of `reach.safe_nodes`
     :return:
     """
 
@@ -119,7 +125,13 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
     collect_all_safe_resources_in_reach(previous_reach)
     initial_state = previous_reach.state
 
-    previous_safe_nodes = set(previous_reach.safe_nodes)
+    def safe_nodes(reach: GeneratorReach) -> set[Node]:
+        if filter_resource_nodes:
+            return set(reach.safe_uncollected_resource_nodes)
+        else:
+            return set(reach.safe_nodes)
+
+    previous_safe_nodes = safe_nodes(previous_reach)
 
     for action in get_collectable_resource_nodes_of_reach(previous_reach):
         # print("Trying to collect {} and it's not dangerous. Copying...".format(action.name))
@@ -127,18 +139,20 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
         next_reach.act_on(action)
         collect_all_safe_resources_in_reach(next_reach)
 
-        if previous_safe_nodes <= set(next_reach.safe_nodes):
+        if previous_safe_nodes <= safe_nodes(next_reach):
             # print("Non-safe {} was good".format(logic.game.node_name(action)))
-            return advance_reach_with_possible_unsafe_resources(next_reach)
+            return advance_reach_with_possible_unsafe_resources(next_reach, filter_resource_nodes=filter_resource_nodes)
 
         if next_reach.is_reachable_node(initial_state.node):
             next_next_state = next_reach.state.copy()
             next_next_state.node = initial_state.node
 
-            next_reach = reach_with_all_safe_resources(game, next_next_state)
-            if previous_safe_nodes <= set(next_reach.safe_nodes):
+            next_reach = reach_with_all_safe_resources(game, next_next_state, previous_reach.filler_config)
+            if previous_safe_nodes <= safe_nodes(next_reach):
                 # print("Non-safe {} could reach back to where we were".format(logic.game.node_name(action)))
-                return advance_reach_with_possible_unsafe_resources(next_reach)
+                return advance_reach_with_possible_unsafe_resources(
+                    next_reach, filter_resource_nodes=filter_resource_nodes
+                )
         else:
             pass
 
@@ -155,6 +169,10 @@ def advance_to_with_reach_copy(base_reach: GeneratorReach, state: State) -> Gene
     """
     potential_reach = copy.deepcopy(base_reach)
     potential_reach.advance_to(state)
-    collect_all_safe_resources_in_reach(potential_reach)
-    return potential_reach
-    # return advance_reach_with_possible_unsafe_resources(potential_reach)
+
+    if potential_reach.filler_config.consider_possible_unsafe_resources:
+        return advance_reach_with_possible_unsafe_resources(potential_reach, filter_resource_nodes=True)
+
+    else:
+        collect_all_safe_resources_in_reach(potential_reach)
+        return potential_reach

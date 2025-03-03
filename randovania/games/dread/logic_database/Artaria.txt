@@ -307,6 +307,10 @@ Extra - asset_id: collision_camera_003
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Pickup (Missile Tank 2)
       Trivial
+  > Event - Proto EMMI Blob (East Side)
+      Any of the following:
+          After Artaria - Proto EMMI Blob or Shoot Diffusion or Wave
+          Morph Ball and Wide Beam and Pseudo-Wave Beam (Intermediate) and Shoot Charge Beam
   > West of Blob
       Morph Ball and After Artaria - Proto EMMI Blob
 
@@ -608,6 +612,13 @@ Extra - asset_id: collision_camera_006
           # Spider ceiling wall here. Probably don't need an event for it.
           Spider Magnet or Simple IBJ or Use Spin Boost
           Speed Booster and Disabled Door Lock Randomizer
+          All of the following:
+              # https://www.youtube.com/watch?v=DygpVK2XWJM
+              Grapple Beam
+              Any of the following:
+                  # a lot more lenient with a walljump
+                  Grapple Movement (Intermediate)
+                  Grapple Movement (Beginner) and Wall Jump (Beginner)
   > Door to EMMI Zone Ballspark Hallway
       Any of the following:
           Flash Shift or Simple IBJ or Use Spin Boost
@@ -1825,8 +1836,10 @@ Extra - asset_id: collision_camera_017
   * Extra - right_shield_def: None
   > Door to EMMI Zone Spinner (Middle)
       Any of the following:
-          Speed Booster or Simple IBJ or Use Spin Boost
-          Flash Shift and Wall Jump (Beginner)
+          Space Jump or Speed Booster or Simple IBJ
+          All of the following:
+              Wall Jump (Beginner)
+              Flash Shift or Use Spin Boost
           All of the following:
               Stand on Frozen Enemy (Intermediate) and Wall Jump (Advanced) and Shoot Ice Missile
               After Artaria - Central Unit or After Elun - Release X Parasites
@@ -2903,10 +2916,12 @@ Extra - asset_id: collision_camera_048
           Spider Magnet or Simple IBJ or Use Spin Boost
           Grapple Beam and Grapple Movement (Beginner)
           Speed Booster and Disabled Door Lock Randomizer
-  > Event - EMMI Single Use Slide
+  > Event - EMMI Single Use Slide Down
       Before Artaria - EMMI Single Use Slide and Can Slide
   > Start Point
       Trivial
+  > Event - EMMI Single Use Slide Up
+      After Artaria - EMMI Single Use Slide
 
 > Door to EMMI Zone Exit Northwest; Heals? False
   * Layers: default
@@ -2944,7 +2959,9 @@ Extra - asset_id: collision_camera_048
       Shoot Beam
   > Tunnel to EMMI Zone Exit North
       Morph Ball and After Artaria - Slide Alternative Blob
-  > Event - EMMI Single Use Slide
+  > Event - EMMI Single Use Slide Down
+      After Artaria - EMMI Single Use Slide and Can Slide
+  > Event - EMMI Single Use Slide Up
       Morph Ball and Before Artaria - EMMI Single Use Slide
 
 > Tunnel to EMMI Zone Exit North; Heals? False
@@ -2953,11 +2970,9 @@ Extra - asset_id: collision_camera_048
   > Below Slide
       Morph Ball and After Artaria - Slide Alternative Blob
 
-> Event - EMMI Single Use Slide; Heals? False
+> Event - EMMI Single Use Slide Down; Heals? False
   * Layers: default
   * Event Artaria - EMMI Single Use Slide
-  > Door to EMMI Zone Exit North
-      Morph Ball
   > Below Slide
       Can Slide
 
@@ -2975,6 +2990,12 @@ Extra - asset_id: collision_camera_048
   * Extra - actor_def: actordef:actors/props/breakablecave009/charclasses/breakablecave009.bmsad
   > Start Point
       Trivial
+
+> Event - EMMI Single Use Slide Up; Heals? False
+  * Layers: default
+  * Event Artaria - EMMI Single Use Slide
+  > Door to EMMI Zone Exit North
+      Morph Ball
 
 ----------------
 Central Unit Access
@@ -3368,7 +3389,7 @@ Extra - asset_id: collision_camera_056
   * Extra - right_shield_def: None
   > Dock to Water Tunnel under Map
       Trivial
-  > Event - Prepare Speeboost in Map Station
+  > Event - Prepare Speedboost in Map Station
       Disabled Door Lock Randomizer
 
 > Door to Save Station West; Heals? False
@@ -3526,7 +3547,7 @@ Extra - asset_id: collision_camera_056
   > Right of Rotatable
       Trivial
 
-> Event - Prepare Speeboost in Map Station; Heals? False
+> Event - Prepare Speedboost in Map Station; Heals? False
   * Layers: default
   * Event Artaria - Prepare Speed Booster in Map Station
   > Door to Map Station
@@ -4331,7 +4352,8 @@ Extra - asset_id: collision_camera_071
   * Extra - right_shield_def: None
   > Door to Teleport to Dairon (Top)
       Any of the following:
-          Flash Shift or Simple IBJ or Use Spin Boost
+          Flash Shift or Space Jump or Simple IBJ
+          Wall Jump (Beginner) and Use Spin Boost
           Morph Ball and Single-wall Wall Jump (Intermediate)
           Speed Booster and Disabled Door Lock Randomizer
   > Door to Teleport to Dairon (Bottom)
@@ -4810,18 +4832,43 @@ Extra - asset_id: collision_camera_081
   * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Next to Upper Tank
+  > Start Point 2
       All of the following:
-          Before Artaria - Screw Attack Rotatable
+          Speed Booster and Speed Booster Conservation (Beginner) and Disabled Door Lock Randomizer and Shoot Missile
           Any of the following:
-              Flash Shift or Movement (Beginner) or Lay Cross Bomb
-              Speed Booster and Shoot Missile
+              # https://youtu.be/VgTURzSZz8I
+              Screw Attack
+              # https://youtu.be/T4hIL-R_0p0
+              Morph Ball and Slide and Movement (Beginner)
+  > Next to Upper Tank
+      Any of the following:
+          All of the following:
+              Before Artaria - Screw Attack Rotatable and Enabled Highly Dangerous Logic
+              Any of the following:
+                  Flash Shift or Movement (Beginner) or Lay Cross Bomb
+                  Speed Booster and Disabled Door Lock Randomizer and Shoot Missile
+          All of the following:
+              Speed Booster and After Artaria - Screw Attack Rotatable and Speed Booster Conservation (Beginner) and Disabled Door Lock Randomizer and Shoot Missile
+              Any of the following:
+                  # https://youtu.be/F2L7qs1uP90
+                  Screw Attack
+                  # https://youtu.be/QJuxx0SSQMI
+                  Gravity Suit and Morph Ball
   > Event - Screw Attack Rotatable
-      Before Artaria - Screw Attack Rotatable
+      Any of the following:
+          Before Artaria - Screw Attack Rotatable
+          # Technically only possible when turning the flipper. This keeps the event safe and assumes there are no bad consequences.
+          Disabled Highly Dangerous Logic
   > Under left side blocks
       All of the following:
           After Artaria - Screw Attack Rotatable
           Morph Ball or Screw Attack
+  > Event - Screw Attack Rotatable to left of water
+      All of the following:
+          Speed Booster and Speed Booster Conservation (Beginner) and Disabled Door Lock Randomizer and Shoot Missile
+          Any of the following:
+              Screw Attack
+              Before Artaria - Screw Attack Rotatable and Enabled Highly Dangerous Logic
 
 > Pickup (Missile Tank, Underwater); Heals? False
   * Layers: default
@@ -4901,9 +4948,7 @@ Extra - asset_id: collision_camera_081
   > Next to Upper Tank
       All of the following:
           After Artaria - Screw Attack Rotatable
-          Any of the following:
-              Space Jump or Simple IBJ
-              Wall Jump (Beginner) and Use Spin Boost
+          Simple IBJ or Use Spin Boost
   > Event - Screw Attack Rotatable
       All of the following:
           Knowledge (Intermediate)
@@ -4914,7 +4959,7 @@ Extra - asset_id: collision_camera_081
           Water Bomb Jump (Beginner) and Lay Cross Bomb
           Water Bomb Jump (Intermediate) and Lay Normal Bomb
           All of the following:
-              Before Artaria - Screw Attack Rotatable
+              Before Artaria - Screw Attack Rotatable and Enabled Highly Dangerous Logic
               Simple IBJ or Use Spin Boost
               Morph Ball or Screw Attack
 
@@ -4994,17 +5039,17 @@ Extra - asset_id: collision_camera_081
           All of the following:
               Gravity Suit
               Any of the following:
-                  Before Artaria - Screw Attack Water Blob
+                  Before Artaria - Screw Attack Water Blob and Enabled Highly Dangerous Logic
                   All of the following:
                       After Artaria - Screw Attack Water Blob
                       Simple IBJ or Use Spin Boost
-          Before Artaria - Screw Attack Water Blob and Perform WBJ
+          Before Artaria - Screw Attack Water Blob and Enabled Highly Dangerous Logic and Perform WBJ
   > Blob - Right
       After Artaria - Screw Attack Water Blob
   > Early SA Platform
       Any of the following:
           Gravity Suit or Perform WBJ
-          Before Artaria - Screw Attack Water Blob and Use Spin Boost
+          Before Artaria - Screw Attack Water Blob and Enabled Highly Dangerous Logic and Use Spin Boost
 
 > Next to Upper Tank; Heals? False
   * Layers: default
@@ -5012,7 +5057,7 @@ Extra - asset_id: collision_camera_081
       Trivial
   > Door to Transport to Burenia
       All of the following:
-          Before Artaria - Screw Attack Rotatable
+          Before Artaria - Screw Attack Rotatable and Enabled Highly Dangerous Logic
           Flash Shift or Movement (Beginner) or Lay Cross Bomb
   > Total Recharge
       After Artaria - Screw Attack Rotatable
@@ -5035,9 +5080,11 @@ Extra - asset_id: collision_camera_081
       Any of the following:
           Gravity Suit or Perform WBJ
           Infinite Bomb Jump (Beginner) and Lay Cross Bomb
-          Screw Attack and Before Artaria - Screw Attack Rotatable
+          Screw Attack and Before Artaria - Screw Attack Rotatable and Enabled Highly Dangerous Logic
   > Early SA Platform
       Trivial
+  > Event - Screw Attack Rotatable to left of water
+      After Artaria - Screw Attack Rotatable
 
 > Tunnel to Shortcut to Screw Attack; Heals? False
   * Layers: default
@@ -5051,6 +5098,12 @@ Extra - asset_id: collision_camera_081
       Space Jump and Water Space Jump (Intermediate)
   > Blob - Left
       Trivial
+  > Under left side blocks
+      Trivial
+
+> Event - Screw Attack Rotatable to left of water; Heals? False
+  * Layers: default
+  * Event Artaria - Screw Attack Rotatable
   > Under left side blocks
       Trivial
 

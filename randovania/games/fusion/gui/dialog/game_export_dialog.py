@@ -9,6 +9,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.games.fusion.exporter.game_exporter import FusionGameExportParams
 from randovania.games.fusion.exporter.options import FusionPerGameOptions
 from randovania.games.fusion.gui.generated.fusion_game_export_dialog_ui import Ui_FusionGameExportDialog
+from randovania.games.fusion.layout import FusionConfiguration
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     add_field_validation,
@@ -44,7 +45,7 @@ def is_fusion_validator(path: Path | None) -> bool:
         return True
 
 
-class FusionGameExportDialog(GameExportDialog, Ui_FusionGameExportDialog):
+class FusionGameExportDialog(GameExportDialog[FusionConfiguration], Ui_FusionGameExportDialog):
     """A window for asking the user for what is needed to export this specific game.
 
     The provided implementation assumes you need an ISO/ROM file, and produces a new ISO/ROM file."""
@@ -53,12 +54,18 @@ class FusionGameExportDialog(GameExportDialog, Ui_FusionGameExportDialog):
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.FUSION
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
-        super().__init__(options, patch_data, word_hash, spoiler, games)
+    def __init__(
+        self,
+        options: Options,
+        configuration: FusionConfiguration,
+        word_hash: str,
+        spoiler: bool,
+        games: list[RandovaniaGame],
+    ):
+        super().__init__(options, configuration, word_hash, spoiler, games)
 
         self._base_output_name = f"Fusion - {word_hash}.{self.valid_file_type}"
-        fusion_options = options.options_for_game(self.game_enum())
-        assert isinstance(fusion_options, FusionPerGameOptions)
+        fusion_options = options.per_game_options(FusionPerGameOptions)
 
         # Input
         self.input_file_button.clicked.connect(self._on_input_file_button)

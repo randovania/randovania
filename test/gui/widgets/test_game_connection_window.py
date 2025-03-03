@@ -142,10 +142,10 @@ async def test_add_connector_builder_dread(window: GameConnectionWindow, abort, 
         assert window.game_connection.add_connection_builder.call_args[0][0].ip == "my_ip"
 
 
-@pytest.mark.parametrize("system", ["Darwin", "Windows"])
+@pytest.mark.parametrize("system", ["darwin", "win32"])
 def test_setup_builder_ui_all_builders(skip_qtbot, system, mocker: MockerFixture, is_dev_version, is_frozen):
     # Setup
-    mocker.patch("platform.system", return_value=system)
+    mocker.patch("sys.platform", system)
 
     game_connection = MagicMock()
     game_connection.connection_builders = [
@@ -163,7 +163,7 @@ def test_setup_builder_ui_all_builders(skip_qtbot, system, mocker: MockerFixture
 
     # Assert
     has_debug = ConnectorBuilderChoice.DEBUG.is_usable()
-    if system == "Darwin":
+    if system == "darwin":
         print(list(window.ui_for_builder.keys()))
         assert len(window.ui_for_builder) == 1 + has_debug
     else:

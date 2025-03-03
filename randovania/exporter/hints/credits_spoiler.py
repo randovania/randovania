@@ -15,13 +15,13 @@ if TYPE_CHECKING:
 
 
 class OwnedPickupLocation(NamedTuple):
-    player_name: str | None
+    world_name: str | None
     location: PickupLocation
 
     def export(self, namer: HintNamer, use_player_color: bool = True) -> str:
         hint = namer.format_location(self.location, with_region=True, with_area=True, with_color=False)
-        if self.player_name is not None:
-            hint = f"{namer.format_player(self.player_name, with_color=use_player_color)}'s {hint}"
+        if self.world_name is not None:
+            hint = f"{namer.format_world(self.world_name, with_color=use_player_color)}'s {hint}"
         return hint
 
 
@@ -36,8 +36,7 @@ def get_locations_for_major_pickups_and_keys(
             if target.player != players_config.player_index:
                 continue
 
-            pickup_category = target.pickup.pickup_category
-            if pickup_category.hinted_as_major or pickup_category.is_key:
+            if target.pickup.show_in_credits_spoiler:
                 player_name = None
                 if players_config.is_multiworld:
                     player_name = players_config.player_names[player_index]
@@ -50,7 +49,7 @@ def get_locations_for_major_pickups_and_keys(
 
 
 def starting_pickups_with_count(patches: GamePatches) -> dict[PickupEntry, int]:
-    result = collections.defaultdict(int)
+    result: dict[PickupEntry, int] = collections.defaultdict(int)
 
     if not isinstance(patches.starting_equipment, list):
         return {}
@@ -76,7 +75,7 @@ def generic_credits(
         pickup.name: index for index, pickup in enumerate(standard_pickup_configuration.pickups_state.keys())
     }
 
-    def sort_pickup(p: PickupEntry):
+    def sort_pickup(p: PickupEntry) -> tuple[float, str]:
         return major_pickup_name_order.get(p.name, math.inf), p.name
 
     details = get_locations_for_major_pickups_and_keys(all_patches, players_config)

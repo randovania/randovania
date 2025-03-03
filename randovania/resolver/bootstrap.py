@@ -15,9 +15,9 @@ if TYPE_CHECKING:
     from collections.abc import Callable
     from random import Random
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.pickup.pickup_category import PickupCategory
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
@@ -32,7 +32,7 @@ class EnergyConfig(NamedTuple):
     energy_per_tank: int
 
 
-class Bootstrap:
+class Bootstrap[Configuration: BaseConfiguration]:
     def trick_resources_for_configuration(
         self,
         configuration: TrickLevelConfiguration,
@@ -58,7 +58,7 @@ class Bootstrap:
 
     def event_resources_for_configuration(
         self,
-        configuration: BaseConfiguration,
+        configuration: Configuration,
         resource_database: ResourceDatabase,
     ) -> ResourceGain:
         yield from []
@@ -97,7 +97,7 @@ class Bootstrap:
             ]
         )
 
-    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
+    def create_damage_state(self, game: GameDescription, configuration: Configuration) -> DamageState:
         """
         Creates a DamageState for the given configuration.
         :param game:
@@ -107,7 +107,7 @@ class Bootstrap:
         raise NotImplementedError
 
     def calculate_starting_state(
-        self, game: GameDescription, patches: GamePatches, configuration: BaseConfiguration
+        self, game: GameDescription, patches: GamePatches, configuration: Configuration
     ) -> State:
         starting_node = game.region_list.node_by_identifier(patches.starting_location)
 
@@ -129,7 +129,9 @@ class Bootstrap:
         starting_state = State(
             initial_resources,
             (),
-            self.create_damage_state(game, configuration),
+            self.create_damage_state(game, configuration).apply_collected_resource_difference(
+                initial_resources, ResourceCollection()
+            ),
             starting_node,
             patches,
             None,
@@ -143,7 +145,7 @@ class Bootstrap:
         return starting_state
 
     def version_resources_for_game(
-        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+        self, configuration: Configuration, resource_database: ResourceDatabase
     ) -> ResourceGain:
         """
         Determines which Version resources should be enabled, according to the configuration.
@@ -154,7 +156,7 @@ class Bootstrap:
             yield resource, 1 if resource.long_name == "NTSC" else 0
 
     def _get_enabled_misc_resources(
-        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+        self, configuration: Configuration, resource_database: ResourceDatabase
     ) -> set[str]:
         """
         Returns a set of strings corresponding to Misc resource short names which should be enabled.
@@ -163,7 +165,7 @@ class Bootstrap:
         return set()
 
     def misc_resources_for_configuration(
-        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+        self, configuration: Configuration, resource_database: ResourceDatabase
     ) -> ResourceGain:
         """
         Determines which Misc resources should be enabled, according to the configuration.
@@ -172,7 +174,7 @@ class Bootstrap:
         for resource in resource_database.misc:
             yield resource, 1 if resource.short_name in enabled_resources else 0
 
-    def patch_resource_database(self, db: ResourceDatabase, configuration: BaseConfiguration) -> ResourceDatabase:
+    def patch_resource_database(self, db: ResourceDatabase, configuration: Configuration) -> ResourceDatabase:
         """
         Makes modifications to the resource database according to the configuration.
         Requirement templates and damage reductions are common candidates for modification.
@@ -182,7 +184,7 @@ class Bootstrap:
 
     def logic_bootstrap(
         self,
-        configuration: BaseConfiguration,
+        configuration: Configuration,
         game: GameDescription,
         patches: GamePatches,
     ) -> tuple[GameDescription, State]:
@@ -223,20 +225,22 @@ class Bootstrap:
         return game, starting_state
 
     def apply_game_specific_patches(
-        self, configuration: BaseConfiguration, game: GameDescription, patches: GamePatches
+        self, configuration: Configuration, game: GameDescription, patches: GamePatches
     ) -> None:
         pass
 
-    def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
+    def assign_pool_results(
+        self, rng: Random, configuration: Configuration, patches: GamePatches, pool_results: PoolResults
+    ) -> GamePatches:
         return patches.assign_own_pickups(pool_results.assignment.items()).assign_extra_starting_pickups(
             pool_results.starting
         )
 
-    def all_preplaced_item_locations(
+    def all_preplaced_pickup_locations(
         self,
         game: GameDescription,
-        config: BaseConfiguration,
-        game_specific_check: Callable[[PickupNode, BaseConfiguration], bool],
+        config: Configuration,
+        game_specific_check: Callable[[PickupNode, Configuration], bool],
     ) -> list[PickupNode]:
         locations = []
 
@@ -246,22 +250,26 @@ class Bootstrap:
 
         return locations
 
-    def pre_place_items(
+    def pre_place_pickups(
         self,
         rng: Random,
         locations: list[PickupNode],
         pool_results: PoolResults,
-        item_category: PickupCategory,
+        item_category: str,
+        game: RandovaniaGame,
     ) -> None:
         pre_placed_indices = list(pool_results.assignment.keys())
         reduced_locations = [loc for loc in locations if loc.pickup_index not in pre_placed_indices]
 
         rng.shuffle(reduced_locations)
 
-        all_artifacts = [pickup for pickup in list(pool_results.to_place) if pickup.pickup_category is item_category]
+        pickup_database = default_database.pickup_database_for_game(game)
+        category = pickup_database.pickup_categories[item_category]
+
+        all_artifacts = [pickup for pickup in list(pool_results.to_place) if pickup.gui_category is category]
         if len(all_artifacts) > len(reduced_locations):
             raise InvalidConfiguration(
-                f"Has {len(all_artifacts)} {item_category.long_name} in the pool, "
+                f"Has {len(all_artifacts)} {category.long_name} in the pool, "
                 f"but only {len(reduced_locations)} valid locations."
             )
 

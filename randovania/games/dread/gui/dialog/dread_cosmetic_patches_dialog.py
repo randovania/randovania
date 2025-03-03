@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from functools import partial
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.games.dread.gui.generated.dread_cosmetic_patches_dialog_ui import Ui_DreadCosmeticPatchesDialog
 from randovania.games.dread.layout.dread_cosmetic_patches import (
@@ -19,13 +19,10 @@ if TYPE_CHECKING:
     from PySide6 import QtWidgets
 
 
-class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatchesDialog):
-    _cosmetic_patches: DreadCosmeticPatches
-
+class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog[DreadCosmeticPatches], Ui_DreadCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: DreadCosmeticPatches):
-        super().__init__(parent)
+        super().__init__(parent, current)
         self.setupUi(self)
-        self._cosmetic_patches = current
 
         for room_gui_type in DreadRoomGuiType:
             self.room_names_dropdown.addItem(room_gui_type.long_name, room_gui_type)
@@ -47,6 +44,11 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
 
         self.connect_signals()
         self.on_new_cosmetic_patches(current)
+
+    @classmethod
+    @override
+    def cosmetic_patches_type(cls) -> type[DreadCosmeticPatches]:
+        return DreadCosmeticPatches
 
     def connect_signals(self) -> None:
         super().connect_signals()

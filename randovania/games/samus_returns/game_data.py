@@ -9,6 +9,7 @@ import randovania.game.gui
 import randovania.game.layout
 import randovania.game.web_info
 from randovania.games.samus_returns import layout
+from randovania.games.samus_returns.db_integrity import find_msr_db_errors
 from randovania.games.samus_returns.layout import progressive_items
 from randovania.games.samus_returns.layout.preset_describer import MSRPresetDescriber
 
@@ -26,6 +27,7 @@ def _options() -> type[PerGameOptions]:
 
 def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.samus_returns import gui
+    from randovania.gui.game_details.hint_details_tab import HintDetailsTab
 
     return randovania.game.gui.GameGui(
         game_tab=gui.MSRGameTabWidget,
@@ -33,7 +35,7 @@ def _gui() -> randovania.game.gui.GameGui:
         cosmetic_dialog=gui.MSRCosmeticPatchesDialog,
         export_dialog=gui.MSRGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(gui.MSRHintDetailsTab, gui.MSRTeleporterDetailsTab),
+        spoiler_visualizer=(HintDetailsTab, gui.MSRTeleporterDetailsTab),
     )
 
 
@@ -157,7 +159,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
         ],
         need_to_play=[
             "A modded 3DS with Luma3DS, or Citra",
-            "A dumped RomFS of your original game. Any region works.",
+            "A decrypted copy of your original game. Currently, only the NA and EU versions are supported.",
         ],
     ),
     hash_words=_hash_words(),
@@ -173,4 +175,5 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     exporter=_exporter,
     defaults_available_in_game_sessions=True,
     multiple_start_nodes_per_area=True,
+    logic_db_integrity=find_msr_db_errors,
 )

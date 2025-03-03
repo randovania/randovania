@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import pytest
 
-from randovania.games.am2r.generator.pool_creator import artifact_pool, create_am2r_artifact
+from randovania.games.am2r.generator.pool_creator import artifact_pool
 from randovania.games.am2r.layout.am2r_configuration import AM2RArtifactConfig
 from randovania.generator.pickup_pool import PoolResults
+from randovania.generator.pickup_pool.pickup_creator import create_generated_pickup
 from randovania.layout.exceptions import InvalidConfiguration
 
 
@@ -16,9 +17,9 @@ def test_am2r_pool_creator(am2r_game_description, required_dna, placed_dna):
 
     # Assert
     assert results == PoolResults(
-        [create_am2r_artifact(i, db) for i in range(required_dna)],
+        [create_generated_pickup("Metroid DNA", db, i=i + 1) for i in range(required_dna)],
         {},
-        [create_am2r_artifact(i, db) for i in range(required_dna, 46)],
+        [create_generated_pickup("Metroid DNA", db, i=i + 1) for i in range(required_dna, 46)],
     )
 
 

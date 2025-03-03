@@ -135,33 +135,40 @@ class Editor:
     def rename_node(self, area: Area, node: Node, new_name: str) -> None:
         self.replace_node(area, node, dataclasses.replace(node, identifier=node.identifier.renamed(new_name)))
 
+    def replace_area(self, old_area: Area, new_area: Area) -> None:
+        """
+        "Safely" replaces an area with a new one, attempting
+        to update anything that might be broken by such a change
+        """
+        current_region = self.game.region_list.region_with_area(old_area)
+
+        if old_area.name != new_area.name:
+            # rename Area
+            def identifier_replacer(old: NodeIdentifier) -> NodeIdentifier:
+                if (old.region, old.area) == (current_region.name, old_area.name):
+                    return NodeIdentifier.create(
+                        old.region,
+                        new_area.name,
+                        old.node,
+                    )
+                else:
+                    return old
+
+            self.replace_identifiers(identifier_replacer)
+
+            for node in new_area.nodes:
+                self.replace_node(
+                    new_area, node, dataclasses.replace(node, identifier=identifier_replacer(node.identifier))
+                )
+
+        current_region.areas[current_region.areas.index(old_area)] = new_area
+        self.game.region_list.invalidate_node_cache()
+
     def rename_area(self, current_area: Area, new_name: str) -> None:
         if current_area.name == new_name:
             return
 
-        current_region = self.game.region_list.region_with_area(current_area)
-
-        def identifier_replacer(old: NodeIdentifier) -> NodeIdentifier:
-            if (old.region, old.area) == (current_region.name, current_area.name):
-                return NodeIdentifier.create(
-                    old.region,
-                    new_name,
-                    old.node,
-                )
-            else:
-                return old
-
-        self.replace_identifiers(identifier_replacer)
-
-        new_area = dataclasses.replace(current_area, name=new_name)
-        current_region.areas[current_region.areas.index(current_area)] = new_area
-
-        for node in new_area.nodes:
-            self.replace_node(
-                new_area, node, dataclasses.replace(node, identifier=identifier_replacer(node.identifier))
-            )
-
-        self.game.region_list.invalidate_node_cache()
+        self.replace_area(current_area, dataclasses.replace(current_area, name=new_name))
 
     def replace_identifiers(self, replacer: Callable[[NodeIdentifier], NodeIdentifier]) -> None:
         """

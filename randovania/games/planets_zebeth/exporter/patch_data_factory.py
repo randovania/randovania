@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import textwrap
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler
@@ -26,6 +26,11 @@ MAX_CHARS_LIMIT_FOR_INGAME_MESSAGE_BOX = 33
 class PlanetsZebethPatchDataFactory(PatchDataFactory):
     cosmetic_patches: PlanetsZebethCosmeticPatches
     configuration: PlanetsZebethConfiguration
+
+    @override
+    @classmethod
+    def hint_namer_type(cls) -> type[PlanetsZebethHintNamer]:
+        return PlanetsZebethHintNamer
 
     def _create_pickups_dict(self, pickup_list: list[ExportedPickupDetails], _rng: Random) -> dict:
         pickup_map_dict = {}

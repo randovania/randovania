@@ -29,7 +29,7 @@ def _add_parser_arguments_for(
             arg_kwargs["action"] = "store_true"
             arg_kwargs["required"] = False
 
-        elif issubclass(type_, enum.Enum):
+        elif isinstance(type_, type) and issubclass(type_, enum.Enum):
             arg_kwargs["type"] = type_
             arg_kwargs["required"] = not is_optional
             arg_kwargs["action"] = EnumAction

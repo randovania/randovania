@@ -14,6 +14,7 @@ from randovania.game_connection.executor.cs_executor import CSExecutor, CSServer
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.interface_common.players_configuration import INVALID_UUID
+from randovania.network_common.remote_pickup import RemotePickup
 
 
 @pytest.fixture(name="connector")
@@ -141,9 +142,12 @@ async def test_update_inventory(connector: CSRemoteConnector, has_item: bool, ha
 async def test_set_remote_pickups(connector: CSRemoteConnector, cs_panties_pickup):
     assert isinstance(connector.executor, MagicMock)
 
-    pickup_entry_with_owner = (("Dummy 1", cs_panties_pickup), ("Dummy 2", cs_panties_pickup))
-    await connector.set_remote_pickups(pickup_entry_with_owner)
-    assert connector.remote_pickups == pickup_entry_with_owner
+    remote_pickups = (
+        RemotePickup("Dummy 1", cs_panties_pickup, None),
+        RemotePickup("Dummy 2", cs_panties_pickup, None),
+    )
+    await connector.set_remote_pickups(remote_pickups)
+    assert connector.remote_pickups == remote_pickups
 
 
 async def test_receive_items(connector: CSRemoteConnector, cs_panties_pickup):
@@ -175,8 +179,11 @@ async def test_receive_items(connector: CSRemoteConnector, cs_panties_pickup):
     await connector._receive_items()
     connector.executor.exec_script.assert_not_awaited()
 
-    pickup_entry_with_owner = (("Dummy 1", cs_panties_pickup), ("Dummy 2", cs_panties_pickup))
-    connector.remote_pickups = pickup_entry_with_owner
+    remote_pickups = (
+        RemotePickup("Dummy 1", cs_panties_pickup, None),
+        RemotePickup("Dummy 2", cs_panties_pickup, None),
+    )
+    connector.remote_pickups = remote_pickups
 
     # send first item
     await connector._receive_items()

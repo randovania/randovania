@@ -12,6 +12,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.games.dread.exporter.game_exporter import DreadGameExportParams, DreadModPlatform, LinuxRyujinxPath
 from randovania.games.dread.exporter.options import DreadPerGameOptions
 from randovania.games.dread.gui.generated.dread_game_export_dialog_ui import Ui_DreadGameExportDialog
+from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     is_directory_validator,
@@ -31,7 +32,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
     from randovania.exporter.game_exporter import GameExportParams
-    from randovania.interface_common.options import Options
+    from randovania.interface_common.options import Options, PerGameOptions
 
 
 def return_linux_only_controls() -> set[str]:
@@ -54,17 +55,19 @@ def decode_path(s: str | None) -> Path | None:
     return Path(s)
 
 
-def add_validation(edit: QtWidgets.QLineEdit, validation: Callable[[], bool], post_validation: Callable[[], None]):
-    def field_validation():
+def add_validation(
+    edit: QtWidgets.QLineEdit, validation: Callable[[], bool], post_validation: Callable[[], None]
+) -> None:
+    def field_validation() -> None:
         common_qt_lib.set_error_border_stylesheet(edit, not validation())
         post_validation()
 
     common_qt_lib.set_error_border_stylesheet(edit, False)
-    edit.field_validation = field_validation
+    setattr(edit, "field_validation", field_validation)
     edit.textChanged.connect(field_validation)
 
 
-def romfs_validation(line: QtWidgets.QLineEdit):
+def romfs_validation(line: QtWidgets.QLineEdit) -> bool:
     if is_directory_validator(line):
         return True
 
@@ -84,7 +87,7 @@ def romfs_validation(line: QtWidgets.QLineEdit):
     )
 
 
-class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
+class DreadGameExportDialog(GameExportDialog[DreadConfiguration], Ui_DreadGameExportDialog):
     def get_path_to_ryujinx(self) -> Path:
         ryujinx_path_tuple = ("Ryujinx", "mods", "contents", "010093801237c000")
         match (platform.system(), self.linux_ryujinx_path):
@@ -119,14 +122,20 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         raise ValueError("Unsupported platform")
 
     @classmethod
-    def game_enum(cls):
+    def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_DREAD
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
-        super().__init__(options, patch_data, word_hash, spoiler, games)
+    def __init__(
+        self,
+        options: Options,
+        configuration: DreadConfiguration,
+        word_hash: str,
+        spoiler: bool,
+        games: list[RandovaniaGame],
+    ):
+        super().__init__(options, configuration, word_hash, spoiler, games)
 
-        per_game = options.options_for_game(self.game_enum())
-        assert isinstance(per_game, DreadPerGameOptions)
+        per_game = options.per_game_options(DreadPerGameOptions)
 
         self._validate_input_file()
         self._validate_custom_path()
@@ -247,7 +256,9 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
         self.update_accept_validation()
 
-    def update_per_game_options(self, per_game: DreadPerGameOptions) -> DreadPerGameOptions:
+    def update_per_game_options(self, per_game: PerGameOptions) -> DreadPerGameOptions:
+        assert isinstance(per_game, DreadPerGameOptions)
+
         selected_tab = self.output_tab_widget.currentWidget()
         output_preference = json.dumps(
             {
@@ -270,7 +281,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
     # Update
 
-    def _on_update_target_platform(self):
+    def _on_update_target_platform(self) -> None:
         target_platform = self.target_platform
 
         self.output_tab_widget.setTabVisible(
@@ -298,7 +309,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
     # Getters
     @property
-    def input_file(self) -> Path:
+    def input_file(self) -> Path | None:
         return path_in_edit(self.input_file_edit)
 
     @property
@@ -321,14 +332,14 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
     # Input file
 
-    def _validate_input_file(self):
+    def _validate_input_file(self) -> None:
         common_qt_lib.set_error_border_stylesheet(self.input_file_edit, romfs_validation(self.input_file_edit))
 
-    def _on_input_file_change(self):
+    def _on_input_file_change(self) -> None:
         self._validate_input_file()
         self.update_accept_validation()
 
-    def _on_input_file_button(self):
+    def _on_input_file_button(self) -> None:
         input_file = prompt_for_input_directory(self, self.input_file_edit)
         if input_file is not None:
             self.input_file_edit.setText(str(input_file.absolute()))
@@ -341,7 +352,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         else:
             return root_path.joinpath("atmosphere")
 
-    def refresh_drive_list(self):
+    def refresh_drive_list(self) -> None:
         old_value = self.sd_combo.currentText()
 
         self.sd_combo.clear()
@@ -359,7 +370,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         if index >= 0:
             self.sd_combo.setCurrentIndex(index)
 
-    def sd_restore_options(self, options: dict):
+    def sd_restore_options(self, options: dict) -> None:
         self.sd_mod_manager_check.setChecked(options["mod_manager"])
 
         self.sd_non_removable.setChecked(options["non_removable"])
@@ -372,7 +383,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
                 break
 
     # Ryujinx
-    def update_ryujinx_ui(self):
+    def update_ryujinx_ui(self) -> None:
         if supports_ryujinx():
             self.ryujinx_label.setText(
                 self.ryujinx_label.text().format(
@@ -381,14 +392,14 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
             )
 
     # FTP
-    def ftp_on_anonymous_check(self):
+    def ftp_on_anonymous_check(self) -> None:
         self.ftp_username_edit.setEnabled(not self.ftp_anonymous_check.isChecked())
         self.ftp_password_edit.setEnabled(not self.ftp_anonymous_check.isChecked())
         update_validation(self.ftp_username_edit)
         update_validation(self.ftp_password_edit)
         self.update_accept_validation()
 
-    def ftp_restore_options(self, options: dict):
+    def ftp_restore_options(self, options: dict) -> None:
         self.ftp_anonymous_check.setChecked(options["anonymous"])
         self.ftp_username_edit.setText(options["username"])
         self.ftp_password_edit.setText(options["password"])
@@ -396,13 +407,13 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         self.ftp_port_edit.setText(str(options["port"]))
         self.ftp_on_anonymous_check()
 
-    def ftp_is_valid(self):
+    def ftp_is_valid(self) -> bool:
         return not any(x.has_error for x in [self.ftp_username_edit, self.ftp_password_edit, self.ftp_ip_edit])
 
-    def _get_ftp_internal_path(self):
+    def _get_ftp_internal_path(self) -> Path:
         return self._options.internal_copies_path.joinpath("dread", "contents")
 
-    def get_ftp_uploader(self):
+    def get_ftp_uploader(self) -> FtpUploader:
         if self.ftp_anonymous_check.isChecked():
             auth = None
         else:
@@ -417,7 +428,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         )
 
     # Custom Path
-    def _validate_custom_path(self):
+    def _validate_custom_path(self) -> None:
         common_qt_lib.set_error_border_stylesheet(
             self.custom_path_edit,
             (
@@ -426,22 +437,22 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
             ),
         )
 
-    def _on_custom_path_change(self):
+    def _on_custom_path_change(self) -> None:
         self._validate_custom_path()
         self.update_accept_validation()
 
-    def _on_custom_path_button(self):
+    def _on_custom_path_button(self) -> None:
         output_file = prompt_for_output_directory(self, "DreadRandovania", self.custom_path_edit)
         if output_file is not None:
             self.custom_path_edit.setText(str(output_file))
 
-    def custom_restore_options(self, options: dict):
+    def custom_restore_options(self, options: dict) -> None:
         if options["path"] is not None:
             self.custom_path_edit.setText(options["path"])
 
     # Export
 
-    def update_accept_validation(self):
+    def update_accept_validation(self) -> None:
         tab = self.output_tab_widget.currentWidget()
         self.accept_button.setEnabled(
             hasattr(tab, "is_valid") and tab.is_valid() and not self.input_file_edit.has_error
@@ -469,6 +480,9 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
         else:
             raise RuntimeError(f"Unknown output_tab: {output_tab}")
+
+        assert self.input_file is not None
+        assert output_path is not None
 
         return DreadGameExportParams(
             spoiler_output=spoiler_path_for_directory(self.auto_save_spoiler, output_path),

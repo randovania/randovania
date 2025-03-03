@@ -6,7 +6,7 @@ from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.gui.widgets.node_selector_widget import NodeSelectorWidget
 
 if TYPE_CHECKING:
-    import pytestqt.qtbot  # type: ignore[import-untyped]
+    import pytestqt.qtbot
 
     from randovania.game_description.game_description import GameDescription
 

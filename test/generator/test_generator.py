@@ -5,8 +5,12 @@ from unittest.mock import AsyncMock, MagicMock, call, patch
 
 import pytest
 
+from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel
+from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.generator import generator
 from randovania.generator.filler.filler_configuration import FillerPlayerResult, FillerResults
+from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
 
@@ -30,6 +34,11 @@ async def test_create_patches(
     )
     mock_dock_weakness_distributor: AsyncMock = mocker.patch(
         "randovania.generator.dock_weakness_distributor.distribute_post_fill_weaknesses",
+        new_callable=AsyncMock,
+        return_value=filler_result,
+    )
+    mock_specific_location_hints: AsyncMock = mocker.patch(
+        "randovania.generator.hint_distributor.distribute_specific_location_hints",
         new_callable=AsyncMock,
         return_value=filler_result,
     )
@@ -63,6 +72,7 @@ async def test_create_patches(
     )
     mock_distribute_remaining_items.assert_called_once_with(rng, filler_result, presets)
     mock_dock_weakness_distributor.assert_called_once_with(rng, filler_result, status_update)
+    mock_specific_location_hints.assert_called_once_with(rng, filler_result, player_pools)
 
     assert result == LayoutDescription.create_new(
         generator_parameters=generator_parameters,
@@ -88,3 +98,91 @@ def test_distribute_remaining_items_no_locations_left(
         InvalidConfiguration, match=r"Received 881 remaining pickups, but there's only \d+ unassigned locations."
     ):
         generator._distribute_remaining_items(rng, filler_results, [default_echoes_preset])
+
+
+@pytest.mark.parametrize(
+    "logical_placement_cases",
+    [
+        (
+            LogicalPickupPlacementConfiguration.MINIMAL,
+            "Trivial",
+        ),
+        (
+            LogicalPickupPlacementConfiguration.MAJORS,
+            "Major ≥ 1",
+        ),
+        (
+            LogicalPickupPlacementConfiguration.ALL,
+            "(Major ≥ 1 and Minor ≥ 1)",
+        ),
+    ],
+)
+def test_victory_condition_for_pickup_placement(
+    mocker,
+    blank_game_description,
+    blank_pickup_database,
+    default_generator_params,
+    default_generator_params_minor,
+    logical_placement_cases,
+):
+    # Setup
+    placement_config, expected = logical_placement_cases
+    mocker.patch.object(blank_game_description, "victory_condition", Requirement.trivial())
+
+    pickups = [
+        PickupEntry(
+            name="Major Item",
+            model=PickupModel(
+                game=blank_game_description.game,
+                name="EnergyTransferModule",
+            ),
+            gui_category=blank_pickup_database.pickup_categories["gear"],
+            hint_features=frozenset((blank_pickup_database.pickup_categories["gear"],)),
+            progression=(
+                (
+                    ItemResourceInfo(
+                        resource_index=2,
+                        long_name="Major",
+                        short_name="major",
+                        max_capacity=1,
+                    ),
+                    1,
+                ),
+            ),
+            generator_params=default_generator_params,
+            resource_lock=None,
+            unlocks_resource=False,
+        ),
+        PickupEntry(
+            name="Minor Item",
+            model=PickupModel(
+                game=blank_game_description.game,
+                name="EnergyTransferModule",
+            ),
+            gui_category=blank_pickup_database.pickup_categories["ammo"],
+            hint_features=frozenset((blank_pickup_database.pickup_categories["ammo"],)),
+            progression=(
+                (
+                    ItemResourceInfo(
+                        resource_index=3,
+                        long_name="Minor",
+                        short_name="minor",
+                        max_capacity=1,
+                    ),
+                    1,
+                ),
+            ),
+            generator_params=default_generator_params_minor,
+            resource_lock=None,
+            unlocks_resource=False,
+        ),
+    ]
+
+    # Run
+    victory_str = str(
+        generator.victory_condition_for_pickup_placement(pickups, blank_game_description, placement_config)
+    )
+
+    # Assert
+    # print(victory_str)
+    assert victory_str == expected

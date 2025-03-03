@@ -96,7 +96,7 @@ def test_get_old_preset_bad_json():
 
 def test_get_old_preset_bad_formatting():
     assert preset_history_dialog._get_old_preset('{"name": "theName"}') == (
-        "Preset theName at this version can't be used as it contains the following error:\n'layout_configuration'"
+        "Preset theName at this version can't be used as it contains the following error:\n'schema_version'"
     )
 
 

@@ -1,114 +1,161 @@
 {
-    "schema_version": 9,
+    "schema_version": 13,
     "pickup_categories": {
         "gear": {
             "long_name": "Gear",
             "hint_details": [
                 "some ",
                 "gear"
+            ]
+        },
+        "ammo": {
+            "long_name": "Ammo",
+            "hint_details": [
+                "some ",
+                "ammo"
+            ]
+        },
+        "key": {
+            "long_name": "Key",
+            "hint_details": [
+                "a ",
+                "key"
+            ]
+        }
+    },
+    "generated_pickups": {
+        "Victory Key": {
+            "name_template": "Victory Key",
+            "gui_category": "key",
+            "hint_features": [
+                "key"
             ],
-            "hinted_as_major": true
+            "model_name": "VictoryKey",
+            "offworld_models": {},
+            "preferred_location_category": "major",
+            "probability_offset": 0.25,
+            "progression": [
+                "VictoryKey"
+            ],
+            "expected_case_for_describer": "shuffled"
         }
     },
     "standard_pickups": {
         "Weapon": {
-            "pickup_category": "gear",
-            "broad_category": "gear",
+            "gui_category": "gear",
+            "hint_features": [
+                "gear"
+            ],
             "model_name": "Weapon",
             "offworld_models": {},
+            "preferred_location_category": "major",
             "progression": [
                 "Weapon"
             ],
-            "preferred_location_category": "major",
-            "expected_case_for_describer": "shuffled",
             "ammo": [
                 "Ammo"
             ],
-            "unlocks_ammo": true
+            "unlocks_ammo": true,
+            "expected_case_for_describer": "shuffled"
         },
         "Explosive": {
-            "pickup_category": "gear",
-            "broad_category": "gear",
+            "gui_category": "gear",
+            "hint_features": [
+                "gear"
+            ],
             "model_name": "Explosive",
             "offworld_models": {},
+            "preferred_location_category": "major",
             "progression": [
                 "Explosive"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled"
         },
         "Blue Key": {
-            "pickup_category": "gear",
-            "broad_category": "gear",
+            "gui_category": "gear",
+            "hint_features": [
+                "gear"
+            ],
             "model_name": "Blue Key",
             "offworld_models": {},
+            "preferred_location_category": "major",
             "progression": [
                 "BlueKey"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled"
         },
         "Health": {
-            "pickup_category": "gear",
-            "broad_category": "gear",
+            "gui_category": "gear",
+            "hint_features": [
+                "gear"
+            ],
             "model_name": "Health",
             "offworld_models": {},
+            "preferred_location_category": "minor",
             "progression": [
                 "Health"
             ],
-            "preferred_location_category": "minor",
             "expected_case_for_describer": "shuffled"
         },
         "Jump": {
-            "pickup_category": "gear",
-            "broad_category": "gear",
+            "gui_category": "gear",
+            "hint_features": [
+                "gear"
+            ],
             "model_name": "Jump",
             "offworld_models": {},
+            "preferred_location_category": "major",
             "progression": [
                 "Jump"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "missing",
             "original_locations": [
                 7
             ]
         },
         "Double Jump": {
-            "pickup_category": "gear",
-            "broad_category": "gear",
+            "gui_category": "gear",
+            "hint_features": [
+                "gear"
+            ],
             "model_name": "Double Jump",
             "offworld_models": {},
+            "preferred_location_category": "major",
             "progression": [
                 "DoubleJump"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "missing",
             "original_locations": [
                 8
             ]
         },
         "Progressive Jump": {
-            "pickup_category": "gear",
-            "broad_category": "gear",
+            "gui_category": "gear",
+            "hint_features": [
+                "gear"
+            ],
             "model_name": "Progressive Jump",
             "offworld_models": {},
+            "preferred_location_category": "major",
             "progression": [
                 "Jump",
                 "DoubleJump"
             ],
-            "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled"
         }
     },
     "ammo_pickups": {
         "Missile Expansion": {
-            "broad_category": "gear",
+            "gui_category": "gear",
+            "hint_features": [
+                "gear"
+            ],
             "model_name": "Missile",
             "offworld_models": {},
+            "preferred_location_category": "minor",
             "items": [
                 "Ammo"
-            ],
-            "preferred_location_category": "minor"
+            ]
         }
     },
     "default_pickups": {},
