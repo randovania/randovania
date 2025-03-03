@@ -59,7 +59,7 @@ class WeightedLocations:
             yield player, index, weight
 
     def select_location(self, rng: Random) -> tuple[PlayerState, PickupIndex]:
-        return random_lib.select_element_with_weight(self._items, rng)
+        return random_lib.select_element_with_weight(rng, self._items)
 
     def remove(self, player: PlayerState, index: PickupIndex) -> None:
         self._items.pop((player, index))

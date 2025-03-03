@@ -12,7 +12,7 @@ from randovania.generator.filler import filler_logging
 from randovania.generator.filler.filler_library import UnableToGenerate, UncollectedState
 from randovania.generator.filler.filler_logging import debug_print_collect_event
 from randovania.generator.filler.weighted_locations import WeightedLocations
-from randovania.lib.random_lib import select_element_with_weight
+from randovania.lib import random_lib
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
@@ -84,7 +84,7 @@ def _get_next_player(
         if debug.debug_level() > 1:
             print(f">>>>> Player Weights: {weighted_players}")
 
-        return select_element_with_weight(weighted_players, rng)
+        return random_lib.select_element_with_weight(rng, weighted_players)
     else:
         if all(player_state.victory_condition_satisfied() for player_state in player_states):
             debug.debug_print("Finished because we can win")
@@ -221,19 +221,6 @@ def weighted_potential_actions(
     return final_weights
 
 
-def select_weighted_action(rng: Random, weighted_actions: Mapping[Action, float]) -> Action:
-    """
-    Choose a random action, respecting the weights.
-    If all actions have weight 0, select one randomly.
-    """
-    try:
-        return select_element_with_weight(weighted_actions, rng=rng)
-    except StopIteration:
-        # All actions had weight 0. Select one randomly instead.
-        # No need to check if potential_actions is empty, _get_next_player only return players with actions
-        return rng.choice(list(weighted_actions.keys()))
-
-
 def increment_index_age(locations_weighted: WeightedLocations, increment: float) -> None:
     """
     Increments the pickup index's age for every already collected index.
@@ -331,7 +318,7 @@ def retcon_playthrough_filler(
             break
 
         weighted_actions = weighted_potential_actions(current_player, action_report, all_locations_weighted)
-        action = select_weighted_action(rng, weighted_actions)
+        action = random_lib.select_element_with_weight_and_uniform_fallback(rng, weighted_actions)
 
         new_resources, new_pickups = action.split_pickups()
         new_pickups.sort()
