@@ -37,6 +37,11 @@ async def test_create_patches(
         new_callable=AsyncMock,
         return_value=filler_result,
     )
+    mock_generic_hints: AsyncMock = mocker.patch(
+        "randovania.generator.hint_distributor.distribute_generic_hints",
+        new_callable=AsyncMock,
+        return_value=filler_result,
+    )
     mock_specific_location_hints: AsyncMock = mocker.patch(
         "randovania.generator.hint_distributor.distribute_specific_location_hints",
         new_callable=AsyncMock,
@@ -72,6 +77,7 @@ async def test_create_patches(
     )
     mock_distribute_remaining_items.assert_called_once_with(rng, filler_result, presets)
     mock_dock_weakness_distributor.assert_called_once_with(rng, filler_result, status_update)
+    mock_generic_hints.assert_called_once_with(rng, filler_result)
     mock_specific_location_hints.assert_called_once_with(rng, filler_result)
 
     assert result == LayoutDescription.create_new(
@@ -91,6 +97,7 @@ def test_distribute_remaining_items_no_locations_left(
         patches=echoes_game_patches,
         unassigned_pickups=[MagicMock()] * 1000,
         pool=MagicMock(),
+        hint_state=MagicMock(),
     )
     filler_results = FillerResults({0: player_result}, ())
 

@@ -86,7 +86,7 @@ def test_general_blank_layout(default_blank_preset):
     options.advanced_generate_in_another_process = True
 
     parameters = GeneratorParameters(
-        seed_number=1001,
+        seed_number=1000,
         spoiler=True,
         presets=[default_blank_preset],
         development=True,
@@ -99,4 +99,4 @@ def test_general_blank_layout(default_blank_preset):
 
     # Assert
     assert result.generator_parameters == parameters
-    assert result.get_seed_for_player(0) == 1001
+    assert result.get_seed_for_player(0) == 1000

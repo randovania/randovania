@@ -3,7 +3,6 @@ from __future__ import annotations
 import asyncio
 import dataclasses
 import itertools
-import logging
 import time
 from functools import lru_cache
 from typing import TYPE_CHECKING, Self
@@ -35,9 +34,6 @@ if TYPE_CHECKING:
     from randovania.generator.filler.filler_configuration import FillerResults
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.state import State
-
-
-logger = logging.getLogger(__name__)
 
 
 def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePatches:
@@ -421,54 +417,6 @@ async def distribute_post_fill_weaknesses(
         new_patches[player] = patches.assign_dock_weakness(new_assignment)
 
     debug.debug_print(f"Dock weakness distribution finished in {int(time.perf_counter() - start_time)}s")
-
-    new_results = dataclasses.replace(
-        filler_results,
-        player_results={
-            player: dataclasses.replace(result, patches=new_patches[player])
-            for player, result in filler_results.player_results.items()
-        },
-    )
-    return await assign_dock_rando_hints(rng, new_results, status_update)
-
-
-async def assign_dock_rando_hints(
-    rng: Random, filler_results: FillerResults, status_update: Callable[[str], None]
-) -> FillerResults:
-    new_patches: dict[int, GamePatches] = {
-        player: result.patches for player, result in filler_results.player_results.items()
-    }
-
-    for player, result in filler_results.player_results.items():
-        patches = result.patches
-
-        if patches.configuration.dock_rando.mode != DockRandoMode.DOCKS:
-            continue
-
-        hint_distributor = patches.game.game.generator.hint_distributor
-
-        status_update(f"Preparing resolver-based hints for player {player + 1}.")
-
-        with debug.with_level(0):
-            new_state = await resolver.resolve(patches.configuration, patches, collect_hint_data=True)
-
-        if new_state is None:
-            logger.warning(
-                f"Unable to solve game for player {player + 1} after placing doors. Hints will be fully random."
-            )
-            continue
-        else:
-            debug.debug_print(f">> Player {player + 1} is solve-able after door placement. Beginning hint placement.")
-
-        assert new_state.hint_state is not None
-        new_patches[player] = await hint_distributor.assign_post_filler_hints(
-            patches,
-            rng,
-            result.pool,
-            result.patches.game.region_list,
-            new_state.hint_state,
-            filler_results.player_pools,
-        )
 
     return dataclasses.replace(
         filler_results,

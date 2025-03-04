@@ -11,7 +11,6 @@ from randovania.generator.filler.filler_configuration import (
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.retcon import retcon_playthrough_filler
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
@@ -72,17 +71,12 @@ async def run_filler(
     for player_state, patches in filler_result.items():
         player_pool = player_pools[player_state.index]
 
-        hint_distributor = player_pool.game_generator.hint_distributor
-        new_patches = patches
-        if patches.configuration.dock_rando.mode != DockRandoMode.DOCKS:
-            new_patches = await hint_distributor.assign_post_filler_hints(
-                patches, rng, player_pool, player_state.game.region_list, player_state.hint_state, player_pools
-            )
         results[player_state.index] = FillerPlayerResult(
             game=player_state.game,
-            patches=new_patches,
+            patches=patches,
             unassigned_pickups=player_state.pickups_left,
             pool=player_pool,
+            hint_state=player_state.hint_state,
         )
 
     if any(pool.configuration.should_hide_generation_log() for pool in player_pools):
