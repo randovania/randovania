@@ -7,7 +7,7 @@ from frozendict import frozendict
 
 from randovania.game_description.hint_features import HintDetails, HintFeature
 from randovania.game_description.pickup.pickup_definition.ammo_pickup import AmmoPickupDefinition
-from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
+from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition, StartingEnum
 from randovania.game_description.pickup.pickup_entry import (
     PickupEntry,
     PickupGeneratorParams,
@@ -48,7 +48,7 @@ def echoes_standard_pickup(
         offworld_models=frozendict({}),
         progression=("DarkVisor", "MorphBall", "Bombs"),
         ammo=("EnergyTank", "DarkAmmo"),
-        must_be_starting=False,
+        starting_conditon=StartingEnum.CAN_BE_STARTING,
         original_locations=(),
         probability_offset=5.0,
         preferred_location_category=LocationCategory.MAJOR,

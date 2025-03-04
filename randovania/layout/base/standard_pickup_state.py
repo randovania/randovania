@@ -67,7 +67,7 @@ class StandardPickupState:
                 f" got {self.num_shuffled_pickups}. ({pickup.name})"
             )
 
-        if pickup.must_be_starting:
+        if pickup.starting_condition == 2:
             if not self.num_included_in_starting_pickups:
                 raise ValueError(f"Required items must be included in starting items. ({pickup.name})")
 

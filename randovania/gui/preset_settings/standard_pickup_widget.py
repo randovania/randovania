@@ -6,6 +6,9 @@ from PySide6 import QtWidgets
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QGraphicsOpacityEffect, QWidget
 
+from randovania.game_description.pickup.pickup_definition.standard_pickup import (
+    StartingEnum,
+)
 from randovania.gui.generated.standard_pickup_widget_ui import Ui_StandardPickupWidget
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.layout.base import standard_pickup_state
@@ -13,7 +16,9 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState, St
 from randovania.lib import enum_lib
 
 if TYPE_CHECKING:
-    from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
+    from randovania.game_description.pickup.pickup_definition.standard_pickup import (
+        StandardPickupDefinition,
+    )
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
@@ -95,7 +100,7 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
             self.root_layout.addWidget(self.description_label, self.root_layout.rowCount(), 0, 1, -1)
 
         self.set_custom_fields_visible(False)
-        if self._pickup.must_be_starting:
+        if self._pickup.starting_condition == StartingEnum.MUST_BE_STARTING:
             self.pickup_name_label.setToolTip(
                 "This item is necessary for the game to function properly and can't be removed."
             )

@@ -6,7 +6,7 @@ from frozendict import frozendict
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
+from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition, StartingEnum
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 
@@ -62,7 +62,7 @@ def standard_pickup_state(request, echoes_pickup_database, generic_pickup_catego
         offworld_models=frozendict(),
         progression=(request.param.get("progression", "Power"),),
         ammo=request.param.get("ammo_index", ()),
-        must_be_starting=True,
+        starting_condition=StartingEnum.MUST_BE_STARTING,
         original_locations=(),
         probability_offset=0.0,
         preferred_location_category=LocationCategory.MAJOR,

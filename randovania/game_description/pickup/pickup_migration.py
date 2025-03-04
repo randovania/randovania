@@ -4,6 +4,7 @@ import itertools
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import migration_data
+from randovania.game_description.pickup.pickup_definition.standard_pickup import StartingEnum
 from randovania.lib import migration_lib
 
 
@@ -199,6 +200,22 @@ def _migrate_v12(pickup_data: dict, game: RandovaniaGame) -> None:
         category.pop("is_broad_category", None)
 
 
+def _migrate_v13(pickup_data: dict, game: RandovaniaGame) -> None:
+    for pickup in pickup_data["standard_pickups"].values():
+        if "must_be_starting" in pickup:
+            pickup["starting_condition"] = StartingEnum.MUST_BE_STARTING
+            pickup.pop("must_be_starting")
+        else:
+            pickup["starting_condition"] = StartingEnum.CAN_BE_STARTING
+    if game == RandovaniaGame.METROID_PRIME_ECHOES:
+        pickup_data["standard_pickups"]["Cannon Ball"]["starting_condition"] = StartingEnum.CAN_NEVER_BE_STARTING
+        pickup_data["standard_pickups"]["Double Damage"]["starting_condition"] = StartingEnum.CAN_NEVER_BE_STARTING
+        pickup_data["standard_pickups"]["Unlimited Beam Ammo"]["starting_condition"] = (
+            StartingEnum.CAN_NEVER_BE_STARTING
+        )
+        pickup_data["standard_pickups"]["Unlimited Missiles"]["starting_condition"] = StartingEnum.CAN_NEVER_BE_STARTING
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -212,6 +229,7 @@ _MIGRATIONS = [
     _migrate_v10,  # move category fields to pickup and add hint_features
     _migrate_v11,  # fix the fact that old migrations don't actually work on old DBs, lol
     _migrate_v12,  # remove is_broad_category
+    _migrate_v13,  # change must_be_starting to starting_condition
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
