@@ -256,15 +256,16 @@ class HintDistributor(ABC):
         patches: GamePatches,
         rng: Random,
         player_pool: PlayerPool,
-        player_state: PlayerState,
-        player_pools: list[PlayerPool],
+        region_list: RegionList,
+        hint_state: HintState,
+        player_pools: Sequence[PlayerPool],
     ) -> GamePatches:
         # Since we haven't added expansions yet, these hints will always be for items added by the filler.
         full_hints_patches = self.fill_unassigned_hints(
             patches,
-            player_state.game.region_list,
+            region_list,
             rng,
-            player_state.hint_state,
+            hint_state,
             player_pools,
         )
         return await self.assign_precision_to_hints(full_hints_patches, rng, player_pool, player_pools)
@@ -274,7 +275,7 @@ class HintDistributor(ABC):
         patches: GamePatches,
         rng: Random,
         player_pool: PlayerPool,
-        player_pools: list[PlayerPool],
+        player_pools: Sequence[PlayerPool],
         hint_kinds: Container[HintNodeKind] = {HintNodeKind.GENERIC},
     ) -> GamePatches:
         """
@@ -289,7 +290,7 @@ class HintDistributor(ABC):
 
     @final
     @staticmethod
-    def hint_suitability_for_target(target: PickupTarget, player_pools: list[PlayerPool]) -> HintSuitability:
+    def hint_suitability_for_target(target: PickupTarget, player_pools: Sequence[PlayerPool]) -> HintSuitability:
         """
         Determines the HintSuitability for the given target,
         according to the criteria of its *owner's* HintDistributor.
@@ -319,7 +320,7 @@ class HintDistributor(ABC):
         region_list: RegionList,
         rng: Random,
         hint_state: HintState,
-        player_pools: list[PlayerPool],
+        player_pools: Sequence[PlayerPool],
     ) -> GamePatches:
         """
         Selects targets for all remaining unassigned generic hint nodes
@@ -344,14 +345,28 @@ class HintDistributor(ABC):
             real_potential_targets = {
                 target
                 for target in sorted(potential_targets)
-                if self.hint_suitability_for_target(patches.pickup_assignment[target], player_pools)
+                if target in patches.pickup_assignment
+                and self.hint_suitability_for_target(patches.pickup_assignment[target], player_pools)
                 >= HintSuitability.MORE_INTERESTING
             }
             # don't hint things twice
             real_potential_targets -= hinted_locations
+            debug.debug_print(f"  * Trying {len(real_potential_targets)} logical interesting pickups")
 
             if not real_potential_targets:
-                # no interesting pickups to place - use anything placed during fill or prefill
+                # no logical pickups to place - use any interesting pickups
+                real_potential_targets = {
+                    pickup
+                    for pickup, entry in patches.pickup_assignment.items()
+                    if self.hint_suitability_for_target(entry, player_pools) >= HintSuitability.MORE_INTERESTING
+                }
+                real_potential_targets -= hinted_locations
+                debug.debug_print(
+                    f"  * No logical interesting pickups; trying {len(real_potential_targets)} interesting pickups"
+                )
+
+            if not real_potential_targets:
+                # no interesting pickups to place - use less interesting pickups
                 real_potential_targets = {
                     pickup
                     for pickup, entry in patches.pickup_assignment.items()
@@ -651,20 +666,56 @@ class AllJokesHintDistributor(HintDistributor):
         patches: GamePatches,
         rng: Random,
         player_pool: PlayerPool,
-        player_pools: list[PlayerPool],
+        player_pools: Sequence[PlayerPool],
         hint_kinds: Container[HintNodeKind] = {HintNodeKind.GENERIC},
     ) -> GamePatches:
         return self.replace_hints_without_precision_with_jokes(patches)
 
 
-async def distribute_specific_location_hints(
-    rng: Random, filler_results: FillerResults, player_pools: list[PlayerPool]
+async def distribute_generic_hints(
+    rng: Random,
+    filler_results: FillerResults,
 ) -> FillerResults:
-    """Distribute HintNodeKind.SPECIFIC_PICKUP hints *after* all items have been placed."""
+    """Distribute HintNodeKind.GENERIC hints after all pickups are placed."""
+    new_patches: dict[int, GamePatches] = {
+        player: result.patches for player, result in filler_results.player_results.items()
+    }
+
+    for player_index, result in filler_results.player_results.items():
+        patches = result.patches
+
+        hint_state: HintState = result.hint_state
+
+        hint_distributor = patches.game.game.generator.hint_distributor
+        new_patches[player_index] = await hint_distributor.assign_post_filler_hints(
+            patches,
+            rng,
+            result.pool,
+            patches.game.region_list,
+            hint_state,
+            filler_results.player_pools,
+        )
+
+    return dataclasses.replace(
+        filler_results,
+        player_results={
+            player: dataclasses.replace(result, patches=new_patches[player])
+            for player, result in filler_results.player_results.items()
+        },
+    )
+
+
+async def distribute_specific_location_hints(
+    rng: Random,
+    filler_results: FillerResults,
+) -> FillerResults:
+    """Distribute HintNodeKind.SPECIFIC_PICKUP hints after all pickups are placed."""
     old_patches: dict[int, GamePatches] = {
         player: result.patches for player, result in filler_results.player_results.items()
     }
     new_patches: dict[int, GamePatches] = {}
+
+    player_pools = filler_results.player_pools
 
     for player_index, patches in old_patches.items():
         player_pool = player_pools[player_index]
