@@ -1,14 +1,18 @@
-import dataclasses
-from typing import Self
+from __future__ import annotations
 
-from randovania.game.generator import GameGenerator
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.pickup.pickup_entry import PickupEntry
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.layout.base.available_locations import RandomizationMode
-from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
+import dataclasses
+from typing import TYPE_CHECKING, Self
+
+if TYPE_CHECKING:
+    from randovania.game.generator import GameGenerator
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.generator.filler.player_state import GeneratorHintState
+    from randovania.layout.base.available_locations import RandomizationMode
+    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 
 
 @dataclasses.dataclass(frozen=True)
@@ -60,6 +64,7 @@ class FillerPlayerResult:
     patches: GamePatches
     unassigned_pickups: list[PickupEntry]
     pool: PlayerPool
+    hint_state: GeneratorHintState
 
 
 @dataclasses.dataclass(frozen=True)
