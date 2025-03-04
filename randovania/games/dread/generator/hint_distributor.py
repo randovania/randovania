@@ -13,8 +13,9 @@ from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.generator.hint_distributor import HintDistributor
 
 if TYPE_CHECKING:
+    from randovania.game_description.assignment import PickupTarget
+    from randovania.game_description.db.hint_node import HintNode
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.generator.pre_fill_params import PreFillParams
 
 
@@ -25,8 +26,8 @@ class DreadHintDistributor(HintDistributor):
         return PrecisionPair(HintLocationPrecision.REGION_ONLY, HintItemPrecision.DETAILED, True)
 
     @override
-    def is_pickup_interesting(self, pickup: PickupEntry) -> bool:
-        return not pickup.has_hint_feature("dna")
+    def is_pickup_interesting(self, target: PickupTarget, player_id: int, hint_node: HintNode) -> bool:
+        return not target.pickup.has_hint_feature("dna")
 
     @override
     async def assign_specific_location_hints(self, patches: GamePatches, prefill: PreFillParams) -> GamePatches:
