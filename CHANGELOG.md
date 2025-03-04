@@ -85,6 +85,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Legacy multiworld sessions where an Echoes hint points to a Cave Story item may have very slightly altered wording.
 - Changed: A legacy relative hint pointing to a Nothing will now always refer to it by name.
 - Changed: Keybearer hints may refer to pickups using different categories than before.
+- Fixed: Seeds with individual Door Lock Randomizer enabled should see more door variety in the lategame.
 - Fixed: When using the new experimental generator setting to consider possible unsafe resources, the Starter Preset can once again see Missile Launcher placed in the GFMC Compound crate.
 - Fixed: Translators will no longer be hinted by hints of their own color.
 
