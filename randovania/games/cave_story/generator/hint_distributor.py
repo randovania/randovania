@@ -12,7 +12,7 @@ from randovania.games.cave_story.layout.cs_configuration import CSConfiguration,
 from randovania.generator.hint_distributor import HintDistributor, HintTargetPrecision
 
 if TYPE_CHECKING:
-    from collections.abc import Container
+    from collections.abc import Container, Sequence
     from random import Random
 
     from randovania.game_description.game_patches import GamePatches
@@ -88,7 +88,7 @@ class CSHintDistributor(HintDistributor):
         patches: GamePatches,
         rng: Random,
         player_pool: PlayerPool,
-        player_pools: list[PlayerPool],
+        player_pools: Sequence[PlayerPool],
         hint_kinds: Container[HintNodeKind] = {HintNodeKind.GENERIC},
     ) -> GamePatches:
         assert isinstance(player_pool.configuration, CSConfiguration)
