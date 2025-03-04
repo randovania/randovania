@@ -153,6 +153,15 @@ class HintSuitability(IntEnum):
     """Highest priority."""
 
 
+def _sort_hints(
+    hinted_locations: set[PickupIndex], item: tuple[NodeIdentifier, set[PickupIndex]]
+) -> tuple[bool, int, NodeIdentifier]:
+    identifier, targets = item
+    num_targets = len(targets - hinted_locations)
+    has_targets = bool(num_targets)  # place hints with NO targets last instead of first
+    return (not has_targets, num_targets, identifier)
+
+
 class HintDistributor(ABC):
     @property
     def num_joke_hints(self) -> int:
@@ -317,12 +326,7 @@ class HintDistributor(ABC):
         """
 
         hinted_locations = {hint.target for hint in patches.hints.values() if isinstance(hint, LocationHint)}
-
-        def sort_hints(item: tuple[NodeIdentifier, set[PickupIndex]]) -> tuple[bool, int, NodeIdentifier]:
-            identifier, targets = item
-            num_targets = len(targets - hinted_locations)
-            has_targets = bool(num_targets)  # place hints with NO targets last instead of first
-            return (not has_targets, num_targets, identifier)
+        sort_hints = functools.partial(_sort_hints, hinted_locations)
 
         # assign hints with fewest potential targets first to help ensure none of them run out of options
         for hint_node, potential_targets in sorted(hint_state.hint_valid_targets.items(), key=sort_hints):
