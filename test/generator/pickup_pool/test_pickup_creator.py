@@ -48,7 +48,7 @@ def echoes_standard_pickup(
         offworld_models=frozendict({}),
         progression=("DarkVisor", "MorphBall", "Bombs"),
         ammo=("EnergyTank", "DarkAmmo"),
-        starting_conditon=StartingEnum.CAN_BE_STARTING,
+        starting_condition=StartingEnum.CAN_BE_STARTING,
         original_locations=(),
         probability_offset=5.0,
         preferred_location_category=LocationCategory.MAJOR,
