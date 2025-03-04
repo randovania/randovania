@@ -75,7 +75,7 @@ async def run_filler(
         results[player_state.index] = FillerPlayerResult(
             game=player_state.game,
             patches=await hint_distributor.assign_post_filler_hints(
-                patches, rng, player_pool, player_state, player_pools
+                patches, rng, player_pool, player_state.game.region_list, player_state.hint_state, player_pools
             ),
             unassigned_pickups=player_state.pickups_left,
             pool=player_pool,

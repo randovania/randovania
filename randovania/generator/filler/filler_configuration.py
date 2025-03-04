@@ -68,5 +68,5 @@ class FillerResults:
     action_log: tuple[str, ...]
 
     @property
-    def player_pools(self) -> tuple[PlayerPool]:
+    def player_pools(self) -> tuple[PlayerPool, ...]:
         return tuple(result.pool for result in self.player_results.values())
