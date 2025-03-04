@@ -9,6 +9,8 @@ from unittest.mock import ANY, MagicMock, call
 import pytest
 
 from randovania.game.game_enum import RandovaniaGame
+from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.hint import (
     HintDarkTemple,
@@ -171,3 +173,35 @@ async def test_keybearer_hint_precisions(
 
     # Assert
     assert pickup_results == expected_results
+
+
+@pytest.mark.parametrize(
+    ("target_pickup", "target_player", "features", "expected"),
+    [
+        ("Violet Translator", 0, set(), False),
+        ("Amber Translator", 0, set(), True),
+        ("Violet Translator", 1, set(), True),
+        ("Sky Temple Key 1", 0, {"key"}, False),
+        ("Energy Tank", 0, {"energy_tank"}, False),
+    ],
+)
+def test_echoes_interesting_pickups(
+    target_pickup: str, target_player: int, features: set[str], expected: bool, echoes_game_description
+):
+    # Setup
+    hint_node = echoes_game_description.region_list.typed_node_by_identifier(
+        NodeIdentifier.create("Great Temple", "Main Energy Controller", "Lore Scan"),
+        HintNode,
+    )
+    hint_distributor = EchoesHintDistributor()
+
+    target = MagicMock(spec=PickupTarget)
+    target.pickup.name = target_pickup
+    target.pickup.has_hint_feature = lambda feat: feat in features
+    target.player = target_player
+
+    # Run
+    result = hint_distributor.is_pickup_interesting(target, 0, hint_node)
+
+    # Assert
+    assert result == expected

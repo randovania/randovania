@@ -98,6 +98,7 @@ async def test_fill_unassigned_hints_empty_assignment(echoes_game_description, e
         echoes_game_description.region_list,
         rng,
         hint_state,
+        0,
         player_pools,
     )
 
