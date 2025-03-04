@@ -693,7 +693,7 @@ class AllJokesHintDistributor(HintDistributor):
 
 
 def _should_use_resolver_hints(config: BaseConfiguration) -> bool:
-    return config.dock_rando.mode == DockRandoMode.DOCKS
+    return config.use_resolver_hints or config.dock_rando.mode == DockRandoMode.DOCKS
 
 
 async def get_resolver_hint_state(player: int, patches: GamePatches) -> ResolverHintState | None:
