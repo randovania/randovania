@@ -278,7 +278,7 @@ async def _create_description(
 
     filler_results = _distribute_remaining_items(rng, filler_results, presets)
     filler_results = await dock_weakness_distributor.distribute_post_fill_weaknesses(rng, filler_results, status_update)
-    filler_results = await hint_distributor.distribute_specific_location_hints(rng, filler_results, player_pools)
+    filler_results = await hint_distributor.distribute_specific_location_hints(rng, filler_results)
 
     return LayoutDescription.create_new(
         generator_parameters=generator_params,

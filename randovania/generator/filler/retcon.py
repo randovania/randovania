@@ -338,7 +338,7 @@ def retcon_playthrough_filler(
             for i, new_pickup in enumerate(new_pickups):
                 if i > 0:
                     current_player.reach = reach_lib.advance_reach_with_possible_unsafe_resources(current_player.reach)
-                    current_player.hint_state.advance_hint_seen_count(current_player.reach)
+                    current_player.hint_state.advance_hint_seen_count(current_player.reach.state)
                     all_locations_weighted = _calculate_all_pickup_indices_weight(player_states)
 
                 log_entry = _assign_pickup_somewhere(

@@ -256,16 +256,17 @@ class HintDistributor(ABC):
         patches: GamePatches,
         rng: Random,
         player_pool: PlayerPool,
-        player_state: PlayerState,
-        player_pools: list[PlayerPool],
+        region_list: RegionList,
+        hint_state: HintState,
+        player_pools: Sequence[PlayerPool],
     ) -> GamePatches:
         # Since we haven't added expansions yet, these hints will always be for items added by the filler.
         full_hints_patches = self.fill_unassigned_hints(
             patches,
-            player_state.game.region_list,
+            region_list,
             rng,
-            player_state.hint_state,
-            player_state.index,
+            hint_state,
+            player_pools.index(player_pool),
             player_pools,
         )
         return await self.assign_precision_to_hints(full_hints_patches, rng, player_pool, player_pools)
@@ -275,7 +276,7 @@ class HintDistributor(ABC):
         patches: GamePatches,
         rng: Random,
         player_pool: PlayerPool,
-        player_pools: list[PlayerPool],
+        player_pools: Sequence[PlayerPool],
         hint_kinds: Container[HintNodeKind] = {HintNodeKind.GENERIC},
     ) -> GamePatches:
         """
@@ -291,7 +292,7 @@ class HintDistributor(ABC):
     @final
     @staticmethod
     def hint_suitability_for_target(
-        target: PickupTarget, player_id: int, hint_node: HintNode, player_pools: list[PlayerPool]
+        target: PickupTarget, player_id: int, hint_node: HintNode, player_pools: Sequence[PlayerPool]
     ) -> HintSuitability:
         """
         Determines the HintSuitability for the given target,
@@ -323,7 +324,7 @@ class HintDistributor(ABC):
         rng: Random,
         hint_state: HintState,
         player_id: int,
-        player_pools: list[PlayerPool],
+        player_pools: Sequence[PlayerPool],
     ) -> GamePatches:
         """
         Selects targets for all remaining unassigned generic hint nodes
@@ -658,20 +659,20 @@ class AllJokesHintDistributor(HintDistributor):
         patches: GamePatches,
         rng: Random,
         player_pool: PlayerPool,
-        player_pools: list[PlayerPool],
+        player_pools: Sequence[PlayerPool],
         hint_kinds: Container[HintNodeKind] = {HintNodeKind.GENERIC},
     ) -> GamePatches:
         return self.replace_hints_without_precision_with_jokes(patches)
 
 
-async def distribute_specific_location_hints(
-    rng: Random, filler_results: FillerResults, player_pools: list[PlayerPool]
-) -> FillerResults:
+async def distribute_specific_location_hints(rng: Random, filler_results: FillerResults) -> FillerResults:
     """Distribute HintNodeKind.SPECIFIC_PICKUP hints *after* all items have been placed."""
     old_patches: dict[int, GamePatches] = {
         player: result.patches for player, result in filler_results.player_results.items()
     }
     new_patches: dict[int, GamePatches] = {}
+
+    player_pools = filler_results.player_pools
 
     for player_index, patches in old_patches.items():
         player_pool = player_pools[player_index]
