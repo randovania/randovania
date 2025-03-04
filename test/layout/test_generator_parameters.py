@@ -90,7 +90,7 @@ def test_decode(default_blank_preset, mocker, development, extra_data):
     if development:
         encoded = b" \x00\x00\x0f\xa3\x00\x03\x00"
     else:
-        encoded = b" \x00\x00\x0f\xa2\x00\x03\x07\x80"
+        encoded = b" \x00\x00\x0f\xa2\x00\x03\x03\xc0"
     if extra_data:
         encoded += b"="
 
@@ -108,7 +108,7 @@ def test_decode(default_blank_preset, mocker, development, extra_data):
         development=development,
     )
 
-    # Uncomment this line to quickly get the new encoded permalink
+    # # Uncomment this line to quickly get the new encoded permalink
     # assert expected.as_bytes == b""
     # print(expected.as_bytes)
 
