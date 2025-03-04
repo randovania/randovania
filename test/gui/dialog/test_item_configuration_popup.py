@@ -2,14 +2,18 @@ from __future__ import annotations
 
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.standard_pickup_widget import StandardPickupWidget
-from randovania.layout.base.standard_pickup_state import StandardPickupState, StandardPickupStateCase, StartingEnum
+from randovania.layout.base.standard_pickup_state import (
+    StandardPickupState,
+    StandardPickupStateCase,
+    StartingItemBehavior,
+)
 
 
 def test_state_no_changes(skip_qtbot, echoes_pickup_database, echoes_resource_database):
     item = [
         item
         for item in echoes_pickup_database.standard_pickups.values()
-        if item.starting_condition == StartingEnum.CAN_BE_STARTING
+        if item.starting_condition == StartingItemBehavior.CAN_BE_STARTING
     ][0]
     state = StandardPickupState(
         include_copy_in_original_location=False,
@@ -30,7 +34,7 @@ def test_state_change_to_starting(skip_qtbot, echoes_pickup_database, echoes_res
     item = [
         item
         for item in echoes_pickup_database.standard_pickups.values()
-        if item.starting_condition == StartingEnum.CAN_BE_STARTING
+        if item.starting_condition == StartingItemBehavior.CAN_BE_STARTING
     ][0]
     state = StandardPickupState(
         include_copy_in_original_location=False,
@@ -87,7 +91,7 @@ def test_state_must_be_starting(skip_qtbot, echoes_pickup_database, echoes_resou
     item = [
         item
         for item in echoes_pickup_database.standard_pickups.values()
-        if item.starting_condition == StartingEnum.MUST_BE_STARTING
+        if item.starting_condition == StartingItemBehavior.MUST_BE_STARTING
     ][0]
     state = StandardPickupState(
         include_copy_in_original_location=False,
