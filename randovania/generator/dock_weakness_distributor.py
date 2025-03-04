@@ -257,7 +257,8 @@ async def _run_dock_resolver(
         new_state = None
         result = f"Timeout ({logic.get_attempts()} attempts)"
     else:
-        result = f"Finished resolver ({logic.get_attempts()} attempts)"
+        success = "success" if new_state is not None else "failure"
+        result = f"Finished resolver ({success} in {logic.get_attempts()} attempts)"
 
     debug.debug_print(result)
 
