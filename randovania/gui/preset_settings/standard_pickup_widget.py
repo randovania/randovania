@@ -103,6 +103,8 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
             )
             self.case = StandardPickupStateCase.STARTING_ITEM
             self.state_case_combo.setEnabled(False)
+        elif self._pickup.starting_condition == StartingEnum.CAN_NEVER_BE_STARTING:
+            self.pickup_name_label.setToolTip("Due to game limitations, this item cannot be started with.")
         else:
             self.set_new_state(starting_state)
 

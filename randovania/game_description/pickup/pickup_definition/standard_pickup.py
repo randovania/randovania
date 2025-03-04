@@ -54,7 +54,7 @@ class StandardPickupDefinition(BasePickupDefinition):
     """Whether this pickup should be hidden in the GUI."""
 
     starting_condition: StartingEnum = dataclasses.field(default=StartingEnum.CAN_BE_STARTING, metadata=EXCLUDE_DEFAULT)
-    """How this pickup should be treated by the starting items."""
+    """How this pickup should behave in regards to being a starting item."""
 
     original_locations: tuple[PickupIndex, ...] = dataclasses.field(default_factory=tuple, metadata=EXCLUDE_DEFAULT)
     """
