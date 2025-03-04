@@ -301,8 +301,7 @@ class PlayerState:
         ]
 
         return (
-            "At {} after {} actions and {} pickups, "
-            "with {} collected locations, {} safe nodes, {} safe uncollected resource nodes.\n\n"
+            "At {} after {} actions and {} pickups, with {} collected locations, {} safe nodes.\n\n"
             "Pickups still available: {}\n\n"
             "Resources to progress: {}\n\n"
             "Paths to be opened:\n{}\n\n"
@@ -314,7 +313,6 @@ class PlayerState:
             self.num_assigned_pickups,
             len(state.pickup_indices),
             sum(1 for n in self.reach.safe_nodes),
-            sum(1 for n in self.reach.safe_uncollected_resource_nodes),
             ", ".join(
                 name if quantity == 1 else f"{name} x{quantity}"
                 for name, quantity in sorted(pickups_by_name_and_quantity.items())
