@@ -22,8 +22,9 @@ if TYPE_CHECKING:
     from collections.abc import Container
     from random import Random
 
+    from randovania.game_description.assignment import PickupTarget
+    from randovania.game_description.db.hint_node import HintNode
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.generator.filler.filler_configuration import PlayerPool
     from randovania.generator.pre_fill_params import PreFillParams
 
@@ -36,11 +37,14 @@ class EchoesHintDistributor(HintDistributor):
         return 2
 
     @override
-    def is_pickup_interesting(self, pickup: PickupEntry) -> bool:
+    def is_pickup_interesting(self, target: PickupTarget, player_id: int, hint_node: HintNode) -> bool:
         non_interesting_features = ["key", "energy_tank"]
         for feature in non_interesting_features:
-            if pickup.has_hint_feature(feature):
+            if target.pickup.has_hint_feature(feature):
                 return False
+        if target.player == player_id and ("Translator" in target.pickup.name):
+            # don't place a translator hint on its color of lore scan
+            return hint_node.extra.get("translator") not in target.pickup.name
         return True
 
     @override
