@@ -351,9 +351,22 @@ class HintDistributor(ABC):
             }
             # don't hint things twice
             real_potential_targets -= hinted_locations
+            debug.debug_print(f"  * Trying {len(real_potential_targets)} logical interesting pickups")
 
             if not real_potential_targets:
-                # no interesting pickups to place - use anything placed during fill or prefill
+                # no logical pickups to place - use any interesting pickups
+                real_potential_targets = {
+                    pickup
+                    for pickup, entry in patches.pickup_assignment.items()
+                    if self.hint_suitability_for_target(entry, player_pools) >= HintSuitability.MORE_INTERESTING
+                }
+                real_potential_targets -= hinted_locations
+                debug.debug_print(
+                    f"  * No logical interesting pickups; trying {len(real_potential_targets)} interesting pickups"
+                )
+
+            if not real_potential_targets:
+                # no interesting pickups to place - use less interesting pickups
                 real_potential_targets = {
                     pickup
                     for pickup, entry in patches.pickup_assignment.items()
@@ -689,7 +702,7 @@ async def distribute_generic_hints(
     for player_index, result in filler_results.player_results.items():
         patches = result.patches
 
-        hint_state = result.hint_state
+        hint_state: HintState = result.hint_state
         if _should_use_resolver_hints(patches.configuration):
             resolver_hint_state = await get_resolver_hint_state(player_index, patches)
             if resolver_hint_state is not None:
