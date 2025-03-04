@@ -27,6 +27,7 @@ def _options() -> type[PerGameOptions]:
 def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.blank import gui
     from randovania.games.blank.layout import progressive_items
+    from randovania.gui.game_details.hint_details_tab import HintDetailsTab
 
     return randovania.game.gui.GameGui(
         game_tab=gui.BlankGameTabWidget,
@@ -34,20 +35,19 @@ def _gui() -> randovania.game.gui.GameGui:
         cosmetic_dialog=gui.BlankCosmeticPatchesDialog,
         export_dialog=gui.BlankGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(),
+        spoiler_visualizer=(HintDetailsTab,),
     )
 
 
 def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.blank import generator
     from randovania.generator.filler.weights import ActionWeights
-    from randovania.generator.hint_distributor import AllJokesHintDistributor
 
     return randovania.game.generator.GameGenerator(
         pickup_pool_creator=generator.pool_creator,
         bootstrap=generator.BlankBootstrap(),
         base_patches_factory=generator.BlankBasePatchesFactory(),
-        hint_distributor=AllJokesHintDistributor(),
+        hint_distributor=generator.BlankHintDistributor(),
         action_weights=ActionWeights(),
     )
 
