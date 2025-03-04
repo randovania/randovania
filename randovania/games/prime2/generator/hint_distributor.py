@@ -19,7 +19,7 @@ from randovania.generator.hint_distributor import HintDistributor, HintTargetPre
 from randovania.lib import enum_lib
 
 if TYPE_CHECKING:
-    from collections.abc import Container
+    from collections.abc import Container, Sequence
     from random import Random
 
     from randovania.game_description.game_patches import GamePatches
@@ -86,7 +86,7 @@ class EchoesHintDistributor(HintDistributor):
         patches: GamePatches,
         rng: Random,
         player_pool: PlayerPool,
-        player_pools: list[PlayerPool],
+        player_pools: Sequence[PlayerPool],
         hint_kinds: Container[HintNodeKind] = {HintNodeKind.GENERIC},
     ) -> GamePatches:
         assert isinstance(player_pool.configuration, EchoesConfiguration)

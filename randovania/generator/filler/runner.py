@@ -14,13 +14,13 @@ from randovania.generator.filler.retcon import retcon_playthrough_filler
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Sequence
     from random import Random
 
 
 async def run_filler(
     rng: Random,
-    player_pools: list[PlayerPool],
+    player_pools: Sequence[PlayerPool],
     world_names: list[str],
     status_update: Callable[[str], None],
 ) -> FillerResults:
@@ -46,7 +46,6 @@ async def run_filler(
         rng.shuffle(standard_pickups)
 
         new_game, state = pool.game_generator.bootstrap.logic_bootstrap(config, pool.game, pool.patches)
-        major_configuration = config.standard_pickup_configuration
         player_states.append(
             PlayerState(
                 index=index,
@@ -54,20 +53,7 @@ async def run_filler(
                 game=new_game,
                 initial_state=state,
                 pickups_left=standard_pickups,
-                configuration=FillerConfiguration(
-                    randomization_mode=config.available_locations.randomization_mode,
-                    minimum_random_starting_pickups=major_configuration.minimum_random_starting_pickups,
-                    maximum_random_starting_pickups=major_configuration.maximum_random_starting_pickups,
-                    indices_to_exclude=config.available_locations.excluded_indices,
-                    logical_resource_action=config.logical_resource_action,
-                    first_progression_must_be_local=config.first_progression_must_be_local,
-                    minimum_available_locations_for_hint_placement=config.minimum_available_locations_for_hint_placement,
-                    minimum_location_weight_for_hint_placement=config.minimum_location_weight_for_hint_placement,
-                    single_set_for_pickups_that_solve=config.single_set_for_pickups_that_solve,
-                    staggered_multi_pickup_placement=config.staggered_multi_pickup_placement,
-                    fallback_to_reweight_with_unsafe=False,
-                    consider_possible_unsafe_resources=config.consider_possible_unsafe_resources,
-                ),
+                configuration=FillerConfiguration.from_configuration(config),
             )
         )
 
@@ -92,6 +78,7 @@ async def run_filler(
                 patches, rng, player_pool, player_state, player_pools
             ),
             unassigned_pickups=player_state.pickups_left,
+            pool=player_pool,
         )
 
     if any(pool.configuration.should_hide_generation_log() for pool in player_pools):
