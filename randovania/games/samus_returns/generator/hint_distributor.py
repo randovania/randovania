@@ -6,7 +6,8 @@ from randovania.game_description.hint import HintItemPrecision, HintLocationPrec
 from randovania.generator.hint_distributor import HintDistributor
 
 if TYPE_CHECKING:
-    from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.assignment import PickupTarget
+    from randovania.game_description.db.hint_node import HintNode
 
 
 class MSRHintDistributor(HintDistributor):
@@ -16,9 +17,9 @@ class MSRHintDistributor(HintDistributor):
         return PrecisionPair(HintLocationPrecision.REGION_ONLY, HintItemPrecision.DETAILED, True)
 
     @override
-    def is_pickup_interesting(self, pickup: PickupEntry) -> bool:
+    def is_pickup_interesting(self, target: PickupTarget, player_id: int, hint_node: HintNode) -> bool:
         non_interesting_features = ["dna", "energy_tank", "expansion"]
         for feature in non_interesting_features:
-            if pickup.has_hint_feature(feature):
+            if target.pickup.has_hint_feature(feature):
                 return False
         return True

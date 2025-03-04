@@ -266,6 +266,7 @@ class HintDistributor(ABC):
             region_list,
             rng,
             hint_state,
+            player_pools.index(player_pool),
             player_pools,
         )
         return await self.assign_precision_to_hints(full_hints_patches, rng, player_pool, player_pools)
@@ -290,7 +291,9 @@ class HintDistributor(ABC):
 
     @final
     @staticmethod
-    def hint_suitability_for_target(target: PickupTarget, player_pools: Sequence[PlayerPool]) -> HintSuitability:
+    def hint_suitability_for_target(
+        target: PickupTarget, player_id: int, hint_node: HintNode, player_pools: Sequence[PlayerPool]
+    ) -> HintSuitability:
         """
         Determines the HintSuitability for the given target,
         according to the criteria of its *owner's* HintDistributor.
@@ -300,17 +303,17 @@ class HintDistributor(ABC):
         """
         hint_distributor = player_pools[target.player].game_generator.hint_distributor
 
-        if not hint_distributor.is_pickup_interesting(target.pickup):
+        if not hint_distributor.is_pickup_interesting(target, player_id, hint_node):
             return HintSuitability.LEAST_INTERESTING
-        if not hint_distributor.is_pickup_more_interesting(target.pickup):
+        if not hint_distributor.is_pickup_more_interesting(target, player_id, hint_node):
             return HintSuitability.INTERESTING
         return HintSuitability.MORE_INTERESTING
 
-    def is_pickup_more_interesting(self, pickup: PickupEntry) -> bool:
+    def is_pickup_more_interesting(self, target: PickupTarget, player_id: int, hint_node: HintNode) -> bool:
         """Pickups which don't satisfy this check are lower priority for hinting than those that do."""
-        return pickup.show_in_credits_spoiler
+        return target.pickup.show_in_credits_spoiler
 
-    def is_pickup_interesting(self, pickup: PickupEntry) -> bool:
+    def is_pickup_interesting(self, target: PickupTarget, player_id: int, hint_node: HintNode) -> bool:
         """Pickups which don't satisfy this check are only hinted as a last resort."""
         return True
 
@@ -320,6 +323,7 @@ class HintDistributor(ABC):
         region_list: RegionList,
         rng: Random,
         hint_state: HintState,
+        player_id: int,
         player_pools: Sequence[PlayerPool],
     ) -> GamePatches:
         """
@@ -345,7 +349,9 @@ class HintDistributor(ABC):
             real_potential_targets = {
                 target
                 for target in sorted(potential_targets)
-                if self.hint_suitability_for_target(patches.pickup_assignment[target], player_pools)
+                if HintDistributor.hint_suitability_for_target(
+                    patches.pickup_assignment[target], player_id, node, player_pools
+                )
                 >= HintSuitability.MORE_INTERESTING
             }
             # don't hint things twice
@@ -356,7 +362,8 @@ class HintDistributor(ABC):
                 real_potential_targets = {
                     pickup
                     for pickup, entry in patches.pickup_assignment.items()
-                    if self.hint_suitability_for_target(entry, player_pools) >= HintSuitability.INTERESTING
+                    if HintDistributor.hint_suitability_for_target(entry, player_id, node, player_pools)
+                    >= HintSuitability.INTERESTING
                 }
                 real_potential_targets -= hinted_locations
                 debug.debug_print(
