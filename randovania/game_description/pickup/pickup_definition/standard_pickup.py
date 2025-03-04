@@ -1,20 +1,13 @@
 from __future__ import annotations
 
 import dataclasses
-from enum import Enum
 
 from randovania.bitpacking.json_dataclass import EXCLUDE_DEFAULT
 from randovania.game_description.pickup.pickup_definition.base_pickup import (
     BasePickupDefinition,
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.layout.base.standard_pickup_state import StandardPickupStateCase
-
-
-class StartingEnum(Enum):
-    CAN_BE_STARTING = 1
-    MUST_BE_STARTING = 2
-    CAN_NEVER_BE_STARTING = 3
+from randovania.layout.base.standard_pickup_state import StandardPickupStateCase, StartingEnum
 
 
 @dataclasses.dataclass(frozen=True, kw_only=True)

@@ -7,7 +7,7 @@ from frozendict import frozendict
 
 from randovania.game_description.hint_features import HintDetails, HintFeature
 from randovania.game_description.pickup.pickup_definition.ammo_pickup import AmmoPickupDefinition
-from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition, StartingEnum
+from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
 from randovania.game_description.pickup.pickup_entry import (
     PickupEntry,
     PickupGeneratorParams,
@@ -18,7 +18,7 @@ from randovania.game_description.resources.location_category import LocationCate
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator
-from randovania.layout.base.standard_pickup_state import StandardPickupState
+from randovania.layout.base.standard_pickup_state import StandardPickupState, StartingEnum
 
 
 @pytest.fixture

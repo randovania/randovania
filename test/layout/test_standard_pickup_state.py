@@ -6,9 +6,9 @@ from frozendict import frozendict
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition, StartingEnum
+from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.layout.base.standard_pickup_state import StandardPickupState
+from randovania.layout.base.standard_pickup_state import StandardPickupState, StartingEnum
 
 
 @pytest.fixture(

@@ -4,7 +4,7 @@ import itertools
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import migration_data
-from randovania.game_description.pickup.pickup_definition.standard_pickup import StartingEnum
+from randovania.layout.base.standard_pickup_state import StartingEnum
 from randovania.lib import migration_lib
 
 

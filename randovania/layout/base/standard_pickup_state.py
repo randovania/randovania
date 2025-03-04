@@ -24,6 +24,12 @@ PRIORITY_LIMITS = {
 }
 
 
+class StartingEnum(enum.IntEnum):
+    CAN_BE_STARTING = 1
+    MUST_BE_STARTING = 2
+    CAN_NEVER_BE_STARTING = 3
+
+
 class StandardPickupStateCase(enum.Enum):
     MISSING = "missing"
     VANILLA = "vanilla"
@@ -67,7 +73,7 @@ class StandardPickupState:
                 f" got {self.num_shuffled_pickups}. ({pickup.name})"
             )
 
-        if pickup.starting_condition == 2:
+        if pickup.starting_condition == StartingEnum.MUST_BE_STARTING:
             if not self.num_included_in_starting_pickups:
                 raise ValueError(f"Required items must be included in starting items. ({pickup.name})")
 
