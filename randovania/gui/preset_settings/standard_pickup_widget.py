@@ -50,6 +50,11 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
                 continue
             if case == StandardPickupStateCase.STARTING_ITEM and len(pickup.progression) > 1:
                 continue
+            if (
+                case == StandardPickupStateCase.STARTING_ITEM
+                and pickup.starting_condition == StartingItemBehavior.CAN_NEVER_BE_STARTING
+            ):
+                continue
 
             if case == StandardPickupStateCase.SHUFFLED and pickup.count_for_shuffled_case > 1:
                 text = f"{pickup.count_for_shuffled_case} shuffled copies"
@@ -109,6 +114,7 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
             self.state_case_combo.setEnabled(False)
         elif self._pickup.starting_condition == StartingItemBehavior.CAN_NEVER_BE_STARTING:
             self.pickup_name_label.setToolTip("Due to game limitations, this item cannot be started with.")
+            self.case = StandardPickupStateCase.SHUFFLED
         else:
             self.set_new_state(starting_state)
 

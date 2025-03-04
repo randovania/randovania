@@ -77,6 +77,10 @@ class StandardPickupState:
             if not self.num_included_in_starting_pickups:
                 raise ValueError(f"Required items must be included in starting items. ({pickup.name})")
 
+        if pickup.starting_condition == StartingItemBehavior.CAN_NEVER_BE_STARTING:
+            if self.num_included_in_starting_pickups:
+                raise ValueError(f"This item cannot be a starting item. ({pickup.name})")
+
         if self.num_included_in_starting_pickups > 0:
             if len(pickup.progression) > 1:
                 raise ValueError(f"Progressive items cannot be starting items. ({pickup.name})")
