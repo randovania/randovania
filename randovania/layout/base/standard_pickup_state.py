@@ -24,10 +24,10 @@ PRIORITY_LIMITS = {
 }
 
 
-class StartingItemBehavior(enum.IntEnum):
-    CAN_BE_STARTING = 1
-    MUST_BE_STARTING = 2
-    CAN_NEVER_BE_STARTING = 3
+class StartingItemBehavior(enum.StrEnum):
+    CAN_BE_STARTING = "can_start"
+    MUST_BE_STARTING = "must_start"
+    CAN_NEVER_BE_STARTING = "never_start"
 
 
 class StandardPickupStateCase(enum.Enum):
@@ -79,7 +79,7 @@ class StandardPickupState:
 
         if pickup.starting_condition == StartingItemBehavior.CAN_NEVER_BE_STARTING:
             if self.num_included_in_starting_pickups:
-                raise ValueError(f"This item cannot be a starting item. ({pickup.name})")
+                raise ValueError(f"{pickup.name} cannot be a starting item.")
 
         if self.num_included_in_starting_pickups > 0:
             if len(pickup.progression) > 1:
