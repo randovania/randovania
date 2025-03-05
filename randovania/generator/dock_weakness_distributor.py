@@ -14,6 +14,7 @@ from randovania.game_description.db.dock import DockLock, DockLockType, DockRand
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import NodeContext
+from randovania.game_description.node_search import distances_to_node
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -246,7 +247,6 @@ async def _run_dock_resolver(
     state.patches = state.patches.assign_dock_weakness(locks)
     logic = DockRandoLogic.from_logic(setup[1], dock, target)
 
-    debug.debug_print(f"{dock.identifier}")
     try:
         new_state = await _run_resolver(
             state,
@@ -338,6 +338,7 @@ async def distribute_post_fill_weaknesses(
     new_patches: dict[int, GamePatches] = {
         player: result.patches for player, result in filler_results.player_results.items()
     }
+    initial_states: dict[int, State] = {}
     docks_placed = 0
     docks_to_place = len(unassigned_docks)
 
@@ -349,6 +350,7 @@ async def distribute_post_fill_weaknesses(
 
         status_update(f"Preparing door lock randomizer for player {player + 1}.")
         state, logic = resolver.setup_resolver(patches.configuration, patches)
+        initial_states[player] = state
 
         try:
             new_state = await _run_resolver(
@@ -364,11 +366,23 @@ async def distribute_post_fill_weaknesses(
         else:
             debug.debug_print(f">> Player {player + 1} is solve-able with all doors unlocked.")
 
+    path_to_area = {
+        player: distances_to_node(
+            state.region_list,
+            state.node,
+            [],
+            patches=new_patches[player],
+        )
+        for player, state in initial_states.items()
+    }
+
     while unassigned_docks:
         await asyncio.sleep(0)
         status_update(f"{docks_placed}/{docks_to_place} door locks placed")
 
         player, dock = unassigned_docks.pop()
+
+        debug.debug_print(f"{dock.identifier}")
 
         game = filler_results.player_results[player].game
         patches = new_patches[player]
@@ -386,7 +400,22 @@ async def distribute_post_fill_weaknesses(
         dock_type_params = game.dock_weakness_database.dock_rando_params[dock.dock_type]
         dock_type_state = patches.configuration.dock_rando.types_state[dock.dock_type]
 
-        if dock_type_state.can_change_to == {dock_type_params.unlocked}:
+        def should_skip() -> bool:
+            if dock_type_state.can_change_to == {dock_type_params.unlocked}:
+                # no need to run the resolver if doors can only be unlocked
+                return True
+
+            dock_area = patches.game.region_list.nodes_to_area(dock)
+            target_area = patches.game.region_list.nodes_to_area(target)
+            if (dock_area not in path_to_area[player]) and (target_area not in path_to_area[player]):
+                # don't bother running the resolver if it's
+                # guaranteed to be impossible to reach the dock
+                return True
+
+            return False
+
+        if should_skip():
+            debug.debug_print("Skipping redundant resolver run")
             weighted_weaknesses = {dock_type_params.unlocked: 1.0}
 
         else:
