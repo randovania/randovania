@@ -150,9 +150,9 @@ jobs:
       - name: run pytest (benchmark)
         uses: CodSpeedHQ/action@v3
         with:
-          run: python -m pytest -n auto --codspeed --codspeed-mode=walltime --codspeed-max-rounds=1
+          run: python -m pytest -n auto --codspeed --codspeed-mode=walltime --codspeed-max-rounds=10
           token: ${{ secrets.CODSPEED_TOKEN }}
-        if: ${{ matrix.test_suite == 'benchmark' }}
+        if: ${{ matrix.test_suite == 'benchmark' && github.event_name != 'merge_group' }}
 
       - name: create executable
         run: python -u tools/create_release.py
