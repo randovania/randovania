@@ -60,6 +60,9 @@ class ResolverReach:
         for index in self._node_indices:
             yield all_nodes[index]
 
+    def game_state_at_node(self, index: int) -> DamageState:
+        return self._game_state_at_node[index]
+
     @property
     def satisfiable_requirements_for_additionals(self) -> SatisfiableRequirements:
         return self._satisfiable_requirements_for_additionals
