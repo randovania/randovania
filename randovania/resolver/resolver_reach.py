@@ -28,7 +28,7 @@ def _build_satisfiable_requirements(
     context: NodeContext,
     requirements_by_node: dict[int, list[Requirement]],
 ) -> SatisfiableRequirements:
-    def _for_node(node_index: int, reqs: list[Requirement]) -> frozenset[RequirementList]:
+    def _for_node(node_index: int, reqs: list[Requirement]) -> Iterator[RequirementList]:
         additional = logic.get_additional_requirements(all_nodes[node_index]).alternatives
 
         set_param = set()

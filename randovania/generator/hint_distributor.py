@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import functools
+import logging
 import math
 from abc import ABC, abstractmethod
 from collections import defaultdict
@@ -27,7 +28,8 @@ from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.filler.player_state import HintState, PlayerState
-from randovania.resolver import debug
+from randovania.layout.base.dock_rando_configuration import DockRandoMode
+from randovania.resolver import debug, resolver
 
 if TYPE_CHECKING:
     from randovania.game_description.assignment import PickupTarget
@@ -36,6 +38,8 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.generator.filler.filler_configuration import FillerResults, PlayerPool
     from randovania.generator.pre_fill_params import PreFillParams
+    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.hint_state import ResolverHintState
 
 HintProvider = Callable[[PlayerState, GamePatches, Random, PickupIndex], LocationHint | None]
 
@@ -43,6 +47,9 @@ HintTargetPrecision = tuple[PickupIndex, PrecisionPair]
 
 HintFeatureGaussianParams = tuple[float, float]
 """The mean and standard deviation defining a Gaussian distribution."""
+
+
+logger = logging.getLogger(__name__)
 
 
 class FeatureChooser[PrecisionT: Enum]:
@@ -685,6 +692,24 @@ class AllJokesHintDistributor(HintDistributor):
         return self.replace_hints_without_precision_with_jokes(patches)
 
 
+def _should_use_resolver_hints(config: BaseConfiguration) -> bool:
+    return config.use_resolver_hints or config.dock_rando.mode == DockRandoMode.DOCKS
+
+
+async def get_resolver_hint_state(player: int, patches: GamePatches) -> ResolverHintState | None:
+    with debug.with_level(0):
+        new_state = await resolver.resolve(patches.configuration, patches, collect_hint_data=True)
+
+    if new_state is None:
+        logger.warning(
+            f"Unable to solve game for player {player + 1} after placing doors. Hints will be based on generator state."
+        )
+        return None
+    else:
+        debug.debug_print(f">> Player {player + 1} is solve-able after door placement. Beginning hint placement.")
+        return new_state.hint_state
+
+
 async def distribute_generic_hints(
     rng: Random,
     filler_results: FillerResults,
@@ -698,6 +723,10 @@ async def distribute_generic_hints(
         patches = result.patches
 
         hint_state: HintState = result.hint_state
+        if _should_use_resolver_hints(patches.configuration):
+            resolver_hint_state = await get_resolver_hint_state(player_index, patches)
+            if resolver_hint_state is not None:
+                hint_state = resolver_hint_state
 
         hint_distributor = patches.game.game.generator.hint_distributor
         new_patches[player_index] = await hint_distributor.assign_post_filler_hints(
