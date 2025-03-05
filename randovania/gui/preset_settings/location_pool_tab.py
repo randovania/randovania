@@ -64,7 +64,7 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
                             node_names[node] = f"{region_list.nodes_to_area(node).name} ({node_name})"
 
         for region_name in sorted(nodes_by_region.keys()):
-            spoiler = Foldable(None, region_name)
+            spoiler = Foldable(None, region_name, initially_folded=len(nodes_by_region) > 1)
             vbox_layout = QtWidgets.QVBoxLayout()
 
             first_node = True
