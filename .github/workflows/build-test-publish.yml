@@ -23,72 +23,10 @@ on:
       - 'v*.*.*'
 
 jobs:
-  pytest:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: 'ubuntu-latest'
-            python: '3.12'
-            executable: false
-            wheel: true
-            test_suite: 'regular'
-            name: 'Linux'
-
-          - os: 'ubuntu-latest'
-            python: '3.12'
-            executable: true
-            test_suite: 'executable'
-            name: 'Linux Executable'
-
-          - os: 'macos-13'
-            python: '3.12'
-            executable: false
-            test_suite: 'regular'
-            name: 'macOS'
-
-          - os: 'macos-13'
-            python: '3.12'
-            executable: true
-            test_suite: 'executable'
-            name: 'macOS Executable'
-
-          - os: 'windows-latest'
-            python: '3.12'
-            executable: false
-            test_suite: 'regular'
-            name: 'Windows'
-
-          - os: 'windows-latest'
-            python: '3.12'
-            executable: true
-            test_suite: 'executable'
-            name: 'Windows Executable'
-
-          - os: 'ubuntu-latest'
-            python: '3.12'
-            executable: false
-            test_suite: 'resolver'
-            name: 'Resolver'
-
-          - os: 'ubuntu-latest'
-            python: '3.12'
-            executable: false
-            test_suite: 'benchmark'
-            name: 'Benchmark'
-
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 30
-
-    name: ${{ matrix.name }}
-
-    env:
-      # Due to https://github.com/eventlet/eventlet/issues/670, merely importing eventlet during a test running with
-      # pytest-async causes an error. Settings EVENTLET_IMPORT_VERSION_ONLY allows us to avoid that error, but this
-      # instead causes the flask_socketio to fail importing. Setting FLASK_RUN_FROM_CLI causes it to default to the
-      # threading async method instead, avoiding the issue
-      EVENTLET_IMPORT_VERSION_ONLY: ${{ matrix.os == 'macos-13' && '1' || '0' }}
-      FLASK_RUN_FROM_CLI: ${{ matrix.os == 'macos-13' && '1' || '0' }}
+  wheel:
+    runs-on: 'ubuntu-latest'
+    name: Wheel
+    if: ${{ github.event_name != 'merge_group' }}
 
     steps:
       - name: Checkout
@@ -96,92 +34,59 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Workaround for worktree config
-        run: git config --unset-all extensions.worktreeConfig || true
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "${{ matrix.python }}"
           cache: "pip"
-
-      - name: Apt
-        run: sudo apt-get -q update && sudo apt-get -y install xvfb xserver-xephyr tigervnc-standalone-server x11-utils gnumeric libxcb-cursor0 libxkbcommon-x11-0
-        if: matrix.os == 'ubuntu-latest'
 
       - name: Install core Python packages
         run: python -m pip install --upgrade -r requirements-setuptools.txt
-
-      - name: Install Python packages (source)
-        run: python -m pip install -r requirements.txt -e ".[gui,exporters,server,test,typing,website]"
-        if: ${{ !matrix.executable }}
-
-      - name: Install Python packages (executable)
-        run: python -m pip install -e . -e ".[gui,exporters,test]" -c requirements.txt
-        if: ${{ matrix.executable }}
 
       - name: build ui files
         run: python setup.py build_ui
 
       - name: build sdist and wheel
         run: python -m build --no-isolation
-        if: ${{ matrix.wheel }}
 
-      - name: create test game
-        run: coverage run -m randovania development add-new-game --enum-name TEST_GAME --enum-value test_game --short-name TG --long-name "Test Game"
-        if: ${{ matrix.test_suite == 'regular' && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.ref, 'refs/tags/v') }}
-
-      - name: build ui files for test game too
-        run: python setup.py build_ui
-        if: ${{ matrix.test_suite == 'regular' && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.ref, 'refs/tags/v') }}
-
-      - name: run pytest (regular)
-        run: $PREFIX python -m pytest --cov randovania --cov-append --cov-report=xml --skip-resolver-tests -n auto --durations=100
-        shell: bash
-        env:
-          QT_QPA_PLATFORM: "${{ matrix.os == 'ubuntu-latest' && 'xcb' || '' }}"
-          PREFIX: "${{ matrix.os == 'ubuntu-latest' && 'xvfb-run' || '' }}"
-        if: ${{ matrix.test_suite == 'regular' }}
-
-      - name: run pytest (resolver)
-        run: python -m pytest --cov randovania --cov-append --cov-report=xml --durations=100 -n auto test/resolver/test_resolver.py test/generator/test_generator_reach.py
-        if: ${{ matrix.test_suite == 'resolver' }}
-
-      - name: run pytest (benchmark)
-        uses: CodSpeedHQ/action@v3
+      - name: Upload wheel
+        uses: actions/upload-artifact@v4.0.0
         with:
-          run: python -m pytest -n auto --codspeed --codspeed-mode=walltime --codspeed-max-rounds=1
-          token: ${{ secrets.CODSPEED_TOKEN }}
-        if: ${{ matrix.test_suite == 'benchmark' && github.event_name != 'merge_group' }}
+          name: Python Package
+          if-no-files-found: error
+          path: |
+            dist/randovania-*.tar.gz
+            dist/randovania-*.whl
 
-      - name: create executable
-        run: python -u tools/create_release.py
-        if: matrix.executable
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OBFUSCATOR_SECRET: ${{ secrets.OBFUSCATOR_SECRET }}
-          SENTRY_CLIENT_URL: ${{ secrets.SENTRY_CLIENT_URL }}
-          PRODUCTION: ${{ startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/heads/stable') }}
 
-      - name: executable check
-        run: dist/randovania/randovania --version
-        if: matrix.executable
+  resolver:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    name: Resolver
 
-      - name: executable test
-        run: dist/randovania/randovania --pytest --skip-gui-tests --skip-echo-tool --skip-resolver-tests --durations=100 --ignore=test/server --ignore=test/cli/commands/test_website.py --ignore=test/cli/commands/test_export_videos.py
-        if: ${{ matrix.test_suite == 'executable' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-# TODO: this causes CI to hang
-#      - name: executable startup check
-#        run: $PREFIX dist/randovania/randovania gui main --instantly-quit
-#        shell: bash
-#        env:
-#          QT_QPA_PLATFORM: "${{ matrix.os == 'ubuntu-latest' && 'xcb' || '' }}"
-#          PREFIX: "${{ matrix.os == 'ubuntu-latest' && 'xvfb-run' || '' }}"
-#        if: matrix.executable
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          cache: "pip"
+
+      - name: Install core Python packages
+        run: python -m pip install --upgrade -r requirements-setuptools.txt
+
+      - name: Install Python packages
+        run: python -m pip install -r requirements.txt -e ".[gui,exporters,server,test,typing,website]"
+
+      - name: build ui files
+        run: python setup.py build_ui
+
+      - name: run pytest
+        run: python -m pytest --cov randovania --cov-append --cov-report=xml --durations=100 -n auto test/resolver/test_resolver.py test/generator/test_generator_reach.py
 
       - name: codecov
-        if: ${{ matrix.test_suite == 'regular' || matrix.test_suite == 'resolver' }}
         uses: Wandalen/wretry.action@master
         with:
           action: codecov/codecov-action@v4
@@ -192,30 +97,181 @@ jobs:
           attempt_limit: 5
           attempt_delay: 10000
 
+  pytest:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - { name: "Linux", image: ubuntu-latest }
+          - { name: "macOS", image: macos-13 }
+          - { name: "Windows", image: windows-latest }
+        is_merge_queue:
+          - ${{ github.event_name == 'merge_queue' }}
+        is_stable:
+          - ${{ startsWith(github.ref, 'refs/heads/stable') || startsWith(github.ref, 'refs/tags/v') }}
+
+        exclude:
+          - is_merge_queue: true
+            os: { name: "Linux", image: ubuntu-latest }
+          - is_merge_queue: true
+            os: { name: "macOS", image: macos-13 }
+
+    runs-on: ${{ matrix.os.image }}
+    timeout-minutes: 30
+
+    name: ${{ matrix.os.name }}
+
+    env:
+      # Due to https://github.com/eventlet/eventlet/issues/670, merely importing eventlet during a test running with
+      # pytest-async causes an error. Settings EVENTLET_IMPORT_VERSION_ONLY allows us to avoid that error, but this
+      # instead causes the flask_socketio to fail importing. Setting FLASK_RUN_FROM_CLI causes it to default to the
+      # threading async method instead, avoiding the issue
+      EVENTLET_IMPORT_VERSION_ONLY: ${{ matrix.os.image == 'macos-13' && '1' || '0' }}
+      FLASK_RUN_FROM_CLI: ${{ matrix.os.image == 'macos-13' && '1' || '0' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          cache: "pip"
+
+      - name: Apt
+        run: sudo apt-get -q update && sudo apt-get -y install xvfb xserver-xephyr tigervnc-standalone-server x11-utils gnumeric libxcb-cursor0 libxkbcommon-x11-0
+        if: matrix.os.image == 'ubuntu-latest'
+
+      - name: Install core Python packages
+        run: python -m pip install --upgrade -r requirements-setuptools.txt
+
+      - name: Install Python packages
+        run: python -m pip install -r requirements.txt -e ".[gui,exporters,server,test,typing,website]"
+
+      - name: build ui files
+        run: python setup.py build_ui
+
+      - name: create test game
+        run: coverage run -m randovania development add-new-game --enum-name TEST_GAME --enum-value test_game --short-name TG --long-name "Test Game"
+        if: ${{ !matrix.is_stable }}
+
+      - name: build ui files for test game too
+        run: python setup.py build_ui
+        if: ${{ !matrix.is_stable }}
+
+      - name: run pytest
+        run: $PREFIX python -m pytest --cov randovania --cov-append --cov-report=xml --skip-resolver-tests -n auto --durations=100
+        shell: bash
+        env:
+          QT_QPA_PLATFORM: "${{ matrix.os.image == 'ubuntu-latest' && 'xcb' || '' }}"
+          PREFIX: "${{ matrix.os.image == 'ubuntu-latest' && 'xvfb-run' || '' }}"
+
+      - name: codecov
+        uses: Wandalen/wretry.action@master
+        with:
+          action: codecov/codecov-action@v4
+          with: |
+            fail_ci_if_error: false
+            files: ./coverage.xml
+            token: ${{ secrets.CODECOV_TOKEN }}
+          attempt_limit: 5
+          attempt_delay: 10000
+
+  executable:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - { name: "Linux", image: ubuntu-latest }
+          - { name: "macOS", image: macos-13 }
+          - { name: "Windows", image: windows-latest }
+
+        is_merge_queue:
+          - ${{ github.event_name == 'merge_queue' }}
+        is_stable:
+          - ${{ startsWith(github.ref, 'refs/heads/stable') || startsWith(github.ref, 'refs/tags/v') }}
+
+        exclude:
+          - is_merge_queue: true
+            os: { name: "Linux", image: ubuntu-latest }
+          - is_merge_queue: true
+            os: { name: "macOS", image: macos-13 }
+
+    runs-on: ${{ matrix.os.image }}
+    timeout-minutes: 30
+
+    name: ${{ matrix.os.name }} Executable
+
+    env:
+      # Due to https://github.com/eventlet/eventlet/issues/670, merely importing eventlet during a test running with
+      # pytest-async causes an error. Settings EVENTLET_IMPORT_VERSION_ONLY allows us to avoid that error, but this
+      # instead causes the flask_socketio to fail importing. Setting FLASK_RUN_FROM_CLI causes it to default to the
+      # threading async method instead, avoiding the issue
+      EVENTLET_IMPORT_VERSION_ONLY: ${{ matrix.os.image == 'macos-13' && '1' || '0' }}
+      FLASK_RUN_FROM_CLI: ${{ matrix.os.image == 'macos-13' && '1' || '0' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          cache: "pip"
+
+      - name: Apt
+        run: sudo apt-get -q update && sudo apt-get -y install xvfb xserver-xephyr tigervnc-standalone-server x11-utils gnumeric libxcb-cursor0 libxkbcommon-x11-0
+        if: matrix.os.image == 'ubuntu-latest'
+
+      - name: Install core Python packages
+        run: python -m pip install --upgrade -r requirements-setuptools.txt
+
+      - name: Install Python packages
+        run: python -m pip install -e . -e ".[gui,exporters,test]" -c requirements.txt
+
+      - name: build ui files
+        run: python setup.py build_ui
+
+      - name: create executable
+        run: python -u tools/create_release.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OBFUSCATOR_SECRET: ${{ secrets.OBFUSCATOR_SECRET }}
+          SENTRY_CLIENT_URL: ${{ secrets.SENTRY_CLIENT_URL }}
+          PRODUCTION: ${{ matrix.is_stable }}
+
+      - name: executable check
+        run: dist/randovania/randovania --version
+
+      - name: executable test
+        run: dist/randovania/randovania --pytest --skip-gui-tests --skip-echo-tool --skip-resolver-tests --durations=100 --ignore=test/server --ignore=test/cli/commands/test_website.py --ignore=test/cli/commands/test_export_videos.py
+
+# TODO: this causes CI to hang
+#      - name: executable startup check
+#        run: $PREFIX dist/randovania/randovania gui main --instantly-quit
+#        shell: bash
+#        env:
+#          QT_QPA_PLATFORM: "${{ matrix.os.image == 'ubuntu-latest' && 'xcb' || '' }}"
+#          PREFIX: "${{ matrix.os.image == 'ubuntu-latest' && 'xvfb-run' || '' }}"
+
       - name: Upload artifacts
-        if: ${{ matrix.executable && (startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/v')) && github.event_name != 'merge_group' }}
+        if: ${{ (startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/v')) && github.event_name != 'merge_group' }}
         uses: actions/upload-artifact@v4.0.0
         with:
-          name: Randovania ${{ matrix.name }}
+          name: Randovania ${{ matrix.os.name }} Executable
           if-no-files-found: error
           path: |
             dist/randovania-*.zip
             dist/randovania-*.tar.gz
             dist/randovania-*.7z
 
-      - name: Upload wheel
-        if: ${{ matrix.wheel }}
-        uses: actions/upload-artifact@v4.0.0
-        with:
-          name: Python Package
-          if-no-files-found: error
-          path: |
-            dist/randovania-*.tar.gz
-            dist/randovania-*.whl
-
   installer:
     runs-on: windows-latest
-    needs: pytest
+    needs: executable
     name: Build Windows Installer
     if: ${{ (startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/v')) && github.event_name != 'merge_group' }}
     steps:
@@ -312,7 +368,7 @@ jobs:
 
   flatpak:
     runs-on: ubuntu-latest
-    needs: pytest
+    needs: executable
     name: Build Flatpak
     if: ${{ (startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/v')) && github.event_name != 'merge_group' }}
 
@@ -323,7 +379,6 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
           cache: 'pip'
 
       - name: Download the executable
@@ -344,109 +399,6 @@ jobs:
         shell: bash
         run: python ./tools/build_flatpak.py --repository ./flatpak-repo packages/*.tar.gz
 
-  lint:
-    runs-on: 'windows-latest'
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Workaround for worktree config
-        run: git config --unset-all extensions.worktreeConfig || true
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install Python packages
-        run: |
-          python -m pip install --upgrade -r requirements-setuptools.txt
-          python -m pip install -r requirements-lint.txt
-
-      - name: Test if requirements files are up to date
-        shell: bash
-        run: |
-          set -e
-          python tools/update_requirements.py --quiet
-          git diff --exit-code
-
-  mypy-required:
-    runs-on: 'ubuntu-latest'
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Workaround for worktree config
-        run: git config --unset-all extensions.worktreeConfig || true
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-          cache: "pip"
-
-      - name: Install Python packages
-        run: |
-          python -m pip install --upgrade -r requirements-setuptools.txt
-          python -m pip install -r requirements.txt -e ".[gui,exporters,server,test,typing]"
-
-      - name: build ui files
-        run: python setup.py build_ui
-
-      - name: Mypy on required files
-        uses: tsuyoshicho/action-mypy@v5
-        with:
-          github_token: ${{ secrets.github_token }}
-          # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
-          reporter: github-check
-          setup_method: nothing
-          target: --config-file=pyproject.toml
-          fail_on_error: true
-          install_types: false
-
-  mypy-modified:
-    runs-on: 'ubuntu-latest'
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Workaround for worktree config
-        run: git config --unset-all extensions.worktreeConfig || true
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-          cache: "pip"
-
-      - name: Install Python packages
-        run: |
-          python -m pip install --upgrade -r requirements-setuptools.txt
-          python -m pip install -r requirements.txt -e ".[gui,exporters,server,test,typing]"
-
-      - name: build ui files
-        run: python setup.py build_ui
-
-      - name: Mypy on modified files
-        uses: tsuyoshicho/action-mypy@v5
-        with:
-          github_token: ${{ secrets.github_token }}
-          # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
-          reporter: github-check
-          setup_method: nothing
-          level: warning
-          fail_on_error: false
-          install_types: false
-
   docker:
     runs-on: ubuntu-latest
     name: Docker
@@ -456,9 +408,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Workaround for worktree config
-        run: git config --unset-all extensions.worktreeConfig || true
 
       -
         name: Prepare
@@ -538,7 +487,9 @@ jobs:
     runs-on: 'ubuntu-latest'
     name: Release
     needs:
+      - wheel
       - pytest
+      - executable
       - docker
       - installer
     if: ${{ github.event_name != 'pull_request' && github.event_name != 'merge_group' }}
@@ -551,8 +502,6 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
 
       - name: Download the executables
         uses: actions/download-artifact@v4.1.0
