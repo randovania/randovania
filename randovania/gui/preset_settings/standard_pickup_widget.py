@@ -12,7 +12,7 @@ from randovania.layout.base import standard_pickup_state
 from randovania.layout.base.standard_pickup_state import (
     StandardPickupState,
     StandardPickupStateCase,
-    StartingItemBehavior,
+    StartingPickupBehavior,
 )
 from randovania.lib import enum_lib
 
@@ -52,7 +52,7 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
                 continue
             if (
                 case == StandardPickupStateCase.STARTING_ITEM
-                and pickup.starting_condition == StartingItemBehavior.CAN_NEVER_BE_STARTING
+                and pickup.starting_condition == StartingPickupBehavior.CAN_NEVER_BE_STARTING
             ):
                 continue
 
@@ -106,13 +106,13 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
             self.root_layout.addWidget(self.description_label, self.root_layout.rowCount(), 0, 1, -1)
 
         self.set_custom_fields_visible(False)
-        if self._pickup.starting_condition == StartingItemBehavior.MUST_BE_STARTING:
+        if self._pickup.starting_condition == StartingPickupBehavior.MUST_BE_STARTING:
             self.pickup_name_label.setToolTip(
                 "This item is necessary for the game to function properly and can't be removed."
             )
             self.case = StandardPickupStateCase.STARTING_ITEM
             self.state_case_combo.setEnabled(False)
-        elif self._pickup.starting_condition == StartingItemBehavior.CAN_NEVER_BE_STARTING:
+        elif self._pickup.starting_condition == StartingPickupBehavior.CAN_NEVER_BE_STARTING:
             self.pickup_name_label.setToolTip("Due to game limitations, this item cannot be started with.")
             self.case = StandardPickupStateCase.SHUFFLED
         else:

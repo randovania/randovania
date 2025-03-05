@@ -26,7 +26,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
 from randovania.generator.generator import create_player_pool
 from randovania.generator.pre_fill_params import PreFillParams
-from randovania.layout.base.standard_pickup_state import StandardPickupState, StartingItemBehavior
+from randovania.layout.base.standard_pickup_state import StandardPickupState, StartingPickupBehavior
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
@@ -114,7 +114,7 @@ def echoes_configuration_everything_shuffled(default_echoes_configuration) -> Ec
     pickups_state = copy.copy(old_pickups_config.pickups_state)
 
     for pickup in old_pickups_config.pickups_state:
-        if pickup.starting_condition == StartingItemBehavior.MUST_BE_STARTING:
+        if pickup.starting_condition == StartingPickupBehavior.MUST_BE_STARTING:
             continue
         pickups_state[pickup] = StandardPickupState(
             num_shuffled_pickups=1, included_ammo=tuple(1 for ammo in pickup.ammo)

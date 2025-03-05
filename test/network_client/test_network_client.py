@@ -15,7 +15,7 @@ from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupM
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.layout.base.standard_pickup_state import StartingItemBehavior
+from randovania.layout.base.standard_pickup_state import StartingPickupBehavior
 from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect, _decode_pickup
 from randovania.network_common import connection_headers, remote_inventory
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
@@ -308,7 +308,7 @@ def test_decode_pickup(
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
-        start_case=StartingItemBehavior.CAN_BE_STARTING,
+        start_case=StartingPickupBehavior.CAN_BE_STARTING,
         gui_category=generic_pickup_category,
         hint_features=frozenset((generic_pickup_category,)),
         progression=(),

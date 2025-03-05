@@ -18,7 +18,7 @@ from randovania.game_description.resources.location_category import LocationCate
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator
-from randovania.layout.base.standard_pickup_state import StandardPickupState, StartingItemBehavior
+from randovania.layout.base.standard_pickup_state import StandardPickupState, StartingPickupBehavior
 
 
 @pytest.fixture
@@ -48,7 +48,7 @@ def echoes_standard_pickup(
         offworld_models=frozendict({}),
         progression=("DarkVisor", "MorphBall", "Bombs"),
         ammo=("EnergyTank", "DarkAmmo"),
-        starting_condition=StartingItemBehavior.CAN_BE_STARTING,
+        starting_condition=StartingPickupBehavior.CAN_BE_STARTING,
         original_locations=(),
         probability_offset=5.0,
         preferred_location_category=LocationCategory.MAJOR,

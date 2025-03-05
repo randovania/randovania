@@ -12,7 +12,7 @@ from randovania.generator.filler import filler_logging
 from randovania.generator.filler.filler_library import UnableToGenerate, UncollectedState
 from randovania.generator.filler.filler_logging import debug_print_collect_event
 from randovania.generator.filler.weighted_locations import WeightedLocations
-from randovania.layout.base.standard_pickup_state import StartingItemBehavior
+from randovania.layout.base.standard_pickup_state import StartingPickupBehavior
 from randovania.lib import random_lib
 from randovania.resolver import debug
 
@@ -370,7 +370,7 @@ def debug_print_weighted_locations(all_locations_weighted: WeightedLocations, pl
 
 
 def should_be_starting_pickup(player: PlayerState, locations: WeightedLocations, pickup_entry: PickupEntry) -> bool:
-    if pickup_entry.start_case == StartingItemBehavior.CAN_NEVER_BE_STARTING:
+    if pickup_entry.start_case == StartingPickupBehavior.CAN_NEVER_BE_STARTING:
         return False
 
     cur_starting_pickups = player.num_starting_pickups_placed

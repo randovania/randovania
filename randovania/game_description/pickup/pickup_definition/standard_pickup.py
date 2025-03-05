@@ -7,7 +7,7 @@ from randovania.game_description.pickup.pickup_definition.base_pickup import (
     BasePickupDefinition,
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.layout.base.standard_pickup_state import StandardPickupStateCase, StartingItemBehavior
+from randovania.layout.base.standard_pickup_state import StandardPickupStateCase, StartingPickupBehavior
 
 
 @dataclasses.dataclass(frozen=True, kw_only=True)
@@ -53,8 +53,8 @@ class StandardPickupDefinition(BasePickupDefinition):
     hide_from_gui: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
     """Whether this pickup should be hidden in the GUI."""
 
-    starting_condition: StartingItemBehavior = dataclasses.field(
-        default=StartingItemBehavior.CAN_BE_STARTING, metadata=EXCLUDE_DEFAULT
+    starting_condition: StartingPickupBehavior = dataclasses.field(
+        default=StartingPickupBehavior.CAN_BE_STARTING, metadata=EXCLUDE_DEFAULT
     )
     """How this pickup should behave in regards to being a starting item."""
 

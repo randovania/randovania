@@ -6,7 +6,7 @@ from randovania.generator.filler.action import Action
 from randovania.generator.filler.filler_library import UncollectedState
 from randovania.generator.filler.retcon import EvaluatedAction, _calculate_weights_for, should_be_starting_pickup
 from randovania.generator.generator_reach import GeneratorReach
-from randovania.layout.base.standard_pickup_state import StartingItemBehavior
+from randovania.layout.base.standard_pickup_state import StartingPickupBehavior
 from randovania.resolver import debug
 
 
@@ -57,6 +57,6 @@ def test_calculate_weights_for_output(capsys, blank_pickup):
 
 def test_invalid_starting_items():
     pickup_entry = MagicMock()
-    pickup_entry.start_case = StartingItemBehavior.CAN_NEVER_BE_STARTING
+    pickup_entry.start_case = StartingPickupBehavior.CAN_NEVER_BE_STARTING
 
     assert not should_be_starting_pickup(MagicMock(), MagicMock(), pickup_entry)

@@ -5,7 +5,7 @@ from randovania.gui.preset_settings.standard_pickup_widget import StandardPickup
 from randovania.layout.base.standard_pickup_state import (
     StandardPickupState,
     StandardPickupStateCase,
-    StartingItemBehavior,
+    StartingPickupBehavior,
 )
 
 
@@ -13,7 +13,7 @@ def test_state_no_changes(skip_qtbot, echoes_pickup_database, echoes_resource_da
     item = [
         item
         for item in echoes_pickup_database.standard_pickups.values()
-        if item.starting_condition == StartingItemBehavior.CAN_BE_STARTING
+        if item.starting_condition == StartingPickupBehavior.CAN_BE_STARTING
     ][0]
     state = StandardPickupState(
         include_copy_in_original_location=False,
@@ -34,7 +34,7 @@ def test_state_change_to_starting(skip_qtbot, echoes_pickup_database, echoes_res
     item = [
         item
         for item in echoes_pickup_database.standard_pickups.values()
-        if item.starting_condition == StartingItemBehavior.CAN_BE_STARTING
+        if item.starting_condition == StartingPickupBehavior.CAN_BE_STARTING
     ][0]
     state = StandardPickupState(
         include_copy_in_original_location=False,
@@ -91,7 +91,7 @@ def test_state_must_be_starting(skip_qtbot, echoes_pickup_database, echoes_resou
     item = [
         item
         for item in echoes_pickup_database.standard_pickups.values()
-        if item.starting_condition == StartingItemBehavior.MUST_BE_STARTING
+        if item.starting_condition == StartingPickupBehavior.MUST_BE_STARTING
     ][0]
     state = StandardPickupState(
         include_copy_in_original_location=False,

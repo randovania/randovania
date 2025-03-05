@@ -25,7 +25,7 @@ PRIORITY_LIMITS = {
 }
 
 
-class StartingItemBehavior(BitPackEnum, enum.StrEnum):
+class StartingPickupBehavior(BitPackEnum, enum.StrEnum):
     CAN_BE_STARTING = "can_start"
     MUST_BE_STARTING = "must_start"
     CAN_NEVER_BE_STARTING = "never_start"
@@ -74,11 +74,11 @@ class StandardPickupState:
                 f" got {self.num_shuffled_pickups}. ({pickup.name})"
             )
 
-        if pickup.starting_condition == StartingItemBehavior.MUST_BE_STARTING:
+        if pickup.starting_condition == StartingPickupBehavior.MUST_BE_STARTING:
             if not self.num_included_in_starting_pickups:
                 raise ValueError(f"Required items must be included in starting items. ({pickup.name})")
 
-        if pickup.starting_condition == StartingItemBehavior.CAN_NEVER_BE_STARTING:
+        if pickup.starting_condition == StartingPickupBehavior.CAN_NEVER_BE_STARTING:
             if self.num_included_in_starting_pickups:
                 raise ValueError(f"{pickup.name} cannot be a starting item.")
 

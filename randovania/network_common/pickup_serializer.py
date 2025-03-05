@@ -14,7 +14,7 @@ from randovania.game_description.pickup.pickup_entry import (
     ResourceLock,
 )
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.layout.base.standard_pickup_state import StartingItemBehavior
+from randovania.layout.base.standard_pickup_state import StartingPickupBehavior
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -150,7 +150,7 @@ class BitPackPickupEntry:
         pickup_category = _decode_hint_feature(decoder)
         hint_features = frozenset(bitpacking.decode_tuple(decoder, _decode_hint_feature))
         progression = bitpacking.decode_tuple(decoder, helper.decode_resource_quantity)
-        start_case = StartingItemBehavior.bit_pack_unpack(decoder, {})
+        start_case = StartingPickupBehavior.bit_pack_unpack(decoder, {})
         extra_resources = bitpacking.decode_tuple(decoder, helper.decode_resource_quantity)
         unlocks_resource = bitpacking.decode_bool(decoder)
         resource_lock = None

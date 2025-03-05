@@ -12,7 +12,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.inventory import Inventory
-from randovania.layout.base.standard_pickup_state import StartingItemBehavior
+from randovania.layout.base.standard_pickup_state import StartingPickupBehavior
 from randovania.network_common import error, remote_inventory, signals
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.world_sync import (
@@ -34,7 +34,7 @@ if TYPE_CHECKING:
     [
         (  # normal
             [("Power", 1)],
-            StartingItemBehavior.MUST_BE_STARTING,
+            StartingPickupBehavior.MUST_BE_STARTING,
             (
                 "C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr"
                 "mqu35FxlB#nOvG!<^@M(Ze?<5V<1U%Wo;lsVRU6@Z*qBTEyNQ5I=4BvGO@I?G_tY~G`cdjfdL?~00"
@@ -42,7 +42,7 @@ if TYPE_CHECKING:
         ),
         (  # negative
             [("Missile", -5)],
-            StartingItemBehavior.CAN_BE_STARTING,
+            StartingPickupBehavior.CAN_BE_STARTING,
             (
                 "C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr"
                 "mqu35FxlB#nOvG!<^@M(Ze?<5V<1U%Wo;lsVRU6@Z*qBTEyNQ5I=4BvGO@I?G_tY~G`cdjfl&GZVg"
@@ -50,7 +50,7 @@ if TYPE_CHECKING:
         ),
         (  # progressive
             [("DarkSuit", 1), ("LightSuit", 1)],
-            StartingItemBehavior.CAN_NEVER_BE_STARTING,
+            StartingPickupBehavior.CAN_NEVER_BE_STARTING,
             (
                 "C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr"
                 "mqu35FxlB#nOvG!<^@M(Ze?<5V<1U%Wo;lsVRU6@Z*qBTEyNQ5I=4BvGO@I?G_tY~G`cdjf*TH?Sbz"
