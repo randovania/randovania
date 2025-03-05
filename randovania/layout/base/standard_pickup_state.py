@@ -5,6 +5,7 @@ import enum
 from typing import TYPE_CHECKING
 
 from randovania.bitpacking import bitpacking
+from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.game_description import default_database
 from randovania.lib import enum_lib
 
@@ -24,7 +25,7 @@ PRIORITY_LIMITS = {
 }
 
 
-class StartingItemBehavior(enum.StrEnum):
+class StartingItemBehavior(BitPackEnum, enum.StrEnum):
     CAN_BE_STARTING = "can_start"
     MUST_BE_STARTING = "must_start"
     CAN_NEVER_BE_STARTING = "never_start"
