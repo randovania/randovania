@@ -22,6 +22,8 @@ from randovania.layout.base.standard_pickup_state import (
 if TYPE_CHECKING:
     import pytest_mock
 
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
+
 
 @pytest.fixture(
     params=[
@@ -116,50 +118,60 @@ def test_blank_from_json():
     assert StandardPickupState.from_json({}) == StandardPickupState()
 
 
-def test_check_consistency(mocker: pytest_mock.MockerFixture):
-    pickup = MagicMock()
-    pickup.game = RandovaniaGame.METROID_PRIME_ECHOES
+def _check_consistency(state: StandardPickupState, pickup: PickupEntry, error: str) -> None:
+    with pytest.raises(ValueError, match=re.escape(error)):
+        state.check_consistency(pickup)
 
-    # Check Amount of items shuffled
-    pickup.name = "Progressive Suit"
+
+def test_amount_of_pickups_shuffled():
+    pickup = MagicMock()
+    pickup.game = RandovaniaGame.BLANK
+    pickup.name = "Starting Item Surplus"
     pickup.starting_condition = StartingPickupBehavior.CAN_BE_STARTING
     state = StandardPickupState(num_shuffled_pickups=100)
     expected_error = f"Can only shuffle between 0 and {DEFAULT_MAXIMUM_SHUFFLED[-1]} copies,"
     f" got {state.num_shuffled_pickups}. ({pickup.name})"
-    escaped_error = re.escape(expected_error)
 
-    with pytest.raises(ValueError, match=escaped_error):
-        StandardPickupState.check_consistency(state, pickup)
+    _check_consistency(state, pickup, expected_error)
 
     state = StandardPickupState(num_shuffled_pickups=-1)
-    with pytest.raises(ValueError, match=escaped_error):
-        StandardPickupState.check_consistency(state, pickup)
 
-    # Check starting condition
-    pickup.name = "Cannon Ball"
+    _check_consistency(state, pickup, expected_error)
+
+
+def test_starting_conditions():
+    pickup = MagicMock()
+    pickup.game = RandovaniaGame.BLANK
+    pickup.name = "Banned Starting Item"
     pickup.starting_condition = StartingPickupBehavior.CAN_NEVER_BE_STARTING
     state = StandardPickupState(num_included_in_starting_pickups=1)
+    expected_error = f"{pickup.name} cannot be a starting item."
 
-    with pytest.raises(ValueError, match=f"{pickup.name} cannot be a starting item."):
-        StandardPickupState.check_consistency(state, pickup)
+    _check_consistency(state, pickup, expected_error)
 
-    pickup.name = "Varia Suit"
+    pickup.name = "Required Starting Item"
     pickup.starting_condition = StartingPickupBehavior.MUST_BE_STARTING
     state = StandardPickupState(num_included_in_starting_pickups=0)
     expected_error = f"Required items must be included in starting items. ({pickup.name})"
-    escaped_error = re.escape(expected_error)
 
-    with pytest.raises(ValueError, match=escaped_error):
-        StandardPickupState.check_consistency(state, pickup)
+    _check_consistency(state, pickup, expected_error)
 
-    # Check starting with progressive items
-    pickup.name = "Progressive Suit"
+
+def test_starting_with_progressives():
+    pickup = MagicMock()
+    pickup.game = RandovaniaGame.BLANK
+    pickup.name = "Progressive Starting Item"
     pickup.starting_conidition = StartingPickupBehavior.CAN_NEVER_BE_STARTING
+    pickup.progression = ["Item", "Cooler Item"]
     state = StandardPickupState(num_included_in_starting_pickups=1)
     expected_error = f"Progressive items cannot be starting items. ({pickup.name})"
-    escaped_error = re.escape(expected_error)
 
-    # Check Max item capacity
+    _check_consistency(state, pickup, expected_error)
+
+
+def test_max_item_capacity(mocker: pytest_mock.MockerFixture):
+    pickup = MagicMock()
+    pickup.game = RandovaniaGame.BLANK
     pickup.name = "Item Over Maximum Capacity"
     pickup_info = MagicMock()
     pickup_info.max_capacity = 1
@@ -169,51 +181,55 @@ def test_check_consistency(mocker: pytest_mock.MockerFixture):
         "randovania.game_description.resources.resource_database.ResourceDatabase.get_item", return_value=pickup_info
     )
     expected_error = f"More starting copies than the item's maximum. ({pickup.name})"
-    escaped_error = re.escape(expected_error)
 
-    with pytest.raises(ValueError, match=escaped_error):
-        StandardPickupState.check_consistency(state, pickup)
+    _check_consistency(state, pickup, expected_error)
 
-    # Check vanilla item locations
+
+def test_vanilla_pickup_locations():
+    pickup = MagicMock()
+    pickup.game = RandovaniaGame.BLANK
     pickup.name = "Item to be placed in vanilla location"
     pickup.original_locations = False
     pickup.starting_condition = StartingPickupBehavior.CAN_BE_STARTING
     state = StandardPickupState(include_copy_in_original_location=True)
     expected_error = f"No vanilla location defined. ({pickup.name})"
-    escaped_error = re.escape(expected_error)
 
-    with pytest.raises(ValueError, match=escaped_error):
-        StandardPickupState.check_consistency(state, pickup)
+    _check_consistency(state, pickup, expected_error)
 
-    # Check item priority range
+
+def test_pickup_priority_range():
+    # Check over priority
+    pickup = MagicMock()
+    pickup.game = RandovaniaGame.BLANK
     pickup.name = "Item with broken priority"
     state = StandardPickupState(priority=11.0)
     expected_error = "Priority must be between {min} and {max}, got {priority}".format(
         priority=state.priority,
         **PRIORITY_LIMITS,
     )
-    escaped_error = re.escape(expected_error)
 
-    with pytest.raises(ValueError, match=escaped_error):
-        StandardPickupState.check_consistency(state, pickup)
+    _check_consistency(state, pickup, expected_error)
 
+    # Check under priority
     state = StandardPickupState(priority=-1.0)
     expected_error = "Priority must be between {min} and {max}, got {priority}".format(
         priority=state.priority,
         **PRIORITY_LIMITS,
     )
-    escaped_error = re.escape(expected_error)
-    with pytest.raises(ValueError, match=escaped_error):
-        StandardPickupState.check_consistency(state, pickup)
 
+    _check_consistency(state, pickup, expected_error)
+
+
+def test_ammo_config(mocker: pytest_mock.MockerFixture):
     # Check ammo array
+    pickup = MagicMock()
+    pickup.game = RandovaniaGame.BLANK
     pickup.name = "Item with extra ammo entry"
     pickup.ammo = ["Dark Ammo", "Light Ammo"]
     state = StandardPickupState(included_ammo=[2])
     expected_error = f"Mismatched included_ammo array size. ({pickup.name})"
-    escaped_error = re.escape(expected_error)
-    with pytest.raises(ValueError, match=escaped_error):
-        StandardPickupState.check_consistency(state, pickup)
+
+    _check_consistency(state, pickup, expected_error)
 
     # Check correct ammo amounts
     pickup.name = "Item over ammo limit"
@@ -221,13 +237,12 @@ def test_check_consistency(mocker: pytest_mock.MockerFixture):
     ammo_name = "Dark Ammo"
     ammo = 5
     state = StandardPickupState(included_ammo=[5])
+    pickup_info = MagicMock()
     pickup_info.max_capacity = 1
     fake_get_item = mocker.patch(
         "randovania.game_description.resources.resource_database.ResourceDatabase.get_item", return_value=pickup_info
     )
     expected_error = f"Including more than maximum capacity for ammo {ammo_name}."
     f" Included: {ammo}; Max: {fake_get_item(ammo_name).max_capacity}"
-    escaped_error = re.escape(expected_error)
 
-    with pytest.raises(ValueError, match=escaped_error):
-        StandardPickupState.check_consistency(state, pickup)
+    _check_consistency(state, pickup, expected_error)
