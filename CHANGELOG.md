@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Door Lock Randomizer
 
+- Changed: When checking doors that are completely unreachable (such as uncrashed Frigate in most Metroid Prime presets), the resolver is no longer run. This should improve generation time slightly.
 - Fixed: Bug in the revised door solver that would result in permanently locked doors being placed when they shouldn't.
 
 ### Resolver
