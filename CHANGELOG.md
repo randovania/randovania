@@ -35,7 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
-- Fixed: Cannon Ball and the multiplayer pickups can no longer be selected as starting items, since they did not work in-game when doing so.
+- Fixed: Cannon Ball and the multiplayer pickups can no longer be selected as starting pickups, since they did not work in-game when doing so.
 
 ### Metroid Dread
 
