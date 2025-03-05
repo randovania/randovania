@@ -368,10 +368,8 @@ def debug_print_weighted_locations(all_locations_weighted: WeightedLocations, pl
         print(f"[{player_states[owner.index].name}] {node_name} - {weight}")
 
 
-def should_be_starting_pickup(
-    player: PlayerState, locations: WeightedLocations, start_case: StartingItemBehavior
-) -> bool:
-    if start_case == StartingItemBehavior.CAN_NEVER_BE_STARTING:
+def should_be_starting_pickup(player: PlayerState, locations: WeightedLocations, pickup_entry: PickupEntry) -> bool:
+    if pickup_entry.start_case == StartingItemBehavior.CAN_NEVER_BE_STARTING:
         return False
 
     cur_starting_pickups = player.num_starting_pickups_placed
