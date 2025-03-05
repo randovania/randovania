@@ -79,8 +79,8 @@ class PickupEntry:
     hint_features: frozenset[HintFeature]
     progression: tuple[tuple[ItemResourceInfo, int], ...]
     generator_params: PickupGeneratorParams
-    extra_resources: ResourceGainTuple = ()
     start_case: StartingItemBehavior
+    extra_resources: ResourceGainTuple = ()
     unlocks_resource: bool = False
     resource_lock: ResourceLock | None = None
     respects_lock: bool = True
