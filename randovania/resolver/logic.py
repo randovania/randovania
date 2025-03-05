@@ -31,13 +31,16 @@ class Logic:
     game: GameDescription
     configuration: BaseConfiguration
     additional_requirements: list[RequirementSet]
+    prioritize_hints: bool
+
     _attempts: int
     _current_indent: int = 0
     _last_printed_additional: dict[Node, RequirementSet]
 
-    def __init__(self, game: GameDescription, configuration: BaseConfiguration):
+    def __init__(self, game: GameDescription, configuration: BaseConfiguration, prioritize_hints: bool = False):
         self.game = game
         self.configuration = configuration
+        self.prioritize_hints = prioritize_hints
         self.additional_requirements = [RequirementSet.trivial()] * len(game.region_list.all_nodes)
 
     def get_additional_requirements(self, node: Node) -> RequirementSet:

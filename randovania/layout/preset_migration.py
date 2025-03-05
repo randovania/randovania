@@ -1084,6 +1084,10 @@ def _migrate_v97(preset: dict, game: RandovaniaGame) -> None:
     preset["configuration"]["consider_possible_unsafe_resources"] = False
 
 
+def _migrate_v98(preset: dict, game: RandovaniaGame) -> None:
+    preset["configuration"]["use_resolver_hints"] = False
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1182,6 +1186,7 @@ _MIGRATIONS = [
     _migrate_v95,  # msr rename baby_metroid hint to final_boss_item hint
     _migrate_v96,  # dread disable lights per region
     _migrate_v97,  # consider possible unsafe resources
+    _migrate_v98,  # use resolver hints
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

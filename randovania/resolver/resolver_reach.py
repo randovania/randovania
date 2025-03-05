@@ -28,7 +28,7 @@ def _build_satisfiable_requirements(
     context: NodeContext,
     requirements_by_node: dict[int, list[Requirement]],
 ) -> SatisfiableRequirements:
-    def _for_node(node_index: int, reqs: list[Requirement]) -> frozenset[RequirementList]:
+    def _for_node(node_index: int, reqs: list[Requirement]) -> Iterator[RequirementList]:
         additional = logic.get_additional_requirements(all_nodes[node_index]).alternatives
 
         set_param = set()
@@ -59,6 +59,9 @@ class ResolverReach:
         all_nodes = self._logic.game.region_list.all_nodes
         for index in self._node_indices:
             yield all_nodes[index]
+
+    def game_state_at_node(self, index: int) -> DamageState:
+        return self._game_state_at_node[index]
 
     @property
     def satisfiable_requirements_for_additionals(self) -> SatisfiableRequirements:

@@ -6,14 +6,15 @@ from randovania.game_description.hint import HintItemPrecision, HintLocationPrec
 from randovania.generator.hint_distributor import HintDistributor
 
 if TYPE_CHECKING:
-    from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.assignment import PickupTarget
+    from randovania.game_description.db.hint_node import HintNode
 
 
 class AM2RHintDistributor(HintDistributor):
     # Makes DNA less likely to be hinted since gaurunteed hints already exist on Wisdom Septoggs
     @override
-    def is_pickup_interesting(self, pickup: PickupEntry) -> bool:
-        return not pickup.has_hint_feature("dna")
+    def is_pickup_interesting(self, target: PickupTarget, player_id: int, hint_node: HintNode) -> bool:
+        return not target.pickup.has_hint_feature("dna")
 
     @override
     @property

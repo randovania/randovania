@@ -65,6 +65,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     check_if_beatable_after_base_patches: bool
     logical_pickup_placement: LogicalPickupPlacementConfiguration
     consider_possible_unsafe_resources: bool
+    use_resolver_hints: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
@@ -95,7 +96,12 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
         return result
 
     def settings_incompatible_with_multiworld(self) -> list[str]:
-        return _collect_from_fields(self, "settings_incompatible_with_multiworld")
+        result = _collect_from_fields(self, "settings_incompatible_with_multiworld")
+
+        if self.use_resolver_hints:
+            result.append("Resolver-based hints")
+
+        return result
 
     def unsupported_features(self) -> list[str]:
         return _collect_from_fields(self, "unsupported_features")

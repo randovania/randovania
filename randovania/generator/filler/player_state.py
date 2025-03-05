@@ -5,7 +5,6 @@ import re
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.common import elevators
 from randovania.generator import reach_lib
@@ -17,13 +16,13 @@ from randovania.generator.filler.pickup_list import (
     get_pickups_that_solves_unreachable,
     interesting_resources_for_reach,
 )
+from randovania.generator.hint_state import HintState
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
     from randovania.game_description.assignment import PickupTarget
-    from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.game_description import GameDescription
@@ -33,72 +32,15 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.filler.weighted_locations import WeightedLocations
-    from randovania.generator.generator_reach import GeneratorReach
     from randovania.resolver.state import State
 
 
-class HintState:
-    """Tracks necessary state for anything relating to hint placement"""
-
-    configuration: FillerConfiguration
-    game: GameDescription
-
-    hint_seen_count: collections.defaultdict[NodeIdentifier, int]
-    hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]]
-    pickup_available_indices_when_placed: dict[PickupIndex, frozenset[PickupIndex]]
-
-    def __init__(self, config: FillerConfiguration, game: GameDescription):
-        self.configuration = config
-        self.game = game
-
-        self.hint_seen_count = collections.defaultdict(int)
-        self.hint_initial_pickups = {}
-        self.pickup_available_indices_when_placed = {}
-
-    @property
-    def hint_valid_targets(self) -> dict[NodeIdentifier, set[PickupIndex]]:
-        """Mapping of HintNodes to a set of valid PickupIndex choices they can target"""
-        targets = {
-            hint: {
-                pickup
-                for pickup, available in self.pickup_available_indices_when_placed.items()
-                if (pickup not in pickups)
-                and len(available) >= self.configuration.minimum_available_locations_for_hint_placement
-            }
-            for hint, pickups in self.hint_initial_pickups.items()
-        }
-        for node in self.game.region_list.iterate_nodes():
-            if not isinstance(node, HintNode):
-                continue
-            # ensure all hint nodes are included, even if they have no targets
-            targets.setdefault(node.identifier, set())
-        return targets
-
-    def advance_hint_seen_count(self, reach: GeneratorReach) -> None:
-        """Increases hint seen count each time a hint is collected, and sets initial_pickups the first time"""
-        for hint_identifier in reach.state.collected_hints:
-            self.hint_seen_count[hint_identifier] += 1
-            if self.hint_seen_count[hint_identifier] == 1:
-                self.hint_initial_pickups[hint_identifier] = frozenset(reach.state.collected_pickup_indices)
-
+class GeneratorHintState(HintState):
+    def advance_hint_seen_count(self, state: State) -> None:
+        super().advance_hint_seen_count(state)
         filler_logging.print_new_node_identifiers(self.game, self.hint_seen_count, "Hints")
 
-    def assign_available_locations(
-        self,
-        state: PlayerState,
-        pickup_index: PickupIndex,
-        current_uncollected: UncollectedState,
-        all_locations: WeightedLocations,
-    ) -> None:
-        """
-        Update pickup_available_indices_when_placed with
-        the available indices when the pickup is placed
-        """
-
-        available = frozenset(self._valid_available_locations_for_hint(state, current_uncollected, all_locations))
-        self.pickup_available_indices_when_placed[pickup_index] = available
-
-    def _valid_available_locations_for_hint(
+    def valid_available_locations_for_hint(
         self, state: PlayerState, current_uncollected: UncollectedState, all_locations: WeightedLocations
     ) -> list[PickupIndex]:
         """
@@ -126,7 +68,7 @@ class PlayerState:
     _unfiltered_potential_actions: tuple[PickupCombinations, tuple[ResourceNode, ...]]
     num_starting_pickups_placed: int
     num_assigned_pickups: int
-    hint_state: HintState
+    hint_state: GeneratorHintState
 
     def __init__(
         self,
@@ -154,7 +96,7 @@ class PlayerState:
         self.num_actions = 0
         self.indices_groups, self.all_indices = build_available_indices(game.region_list, configuration)
 
-        self.hint_state = HintState(configuration, game)
+        self.hint_state = GeneratorHintState(configuration, game)
 
     def __repr__(self) -> str:
         return f"PlayerState {self.name}"
@@ -162,7 +104,7 @@ class PlayerState:
     def update_for_new_state(self) -> None:
         debug.debug_print(f"\n>>> Updating state of {self.name}")
 
-        self.hint_state.advance_hint_seen_count(self.reach)
+        self.hint_state.advance_hint_seen_count(self.reach.state)
         self._advance_event_seen_count()
         self._log_new_pickup_index()
         self._calculate_potential_actions()
@@ -230,7 +172,8 @@ class PlayerState:
                 (pickup_index, target),
             ]
         )
-        self.hint_state.assign_available_locations(self, pickup_index, current_uncollected, all_locations)
+        available = self.hint_state.valid_available_locations_for_hint(self, current_uncollected, all_locations)
+        self.hint_state.assign_available_locations(pickup_index, available)
 
     def current_state_report(self) -> str:
         state = UncollectedState.from_reach(self.reach)
@@ -301,8 +244,7 @@ class PlayerState:
         ]
 
         return (
-            "At {} after {} actions and {} pickups, "
-            "with {} collected locations, {} safe nodes, {} safe uncollected resource nodes.\n\n"
+            "At {} after {} actions and {} pickups, with {} collected locations, {} safe nodes.\n\n"
             "Pickups still available: {}\n\n"
             "Resources to progress: {}\n\n"
             "Paths to be opened:\n{}\n\n"
@@ -314,7 +256,6 @@ class PlayerState:
             self.num_assigned_pickups,
             len(state.pickup_indices),
             sum(1 for n in self.reach.safe_nodes),
-            sum(1 for n in self.reach.safe_uncollected_resource_nodes),
             ", ".join(
                 name if quantity == 1 else f"{name} x{quantity}"
                 for name, quantity in sorted(pickups_by_name_and_quantity.items())

@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Experimental option under Generation -> Logic Settings that improves the results of generation but increases generation time.
 - Changed: The Hints Spoiler tab sorts its entries in a more helpful manner.
 - Changed: Some joke hints are now shared between all games that use them.
+- Changed: Hints now prioritize non-progression major items rather than progression minor items.
 - Fixed: It is now properly impossible for multiple hints to point to the same location.
 - Fixed: A recent regression in the resolver that made it significantly slower has been fixed.
 - Fixed: Generator action weights were being incorrectly calculated.
@@ -26,11 +27,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Door Lock Randomizer
 
+- Added: Hint placement for seeds with individual door lock randomization now uses the resolver to help determine what to hint. This should result in significantly more useful hints in these seeds.
+- Changed: When checking doors that are completely unreachable (such as uncrashed Frigate in most Metroid Prime presets), the resolver is no longer run. This should improve generation time slightly.
 - Fixed: Bug in the revised door solver that would result in permanently locked doors being placed when they shouldn't.
 
 ### Resolver
 
 - Fixed: Some seeds being considered impossible when finding a progressive item in an area where a later item in the progressive chain is required to leave.
+- Fixed: Minor edge case where a seed might be considered impossible due to missing consideration of damage.
 
 ### Metroid Dread
 
@@ -85,7 +89,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Legacy multiworld sessions where an Echoes hint points to a Cave Story item may have very slightly altered wording.
 - Changed: A legacy relative hint pointing to a Nothing will now always refer to it by name.
 - Changed: Keybearer hints may refer to pickups using different categories than before.
+- Fixed: Seeds with individual Door Lock Randomizer enabled should see more door variety in the lategame.
 - Fixed: When using the new experimental generator setting to consider possible unsafe resources, the Starter Preset can once again see Missile Launcher placed in the GFMC Compound crate.
+- Fixed: Translators will no longer be hinted by hints of their own color.
+
+#### Logic Database
+
+##### Agon Wastes
+
+- Changed: Mining Plaza: Climbing the room with Screw Attack and no Space Jump bumped up to intermediate movement.
+- Changed: Trial Grounds: Climbing the room with Screw Attack and no Space Jump bumped up to intermediate movement.
+
+##### Temple Grounds
+
+- Changed: Temple Assembly Site: Reaching the pickup location with Screw Attack and no Space Jump lowered to beginner movement.
 
 ### Metroid: Samus Returns
 

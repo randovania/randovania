@@ -31,37 +31,51 @@ jobs:
           - os: 'ubuntu-latest'
             python: '3.12'
             executable: false
+            wheel: true
+            test_suite: 'regular'
             name: 'Linux'
 
           - os: 'ubuntu-latest'
             python: '3.12'
             executable: true
+            test_suite: 'executable'
             name: 'Linux Executable'
 
           - os: 'macos-13'
             python: '3.12'
             executable: false
+            test_suite: 'regular'
             name: 'macOS'
 
           - os: 'macos-13'
             python: '3.12'
             executable: true
+            test_suite: 'executable'
             name: 'macOS Executable'
 
           - os: 'windows-latest'
             python: '3.12'
             executable: false
+            test_suite: 'regular'
             name: 'Windows'
 
           - os: 'windows-latest'
             python: '3.12'
             executable: true
+            test_suite: 'executable'
             name: 'Windows Executable'
 
           - os: 'ubuntu-latest'
             python: '3.12'
             executable: false
+            test_suite: 'resolver'
             name: 'Resolver'
+
+          - os: 'ubuntu-latest'
+            python: '3.12'
+            executable: false
+            test_suite: 'benchmark'
+            name: 'Benchmark'
 
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
@@ -111,27 +125,34 @@ jobs:
 
       - name: build sdist and wheel
         run: python -m build --no-isolation
-        if: ${{ !matrix.executable && matrix.os == 'ubuntu-latest' }}
+        if: ${{ matrix.wheel }}
 
       - name: create test game
         run: coverage run -m randovania development add-new-game --enum-name TEST_GAME --enum-value test_game --short-name TG --long-name "Test Game"
-        if: ${{ !matrix.executable && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.ref, 'refs/tags/v') }}
+        if: ${{ matrix.test_suite == 'regular' && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.ref, 'refs/tags/v') }}
 
       - name: build ui files for test game too
         run: python setup.py build_ui
-        if: ${{ !matrix.executable && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.ref, 'refs/tags/v') }}
+        if: ${{ matrix.test_suite == 'regular' && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.ref, 'refs/tags/v') }}
 
-      - name: run pytest (no resolver)
+      - name: run pytest (regular)
         run: $PREFIX python -m pytest --cov randovania --cov-append --cov-report=xml --skip-resolver-tests -n auto --durations=100
         shell: bash
         env:
           QT_QPA_PLATFORM: "${{ matrix.os == 'ubuntu-latest' && 'xcb' || '' }}"
           PREFIX: "${{ matrix.os == 'ubuntu-latest' && 'xvfb-run' || '' }}"
-        if: ${{ !matrix.executable && matrix.name != 'Resolver' }}
+        if: ${{ matrix.test_suite == 'regular' }}
 
       - name: run pytest (resolver)
         run: python -m pytest --cov randovania --cov-append --cov-report=xml --durations=100 -n auto test/resolver/test_resolver.py test/generator/test_generator_reach.py
-        if: ${{ matrix.name == 'Resolver' }}
+        if: ${{ matrix.test_suite == 'resolver' }}
+
+      - name: run pytest (benchmark)
+        uses: CodSpeedHQ/action@v3
+        with:
+          run: python -m pytest -n auto --codspeed --codspeed-mode=walltime --codspeed-max-rounds=1
+          token: ${{ secrets.CODSPEED_TOKEN }}
+        if: ${{ matrix.test_suite == 'benchmark' }}
 
       - name: create executable
         run: python -u tools/create_release.py
@@ -148,7 +169,7 @@ jobs:
 
       - name: executable test
         run: dist/randovania/randovania --pytest --skip-gui-tests --skip-echo-tool --skip-resolver-tests --durations=100 --ignore=test/server --ignore=test/cli/commands/test_website.py --ignore=test/cli/commands/test_export_videos.py
-        if: matrix.executable
+        if: ${{ matrix.test_suite == 'executable' }}
 
 # TODO: this causes CI to hang
 #      - name: executable startup check
@@ -160,7 +181,7 @@ jobs:
 #        if: matrix.executable
 
       - name: codecov
-        if: ${{ !matrix.executable }}
+        if: ${{ matrix.test_suite == 'regular' || matrix.test_suite == 'resolver' }}
         uses: Wandalen/wretry.action@master
         with:
           action: codecov/codecov-action@v4
@@ -183,7 +204,7 @@ jobs:
             dist/randovania-*.7z
 
       - name: Upload wheel
-        if: ${{ matrix.name == 'Linux' }}
+        if: ${{ matrix.wheel }}
         uses: actions/upload-artifact@v4.0.0
         with:
           name: Python Package
@@ -564,7 +585,7 @@ jobs:
           echo version=$(python tools/get_version_from_artifacts.py "packages/Randovania Linux Executable/") >> $GITHUB_OUTPUT
 
       - name: Create Sentry release
-        uses: getsentry/action-release@v2
+        uses: getsentry/action-release@v3
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: randovania
