@@ -70,17 +70,23 @@ class FeatureChooser[PrecisionT: Enum]:
             )
             for feature in self.elements_with_feature
         }
+
+        if self.detailed_precision is not None:
+            # set detailed precision to 1.0 if it isn't already set
+            feature_precisions.setdefault(self.detailed_precision, 1.0)
+
         feature_precisions = {
             feature: ft_precision
             for feature, ft_precision in feature_precisions.items()
             if (
-                ft_precision < 1.0  # exclude any features that would only point to a single element
+                (
+                    ft_precision < 1.0  # exclude any features that would only point to a single element
+                    or feature is self.detailed_precision
+                    or feature_precisions[self.detailed_precision] < 1.0  # unless detailed is imprecise
+                )
                 and not (isinstance(feature, HintFeature) and feature.hidden)
             )
         }
-        if self.detailed_precision is not None:
-            # set detailed precision to 1.0 if it isn't already set
-            feature_precisions.setdefault(self.detailed_precision, 1.0)
 
         return feature_precisions
 
