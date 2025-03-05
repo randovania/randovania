@@ -22,6 +22,7 @@ if TYPE_CHECKING:
         ResourceGainTuple,
         ResourceQuantity,
     )
+    from randovania.layout.base.standard_pickup_state import StartingItemBehavior
 
 
 @dataclass(frozen=True)
@@ -79,6 +80,7 @@ class PickupEntry:
     progression: tuple[tuple[ItemResourceInfo, int], ...]
     generator_params: PickupGeneratorParams
     extra_resources: ResourceGainTuple = ()
+    start_case: StartingItemBehavior
     unlocks_resource: bool = False
     resource_lock: ResourceLock | None = None
     respects_lock: bool = True

@@ -12,6 +12,7 @@ from randovania.generator.filler import filler_logging
 from randovania.generator.filler.filler_library import UnableToGenerate, UncollectedState
 from randovania.generator.filler.filler_logging import debug_print_collect_event
 from randovania.generator.filler.weighted_locations import WeightedLocations
+from randovania.layout.base.standard_pickup_state import StartingItemBehavior
 from randovania.lib import random_lib
 from randovania.resolver import debug
 
@@ -367,7 +368,12 @@ def debug_print_weighted_locations(all_locations_weighted: WeightedLocations, pl
         print(f"[{player_states[owner.index].name}] {node_name} - {weight}")
 
 
-def should_be_starting_pickup(player: PlayerState, locations: WeightedLocations) -> bool:
+def should_be_starting_pickup(
+    player: PlayerState, locations: WeightedLocations, start_case: StartingItemBehavior
+) -> bool:
+    if start_case == StartingItemBehavior.CAN_NEVER_BE_STARTING:
+        return False
+
     cur_starting_pickups = player.num_starting_pickups_placed
     minimum_starting_pickups = player.configuration.minimum_random_starting_pickups
     maximum_starting_pickups = player.configuration.maximum_random_starting_pickups
@@ -401,7 +407,7 @@ def _assign_pickup_somewhere(
 
     usable_locations = current_player.filter_usable_locations(all_locations, action)
 
-    if not should_be_starting_pickup(current_player, usable_locations):
+    if not should_be_starting_pickup(current_player, usable_locations, action.start_case):
         if debug.debug_level() > 2:
             debug_print_weighted_locations(all_locations, player_states)
 
