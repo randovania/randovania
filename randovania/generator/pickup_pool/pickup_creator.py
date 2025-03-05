@@ -51,6 +51,7 @@ def create_standard_pickup(
     return PickupEntry(
         name=pickup.name,
         progression=tuple(_create_resources(progression) for progression in pickup.progression),
+        start_case=pickup.starting_condition,
         extra_resources=tuple(extra_resources),
         model=PickupModel(
             game=resource_database.game_enum,
