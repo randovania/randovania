@@ -67,7 +67,7 @@ async def test_run_filler(
     remaining_items = filler_result.player_results[0].unassigned_pickups
 
     # Assert
-    assert len(result_patches.hints) == len(hint_identifiers)
+    assert result_patches.hints == {hint_identifiers[0]: LocationHint.unassigned(PickupIndex(0))}
     assert [
         hint for hint in result_patches.hints.values() if isinstance(hint, LocationHint) and hint.precision is None
     ] == []
@@ -98,6 +98,7 @@ async def test_fill_unassigned_hints_empty_assignment(echoes_game_description, e
         echoes_game_description.region_list,
         rng,
         hint_state,
+        0,
         player_pools,
     )
 

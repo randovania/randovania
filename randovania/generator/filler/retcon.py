@@ -166,6 +166,7 @@ def weighted_potential_actions(
         return {action: 1.0 for action in actions}
 
     current_uncollected = UncollectedState.from_reach(player_state.reach)
+    current_unsafe_uncollected = UncollectedState.from_reach_only_unsafe(player_state.reach)
     action_weights = player_state.game.game.generator.action_weights
 
     options_considered = 0
@@ -181,7 +182,7 @@ def weighted_potential_actions(
         update_for_option()
 
     actions_weights = {
-        action: _calculate_weights_for(evaluation, current_uncollected)
+        action: _calculate_weights_for(evaluation, current_uncollected, current_unsafe_uncollected)
         for action, evaluation in evaluated_actions.items()
     }
 
@@ -192,12 +193,12 @@ def weighted_potential_actions(
         options_considered = 0
         for action, evaluation in evaluated_actions.items():
             evaluated_actions[action] = evaluation.replace_reach(
-                reach_lib.advance_reach_with_possible_unsafe_resources(evaluation.reach, filter_resource_nodes=True)
+                reach_lib.advance_reach_with_possible_unsafe_resources(evaluation.reach)
             )
             update_for_option()
 
         actions_weights = {
-            action: _calculate_weights_for(evaluation, current_uncollected)
+            action: _calculate_weights_for(evaluation, current_uncollected, current_unsafe_uncollected)
             for action, evaluation in evaluated_actions.items()
         }
 
@@ -338,7 +339,7 @@ def retcon_playthrough_filler(
             for i, new_pickup in enumerate(new_pickups):
                 if i > 0:
                     current_player.reach = reach_lib.advance_reach_with_possible_unsafe_resources(current_player.reach)
-                    current_player.hint_state.advance_hint_seen_count(current_player.reach)
+                    current_player.hint_state.advance_hint_seen_count(current_player.reach.state)
                     all_locations_weighted = _calculate_all_pickup_indices_weight(player_states)
 
                 log_entry = _assign_pickup_somewhere(
@@ -479,6 +480,7 @@ def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> We
 def _calculate_weights_for(
     evaluation: EvaluatedAction,
     current_uncollected: UncollectedState,
+    current_unsafe_uncollected: UncollectedState,
 ) -> float:
     """
     Calculate a weight to be used for this action, based on what's collected in the reach.
@@ -490,21 +492,43 @@ def _calculate_weights_for(
         return action_weights.VICTORY_WEIGHT
 
     potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected
+    potential_unsafe_uncollected = UncollectedState.from_reach_only_unsafe(potential_reach) - current_unsafe_uncollected
+
     if debug.debug_level() > 2:
         nodes = typing.cast(tuple[Node, ...], potential_reach.game.region_list.all_nodes)
 
+        def print_weight_factors(uncollected: UncollectedState) -> None:
+            print(f"  indices: {uncollected.pickup_indices}")
+            print(f"  events: {[event.long_name for event in uncollected.events]}")
+            print(f"  hints: {[hint.as_string for hint in uncollected.hints]}")
+
         print(f">>> {evaluation.action}")
-        print(f"indices: {potential_uncollected.pickup_indices}")
-        print(f"events: {[event.long_name for event in potential_uncollected.events]}")
-        print(f"hints: {[hint.as_string for hint in potential_uncollected.hints]}")
+
+        print("safe resources:")
+        print_weight_factors(potential_uncollected)
+
+        print("unsafe resources:")
+        print_weight_factors(potential_unsafe_uncollected)
+
         print(f"nodes: {[nodes[n].identifier.as_string for n in potential_uncollected.nodes]}")
         print()
 
     # this used to weigh actions according to *how many* resources were unlocked, but we've determined
     # that the results are more fun if we only care about something being unlocked at all
-    pickups_weight = action_weights.pickup_indices_weight if potential_uncollected.pickup_indices else 0.0
-    events_weight = action_weights.events_weight if potential_uncollected.events else 0.0
-    hints_weight = action_weights.hints_weight if potential_uncollected.hints else 0.0
+    pickups_weight = potential_uncollected.pickups_weight(action_weights)
+    events_weight = potential_uncollected.events_weight(action_weights)
+    hints_weight = potential_uncollected.hints_weight(action_weights)
+
+    # if there were no safe resources of that type, check again for unsafe resources but weigh them as dangerous
+    if not pickups_weight:
+        pickups_weight = potential_unsafe_uncollected.pickups_weight(action_weights)
+        pickups_weight *= action_weights.DANGEROUS_ACTION_MULTIPLIER
+    if not events_weight:
+        events_weight = potential_unsafe_uncollected.events_weight(action_weights)
+        events_weight *= action_weights.DANGEROUS_ACTION_MULTIPLIER
+    if not hints_weight:
+        hints_weight = potential_unsafe_uncollected.hints_weight(action_weights)
+        hints_weight *= action_weights.DANGEROUS_ACTION_MULTIPLIER
 
     # we're only concerned about *something* being unlocked by this action
     # so we just take the maximum instead of summing them together
