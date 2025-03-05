@@ -80,9 +80,11 @@ class FeatureChooser[PrecisionT: Enum]:
             for feature, ft_precision in feature_precisions.items()
             if (
                 (
-                    ft_precision < 1.0  # exclude any features that would only point to a single element
+                    # exclude any features that would only point to a single element
+                    ft_precision < 1.0
                     or feature is self.detailed_precision
-                    or feature_precisions[self.detailed_precision] < 1.0  # unless detailed is imprecise
+                    # unless detailed is imprecise
+                    or (self.detailed_precision is not None and feature_precisions[self.detailed_precision] < 1.0)
                 )
                 and not (isinstance(feature, HintFeature) and feature.hidden)
             )
