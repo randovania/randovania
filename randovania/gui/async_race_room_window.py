@@ -191,8 +191,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         if self.room.self_status == AsyncRaceRoomUserStatus.NOT_MEMBER and not await async_dialog.yes_no_prompt(
             self,
             "Confirm Join?",
-            "After confirming this dialog and export settings, "
-            "you have a X minutes grace period until you automatically Start.",
+            "After confirming this dialog and export settings, you'll enter the race.",
         ):
             return
 
