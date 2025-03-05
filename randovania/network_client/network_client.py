@@ -526,9 +526,9 @@ class NetworkClient:
 
     async def async_race_get_layout(self, room: AsyncRaceRoomEntry) -> LayoutDescription:
         """
-        Gets the leaderboard for the given room. Must have already finished to work.
+        Gets the LayoutDescription for the given room. Must have already finished to work.
         :param room: The room's data from get_async_race_room
-        :return: The room's leaderboard
+        :return: The room's layout
         """
         from randovania.layout.layout_description import LayoutDescription
 

@@ -362,7 +362,7 @@ def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
             entry.start_datetime = None
 
         case (AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.PAUSED):
-            # Pressing Finish
+            # Pressing Pause
             if not room.allow_pause:
                 raise error.InvalidActionError("Pausing not allowed")
 
@@ -370,7 +370,7 @@ def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
             entry.paused = True
 
         case (AsyncRaceRoomUserStatus.PAUSED, AsyncRaceRoomUserStatus.STARTED):
-            # Pressing Finish
+            # Undoing pressing "Pause"
             pause = AsyncRaceEntryPause.active_pause(entry)
             pause.end = now
             things_to_save.append(pause)
