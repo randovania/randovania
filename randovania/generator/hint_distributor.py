@@ -79,7 +79,8 @@ class FeatureChooser[PrecisionT: Enum]:
             )
         }
         if self.detailed_precision is not None:
-            feature_precisions[self.detailed_precision] = 1.0
+            # set detailed precision to 1.0 if it isn't already set
+            feature_precisions.setdefault(self.detailed_precision, 1.0)
 
         return feature_precisions
 
@@ -458,7 +459,7 @@ class HintDistributor(ABC):
         """
         Create a FeatureChooser for location Features.
 
-        If `location` is provided, the `REGION_ONLY` feature will be calculated.
+        If `location` is provided, the `REGION_ONLY` and `DETAILED` features will be calculated.
         """
 
         region_list = patches.game.region_list
@@ -470,12 +471,17 @@ class HintDistributor(ABC):
             locations_with_feature[feature].extend(region_list.pickup_nodes_with_feature(feature))
 
         area = region_list.nodes_to_area
-        if location is not None and self.use_region_location_precision:
-            locations_with_feature[HintLocationPrecision.REGION_ONLY] = [
-                node
-                for node in region_list.nodes_to_region(location).all_nodes
-                if (isinstance(node, PickupNode) and area(node).in_dark_aether == area(location).in_dark_aether)
-            ]
+        if location is not None:
+            if self.use_region_location_precision:
+                locations_with_feature[HintLocationPrecision.REGION_ONLY] = [
+                    node
+                    for node in region_list.nodes_to_region(location).all_nodes
+                    if (isinstance(node, PickupNode) and area(node).in_dark_aether == area(location).in_dark_aether)
+                ]
+            if self.use_detailed_location_precision:
+                locations_with_feature[HintLocationPrecision.DETAILED] = [
+                    node for node in region_list.nodes_to_area(location).nodes if isinstance(node, PickupNode)
+                ]
 
         detailed_precision = HintLocationPrecision.DETAILED if self.use_detailed_location_precision else None
 
