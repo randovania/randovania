@@ -406,7 +406,7 @@ def _assign_pickup_somewhere(
 
     usable_locations = current_player.filter_usable_locations(all_locations, action)
 
-    if not should_be_starting_pickup(current_player, usable_locations, action.start_case):
+    if not should_be_starting_pickup(current_player, usable_locations, action):
         if debug.debug_level() > 2:
             debug_print_weighted_locations(all_locations, player_states)
 
