@@ -79,8 +79,8 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
         ("Are other mods supported?", "Only mods that don't add new researches are compatible."),
         (
             "Is multiplayer supported?",
-            "Yes. Since the generated randomizer mod file isn't in the mod portal, "
-            "it'll be necessary to either share the mod file or have everyone export it themselves.",
+            "Yes. As the exported game uses a startup mod setting, it is synced naturally for multiplayer games "
+            "and works like any other Factorio mod.",
         ),
     ],
     web_info=randovania.game.web_info.GameWebInfo(
