@@ -134,13 +134,11 @@ class PresetHints(PresetTab, Ui_PresetHints):
         return bound
 
     @property
-    def experimental_settings(self) -> Iterator[QtWidgets.QWidget]:
+    def development_settings(self) -> Iterator[QtWidgets.QWidget]:
         yield self.resolver_hints_line
         yield self.resolver_hints_check
         yield self.resolver_hints_label
 
-    @property
-    def development_settings(self) -> Iterator[QtWidgets.QWidget]:
         yield self.minimum_available_locations_description
         yield self.minimum_available_locations_line
         yield self.minimum_available_locations_widget
