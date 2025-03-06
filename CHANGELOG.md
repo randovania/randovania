@@ -37,6 +37,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Some seeds being considered impossible when finding a progressive item in an area where a later item in the progressive chain is required to leave.
 - Fixed: Minor edge case where a seed might be considered impossible due to missing consideration of damage.
 
+### Metroid Prime 2: Echoes
+
+- Fixed: Cannon Ball and the multiplayer pickups can no longer be selected as starting pickups, since they did not work in-game when doing so.
+
 ### Metroid Dread
 
 - Fixed: GUI formatting on the game page.

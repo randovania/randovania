@@ -88,6 +88,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
 
         signal_handling.set_combo_with_value(self.logical_pickup_placement_combo, layout.logical_pickup_placement)
 
+        self.check_if_beatable_after_base_patches_check.setChecked(layout.check_if_beatable_after_base_patches)
         self.consider_unsafe_check.setChecked(layout.consider_possible_unsafe_resources)
 
         self.trick_level_minimal_logic_check.setChecked(layout.trick_level.minimal_logic)
@@ -146,6 +147,10 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
     def _on_dangerous_changed(self, value: LayoutLogicalResourceAction):
         with self._editor as editor:
             editor.set_configuration_field("logical_resource_action", value)
+
+    def _on_check_base_patches_changed(self, value: bool):
+        with self._editor as editor:
+            editor.set_configuration_field("check_if_beatable_after_base_patches", value)
 
     def _on_trick_level_minimal_logic_check(self, state: bool):
         with self._editor as options:
