@@ -47,6 +47,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Changed: The Silver Robot fight now have higher health requirements when doing the fights without Power Bomb or Screw Attack
+  - This list replaces `Flash Shift or Combat (Beginner)` from the previous set of requirements
+  - Without Combat tricks: Requires Flash Shift or Spin Boost, and 499HP
+  - On Combat Beginner: Either Flash Shift or Spin Boost, and 399HP; Or 299HP
+  - On Combat Intermediate: 199HP
+  - Or simply Combat Advanced
+- Changed: The Gold Robot fight have the same upgrade to the requirements as the Silver version, except all HP requirements are 100 higher.
+- CHanged: The Twin Robot fights have the same upgrade to the requirements as the Gold version, except all HP requirements are 100 higher again.
+
 ##### Artaria
 
 - Added: Accessing the top pickup in Screw Attack Room with a Shinespark by going down through the water basin. Requires either Screw Attack or Morph Ball and Gravity Suit.
