@@ -94,7 +94,7 @@ async def create_player_pool(
             configuration, rng, game, num_players > 1, player_index=player_index, rng_required=True
         )
         patches = dock_weakness_distributor.distribute_pre_fill_weaknesses(patches, rng)
-        patches = await game_generator.hint_distributor.assign_pre_filler_hints(
+        patches = await game_generator.hints.hint_distributor.assign_pre_filler_hints(
             patches,
             PreFillParams(
                 rng,

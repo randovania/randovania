@@ -294,7 +294,10 @@ class HintDistributor(ABC):
         :param player_state:
         :return:
         """
-        return self.add_hints_precision(patches, rng, player_pools, hint_kinds)
+        if player_pool.configuration.hints.enable_random_hints:
+            return self.add_hints_precision(patches, rng, player_pools, hint_kinds)
+        else:
+            return self.replace_hints_without_precision_with_jokes(patches)
 
     @final
     @staticmethod
@@ -308,7 +311,7 @@ class HintDistributor(ABC):
         `MORE_INTERESTING` pickups are a subset of `INTERESTING` pickups,
         which are a subset of `LEAST_INTERESTING` pickups.
         """
-        hint_distributor = player_pools[target.player].game_generator.hint_distributor
+        hint_distributor = player_pools[target.player].game_generator.hints.hint_distributor
 
         if not hint_distributor.is_pickup_interesting(target, player_id, hint_node):
             return HintSuitability.LEAST_INTERESTING
@@ -693,7 +696,10 @@ class AllJokesHintDistributor(HintDistributor):
 
 
 def _should_use_resolver_hints(config: BaseConfiguration) -> bool:
-    return config.use_resolver_hints or config.dock_rando.mode == DockRandoMode.DOCKS
+    return (
+        config.hints.enable_random_hints  # don't waste time running the resolver!
+        and (config.hints.use_resolver_hints or config.dock_rando.mode == DockRandoMode.DOCKS)
+    )
 
 
 async def get_resolver_hint_state(player: int, patches: GamePatches) -> ResolverHintState | None:
@@ -728,7 +734,7 @@ async def distribute_generic_hints(
             if resolver_hint_state is not None:
                 hint_state = resolver_hint_state
 
-        hint_distributor = patches.game.game.generator.hint_distributor
+        hint_distributor = patches.game.game.generator.hints.hint_distributor
         new_patches[player_index] = await hint_distributor.assign_post_filler_hints(
             patches,
             rng,
@@ -762,7 +768,7 @@ async def distribute_specific_location_hints(
     for player_index, patches in old_patches.items():
         player_pool = player_pools[player_index]
 
-        hint_distributor = player_pool.game_generator.hint_distributor
+        hint_distributor = player_pool.game_generator.hints.hint_distributor
         new_patches[player_index] = await hint_distributor.assign_precision_to_hints(
             patches, rng, player_pool, player_pools, {HintNodeKind.SPECIFIC_PICKUP}
         )

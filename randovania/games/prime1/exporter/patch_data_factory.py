@@ -11,7 +11,6 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.prime1.exporter.hint_namer import PrimeHintNamer
 from randovania.games.prime1.exporter.vanilla_maze_seeds import VANILLA_MAZE_SEEDS
-from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode, PhazonSuitHintMode
 from randovania.games.prime1.layout.prime_configuration import (
     LayoutCutsceneMode,
     PrimeConfiguration,
@@ -19,6 +18,7 @@ from randovania.games.prime1.layout.prime_configuration import (
 )
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 
 if TYPE_CHECKING:
     from random import Random
@@ -809,7 +809,7 @@ class PrimePatchDataFactory(PatchDataFactory):
         )
 
         # serialize text modifications
-        if self.configuration.hints.phazon_suit != PhazonSuitHintMode.DISABLED:
+        if self.configuration.hints.specific_pickup_hints["phazon_suit"] != SpecificPickupHintMode.DISABLED:
             try:
                 phazon_suit_resource_info = self.game.resource_database.get_item_by_name("Phazon Suit")
 
@@ -817,7 +817,7 @@ class PrimePatchDataFactory(PatchDataFactory):
                     self.description.all_patches,
                     self.players_config,
                     namer,
-                    self.configuration.hints.phazon_suit == PhazonSuitHintMode.HIDE_AREA,
+                    self.configuration.hints.specific_pickup_hints["phazon_suit"] == SpecificPickupHintMode.HIDE_AREA,
                     [phazon_suit_resource_info],
                     True,
                 )
@@ -875,14 +875,14 @@ class PrimePatchDataFactory(PatchDataFactory):
 
         artifacts = [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS]
         hint_config = self.configuration.hints
-        if hint_config.artifacts == ArtifactHintMode.DISABLED:
+        if hint_config.specific_pickup_hints["artifacts"] == SpecificPickupHintMode.DISABLED:
             resulting_hints = {art: f"{art.long_name} is lost somewhere on Tallon IV." for art in artifacts}
         else:
             resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
                 namer,
-                hint_config.artifacts == ArtifactHintMode.HIDE_AREA,
+                hint_config.specific_pickup_hints["artifacts"] == SpecificPickupHintMode.HIDE_AREA,
                 [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS],
                 True,
             )

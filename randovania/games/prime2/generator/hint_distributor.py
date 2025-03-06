@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING, override
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
-from randovania.game_description.db.hint_node import HintNodeKind
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.hint import (
     HintDarkTemple,
@@ -14,18 +13,13 @@ from randovania.game_description.hint import (
     SpecificHintPrecision,
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.generator.hint_distributor import HintDistributor, HintTargetPrecision
 from randovania.lib import enum_lib
 
 if TYPE_CHECKING:
-    from collections.abc import Container, Sequence
-    from random import Random
-
     from randovania.game_description.assignment import PickupTarget
     from randovania.game_description.db.hint_node import HintNode
     from randovania.game_description.game_patches import GamePatches
-    from randovania.generator.filler.filler_configuration import PlayerPool
     from randovania.generator.pre_fill_params import PreFillParams
 
 
@@ -83,21 +77,6 @@ class EchoesHintDistributor(HintDistributor):
     @property
     def default_precision_pair(self) -> PrecisionPair:
         return PrecisionPair.featural()
-
-    @override
-    async def assign_precision_to_hints(
-        self,
-        patches: GamePatches,
-        rng: Random,
-        player_pool: PlayerPool,
-        player_pools: Sequence[PlayerPool],
-        hint_kinds: Container[HintNodeKind] = {HintNodeKind.GENERIC},
-    ) -> GamePatches:
-        assert isinstance(player_pool.configuration, EchoesConfiguration)
-        if player_pool.configuration.hints.item_hints:
-            return await super().assign_precision_to_hints(patches, rng, player_pool, player_pools, hint_kinds)
-        else:
-            return self.replace_hints_without_precision_with_jokes(patches)
 
     @override
     async def get_specific_pickup_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:

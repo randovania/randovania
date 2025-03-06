@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.games.am2r.layout.am2r_configuration import AM2RArtifactConfig, AM2RConfiguration
-from randovania.games.am2r.layout.hint_configuration import ItemHintMode
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
     fill_template_strings_from_tree,
@@ -44,13 +43,6 @@ def describe_artifacts(artifacts: AM2RArtifactConfig) -> list[dict[str, bool]]:
         ]
 
 
-_AM2R_HINT_TEXT = {
-    ItemHintMode.DISABLED: None,
-    ItemHintMode.HIDE_AREA: "Area only",
-    ItemHintMode.PRECISE: "Area and room",
-}
-
-
 class AM2RPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, AM2RConfiguration)
@@ -66,9 +58,6 @@ class AM2RPresetDescriber(GamePresetDescriber):
         submerged_lava_probability = describe_probability(configuration.submerged_lava_chance, "submerged in lava")
 
         template_strings = super().format_params(configuration)
-
-        dna_hint = _AM2R_HINT_TEXT[configuration.hints.artifacts]
-        ice_beam_hint = _AM2R_HINT_TEXT[configuration.hints.ice_beam]
 
         extra_message_tree = {
             "Game Changes": [
@@ -112,10 +101,6 @@ class AM2RPresetDescriber(GamePresetDescriber):
                 },
             ],
             "Goal": describe_artifacts(configuration.artifacts),
-            "Hints": [
-                {f"DNA Hint: {dna_hint}": dna_hint is not None},
-                {f"Ice Beam Hint: {ice_beam_hint}": ice_beam_hint is not None},
-            ],
         }
 
         fill_template_strings_from_tree(template_strings, extra_message_tree)

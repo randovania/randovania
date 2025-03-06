@@ -13,8 +13,8 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
 from randovania.games.am2r.exporter.joke_hints import AM2R_JOKE_HINTS
 from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches, MusicMode
-from randovania.games.am2r.layout.hint_configuration import ItemHintMode
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.lib import json_lib, random_lib
 
@@ -351,12 +351,12 @@ class AM2RPatchDataFactory(PatchDataFactory):
         dna_hint_mapping = {}
         hint_config = self.configuration.hints
         hint_namer = AM2RHintNamer(self.description.all_patches, self.players_config)
-        if hint_config.artifacts != ItemHintMode.DISABLED:
+        if hint_config.specific_pickup_hints["artifacts"] != SpecificPickupHintMode.DISABLED:
             dna_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
                 hint_namer,
-                hint_config.artifacts == ItemHintMode.HIDE_AREA,
+                hint_config.specific_pickup_hints["artifacts"] == SpecificPickupHintMode.HIDE_AREA,
                 artifacts,
                 True,
             )
@@ -397,12 +397,12 @@ class AM2RPatchDataFactory(PatchDataFactory):
             septogg_hints[f"septogg_a{i}"] = gm_newline.join(sorted(shuffled_hints, key=_sort_list_by_region))
 
         ice_hint = {}
-        if hint_config.ice_beam != ItemHintMode.DISABLED:
+        if hint_config.specific_pickup_hints["ice_beam"] != SpecificPickupHintMode.DISABLED:
             temp_ice_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
                 hint_namer,
-                hint_config.ice_beam == ItemHintMode.HIDE_AREA,
+                hint_config.specific_pickup_hints["ice_beam"] == SpecificPickupHintMode.HIDE_AREA,
                 ice,
                 True,
             )
