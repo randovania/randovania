@@ -19,7 +19,7 @@ def test_has_unsupported_features(preset_manager):
 
     configuration = dataclasses.replace(
         configuration,
-        trick_level=configuration.trick_level.set_level_for_trick(suitless, LayoutTrickLevel.HYPERMODE),
+        trick_level=configuration.trick_level.set_level_for_trick(suitless, LayoutTrickLevel.LUDICROUS),
         artifacts=DreadArtifactConfig(
             prefer_emmi=False,
             prefer_major_bosses=False,

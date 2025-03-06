@@ -18,7 +18,7 @@ async def test_on_load_preset(skip_qtbot, blank_game_description, mocker, preset
     base_preset = preset_manager.default_preset_for_game(blank_game_description.game).get_preset()
     trick_level = base_preset.configuration.trick_level
     for trick in blank_game_description.resource_database.trick:
-        trick_level = trick_level.set_level_for_trick(trick, LayoutTrickLevel.HYPERMODE)
+        trick_level = trick_level.set_level_for_trick(trick, LayoutTrickLevel.LUDICROUS)
 
     preset = dataclasses.replace(
         base_preset,
