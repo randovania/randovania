@@ -123,18 +123,15 @@ def _check_consistency(state: StandardPickupState, pickup: PickupEntry, error: s
         state.check_consistency(pickup)
 
 
-def test_amount_of_pickups_shuffled():
+@pytest.mark.parametrize(("amount"), [100, -1])
+def test_amount_of_pickups_shuffled(amount: int):
     pickup = MagicMock()
     pickup.game = RandovaniaGame.BLANK
     pickup.name = "Starting Item Surplus"
     pickup.starting_condition = StartingPickupBehavior.CAN_BE_STARTING
-    state = StandardPickupState(num_shuffled_pickups=100)
+    state = StandardPickupState(num_shuffled_pickups=amount)
     expected_error = f"Can only shuffle between 0 and {DEFAULT_MAXIMUM_SHUFFLED[-1]} copies,"
     f" got {state.num_shuffled_pickups}. ({pickup.name})"
-
-    _check_consistency(state, pickup, expected_error)
-
-    state = StandardPickupState(num_shuffled_pickups=-1)
 
     _check_consistency(state, pickup, expected_error)
 
@@ -197,21 +194,13 @@ def test_vanilla_pickup_locations():
     _check_consistency(state, pickup, expected_error)
 
 
-def test_pickup_priority_range():
+@pytest.mark.parametrize(("priority"), [11.0, -1.0])
+def test_pickup_priority_range(priority: float):
     # Check over priority
     pickup = MagicMock()
     pickup.game = RandovaniaGame.BLANK
     pickup.name = "Item with broken priority"
-    state = StandardPickupState(priority=11.0)
-    expected_error = "Priority must be between {min} and {max}, got {priority}".format(
-        priority=state.priority,
-        **PRIORITY_LIMITS,
-    )
-
-    _check_consistency(state, pickup, expected_error)
-
-    # Check under priority
-    state = StandardPickupState(priority=-1.0)
+    state = StandardPickupState(priority=priority)
     expected_error = "Priority must be between {min} and {max}, got {priority}".format(
         priority=state.priority,
         **PRIORITY_LIMITS,
