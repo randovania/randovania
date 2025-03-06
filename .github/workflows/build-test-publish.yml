@@ -42,6 +42,10 @@ jobs:
       - name: Install core Python packages
         run: python -m pip install --upgrade -r requirements-setuptools.txt
 
+      # FIXME: PySide6 should be in the build-system requires
+      - name: Install PySide6
+        run: python -m pip install PySide6 -c requirements.txt
+
       - name: build ui files
         run: python setup.py build_ui
 
@@ -78,7 +82,7 @@ jobs:
         run: python -m pip install --upgrade -r requirements-setuptools.txt
 
       - name: Install Python packages
-        run: python -m pip install -r requirements.txt -e ".[gui,exporters,server,test,typing,website]"
+        run: python -m pip install -r requirements.txt -e ".[exporters,test]"
 
       - name: build ui files
         run: python setup.py build_ui
