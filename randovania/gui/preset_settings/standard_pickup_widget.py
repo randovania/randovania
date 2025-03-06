@@ -9,11 +9,17 @@ from PySide6.QtWidgets import QGraphicsOpacityEffect, QWidget
 from randovania.gui.generated.standard_pickup_widget_ui import Ui_StandardPickupWidget
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.layout.base import standard_pickup_state
-from randovania.layout.base.standard_pickup_state import StandardPickupState, StandardPickupStateCase
+from randovania.layout.base.standard_pickup_state import (
+    StandardPickupState,
+    StandardPickupStateCase,
+    StartingPickupBehavior,
+)
 from randovania.lib import enum_lib
 
 if TYPE_CHECKING:
-    from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
+    from randovania.game_description.pickup.pickup_definition.standard_pickup import (
+        StandardPickupDefinition,
+    )
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
@@ -43,6 +49,11 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
             if case == StandardPickupStateCase.VANILLA and not pickup.original_locations:
                 continue
             if case == StandardPickupStateCase.STARTING_ITEM and len(pickup.progression) > 1:
+                continue
+            if (
+                case == StandardPickupStateCase.STARTING_ITEM
+                and pickup.starting_condition == StartingPickupBehavior.CAN_NEVER_BE_STARTING
+            ):
                 continue
 
             if case == StandardPickupStateCase.SHUFFLED and pickup.count_for_shuffled_case > 1:
@@ -95,12 +106,15 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
             self.root_layout.addWidget(self.description_label, self.root_layout.rowCount(), 0, 1, -1)
 
         self.set_custom_fields_visible(False)
-        if self._pickup.must_be_starting:
+        if self._pickup.starting_condition == StartingPickupBehavior.MUST_BE_STARTING:
             self.pickup_name_label.setToolTip(
                 "This item is necessary for the game to function properly and can't be removed."
             )
             self.case = StandardPickupStateCase.STARTING_ITEM
             self.state_case_combo.setEnabled(False)
+        elif self._pickup.starting_condition == StartingPickupBehavior.CAN_NEVER_BE_STARTING:
+            self.pickup_name_label.setToolTip("Due to game limitations, this item cannot be started with.")
+            self.case = StandardPickupStateCase.SHUFFLED
         else:
             self.set_new_state(starting_state)
 

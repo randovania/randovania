@@ -14,6 +14,7 @@ from randovania.game_description.pickup.pickup_entry import (
     ResourceLock,
 )
 from randovania.game_description.resources.location_category import LocationCategory
+from randovania.layout.base.standard_pickup_state import StartingPickupBehavior
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -119,6 +120,7 @@ class BitPackPickupEntry:
         yield from _encode_hint_feature(self.value.gui_category)
         yield from bitpacking.encode_tuple(tuple(sorted(self.value.hint_features)), _encode_hint_feature)
         yield from bitpacking.encode_tuple(self.value.progression, helper.encode_resource_quantity)
+        yield from self.value.start_case.bit_pack_encode({})
         yield from bitpacking.encode_tuple(self.value.extra_resources, helper.encode_resource_quantity)
         yield from bitpacking.encode_bool(self.value.unlocks_resource)
         yield from bitpacking.encode_bool(self.value.resource_lock is not None)
@@ -148,6 +150,7 @@ class BitPackPickupEntry:
         pickup_category = _decode_hint_feature(decoder)
         hint_features = frozenset(bitpacking.decode_tuple(decoder, _decode_hint_feature))
         progression = bitpacking.decode_tuple(decoder, helper.decode_resource_quantity)
+        start_case = StartingPickupBehavior.bit_pack_unpack(decoder, {})
         extra_resources = bitpacking.decode_tuple(decoder, helper.decode_resource_quantity)
         unlocks_resource = bitpacking.decode_bool(decoder)
         resource_lock = None
@@ -169,6 +172,7 @@ class BitPackPickupEntry:
             gui_category=pickup_category,
             hint_features=hint_features,
             progression=progression,
+            start_case=start_case,
             extra_resources=extra_resources,
             unlocks_resource=unlocks_resource,
             resource_lock=resource_lock,

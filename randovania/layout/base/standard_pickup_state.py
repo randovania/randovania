@@ -5,6 +5,7 @@ import enum
 from typing import TYPE_CHECKING
 
 from randovania.bitpacking import bitpacking
+from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.game_description import default_database
 from randovania.lib import enum_lib
 
@@ -22,6 +23,12 @@ PRIORITY_LIMITS = {
     "max": 10.0,
     "precision": 1.0,
 }
+
+
+class StartingPickupBehavior(BitPackEnum, enum.StrEnum):
+    CAN_BE_STARTING = "can_start"
+    MUST_BE_STARTING = "must_start"
+    CAN_NEVER_BE_STARTING = "never_start"
 
 
 class StandardPickupStateCase(enum.Enum):
@@ -67,9 +74,13 @@ class StandardPickupState:
                 f" got {self.num_shuffled_pickups}. ({pickup.name})"
             )
 
-        if pickup.must_be_starting:
+        if pickup.starting_condition == StartingPickupBehavior.MUST_BE_STARTING:
             if not self.num_included_in_starting_pickups:
                 raise ValueError(f"Required items must be included in starting items. ({pickup.name})")
+
+        if pickup.starting_condition == StartingPickupBehavior.CAN_NEVER_BE_STARTING:
+            if self.num_included_in_starting_pickups:
+                raise ValueError(f"{pickup.name} cannot be a starting item.")
 
         if self.num_included_in_starting_pickups > 0:
             if len(pickup.progression) > 1:

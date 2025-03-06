@@ -1,5 +1,5 @@
 {
-    "schema_version": 13,
+    "schema_version": 14,
     "pickup_categories": {
         "visor": {
             "long_name": "Visors",
@@ -372,7 +372,7 @@
             ],
             "expected_case_for_describer": "starting_item",
             "hide_from_gui": true,
-            "must_be_starting": true
+            "starting_condition": "must_start"
         },
         "Dark Suit": {
             "gui_category": "suit",
@@ -612,7 +612,8 @@
             "progression": [
                 "DoubleDamage"
             ],
-            "expected_case_for_describer": "missing"
+            "expected_case_for_describer": "missing",
+            "starting_condition": "never_start"
         },
         "Unlimited Beam Ammo": {
             "gui_category": "beam",
@@ -629,7 +630,8 @@
             "progression": [
                 "UnlimitedBeamAmmo"
             ],
-            "expected_case_for_describer": "missing"
+            "expected_case_for_describer": "missing",
+            "starting_condition": "never_start"
         },
         "Morph Ball": {
             "gui_category": "morph_ball",
@@ -788,7 +790,8 @@
             "progression": [
                 "CannonBall"
             ],
-            "expected_case_for_describer": "missing"
+            "expected_case_for_describer": "missing",
+            "starting_condition": "never_start"
         },
         "Space Jump Boots": {
             "gui_category": "movement",
@@ -996,7 +999,8 @@
             "progression": [
                 "UnlimitedMissiles"
             ],
-            "expected_case_for_describer": "missing"
+            "expected_case_for_describer": "missing",
+            "starting_condition": "never_start"
         },
         "Super Missile": {
             "gui_category": "charge_combo",
