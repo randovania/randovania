@@ -196,7 +196,6 @@ def test_vanilla_pickup_locations():
 
 @pytest.mark.parametrize(("priority"), [11.0, -1.0])
 def test_pickup_priority_range(priority: float):
-    # Check over priority
     pickup = MagicMock()
     pickup.game = RandovaniaGame.BLANK
     pickup.name = "Item with broken priority"
