@@ -26,5 +26,5 @@ def test_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
     # Assert
     progress_update.assert_not_called()
     assert output_path.joinpath("mod-settings.dat").is_file()
-    assert len(list(output_path.glob("randovania-layout_*.zip"))) == 1
+    assert len(list(output_path.glob("randovania_*.zip"))) == 1
     assert len(list(output_path.glob("randovania-assets_*.zip"))) == 1
