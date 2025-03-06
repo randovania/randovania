@@ -5,6 +5,10 @@ on:
   push:
     branches:
       - main
+  # `workflow_dispatch` allows CodSpeed to trigger backtest
+  # performance analysis in order to generate initial data.
+  workflow_dispatch:
+
 
 jobs:
   benchmark:
@@ -12,6 +16,9 @@ jobs:
     name: Benchmark
 
     timeout-minutes: 30
+    strategy:
+      matrix:
+        shard: [1,2,3,4,5]
 
     steps:
       - name: Checkout
@@ -39,5 +46,5 @@ jobs:
       - name: run pytest (benchmark)
         uses: CodSpeedHQ/action@v3
         with:
-          run: python -m pytest -n auto --codspeed --codspeed-mode=walltime --codspeed-max-rounds=1 --skip-gui-tests
+          run: python -m pytest --skip-gui-tests --codspeed --test-group=${{ matrix.shard }} --test-group-count=5
           token: ${{ secrets.CODSPEED_TOKEN }}
