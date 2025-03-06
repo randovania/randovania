@@ -46,7 +46,10 @@ enum_lib.add_per_enum_field(
 class HintConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCheck):
     # basic settings
     enable_random_hints: bool
-    """When false, all hints are replaced with jokes."""
+    """When false, all random hints are replaced with jokes."""
+
+    enable_specific_location_hints: bool
+    """When false, all specific location hints are replaced with jokes."""
 
     specific_pickup_hints: frozendict[str, SpecificPickupHintMode] = dataclasses.field(
         metadata={"manual_bitpacking": True}

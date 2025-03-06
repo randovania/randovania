@@ -66,7 +66,6 @@ def _hints() -> randovania.game.hints.GameHints:
                 description="This controls how precise the hints for Sky Temple Keys in Sky Temple Gateway are.",
             )
         },
-        has_random_hints=True,
     )
 
 

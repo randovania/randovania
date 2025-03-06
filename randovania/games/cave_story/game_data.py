@@ -64,7 +64,6 @@ def _hints() -> randovania.game.hints.GameHints:
     return randovania.game.hints.GameHints(
         hint_distributor=CSHintDistributor(),
         specific_pickup_hints={},
-        has_random_hints=True,
     )
 
 

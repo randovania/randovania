@@ -32,7 +32,8 @@ class PresetHints(PresetTab, Ui_PresetHints):
 
         game_hints = game_description.game.hints
 
-        if game_hints.has_random_hints:
+        # random hints
+        if game_hints.has_random_hints(game_description.game):
             signal_handling.on_checked(
                 self.enable_random_hints_check, self._persist_bool_hints_field("enable_random_hints")
             )
@@ -59,12 +60,20 @@ class PresetHints(PresetTab, Ui_PresetHints):
         else:
             self.random_hints_box.setVisible(False)
 
+        # specific location hints
+        if game_hints.has_specific_location_hints(game_description.game):
+            signal_handling.on_checked(self.enable_specific_location_hints_check, "enable_specific_location_hints")
+        else:
+            self.specific_location_hints_box.setVisible(False)
+
+        # specific pickup hints
         self.specific_pickup_groups: dict[str, QtWidgets.QGroupBox] = {}
         self.specific_pickup_combos: dict[str, QtWidgets.QComboBox] = {}
 
-        for hint, details in game_hints.specific_pickup_hints.items():
-            self.create_specific_hint_group(hint, details)
-        if not game_hints.specific_pickup_hints:
+        if game_hints.has_specific_pickup_hints(game_description.game):
+            for hint, details in game_hints.specific_pickup_hints.items():
+                self.create_specific_hint_group(hint, details)
+        else:
             self.specific_pickup_hints_box.setVisible(False)
 
     @classmethod

@@ -85,7 +85,7 @@
            <item>
             <widget class="QLabel" name="enable_random_hints_description">
              <property name="text">
-              <string>Whether to use the randomly generated hints system. If disabled, all hints will be replaced with jokes.</string>
+              <string>Whether to use the randomly generated hints system. If disabled, all random hints will be replaced with jokes.</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -261,6 +261,32 @@
             <widget class="QLabel" name="minimum_weight_description">
              <property name="text">
               <string>Pickups can only be hinted if they had this much weight when placed by the generator. Note that resolver-based hints will only ever have a weight of 0.0, so it's not recommended to raise this.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="specific_location_hints_box">
+          <property name="title">
+           <string>Specific Location Hints</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QCheckBox" name="enable_specific_location_hints_check">
+             <property name="text">
+              <string>Enable specific location hints</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="enable_specific_location_hints_description">
+             <property name="text">
+              <string>Whether to use the specific location hints system. If disabled, all specific location hints will be replaced with jokes.</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>

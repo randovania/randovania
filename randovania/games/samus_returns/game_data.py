@@ -90,7 +90,6 @@ def _hints() -> randovania.game.hints.GameHints:
                 ),
             ),
         },
-        has_random_hints=True,
     )
 
 

@@ -56,7 +56,6 @@ def test_dread_format_params(has_artifacts: bool, rb_damage_mode: DreadRavenBeak
             "Progressive Charge Beam, Progressive Suit, Progressive Bomb, Progressive Spin",
         ],
         "Logic Settings": ["All tricks disabled"],
-        "Hints": ["Random hints enabled"],
     }
 
 

@@ -65,7 +65,6 @@ def _hints() -> randovania.game.hints.GameHints:
     return randovania.game.hints.GameHints(
         hint_distributor=DreadHintDistributor(),
         specific_pickup_hints={},  # TODO: DNA
-        has_random_hints=True,
     )
 
 

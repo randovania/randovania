@@ -6,7 +6,7 @@ import logging
 import math
 from abc import ABC, abstractmethod
 from collections import defaultdict
-from collections.abc import Callable, Collection, Container, Mapping, Sequence
+from collections.abc import Callable, Collection, Mapping, Sequence
 from enum import Enum, IntEnum
 from random import Random
 from typing import TYPE_CHECKING, Any, final, override
@@ -16,6 +16,7 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import (
     PRECISION_PAIR_UNASSIGNED,
+    Hint,
     HintItemPrecision,
     HintLocationPrecision,
     JokeHint,
@@ -190,7 +191,7 @@ class HintDistributor(ABC):
 
         wl = prefill.game.region_list
         for node in wl.iterate_nodes():
-            if isinstance(node, HintNode) and node.kind == HintNodeKind.SPECIFIC_PICKUP:
+            if isinstance(node, HintNode) and node.kind == HintNodeKind.SPECIFIC_LOCATION:
                 identifier = node.identifier
                 patches = patches.assign_hint(
                     identifier,
@@ -284,7 +285,7 @@ class HintDistributor(ABC):
         rng: Random,
         player_pool: PlayerPool,
         player_pools: Sequence[PlayerPool],
-        hint_kinds: Container[HintNodeKind] = {HintNodeKind.GENERIC},
+        hint_kind: HintNodeKind = HintNodeKind.GENERIC,
     ) -> GamePatches:
         """
         Ensures no hints present in `patches` has no precision.
@@ -294,10 +295,26 @@ class HintDistributor(ABC):
         :param player_state:
         :return:
         """
-        if player_pool.configuration.hints.enable_random_hints:
-            return self.add_hints_precision(patches, rng, player_pools, hint_kinds)
+        get_hint_node: Callable[[NodeIdentifier], HintNode] = functools.partial(
+            patches.game.region_list.typed_node_by_identifier, t=HintNode
+        )
+        hints_to_replace = {
+            identifier: hint
+            for identifier, hint in patches.hints.items()
+            if is_unassigned_location(hint) and get_hint_node(identifier).kind == hint_kind
+        }
+
+        if hint_kind == HintNodeKind.GENERIC:
+            enable = player_pool.configuration.hints.enable_random_hints
+        elif hint_kind == HintNodeKind.SPECIFIC_LOCATION:
+            enable = player_pool.configuration.hints.enable_specific_location_hints
+        elif hint_kind == HintNodeKind.SPECIFIC_PICKUP:
+            enable = True
+
+        if enable:
+            return self.add_hints_precision(patches, rng, player_pools, hints_to_replace)
         else:
-            return self.replace_hints_without_precision_with_jokes(patches)
+            return self.replace_hints_without_precision_with_jokes(patches, hints_to_replace)
 
     @final
     @staticmethod
@@ -425,16 +442,15 @@ class HintDistributor(ABC):
 
         return patches
 
-    def replace_hints_without_precision_with_jokes(self, patches: GamePatches) -> GamePatches:
+    def replace_hints_without_precision_with_jokes(
+        self, patches: GamePatches, hints_to_replace: Mapping[NodeIdentifier, Hint]
+    ) -> GamePatches:
         """
         Assigns a JokeHint to each hint node with unassigned precision
         :param patches:
         :return:
         """
-
-        hints_to_replace = {
-            hint_node: JokeHint() for hint_node, hint in patches.hints.items() if is_unassigned_location(hint)
-        }
+        hints_to_replace = {identifier: JokeHint() for identifier, hint in hints_to_replace.items()}
 
         return dataclasses.replace(
             patches,
@@ -620,7 +636,7 @@ class HintDistributor(ABC):
         patches: GamePatches,
         rng: Random,
         player_pools: Sequence[PlayerPool],
-        hint_kinds: Container[HintNodeKind] = set(HintNodeKind),
+        hints_to_replace: Mapping[NodeIdentifier, LocationHint],
     ) -> GamePatches:
         """
         Adds precision to all assigned `LocationHint`s that are missing one.
@@ -628,17 +644,10 @@ class HintDistributor(ABC):
         :param patches:
         :param rng:
         :param player_pools:
-        :param hint_kinds: Only replaces hints whose `HintNode`'s kind is in this set.
+        :param hints_to_replace:
         :return:
         """
-        get_hint_node: Callable[[NodeIdentifier], HintNode] = functools.partial(
-            patches.game.region_list.typed_node_by_identifier, t=HintNode
-        )
-        hints_to_replace = {
-            identifier: hint
-            for identifier, hint in patches.hints.items()
-            if is_unassigned_location(hint) and get_hint_node(identifier).kind in hint_kinds
-        }
+        hints_to_replace = dict(hints_to_replace)
 
         unassigned_hints = list(hints_to_replace.items())
         rng.shuffle(unassigned_hints)
@@ -690,9 +699,9 @@ class AllJokesHintDistributor(HintDistributor):
         rng: Random,
         player_pool: PlayerPool,
         player_pools: Sequence[PlayerPool],
-        hint_kinds: Container[HintNodeKind] = {HintNodeKind.GENERIC},
+        hint_kind: HintNodeKind = HintNodeKind.GENERIC,
     ) -> GamePatches:
-        return self.replace_hints_without_precision_with_jokes(patches)
+        return self.replace_hints_without_precision_with_jokes(patches, patches.hints)
 
 
 def _should_use_resolver_hints(config: BaseConfiguration) -> bool:
@@ -757,7 +766,7 @@ async def distribute_specific_location_hints(
     rng: Random,
     filler_results: FillerResults,
 ) -> FillerResults:
-    """Distribute HintNodeKind.SPECIFIC_PICKUP hints after all pickups are placed."""
+    """Distribute HintNodeKind.SPECIFIC_LOCATION hints after all pickups are placed."""
     old_patches: dict[int, GamePatches] = {
         player: result.patches for player, result in filler_results.player_results.items()
     }
@@ -770,7 +779,7 @@ async def distribute_specific_location_hints(
 
         hint_distributor = player_pool.game.game.hints.hint_distributor
         new_patches[player_index] = await hint_distributor.assign_precision_to_hints(
-            patches, rng, player_pool, player_pools, {HintNodeKind.SPECIFIC_PICKUP}
+            patches, rng, player_pool, player_pools, HintNodeKind.SPECIFIC_LOCATION
         )
 
     return dataclasses.replace(

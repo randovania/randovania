@@ -75,7 +75,6 @@ def test_msr_format_params(artifacts) -> None:
             "Change Surface Cavern Cavity Crumble Blocks, Change Area 1 Transport to Surface and Area 2 Crumble Blocks",
         ],
         "Hints": [
-            "Random hints enabled",
             "Metroid DNA Hint: Region and area",
             "Final Boss Item Hint: Region only",
         ],

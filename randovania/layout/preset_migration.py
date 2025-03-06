@@ -1116,6 +1116,8 @@ def _migrate_v99(preset: dict, game: RandovaniaGame) -> None:
     else:
         hints_config["enable_random_hints"] = True
 
+    hints_config["enable_specific_location_hints"] = True
+
     config["hints"] = hints_config
 
 
