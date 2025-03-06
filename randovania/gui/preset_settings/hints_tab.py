@@ -62,7 +62,10 @@ class PresetHints(PresetTab, Ui_PresetHints):
 
         # specific location hints
         if game_hints.has_specific_location_hints(game_description.game):
-            signal_handling.on_checked(self.enable_specific_location_hints_check, "enable_specific_location_hints")
+            signal_handling.on_checked(
+                self.enable_specific_location_hints_check,
+                self._persist_bool_hints_field("enable_specific_location_hints"),
+            )
         else:
             self.specific_location_hints_box.setVisible(False)
 
@@ -101,6 +104,8 @@ class PresetHints(PresetTab, Ui_PresetHints):
         ]:
             w.setEnabled(hints_config.enable_random_hints)
 
+        self.enable_specific_location_hints_check.setChecked(hints_config.enable_specific_location_hints)
+
         for hint, mode in hints_config.specific_pickup_hints.items():
             set_combo_with_value(self.specific_pickup_combos[hint], mode)
 
@@ -137,17 +142,11 @@ class PresetHints(PresetTab, Ui_PresetHints):
     @property
     def development_settings(self) -> Iterator[QtWidgets.QWidget]:
         yield self.minimum_available_locations_description
-        yield self.minimum_available_locations_label
         yield self.minimum_available_locations_line
-        yield self.minimum_available_locations_spacer
-        yield self.minimum_available_locations_spin_box
         yield self.minimum_available_locations_widget
 
         yield self.minimum_weight_description
-        yield self.minimum_weight_label
         yield self.minimum_weight_line
-        yield self.minimum_weight_spacer
-        yield self.minimum_weight_spin_box
         yield self.minimum_weight_widget
 
     def create_specific_hint_group(self, hint: str, details: SpecificHintDetails) -> None:
@@ -155,6 +154,7 @@ class PresetHints(PresetTab, Ui_PresetHints):
 
         hint_group = QtWidgets.QGroupBox(self.specific_pickup_hints_box)
         hint_group.setObjectName(f"hint_{hint}_group")
+        hint_group.setTitle(details.long_name)
         vertical_layout = QtWidgets.QVBoxLayout(hint_group)
         vertical_layout.setSpacing(6)
         vertical_layout.setContentsMargins(11, 11, 11, 11)

@@ -209,7 +209,7 @@ class HintDistributor(ABC):
     async def assign_guaranteed_indices_hints(
         self, patches: GamePatches, identifiers: list[NodeIdentifier], prefill: PreFillParams
     ) -> GamePatches:
-        # Specific Pickup/any HintNode
+        # Specific Location/any HintNode
         indices_with_hint = await self.get_guaranteed_hints(patches, prefill)
         prefill.rng.shuffle(indices_with_hint)
 
@@ -251,12 +251,15 @@ class HintDistributor(ABC):
         self, patches: GamePatches, prefill: PreFillParams, rng_required: bool = True
     ) -> GamePatches:
         patches = await self.assign_specific_location_hints(patches, prefill)
-        hint_identifiers = self.get_generic_hint_nodes(prefill)
-        if rng_required or prefill.rng is not None:
-            prefill.rng.shuffle(hint_identifiers)
-            patches = await self.assign_guaranteed_indices_hints(patches, hint_identifiers, prefill)
-            patches = await self.assign_other_hints(patches, hint_identifiers, prefill)
-            patches = await self.assign_joke_hints(patches, hint_identifiers, prefill)
+
+        if patches.configuration.hints.enable_random_hints:
+            hint_identifiers = self.get_generic_hint_nodes(prefill)
+            if rng_required or prefill.rng is not None:
+                prefill.rng.shuffle(hint_identifiers)
+                patches = await self.assign_guaranteed_indices_hints(patches, hint_identifiers, prefill)
+                patches = await self.assign_other_hints(patches, hint_identifiers, prefill)
+                patches = await self.assign_joke_hints(patches, hint_identifiers, prefill)
+
         return patches
 
     async def assign_post_filler_hints(
