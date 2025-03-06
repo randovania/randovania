@@ -1087,6 +1087,7 @@ def _migrate_v97(preset: dict, game: RandovaniaGame) -> None:
 def _migrate_v98(preset: dict, game: RandovaniaGame) -> None:
     preset["configuration"]["use_resolver_hints"] = False
 
+
 def _migrate_v99(preset: dict, game: RandovaniaGame) -> None:
     for trick, level in preset["configuration"]["trick_level"]["specific_levels"].items():
         if level == "hypermode":
