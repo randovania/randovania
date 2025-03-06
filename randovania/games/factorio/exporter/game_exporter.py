@@ -1,10 +1,11 @@
 from __future__ import annotations
 
+import asyncio
 import dataclasses
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-import requests
+import aiohttp
 
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 
@@ -15,6 +16,15 @@ if TYPE_CHECKING:
 @dataclasses.dataclass(frozen=True)
 class FactorioGameExportParams(GameExportParams):
     output_path: Path
+
+
+async def download_file(url: str, path: Path) -> None:
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as resp:
+            resp.raise_for_status()
+            with path.open("wb") as fd:
+                async for chunk in resp.content.iter_chunked(8192):
+                    fd.write(chunk)
 
 
 class FactorioGameExporter(GameExporter[FactorioGameExportParams]):
@@ -56,8 +66,4 @@ class FactorioGameExporter(GameExporter[FactorioGameExportParams]):
         )
         if assets_mod is not None:
             assets_path, assets_url = assets_mod
-            with requests.get(assets_url, stream=True) as r:
-                r.raise_for_status()
-                with assets_path.open("wb") as f:
-                    for chunk in r.iter_content(chunk_size=8192):
-                        f.write(chunk)
+            asyncio.run(download_file(assets_url, assets_path))
