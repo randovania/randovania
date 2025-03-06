@@ -47,7 +47,11 @@ def _generator() -> randovania.game.generator.GameGenerator:
         pickup_pool_creator=generator.pool_creator,
         bootstrap=generator.BlankBootstrap(),
         base_patches_factory=generator.BlankBasePatchesFactory(),
-        hint_distributor=generator.BlankHintDistributor(),
+        hints=randovania.game.hints.GameHints(
+            hint_distributor=generator.BlankHintDistributor(),
+            specific_pickup_hints={},
+            has_random_hints=True,
+        ),
         action_weights=ActionWeights(),
     )
 

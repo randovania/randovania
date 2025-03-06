@@ -53,7 +53,11 @@ def _generator() -> randovania.game.generator.GameGenerator:
         pickup_pool_creator=pool_creator,
         bootstrap=CSBootstrap(),
         base_patches_factory=BasePatchesFactory(),
-        hint_distributor=CSHintDistributor(),
+        hints=randovania.game.hints.GameHints(
+            hint_distributor=CSHintDistributor(),
+            specific_pickup_hints={},
+            has_random_hints=True,
+        ),
         action_weights=ActionWeights(),
     )
 

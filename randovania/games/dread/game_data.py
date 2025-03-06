@@ -55,7 +55,11 @@ def _generator() -> randovania.game.generator.GameGenerator:
         pickup_pool_creator=pool_creator,
         base_patches_factory=DreadBasePatchesFactory(),
         bootstrap=DreadBootstrap(),
-        hint_distributor=DreadHintDistributor(),
+        hints=randovania.game.hints.GameHints(
+            hint_distributor=DreadHintDistributor(),
+            specific_pickup_hints={},  # TODO: DNA
+            has_random_hints=True,
+        ),
         action_weights=ActionWeights(),
     )
 

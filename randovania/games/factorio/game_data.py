@@ -43,7 +43,10 @@ def _generator() -> randovania.game.generator.GameGenerator:
         pickup_pool_creator=generator.pool_creator,
         bootstrap=generator.FactorioBootstrap(),
         base_patches_factory=generator.FactorioBasePatchesFactory(),
-        hint_distributor=AllJokesHintDistributor(),
+        hints=randovania.game.hints.GameHints(
+            hint_distributor=AllJokesHintDistributor(),
+            specific_pickup_hints={},
+        ),
         action_weights=ActionWeights(),
     )
 

@@ -4,6 +4,7 @@ import randovania.game.data
 import randovania.game.development_state
 import randovania.game.generator
 import randovania.game.gui
+import randovania.game.hints
 import randovania.game.layout
 import randovania.game.web_info
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
@@ -51,7 +52,16 @@ def _generator() -> randovania.game.generator.GameGenerator:
         pickup_pool_creator=echoes_specific_pool,
         bootstrap=EchoesBootstrap(),
         base_patches_factory=EchoesBasePatchesFactory(),
-        hint_distributor=EchoesHintDistributor(),
+        hints=randovania.game.hints.GameHints(
+            hint_distributor=EchoesHintDistributor(),
+            specific_pickup_hints={
+                "sky_temple_keys": randovania.game.hints.SpecificHintDetails(
+                    long_name="Sky Temple Keys",
+                    description="This controls how precise the hints for Sky Temple Keys in Sky Temple Gateway are.",
+                )
+            },
+            has_random_hints=True,
+        ),
         action_weights=ActionWeights(),
     )
 

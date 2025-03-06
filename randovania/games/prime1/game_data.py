@@ -4,6 +4,7 @@ import randovania.game.data
 import randovania.game.development_state
 import randovania.game.generator
 import randovania.game.gui
+import randovania.game.hints
 import randovania.game.layout
 import randovania.game.web_info
 from randovania.games.prime1.db_integrity import find_prime_db_errors
@@ -50,7 +51,25 @@ def _generator() -> randovania.game.generator.GameGenerator:
         pickup_pool_creator=prime1_specific_pool,
         bootstrap=PrimeBootstrap(),
         base_patches_factory=PrimeBasePatchesFactory(),
-        hint_distributor=PrimeHintDistributor(),
+        hints=randovania.game.hints.GameHints(
+            hint_distributor=PrimeHintDistributor(),
+            specific_pickup_hints={
+                "artifacts": randovania.game.hints.SpecficHintDetails(
+                    long_name="Chozo Artifacts",
+                    description="This controls how precise the hints for Chozo Artifacts in Artifact Temple are.",
+                ),
+                "phazon_suit": randovania.game.hints.SpecificHintDetails(
+                    long_name="Phazon Suit",
+                    description="This controls how precise the hint for Phazon Suit in Impact Crater is.",
+                    disabled_details="No hint is added.",
+                    hide_area_details=(
+                        "A scan post will be placed in Crater Entry Point "
+                        "revealing Phazon Suit's region (e.g. Player 2's Phazon Mines)."
+                    ),
+                    precise_details="Same as above, but shows the exact area name as well.",
+                ),
+            },
+        ),
         action_weights=ActionWeights(),
     )
 

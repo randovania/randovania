@@ -6,8 +6,10 @@ import randovania.game.data
 import randovania.game.development_state
 import randovania.game.generator
 import randovania.game.gui
+import randovania.game.hints
 import randovania.game.layout
 import randovania.game.web_info
+import randovania.game_connection
 from randovania.games.samus_returns import layout
 from randovania.games.samus_returns.db_integrity import find_msr_db_errors
 from randovania.games.samus_returns.layout import progressive_items
@@ -61,7 +63,29 @@ def _generator() -> randovania.game.generator.GameGenerator:
         pickup_pool_creator=generator.pool_creator,
         bootstrap=MSRBootstrap(),
         base_patches_factory=generator.MSRBasePatchesFactory(),
-        hint_distributor=MSRHintDistributor(),
+        hints=randovania.game.hints.GameHints(
+            hint_distributor=MSRHintDistributor(),
+            specific_pickup_hints={
+                "artifacts": randovania.game.hints.SpecificHintDetails(
+                    long_name="Metroid DNA",
+                    description="This controls how precise the Metroid DNA hints for the DNA Chozo Seals are.",
+                ),
+                "final_boss_item": randovania.game.hints.SpecificHintDetails(
+                    long_name="Final Boss Item",
+                    description=(
+                        "After collecting all Metroid DNA, a message appears that says that "
+                        "the final boss can be fought and where to find them. "
+                        "Most of the final bosses require some item to either access or beat them, "
+                        "so an additional hint is provided that says where to find the item. "
+                        "This controls how precise that hint will be.\n"
+                        " - Proteus Ridley needs the Baby Metroid\n"
+                        " - Diggernaut needs Bomb\n"
+                        " - Metroid Queen needs Ice Beam\n"
+                    ),
+                ),
+            },
+            has_random_hints=True,
+        ),
         action_weights=ActionWeights(),
     )
 

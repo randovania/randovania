@@ -6,6 +6,7 @@ import randovania.game.data
 import randovania.game.development_state
 import randovania.game.generator
 import randovania.game.gui
+import randovania.game.hints
 import randovania.game.layout
 from randovania.games.fusion import layout
 from randovania.games.fusion.db_integrity import find_fusion_db_errors
@@ -46,7 +47,19 @@ def _generator() -> randovania.game.generator.GameGenerator:
         pickup_pool_creator=generator.pool_creator,
         bootstrap=generator.FusionBootstrap(),
         base_patches_factory=generator.FusionBasePatchesFactory(),
-        hint_distributor=FusionHintDistributor(),
+        hints=randovania.game.hints.GameHints(
+            hint_distributor=FusionHintDistributor(),
+            specific_pickup_hints={
+                "artifacts": randovania.game.hints.SpecificHintDetails(
+                    long_name="Infant Metroids",
+                    description="This controls how precise the Infant Metroids hint at Restricted Labs is.",
+                ),
+                "charge_beam": randovania.game.hints.SpecificHintDetails(
+                    long_name="Charge Beam",
+                    description="This controls how precise the hint for Charge Beam in Auxiliary Navigation Room is.",
+                ),
+            },
+        ),
         action_weights=ActionWeights(events_weight=0.75, hints_weight=0.5),
     )
 
