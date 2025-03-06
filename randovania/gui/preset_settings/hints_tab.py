@@ -59,12 +59,13 @@ class PresetHints(PresetTab, Ui_PresetHints):
         else:
             self.random_hints_box.setVisible(False)
 
-        self.specific_hint_groups: dict[str, QtWidgets.QGroupBox] = {}
-        self.specific_hint_combos: dict[str, QtWidgets.QComboBox] = {}
+        self.specific_pickup_groups: dict[str, QtWidgets.QGroupBox] = {}
+        self.specific_pickup_combos: dict[str, QtWidgets.QComboBox] = {}
 
         for hint, details in game_hints.specific_pickup_hints.items():
             self.create_specific_hint_group(hint, details)
-        self.specific_pickup_hints_box.setVisible(False)
+        if not game_hints.specific_pickup_hints:
+            self.specific_pickup_hints_box.setVisible(False)
 
     @classmethod
     def tab_title(cls) -> str:
@@ -92,11 +93,11 @@ class PresetHints(PresetTab, Ui_PresetHints):
             w.setEnabled(hints_config.enable_random_hints)
 
         for hint, mode in hints_config.specific_pickup_hints.items():
-            set_combo_with_value(self.specific_hint_combos[hint], mode)
+            set_combo_with_value(self.specific_pickup_combos[hint], mode)
 
     def _on_specific_hint_combo_changed(self, hint: str, new_index: int):
         new_dict = dict(self._editor.hint_configuration.specific_pickup_hints)
-        new_dict[hint] = self.specific_hint_combos[hint].currentData()
+        new_dict[hint] = self.specific_pickup_combos[hint].currentData()
 
         with self._editor as editor:
             editor.hint_configuration = dataclasses.replace(
@@ -172,6 +173,6 @@ class PresetHints(PresetTab, Ui_PresetHints):
         vertical_layout.addWidget(combo)
 
         self.verticalLayout.addWidget(hint_group)
-        self.specific_hint_groups[hint] = hint_group
-        self.specific_hint_combos[hint] = combo
+        self.specific_pickup_groups[hint] = hint_group
+        self.specific_pickup_combos[hint] = combo
         signal_handling.on_combo(combo, functools.partial(self._on_specific_hint_combo_changed, hint))
