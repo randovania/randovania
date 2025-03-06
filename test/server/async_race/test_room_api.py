@@ -14,6 +14,7 @@ from randovania.network_common.async_race_room import (
     RaceRoomLeaderboard,
     RaceRoomLeaderboardEntry,
 )
+from randovania.network_common.audit import AuditEntry
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.network_common.user import RandovaniaUser
@@ -621,6 +622,9 @@ def test_admin_update_entries(simple_room, mocker: pytest_mock.MockFixture):
         "visibility": "visible",
         "allow_pause": True,
     }
+    assert [x.as_entry() for x in simple_room.audit_log] == [
+        AuditEntry(user="The Name", message="Modified entries for ['ignored'].", time=ANY)
+    ]
 
 
 def test_join_and_export_too_early(simple_room, mocker: pytest_mock.MockFixture):
@@ -692,3 +696,7 @@ def test_submit_proof_valid(simple_room):
     entry = AsyncRaceEntry.entry_for(simple_room, sa.get_current_user.return_value)
     assert entry.submission_notes == "notes"
     assert entry.proof_url == ""
+
+    assert [x.as_entry() for x in simple_room.audit_log] == [
+        AuditEntry(user="The Player", message="Updated submission notes and proof.", time=ANY)
+    ]

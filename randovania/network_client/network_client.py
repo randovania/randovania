@@ -473,7 +473,7 @@ class NetworkClient:
 
     async def create_async_race_room(
         self, layout: LayoutDescription, settings: AsyncRaceSettings
-    ) -> AsyncRaceRoomListEntry:
+    ) -> AsyncRaceRoomEntry:
         """
 
         :param layout:
@@ -487,7 +487,7 @@ class NetworkClient:
                 settings.as_json,
             ),
         )
-        return AsyncRaceRoomListEntry.from_json(result)
+        return AsyncRaceRoomEntry.from_json(result)
 
     async def get_async_race_room_list(self, ignore_limit: bool) -> list[AsyncRaceRoomListEntry]:
         return [

@@ -127,8 +127,24 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         match room.race_status:
             case AsyncRaceRoomRaceStatus.SCHEDULED:
                 participation_text = f"Race starts in {humanize.naturaltime(room.start_date, when=now)}"
+
             case AsyncRaceRoomRaceStatus.FINISHED:
-                participation_text = f"Race has finished. You have {self.room.self_status.name}."
+                match self.room.self_status:
+                    case AsyncRaceRoomUserStatus.NOT_MEMBER:
+                        extra = "You didn't join."
+                    case AsyncRaceRoomUserStatus.JOINED:
+                        extra = "You never started."
+                    case AsyncRaceRoomUserStatus.STARTED:
+                        extra = "You didn't finish."
+                    case AsyncRaceRoomUserStatus.PAUSED:
+                        extra = "You were paused."
+                    case AsyncRaceRoomUserStatus.FINISHED:
+                        extra = "You finished."
+                    case AsyncRaceRoomUserStatus.FORFEITED:
+                        extra = "You forfeited."
+                    case _:
+                        extra = f" (Unknown status {self.room.self_status.name})"
+                participation_text = f"Race has finished. {extra}"
 
         self.ui.participation_label.setText(participation_text or "")
         self.ui.participation_label.setVisible(participation_text is not None)
@@ -208,7 +224,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
             return
 
         patch_data = await self._network_client.async_race_join_and_export(
-            self.room, self._options.options_for_game(game).cosmetic_patches
+            self.room, self._options.generic_per_game_options(game).cosmetic_patches
         )
 
         dialog.save_options()
