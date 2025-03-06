@@ -605,12 +605,27 @@ if all(find_spec(n) is not None for n in ("pytestqt", "qasync")):
         yield loop
         loop.close()
 
+    @pytest.fixture(scope="session")
+    def qapp_cls(request: pytest.FixtureRequest):
+        if request.config.option.skip_gui_tests:
+            import PySide6.QtCore
+
+            return PySide6.QtCore.QCoreApplication
+        else:
+            import PySide6.QtWidgets
+
+            return PySide6.QtWidgets.QApplication
+
 else:
 
     @pytest.fixture
     def skip_qtbot(request: pytest.FixtureRequest) -> QtBot:
         pytest.skip()
         return "no qtbot"  # noqa
+
+    @pytest.fixture(scope="session")
+    def qapp_cls(request: pytest.FixtureRequest) -> None:
+        pytest.skip()
 
 
 def pytest_configure(config: pytest.Config) -> None:
