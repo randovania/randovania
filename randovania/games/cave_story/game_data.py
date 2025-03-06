@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import typing
 
+import randovania.game.hints
+
 if typing.TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExporter
     from randovania.exporter.patch_data_factory import PatchDataFactory
@@ -44,7 +46,6 @@ def _gui() -> randovania.game.gui.GameGui:
 
 def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.cave_story.generator.bootstrap import CSBootstrap
-    from randovania.games.cave_story.generator.hint_distributor import CSHintDistributor
     from randovania.games.cave_story.generator.pool_creator import pool_creator
     from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.filler.weights import ActionWeights
@@ -53,12 +54,17 @@ def _generator() -> randovania.game.generator.GameGenerator:
         pickup_pool_creator=pool_creator,
         bootstrap=CSBootstrap(),
         base_patches_factory=BasePatchesFactory(),
-        hints=randovania.game.hints.GameHints(
-            hint_distributor=CSHintDistributor(),
-            specific_pickup_hints={},
-            has_random_hints=True,
-        ),
         action_weights=ActionWeights(),
+    )
+
+
+def _hints() -> randovania.game.hints.GameHints:
+    from randovania.games.cave_story.generator.hint_distributor import CSHintDistributor
+
+    return randovania.game.hints.GameHints(
+        hint_distributor=CSHintDistributor(),
+        specific_pickup_hints={},
+        has_random_hints=True,
     )
 
 
@@ -111,6 +117,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     ),
     options=_options,
     gui=_gui,
+    hints=_hints,
     generator=_generator,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,

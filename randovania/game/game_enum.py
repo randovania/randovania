@@ -19,6 +19,7 @@ if typing.TYPE_CHECKING:
     from randovania.game.data import GameData
     from randovania.game.generator import GameGenerator
     from randovania.game.gui import GameGui
+    from randovania.game.hints import GameHints
     from randovania.interface_common.options import PerGameOptions
 
 
@@ -95,6 +96,10 @@ class RandovaniaGame(BitPackEnum, Enum):
     @cached_property
     def generator(self) -> GameGenerator:
         return self.data.generator()
+
+    @cached_property
+    def hints(self) -> GameHints:
+        return self.data.hints()
 
     @cached_property
     def patch_data_factory(self) -> type[PatchDataFactory]:

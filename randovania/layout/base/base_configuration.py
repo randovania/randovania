@@ -89,12 +89,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
         return result
 
     def settings_incompatible_with_multiworld(self) -> list[str]:
-        result = _collect_from_fields(self, "settings_incompatible_with_multiworld")
-
-        if self.use_resolver_hints:
-            result.append("Resolver-based hints")
-
-        return result
+        return _collect_from_fields(self, "settings_incompatible_with_multiworld")
 
     def unsupported_features(self) -> list[str]:
         return _collect_from_fields(self, "unsupported_features")

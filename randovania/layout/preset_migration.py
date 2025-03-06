@@ -1099,11 +1099,17 @@ def _migrate_v99(preset: dict, game: RandovaniaGame) -> None:
     pop_from_base_config("minimum_location_weight_for_hint_placement")
     pop_from_base_config("use_resolver_hints")
 
-    if game in {RandovaniaGame.AM2R, RandovaniaGame.FUSION, RandovaniaGame.METROID_PRIME, RandovaniaGame.AM2R}:
+    if game in {
+        RandovaniaGame.AM2R,
+        RandovaniaGame.FUSION,
+        RandovaniaGame.METROID_PRIME,
+        RandovaniaGame.METROID_SAMUS_RETURNS,
+    }:
         hints_config["specific_pickup_hints"] = config.pop("hints")
-
-    if game == RandovaniaGame.METROID_PRIME_ECHOES:
+    elif game == RandovaniaGame.METROID_PRIME_ECHOES:
         hints_config["specific_pickup_hints"] = {"sky_temple_keys": config["hints"]["sky_temple_keys"]}
+    else:
+        hints_config["specific_pickup_hints"] = {}
 
     if game in {RandovaniaGame.CAVE_STORY, RandovaniaGame.METROID_PRIME_ECHOES}:
         hints_config["enable_random_hints"] = config.pop("hints")["item_hints"]

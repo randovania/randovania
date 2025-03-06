@@ -30,7 +30,7 @@ class PresetHints(PresetTab, Ui_PresetHints):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        game_hints = game_description.game.generator.hints
+        game_hints = game_description.game.hints
 
         if game_hints.has_random_hints:
             signal_handling.on_checked(

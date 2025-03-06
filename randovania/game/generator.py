@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-    from randovania.game.hints import GameHints
     from randovania.game_description.game_description import GameDescription
     from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.filler.weights import ActionWeights
@@ -26,9 +25,6 @@ class GameGenerator:
     base_patches_factory: BasePatchesFactory
     # TODO Revise this text
     """Creates base patches, such as teleporter or configurable node assignments."""
-
-    hints: GameHints
-    """Settings for the hint system."""
 
     action_weights: ActionWeights
     """Contains weights related to weighting actions."""

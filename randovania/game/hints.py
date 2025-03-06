@@ -1,6 +1,10 @@
-import dataclasses
+from __future__ import annotations
 
-from randovania.generator.hint_distributor import HintDistributor
+import dataclasses
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from randovania.generator.hint_distributor import HintDistributor
 
 
 @dataclasses.dataclass(frozen=True)

@@ -110,13 +110,14 @@ class GamePresetDescriber:
 
     def _hints_info(self, configuration: BaseConfiguration) -> list[str]:
         strings: list[str] = []
-        game_hints = configuration.game_enum().generator.hints
+        game_hints = configuration.game_enum().hints
 
         if game_hints.has_random_hints:
             strings.append(f"Random hints {'enabled' if configuration.hints.enable_random_hints else 'disabled'}")
             if configuration.hints.use_resolver_hints:
                 strings.append("Uses resolver-based hints")
 
+        print(configuration.hints.specific_pickup_hints)
         for hint, mode in configuration.hints.specific_pickup_hints.items():
             details = game_hints.specific_pickup_hints[hint]
             strings.append(f"{details.long_name} Hint: {mode.long_name}")

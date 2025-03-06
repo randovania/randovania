@@ -76,6 +76,7 @@ def test_echoes_format_params(default_echoes_configuration):
             "Split beam ammo",
             "Sky Temple Keys at all bosses",
         ],
+        "Hints": ["Random hints enabled", "Sky Temple Keys Hint: Region and area"],
     }
 
 
@@ -139,4 +140,5 @@ def test_echoes_format_params2(default_echoes_configuration):
             "Split beam ammo",
             "Sky Temple Keys at all bosses",
         ],
+        "Hints": ["Random hints enabled", "Sky Temple Keys Hint: Region and area"],
     }

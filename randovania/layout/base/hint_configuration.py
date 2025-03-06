@@ -1,9 +1,13 @@
 import dataclasses
+import typing
+from collections.abc import Iterator
 from enum import Enum
+from typing import Self, override
 
 from frozendict import frozendict
 
-from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
+from randovania.bitpacking import bitpacking
+from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackDecoder, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.lib import enum_lib
@@ -44,7 +48,9 @@ class HintConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     enable_random_hints: bool
     """When false, all hints are replaced with jokes."""
 
-    specific_pickup_hints: frozendict[str, SpecificPickupHintMode]
+    specific_pickup_hints: frozendict[str, SpecificPickupHintMode] = dataclasses.field(
+        metadata={"manual_bitpacking": True}
+    )
     """What level of precision to use for a given specific pickup hint (e.g. Artifacts)"""
 
     # experimental settings / hidden from GUI
@@ -57,3 +63,48 @@ class HintConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
         }
     )
     use_resolver_hints: bool
+
+    def settings_incompatible_with_multiworld(self) -> list[str]:
+        incompatible = []
+        if self.use_resolver_hints:
+            incompatible.append("Resolver-based hints")
+        return incompatible
+
+    @override
+    def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
+        reference = typing.cast(HintConfiguration, metadata["reference"])
+
+        modified_specific_hints = [
+            hint
+            for hint, mode in sorted(reference.specific_pickup_hints.items())
+            if self.specific_pickup_hints[hint] != mode
+        ]
+        yield from bitpacking.pack_sorted_array_elements(
+            modified_specific_hints,
+            sorted(reference.specific_pickup_hints.keys()),
+        )
+        for hint in modified_specific_hints:
+            yield from self.specific_pickup_hints[hint].bit_pack_encode(
+                {"reference": reference.specific_pickup_hints[hint]}
+            )
+
+        yield from super().bit_pack_encode(metadata)
+
+    @override
+    @classmethod
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata: dict) -> Self:
+        reference = typing.cast(HintConfiguration, metadata["reference"])
+
+        modified_specific_hints = bitpacking.decode_sorted_array_elements(
+            decoder, sorted(reference.specific_pickup_hints.keys())
+        )
+        specific_hints = dict(reference.specific_pickup_hints)
+        for hint in modified_specific_hints:
+            specific_hints[hint] = SpecificPickupHintMode.bit_pack_unpack(
+                decoder, {"reference": reference.specific_pickup_hints[hint]}
+            )
+
+        meta = dict(metadata)
+        meta["extra_args"]["specific_pickup_hints"] = frozendict(specific_hints)
+
+        return super().bit_pack_unpack(decoder, meta)

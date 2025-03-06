@@ -37,17 +37,21 @@ def _gui() -> randovania.game.gui.GameGui:
 def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.planets_zebeth import generator
     from randovania.generator.filler.weights import ActionWeights
-    from randovania.generator.hint_distributor import AllJokesHintDistributor
 
     return randovania.game.generator.GameGenerator(
         pickup_pool_creator=generator.pool_creator,
         bootstrap=generator.PlanetsZebethBootstrap(),
         base_patches_factory=generator.PlanetsZebethBasePatchesFactory(),
-        hints=randovania.game.hints.GameHints(
-            hint_distributor=AllJokesHintDistributor(),
-            specific_pickup_hints={},
-        ),
         action_weights=ActionWeights(),
+    )
+
+
+def _hints() -> randovania.game.hints.GameHints:
+    from randovania.generator.hint_distributor import AllJokesHintDistributor
+
+    return randovania.game.hints.GameHints(
+        hint_distributor=AllJokesHintDistributor(),
+        specific_pickup_hints={},
     )
 
 
@@ -92,6 +96,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     options=_options,
     gui=_gui,
     generator=_generator,
+    hints=_hints,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     multiple_start_nodes_per_area=False,

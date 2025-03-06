@@ -82,7 +82,7 @@ async def test_fill_unassigned_hints_empty_assignment(echoes_game_description, e
         for node in echoes_game_description.region_list.iterate_nodes()
         if isinstance(node, HintNode) and node.kind == HintNodeKind.GENERIC
     ]
-    hint_distributor = echoes_game_description.game.generator.hint_distributor
+    hint_distributor = echoes_game_description.game.hints.hint_distributor
 
     filler_config = MagicMock()
     filler_config.minimum_available_locations_for_hint_placement = 0

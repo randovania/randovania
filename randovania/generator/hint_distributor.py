@@ -311,7 +311,7 @@ class HintDistributor(ABC):
         `MORE_INTERESTING` pickups are a subset of `INTERESTING` pickups,
         which are a subset of `LEAST_INTERESTING` pickups.
         """
-        hint_distributor = player_pools[target.player].game_generator.hints.hint_distributor
+        hint_distributor = player_pools[target.player].game.game.hints.hint_distributor
 
         if not hint_distributor.is_pickup_interesting(target, player_id, hint_node):
             return HintSuitability.LEAST_INTERESTING
@@ -734,7 +734,7 @@ async def distribute_generic_hints(
             if resolver_hint_state is not None:
                 hint_state = resolver_hint_state
 
-        hint_distributor = patches.game.game.generator.hints.hint_distributor
+        hint_distributor = patches.game.game.hints.hint_distributor
         new_patches[player_index] = await hint_distributor.assign_post_filler_hints(
             patches,
             rng,
@@ -768,7 +768,7 @@ async def distribute_specific_location_hints(
     for player_index, patches in old_patches.items():
         player_pool = player_pools[player_index]
 
-        hint_distributor = player_pool.game_generator.hints.hint_distributor
+        hint_distributor = player_pool.game.game.hints.hint_distributor
         new_patches[player_index] = await hint_distributor.assign_precision_to_hints(
             patches, rng, player_pool, player_pools, {HintNodeKind.SPECIFIC_PICKUP}
         )
