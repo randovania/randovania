@@ -10,6 +10,7 @@ from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfigura
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
 from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration, DockRandoMode
+from randovania.layout.base.hint_configuration import HintConfiguration
 from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 from randovania.layout.base.pickup_model import PickupModelDataSource, PickupModelStyle
@@ -51,21 +52,13 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     logical_resource_action: LayoutLogicalResourceAction
     first_progression_must_be_local: bool
     two_sided_door_lock_search: bool
-    minimum_available_locations_for_hint_placement: int = dataclasses.field(metadata={"min": 0, "max": 99})
-    minimum_location_weight_for_hint_placement: float = dataclasses.field(
-        metadata={
-            "min": 0,
-            "max": 5.0,
-            "precision": 0.1,
-        }
-    )
     dock_rando: DockRandoConfiguration
     single_set_for_pickups_that_solve: bool
     staggered_multi_pickup_placement: bool
     check_if_beatable_after_base_patches: bool
     logical_pickup_placement: LogicalPickupPlacementConfiguration
     consider_possible_unsafe_resources: bool
-    use_resolver_hints: bool
+    hints: HintConfiguration
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
