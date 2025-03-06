@@ -27,6 +27,7 @@ if TYPE_CHECKING:
     from pytestqt.qtbot import QtBot
 
     from randovania.gui.dialog.async_race_admin_dialog import AsyncRaceAdminDialog
+    from randovania.interface_common.options import Options
     from randovania.layout.preset import Preset
 
 
@@ -56,8 +57,8 @@ def create_room(
     )
 
 
-def create_window(skip_qtbot: QtBot, room: AsyncRaceRoomEntry) -> AsyncRaceRoomWindow:
-    window = AsyncRaceRoomWindow(room, MagicMock(spec=QtNetworkClient), MagicMock(), MagicMock())
+def create_window(skip_qtbot: QtBot, room: AsyncRaceRoomEntry, options: Options) -> AsyncRaceRoomWindow:
+    window = AsyncRaceRoomWindow(room, MagicMock(spec=QtNetworkClient), options, MagicMock())
     skip_qtbot.add_widget(window)
     return window
 
@@ -83,8 +84,8 @@ async def button_state_helper(
         (AsyncRaceRoomUserStatus.STARTED, AsyncRaceRoomUserStatus.JOINED),
     ],
 )
-async def test_on_start(skip_qtbot, default_blank_preset, before, after):
-    window = create_window(skip_qtbot, create_room(default_blank_preset, self_status=before))
+async def test_on_start(skip_qtbot, options, default_blank_preset, before, after):
+    window = create_window(skip_qtbot, create_room(default_blank_preset, self_status=before), options)
     await button_state_helper(window, after, window.ui.start_button, window._on_start)
 
 
@@ -97,8 +98,8 @@ async def test_on_start(skip_qtbot, default_blank_preset, before, after):
         (AsyncRaceRoomUserStatus.FINISHED, None),
     ],
 )
-async def test_on_pause(skip_qtbot, default_blank_preset, before, after):
-    window = create_window(skip_qtbot, create_room(default_blank_preset, self_status=before))
+async def test_on_pause(skip_qtbot, options, default_blank_preset, before, after):
+    window = create_window(skip_qtbot, create_room(default_blank_preset, self_status=before), options)
     await button_state_helper(window, after, window.ui.pause_button, window._on_pause)
 
 
@@ -111,8 +112,8 @@ async def test_on_pause(skip_qtbot, default_blank_preset, before, after):
         (AsyncRaceRoomUserStatus.FORFEITED, None),
     ],
 )
-async def test_on_finish(skip_qtbot, default_blank_preset, before, after):
-    window = create_window(skip_qtbot, create_room(default_blank_preset, self_status=before))
+async def test_on_finish(skip_qtbot, options, default_blank_preset, before, after):
+    window = create_window(skip_qtbot, create_room(default_blank_preset, self_status=before), options)
     await button_state_helper(window, after, window.ui.finish_button, window._on_finish)
 
 
@@ -125,15 +126,15 @@ async def test_on_finish(skip_qtbot, default_blank_preset, before, after):
         (AsyncRaceRoomUserStatus.FINISHED, None),
     ],
 )
-async def test_on_forfeit(skip_qtbot, default_blank_preset, before, after):
-    window = create_window(skip_qtbot, create_room(default_blank_preset, self_status=before))
+async def test_on_forfeit(skip_qtbot, options, default_blank_preset, before, after):
+    window = create_window(skip_qtbot, create_room(default_blank_preset, self_status=before), options)
     await button_state_helper(window, after, window.ui.forfeit_button, window._on_forfeit)
 
 
 @pytest.mark.parametrize("confirm_export", [False, True])
 @pytest.mark.parametrize("prompt_join", ["refuse", "accept", "member"])
 async def test_on_join_and_forfeit(
-    skip_qtbot, default_blank_preset, mocker: pytest_mock.MockFixture, prompt_join, confirm_export
+    skip_qtbot, options, default_blank_preset, mocker: pytest_mock.MockFixture, prompt_join, confirm_export
 ):
     mock_prompt = mocker.patch(
         "randovania.gui.lib.async_dialog.yes_no_prompt", autospec=True, return_value=prompt_join != "refuse"
@@ -153,10 +154,12 @@ async def test_on_join_and_forfeit(
             if prompt_join == "member"
             else AsyncRaceRoomUserStatus.NOT_MEMBER,
         ),
+        options,
     )
     network_client: AsyncMock = window._network_client
     window.refresh_data = AsyncMock()
     window.preset = preset = MagicMock(spec=VersionedPreset)
+    preset.game.value = default_blank_preset.game.value
     export_dialog_class: MagicMock = preset.game.gui.export_dialog
 
     # Run
@@ -205,7 +208,7 @@ async def test_on_join_and_forfeit(
     window.refresh_data.assert_awaited_once_with()
 
 
-async def test_on_view_user_entries(skip_qtbot, default_blank_preset, mocker: pytest_mock.MockFixture):
+async def test_on_view_user_entries(skip_qtbot, options, default_blank_preset, mocker: pytest_mock.MockFixture):
     def execute_dialog_effect(dialog: AsyncRaceAdminDialog):
         dialog.model.setData(dialog.model.index(1, 4), "true", Qt.ItemDataRole.EditRole)
         return QtWidgets.QDialog.DialogCode.Accepted
@@ -216,7 +219,9 @@ async def test_on_view_user_entries(skip_qtbot, default_blank_preset, mocker: py
         side_effect=execute_dialog_effect,
     )
 
-    window = create_window(skip_qtbot, create_room(default_blank_preset, self_status=AsyncRaceRoomUserStatus.JOINED))
+    window = create_window(
+        skip_qtbot, create_room(default_blank_preset, self_status=AsyncRaceRoomUserStatus.JOINED), options
+    )
     window._network_client.async_race_admin_update_entries = AsyncMock(return_value=window.room)
     window._network_client.async_race_admin_get_admin_data.return_value = AsyncRaceRoomAdminData(
         [

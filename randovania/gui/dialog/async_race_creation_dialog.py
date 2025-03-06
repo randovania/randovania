@@ -72,13 +72,13 @@ class AsyncRaceCreationDialog(QtWidgets.QDialog):
         """
         :return: True if name_edit is not empty
         """
-        return len(self.ui.name_edit.text()) > 0
+        return bool(self.ui.name_edit.text())
 
     def _validate_password(self) -> bool:
         """
         :return: True if password_check is unchecked or password_edit is not empty
         """
-        return not self.ui.password_edit.isEnabled() or len(self.ui.password_edit.text()) > 0
+        return not self.ui.password_edit.isEnabled() or self.ui.password_edit.text()
 
     def _validate_end_time(self) -> bool:
         """

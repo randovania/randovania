@@ -289,6 +289,12 @@ def admin_update_entries(sa: ServerApp, room_id: int, raw_new_entries: JsonType)
             entry.forfeit = modification.forfeit
             entry.save()
 
+        database.AsyncRaceAuditEntry.create(
+            room=room,
+            user=sa.get_current_user(),
+            message=f"Modified entries for {[', '.join(mod.user.name for mod in new_entries)]}.",
+        )
+
     return AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa).as_json
 
 

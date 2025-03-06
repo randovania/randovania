@@ -29,7 +29,10 @@ class AsyncRaceProofPopup(QtWidgets.QDialog):
 
     def _on_proof_updated(self) -> None:
         """Validate that the proof URL at least looks like a URL"""
-        common_qt_lib.set_error_border_stylesheet(self.ui.proof_edit, self._proof_re.match(self.proof_url) is None)
+        common_qt_lib.set_error_border_stylesheet(
+            self.ui.proof_edit,
+            self.proof_url and self._proof_re.match(self.proof_url) is None,
+        )
         self.ui.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Save).setEnabled(
             not self.ui.proof_edit.has_error
         )
