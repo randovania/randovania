@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import dataclasses
+import functools
 import uuid
 from importlib.util import find_spec
 from pathlib import Path
@@ -570,18 +571,23 @@ def pytest_addoption(parser: pytest.Parser) -> None:
 
 
 if all(find_spec(n) is not None for n in ("pytestqt", "qasync")):
-    import asyncio.events
 
-    import qasync
+    @functools.cache
+    def get_event_loop_class() -> type[asyncio.EventLoop]:
+        import asyncio.events
 
-    class EventLoopWithRunningFlag(qasync.QEventLoop):
-        def _before_run_forever(self):
-            super()._before_run_forever()
-            asyncio.events._set_running_loop(self)
+        import qasync
 
-        def _after_run_forever(self):
-            asyncio.events._set_running_loop(None)
-            super()._after_run_forever()
+        class EventLoopWithRunningFlag(qasync.QEventLoop):
+            def _before_run_forever(self):
+                super()._before_run_forever()
+                asyncio.events._set_running_loop(self)
+
+            def _after_run_forever(self):
+                asyncio.events._set_running_loop(None)
+                super()._after_run_forever()
+
+        return EventLoopWithRunningFlag
 
     @pytest.fixture
     def skip_qtbot(request: pytest.FixtureRequest, qtbot: QtBot) -> QtBot:
@@ -593,7 +599,7 @@ if all(find_spec(n) is not None for n in ("pytestqt", "qasync")):
     @pytest.fixture
     def event_loop(request: pytest.FixtureRequest) -> asyncio.EventLoop:
         if "skip_qtbot" in request.fixturenames:
-            loop = EventLoopWithRunningFlag(request.getfixturevalue("qapp"), set_running_loop=False)
+            loop = get_event_loop_class()(request.getfixturevalue("qapp"), set_running_loop=False)
         else:
             loop = asyncio.get_event_loop_policy().new_event_loop()
         yield loop
