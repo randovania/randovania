@@ -94,7 +94,7 @@ def test_location_precision(
 ):
     # Setup
     game = blank_game_patches.game
-    hint_distributor = game.game.generator.hint_distributor
+    hint_distributor = game.game.hints.hint_distributor
     pickup_node = game.region_list.get_pickup_node(location)
     area = game.region_list.nodes_to_area(pickup_node)
 
