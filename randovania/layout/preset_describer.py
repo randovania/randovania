@@ -108,6 +108,21 @@ class GamePresetDescriber:
 
         return result
 
+    def _hints_info(self, configuration: BaseConfiguration) -> list[str]:
+        strings: list[str] = []
+        game_hints = configuration.game_enum().generator.hints
+
+        if game_hints.has_random_hints:
+            strings.append(f"Random hints {'enabled' if configuration.hints.enable_random_hints else 'disabled'}")
+            if configuration.hints.use_resolver_hints:
+                strings.append("Uses resolver-based hints")
+
+        for hint, mode in configuration.hints.specific_pickup_hints.items():
+            details = game_hints.specific_pickup_hints[hint]
+            strings.append(f"{details.long_name} Hint: {mode.long_name}")
+
+        return strings
+
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         """Function providing any game-specific information to display in presets such as the goal."""
 
@@ -187,6 +202,11 @@ class GamePresetDescriber:
         dock_rando = configuration.dock_rando
         if dock_rando.is_enabled():
             template_strings["Gameplay"].append(dock_rando.mode.description)
+
+        # Hints
+        hint_strings = self._hints_info(configuration)
+        if hint_strings:
+            template_strings["Hints"].extend(hint_strings)
 
         return template_strings
 
