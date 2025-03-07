@@ -110,20 +110,20 @@ class GamePresetDescriber:
 
     def _hints_info(self, configuration: BaseConfiguration) -> list[str]:
         strings: list[str] = []
-        game_hints = configuration.game_enum().hints
+        game = default_database.game_description_for(configuration.game)
 
-        if game_hints.has_random_hints(configuration.game_enum()):
+        if game.has_random_hints:
             if not configuration.hints.enable_random_hints:
                 strings.append("Random hints disabled")
             elif configuration.hints.use_resolver_hints:
                 strings.append("Uses resolver-based hints")
 
-        if game_hints.has_specific_location_hints(configuration.game_enum()):
+        if game.has_specific_location_hints:
             if not configuration.hints.enable_specific_location_hints:
                 strings.append("Specific location hints disabled")
 
         for hint, mode in configuration.hints.specific_pickup_hints.items():
-            details = game_hints.specific_pickup_hints[hint]
+            details = configuration.game.hints.specific_pickup_hints[hint]
             strings.append(f"{details.long_name} Hint: {mode.long_name}")
 
         return strings
