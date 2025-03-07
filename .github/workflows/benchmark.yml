@@ -18,7 +18,7 @@ jobs:
     timeout-minutes: 30
     strategy:
       matrix:
-        shard: [1,2,3,4,5]
+        shard: [1,2,3,4]
 
     steps:
       - name: Checkout
@@ -46,5 +46,5 @@ jobs:
       - name: run pytest (benchmark)
         uses: CodSpeedHQ/action@v3
         with:
-          run: python -m pytest --skip-gui-tests --codspeed --test-group=${{ matrix.shard }} --test-group-count=5
+          run: python -m pytest --skip-gui-tests --test-group=${{ matrix.shard }} --test-group-count=4 --codspeed --codspeed-mode=walltime
           token: ${{ secrets.CODSPEED_TOKEN }}
