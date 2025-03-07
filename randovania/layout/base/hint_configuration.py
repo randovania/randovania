@@ -108,6 +108,7 @@ class HintConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
             )
 
         meta = dict(metadata)
+        meta.setdefault("extra_args", {})
         meta["extra_args"]["specific_pickup_hints"] = frozendict(specific_hints)
 
         return super().bit_pack_unpack(decoder, meta)
