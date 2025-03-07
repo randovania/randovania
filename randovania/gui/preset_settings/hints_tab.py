@@ -15,7 +15,7 @@ from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 from randovania.lib import dataclass_lib
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Callable, Iterator
 
     from randovania.game.hints import SpecificHintDetails
     from randovania.game_description.game_description import GameDescription
@@ -35,9 +35,9 @@ class PresetHints(PresetTab, Ui_PresetHints):
         # random hints
         if game_hints.has_random_hints(game_description.game):
             signal_handling.on_checked(
-                self.enable_random_hints_check, self._persist_bool_hints_field("enable_random_hints")
+                self.enable_random_hints_check, self._persist_hints_field("enable_random_hints", bool)
             )
-            signal_handling.on_checked(self.resolver_hints_check, self._persist_bool_hints_field("use_resolver_hints"))
+            signal_handling.on_checked(self.resolver_hints_check, self._persist_hints_field("use_resolver_hints", bool))
 
             minimum_available_meta = dataclass_lib.get_metadata_for_field(
                 editor.hint_configuration, "minimum_available_locations_for_hint_placement"
@@ -45,7 +45,7 @@ class PresetHints(PresetTab, Ui_PresetHints):
             self.minimum_available_locations_spin_box.setMinimum(minimum_available_meta["min"])
             self.minimum_available_locations_spin_box.setMaximum(minimum_available_meta["max"])
             self.minimum_available_locations_spin_box.valueChanged.connect(
-                self._persist_number_hints_field("minimum_available_locations_for_hint_placement")
+                self._persist_hints_field("minimum_available_locations_for_hint_placement", int)
             )
 
             minimum_weight_meta = dataclass_lib.get_metadata_for_field(
@@ -55,7 +55,7 @@ class PresetHints(PresetTab, Ui_PresetHints):
             self.minimum_weight_spin_box.setMaximum(minimum_weight_meta["max"])
             self.minimum_weight_spin_box.setSingleStep(minimum_weight_meta["precision"])
             self.minimum_weight_spin_box.valueChanged.connect(
-                self._persist_number_hints_field("minimum_location_weight_for_hint_placement")
+                self._persist_hints_field("minimum_location_weight_for_hint_placement", float)
             )
         else:
             self.random_hints_box.setVisible(False)
@@ -64,7 +64,7 @@ class PresetHints(PresetTab, Ui_PresetHints):
         if game_hints.has_specific_location_hints(game_description.game):
             signal_handling.on_checked(
                 self.enable_specific_location_hints_check,
-                self._persist_bool_hints_field("enable_specific_location_hints"),
+                self._persist_hints_field("enable_specific_location_hints", bool),
             )
         else:
             self.specific_location_hints_box.setVisible(False)
@@ -87,7 +87,7 @@ class PresetHints(PresetTab, Ui_PresetHints):
     def header_name(cls) -> str | None:
         return None
 
-    def on_preset_changed(self, preset: Preset[BaseConfiguration]):
+    def on_preset_changed(self, preset: Preset[BaseConfiguration]) -> None:
         hints_config = preset.configuration.hints
         self.enable_random_hints_check.setChecked(hints_config.enable_random_hints)
         self.resolver_hints_check.setChecked(hints_config.use_resolver_hints)
@@ -109,7 +109,7 @@ class PresetHints(PresetTab, Ui_PresetHints):
         for hint, mode in hints_config.specific_pickup_hints.items():
             set_combo_with_value(self.specific_pickup_combos[hint], mode)
 
-    def _on_specific_hint_combo_changed(self, hint: str, new_index: int):
+    def _on_specific_hint_combo_changed(self, hint: str, new_index: int) -> None:
         new_dict = dict(self._editor.hint_configuration.specific_pickup_hints)
         new_dict[hint] = self.specific_pickup_combos[hint].currentData()
 
@@ -119,15 +119,8 @@ class PresetHints(PresetTab, Ui_PresetHints):
                 specific_pickup_hints=frozendict(new_dict),
             )
 
-    def _persist_bool_hints_field(self, field_name: str):
-        def bound(value: int):
-            with self._editor as editor:
-                editor.hint_configuration = dataclasses.replace(editor.hint_configuration, **{field_name: bool(value)})
-
-        return bound
-
-    def _persist_number_hints_field(self, field_name: str):
-        def bound(value: int | float):
+    def _persist_hints_field[T](self, field_name: str, field_type: type[T]) -> Callable[[T], None]:
+        def bound(value: T) -> None:
             with self._editor as editor:
                 editor.hint_configuration = dataclasses.replace(editor.hint_configuration, **{field_name: value})
 
