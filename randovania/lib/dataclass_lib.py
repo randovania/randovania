@@ -21,4 +21,4 @@ def get_field(dataclass: DataclassInstance | type[DataclassInstance], field_name
     except StopIteration:
         if not isinstance(dataclass, type):
             dataclass = type(dataclass)
-        raise AttributeError(f"{dataclass.__name__} has no field {field_name}")
+        raise AttributeError(f"{dataclass.__name__} has no field '{field_name}'")

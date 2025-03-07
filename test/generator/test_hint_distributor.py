@@ -1,11 +1,16 @@
+import dataclasses
 import functools
+from random import Random
+from unittest.mock import MagicMock
 
 import pytest
 
+from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.hint_node import HintNodeKind
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.hint import HintLocationPrecision
+from randovania.game_description.hint import Hint, HintLocationPrecision, JokeHint, LocationHint, is_unassigned_location
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.generator.hint_distributor import _sort_hints
+from randovania.generator.hint_distributor import HintDistributor, HintSuitability, _sort_hints
 
 
 def dummy_node(idx: str) -> NodeIdentifier:
@@ -116,3 +121,89 @@ def test_location_precision(
 
     # Assert
     assert result == real_expected
+
+
+@pytest.mark.parametrize(
+    ("hint_kind", "enable_hints"),
+    [
+        (HintNodeKind.GENERIC, False),
+        (HintNodeKind.GENERIC, True),
+        (HintNodeKind.SPECIFIC_LOCATION, False),
+        (HintNodeKind.SPECIFIC_LOCATION, True),
+        (HintNodeKind.SPECIFIC_PICKUP, True),
+    ],
+)
+async def test_assign_precision_to_hints(hint_kind: HintNodeKind, enable_hints: bool, echoes_game_patches):
+    # Setup
+    player_pool = MagicMock()
+    player_pool.configuration.hints.enable_random_hints = enable_hints
+    player_pool.configuration.hints.enable_specific_location_hints = enable_hints
+
+    generic_hint_node = NodeIdentifier.create("Great Temple", "Main Energy Controller", "Lore Scan")
+    specific_location_hint_node = NodeIdentifier.create(
+        "Agon Wastes", "Central Mining Station", "Keybearer Corpse (J-Stl)"
+    )
+    echoes_game_patches = echoes_game_patches.assign_hint(generic_hint_node, LocationHint.unassigned(PickupIndex(0)))
+    echoes_game_patches = echoes_game_patches.assign_hint(
+        specific_location_hint_node, LocationHint.unassigned(PickupIndex(1))
+    )
+
+    # Run
+    hint_distributor = echoes_game_patches.game.game.hints.hint_distributor
+    echoes_game_patches = await hint_distributor.assign_precision_to_hints(
+        echoes_game_patches,
+        Random(1000),
+        player_pool,
+        [player_pool],
+        hint_kind,
+    )
+
+    generic_hint = echoes_game_patches.hints[generic_hint_node]
+    specific_location_hint = echoes_game_patches.hints[specific_location_hint_node]
+
+    # Assert
+    def check_hint(hint: Hint) -> None:
+        assert not is_unassigned_location(hint)
+        if enable_hints:
+            assert isinstance(hint, LocationHint)
+        else:
+            assert isinstance(hint, JokeHint)
+
+    if hint_kind == HintNodeKind.GENERIC:
+        check_hint(generic_hint)
+    else:
+        assert is_unassigned_location(generic_hint)
+
+    if hint_kind == HintNodeKind.SPECIFIC_LOCATION:
+        check_hint(specific_location_hint)
+    else:
+        assert is_unassigned_location(specific_location_hint)
+
+
+@pytest.mark.parametrize("target_suitability", list(HintSuitability))
+def test_hint_suitability_for_target(
+    target_suitability: HintSuitability, blank_pickup, echoes_game_description, echoes_pickup_database
+):
+    # Setup
+    blank_pickup = dataclasses.replace(
+        blank_pickup,
+        show_in_credits_spoiler=target_suitability == HintSuitability.MORE_INTERESTING,
+    )
+    if target_suitability == HintSuitability.LEAST_INTERESTING:
+        blank_pickup = dataclasses.replace(
+            blank_pickup, hint_features=frozenset({echoes_pickup_database.pickup_categories["key"]})
+        )
+
+    player_pool = MagicMock()
+    player_pool.game = echoes_game_description
+
+    # Run
+    result = HintDistributor.hint_suitability_for_target(
+        PickupTarget(blank_pickup, 0),
+        0,
+        MagicMock(),
+        [player_pool],
+    )
+
+    # Assert
+    assert result == target_suitability
