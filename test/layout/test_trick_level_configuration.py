@@ -23,7 +23,7 @@ from randovania.layout.base.trick_level_configuration import TrickLevelConfigura
             "bit_count": 27,
             "json": {
                 "minimal_logic": False,
-                "specific_levels": {i: "hypermode" for i in ["BombJump", "BSJ", "Dash", "Movement"]},
+                "specific_levels": {i: "ludicrous" for i in ["BombJump", "BSJ", "Dash", "Movement"]},
             },
         },
     ],
@@ -107,16 +107,16 @@ def test_pretty_description_minimal_logic(echoes_game_description):
     [
         ({}, "All tricks disabled"),
         (
-            {i: LayoutTrickLevel.HYPERMODE for i in ["Dash", "BombJump", "Movement", "BSJ"]},
-            "Enabled tricks: 21 at Disabled, 4 at Hypermode",
+            {i: LayoutTrickLevel.LUDICROUS for i in ["Dash", "BombJump", "Movement", "BSJ"]},
+            "Enabled tricks: 21 at Disabled, 4 at Ludicrous",
         ),
         (
             {
-                "Dash": LayoutTrickLevel.HYPERMODE,
-                "BombJump": LayoutTrickLevel.HYPERMODE,
+                "Dash": LayoutTrickLevel.LUDICROUS,
+                "BombJump": LayoutTrickLevel.LUDICROUS,
                 "AirUnderwater": LayoutTrickLevel.ADVANCED,
             },
-            "Enabled tricks: 22 at Disabled, Air Underwater at Advanced, 2 at Hypermode",
+            "Enabled tricks: 22 at Disabled, Air Underwater at Advanced, 2 at Ludicrous",
         ),
     ],
 )
