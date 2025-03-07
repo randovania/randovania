@@ -36,11 +36,11 @@ def test_assign_pool_results(default_cs_configuration: CSConfiguration, puppies,
     default_cs_configuration = dataclasses.replace(default_cs_configuration, puppies_anywhere=puppies)
     tricks = default_cs_configuration.trick_level.set_level_for_trick(
         game_description.resource_database.get_trick("SNBubbler"),
-        LayoutTrickLevel.HYPERMODE,
+        LayoutTrickLevel.LUDICROUS,
     )
     tricks = tricks.set_level_for_trick(
         game_description.resource_database.get_trick("SNMissiles"),
-        LayoutTrickLevel.HYPERMODE,
+        LayoutTrickLevel.LUDICROUS,
     )
     default_cs_configuration = dataclasses.replace(default_cs_configuration, trick_level=tricks)
 

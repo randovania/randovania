@@ -1089,6 +1089,12 @@ def _migrate_v98(preset: dict, game: RandovaniaGame) -> None:
 
 
 def _migrate_v99(preset: dict, game: RandovaniaGame) -> None:
+    for trick, level in preset["configuration"]["trick_level"]["specific_levels"].items():
+        if level == "hypermode":
+            preset["configuration"]["trick_level"]["specific_levels"][trick] = "ludicrous"
+
+
+def _migrate_v100(preset: dict, game: RandovaniaGame) -> None:
     config = preset["configuration"]
     hints_config = {}
 
@@ -1220,7 +1226,8 @@ _MIGRATIONS = [
     _migrate_v96,  # dread disable lights per region
     _migrate_v97,  # consider possible unsafe resources
     _migrate_v98,  # use resolver hints
-    _migrate_v99,  # hints configuration
+    _migrate_v99,  # replace trick level hypermode with ludicrous
+    _migrate_v100,  # hints configuration
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
