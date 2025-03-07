@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from randovania.layout.preset import Preset
 
@@ -154,8 +154,11 @@ class PresetEditor:
     def hint_configuration(self, value: HintConfiguration):
         self.set_configuration_field("hints", value)
 
-    def set_configuration_field(self, field_name: str, value):
+    def set_configuration_field(self, field_name: str, value: Any):
         self._edit_field("configuration", dataclasses.replace(self.configuration, **{field_name: value}))
+
+    def set_hint_configuration_field(self, field_name: str, value: Any):
+        self.hint_configuration = dataclasses.replace(self.hint_configuration, **{field_name: value})
 
     ######
 

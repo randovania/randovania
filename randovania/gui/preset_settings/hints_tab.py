@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import dataclasses
 import functools
 from typing import TYPE_CHECKING
 
@@ -112,15 +111,12 @@ class PresetHints(PresetTab, Ui_PresetHints):
         new_dict[hint] = self.specific_pickup_combos[hint].currentData()
 
         with self._editor as editor:
-            editor.hint_configuration = dataclasses.replace(
-                editor.hint_configuration,
-                specific_pickup_hints=frozendict(new_dict),
-            )
+            editor.set_hint_configuration_field("specific_pickup_hints", frozendict(new_dict))
 
     def _persist_hints_field[T](self, field_name: str, field_type: type[T]) -> Callable[[T], None]:
         def bound(value: T) -> None:
             with self._editor as editor:
-                editor.hint_configuration = dataclasses.replace(editor.hint_configuration, **{field_name: value})
+                editor.set_hint_configuration_field(field_name, value)
 
         return bound
 
