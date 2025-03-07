@@ -43,8 +43,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>581</width>
-         <height>566</height>
+         <width>567</width>
+         <height>604</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -70,6 +70,16 @@
          <number>6</number>
         </property>
         <item>
+         <widget class="QLabel" name="hint_system_description">
+          <property name="text">
+           <string>For more information about Randovania's hint system, please refer to the various hint-related tabs on this game's page.</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QGroupBox" name="random_hints_box">
           <property name="title">
            <string>Random Hints</string>
@@ -85,7 +95,7 @@
            <item>
             <widget class="QLabel" name="enable_random_hints_description">
              <property name="text">
-              <string>Whether to use the randomly generated hints system. If disabled, all random hints will be replaced with jokes.</string>
+              <string>Random hints are hints scattered randomly across hint locations, and can provide you with various pieces of information. If disabled, all random hints will be replaced with jokes.</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -286,7 +296,7 @@
            <item>
             <widget class="QLabel" name="enable_specific_location_hints_description">
              <property name="text">
-              <string>Whether to use the specific location hints system. If disabled, all specific location hints will be replaced with jokes.</string>
+              <string>Specific location hints are hints that are always in the same hint location, and always provide you with information about the pickup in the specific pickup location associated with that hint. If disabled, all specific location hints will be replaced with jokes.</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>

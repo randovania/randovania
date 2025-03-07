@@ -37,18 +37,18 @@ class PresetHints(PresetTab, Ui_PresetHints):
             )
             signal_handling.on_checked(self.resolver_hints_check, self._persist_hints_field("use_resolver_hints", bool))
 
-            minimum_available_meta = dataclass_lib.get_metadata_for_field(
+            minimum_available_meta = dataclass_lib.get_field(
                 editor.hint_configuration, "minimum_available_locations_for_hint_placement"
-            )
+            ).metadata
             self.minimum_available_locations_spin_box.setMinimum(minimum_available_meta["min"])
             self.minimum_available_locations_spin_box.setMaximum(minimum_available_meta["max"])
             self.minimum_available_locations_spin_box.valueChanged.connect(
                 self._persist_hints_field("minimum_available_locations_for_hint_placement", int)
             )
 
-            minimum_weight_meta = dataclass_lib.get_metadata_for_field(
+            minimum_weight_meta = dataclass_lib.get_field(
                 editor.hint_configuration, "minimum_location_weight_for_hint_placement"
-            )
+            ).metadata
             self.minimum_weight_spin_box.setMinimum(minimum_weight_meta["min"])
             self.minimum_weight_spin_box.setMaximum(minimum_weight_meta["max"])
             self.minimum_weight_spin_box.setSingleStep(minimum_weight_meta["precision"])
@@ -164,8 +164,7 @@ class PresetHints(PresetTab, Ui_PresetHints):
 
         combo = QtWidgets.QComboBox(hint_group)
         for i, mode in enumerate(SpecificPickupHintMode):
-            combo.addItem(mode.description)
-            combo.setItemData(i, mode)
+            combo.addItem(mode.description, mode)
         combo.setObjectName(f"hint_{hint}_combo")
 
         vertical_layout.addWidget(combo)
