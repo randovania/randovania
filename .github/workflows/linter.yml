@@ -55,16 +55,11 @@ jobs:
       - name: build ui files
         run: python setup.py build_ui
 
-      - name: Mypy on required files
-        uses: tsuyoshicho/action-mypy@v5
+      - name: mypy
+        uses: liskin/gh-problem-matcher-wrap@v2
         with:
-          github_token: ${{ secrets.github_token }}
-          # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
-          reporter: github-check
-          setup_method: nothing
-          target: --config-file=pyproject.toml
-          fail_on_error: true
-          install_types: false
+          linters: mypy
+          run: mypy
 
   mypy-modified:
     runs-on: 'ubuntu-latest'
