@@ -80,6 +80,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Reaching the tunnel at the top of Central Unit Access with Spin Boost now requires Movement (Beginner), but remains trickless with Space Jump.
 
+##### Ghavoran
+
+- Changed: The connections to fight the Golden Robot no longer require the X to not be released when doing the fight normally. This doesn't change what is logical, but makes it easier for the generator and resolver to release the X.
+
 ### Metroid Prime
 
 #### Logic Database
