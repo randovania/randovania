@@ -13,10 +13,10 @@ from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.samus_returns.exporter.hint_namer import MSRHintNamer
 from randovania.games.samus_returns.exporter.joke_hints import MSR_JOKE_HINTS
-from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
 from randovania.games.samus_returns.layout.msr_configuration import FinalBossConfiguration
 from randovania.games.samus_returns.layout.msr_cosmetic_patches import MusicMode
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.lib import random_lib
 
@@ -320,12 +320,12 @@ class MSRPatchDataFactory(PatchDataFactory):
         artifacts = [self.game.resource_database.get_item(f"Metroid DNA {i + 1}") for i in range(39)]
         dna_hint_mapping: dict = {}
         hint_config = self.configuration.hints
-        if hint_config.artifacts != ItemHintMode.DISABLED:
+        if hint_config.specific_pickup_hints["artifacts"] != SpecificPickupHintMode.DISABLED:
             dna_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
                 exporter.namer,
-                hint_config.artifacts == ItemHintMode.HIDE_AREA,
+                hint_config.specific_pickup_hints["artifacts"] == SpecificPickupHintMode.HIDE_AREA,
                 artifacts,
                 False,
             )
@@ -382,12 +382,12 @@ class MSRPatchDataFactory(PatchDataFactory):
         final_boss_resource = [(self.game.resource_database.get_item(final_boss_item))]
         final_boss_hint: str = ""
 
-        if hint_config.final_boss_item != ItemHintMode.DISABLED:
+        if hint_config.specific_pickup_hints["final_boss_item"] != SpecificPickupHintMode.DISABLED:
             temp_final_boss_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
                 hint_namer,
-                hint_config.final_boss_item == ItemHintMode.HIDE_AREA,
+                hint_config.specific_pickup_hints["final_boss_item"] == SpecificPickupHintMode.HIDE_AREA,
                 final_boss_resource,
                 False,
             )

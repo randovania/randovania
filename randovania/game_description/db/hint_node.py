@@ -18,16 +18,16 @@ class HintNodeKind(Enum):
     long_name: str
 
     GENERIC = "generic"
+    SPECIFIC_LOCATION = "specific-location"
     SPECIFIC_PICKUP = "specific-pickup"
-    SPECIFIC_ITEM = "specific-item"
 
 
 enum_lib.add_long_name(
     HintNodeKind,
     {
         HintNodeKind.GENERIC: "Generic",
+        HintNodeKind.SPECIFIC_LOCATION: "Specific Location",
         HintNodeKind.SPECIFIC_PICKUP: "Specific Pickup",
-        HintNodeKind.SPECIFIC_ITEM: "Specific Item",
     },
 )
 

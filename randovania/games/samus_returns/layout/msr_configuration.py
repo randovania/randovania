@@ -6,7 +6,6 @@ from enum import Enum
 from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game.game_enum import RandovaniaGame
-from randovania.games.samus_returns.layout.hint_configuration import HintConfiguration
 from randovania.games.samus_returns.layout.msr_teleporters import MSRTeleporterConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
 
@@ -54,7 +53,6 @@ class MSRConfiguration(BaseConfiguration):
     reverse_area8: bool
     allow_highly_dangerous_logic: bool
     artifacts: MSRArtifactConfig
-    hints: HintConfiguration
     constant_heat_damage: int | None = dataclasses.field(metadata={"min": 0, "max": 1000, "precision": 1})
     constant_lava_damage: int | None = dataclasses.field(metadata={"min": 0, "max": 1000, "precision": 1})
     final_boss: FinalBossConfiguration  # TODO: Add support to use random option

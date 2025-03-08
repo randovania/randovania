@@ -4,6 +4,7 @@ import randovania.game.data
 import randovania.game.development_state
 import randovania.game.generator
 import randovania.game.gui
+import randovania.game.hints
 import randovania.game.layout
 import randovania.game.web_info
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
@@ -47,7 +48,6 @@ def _exporter():
 def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.dread.generator.base_patches_factory import DreadBasePatchesFactory
     from randovania.games.dread.generator.bootstrap import DreadBootstrap
-    from randovania.games.dread.generator.hint_distributor import DreadHintDistributor
     from randovania.games.dread.generator.pool_creator import pool_creator
     from randovania.generator.filler.weights import ActionWeights
 
@@ -55,8 +55,16 @@ def _generator() -> randovania.game.generator.GameGenerator:
         pickup_pool_creator=pool_creator,
         base_patches_factory=DreadBasePatchesFactory(),
         bootstrap=DreadBootstrap(),
-        hint_distributor=DreadHintDistributor(),
         action_weights=ActionWeights(),
+    )
+
+
+def _hints() -> randovania.game.hints.GameHints:
+    from randovania.games.dread.generator.hint_distributor import DreadHintDistributor
+
+    return randovania.game.hints.GameHints(
+        hint_distributor=DreadHintDistributor(),
+        specific_pickup_hints={},  # TODO: DNA
     )
 
 
@@ -146,6 +154,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     options=_options,
     gui=_gui,
     generator=_generator,
+    hints=_hints,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     multiple_start_nodes_per_area=True,

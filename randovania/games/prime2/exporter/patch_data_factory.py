@@ -21,10 +21,10 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.common import elevators
 from randovania.games.prime2.exporter import hints
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
-from randovania.games.prime2.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.base.hint_configuration import HintConfiguration, SpecificPickupHintMode
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.lib import json_lib, string_lib
@@ -503,8 +503,8 @@ def _create_string_patches(
     string_patches.extend(hints.create_patches_hints(all_patches, players_config, game.region_list, namer, rng))
 
     # Sky Temple Keys
-    stk_mode = hint_config.sky_temple_keys
-    if stk_mode == SkyTempleKeyHintMode.DISABLED:
+    stk_mode = hint_config.specific_pickup_hints["sky_temple_keys"]
+    if stk_mode == SpecificPickupHintMode.DISABLED:
         string_patches.extend(randovania.games.prime2.exporter.hints.hide_stk_hints(namer))
     else:
         string_patches.extend(
@@ -513,7 +513,7 @@ def _create_string_patches(
                 players_config,
                 game.resource_database,
                 namer,
-                stk_mode == SkyTempleKeyHintMode.HIDE_AREA,
+                stk_mode == SpecificPickupHintMode.HIDE_AREA,
             )
         )
 

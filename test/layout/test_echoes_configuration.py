@@ -15,13 +15,13 @@ from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters i
 )
 from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
-from randovania.games.prime2.layout.hint_configuration import HintConfiguration
 from randovania.games.prime2.layout.translator_configuration import TranslatorConfiguration
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
 from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration
+from randovania.layout.base.hint_configuration import HintConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
@@ -57,25 +57,25 @@ def make_dummy(cls: type[T]) -> T:
 @pytest.fixture(
     params=[
         {
-            "encoded": b"@\x00\x0c\x161\xfc\\0\x12\xc0\x0f\xf8",
+            "encoded": b"@0\xb1\x8f\xe2\xe1\x80\x96\x00\x7f\xc0",
             "sky_temple_keys": LayoutSkyTempleKeyMode.NINE.value,
         },
         {
-            "encoded": b"@\x00\x0c\x001\xfc\\0\x12\xc0\x0f\xf8",
+            "encoded": b"@0\x01\x8f\xe2\xe1\x80\x96\x00\x7f\xc0",
             "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_BOSSES.value,
         },
         {
-            "encoded": b"@\x00\x0c\x08\x8b\xfc\\0\x12\xc0\x0f\xf8",
+            "encoded": b"@0D_\xe2\xe1\x80\x96\x00\x7f\xc0",
             "sky_temple_keys": LayoutSkyTempleKeyMode.TWO.value,
             "energy_per_tank": 280,
         },
         {
-            "encoded": b"@\x00\x0c\x021\xfd\x17\xb0\x12\xc0\x0f\xf8",
+            "encoded": b"@0\x11\x8f\xe8\xbd\x80\x96\x00\x7f\xc0",
             "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS.value,
             "varia_suit_damage": 18.0,
         },
         {
-            "encoded": b"\x10\x00\x0c\x021\xfc\\0\x12\xc0\x0f\xf8",
+            "encoded": b"\x100\x11\x8f\xe2\xe1\x80\x96\x00\x7f\xc0",
             "pickup_model_style": PickupModelStyle.HIDE_MODEL.value,
             "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS.value,
             "damage_strictness": LayoutDamageStrictness.STRICT.value,

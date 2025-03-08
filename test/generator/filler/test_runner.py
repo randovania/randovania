@@ -82,7 +82,7 @@ async def test_fill_unassigned_hints_empty_assignment(echoes_game_description, e
         for node in echoes_game_description.region_list.iterate_nodes()
         if isinstance(node, HintNode) and node.kind == HintNodeKind.GENERIC
     ]
-    hint_distributor = echoes_game_description.game.generator.hint_distributor
+    hint_distributor = echoes_game_description.game.hints.hint_distributor
 
     filler_config = MagicMock()
     filler_config.minimum_available_locations_for_hint_placement = 0
@@ -113,7 +113,7 @@ async def test_fill_unassigned_hints_empty_assignment(echoes_game_description, e
         [1, 3],  # test case for a Nothing being hinted
     ],
 )
-def test_add_hints_precision(empty_patches, blank_pickup, pickups_to_assign):
+async def test_add_hints_precision(empty_patches, blank_pickup, pickups_to_assign):
     player_pools = [MagicMock()]
     rng = MagicMock()
     rng.gauss.return_value = 0.0
@@ -146,7 +146,7 @@ def test_add_hints_precision(empty_patches, blank_pickup, pickups_to_assign):
     expected_feature = empty_patches.game.hint_feature_database["hint1"]
 
     # Run
-    result = hint_distributor.add_hints_precision(initial_patches, rng, player_pools)
+    result = await hint_distributor.assign_precision_to_hints(initial_patches, rng, player_pools[0], player_pools)
 
     # Assert
     assert result.hints == {

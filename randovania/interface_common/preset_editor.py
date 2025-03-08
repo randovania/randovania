@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from randovania.layout.preset import Preset
 
@@ -16,6 +16,7 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.damage_strictness import LayoutDamageStrictness
     from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration
+    from randovania.layout.base.hint_configuration import HintConfiguration
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
     from randovania.layout.lib.teleporters import TeleporterConfiguration
 
@@ -145,8 +146,19 @@ class PresetEditor:
     def dock_rando_configuration(self, value: DockRandoConfiguration):
         self.set_configuration_field("dock_rando", value)
 
-    def set_configuration_field(self, field_name: str, value):
+    @property
+    def hint_configuration(self) -> HintConfiguration:
+        return self.configuration.hints
+
+    @hint_configuration.setter
+    def hint_configuration(self, value: HintConfiguration):
+        self.set_configuration_field("hints", value)
+
+    def set_configuration_field(self, field_name: str, value: Any):
         self._edit_field("configuration", dataclasses.replace(self.configuration, **{field_name: value}))
+
+    def set_hint_configuration_field(self, field_name: str, value: Any):
+        self.hint_configuration = dataclasses.replace(self.hint_configuration, **{field_name: value})
 
     ######
 

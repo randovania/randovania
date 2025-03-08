@@ -9,7 +9,6 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.filler.weights import ActionWeights
-    from randovania.generator.hint_distributor import HintDistributor
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.bootstrap import Bootstrap
@@ -26,9 +25,6 @@ class GameGenerator:
     base_patches_factory: BasePatchesFactory
     # TODO Revise this text
     """Creates base patches, such as teleporter or configurable node assignments."""
-
-    hint_distributor: HintDistributor
-    """Use AllJokesDistributor if not using hints."""
 
     action_weights: ActionWeights
     """Contains weights related to weighting actions."""

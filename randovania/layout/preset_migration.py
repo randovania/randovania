@@ -1094,6 +1094,39 @@ def _migrate_v99(preset: dict, game: RandovaniaGame) -> None:
             preset["configuration"]["trick_level"]["specific_levels"][trick] = "ludicrous"
 
 
+def _migrate_v100(preset: dict, game: RandovaniaGame) -> None:
+    config = preset["configuration"]
+    hints_config = {}
+
+    def pop_from_base_config(field: str) -> None:
+        hints_config[field] = config.pop(field)
+
+    pop_from_base_config("minimum_available_locations_for_hint_placement")
+    pop_from_base_config("minimum_location_weight_for_hint_placement")
+    pop_from_base_config("use_resolver_hints")
+
+    if game in {
+        RandovaniaGame.AM2R,
+        RandovaniaGame.FUSION,
+        RandovaniaGame.METROID_PRIME,
+        RandovaniaGame.METROID_SAMUS_RETURNS,
+    }:
+        hints_config["specific_pickup_hints"] = config.pop("hints")
+    elif game == RandovaniaGame.METROID_PRIME_ECHOES:
+        hints_config["specific_pickup_hints"] = {"sky_temple_keys": config["hints"]["sky_temple_keys"]}
+    else:
+        hints_config["specific_pickup_hints"] = {}
+
+    if game in {RandovaniaGame.CAVE_STORY, RandovaniaGame.METROID_PRIME_ECHOES}:
+        hints_config["enable_random_hints"] = config.pop("hints")["item_hints"]
+    else:
+        hints_config["enable_random_hints"] = True
+
+    hints_config["enable_specific_location_hints"] = True
+
+    config["hints"] = hints_config
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1194,6 +1227,7 @@ _MIGRATIONS = [
     _migrate_v97,  # consider possible unsafe resources
     _migrate_v98,  # use resolver hints
     _migrate_v99,  # replace trick level hypermode with ludicrous
+    _migrate_v100,  # hints configuration
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
