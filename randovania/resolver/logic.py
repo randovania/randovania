@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from randovania.game_description.db.event_pickup import EventPickupNode
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.resolver import debug
@@ -23,6 +25,21 @@ def n(node: Node, region_list: RegionList, with_region: bool = False) -> str:
 
 def energy_string(state: State) -> str:
     return f" [{state.game_state_debug_string()}]" if debug.debug_level() >= 2 else ""
+
+
+def action_string(state: State) -> str:
+    action = ""
+    node = state.node
+
+    if isinstance(node, EventPickupNode):
+        node = node.pickup_node
+
+    if isinstance(node, PickupNode):
+        action = repr(state.patches.pickup_assignment[node.pickup_index])
+    elif isinstance(node, ResourceNode):
+        action = node.name
+
+    return f"[action {action}] " if action else ""
 
 
 class Logic:
@@ -95,8 +112,10 @@ class Logic:
             if debug.debug_level() >= 3:
                 for node in state.path_from_previous_state[1:]:
                     debug.print_function(f"{self._indent(1)}: {n(node, region_list=region_list)}")
+
+            node_str = n(state.node, region_list=region_list)
             debug.print_function(
-                f"{self._indent(1)}> {n(state.node, region_list=region_list)}{energy_string(state)} for {resources}"
+                f"{self._indent(1)}> {node_str}{energy_string(state)} for {action_string(state)}{resources}"
             )
 
     def log_checking_satisfiable_actions(self, state: State, actions: list[tuple[ResourceNode, DamageState]]):
