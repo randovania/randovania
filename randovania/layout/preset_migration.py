@@ -1127,6 +1127,16 @@ def _migrate_v100(preset: dict, game: RandovaniaGame) -> None:
     config["hints"] = hints_config
 
 
+def _migrate_v101(preset: dict, game: RandovaniaGame) -> None:
+    banned_pickups = ["Cannon Ball", "Unlimited Beam Ammo", "Unlimited Missiles", "Double Damage"]
+    pickup_config = preset["configuration"]["standard_pickup_configuration"]["pickups_state"]
+    if game == RandovaniaGame.METROID_PRIME_ECHOES:
+        for pickup in banned_pickups:
+            if pickup in pickup_config:
+                if "num_included_in_starting_pickups" in pickup_config[pickup]:
+                    pickup_config[pickup]["num_included_in_starting_pickups"] = 0
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1228,6 +1238,7 @@ _MIGRATIONS = [
     _migrate_v98,  # use resolver hints
     _migrate_v99,  # replace trick level hypermode with ludicrous
     _migrate_v100,  # hints configuration
+    _migrate_v101,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
