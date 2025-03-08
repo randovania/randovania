@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import time
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, NamedTuple
 
 from PySide6 import QtWidgets
 from qasync import asyncSlot
@@ -13,6 +13,11 @@ from randovania.resolver import debug, resolver
 
 if TYPE_CHECKING:
     from randovania.layout.layout_description import LayoutDescription
+
+
+class IndentedWidget(NamedTuple):
+    indent: int
+    item: QtWidgets.QTreeWidgetItem
 
 
 async def _run_validator(write_to_log, debug_level: int, layout: LayoutDescription):
@@ -28,6 +33,7 @@ async def _run_validator(write_to_log, debug_level: int, layout: LayoutDescripti
             final_state_by_resolve = await resolver.resolve(
                 configuration=configuration,
                 patches=patches,
+                fully_indent_log=False,
             )
         after = time.perf_counter()
 
@@ -67,7 +73,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
         self.log_widget.setColumnCount(1)
         self.log_widget.setHeaderLabels(["Steps"])
 
-        current_tree = [(-1, self.log_widget)]
+        current_tree = [IndentedWidget(-1, self.log_widget)]  # type: ignore[assignment]
 
         def write_to_log(*a):
             scrollbar = self.log_widget.verticalScrollBar()
@@ -77,23 +83,38 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
             stripped = message.lstrip()
             indent = len(message) - len(stripped)
 
-            # Remove any leading >
-            if stripped.startswith("> "):
+            # Extra indent
+            leading_chars_to_indent = ("# ", ": ", "= ")
+            extra_indent = any(stripped.startswith(c) for c in leading_chars_to_indent)
+
+            if extra_indent:
+                indent += 1
+
+            # Remove leading chars
+            leading_chars_to_remove = ("> ", ": ", "= ")
+            remove_leading = any(stripped.startswith(c) for c in leading_chars_to_remove)
+
+            if remove_leading:
                 stripped = stripped[2:]
 
-            while current_tree[-1][0] >= indent:
-                current_tree.pop()[1].setExpanded(False)
+            while current_tree[-1].indent >= indent:
+                current_tree.pop().item.setExpanded(False)
 
-            item = QtWidgets.QTreeWidgetItem(current_tree[-1][1])
+            if indent == 0:
+                parent = self.log_widget
+            else:
+                parent = current_tree[-1].item
+
+            item = QtWidgets.QTreeWidgetItem(parent)
             item.setText(0, stripped)
             item.setExpanded(True)
-            current_tree.append((indent, item))
+            current_tree.append(IndentedWidget(indent, item))
 
             self.log_widget.resizeColumnToContents(0)
             if autoscroll:
                 self.log_widget.scrollToBottom()
-                bar: QtWidgets.QScrollBar = self.log_widget.horizontalScrollBar()
-                bar.setValue(bar.maximum())
+                # bar: QtWidgets.QScrollBar = self.log_widget.horizontalScrollBar()
+                # bar.setValue(bar.maximum())
 
         self._current_task = asyncio.create_task(
             _run_validator(write_to_log, self.verbosity_combo.currentIndex(), self.layout)

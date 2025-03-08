@@ -410,6 +410,7 @@ async def resolve(
     status_update: Callable[[str], None] | None = None,
     *,
     collect_hint_data: bool = False,
+    fully_indent_log: bool = True,
 ) -> State | None:
     if status_update is None:
         status_update = _quiet_print
@@ -422,5 +423,7 @@ async def resolve(
             FillerConfiguration.from_configuration(configuration),
             patches.game,
         )
+
+    logic.increment_indent = fully_indent_log
 
     return await advance_depth(starting_state, logic, status_update)

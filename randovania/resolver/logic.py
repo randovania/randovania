@@ -32,16 +32,25 @@ class Logic:
     configuration: BaseConfiguration
     additional_requirements: list[RequirementSet]
     prioritize_hints: bool
+    increment_indent: bool
 
     _attempts: int
     _current_indent: int = 0
     _last_printed_additional: dict[Node, RequirementSet]
 
-    def __init__(self, game: GameDescription, configuration: BaseConfiguration, prioritize_hints: bool = False):
+    def __init__(
+        self,
+        game: GameDescription,
+        configuration: BaseConfiguration,
+        *,
+        prioritize_hints: bool = False,
+        increment_indent: bool = True,
+    ):
         self.game = game
         self.configuration = configuration
         self.prioritize_hints = prioritize_hints
         self.additional_requirements = [RequirementSet.trivial()] * len(game.region_list.all_nodes)
+        self.increment_indent = increment_indent
 
     def get_additional_requirements(self, node: Node) -> RequirementSet:
         return self.additional_requirements[node.node_index]
@@ -60,7 +69,7 @@ class Logic:
 
     def resolver_start(self):
         self._attempts = 0
-        self._current_indent = 0
+        self._current_indent = 0 if self.increment_indent else 1
         self._last_printed_additional = {}
 
     def start_new_attempt(self, state: State, max_attempts: int | None):
@@ -68,7 +77,8 @@ class Logic:
             raise ResolverTimeoutError(f"Timed out after {max_attempts} attempts")
 
         self._attempts += 1
-        self._current_indent += 1
+        if self.increment_indent:
+            self._current_indent += 1
 
         if debug.debug_level() > 0:
             region_list = state.region_list
@@ -91,19 +101,22 @@ class Logic:
 
     def log_checking_satisfiable_actions(self, state: State, actions: list[tuple[ResourceNode, DamageState]]):
         if debug.debug_level() > 1:
-            debug.print_function(f"{self._indent()}# Satisfiable Actions")
-            for action, _ in actions:
-                debug.print_function(f"{self._indent(-1)}= {n(action, region_list=state.region_list)}")
+            if actions:
+                debug.print_function(f"{self._indent()}# Satisfiable Actions")
+                for action, _ in actions:
+                    debug.print_function(f"{self._indent(-1)}= {n(action, region_list=state.region_list)}")
+            else:
+                debug.print_function(f"{self._indent()}# No Satisfiable Actions")
 
     def log_rollback(
         self, state: State, has_action, possible_action: bool, additional_requirements: RequirementSet | None = None
     ):
         if debug.debug_level() > 0:
             show_reqs = debug.debug_level() > 1 and additional_requirements is not None
+            debug.print_function(f"{self._indent()}* Rollback {n(state.node, region_list=state.region_list)}")
             debug.print_function(
-                "{}* Rollback {}; Had action? {}; Possible Action? {}{}".format(
-                    self._indent(),
-                    n(state.node, region_list=state.region_list),
+                "{}Had action? {}; Possible Action? {}{}".format(
+                    self._indent(-1),
                     has_action,
                     possible_action,
                     "; Additional Requirements:" if show_reqs else "",
@@ -111,7 +124,8 @@ class Logic:
             )
             if show_reqs:
                 self.print_requirement_set(additional_requirements, -1)
-        self._current_indent -= 1
+        if self.increment_indent:
+            self._current_indent -= 1
 
     def log_skip_action_missing_requirement(self, node: Node, game: GameDescription):
         if debug.debug_level() > 1:
