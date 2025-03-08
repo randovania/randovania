@@ -1135,7 +1135,6 @@ def _migrate_v101(preset: dict, game: RandovaniaGame) -> None:
             if pickup in pickup_config:
                 if "num_included_in_starting_pickups" in pickup_config[pickup]:
                     pickup_config[pickup]["num_included_in_starting_pickups"] = 0
-    return preset
 
 
 _MIGRATIONS = [
