@@ -3,6 +3,7 @@ from __future__ import annotations
 from unittest.mock import ANY, MagicMock
 
 import pytest
+from PySide6 import QtCore
 
 from randovania.gui.widgets import game_validator_widget
 from randovania.resolver import debug
@@ -78,6 +79,23 @@ async def test_on_start_button_has_task(widget):
     assert widget.start_button.text() == "Weird Text"
 
 
+def test_set_filter(widget, skip_qtbot):
+    assert not widget._action_filters["Hint"]
+    assert not widget.show_hints_check.isChecked()
+
+    skip_qtbot.mouseClick(widget.show_hints_check, QtCore.Qt.MouseButton.LeftButton)
+    assert widget._action_filters["Hint"] is True
+    assert widget.show_hints_check.isChecked()
+    assert widget.needs_refresh_label.text() == ""
+
+    widget._last_run_filters = dict(widget._action_filters)
+
+    skip_qtbot.mouseClick(widget.show_hints_check, QtCore.Qt.MouseButton.LeftButton)
+    assert widget._action_filters["Hint"] is False
+    assert not widget.show_hints_check.isChecked()
+    assert widget.needs_refresh_label.text() == "Please re-run the resolver to update the filters"
+
+
 @pytest.mark.parametrize("cancel", [False, True])
 @pytest.mark.parametrize("verbosity", [0, 1, 2, 3])
 async def test_on_start_button_no_task(widget, mocker, cancel: bool, verbosity: int):
@@ -98,6 +116,10 @@ async def test_on_start_button_no_task(widget, mocker, cancel: bool, verbosity: 
             if verbosity > 2:
                 write_to_log(": Back-Only Lock Room/Door to Starting Area")
             write_to_log(
+                "> Starting Area/Spawn Point [100/100 Energy] for [action Some weird action] ['N: Spawn Point']"
+            )
+            write_to_log(" * Rollback weird action")
+            write_to_log(
                 "> Back-Only Lock Room/Event - Key Switch 1 [100/100 Energy] for "
                 "[action Event - Key Switch 1] ['E: Key Switch 1']"
             )
@@ -117,19 +139,35 @@ async def test_on_start_button_no_task(widget, mocker, cancel: bool, verbosity: 
 
     # Assert
     mock_run_validator.assert_awaited_once_with(ANY, verbosity, widget.layout_description)
-    assert widget.log_widget.topLevelItemCount() == (3 if verbosity else 0)
+    assert widget.log_widget.topLevelItemCount() == (5 if verbosity else 0)
+
     if verbosity:
         assert not widget.log_widget.topLevelItem(0).isExpanded()
+
         pickup_action = widget.log_widget.topLevelItem(1)
         assert pickup_action.text(1) == "Pickup"
         assert pickup_action.text(2) == "Blue Key"
+
+        other_action = widget.log_widget.topLevelItem(2)
+        assert other_action.text(1) == "Other"
+        assert other_action.text(2) == "Some weird action"
+
+        rollback = widget.log_widget.topLevelItem(3)
+        assert rollback.text(0) == "Rollback weird action"
+        assert rollback.text(1) == "Rollback"
+
     if verbosity > 1:
-        child = widget.log_widget.topLevelItem(1).child(0)
+        child = pickup_action.child(0)
         assert child.text(0) == "# Satisfiable Actions"
         assert child.child(0).text(0) == "Starting Area/Lock - Door to Boss Arena"
+
     if verbosity > 2:
-        child = widget.log_widget.topLevelItem(1).child(1)
+        child = pickup_action.child(1)
         assert child.text(0) == "Back-Only Lock Room/Door to Starting Area"
+
+    for column in (3, 4):
+        assert widget.log_widget.isColumnHidden(column) == (verbosity < 2)
+
     assert widget.start_button.text() == "Start"
     assert widget.status_label.text() == "Cancelled!" if cancel else "Final result!"
     assert widget._current_task is None
