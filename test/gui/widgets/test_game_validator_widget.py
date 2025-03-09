@@ -12,8 +12,10 @@ from randovania.resolver import debug
 def widget(skip_qtbot):
     layout = MagicMock()
     layout.generator_parameters.world_count = 1
+    layout.all_presets = [MagicMock()]
     players = MagicMock()
     players.player_names = {0: "Player"}
+    players.player_index = 0
     widget = game_validator_widget.GameValidatorWidget(layout, players)
     skip_qtbot.addWidget(widget)
     return widget
