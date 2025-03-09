@@ -5,7 +5,7 @@ import re
 import time
 from typing import TYPE_CHECKING, NamedTuple
 
-from PySide6 import QtWidgets
+from PySide6 import QtGui, QtWidgets
 from qasync import asyncSlot
 
 from randovania.gui.generated.game_validator_widget_ui import Ui_GameValidatorWidget
@@ -37,6 +37,16 @@ action_re = re.compile(
 )
 pickup_action_re = re.compile(r"^World (?P<world_num>\d+?)'s (?P<pickup_name>.*?)$")
 action_type_re = re.compile(r"^(?P<type>.*?) - (?P<action>.*?)$")
+
+
+def get_brush_for_action(action_type: str | None) -> QtGui.QBrush:
+    ACTION_COLORS = {
+        "Pickup": QtGui.QColorConstants.Cyan,
+        "Event": QtGui.QColorConstants.Magenta,
+        "Lock": QtGui.QColorConstants.Green,
+        "Hint": QtGui.QColorConstants.Yellow,
+    }
+    return QtGui.QBrush(ACTION_COLORS.get(action_type, QtGui.QColorConstants.Red))
 
 
 async def _run_validator(write_to_log, debug_level: int, layout: LayoutDescription):
@@ -215,6 +225,8 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
                 widget = IndentedWidget(indent, item)
 
             item.setExpanded(indent == 0)
+            item.setForeground(self._label_ids["Type"], get_brush_for_action(widget.action_type))
+            item.setBackground(self._label_ids["Type"], QtGui.QColor(32, 33, 36))  # ugly in light mode, but visible
 
             self.update_item_visibility(widget)
             self._current_tree.append(widget)
