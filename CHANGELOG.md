@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The Hints Spoiler tab sorts its entries in a more helpful manner.
 - Changed: Some joke hints are now shared between all games that use them.
 - Changed: Hints now prioritize non-progression major items rather than progression minor items.
+- Changed: The "Spoiler: Playthrough" tab is significantly easier to read and follow along with.
+- Fixed: The "Spoiler: Playthrough" tab is much faster when calculating the playthrough.
 - Fixed: It is now properly impossible for multiple hints to point to the same location.
 - Fixed: A recent regression in the resolver that made it significantly slower has been fixed.
 - Fixed: Generator action weights were being incorrectly calculated.

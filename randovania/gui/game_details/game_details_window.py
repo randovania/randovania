@@ -255,7 +255,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
                 if self.validator_widget is not None:
                     self.validator_widget.stop_validator()
 
-                self.validator_widget = GameValidatorWidget(self.layout_description)
+                self.validator_widget = GameValidatorWidget(self.layout_description, self.players_configuration)
                 self.layout_info_tab.addTab(self.validator_widget, "Spoiler: Playthrough")
 
             if not any(preset.configuration.should_hide_generation_log() for preset in description.all_presets):

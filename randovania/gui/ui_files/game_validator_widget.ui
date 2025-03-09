@@ -14,55 +14,30 @@
    <string>Game Validator</string>
   </property>
   <layout class="QGridLayout" name="root_layout">
-   <item row="3" column="0">
-    <widget class="QLabel" name="verbosity_label">
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Log Verbosity&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QComboBox" name="verbosity_combo">
-     <property name="currentIndex">
-      <number>1</number>
-     </property>
-     <item>
-      <property name="text">
-       <string>Silent</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Normal</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>High</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Extreme</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="3" column="2">
-    <widget class="QLabel" name="status_label">
-     <property name="text">
-      <string>Not started</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="3">
+   <item row="3" column="4">
     <widget class="QPushButton" name="start_button">
+     <property name="minimumSize">
+      <size>
+       <width>120</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="text">
       <string>Start</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="4">
+   <item row="3" column="3">
+    <widget class="QLabel" name="status_label">
+     <property name="text">
+      <string>Not started</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="6">
     <widget class="QTreeWidget" name="log_widget">
      <property name="verticalScrollBarPolicy">
       <enum>Qt::ScrollBarAlwaysOn</enum>
@@ -73,12 +48,18 @@
      <property name="textElideMode">
       <enum>Qt::ElideNone</enum>
      </property>
+     <property name="columnCount">
+      <number>1</number>
+     </property>
+     <attribute name="headerDefaultSectionSize">
+      <number>50</number>
+     </attribute>
      <attribute name="headerStretchLastSection">
       <bool>true</bool>
      </attribute>
      <column>
       <property name="text">
-       <string>Steps</string>
+       <string>Playthrough</string>
       </property>
      </column>
      <item>
@@ -91,6 +72,111 @@
        <string>Press the Start button at the bottom-right and wait for it to finish.</string>
       </property>
      </item>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <layout class="QGridLayout" name="options_layout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="verbosity_label">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Verbosity&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="verbosity_combo">
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>Silent</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Normal</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>High</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Extreme</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="2">
+      <layout class="QHBoxLayout" name="filter_actions_layout">
+       <item>
+        <widget class="QCheckBox" name="show_pickups_check">
+         <property name="text">
+          <string>Pickups</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="show_events_check">
+         <property name="text">
+          <string>Events</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="show_hints_check">
+         <property name="text">
+          <string>Hints</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="show_locks_check">
+         <property name="text">
+          <string>Door Locks</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLabel" name="needs_refresh_label">
+     <property name="styleSheet">
+      <string notr="true">color: red;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
     </widget>
    </item>
   </layout>
