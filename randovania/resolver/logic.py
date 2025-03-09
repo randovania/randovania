@@ -39,8 +39,8 @@ def action_string(state: State) -> str:
         action = node.name
 
     if isinstance(node, PickupNode):
-        target = state.patches.pickup_assignment.get(node.pickup_index, node.pickup_index)
-        action = repr(target)
+        target = state.patches.pickup_assignment.get(node.pickup_index, "Pickup - Nothing")
+        action = str(target)
 
     elif isinstance(node, HintNode):
         if not action.startswith("Hint - "):

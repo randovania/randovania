@@ -210,13 +210,15 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
                         action = f"Pickup - {action}"
 
                     action_type_match = action_type_re.match(action)
-                    assert action_type_match is not None
+                    if action_type_match is None:
+                        item.setText(self._label_ids["Action"], action)
+                        action_type = "Other"
+                    else:
+                        item.setText(self._label_ids["Action"], action_type_match.group("action"))
+                        action_type = action_type_match.group("type")
 
-                    item.setText(self._label_ids["Action"], action_type_match.group("action"))
-
-                    action = action_type_match.group("type")
-                    item.setText(self._label_ids["Type"], action)
-                    widget = IndentedWidget(indent, item, action)
+                    item.setText(self._label_ids["Type"], action_type)
+                    widget = IndentedWidget(indent, item, action_type)
                 else:
                     item.setText(self._label_ids["Type"], "Start")
                     widget = IndentedWidget(indent, item)
