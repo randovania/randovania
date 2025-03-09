@@ -405,6 +405,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "TankIncrements": self._create_tank_increments(),
             "MissileLimit": 3,
             "DoorLocks": self._create_door_locks(),
+            "HideDoorsOnMinimap": self.configuration.dock_rando.is_enabled(),
             "Palettes": self._create_palette(),
             "NavigationText": self._create_nav_text(),
             "NavStationLocks": self._create_nav_locks(),
