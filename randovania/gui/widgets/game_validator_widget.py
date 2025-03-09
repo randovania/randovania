@@ -160,8 +160,6 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
             stripped = message.lstrip()
             indent = len(message) - len(stripped)
 
-            print(message)
-
             leading_char = stripped[0]
 
             # Extra indent
@@ -169,8 +167,13 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
             if leading_char in leading_chars_to_indent:
                 indent += 1
 
+            # Remove indent
+            leading_chars_to_dedent = (SKIP_ROLLBACK_CHAR,)
+            if leading_char in leading_chars_to_dedent:
+                indent -= 1
+
             # Remove leading chars
-            leading_chars_to_remove = (ACTION_CHAR, PATH_CHAR, SATISFIABLE_CHAR)
+            leading_chars_to_remove = (ACTION_CHAR, PATH_CHAR, SATISFIABLE_CHAR, SKIP_ROLLBACK_CHAR)
             if leading_char in leading_chars_to_remove:
                 stripped = stripped[2:]
 
@@ -222,6 +225,11 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
                 else:
                     item.setText(self._label_ids["Type"], "Start")
                     widget = IndentedWidget(indent, item)
+            elif leading_char == SKIP_ROLLBACK_CHAR:
+                action_type = stripped.split(" ")[0]
+                item.setText(self._label_ids["Node"], stripped)
+                item.setText(self._label_ids["Type"], action_type)
+                widget = IndentedWidget(indent, item, action_type)
             else:
                 item.setText(0, stripped)
                 widget = IndentedWidget(indent, item)
