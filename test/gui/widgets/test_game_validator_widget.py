@@ -3,7 +3,6 @@ from __future__ import annotations
 from unittest.mock import ANY, MagicMock
 
 import pytest
-from PySide6 import QtCore
 
 from randovania.gui.widgets import game_validator_widget
 from randovania.gui.widgets.game_validator_widget import LABEL_IDS
@@ -80,19 +79,19 @@ async def test_on_start_button_has_task(widget):
     assert widget.start_button.text() == "Weird Text"
 
 
-def test_set_filter(widget, skip_qtbot):
+def test_set_filter(widget):
     assert not widget._action_filters["Hint"]
     assert not widget.show_hints_check.isChecked()
 
-    skip_qtbot.mouseClick(widget.show_hints_check, QtCore.Qt.MouseButton.LeftButton)
-    assert widget._action_filters["Hint"] is True
+    widget.show_hints_check.setChecked(True)
+    assert widget._action_filters["Hint"]
     assert widget.show_hints_check.isChecked()
     assert widget.needs_refresh_label.text() == ""
 
     widget._last_run_filters = dict(widget._action_filters)
 
-    skip_qtbot.mouseClick(widget.show_hints_check, QtCore.Qt.MouseButton.LeftButton)
-    assert widget._action_filters["Hint"] is False
+    widget.show_hints_check.setChecked(False)
+    assert not widget._action_filters["Hint"]
     assert not widget.show_hints_check.isChecked()
     assert widget.needs_refresh_label.text() == "Please re-run the resolver to update the data"
 
