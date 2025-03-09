@@ -12,7 +12,6 @@ from randovania.resolver import debug, resolver
 
 if TYPE_CHECKING:
     from argparse import ArgumentParser, Namespace, _SubParsersAction
-    from typing import Any
 
 
 def validate_command_logic(args: Namespace) -> int:
@@ -27,7 +26,7 @@ def validate_command_logic(args: Namespace) -> int:
     if write_to is not None:
         output_file = write_to.open("w", encoding="utf-8")
 
-        def write_to_log(s: str) -> Any:
+        def write_to_log(s: str) -> None:
             output_file.write(s + "\n")
 
         debug.print_function = write_to_log

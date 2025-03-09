@@ -3,7 +3,7 @@ from __future__ import annotations
 import asyncio
 import re
 import time
-from typing import TYPE_CHECKING, NamedTuple
+from typing import TYPE_CHECKING, Any, NamedTuple
 
 from PySide6 import QtGui, QtWidgets
 from qasync import asyncSlot
@@ -45,11 +45,12 @@ def get_brush_for_action(action_type: str | None) -> QtGui.QBrush:
         "Event": QtGui.QColorConstants.Magenta,
         "Lock": QtGui.QColorConstants.Green,
         "Hint": QtGui.QColorConstants.Yellow,
+        None: QtGui.QColorConstants.Red,
     }
-    return QtGui.QBrush(ACTION_COLORS.get(action_type, QtGui.QColorConstants.Red))
+    return QtGui.QBrush(ACTION_COLORS.get(action_type, ACTION_COLORS[None]))
 
 
-async def _run_validator(write_to_log, debug_level: int, layout: LayoutDescription):
+async def _run_validator(write_to_log: debug.DebugPrintFunction, debug_level: int, layout: LayoutDescription) -> str:
     old_print_function = debug.print_function
     try:
         debug.print_function = write_to_log
@@ -98,7 +99,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
             "Hint": False,
             "Lock": configs[players.player_index].dock_rando.is_enabled(),
         }
-        self._last_run_filters: dict[str, bool] = None
+        self._last_run_filters: dict[str, bool] | None = None
 
         def init_filter(check: QtWidgets.QCheckBox, action_type: str) -> None:
             check.setChecked(self._action_filters[action_type])
@@ -109,9 +110,9 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
         init_filter(self.show_hints_check, "Hint")
         init_filter(self.show_locks_check, "Lock")
 
-    def stop_validator(self):
+    def stop_validator(self) -> None:
         if self._current_task is not None:
-            return self._current_task.cancel()
+            self._current_task.cancel()
 
     def _set_action_filter(self, action_type: str) -> Callable[[bool], None]:
         def bound(value: bool) -> None:
@@ -131,7 +132,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
         widget.item.setHidden(hide)
 
     @asyncSlot()
-    async def on_start_button(self):
+    async def on_start_button(self) -> None:
         if self._current_task is not None:
             return self.stop_validator()
 
@@ -150,9 +151,9 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
         self.log_widget.setColumnHidden(self._label_ids["Energy"], verbosity < 2)
         self.log_widget.setColumnHidden(self._label_ids["Resources"], verbosity < 2)
 
-        self._current_tree = [IndentedWidget(-1, self.log_widget)]  # type: ignore[assignment]
+        self._current_tree = [IndentedWidget(-1, self.log_widget)]
 
-        def write_to_log(*a):
+        def write_to_log(*a: Any) -> None:
             scrollbar = self.log_widget.verticalScrollBar()
             autoscroll = scrollbar.value() == scrollbar.maximum()
 
