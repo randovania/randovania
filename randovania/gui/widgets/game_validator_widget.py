@@ -9,10 +9,12 @@ from PySide6 import QtWidgets
 from qasync import asyncSlot
 
 from randovania.gui.generated.game_validator_widget_ui import Ui_GameValidatorWidget
-from randovania.gui.lib import common_qt_lib
+from randovania.gui.lib import common_qt_lib, signal_handling
 from randovania.resolver import debug, resolver
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from randovania.interface_common.players_configuration import PlayersConfiguration
     from randovania.layout.layout_description import LayoutDescription
 
@@ -20,6 +22,7 @@ if TYPE_CHECKING:
 class IndentedWidget(NamedTuple):
     indent: int
     item: QtWidgets.QTreeWidgetItem
+    action_type: str | None = None
 
 
 ACTION_CHAR = ">"
@@ -70,33 +73,66 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
         self.layout_description = layout
         self.players = players
         self._current_task = None
+        self._current_tree: list[IndentedWidget] = []
+
+        self._labels = ["Node", "Type", "Action", "Energy", "Resources"]
+        self._label_ids = {label: i for i, label in enumerate(self._labels)}
 
         self.start_button.clicked.connect(self.on_start_button)
+
+        self._action_filters = {
+            "Pickup": self.show_pickups_check.isChecked(),
+            "Event": self.show_events_check.isChecked(),
+            "Hint": self.show_hints_check.isChecked(),
+        }
+        self._last_run_filters: dict[str, bool] = None
+
+        signal_handling.on_checked(self.show_pickups_check, self._set_action_filter("Pickup"))
+        signal_handling.on_checked(self.show_events_check, self._set_action_filter("Event"))
+        signal_handling.on_checked(self.show_hints_check, self._set_action_filter("Hint"))
 
     def stop_validator(self):
         if self._current_task is not None:
             return self._current_task.cancel()
+
+    def _set_action_filter(self, action_type: str) -> Callable[[bool], None]:
+        def bound(value: bool) -> None:
+            self._action_filters[action_type] = value
+
+            if self._last_run_filters is None or self._action_filters == self._last_run_filters:
+                self.needs_refresh_label.setText("")
+            else:
+                self.needs_refresh_label.setText("Please re-run the resolver to update the filters")
+
+        return bound
+
+    def update_item_visibility(self, widget: IndentedWidget) -> None:
+        if widget.action_type is None:
+            return
+        hide = not self._action_filters[widget.action_type]
+        widget.item.setHidden(hide)
 
     @asyncSlot()
     async def on_start_button(self):
         if self._current_task is not None:
             return self.stop_validator()
 
+        self._last_run_filters = dict(self._action_filters)
+        self.needs_refresh_label.setText("")
+
         verbosity = self.verbosity_combo.currentIndex()
 
         self.start_button.setText("Stop")
         self.status_label.setText("Running...")
 
-        labels = ["Node", "Type", "Action", "Energy", "Resources"]
-        label_ids = {label: i for i, label in enumerate(labels)}
         self.log_widget.clear()
-        self.log_widget.setColumnCount(len(labels))
-        self.log_widget.setHeaderLabels(labels)
+        self.log_widget.setColumnCount(len(self._labels))
+        self.log_widget.setHeaderLabels(self._labels)
 
-        self.log_widget.setColumnHidden(label_ids["Energy"], verbosity < 2)
-        self.log_widget.setColumnHidden(label_ids["Resources"], verbosity < 2)
+        self.log_widget.setColumnHidden(self._label_ids["Energy"], verbosity < 2)
+        self.log_widget.setColumnHidden(self._label_ids["Resources"], verbosity < 2)
 
-        current_tree = [IndentedWidget(-1, self.log_widget)]  # type: ignore[assignment]
+        self._current_tree = [IndentedWidget(-1, self.log_widget)]  # type: ignore[assignment]
 
         def write_to_log(*a):
             scrollbar = self.log_widget.verticalScrollBar()
@@ -118,13 +154,13 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
             if leading_char in leading_chars_to_remove:
                 stripped = stripped[2:]
 
-            while current_tree[-1].indent >= indent:
-                current_tree.pop().item.setExpanded(False)
+            while self._current_tree[-1].indent >= indent:
+                self._current_tree.pop().item.setExpanded(False)
 
             if indent == 0:
                 parent = self.log_widget
             else:
-                parent = current_tree[-1].item
+                parent = self._current_tree[-1].item
 
             item = QtWidgets.QTreeWidgetItem(parent)
 
@@ -133,9 +169,9 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
                 assert match is not None
                 groups = match.groupdict()
 
-                item.setText(label_ids["Node"], groups["node"])
-                item.setText(label_ids["Resources"], groups["resources"])
-                item.setText(label_ids["Energy"], groups.get("energy", ""))
+                item.setText(self._label_ids["Node"], groups["node"])
+                item.setText(self._label_ids["Resources"], groups["resources"])
+                item.setText(self._label_ids["Energy"], groups.get("energy", ""))
 
                 action = groups["action"]
                 if action is not None:
@@ -156,26 +192,27 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
                     action_type_match = action_type_re.match(action)
                     assert action_type_match is not None
 
-                    print(action)
-                    print(action_type_match.groupdict())
-                    print()
+                    item.setText(self._label_ids["Action"], action_type_match.group("action"))
 
-                    item.setText(label_ids["Type"], action_type_match.group("type"))
-                    item.setText(label_ids["Action"], action_type_match.group("action"))
+                    action = action_type_match.group("type")
+                    item.setText(self._label_ids["Type"], action)
+                    widget = IndentedWidget(indent, item, action)
                 else:
-                    item.setText(label_ids["Type"], "Starting Node")
-
+                    item.setText(self._label_ids["Type"], "Start")
+                    widget = IndentedWidget(indent, item)
             else:
                 item.setText(0, stripped)
+                widget = IndentedWidget(indent, item)
 
-            item.setExpanded(True)
-            current_tree.append(IndentedWidget(indent, item))
+            item.setExpanded(indent == 0)
 
-            self.log_widget.resizeColumnToContents(0)
+            self.update_item_visibility(widget)
+            self._current_tree.append(widget)
+
+            for label in ("Node", "Action", "Resources"):
+                self.log_widget.resizeColumnToContents(self._label_ids[label])
             if autoscroll:
                 self.log_widget.scrollToBottom()
-                # bar: QtWidgets.QScrollBar = self.log_widget.horizontalScrollBar()
-                # bar.setValue(bar.maximum())
 
         self._current_task = asyncio.create_task(_run_validator(write_to_log, verbosity, self.layout_description))
         try:

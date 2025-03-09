@@ -21,6 +21,43 @@
      </property>
     </widget>
    </item>
+   <item row="2" column="0" colspan="4">
+    <widget class="QTreeWidget" name="log_widget">
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
+     </property>
+     <property name="textElideMode">
+      <enum>Qt::ElideNone</enum>
+     </property>
+     <property name="columnCount">
+      <number>1</number>
+     </property>
+     <attribute name="headerDefaultSectionSize">
+      <number>50</number>
+     </attribute>
+     <attribute name="headerStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Playthrough</string>
+      </property>
+     </column>
+     <item>
+      <property name="text">
+       <string>To view the playthrough, it's necessary to run the solver.</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Press the Start button at the bottom-right and wait for it to finish.</string>
+      </property>
+     </item>
+    </widget>
+   </item>
    <item row="3" column="1">
     <widget class="QComboBox" name="verbosity_combo">
      <property name="currentIndex">
@@ -48,7 +85,38 @@
      </item>
     </widget>
    </item>
-   <item row="3" column="2">
+   <item row="5" column="0" rowspan="3" colspan="2">
+    <layout class="QHBoxLayout" name="filter_actions_layout">
+     <item>
+      <widget class="QCheckBox" name="show_pickups_check">
+       <property name="text">
+        <string>Pickups</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="show_events_check">
+       <property name="text">
+        <string>Events</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="show_hints_check">
+       <property name="text">
+        <string>Hints</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="2" rowspan="2">
     <widget class="QLabel" name="status_label">
      <property name="text">
       <string>Not started</string>
@@ -62,35 +130,17 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="4">
-    <widget class="QTreeWidget" name="log_widget">
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOn</enum>
+   <item row="6" column="2" colspan="2">
+    <widget class="QLabel" name="needs_refresh_label">
+     <property name="styleSheet">
+      <string notr="true">color: red;</string>
      </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOn</enum>
+     <property name="text">
+      <string/>
      </property>
-     <property name="textElideMode">
-      <enum>Qt::ElideNone</enum>
+     <property name="margin">
+      <number>0</number>
      </property>
-     <attribute name="headerStretchLastSection">
-      <bool>true</bool>
-     </attribute>
-     <column>
-      <property name="text">
-       <string>Steps</string>
-      </property>
-     </column>
-     <item>
-      <property name="text">
-       <string>To view the playthrough, it's necessary to run the solver.</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Press the Start button at the bottom-right and wait for it to finish.</string>
-      </property>
-     </item>
     </widget>
    </item>
   </layout>
