@@ -26,6 +26,10 @@ class IndentedWidget(NamedTuple):
     action_type: str | None = None
 
 
+_LABELS = ["Node", "Type", "Action", "Energy", "Resources"]
+LABEL_IDS = {label: i for i, label in enumerate(_LABELS)}
+
+
 ACTION_CHAR = ">"
 PATH_CHAR = ":"
 SATISFIABLE_CHAR = "="
@@ -87,9 +91,6 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
         self._current_task = None
         self._current_tree: list[IndentedWidget] = []
 
-        self._labels = ["Node", "Type", "Action", "Energy", "Resources"]
-        self._label_ids = {label: i for i, label in enumerate(self._labels)}
-
         self.start_button.clicked.connect(self.on_start_button)
 
         configs: list[BaseConfiguration] = [preset.configuration for preset in layout.all_presets]
@@ -145,11 +146,11 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
         self.status_label.setText("Running...")
 
         self.log_widget.clear()
-        self.log_widget.setColumnCount(len(self._labels))
-        self.log_widget.setHeaderLabels(self._labels)
+        self.log_widget.setColumnCount(len(LABEL_IDS))
+        self.log_widget.setHeaderLabels(list(LABEL_IDS))
 
-        self.log_widget.setColumnHidden(self._label_ids["Energy"], verbosity < 2)
-        self.log_widget.setColumnHidden(self._label_ids["Resources"], verbosity < 2)
+        self.log_widget.setColumnHidden(LABEL_IDS["Energy"], verbosity < 2)
+        self.log_widget.setColumnHidden(LABEL_IDS["Resources"], verbosity < 2)
 
         self._current_tree = [IndentedWidget(-1, self.log_widget)]
 
@@ -193,9 +194,9 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
                 assert match is not None
                 groups = match.groupdict()
 
-                item.setText(self._label_ids["Node"], groups["node"])
-                item.setText(self._label_ids["Resources"], groups["resources"])
-                item.setText(self._label_ids["Energy"], groups.get("energy", ""))
+                item.setText(LABEL_IDS["Node"], groups["node"])
+                item.setText(LABEL_IDS["Resources"], groups["resources"])
+                item.setText(LABEL_IDS["Energy"], groups.get("energy", ""))
 
                 action = groups["action"]
                 if action is not None:
@@ -215,35 +216,35 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
 
                     action_type_match = action_type_re.match(action)
                     if action_type_match is None:
-                        item.setText(self._label_ids["Action"], action)
+                        item.setText(LABEL_IDS["Action"], action)
                         action_type = "Other"
                     else:
-                        item.setText(self._label_ids["Action"], action_type_match.group("action"))
+                        item.setText(LABEL_IDS["Action"], action_type_match.group("action"))
                         action_type = action_type_match.group("type")
 
-                    item.setText(self._label_ids["Type"], action_type)
+                    item.setText(LABEL_IDS["Type"], action_type)
                     widget = IndentedWidget(indent, item, action_type)
                 else:
-                    item.setText(self._label_ids["Type"], "Start")
+                    item.setText(LABEL_IDS["Type"], "Start")
                     widget = IndentedWidget(indent, item)
             elif leading_char == SKIP_ROLLBACK_CHAR:
                 action_type = stripped.split(" ")[0]
-                item.setText(self._label_ids["Node"], stripped)
-                item.setText(self._label_ids["Type"], action_type)
+                item.setText(LABEL_IDS["Node"], stripped)
+                item.setText(LABEL_IDS["Type"], action_type)
                 widget = IndentedWidget(indent, item, action_type)
             else:
                 item.setText(0, stripped)
                 widget = IndentedWidget(indent, item)
 
             item.setExpanded(indent == 0)
-            item.setForeground(self._label_ids["Type"], get_brush_for_action(widget.action_type))
-            item.setBackground(self._label_ids["Type"], QtGui.QColor(32, 33, 36))  # ugly in light mode, but visible
+            item.setForeground(LABEL_IDS["Type"], get_brush_for_action(widget.action_type))
+            item.setBackground(LABEL_IDS["Type"], QtGui.QColor(32, 33, 36))  # ugly in light mode, but visible
 
             self.update_item_visibility(widget)
             self._current_tree.append(widget)
 
             for label in ("Node", "Action", "Resources"):
-                self.log_widget.resizeColumnToContents(self._label_ids[label])
+                self.log_widget.resizeColumnToContents(LABEL_IDS[label])
             if autoscroll:
                 self.log_widget.scrollToBottom()
 

@@ -6,6 +6,7 @@ import pytest
 from PySide6 import QtCore
 
 from randovania.gui.widgets import game_validator_widget
+from randovania.gui.widgets.game_validator_widget import LABEL_IDS
 from randovania.resolver import debug
 
 
@@ -145,27 +146,27 @@ async def test_on_start_button_no_task(widget, mocker, cancel: bool, verbosity: 
         assert not widget.log_widget.topLevelItem(0).isExpanded()
 
         pickup_action = widget.log_widget.topLevelItem(1)
-        assert pickup_action.text(1) == "Pickup"
-        assert pickup_action.text(2) == "Blue Key"
+        assert pickup_action.text(LABEL_IDS["Type"]) == "Pickup"
+        assert pickup_action.text(LABEL_IDS["Action"]) == "Blue Key"
 
         other_action = widget.log_widget.topLevelItem(2)
-        assert other_action.text(1) == "Other"
-        assert other_action.text(2) == "Some weird action"
+        assert other_action.text(LABEL_IDS["Type"]) == "Other"
+        assert other_action.text(LABEL_IDS["Action"]) == "Some weird action"
 
         rollback = widget.log_widget.topLevelItem(3)
-        assert rollback.text(0) == "Rollback weird action"
-        assert rollback.text(1) == "Rollback"
+        assert rollback.text(LABEL_IDS["Node"]) == "Rollback weird action"
+        assert rollback.text(LABEL_IDS["Type"]) == "Rollback"
 
     if verbosity > 1:
         child = pickup_action.child(0)
         assert child.text(0) == "# Satisfiable Actions"
-        assert child.child(0).text(0) == "Starting Area/Lock - Door to Boss Arena"
+        assert child.child(0).text(LABEL_IDS["Node"]) == "Starting Area/Lock - Door to Boss Arena"
 
     if verbosity > 2:
         child = pickup_action.child(1)
-        assert child.text(0) == "Back-Only Lock Room/Door to Starting Area"
+        assert child.text(LABEL_IDS["Node"]) == "Back-Only Lock Room/Door to Starting Area"
 
-    for column in (3, 4):
+    for column in (LABEL_IDS["Energy"], LABEL_IDS["Resources"]):
         assert widget.log_widget.isColumnHidden(column) == (verbosity < 2)
 
     assert widget.start_button.text() == "Start"
