@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.event_pickup import EventPickupNode
+from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_set import RequirementSet
@@ -34,10 +35,16 @@ def action_string(state: State) -> str:
     if isinstance(node, EventPickupNode):
         node = node.pickup_node
 
-    if isinstance(node, PickupNode):
-        action = repr(state.patches.pickup_assignment[node.pickup_index])
-    elif isinstance(node, ResourceNode):
+    if isinstance(node, ResourceNode):
         action = node.name
+
+    if isinstance(node, PickupNode):
+        target = state.patches.pickup_assignment.get(node.pickup_index, node.pickup_index)
+        action = repr(target)
+
+    elif isinstance(node, HintNode):
+        if not action.startswith("Hint - "):
+            action = f"Hint - {action}"
 
     return f"[action {action}] " if action else ""
 

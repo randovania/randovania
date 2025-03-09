@@ -109,7 +109,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
     def update_item_visibility(self, widget: IndentedWidget) -> None:
         if widget.action_type is None:
             return
-        hide = not self._action_filters[widget.action_type]
+        hide = not self._action_filters.get(widget.action_type, True)
         widget.item.setHidden(hide)
 
     @asyncSlot()
