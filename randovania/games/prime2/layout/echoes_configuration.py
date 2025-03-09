@@ -10,7 +10,6 @@ from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters i
     PrimeTrilogyTeleporterConfiguration,
 )
 from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
-from randovania.games.prime2.layout.hint_configuration import HintConfiguration
 from randovania.games.prime2.layout.translator_configuration import TranslatorConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
 
@@ -53,7 +52,6 @@ class EchoesConfiguration(BaseConfiguration):
     teleporters: PrimeTrilogyTeleporterConfiguration
     sky_temple_keys: LayoutSkyTempleKeyMode
     translator_configuration: TranslatorConfiguration
-    hints: HintConfiguration
     beam_configuration: BeamConfiguration
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     safe_zone: LayoutSafeZone

@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.games.prime1.layout.hint_configuration import PhazonSuitHintMode
 from randovania.games.prime1.layout.prime_configuration import (
     DamageReduction,
     LayoutCutsceneMode,
@@ -27,12 +26,6 @@ _PRIME1_CUTSCENE_MODE_DESCRIPTION = {
     LayoutCutsceneMode.ORIGINAL: "Original cutscenes",
 }
 
-_PRIME1_PHAZON_SUIT_HINT = {
-    PhazonSuitHintMode.DISABLED: None,
-    PhazonSuitHintMode.HIDE_AREA: "Area only",
-    PhazonSuitHintMode.PRECISE: "Area and room",
-}
-
 _PRIME1_ROOM_RANDO_MODE_DESCRIPTION = {
     RoomRandoMode.NONE: None,
     RoomRandoMode.ONE_WAY: "One-way Room Rando",
@@ -46,8 +39,6 @@ class PrimePresetDescriber(GamePresetDescriber):
         template_strings = super().format_params(configuration)
         cutscene_removal = _PRIME1_CUTSCENE_MODE_DESCRIPTION[configuration.qol_cutscenes]
         ingame_difficulty = configuration.ingame_difficulty.description
-
-        phazon_hint = _PRIME1_PHAZON_SUIT_HINT[configuration.hints.phazon_suit]
 
         room_rando = _PRIME1_ROOM_RANDO_MODE_DESCRIPTION[configuration.room_rando]
 
@@ -134,7 +125,6 @@ class PrimePresetDescriber(GamePresetDescriber):
                     "Dangerous Gravity Suit Logic": configuration.allow_underwater_movement_without_gravity,
                 },
             ],
-            "Quality of Life": [{f"Phazon suit hint: {phazon_hint}": phazon_hint is not None}],
             "Game Changes": [
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,

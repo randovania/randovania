@@ -6,6 +6,7 @@ import randovania.game.data
 import randovania.game.development_state
 import randovania.game.generator
 import randovania.game.gui
+import randovania.game.hints
 import randovania.game.layout
 import randovania.game.web_info
 from randovania.games.am2r import layout
@@ -39,15 +40,31 @@ def _gui() -> randovania.game.gui.GameGui:
 
 def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.am2r import generator
-    from randovania.games.am2r.generator.hint_distributor import AM2RHintDistributor
     from randovania.generator.filler.weights import ActionWeights
 
     return randovania.game.generator.GameGenerator(
         pickup_pool_creator=generator.pool_creator,
         bootstrap=generator.AM2RBootstrap(),
         base_patches_factory=generator.AM2RBasePatchesFactory(),
-        hint_distributor=AM2RHintDistributor(),
         action_weights=ActionWeights(),
+    )
+
+
+def _hints() -> randovania.game.hints.GameHints:
+    from randovania.games.am2r.generator.hint_distributor import AM2RHintDistributor
+
+    return randovania.game.hints.GameHints(
+        hint_distributor=AM2RHintDistributor(),
+        specific_pickup_hints={
+            "artifacts": randovania.game.hints.SpecificHintDetails(
+                long_name="DNA",
+                description="This controls how precise the DNA hints for the Wisdom Septoggs are.",
+            ),
+            "ice_beam": randovania.game.hints.SpecificHintDetails(
+                long_name="Ice Beam",
+                description="This controls how precise the hint for Ice Beam in Genetics Laboratory is.",
+            ),
+        },
     )
 
 
@@ -164,6 +181,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     options=_options,
     gui=_gui,
     generator=_generator,
+    hints=_hints,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     multiple_start_nodes_per_area=False,

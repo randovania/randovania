@@ -69,7 +69,7 @@ def generate_layout(
                 "generation_trick_amount_intermediate": LayoutTrickLevel.INTERMEDIATE,
                 "generation_trick_amount_advanced": LayoutTrickLevel.ADVANCED,
                 "generation_trick_amount_expert": LayoutTrickLevel.EXPERT,
-                "generation_trick_amount_hypermode": LayoutTrickLevel.HYPERMODE,
+                "generation_trick_amount_ludicrous": LayoutTrickLevel.LUDICROUS,
             }
             for tag_name, trick in tag_name_to_trick.items():
                 monitoring.metrics.incr(

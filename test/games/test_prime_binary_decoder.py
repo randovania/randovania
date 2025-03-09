@@ -117,6 +117,7 @@ def test_full_data_encode_is_equal(game_enum):
         pytest.skip("Missing json-based data")
 
     json_database = data_reader.read_split_file(data_dir)
+    json_database = game_migration.migrate_to_current(json_database, game_enum)
 
     b = io.BytesIO()
     binary_data.encode(json_database, b)

@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Major** - Added: Featural Hints. Echoes and Cave Story now use a brand new hint system, where hints may refer to various Features of a pickup or of a location. Read the complete changelog for more details.
 - **Major** - Changed: Hints are now placed after pickup placement, rather than during. This should result in more interesting hints in all games.
 - **Major** - Added: Co-op as an additional Multiworld Mode. In Co-op, multiple people can share Worlds together, which means that they will share their inventory. This works for all games that support Multiworld.
+- **Major** - Changed: The trick level "Hypermode" has been renamed to "Ludicrous". This new name is game agnostic and more properly describes the difficulty of this category.
+- Added: Games with hints now share a unified Hints tab in the preset editor window. New settings have been added to disable various kinds of hints.
 - Added: Every game now has a "Pickup Hint Features" tab where you can view which Features apply to which pickups.
 - Added: Cave Story and Echoes now have a "Pickup Location Features" tab where you can view which Features apply to which locations.
 - Added: Location Features can be viewed in the Database Viewer.
@@ -30,11 +32,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Hint placement for seeds with individual door lock randomization now uses the resolver to help determine what to hint. This should result in significantly more useful hints in these seeds.
 - Changed: When checking doors that are completely unreachable (such as uncrashed Frigate in most Metroid Prime presets), the resolver is no longer run. This should improve generation time slightly.
 - Fixed: Bug in the revised door solver that would result in permanently locked doors being placed when they shouldn't.
+- Fixed: Minor edge case where damage wasn't considered when placing permanently locked doors.
 
 ### Resolver
 
 - Fixed: Some seeds being considered impossible when finding a progressive item in an area where a later item in the progressive chain is required to leave.
 - Fixed: Minor edge case where a seed might be considered impossible due to missing consideration of damage.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Cannon Ball and the multiplayer pickups can no longer be selected as starting pickups, since they did not work in-game when doing so.
 
 ### Metroid Dread
 

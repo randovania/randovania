@@ -10,6 +10,7 @@ from frozendict import frozendict
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.layout.base.standard_pickup_state import StartingPickupBehavior
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -78,6 +79,7 @@ class PickupEntry:
     hint_features: frozenset[HintFeature]
     progression: tuple[tuple[ItemResourceInfo, int], ...]
     generator_params: PickupGeneratorParams
+    start_case: StartingPickupBehavior = StartingPickupBehavior.CAN_BE_STARTING
     extra_resources: ResourceGainTuple = ()
     unlocks_resource: bool = False
     resource_lock: ResourceLock | None = None

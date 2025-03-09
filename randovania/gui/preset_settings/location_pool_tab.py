@@ -5,6 +5,7 @@ import dataclasses
 import re
 from typing import TYPE_CHECKING
 
+import natsort
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QFrame, QGraphicsOpacityEffect, QSizePolicy, QSpacerItem
 
@@ -63,15 +64,15 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
                             node_names[node] = f"{region_list.nodes_to_area(node).name} ({node_name})"
 
         for region_name in sorted(nodes_by_region.keys()):
-            spoiler = Foldable(None, region_name)
+            spoiler = Foldable(None, region_name, initially_folded=len(nodes_by_region) > 1)
             vbox_layout = QtWidgets.QVBoxLayout()
 
             first_node = True
-            for node in sorted(nodes_by_region[region_name], key=node_names.get):
+            for node in natsort.natsorted(nodes_by_region[region_name], key=node_names.get):
                 if not first_node:
                     separator_line = QFrame()
-                    separator_line.setFrameShape(QFrame.HLine)
-                    separator_line.setFrameShadow(QFrame.Sunken)
+                    separator_line.setFrameShape(QFrame.Shape.HLine)
+                    separator_line.setFrameShadow(QFrame.Shadow.Sunken)
                     transparent = QGraphicsOpacityEffect(separator_line)
                     transparent.setOpacity(0.33)
                     separator_line.setGraphicsEffect(transparent)
@@ -87,7 +88,9 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
             spoiler.set_content_layout(vbox_layout)
             self.locations_scroll_area_layout.addWidget(spoiler)
 
-        self.locations_scroll_area_layout.addItem(QSpacerItem(5, 5, QSizePolicy.Expanding, QSizePolicy.Expanding))
+        self.locations_scroll_area_layout.addItem(
+            QSpacerItem(5, 5, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        )
 
     @classmethod
     def tab_title(cls) -> str:

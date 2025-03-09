@@ -74,7 +74,10 @@ def test_msr_format_params(artifacts) -> None:
             "Open Area 3 Factory Interior East Shortcut",
             "Change Surface Cavern Cavity Crumble Blocks, Change Area 1 Transport to Surface and Area 2 Crumble Blocks",
         ],
-        "Hints": ["Final Boss Item Hint: Area only", "DNA Hints: Area and room"],
+        "Hints": [
+            "Metroid DNA Hint: Region and area",
+            "Final Boss Item Hint: Region only",
+        ],
         "Environmental Damage": [
             "Heat: Constant 20 dmg/s",
             "Lava: Constant 20 dmg/s",

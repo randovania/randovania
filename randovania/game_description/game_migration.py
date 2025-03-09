@@ -299,6 +299,19 @@ def _migrate_v27(data: dict, game: RandovaniaGame) -> None:
                     node["hint_features"] = []
 
 
+def _migrate_v28(data: dict, game: RandovaniaGame) -> None:
+    hint_types = {
+        "generic": "generic",
+        "specific-pickup": "specific-location",
+        "specific-item": "specific-pickup",
+    }
+    for region in data["regions"]:
+        for area in region["areas"].values():
+            for node in area["nodes"].values():
+                if node["node_type"] == "hint":
+                    node["kind"] = hint_types[node["kind"]]
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -327,6 +340,7 @@ _MIGRATIONS = [
     _migrate_v25,  # flatten_to_set_on_patch
     _migrate_v26,  # remove initial_states
     _migrate_v27,  # add hint features
+    _migrate_v28,  # rename HintNodeKind
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

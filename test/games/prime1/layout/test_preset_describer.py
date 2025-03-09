@@ -54,7 +54,10 @@ def test_prime_format_params(use_enemy_attribute_randomizer):
             "6 Artifacts, 6 min actions",
         ],
         "Gameplay": ["Starts at Tallon Overworld - Landing Site"],
-        "Quality of Life": ["Phazon suit hint: Area only"],
+        "Hints": [
+            "Chozo Artifacts Hint: Region and area",
+            "Phazon Suit Hint: Region only",
+        ],
         "Difficulty": [],
         "Game Changes": [
             "Warp to start, Unlocked Vault door, Unlocked Save Station doors, Phazon Elite without Dynamo",

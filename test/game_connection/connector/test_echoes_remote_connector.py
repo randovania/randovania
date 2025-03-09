@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
-from ppc_asm.assembler import BaseInstruction  # type: ignore[import-untyped]
+from ppc_asm.assembler import BaseInstruction
 from retro_data_structures.game_check import Game as RDSGame
 
 from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector

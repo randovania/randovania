@@ -22,7 +22,6 @@ def test_gui(skip_qtbot, game_enum):
 
 def test_generator(game_enum):
     from randovania.generator.base_patches_factory import BasePatchesFactory
-    from randovania.generator.hint_distributor import HintDistributor
     from randovania.resolver.bootstrap import Bootstrap
 
     # Run
@@ -31,8 +30,18 @@ def test_generator(game_enum):
     # Assert
     assert isinstance(g.bootstrap, Bootstrap)
     assert isinstance(g.base_patches_factory, BasePatchesFactory)
-    if g.hint_distributor is not None:
-        assert isinstance(g.hint_distributor, HintDistributor)
+
+
+def test_hints(game_enum):
+    from randovania.game.hints import GameHints
+    from randovania.generator.hint_distributor import HintDistributor
+
+    # Run
+    h = game_enum.hints
+
+    # Assert
+    assert isinstance(h, GameHints)
+    assert isinstance(h.hint_distributor, HintDistributor)
 
 
 def test_patch_data_factory(game_enum):

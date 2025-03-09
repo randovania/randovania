@@ -15,7 +15,7 @@ class LayoutTrickLevel(BitPackEnum, Enum):
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     EXPERT = "expert"
-    HYPERMODE = "hypermode"
+    LUDICROUS = "ludicrous"
 
     @classmethod
     def default(cls) -> Self:
@@ -47,6 +47,6 @@ enum_lib.add_long_name(
         LayoutTrickLevel.INTERMEDIATE: "Intermediate",
         LayoutTrickLevel.ADVANCED: "Advanced",
         LayoutTrickLevel.EXPERT: "Expert",
-        LayoutTrickLevel.HYPERMODE: "Hypermode",
+        LayoutTrickLevel.LUDICROUS: "Ludicrous",
     },
 )
