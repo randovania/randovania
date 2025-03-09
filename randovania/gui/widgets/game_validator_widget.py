@@ -111,20 +111,38 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
         init_filter(self.show_hints_check, "Hint")
         init_filter(self.show_locks_check, "Lock")
 
+        self._last_run_verbosity: int | None = None
+        for i, name in enumerate(["Silent", "Normal", "High", "Extreme"]):
+            self.verbosity_combo.setItemText(i, name)
+            self.verbosity_combo.setItemData(i, i)
+        signal_handling.on_combo(self.verbosity_combo, self._set_verbosity)
+        self._verbosity = self.verbosity_combo.currentIndex()
+
     def stop_validator(self) -> None:
         if self._current_task is not None:
             self._current_task.cancel()
 
+    def _update_needs_refresh(self) -> None:
+        need_refresh_filters = not (self._last_run_filters is None or self._action_filters == self._last_run_filters)
+        need_refresh_verbosity = not (self._last_run_verbosity is None or self._verbosity == self._last_run_verbosity)
+
+        if need_refresh_filters or need_refresh_verbosity:
+            text = "Please re-run the resolver to update the data"
+        else:
+            text = ""
+
+        self.needs_refresh_label.setText(text)
+
     def _set_action_filter(self, action_type: str) -> Callable[[bool], None]:
         def bound(value: bool) -> None:
             self._action_filters[action_type] = value
-
-            if self._last_run_filters is None or self._action_filters == self._last_run_filters:
-                self.needs_refresh_label.setText("")
-            else:
-                self.needs_refresh_label.setText("Please re-run the resolver to update the filters")
+            self._update_needs_refresh()
 
         return bound
+
+    def _set_verbosity(self, value: int) -> None:
+        self._verbosity = value
+        self._update_needs_refresh()
 
     def update_item_visibility(self, widget: IndentedWidget) -> None:
         if widget.action_type is None:
@@ -140,7 +158,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
         self._last_run_filters = dict(self._action_filters)
         self.needs_refresh_label.setText("")
 
-        verbosity = self.verbosity_combo.currentIndex()
+        self._last_run_verbosity = self._verbosity
 
         self.start_button.setText("Stop")
         self.status_label.setText("Running...")
@@ -149,8 +167,8 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
         self.log_widget.setColumnCount(len(LABEL_IDS))
         self.log_widget.setHeaderLabels(list(LABEL_IDS))
 
-        self.log_widget.setColumnHidden(LABEL_IDS["Energy"], verbosity < 2)
-        self.log_widget.setColumnHidden(LABEL_IDS["Resources"], verbosity < 2)
+        self.log_widget.setColumnHidden(LABEL_IDS["Energy"], self._verbosity < 2)
+        self.log_widget.setColumnHidden(LABEL_IDS["Resources"], self._verbosity < 2)
 
         self._current_tree = [IndentedWidget(-1, self.log_widget)]
 
@@ -248,7 +266,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
             if autoscroll:
                 self.log_widget.scrollToBottom()
 
-        self._current_task = asyncio.create_task(_run_validator(write_to_log, verbosity, self.layout_description))
+        self._current_task = asyncio.create_task(_run_validator(write_to_log, self._verbosity, self.layout_description))
         try:
             time_consumed = await self._current_task
             self.status_label.setText(time_consumed)

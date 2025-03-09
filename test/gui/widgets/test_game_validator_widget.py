@@ -94,13 +94,13 @@ def test_set_filter(widget, skip_qtbot):
     skip_qtbot.mouseClick(widget.show_hints_check, QtCore.Qt.MouseButton.LeftButton)
     assert widget._action_filters["Hint"] is False
     assert not widget.show_hints_check.isChecked()
-    assert widget.needs_refresh_label.text() == "Please re-run the resolver to update the filters"
+    assert widget.needs_refresh_label.text() == "Please re-run the resolver to update the data"
 
 
 @pytest.mark.parametrize("cancel", [False, True])
 @pytest.mark.parametrize("verbosity", [0, 1, 2, 3])
 async def test_on_start_button_no_task(widget, mocker, cancel: bool, verbosity: int):
-    widget.verbosity_combo.currentIndex = MagicMock(return_value=verbosity)
+    widget._verbosity = verbosity
 
     async def side_effect(write_to_log, *args):
         assert widget.start_button.text() == "Stop"
