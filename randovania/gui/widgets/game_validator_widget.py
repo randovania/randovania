@@ -16,6 +16,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
     from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.layout_description import LayoutDescription
 
 
@@ -80,16 +81,23 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
 
         self.start_button.clicked.connect(self.on_start_button)
 
+        configs: list[BaseConfiguration] = [preset.configuration for preset in layout.all_presets]
         self._action_filters = {
-            "Pickup": self.show_pickups_check.isChecked(),
-            "Event": self.show_events_check.isChecked(),
-            "Hint": self.show_hints_check.isChecked(),
+            "Pickup": True,
+            "Event": True,
+            "Hint": False,
+            "Lock": configs[players.player_index].dock_rando.is_enabled(),
         }
         self._last_run_filters: dict[str, bool] = None
 
-        signal_handling.on_checked(self.show_pickups_check, self._set_action_filter("Pickup"))
-        signal_handling.on_checked(self.show_events_check, self._set_action_filter("Event"))
-        signal_handling.on_checked(self.show_hints_check, self._set_action_filter("Hint"))
+        def init_filter(check: QtWidgets.QCheckBox, action_type: str) -> None:
+            check.setChecked(self._action_filters[action_type])
+            signal_handling.on_checked(check, self._set_action_filter(action_type))
+
+        init_filter(self.show_pickups_check, "Pickup")
+        init_filter(self.show_events_check, "Event")
+        init_filter(self.show_hints_check, "Hint")
+        init_filter(self.show_locks_check, "Lock")
 
     def stop_validator(self):
         if self._current_task is not None:
@@ -141,6 +149,8 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
             message = "    ".join(str(t) for t in a)
             stripped = message.lstrip()
             indent = len(message) - len(stripped)
+
+            print(message)
 
             leading_char = stripped[0]
 
