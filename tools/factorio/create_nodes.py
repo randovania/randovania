@@ -7,8 +7,8 @@ from pathlib import Path
 
 import networkx
 
-from tools.factorio import util
-from tools.factorio.util import and_req, tech_req, template_req
+from randovania.games.factorio import importer_util
+from randovania.games.factorio.importer_util import tech_req, template_req
 
 _upgrade_techs_templates = {
     "refined-flammables-{}": 6,
@@ -29,31 +29,55 @@ _bonus_upgrade_tech = [
 ]
 
 _k_tier_requirements = [
-    [],  # 1
+    # 1 and 2
     [],
-    [template_req("craft-transport-belt")],
+    [],
+    # 3
+    [
+        template_req("craft-transport-belt"),
+    ],
+    # 4: being able to transition away from burner tech
     [
         template_req("craft-assembling-machine-1"),
         template_req("craft-inserter"),
         template_req("craft-electric-mining-drill"),
         template_req("has-electricity"),
-    ],  # TODO: electric lab
+        # TODO: electric lab, in case we shuffle that
+    ],
+    # 5, around Oil Processing
     [
+        # TODO: fast smelting
         template_req("craft-fast-transport-belt"),
         template_req("craft-fast-inserter"),
         tech_req("railway"),
-    ],  # TODO: fast smelting
-    [tech_req("construction-robotics"), template_req("craft-assembling-machine-2")],
-    [template_req("craft-bulk-inserter")],
-    [tech_req("research-speed-6"), template_req("craft-assembling-machine-3")],
-    [tech_req("logistic-system")],
+    ],
+    # 6, initial utility/production science
+    [
+        tech_req("construction-robotics"),
+        template_req("craft-assembling-machine-2"),
+    ],
+    # 7, late game tech
+    [
+        template_req("craft-bulk-inserter"),
+    ],
+    # 8, Rocket Silo and similar
+    [
+        tech_req("research-speed-6"),
+        template_req("craft-assembling-machine-3"),
+    ],
+    # 9, Spidertron
+    [
+        tech_req("logistic-system"),
+    ],
+    # 10, Atomic Bomb
     [tech_req("productivity-module-3")],
 ]
 
 trivial_req = {"type": "and", "data": {"comment": None, "items": []}}
-areas = {
+areas: dict = {
     "Tech Tree": {
         "default_node": None,
+        "hint_features": [],
         "extra": {},
         "nodes": {
             "Spawn Point": {
@@ -71,7 +95,7 @@ areas = {
 }
 
 
-def make_node_base(extra=None):
+def make_node_base(extra: dict | None = None) -> dict:
     return {
         "heal": False,
         "coordinates": None,
@@ -82,7 +106,7 @@ def make_node_base(extra=None):
     }
 
 
-def make_dock(target_area: str, target_node: str, connections=None):
+def make_dock(target_area: str, target_node: str, connections: dict | None = None) -> dict:
     return {
         "node_type": "dock",
         **make_node_base(),
@@ -102,9 +126,12 @@ for tier, req in enumerate(_k_tier_requirements):
     areas["Tech Tree"]["nodes"][f"Connection to Tier {tier + 1}"] = make_dock(
         f"Tier {tier + 1}", "Connection to Tech Tree", {"Spawn Point": trivial_req}
     )
-    areas["Tech Tree"]["nodes"]["Spawn Point"]["connections"][f"Connection to Tier {tier + 1}"] = and_req(req)
+    areas["Tech Tree"]["nodes"]["Spawn Point"]["connections"][f"Connection to Tier {tier + 1}"] = importer_util.and_req(
+        req
+    )
     areas[f"Tier {tier + 1}"] = {
         "default_node": None,
+        "hint_features": [],
         "extra": {},
         "nodes": {"Connection to Tech Tree": make_dock("Tech Tree", f"Connection to Tier {tier + 1}")},
     }
@@ -112,12 +139,13 @@ for tier, req in enumerate(_k_tier_requirements):
 current_pickup_index = -1
 
 
-def make_pickup(index: int, *, is_major: bool = False, connections=None) -> dict[str, typing.Any]:
+def make_pickup(index: int, *, is_major: bool = False, connections: dict | None = None) -> dict[str, typing.Any]:
     return {
         "node_type": "pickup",
         **make_node_base(),
         "pickup_index": index,
         "location_category": "major" if is_major else "minor",
+        "hint_features": [],
         "connections": connections or {},
     }
 
@@ -143,7 +171,7 @@ def make_gen_id(existing_ids: dict[str, int]) -> typing.Callable[[], int]:
     return gen_id
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--factorio", type=Path, help="Path to the Factorio root folder.", required=True)
     args = parser.parse_args()
@@ -152,7 +180,7 @@ def main():
     rdv_factorio_path = Path(__file__).parents[2].joinpath("randovania/games/factorio")
     region_path = rdv_factorio_path.joinpath("logic_database/Tech.json")
 
-    util.read_locales(factorio_path)
+    importer_util.read_locales(factorio_path)
 
     raw_dump_path = factorio_path.joinpath("script-output/data-raw-dump.json")
 
@@ -161,18 +189,18 @@ def main():
 
     techs_raw = {key: value for key, value in raw_dump["technology"].items() if not key.startswith("randovania-")}
 
-    existing_ids = util.load_existing_pickup_ids(region_path)
+    existing_ids = importer_util.load_existing_pickup_ids(region_path)
     gen_id = make_gen_id(existing_ids)
 
     graph = networkx.DiGraph()
-    pack_for_tech = {}
-    pickup_nodes = {}
+    pack_for_tech: dict[str, tuple[str, ...] | None] = {}
+    pickup_nodes: dict[str, dict] = {}
 
     for tech_name, tech in techs_raw.items():
         if tech.get("randovania_custom_tech"):
             continue
 
-        packs = None
+        packs: tuple[str, ...] | None = None
         if "unit" in tech:
             packs = tuple(sorted(it[0] for it in tech["unit"]["ingredients"]))
             if "space-science-pack" in packs:
@@ -195,17 +223,18 @@ def main():
             )
 
         pickup_nodes[tech_name] = {
-            "node_name": f"Pickup ({util.get_localized_name(tech_name)})",
+            "node_name": f"Pickup ({importer_util.get_localized_name(tech_name)})",
             "tech_name": f"randovania-{new_tech}",
             "complexity": complexity,
         }
 
-    def requirement_for_tech(n: str):
+    def requirement_for_tech(n: str) -> dict:
         # code = "".join(it[0] for it in pack_for_tech[n]).upper()
         # print(f"{n:40} {cost_complexity:10d} -- {code:>6} x{tech['unit']['count']:<6} @ {tech['unit']['time']}s")
 
-        if pack_for_tech[n] is not None:
-            items = [{"type": "template", "data": f"craft-{pack.lower()}"} for pack in pack_for_tech[n]]
+        packs = pack_for_tech[n]
+        if packs is not None:
+            items = [{"type": "template", "data": f"craft-{pack.lower()}"} for pack in packs]
         else:
             trigger = techs_raw[n]["research_trigger"]
             match trigger["type"]:
