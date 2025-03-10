@@ -10423,8 +10423,20 @@
     },
     "minimal_logic": null,
     "victory_condition": {
-        "type": "template",
-        "data": "craft-rocket-part"
+        "type": "and",
+        "data": {
+            "comment": null,
+            "items": [
+                {
+                    "type": "template",
+                    "data": "craft-rocket-part"
+                },
+                {
+                    "type": "template",
+                    "data": "craft-satellite"
+                }
+            ]
+        }
     },
     "dock_weakness_database": {
         "types": {
