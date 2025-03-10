@@ -79,16 +79,25 @@ class UncollectedState(NamedTuple):
                 if (node.node_index in base_state.nodes) and isinstance(node, res_type)
             )
 
+        def all_collectable_resource_nodes_of_type[T: ResourceNode](res_type: type[T]) -> Iterator[T]:
+            yield from (
+                node
+                for node in all_resource_nodes_of_type(res_type)
+                if node.requirement_to_collect().satisfied(
+                    context, reach.state.damage_state.health_for_damage_requirements()
+                )
+            )
+
         return cls(
             _filter_not_in_dict(
-                (node.pickup_index for node in all_resource_nodes_of_type(PickupNode)),
+                (node.pickup_index for node in all_collectable_resource_nodes_of_type(PickupNode)),
                 reach.state.patches.pickup_assignment,
             ),
             _filter_not_in_dict(
-                (node.identifier for node in all_resource_nodes_of_type(HintNode)),
+                (node.identifier for node in all_collectable_resource_nodes_of_type(HintNode)),
                 reach.state.patches.hints,
             ),
-            {node.resource(context) for node in all_resource_nodes_of_type(EventNode)},
+            {node.resource(context) for node in all_collectable_resource_nodes_of_type(EventNode)},
             base_state.nodes,
         )
 
