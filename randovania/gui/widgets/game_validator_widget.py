@@ -37,16 +37,24 @@ SATISFIABLE_CHAR = "="
 COMMENT_CHAR = "#"
 SKIP_ROLLBACK_CHAR = "*"
 
+location_pattern = r"(?P<region>.+?)/(?P<area>.+?)/(?P<node>.+?)"
+action_pattern = r"\[action (?P<action>.*?)]"
+
 action_re = re.compile(
-    r"^(?P<region>.+?)/(?P<area>.+?)/(?P<node>.+?) "
-    r"(?:\[(?P<energy>\d+?/\d+?) Energy] )?for (?:\[action (?P<action>.*?)] )?(?P<resources>\[.*?])$"
+    f"^{location_pattern} "
+    r"(?:\[(?P<energy>\d+?/\d+?) Energy] )?"
+    f"for (?:{action_pattern} )?"
+    r"(?P<resources>\[.*?])$"
 )
+rollback_skip_re = re.compile(
+    r"^(?P<action_type>.*?) "
+    f"{location_pattern} "
+    f"{action_pattern}"
+    r"(?:, (?P<additional>.*?))?$"
+)
+
 pickup_action_re = re.compile(r"^World (?P<world_num>\d+?)'s (?P<pickup_name>.*?)$")
 action_type_re = re.compile(r"^(?P<type>.*?) - (?P<action>.*?)$")
-rollback_skip_re = re.compile(
-    r"^(?P<action_type>.*?) (?P<region>.+?)/(?P<area>.+?)/(?P<node>.+?) "
-    r"\[action (?P<action>.*?)(?:, (?P<additional>.*?))?$"
-)
 
 
 def get_brush_for_action(action_type: str | None) -> QtGui.QBrush:
