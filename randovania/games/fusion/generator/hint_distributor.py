@@ -29,6 +29,8 @@ class FusionHintDistributor(HintDistributor):
     @override
     def is_pickup_interesting(self, target: PickupTarget, player_id: int, hint_node: HintNode) -> bool:
         non_interesting_features = ["key", "energy_tank", "charge"]
+        if target.player != player_id:
+            return True
         for feature in non_interesting_features:
             if target.pickup.has_hint_feature(feature):
                 return False
