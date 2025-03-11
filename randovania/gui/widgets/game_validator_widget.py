@@ -24,6 +24,7 @@ class IndentedWidget(NamedTuple):
     indent: int
     item: QtWidgets.QTreeWidgetItem
     action_type: str | None = None
+    action_visibility_type: str | None = None
 
 
 _LABELS = ["Node", "Type", "Action", "Energy", "Resources"]
@@ -43,7 +44,8 @@ action_re = re.compile(
 pickup_action_re = re.compile(r"^World (?P<world_num>\d+?)'s (?P<pickup_name>.*?)$")
 action_type_re = re.compile(r"^(?P<type>.*?) - (?P<action>.*?)$")
 rollback_skip_re = re.compile(
-    r"^(?P<action>.*?) (?P<region>.+?)/(?P<area>.+?)/(?P<node>.+?)(?:, (?P<additional>.*?))?$"
+    r"^(?P<action_type>.*?) (?P<region>.+?)/(?P<area>.+?)/(?P<node>.+?) "
+    r"\[action (?P<action>.*?)(?:, (?P<additional>.*?))?$"
 )
 
 
@@ -153,9 +155,10 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
         self._update_needs_refresh()
 
     def should_item_be_visible(self, widget: IndentedWidget) -> bool:
-        if widget.action_type is None:
+        action_type = widget.action_visibility_type or widget.action_type
+        if action_type is None:
             return True
-        return self._action_filters.get(widget.action_type, True)
+        return self._action_filters.get(action_type, True)
 
     def update_item_visibility(self, widget: IndentedWidget) -> None:
         hide = not self.should_item_be_visible(widget)
@@ -214,6 +217,28 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
             item = QtWidgets.QTreeWidgetItem()
             region, area, node = ("", "", "")
 
+            def action_type_and_text(_action: str) -> tuple[str, str]:
+                action_type_match = action_type_re.match(_action)
+                if action_type_match is None:
+                    return "Other", _action
+
+                action_text = action_type_match.group("action")
+                action_type = action_type_match.group("type")
+
+                if (action_type in {"Major", "Minor", "Pickup"}) and action_text != "Nothing":
+                    pickup_match = pickup_action_re.match(action_text)
+                    assert pickup_match is not None
+
+                    player = int(pickup_match.group("world_num"))
+                    pickup = pickup_match.group("pickup_name")
+
+                    if self.layout_description.generator_parameters.world_count == 1:
+                        action_text = pickup
+                    else:
+                        action_text = f"{self.players.player_names[player]}'s {pickup}"
+
+                return action_type, action_text
+
             if leading_char == ACTION_CHAR:
                 match = action_re.match(stripped)
                 assert match is not None
@@ -229,33 +254,16 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
 
                 action = groups["action"]
                 if action is not None:
-                    action_type_match = action_type_re.match(action)
-                    if action_type_match is None:
-                        item.setText(LABEL_IDS["Action"], action)
-                        action_type = "Other"
-                    else:
-                        action_text = action_type_match.group("action")
-                        action_type = action_type_match.group("type")
-
-                        if (action_type in {"Major", "Minor", "Pickup"}) and action_text != "Nothing":
-                            pickup_match = pickup_action_re.match(action_text)
-                            assert pickup_match is not None
-
-                            player = int(pickup_match.group("world_num"))
-                            pickup = pickup_match.group("pickup_name")
-
-                            if self.layout_description.generator_parameters.world_count == 1:
-                                action_text = pickup
-                            else:
-                                action_text = f"{self.players.player_names[player]}'s {pickup}"
-
-                        item.setText(LABEL_IDS["Action"], action_text)
+                    action_type, action_text = action_type_and_text(action)
 
                     item.setText(LABEL_IDS["Type"], action_type)
+                    item.setText(LABEL_IDS["Action"], action_text)
+
                     widget = IndentedWidget(indent, item, action_type)
                 else:
                     item.setText(LABEL_IDS["Type"], "Start")
                     widget = IndentedWidget(indent, item)
+
             elif leading_char == SKIP_ROLLBACK_CHAR:
                 rollback_skip_match = rollback_skip_re.match(stripped)
                 assert rollback_skip_match is not None
@@ -265,13 +273,16 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
                 area = groups["area"]
                 node = groups["node"]
 
-                action_type = groups["action"]
+                action_type = groups["action_type"]
+
+                underlying_action_type, _ = action_type_and_text(groups["action"])
 
                 item.setText(LABEL_IDS["Node"], f"{action_type} {area}/{node}")
                 item.setText(LABEL_IDS["Type"], action_type)
                 if (extra := groups.get("additional")) is not None:
                     item.setText(LABEL_IDS["Action"], extra.capitalize())
-                widget = IndentedWidget(indent, item, action_type)
+                widget = IndentedWidget(indent, item, action_type, underlying_action_type)
+
             else:
                 item.setText(0, stripped)
                 widget = IndentedWidget(indent, item)

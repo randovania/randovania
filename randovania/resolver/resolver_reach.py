@@ -175,7 +175,7 @@ class ResolverReach:
                 self._satisfiable_requirements_for_additionals = self._satisfiable_requirements_for_additionals.union(
                     additional_requirements.alternatives
                 )
-                self._logic.log_skip_action_missing_requirement(node, self._logic.game)
+                self._logic.log_skip_action_missing_requirement(node, state.patches, self._logic.game)
 
     def collectable_resource_nodes(self, context: NodeContext) -> Iterator[ResourceNode]:
         for node in self.nodes:
