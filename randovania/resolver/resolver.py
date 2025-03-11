@@ -325,7 +325,7 @@ async def _inner_advance_depth(
     for action, damage_state in actions:
         action_additional_requirements = logic.get_additional_requirements(action)
         if not action_additional_requirements.satisfied(context, damage_state.health_for_damage_requirements()):
-            logic.log_skip_action_missing_requirement(action, logic.game)
+            logic.log_skip_action_missing_requirement(action, state.patches, logic.game)
             continue
         new_state = state.act_on_node(action, path=reach.path_to_node(action), new_damage_state=damage_state)
         _assign_hint_available_locations(new_state, action, logic)

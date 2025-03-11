@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
@@ -14,23 +15,23 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.requirements.base import Requirement
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.state import State
 
 
-def n(node: Node, region_list: RegionList, with_region: bool = False) -> str:
-    return region_list.node_name(node, with_region) if node is not None else "None"
+def n(node: Node, region_list: RegionList, with_region: bool = True) -> str:
+    return region_list.node_name(node, with_region, True) if node is not None else "None"
 
 
 def energy_string(state: State) -> str:
     return f" [{state.game_state_debug_string()}]" if debug.debug_level() >= 2 else ""
 
 
-def action_string(state: State) -> str:
+def action_string(node: Node, patches: GamePatches) -> str:
     action = ""
-    node = state.node
 
     if isinstance(node, EventPickupNode):
         node = node.pickup_node
@@ -39,8 +40,11 @@ def action_string(state: State) -> str:
         action = node.name
 
     if isinstance(node, PickupNode):
-        target = state.patches.pickup_assignment.get(node.pickup_index, "Pickup - Nothing")
-        action = str(target)
+        target = patches.pickup_assignment.get(node.pickup_index, "Nothing")
+        if isinstance(target, PickupTarget) and target.pickup.show_in_credits_spoiler:
+            action = f"Major - {target}"
+        else:
+            action = f"Minor - {target}"
 
     elif isinstance(node, HintNode):
         if not action.startswith("Hint - "):
@@ -121,9 +125,8 @@ class Logic:
                     debug.print_function(f"{self._indent(1)}: {n(node, region_list=region_list)}")
 
             node_str = n(state.node, region_list=region_list)
-            debug.print_function(
-                f"{self._indent(1)}> {node_str}{energy_string(state)} for {action_string(state)}{resources}"
-            )
+            action_text = action_string(state.node, state.patches)
+            debug.print_function(f"{self._indent(1)}> {node_str}{energy_string(state)} for {action_text}{resources}")
 
     def log_checking_satisfiable_actions(self, state: State, actions: list[tuple[ResourceNode, DamageState]]):
         if debug.debug_level() > 1:
@@ -139,7 +142,10 @@ class Logic:
     ):
         if debug.debug_level() > 0:
             show_reqs = debug.debug_level() > 1 and additional_requirements is not None
-            debug.print_function(f"{self._indent()}* Rollback {n(state.node, region_list=state.region_list)}")
+            action_text = action_string(state.node, state.patches)
+            debug.print_function(
+                f"{self._indent()}* Rollback {n(state.node, region_list=state.region_list)} {action_text}"
+            )
             debug.print_function(
                 "{}Had action? {}; Possible Action? {}{}".format(
                     self._indent(-1),
@@ -153,15 +159,14 @@ class Logic:
         if self.increment_indent:
             self._current_indent -= 1
 
-    def log_skip_action_missing_requirement(self, node: Node, game: GameDescription):
+    def log_skip_action_missing_requirement(self, node: Node, patches: GamePatches, game: GameDescription):
         if debug.debug_level() > 1:
             requirement_set = self.get_additional_requirements(node)
+            base_log = f"{self._indent()}* Skip {n(node, region_list=game.region_list)} {action_string(node, patches)}"
             if node in self._last_printed_additional and self._last_printed_additional[node] == requirement_set:
-                debug.print_function(f"{self._indent()}* Skip {n(node, region_list=game.region_list)}, same additional")
+                debug.print_function(f"{base_log}, same additional")
             else:
-                debug.print_function(
-                    f"{self._indent()}* Skip {n(node, region_list=game.region_list)}, missing additional:"
-                )
+                debug.print_function(f"{base_log}, missing additional:")
                 self.print_requirement_set(requirement_set, -1)
                 self._last_printed_additional[node] = requirement_set
 
