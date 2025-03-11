@@ -12,7 +12,7 @@ from randovania.resolver import debug
 @pytest.fixture
 def widget(skip_qtbot):
     layout = MagicMock()
-    layout.generator_parameters.world_count = 1
+    layout.world_count = 1
     layout.all_presets = [MagicMock()]
     players = MagicMock()
     players.player_names = {0: "Player"}
