@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
@@ -20,8 +21,8 @@ if TYPE_CHECKING:
     from randovania.resolver.state import State
 
 
-def n(node: Node, region_list: RegionList, with_region: bool = False) -> str:
-    return region_list.node_name(node, with_region) if node is not None else "None"
+def n(node: Node, region_list: RegionList, with_region: bool = True) -> str:
+    return region_list.node_name(node, with_region, True) if node is not None else "None"
 
 
 def energy_string(state: State) -> str:
@@ -39,8 +40,11 @@ def action_string(state: State) -> str:
         action = node.name
 
     if isinstance(node, PickupNode):
-        target = state.patches.pickup_assignment.get(node.pickup_index, "Pickup - Nothing")
-        action = str(target)
+        target = state.patches.pickup_assignment.get(node.pickup_index, "Nothing")
+        if isinstance(target, PickupTarget) and target.pickup.show_in_credits_spoiler:
+            action = f"Major - {target}"
+        else:
+            action = f"Minor - {target}"
 
     elif isinstance(node, HintNode):
         if not action.startswith("Hint - "):

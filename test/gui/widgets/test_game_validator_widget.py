@@ -108,7 +108,7 @@ async def test_on_start_button_no_task(widget, mocker, cancel: bool, verbosity: 
             write_to_log("> Starting Area/Spawn Point for []")
             write_to_log(
                 "> Starting Area/Pickup (Weapon) [100/100 Energy] for "
-                "[action World 0's Blue Key] ['N: Pickup (Weapon)', 'I: Blue Key']"
+                "[action Major - World 0's Blue Key] ['N: Pickup (Weapon)', 'I: Blue Key']"
             )
             if verbosity > 1:
                 write_to_log(" # Satisfiable Actions")
@@ -145,7 +145,7 @@ async def test_on_start_button_no_task(widget, mocker, cancel: bool, verbosity: 
         assert not widget.log_widget.topLevelItem(0).isExpanded()
 
         pickup_action = widget.log_widget.topLevelItem(1)
-        assert pickup_action.text(LABEL_IDS["Type"]) == "Pickup"
+        assert pickup_action.text(LABEL_IDS["Type"]) == "Major"
         assert pickup_action.text(LABEL_IDS["Action"]) == "Blue Key"
 
         other_action = widget.log_widget.topLevelItem(2)
