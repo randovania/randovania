@@ -7,12 +7,15 @@ from typing import TYPE_CHECKING, override
 
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
+from randovania.exporter.hints.hint_exporter import HintExporter
+from randovania.exporter.hints.joke_hints import GENERIC_JOKE_HINTS
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.hint_node import HintNode
 from randovania.games.fusion.exporter.hint_namer import FusionColor, FusionHintNamer
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.lib import json_lib
 
@@ -196,28 +199,32 @@ class FusionPatchDataFactory(PatchDataFactory):
 
     def _create_nav_text(self) -> dict:
         nav_text_json = {}
-        # namer = FusionHintNamer(self.description.all_patches, self.players_config)
-        # exporter = HintExporter(namer, self.rng, GENERIC_JOKE_HINTS)
+        namer = FusionHintNamer(self.description.all_patches, self.players_config)
+        exporter = HintExporter(namer, self.rng, GENERIC_JOKE_HINTS)
 
         artifacts = [self.game.resource_database.get_item(f"Infant Metroid {i + 1}") for i in range(20)]
 
-        metroid_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
-            self.description.all_patches,
-            self.players_config,
-            FusionHintNamer(self.description.all_patches, self.players_config),
-            False,  # TODO: make this depending on hint settings later:tm:
-            artifacts,
-            True,
-        )
+        metroid_precision = self.configuration.hints.specific_pickup_hints["artifacts"]
+        charge_precision = self.configuration.hints.specific_pickup_hints["charge_beam"]
 
-        charge_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
-            self.description.all_patches,
-            self.players_config,
-            FusionHintNamer(self.description.all_patches, self.players_config),
-            True,  # TODO: make this depending on hint settings later:tm:
-            [self.game.resource_database.get_item("ChargeBeam")],
-            True,
-        )
+        if metroid_precision != SpecificPickupHintMode.DISABLED:
+            metroid_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+                self.description.all_patches,
+                self.players_config,
+                FusionHintNamer(self.description.all_patches, self.players_config),
+                True if metroid_precision != SpecificPickupHintMode.HIDE_AREA else False,
+                artifacts,
+                True,
+            )
+        if charge_precision != SpecificPickupHintMode.DISABLED:
+            charge_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+                self.description.all_patches,
+                self.players_config,
+                FusionHintNamer(self.description.all_patches, self.players_config),
+                True if charge_precision != SpecificPickupHintMode.HIDE_AREA else False,
+                [self.game.resource_database.get_item("ChargeBeam")],
+                True,
+            )
 
         hints = {}
 
@@ -226,16 +233,19 @@ class FusionPatchDataFactory(PatchDataFactory):
                 continue
 
             hint_location = node.extra["hint_name"]
-            if hint_location == "AuxiliaryPower":
+            if hint_location == "AuxiliaryPower" and charge_precision != SpecificPickupHintMode.DISABLED:
                 hints[hint_location] = " ".join(
                     [text for _, text in charge_hint_mapping.items() if "has no need to be located" not in text]
                 )
-            elif hint_location == "RestrictedLabs":
+            elif hint_location == "RestrictedLabs" and metroid_precision != SpecificPickupHintMode.DISABLED:
                 hints[hint_location] = " ".join(
                     [text for _, text in metroid_hint_mapping.items() if "has no need to be located" not in text]
                 )
             else:
-                hints[hint_location] = " ".join(["Hint system still in development, we appreciate your patience."])
+                hints[hint_location] = exporter.create_message_for_hint(
+                    self.patches.hints[node.identifier],
+                    True,
+                ).strip()
 
         starting_items_list = item_names.additional_starting_equipment(
             self.patches.configuration, self.patches.game, self.patches
