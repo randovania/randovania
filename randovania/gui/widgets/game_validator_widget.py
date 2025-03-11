@@ -240,7 +240,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
                     player = int(pickup_match.group("world_num"))
                     pickup = pickup_match.group("pickup_name")
 
-                    if self.layout_description.generator_parameters.world_count == 1:
+                    if self.layout_description.world_count == 1:
                         action_text = pickup
                     else:
                         action_text = f"{self.players.player_names[player]}'s {pickup}"
