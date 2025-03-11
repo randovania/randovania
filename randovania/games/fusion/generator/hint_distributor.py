@@ -19,50 +19,45 @@ if TYPE_CHECKING:
 
 class FusionHintDistributor(HintDistributor):
     # Pre Filler
+
     # Joke hints to go in pool
     @override
     @property
     def num_joke_hints(self) -> int:
-        return 0
+        return 1
 
     # Makes the listed features less interesting to hint
     @override
     def is_pickup_interesting(self, target: PickupTarget, player_id: int, hint_node: HintNode) -> bool:
-        non_interesting_features = ["key", "energy_tank", "charge"]
-        if target.player != player_id:
-            return True
+        non_interesting_features = ["key", "charge"]
         for feature in non_interesting_features:
             if target.pickup.has_hint_feature(feature):
                 return False
         return True
 
+    # Set default precision for hints
     @override
     @property
     def default_precision_pair(self) -> PrecisionPair:
         return PrecisionPair.featural()
 
+    # Make hints for specific locations
     @override
     async def assign_specific_location_hints(self, patches: GamePatches, prefill: PreFillParams) -> GamePatches:
         assert isinstance(prefill.configuration, FusionConfiguration)
         fake_hints = [
-            {
-                "region": "Main Deck",
-                "area": "Auxiliary Navigation Room",
-                "node": "Navigation Terminal",
-                "type": JokeHint(),
-            },
-            {
-                "region": "Main Deck",
-                "area": "Restricted Navigation Room",
-                "node": "Navigation Terminal",
-                "type": JokeHint(),
-            },
+            ("Main Deck", "Auxiliary Navigation Room", "Navigation Terminal"),
+            ("Main Deck", "Restricted Navigation Room", "Navigation Terminal"),
         ]
-        for hint in fake_hints:
-            patches = patches.assign_hint(
-                NodeIdentifier.create(hint["region"], hint["area"], hint["node"]), hint["type"]
-            )
+        for region, area, node in fake_hints:
+            patches = patches.assign_hint(NodeIdentifier.create(region, area, node), JokeHint())
 
         return await super().assign_specific_location_hints(patches, prefill)
 
     # Post Filler
+
+    # Don't use area in hints
+    @override
+    @property
+    def use_detailed_location_precision(self) -> bool:
+        return False

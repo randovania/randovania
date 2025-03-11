@@ -14,10 +14,9 @@ from randovania.games.fusion.generator.hint_distributor import FusionHintDistrib
     ("target_pickup", "target_player", "features", "expected"),
     [
         ("Charge Beam", 0, {"beam", "charge"}, False),
-        ("Charge Beam", 1, {"beam", "charge"}, True),
         ("Gravity Suit", 0, {"suit", "life_support"}, True),
         ("Infant Metroid 1", 0, {"key"}, False),
-        ("Energy Tank", 0, {"energy_tank"}, False),
+        ("Energy Tank", 0, {"energy_tank"}, True),
     ],
 )
 def test_fusion_interesting_pickups(

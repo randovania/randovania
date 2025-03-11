@@ -8,12 +8,12 @@ from typing import TYPE_CHECKING, override
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
-from randovania.exporter.hints.joke_hints import GENERIC_JOKE_HINTS
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.hint_node import HintNode
 from randovania.games.fusion.exporter.hint_namer import FusionColor, FusionHintNamer
+from randovania.games.fusion.exporter.joke_hints import FUSION_JOKE_HINTS
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 from randovania.layout.base.pickup_model import PickupModelStyle
@@ -200,7 +200,7 @@ class FusionPatchDataFactory(PatchDataFactory):
     def _create_nav_text(self) -> dict:
         nav_text_json = {}
         namer = FusionHintNamer(self.description.all_patches, self.players_config)
-        exporter = HintExporter(namer, self.rng, GENERIC_JOKE_HINTS)
+        exporter = HintExporter(namer, self.rng, FUSION_JOKE_HINTS)
 
         artifacts = [self.game.resource_database.get_item(f"Infant Metroid {i + 1}") for i in range(20)]
 
