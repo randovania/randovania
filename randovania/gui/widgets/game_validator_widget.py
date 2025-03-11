@@ -181,7 +181,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
         self.log_widget.setColumnHidden(LABEL_IDS["Energy"], self._verbosity < 2)
         self.log_widget.setColumnHidden(LABEL_IDS["Resources"], self._verbosity < 2)
 
-        self._current_tree = [IndentedWidget(-3, self.log_widget)]
+        self._current_tree = [IndentedWidget(-2, self.log_widget)]
 
         def write_to_log(*a: Any) -> None:
             scrollbar = self.log_widget.verticalScrollBar()
@@ -223,7 +223,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
                 area = groups["area"]
                 node = groups["node"]
 
-                item.setText(LABEL_IDS["Node"], node)
+                item.setText(LABEL_IDS["Node"], f"{area}/{node}")
                 item.setText(LABEL_IDS["Resources"], groups["resources"])
                 item.setText(LABEL_IDS["Energy"], groups.get("energy", ""))
 
@@ -267,7 +267,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
 
                 action_type = groups["action"]
 
-                item.setText(LABEL_IDS["Node"], f"{action_type} {node}")
+                item.setText(LABEL_IDS["Node"], f"{action_type} {area}/{node}")
                 item.setText(LABEL_IDS["Type"], action_type)
                 if (extra := groups.get("additional")) is not None:
                     item.setText(LABEL_IDS["Action"], extra.capitalize())
@@ -277,29 +277,18 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
                 widget = IndentedWidget(indent, item)
 
             if self.should_item_be_visible(widget) and node:
-                if len(self._current_tree) == 3:
-                    region_item = self._current_tree[-2].item
-                    area_item = self._current_tree[-1].item
+                if len(self._current_tree) == 2:
+                    region_item = self._current_tree[-1].item
 
                     if region_item.text(LABEL_IDS["Node"]) != region:
-                        self._current_tree.pop()
-                        self._current_tree.pop()
-                    elif area_item.text(LABEL_IDS["Node"]) != area:
                         self._current_tree.pop()
 
                 if len(self._current_tree) == 1:
                     region_item = QtWidgets.QTreeWidgetItem(self._current_tree[-1].item)
                     region_item.setText(LABEL_IDS["Node"], region)
-                    self._current_tree.append(IndentedWidget(-2, region_item))
+                    self._current_tree.append(IndentedWidget(-1, region_item))
 
                     region_item.setExpanded(True)
-
-                if len(self._current_tree) == 2:
-                    area_item = QtWidgets.QTreeWidgetItem(region_item)
-                    area_item.setText(LABEL_IDS["Node"], area)
-                    self._current_tree.append(IndentedWidget(-1, area_item))
-
-                    area_item.setExpanded(True)
 
             parent = self._current_tree[-1].item
             parent.addChild(item)
