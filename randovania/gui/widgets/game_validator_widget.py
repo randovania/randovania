@@ -49,7 +49,7 @@ action_re = re.compile(
 rollback_skip_re = re.compile(
     r"^(?P<action_type>.*?) "
     f"{location_pattern} "
-    f"{action_pattern}"
+    f"{action_pattern} ?"
     r"(?:, (?P<additional>.*?))?$"
 )
 
@@ -199,7 +199,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
             autoscroll = scrollbar.value() == scrollbar.maximum()
 
             message = "    ".join(str(t) for t in a)
-            stripped = message.lstrip()
+            stripped = message.lstrip().rstrip()
             indent = len(message) - len(stripped)
 
             leading_char = stripped[0]
