@@ -38,7 +38,7 @@ class EchoesHintDistributor(HintDistributor):
                 return False
         if target.player == player_id and ("Translator" in target.pickup.name):
             # don't place a translator hint on its color of lore scan
-            return hint_node.extra.get("translator") not in target.pickup.name
+            return hint_node.requirement_display_name not in target.pickup.name
         return True
 
     @override

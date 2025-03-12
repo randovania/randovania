@@ -11,7 +11,7 @@ from enum import Enum, IntEnum
 from random import Random
 from typing import TYPE_CHECKING, Any, final, override
 
-from randovania.game_description.db.hint_node import HintNode, HintNodeKind
+from randovania.game_description.db.hint_node import HintNode, HintNodeKind, SpecificLocationHintNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import (
@@ -199,16 +199,15 @@ class HintDistributor(ABC):
         specific_location_precisions = await self.get_specific_pickup_precision_pairs()
 
         wl = prefill.game.region_list
-        for node in wl.iterate_nodes_of_type(HintNode):
-            if node.kind == HintNodeKind.SPECIFIC_LOCATION:
-                identifier = node.identifier
-                patches = patches.assign_hint(
-                    identifier,
-                    LocationHint(
-                        specific_location_precisions[identifier],
-                        PickupIndex(node.extra["hint_index"]),
-                    ),
-                )
+        for node in wl.iterate_nodes_of_type(SpecificLocationHintNode):
+            identifier = node.identifier
+            patches = patches.assign_hint(
+                identifier,
+                LocationHint(
+                    specific_location_precisions[identifier],
+                    node.target_index,
+                ),
+            )
 
         return patches
 

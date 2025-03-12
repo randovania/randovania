@@ -5,6 +5,7 @@ import itertools
 import json
 import logging
 import traceback
+import typing
 from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
@@ -15,7 +16,12 @@ from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock import DockWeakness
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.hint_node import HintNode, HintNodeKind
+from randovania.game_description.db.hint_node import (
+    HintNode,
+    HintNodeKind,
+    SpecificLocationHintNode,
+    SpecificPickupHintNode,
+)
 from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
@@ -125,6 +131,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         for hint_node_kind in enum_lib.iterate_enum(HintNodeKind):
             self.hint_kind_combo.addItem(hint_node_kind.long_name, hint_node_kind)
+        for specific_hint, details in game.game.hints.specific_pickup_hints.items():
+            self.specific_pickup_target_combo.addItem(details.long_name, specific_hint)
 
         # Pickup
         for category in enum_lib.iterate_enum(LocationCategory):
@@ -149,6 +157,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.on_teleporter_destination_region_combo
         )
         self.hint_requirement_to_collect_button.clicked.connect(self.on_hint_requirement_to_collect_button)
+        self.hint_kind_combo.currentIndexChanged.connect(self.on_hint_kind_combo)
         self.teleporter_network_unlocked_button.clicked.connect(self.on_teleporter_network_unlocked_button)
         self.teleporter_network_activate_button.clicked.connect(self.on_teleporter_network_activated_button)
 
@@ -243,6 +252,22 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
     def fill_for_hint(self, node: HintNode) -> None:
         signal_handling.set_combo_with_value(self.hint_kind_combo, node.kind)
         self.set_hint_requirement_to_collect(node.lock_requirement)
+        if node.requirement_display_name is not None:
+            self.override_requirement_display_name_edit.setText(node.requirement_display_name)
+
+        if isinstance(node, SpecificLocationHintNode):
+            self.specific_location_target_spin.setValue(node.target_index.index)
+        elif isinstance(node, SpecificPickupHintNode):
+            signal_handling.set_combo_with_value(self.specific_pickup_target_combo, node.specific_pickup_hint_id)
+
+        self._update_hint_target_visibility(node.kind)
+
+    def _update_hint_target_visibility(self, kind: HintNodeKind) -> None:
+        self.specific_location_target_label.setHidden(kind != HintNodeKind.SPECIFIC_LOCATION)
+        self.specific_location_target_spin.setHidden(kind != HintNodeKind.SPECIFIC_LOCATION)
+
+        self.specific_pickup_target_combo.setHidden(kind != HintNodeKind.SPECIFIC_PICKUP)
+        self.specific_pickup_target_label.setHidden(kind != HintNodeKind.SPECIFIC_PICKUP)
 
     def set_hint_requirement_to_collect(self, requirement: Requirement) -> None:
         self._hint_requirement_to_collect = requirement
@@ -337,6 +362,9 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         expected_name = next(integrity_check.expected_dock_names(new_node))
         self.name_edit.setText(expected_name)
         self.on_name_edit(self.name_edit.text())
+
+    def on_hint_kind_combo(self, _) -> None:
+        self._update_hint_target_visibility(self.hint_kind_combo.currentData())
 
     # Pickup
 
@@ -489,7 +517,15 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             )
 
         elif node_type == HintNode:
-            return HintNode(
+            kind = typing.cast(HintNodeKind, self.hint_kind_combo.currentData())
+            if kind == HintNodeKind.SPECIFIC_LOCATION:
+                target = self.specific_location_target_spin.value()
+            elif kind == HintNodeKind.SPECIFIC_PICKUP:
+                target = self.specific_pickup_target_combo.currentData()
+            else:
+                target = None
+
+            return kind.hint_node_class(
                 identifier,
                 node_index,
                 heal,
@@ -498,8 +534,9 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 layers,
                 extra,
                 valid_starting_location,
-                self.hint_kind_combo.currentData(),
                 self._hint_requirement_to_collect,
+                self.override_requirement_display_name_edit.text(),
+                target,
             )
 
         elif node_type == TeleporterNetworkNode:

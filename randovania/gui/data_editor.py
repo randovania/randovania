@@ -24,6 +24,7 @@ from randovania.game_description import (
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
+from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node import GenericNode, Node, NodeContext, NodeLocation
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.editor import Editor
@@ -499,6 +500,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 msg += f"\n<br />Open Override: {node.override_default_open_requirement}"
             if node.override_default_lock_requirement is not None:
                 msg += f"\n<br />Lock Override: {node.override_default_lock_requirement}"
+
+        elif isinstance(node, HintNode):
+            msg = node.data_editor_message(self.region_list, self.resource_database)
 
         self.node_name_label.setText(node.name)
         self.node_details_label.setText(msg)
