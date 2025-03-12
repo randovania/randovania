@@ -11,7 +11,7 @@ from enum import Enum, IntEnum
 from random import Random
 from typing import TYPE_CHECKING, Any, final, override
 
-from randovania.game_description.db.hint_node import HintNode, HintNodeKind, SpecificLocationHintNode
+from randovania.game_description.db.hint_node import GenericHintNode, HintNode, HintNodeKind, SpecificLocationHintNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import (
@@ -185,18 +185,14 @@ class HintDistributor(ABC):
         return 0
 
     def get_generic_hint_nodes(self, prefill: PreFillParams) -> list[NodeIdentifier]:
-        return [
-            node.identifier
-            for node in prefill.game.region_list.iterate_nodes_of_type(HintNode)
-            if node.kind == HintNodeKind.GENERIC
-        ]
+        return [node.identifier for node in prefill.game.region_list.iterate_nodes_of_type(GenericHintNode)]
 
-    async def get_specific_pickup_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
-        """Assigns a PrecisionPair to each HintNode with kind SPECIFIC_PICKUP in the game's database."""
+    async def get_specific_location_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
+        """Assigns a PrecisionPair to each HintNode with kind SPECIFIC_LOCATION in the game's database."""
         return {}
 
     async def assign_specific_location_hints(self, patches: GamePatches, prefill: PreFillParams) -> GamePatches:
-        specific_location_precisions = await self.get_specific_pickup_precision_pairs()
+        specific_location_precisions = await self.get_specific_location_precision_pairs()
 
         wl = prefill.game.region_list
         for node in wl.iterate_nodes_of_type(SpecificLocationHintNode):
@@ -377,8 +373,9 @@ class HintDistributor(ABC):
                 # hint has already been assigned
                 continue
 
-            node = region_list.typed_node_by_identifier(hint_node, HintNode)
-            if node.kind != HintNodeKind.GENERIC:
+            try:
+                node = region_list.typed_node_by_identifier(hint_node, GenericHintNode)
+            except AssertionError:
                 continue
 
             debug.debug_print(f"> Choosing hint target for {hint_node.as_string}:")

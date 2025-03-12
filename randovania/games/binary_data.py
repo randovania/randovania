@@ -251,6 +251,8 @@ ConstructNode = NodeAdapter(
                     **NodeBaseFields,
                     kind=ConstructHintNodeKind,
                     requirement_to_collect=ConstructRequirement,
+                    requirement_display_name=OptionalValue(String),
+                    _target=OptionalValue(construct.Select(VarInt, String)),
                 ),
                 "teleporter_network": Struct(
                     **NodeBaseFields,
