@@ -16,6 +16,7 @@ from randovania.games.prime1.layout.prime_configuration import (
     PrimeConfiguration,
     RoomRandoMode,
 )
+from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.hint_configuration import SpecificPickupHintMode
@@ -31,7 +32,6 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
     from randovania.layout.layout_description import LayoutDescription
 
 _EASTER_EGG_SHINY_MISSILE = 1024
@@ -613,10 +613,7 @@ def _serialize_dock_modifications(
                         rng.shuffle(candidates)
 
 
-class PrimePatchDataFactory(PatchDataFactory):
-    cosmetic_patches: PrimeCosmeticPatches
-    configuration: PrimeConfiguration
-
+class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPatches]):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME
 

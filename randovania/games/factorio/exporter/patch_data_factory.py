@@ -9,6 +9,7 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.games.factorio.data_importer import data_parser
 from randovania.games.factorio.generator import recipes
 from randovania.games.factorio.generator.item_cost import item_is_fluid
+from randovania.games.factorio.layout import FactorioConfiguration, FactorioCosmeticPatches
 from randovania.generator.pickup_pool import pickup_creator
 
 if typing.TYPE_CHECKING:
@@ -18,7 +19,7 @@ if typing.TYPE_CHECKING:
     from randovania.games.factorio.generator.base_patches_factory import FactorioGameSpecific
 
 
-class FactorioPatchDataFactory(PatchDataFactory):
+class FactorioPatchDataFactory(PatchDataFactory[FactorioConfiguration, FactorioCosmeticPatches]):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.FACTORIO
 

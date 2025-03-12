@@ -12,6 +12,7 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
+from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
@@ -25,7 +26,6 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
-    from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 
 _ALTERNATIVE_MODELS = {
     PickupModel(RandovaniaGame.METROID_DREAD, "Nothing"): ["itemsphere"],
@@ -94,9 +94,7 @@ def _get_destination_room_for_teleportal(connection: Node):
     return connection.extra.get("transporter_name", f"{connection.identifier.region} - {connection.identifier.area}")
 
 
-class DreadPatchDataFactory(PatchDataFactory):
-    cosmetic_patches: DreadCosmeticPatches
-    configuration: DreadConfiguration
+class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPatches]):
     spawnpoint_name_prefix = "SP_RDV_"
 
     def __init__(self, *args, **kwargs):

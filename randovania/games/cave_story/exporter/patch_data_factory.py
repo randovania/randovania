@@ -19,6 +19,8 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.exporter.hint_exporter import CSHintExporter
 from randovania.games.cave_story.exporter.hint_namer import CSHintNamer
+from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
+from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
 from randovania.games.cave_story.layout.preset_describer import get_ingame_hash
 from randovania.games.cave_story.patcher.caver_music_shuffle import CaverMusic
 from randovania.generator.pickup_pool import pickup_creator
@@ -28,16 +30,11 @@ if TYPE_CHECKING:
 
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
-    from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
-    from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
 
 NOTHING_ITEM_SCRIPT = "<PRI<MSG<TUR<IT+0000\r\nGot =Nothing=!<WAI0025<NOD<EVE0015"
 
 
-class CSPatchDataFactory(PatchDataFactory):
-    cosmetic_patches: CSCosmeticPatches
-    configuration: CSConfiguration
-
+class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
     # Variables shared between multiple functions
     _seed_number: int
     _maps: dict[MapName, CaverdataMaps]

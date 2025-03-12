@@ -12,6 +12,8 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.hint_node import HintNode
 from randovania.games.fusion.exporter.hint_namer import FusionColor, FusionHintNamer
+from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
+from randovania.games.fusion.layout.fusion_cosmetic_patches import FusionCosmeticPatches
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.lib import json_lib
@@ -19,13 +21,9 @@ from randovania.lib import json_lib
 if TYPE_CHECKING:
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
-    from randovania.games.fusion.layout.fusion_cosmetic_patches import FusionCosmeticPatches
 
 
-class FusionPatchDataFactory(PatchDataFactory):
-    cosmetic_patches: FusionCosmeticPatches
-    configuration: FusionConfiguration
+class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeticPatches]):
     _placeholder_metroid_message = "placeholder metroid text"
     _lang_list = ["JapaneseKanji", "JapaneseHiragana", "English", "German", "French", "Italian", "Spanish"]
     _easter_egg_bob = 64

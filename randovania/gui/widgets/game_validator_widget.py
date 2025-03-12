@@ -75,7 +75,7 @@ async def _run_validator(write_to_log: debug.DebugPrintFunction, debug_level: in
     try:
         debug.print_function = write_to_log
 
-        configuration = layout.get_preset(0).configuration
+        configuration: BaseConfiguration = layout.get_preset(0).configuration
         patches = layout.all_patches[0]
 
         before = time.perf_counter()
