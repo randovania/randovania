@@ -28,7 +28,6 @@ from randovania.network_common.multiplayer_session import (
     MultiplayerSessionEntry,
     MultiplayerUser,
     MultiplayerWorld,
-    UserID,
     UserWorldDetail,
 )
 
@@ -36,6 +35,7 @@ if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
     from randovania.gui.lib.window_manager import WindowManager
+    from randovania.network_common.user import UserID
 
 logger = logging.getLogger(__name__)
 
