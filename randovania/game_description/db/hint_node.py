@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 class HintNode(ResourceNode):
     lock_requirement: Requirement
     requirement_display_name: str | None
-    _target: Any
+    _target: Any = None
 
     @classmethod
     def hint_kind(cls) -> HintNodeKind:

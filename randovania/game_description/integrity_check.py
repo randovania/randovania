@@ -108,7 +108,7 @@ def pickup_index_exists(index: PickupIndex, game: GameDescription) -> bool:
 
 
 def specific_location_hint_target_exists(node: SpecificLocationHintNode, game: GameDescription) -> bool:
-    return pickup_index_exists(node.target_index)
+    return pickup_index_exists(node.target_index, game)
 
 
 def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:

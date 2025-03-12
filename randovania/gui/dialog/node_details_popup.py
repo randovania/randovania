@@ -547,7 +547,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 extra,
                 valid_starting_location,
                 self._hint_requirement_to_collect,
-                self.override_requirement_display_name_edit.text(),
+                self.override_requirement_display_name_edit.text() or None,
                 target,
             )
 
