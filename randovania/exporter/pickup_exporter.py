@@ -396,7 +396,7 @@ def export_all_indices(
     pickup_list = list(pickup_assignment.values())
     rng.shuffle(pickup_list)
 
-    indices = sorted(node.pickup_index for node in region_list.iterate_nodes() if isinstance(node, PickupNode))
+    indices = sorted(node.pickup_index for node in region_list.iterate_nodes_of_type(PickupNode))
 
     pickups = [
         exporter.export(

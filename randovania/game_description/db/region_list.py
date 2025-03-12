@@ -119,7 +119,7 @@ class RegionList(NodeProvider):
 
     @property
     def num_pickup_nodes(self) -> int:
-        return sum(1 for node in self.iterate_nodes() if isinstance(node, PickupNode))
+        return sum(1 for node in self.iterate_nodes_of_type(PickupNode))
 
     @property
     def all_regions_areas_nodes(self) -> Iterable[tuple[Region, Area, Node]]:
@@ -230,12 +230,11 @@ class RegionList(NodeProvider):
         # Remove connections to event nodes that have a combo node
         from randovania.game_description.db.event_pickup import EventPickupNode
 
-        for node in self.iterate_nodes():
-            if isinstance(node, EventPickupNode):
-                area = self.nodes_to_area(node)
-                for source, connections in area.connections.items():
-                    if node.event_node in connections:
-                        self._patched_node_connections[source.node_index].pop(node.event_node.node_index, None)
+        for node in self.iterate_nodes_of_type(EventPickupNode):
+            area = self.nodes_to_area(node)
+            for source, connections in area.connections.items():
+                if node.event_node in connections:
+                    self._patched_node_connections[source.node_index].pop(node.event_node.node_index, None)
 
         # Dock Weaknesses
         self._patches_dock_open_requirements = []
@@ -311,9 +310,7 @@ class RegionList(NodeProvider):
         network = self._teleporter_network_cache.get(network_name)
         if network is None:
             network = [
-                node
-                for node in self.iterate_nodes()
-                if isinstance(node, TeleporterNetworkNode) and node.network == network_name
+                node for node in self.iterate_nodes_of_type(TeleporterNetworkNode) if node.network == network_name
             ]
             self._teleporter_network_cache[network_name] = network
         return network

@@ -109,9 +109,7 @@ class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
         )
 
         pickups: dict[MapName, dict[EventNumber, TscScript]] = defaultdict(dict)
-        for index in sorted(
-            node.pickup_index for node in self.game.region_list.iterate_nodes() if isinstance(node, PickupNode)
-        ):
+        for index in sorted(node.pickup_index for node in self.game.region_list.iterate_nodes_of_type(PickupNode)):
             target = self.patches.pickup_assignment.get(index, nothing_item)
 
             node = self.game.region_list.node_from_pickup_index(index)
@@ -154,10 +152,7 @@ class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
 
         hints: dict[MapName, dict[EventNumber, CaverdataMapsHints]] = defaultdict(dict)
 
-        for hint_node in self.game.region_list.iterate_nodes():
-            if not isinstance(hint_node, HintNode):
-                continue
-
+        for hint_node in self.game.region_list.iterate_nodes_of_type(HintNode):
             mapname = typing.cast(
                 MapName,
                 hint_node.extra.get("event_map", self.game.region_list.nodes_to_area(hint_node).extra["map_name"]),

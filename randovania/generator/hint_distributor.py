@@ -187,20 +187,20 @@ class HintDistributor(ABC):
     def get_generic_hint_nodes(self, prefill: PreFillParams) -> list[NodeIdentifier]:
         return [
             node.identifier
-            for node in prefill.game.region_list.iterate_nodes()
-            if isinstance(node, HintNode) and node.kind == HintNodeKind.GENERIC
+            for node in prefill.game.region_list.iterate_nodes_of_type(HintNode)
+            if node.kind == HintNodeKind.GENERIC
         ]
 
-    async def get_specific_pickup_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
+    async def get_specific_location_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
         """Assigns a PrecisionPair to each HintNode with kind SPECIFIC_PICKUP in the game's database."""
         return {}
 
     async def assign_specific_location_hints(self, patches: GamePatches, prefill: PreFillParams) -> GamePatches:
-        specific_location_precisions = await self.get_specific_pickup_precision_pairs()
+        specific_location_precisions = await self.get_specific_location_precision_pairs()
 
         wl = prefill.game.region_list
-        for node in wl.iterate_nodes():
-            if isinstance(node, HintNode) and node.kind == HintNodeKind.SPECIFIC_LOCATION:
+        for node in wl.iterate_nodes_of_type(HintNode):
+            if node.kind == HintNodeKind.SPECIFIC_LOCATION:
                 identifier = node.identifier
                 patches = patches.assign_hint(
                     identifier,
@@ -431,9 +431,7 @@ class HintDistributor(ABC):
 
             if not real_potential_targets:
                 # STILL no pickups to place - just use *anything* that hasn't been hinted
-                real_potential_targets = {
-                    node.pickup_index for node in region_list.iterate_nodes() if isinstance(node, PickupNode)
-                }
+                real_potential_targets = {node.pickup_index for node in region_list.iterate_nodes_of_type(PickupNode)}
                 real_potential_targets -= hinted_locations
                 debug.debug_print(
                     f"  * Still no viable pickups; trying {len(real_potential_targets)} uninteresting pickups"
@@ -503,7 +501,7 @@ class HintDistributor(ABC):
         locations_with_feature: dict[HintFeature | HintLocationPrecision, list[PickupNode]] = defaultdict(list)
         relevant_locations: list[PickupNode] = []
 
-        relevant_locations.extend(node for node in region_list.iterate_nodes() if isinstance(node, PickupNode))
+        relevant_locations.extend(node for node in region_list.iterate_nodes_of_type(PickupNode))
         for feature in patches.game.hint_feature_database.values():
             locations_with_feature[feature].extend(region_list.pickup_nodes_with_feature(feature))
 

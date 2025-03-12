@@ -25,7 +25,7 @@ class CSHintDistributor(HintDistributor):
         return 0
 
     @override
-    async def get_specific_pickup_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
+    async def get_specific_location_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
         game = default_database.game_description_for(RandovaniaGame.CAVE_STORY)
 
         def p(loc: str) -> PrecisionPair:
@@ -58,9 +58,8 @@ class CSHintDistributor(HintDistributor):
             already_hinted_indices = [hint.target for hint in patches.hints.values() if isinstance(hint, LocationHint)]
             indices_with_hint = [
                 (node.pickup_index, PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, False))
-                for node in patches.game.region_list.iterate_nodes()
-                if isinstance(node, PickupNode)
-                and node.pickup_index not in already_hinted_indices
+                for node in patches.game.region_list.iterate_nodes_of_type(PickupNode)
+                if node.pickup_index not in already_hinted_indices
                 and patches.pickup_assignment[node.pickup_index].pickup.name in items_with_hint
             ]
             return indices_with_hint

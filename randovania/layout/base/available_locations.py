@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 
 
 def _all_indices(db: GameDescription) -> list[int]:
-    return sorted(node.pickup_index.index for node in db.region_list.iterate_nodes() if isinstance(node, PickupNode))
+    return sorted(node.pickup_index.index for node in db.region_list.iterate_nodes_of_type(PickupNode))
 
 
 class RandomizationMode(BitPackEnum, Enum):

@@ -178,8 +178,8 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription, elevato
 
 
 def _get_nodes_by_teleporter_id(region_list: RegionList, elevator_dock_type: DockType) -> Iterator[DockNode]:
-    for node in region_list.iterate_nodes():
-        if isinstance(node, DockNode) and node.dock_type == elevator_dock_type:
+    for node in region_list.iterate_nodes_of_type(DockNode):
+        if node.dock_type == elevator_dock_type:
             yield node
 
 
