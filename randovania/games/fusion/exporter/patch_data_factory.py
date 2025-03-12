@@ -19,6 +19,8 @@ from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.lib import json_lib
 
 if TYPE_CHECKING:
+    from mars_patcher.auto_generated_types import MarsschemaStartingitems
+
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.game_description.pickup.pickup_entry import PickupEntry
 
@@ -113,8 +115,8 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         }
         return starting_location_dict
 
-    def _create_starting_items(self) -> dict:
-        starting_dict = {
+    def _create_starting_items(self) -> MarsschemaStartingitems:
+        starting_dict: MarsschemaStartingitems = {
             "Energy": self.configuration.energy_per_tank - 1,
             "Abilities": [],
             "SecurityLevels": [],
@@ -136,16 +138,18 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         starting_dict["PowerBombs"] = pb_launcher.included_ammo[0]
 
         for item, quantity in self.patches.starting_resources().as_resource_gain():
-            category = item.extra["StartingItemCategory"]
-            # Special Case for Ammo and Metroids
-            if category in ["Missiles", "PowerBombs", "Metroids"]:
-                continue
-            # Special Case for E-Tanks
-            elif category == "Energy":
-                starting_dict[category] += self.configuration.energy_per_tank * quantity
-                continue
-            # Normal Case
-            starting_dict[category].append(item.extra["StartingItemName"])
+            match item.extra["StartingItemCategory"]:
+                case "Missiles" | "PowerBombs" | "Metroids":
+                    continue
+                case "Energy":
+                    starting_dict["Energy"] += self.configuration.energy_per_tank * quantity
+                case "SecurityLevels":
+                    starting_dict["SecurityLevels"].append(item.extra["StartingItemName"])
+                case "Abilities":
+                    starting_dict["Abilities"].append(item.extra["StartingItemName"])
+                case _:
+                    raise ValueError(f"{item.extra['StartingItemCategory']} is unsupported as starting")
+
         return starting_dict
 
     def _create_tank_increments(self) -> dict:
@@ -281,7 +285,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             }
         return nav_text_json
 
-    def _credits_elements(self) -> dict:
+    def _credits_elements(self) -> defaultdict[str, list[dict]]:
         elements = defaultdict(list)
         majors = credits_spoiler.get_locations_for_major_pickups_and_keys(
             self.description.all_patches, self.players_config
@@ -300,7 +304,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 )
         return elements
 
-    def _create_credits_text(self) -> dict:
+    def _create_credits_text(self) -> list:
         credits_array = []
         spoiler_dict = self._credits_elements()
 
@@ -309,7 +313,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             for index, pickup in enumerate(self.configuration.standard_pickup_configuration.pickups_state.keys())
         }
 
-        def sort_pickup(p: PickupEntry):
+        def sort_pickup(p: str) -> tuple[int | float, str]:
             return major_pickup_name_order.get(p, math.inf), p
 
         for pickup in sorted(spoiler_dict.keys(), key=sort_pickup):
@@ -319,6 +323,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     credits_array.append({"LineType": "Blue", "Text": location["World"], "BlankLines": 0})
                 credits_array.append({"LineType": "White1", "Text": location["Region"], "BlankLines": 0})
                 credits_array.append({"LineType": "White1", "Text": location["Area"], "BlankLines": 1})
+
         return credits_array
 
     def _create_nav_locks(self) -> dict:
