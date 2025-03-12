@@ -13,6 +13,8 @@ from randovania.resolver import debug, resolver
 if TYPE_CHECKING:
     from argparse import ArgumentParser, Namespace, _SubParsersAction
 
+    from randovania.layout.base.base_configuration import BaseConfiguration
+
 
 def validate_command_logic(args: Namespace) -> int:
     debug.set_level(args.debug)
@@ -31,7 +33,7 @@ def validate_command_logic(args: Namespace) -> int:
 
         debug.print_function = write_to_log
 
-    configuration = description.get_preset(0).configuration
+    configuration: BaseConfiguration = description.get_preset(0).configuration
     patches = description.all_patches[0]
     total_times = []
 

@@ -5,12 +5,13 @@ from typing import TYPE_CHECKING, override
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.games.blank.exporter.hint_namer import BlankHintNamer
+from randovania.games.blank.layout import BlankConfiguration, BlankCosmeticPatches
 
 if TYPE_CHECKING:
     from randovania.exporter.hints.hint_namer import HintNamer
 
 
-class BlankPatchDataFactory(PatchDataFactory):
+class BlankPatchDataFactory(PatchDataFactory[BlankConfiguration, BlankCosmeticPatches]):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.BLANK
 

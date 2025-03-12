@@ -18,7 +18,6 @@ from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.exporter import patch_data_factory
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator, pool_creator
@@ -34,6 +33,8 @@ from randovania.lib import json_lib
 if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
     from randovania.game_description.game_description import GameDescription
+    from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+    from randovania.layout.preset import Preset
     from randovania.lib.json_lib import JsonObject
 
 
@@ -694,9 +695,8 @@ def test_generate_patcher_data(
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", rdvgame_filename))
     player_index = 0
-    preset = description.get_preset(player_index)
+    preset: Preset[EchoesConfiguration] = description.get_preset(player_index)
     cosmetic_patches = EchoesCosmeticPatches()
-    assert isinstance(preset.configuration, EchoesConfiguration)
     configuration = dataclasses.replace(preset.configuration, use_new_patcher=use_new_patcher)
     description.generator_parameters.presets[player_index] = dataclasses.replace(preset, configuration=configuration)
     monkeypatch.setattr(randovania, "VERSION", "Test Version")

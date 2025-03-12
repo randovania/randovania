@@ -12,6 +12,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.dock_node import DockNode
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
 from randovania.games.am2r.exporter.joke_hints import AM2R_JOKE_HINTS
+from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches, MusicMode
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.hint_configuration import SpecificPickupHintMode
@@ -22,7 +23,6 @@ if TYPE_CHECKING:
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 
 
 def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[str, str]:
@@ -107,10 +107,8 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
     return {f"{orig}.ogg": f"{new}.ogg" for orig, new in zip(total_orig, total_new, strict=True)}
 
 
-class AM2RPatchDataFactory(PatchDataFactory):
+class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatches]):
     _EASTER_EGG_SHINY = 1024
-    cosmetic_patches: AM2RCosmeticPatches
-    configuration: AM2RConfiguration
 
     # Effect, sprite, header => new_sprite, new_header
     SHINIES = {
@@ -179,7 +177,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
         return pickup_map_dict
 
     def _create_room_dict(self) -> dict:
-        rng = Random(self.description.get_seed_for_player(self.players_config.player_index))
+        rng = Random(self.description.get_seed_for_world(self.players_config.player_index))
 
         return_dict = {}
         for region in self.game.region_list.regions:
@@ -533,6 +531,6 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "pipes": pipes if self.configuration.teleporters.mode != TeleporterShuffleMode.VANILLA else {},
             "door_locks": self._create_door_locks(),
             "hints": self._create_hints(self.rng),
-            "cosmetics": self._create_cosmetics(self.description.get_seed_for_player(self.players_config.player_index)),
+            "cosmetics": self._create_cosmetics(self.description.get_seed_for_world(self.players_config.player_index)),
             "credits_spoiler": self._credits_spoiler(),
         }
