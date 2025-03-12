@@ -118,8 +118,12 @@ class RegionList(NodeProvider):
                 yield node
 
     @property
+    def all_pickup_indices(self) -> Iterator[PickupIndex]:
+        yield from (node.pickup_index for node in self.iterate_nodes_of_type(PickupNode))
+
+    @property
     def num_pickup_nodes(self) -> int:
-        return sum(1 for node in self.iterate_nodes_of_type(PickupNode))
+        return sum(1 for index in self.all_pickup_indices)
 
     @property
     def all_regions_areas_nodes(self) -> Iterable[tuple[Region, Area, Node]]:

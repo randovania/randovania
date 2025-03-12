@@ -129,10 +129,16 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.event_resource_combo.addItem("No events in database", None)
             self.event_resource_combo.setEnabled(False)
 
+        # Hint
         for hint_node_kind in enum_lib.iterate_enum(HintNodeKind):
             self.hint_kind_combo.addItem(hint_node_kind.long_name, hint_node_kind)
-        for specific_hint, details in game.game.hints.specific_pickup_hints.items():
-            self.specific_pickup_target_combo.addItem(details.long_name, specific_hint)
+
+        specific_pickup_hints = game.game.hints.specific_pickup_hints
+        if specific_pickup_hints:
+            for specific_hint, details in specific_pickup_hints.items():
+                self.specific_pickup_target_combo.addItem(details.long_name, specific_hint)
+        else:
+            self.hint_kind_combo.removeItem(2)
 
         # Pickup
         for category in enum_lib.iterate_enum(LocationCategory):
@@ -158,6 +164,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         )
         self.hint_requirement_to_collect_button.clicked.connect(self.on_hint_requirement_to_collect_button)
         self.hint_kind_combo.currentIndexChanged.connect(self.on_hint_kind_combo)
+        self.specific_location_target_spin.valueChanged.connect(self.on_specific_location_target_spin)
         self.teleporter_network_unlocked_button.clicked.connect(self.on_teleporter_network_unlocked_button)
         self.teleporter_network_activate_button.clicked.connect(self.on_teleporter_network_activated_button)
 
@@ -366,8 +373,11 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
     def on_hint_kind_combo(self, _) -> None:
         self._update_hint_target_visibility(self.hint_kind_combo.currentData())
 
-    # Pickup
+    def on_specific_location_target_spin(self, value: int) -> None:
+        has_error = not integrity_check.pickup_index_exists(PickupIndex(value), self.game)
+        common_qt_lib.set_error_border_stylesheet(self.specific_location_target_spin, has_error)
 
+    # Pickup
     def on_pickup_index_button(self) -> None:
         used_indices: dict[int, int] = collections.defaultdict(lambda: 0)
         for node in self.game.region_list.iterate_nodes_of_type(PickupNode):
@@ -520,6 +530,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             kind = typing.cast(HintNodeKind, self.hint_kind_combo.currentData())
             if kind == HintNodeKind.SPECIFIC_LOCATION:
                 target = self.specific_location_target_spin.value()
+                if PickupIndex(target) not in set(self.game.region_list.all_pickup_indices):
+                    raise ValueError("Can't create hint for a PickupIndex that does not exist.")
             elif kind == HintNodeKind.SPECIFIC_PICKUP:
                 target = self.specific_pickup_target_combo.currentData()
             else:
