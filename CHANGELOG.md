@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Hint placement for seeds with individual door lock randomization now uses the resolver to help determine what to hint. This should result in significantly more useful hints in these seeds.
 - Changed: When checking doors that are completely unreachable (such as uncrashed Frigate in most Metroid Prime presets), the resolver is no longer run. This should improve generation time slightly.
+- Changed: The lists of weaknesses in the Door Locks preset settings tab are now sorted more naturally, and aligned with each other.
 - Fixed: Bug in the revised door solver that would result in permanently locked doors being placed when they shouldn't.
 - Fixed: Minor edge case where damage wasn't considered when placing permanently locked doors.
 
