@@ -9,6 +9,11 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 @dataclasses.dataclass(frozen=True)
 class FactorioConfiguration(BaseConfiguration):
     full_tech_tree: bool
+    can_send_fish_to_space: bool
+    stronger_solar: bool
+    productivity_everywhere: bool
+    single_item_freebie: bool
+    strict_multiplayer_freebie: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

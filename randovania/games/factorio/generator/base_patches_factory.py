@@ -38,6 +38,11 @@ class FactorioBasePatchesFactory(BasePatchesFactory[FactorioConfiguration]):
         techs_raw = data_parser.load_techs_raw()
         item_cost = cost_calculator(recipes_raw, techs_raw)
 
+        # Choose a random recipe for rocket parts as if it's 5 times cheaper.
+        # We'll later multiply what we get by 5. This means the recipe will always involve items in bulk,
+        # making it harder to build a rocket with just freebies.
+        item_cost["rocket-part"].material /= 5
+
         # Get all tech that are present in the preset
         collection = ResourceCollection.with_database(game.resource_database)
         for pickup in pool_creator.calculate_pool_results(configuration, game).all_pickups():
@@ -50,8 +55,11 @@ class FactorioBasePatchesFactory(BasePatchesFactory[FactorioConfiguration]):
 
         # Get all recipe results
         all_items_set = set(BASIC_RESOURCES)
-        for recipe in available_recipes:
-            all_items_set.update(data_parser.get_results(recipes_raw[recipe]).keys())
+        for recipe_name in available_recipes:
+            recipe = recipes_raw[recipe_name]
+            recipe_category = recipe.get("category", "crafting")
+            if recipe_category != "rocket-building":
+                all_items_set.update(data_parser.get_results(recipe).keys())
 
         all_items = sorted(all_items_set)
         simple_items = [
@@ -68,14 +76,16 @@ class FactorioBasePatchesFactory(BasePatchesFactory[FactorioConfiguration]):
             "production-science-pack": (all_items, 2),
             "utility-science-pack": (all_items, 2),
             "rocket-part": (all_items, 0),
+            "satellite": (all_items, 3),
         }
         custom_recipes = {}
 
         for target_item, (items, max_fluid) in to_change.items():
             ingredients = recipes.make_random_recipe(rng, items, target_item, item_cost, max_fluid=max_fluid)
+            multiplier = 5 if target_item == "rocket-part" else 1
             custom_recipes[target_item] = {
                 "ingredients": {
-                    item_name: amount * 10 if item_cost[item_name].is_fluid else amount
+                    item_name: (amount * 10 if item_cost[item_name].is_fluid else amount) * multiplier
                     for item_name, amount in ingredients
                 }
             }
