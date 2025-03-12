@@ -9574,19 +9574,31 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Freeze the fishies - https://youtu.be/bhR_vlIitqU",
+                                            "comment": "Freeze the Skultera (Ice Beam or Ice Missiles): https://youtu.be/FaJ4hM9bQnw",
                                             "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Freeze Enemies With Any Weapon"
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "StandOnFrozenEnemies",
-                                                        "amount": 3,
+                                                        "amount": 2,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Freeze Enemies With Ice Beam"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Freeze Enemies With Ice Missiles"
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -9595,7 +9607,28 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Single-Wall Jump with Gravity - https://youtu.be/3aR9WT-MO9o",
+                                            "comment": "Freeze the Skultera (Diffusion): https://youtu.be/3JQMJxzFucg",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "StandOnFrozenEnemies",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Freeze Enemies With Diffusion"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Single-Wall Jump with Gravity: https://youtu.be/3aR9WT-MO9o",
                                             "items": [
                                                 {
                                                     "type": "template",
