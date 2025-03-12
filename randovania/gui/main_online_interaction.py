@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import asyncio
+import typing
 from typing import TYPE_CHECKING
 
-import typing_extensions
 from PySide6 import QtWidgets
 from qasync import asyncSlot
 
@@ -23,10 +23,10 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
     from randovania.interface_common.preset_manager import PresetManager
 
-BaseSession = typing_extensions.TypeVar("BaseSession")
+BaseSession = typing.TypeVar("BaseSession")
 
 
-class BaseBrowser(async_dialog.DialogLike, typing_extensions.Protocol[BaseSession]):
+class BaseBrowser(async_dialog.DialogLike, typing.Protocol[BaseSession]):
     def __init__(self, network_client: QtNetworkClient): ...
 
     async def refresh(self, *, ignore_limit: bool = False) -> bool: ...
