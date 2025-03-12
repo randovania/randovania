@@ -308,8 +308,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
                     True,
                 ),
             }
-            for logbook_node in self.game.region_list.iterate_nodes()
-            if isinstance(logbook_node, HintNode)
+            for logbook_node in self.game.region_list.iterate_nodes_of_type(HintNode)
         ]
 
         artifacts = [self.game.resource_database.get_item(f"Metroid DNA {i + 1}") for i in range(39)]

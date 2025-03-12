@@ -599,10 +599,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         scan_visor = search.find_resource_info_with_long_name(game.resource_database.item, "Scan Visor")
         scan_visor_req = ResourceRequirement.simple(scan_visor)
 
-        for node in game.region_list.iterate_nodes():
-            if not isinstance(node, ConfigurableNode):
-                continue
-
+        for node in game.region_list.iterate_nodes_of_type(ConfigurableNode):
             combo = self._translator_gate_to_combo[node.identifier]
             requirement: LayoutTranslatorRequirement | None = combo.currentData()
 
@@ -682,7 +679,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         node = region_list.node_by_identifier(node_location)
         self._initial_state.node = node
 
-        def is_resource_node_present(node: Node, state: State):
+        def is_resource_node_present(node: Node, state: State) -> typing.TypeGuard[ResourceNode]:
             if node.is_resource_node:
                 assert isinstance(node, ResourceNode)
                 is_resource_set = self._initial_state.resources.is_resource_set
@@ -875,8 +872,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             {
                 "translator_gates": {
                     node.identifier.as_string: LayoutTranslatorRequirement.VIOLET
-                    for node in game.region_list.iterate_nodes()
-                    if isinstance(node, ConfigurableNode)
+                    for node in game.region_list.iterate_nodes_of_type(ConfigurableNode)
                 }
             }
         )

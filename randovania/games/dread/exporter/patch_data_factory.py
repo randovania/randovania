@@ -278,8 +278,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
                     True,
                 ),
             }
-            for hint_node in self.game.region_list.iterate_nodes()
-            if isinstance(hint_node, HintNode)
+            for hint_node in self.game.region_list.iterate_nodes_of_type(HintNode)
         ]
 
     def _static_text_changes(self) -> dict[str, str]:

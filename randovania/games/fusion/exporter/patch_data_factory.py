@@ -219,10 +219,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
 
         hints = {}
 
-        for node in self.game.region_list.iterate_nodes():
-            if not isinstance(node, HintNode):
-                continue
-
+        for node in self.game.region_list.iterate_nodes_of_type(HintNode):
             hint_location = node.extra["hint_name"]
             if hint_location == "AuxiliaryPower":
                 hints[hint_location] = " ".join(

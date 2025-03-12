@@ -342,9 +342,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
     def on_pickup_index_button(self) -> None:
         used_indices: dict[int, int] = collections.defaultdict(lambda: 0)
-        for node in self.game.region_list.iterate_nodes():
-            if isinstance(node, PickupNode):
-                used_indices[node.pickup_index.index] += 1
+        for node in self.game.region_list.iterate_nodes_of_type(PickupNode):
+            used_indices[node.pickup_index.index] += 1
 
         if isinstance(self.node, PickupNode):
             used_indices[self.node.pickup_index.index] -= 1

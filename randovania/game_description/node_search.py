@@ -67,7 +67,7 @@ def distances_to_node(
 
 
 def pickup_index_to_node(region_list: RegionList, index: PickupIndex) -> PickupNode:
-    for node in region_list.iterate_nodes():
-        if isinstance(node, PickupNode) and node.pickup_index == index:
+    for node in region_list.iterate_nodes_of_type(PickupNode):
+        if node.pickup_index == index:
             return node
     raise ValueError(f"PickupNode with {index} not found.")

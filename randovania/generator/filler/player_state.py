@@ -221,12 +221,8 @@ class PlayerState:
 
         teleporters = []
         teleporter_dock_types = self.reach.game.dock_weakness_database.all_teleporter_dock_types
-        for node in wl.iterate_nodes():
-            if (
-                isinstance(node, DockNode)
-                and node.dock_type in teleporter_dock_types
-                and self.reach.is_reachable_node(node)
-            ):
+        for node in wl.iterate_nodes_of_type(DockNode):
+            if node.dock_type in teleporter_dock_types and self.reach.is_reachable_node(node):
                 other = wl.resolve_dock_node(node, s.patches)
                 teleporters.append(
                     "* {} to {}".format(
