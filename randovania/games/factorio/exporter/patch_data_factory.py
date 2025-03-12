@@ -70,9 +70,16 @@ class FactorioPatchDataFactory(PatchDataFactory[FactorioConfiguration, FactorioC
 
             technologies.append(new_tech)
 
-        return {
+        result: cfg.Configuration = {
             "configuration_identifier": self.description.shareable_hash,
             "layout_uuid": str(self.players_config.get_own_uuid()),
+            "optional_modifications": {
+                "can_send_fish_to_space": self.configuration.can_send_fish_to_space,
+                "stronger_solar": self.configuration.stronger_solar,
+                "productivity_everywhere": self.configuration.productivity_everywhere,
+                "single_item_freebie": self.configuration.single_item_freebie,
+                "strict_multiplayer_freebie": self.configuration.strict_multiplayer_freebie,
+            },
             "technologies": technologies,
             "recipes": self._create_recipe_patches(),
             "starting_tech": [
@@ -82,6 +89,8 @@ class FactorioPatchDataFactory(PatchDataFactory[FactorioConfiguration, FactorioC
                 if amount > 0
             ],
         }
+
+        return result
 
     def _create_recipe_patches(self) -> list[cfg.ConfigurationRecipesItem]:
         result = []
