@@ -29,8 +29,9 @@ def test_find_database_errors(game_enum: RandovaniaGame):
 
 def test_invalid_db():
     trivial_req = {"type": "and", "data": {"comment": "", "items": []}}
+    # FIXME: move into separate JSON file for readability and to migrate more easily
     sample_data = {
-        "schema_version": 29,
+        "schema_version": 30,
         "game": "prime2",
         "resource_database": {
             "items": {
@@ -415,6 +416,7 @@ def test_invalid_db():
                                     "Pickup (Not A Pickup)": trivial_req,
                                     "Bad Pickup": trivial_req,
                                     "Pickup (Duplicate Id)": trivial_req,
+                                    "Bad Hint": trivial_req,
                                 },
                             },
                             "Door to World (2)": {
@@ -462,6 +464,19 @@ def test_invalid_db():
                                 "extra": {},
                                 "valid_starting_location": False,
                                 "event_name": "Boss",
+                                "connections": {"Door to World (1)": trivial_req},
+                            },
+                            "Bad Hint": {
+                                "node_type": "hint",
+                                "heal": False,
+                                "coordinates": None,
+                                "description": "",
+                                "layers": ["default"],
+                                "extra": {},
+                                "valid_starting_location": False,
+                                "kind": "specific-location",
+                                "requirement_to_collect": trivial_req,
+                                "target": 2403,
                                 "connections": {"Door to World (1)": trivial_req},
                             },
                             "Pickup (Not A Pickup)": {
@@ -534,6 +549,7 @@ def test_invalid_db():
         "Lava World/Hot/Door to Nowhere is a Dock Node, but connection 'region World/area Nowhere/node Random Door'"
         " is invalid: 'Unknown name: Nowhere'",
         "Lava World/Hot/Bad Event is an Event Node, but naming doesn't start with 'Event -'",
+        "Lava World/Hot/Bad Hint points to PickupIndex 2403, which does not exist.",
         "Lava World/Hot/Pickup (Not A Pickup) is not a Pickup Node, but naming matches 'Pickup (...)'",
         "Lava World/Hot/Bad Pickup shares the hint feature 'Redundant Feature' with the area it's in.",
         "Lava World/Hot/Bad Pickup is a Pickup Node, but naming doesn't match 'Pickup (...)'",
