@@ -188,7 +188,7 @@ class FusionPatchDataFactory(PatchDataFactory):
                     "HueMax": getattr(cosmetics, f"{attr_name}_hue_max"),
                 }
         palette_dict = {
-            "Seed": self.description.get_seed_for_player(self.players_config.player_index),
+            "Seed": self.description.get_seed_for_world(self.players_config.player_index),
             "Randomize": palettes,
             "ColorSpace": cosmetics.color_space.long_name,
         }

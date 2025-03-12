@@ -717,7 +717,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             "hints": self._encode_hints(self.rng),
             "final_boss_hint": self._create_final_boss_hint(),
             "cosmetic_patches": self._create_cosmetics(
-                self.description.get_seed_for_player(self.players_config.player_index)
+                self.description.get_seed_for_world(self.players_config.player_index)
             ),
             "configuration_identifier": self.description.shareable_hash,
             "custom_doors": self._add_custom_doors(),

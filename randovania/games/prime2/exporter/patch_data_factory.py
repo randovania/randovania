@@ -859,7 +859,7 @@ class EchoesPatchDataFactory(PatchDataFactory):
         }
 
     def add_new_patcher_cosmetics(self) -> dict:
-        cosmetic_rng = Random(self.description.get_seed_for_player(self.players_config.player_index))
+        cosmetic_rng = Random(self.description.get_seed_for_world(self.players_config.player_index))
 
         suits = self.cosmetic_patches.suit_colors.randomized(cosmetic_rng).as_json
         suits.pop("randomize_separately")
@@ -884,7 +884,7 @@ class EchoesPatchDataFactory(PatchDataFactory):
             "worlds": regions_patch_data,
             "area_patches": {"rebalance_world": True},
             "small_randomizations": {
-                "seed": self.description.get_seed_for_player(self.players_config.player_index),
+                "seed": self.description.get_seed_for_world(self.players_config.player_index),
                 "echo_locks": True,
                 "minigyro_chamber": True,
                 "rubiks": True,

@@ -986,7 +986,7 @@ class PrimePatchDataFactory(PatchDataFactory):
 
         data: dict = {
             "$schema": "https://randovania.github.io/randomprime/randomprime.schema.json",
-            "seed": self.description.get_seed_for_player(self.players_config.player_index),
+            "seed": self.description.get_seed_for_world(self.players_config.player_index),
             "preferences": {
                 "defaultGameOptions": self.get_default_game_options(),
                 "qolGameBreaking": not self.configuration.legacy_mode,

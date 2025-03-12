@@ -62,7 +62,7 @@ class CSPatchDataFactory(PatchDataFactory):
         return CSHintExporter
 
     def create_game_specific_data(self) -> dict:
-        self._seed_number = self.description.get_seed_for_player(self.players_config.player_index)
+        self._seed_number = self.description.get_seed_for_world(self.players_config.player_index)
 
         self._maps = self._create_maps_data()
         self._maps["Start"]["pickups"]["0201"] = self._create_starting_script()
