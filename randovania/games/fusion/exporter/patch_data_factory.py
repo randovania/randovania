@@ -211,8 +211,8 @@ class FusionPatchDataFactory(PatchDataFactory):
             metroid_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
-                FusionHintNamer(self.description.all_patches, self.players_config),
-                True if metroid_precision != SpecificPickupHintMode.HIDE_AREA else False,
+                namer,
+                True if metroid_precision == SpecificPickupHintMode.HIDE_AREA else False,
                 artifacts,
                 True,
             )
@@ -220,8 +220,8 @@ class FusionPatchDataFactory(PatchDataFactory):
             charge_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
-                FusionHintNamer(self.description.all_patches, self.players_config),
-                True if charge_precision != SpecificPickupHintMode.HIDE_AREA else False,
+                namer,
+                True if charge_precision == SpecificPickupHintMode.HIDE_AREA else False,
                 [self.game.resource_database.get_item("ChargeBeam")],
                 True,
             )
