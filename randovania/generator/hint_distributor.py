@@ -191,12 +191,12 @@ class HintDistributor(ABC):
             if node.kind == HintNodeKind.GENERIC
         ]
 
-    async def get_specific_location_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
+    async def get_specific_pickup_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
         """Assigns a PrecisionPair to each HintNode with kind SPECIFIC_PICKUP in the game's database."""
         return {}
 
     async def assign_specific_location_hints(self, patches: GamePatches, prefill: PreFillParams) -> GamePatches:
-        specific_location_precisions = await self.get_specific_location_precision_pairs()
+        specific_location_precisions = await self.get_specific_pickup_precision_pairs()
 
         wl = prefill.game.region_list
         for node in wl.iterate_nodes_of_type(HintNode):

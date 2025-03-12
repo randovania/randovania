@@ -25,7 +25,7 @@ class CSHintDistributor(HintDistributor):
         return 0
 
     @override
-    async def get_specific_location_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
+    async def get_specific_pickup_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
         game = default_database.game_description_for(RandovaniaGame.CAVE_STORY)
 
         def p(loc: str) -> PrecisionPair:
