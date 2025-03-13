@@ -472,23 +472,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 )
                 self.editor.add_node(area, lock_node)
 
-    def update_selected_node(self) -> None:
-        node = self.current_node
-        self.node_info_group.setEnabled(node is not None)
-        if node is None:
-            self.node_name_label.setText("<missing node>")
-            self.node_details_label.setText("")
-            self.node_description_label.setText("")
-            self.update_other_node_connection()
-            return
-
-        self.node_heals_check.setChecked(node.heal)
-
-        is_area_spawn = node.valid_starting_location
-        self.area_spawn_check.setChecked(is_area_spawn)
-
-        self.area_view_canvas.highlight_node(node)
-
+    def node_details(self, node: Node) -> str:
         try:
             msg = pretty_print.pretty_print_node_type(node, self.region_list, self.resource_database)
         except Exception as e:
@@ -519,8 +503,27 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             if (requirement := node.requirement_name) != "Trivial":
                 msg += f"\n<br />Requirement: {requirement}"
 
+        return msg
+
+    def update_selected_node(self) -> None:
+        node = self.current_node
+        self.node_info_group.setEnabled(node is not None)
+        if node is None:
+            self.node_name_label.setText("<missing node>")
+            self.node_details_label.setText("")
+            self.node_description_label.setText("")
+            self.update_other_node_connection()
+            return
+
+        self.node_heals_check.setChecked(node.heal)
+
+        is_area_spawn = node.valid_starting_location
+        self.area_spawn_check.setChecked(is_area_spawn)
+
+        self.area_view_canvas.highlight_node(node)
+
         self.node_name_label.setText(node.name)
-        self.node_details_label.setText(msg)
+        self.node_details_label.setText(self.node_details(node))
         self.node_description_label.setText(node.description)
         self.update_other_node_connection()
 
