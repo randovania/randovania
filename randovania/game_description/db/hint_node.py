@@ -11,9 +11,7 @@ from randovania.lib import enum_lib
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node import NodeContext
-    from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.requirements.base import Requirement
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
 
 
@@ -53,21 +51,12 @@ class HintNode(ResourceNode):
     def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
         yield self.resource(context), 1
 
-    def data_editor_message(self, region_list: RegionList, db: ResourceDatabase) -> str:
-        raise NotImplementedError
-
 
 @dataclasses.dataclass(frozen=True, slots=True)
 class GenericHintNode(HintNode):
     @classmethod
     def hint_kind(cls) -> HintNodeKind:
         return HintNodeKind.GENERIC
-
-    def data_editor_message(self, region_list: RegionList, db: ResourceDatabase) -> str:
-        message = "Generic Hint"
-        if (requirement := self.requirement_name) != "Trivial":
-            message += f"\n<br />Requirement: {requirement}"
-        return message
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
@@ -81,18 +70,6 @@ class SpecificLocationHintNode(HintNode):
         """Which PickupIndex this hint points to."""
         return PickupIndex(self._target)
 
-    def data_editor_message(self, region_list: RegionList, db: ResourceDatabase) -> str:
-        message = "Specific Location Hint"
-        target = region_list.node_from_pickup_index(self.target_index)
-        fmt_message = '\n<br />Target: <a href="node://{}">{}</a>'
-        message += fmt_message.format(
-            target.identifier.as_string,
-            region_list.node_name(target, True, True),
-        )
-        if (requirement := self.requirement_name) != "Trivial":
-            message += f"\n<br />Requirement: {requirement}"
-        return message
-
 
 @dataclasses.dataclass(frozen=True, slots=True)
 class SpecificPickupHintNode(HintNode):
@@ -104,14 +81,6 @@ class SpecificPickupHintNode(HintNode):
     def specific_pickup_hint_id(self) -> str:
         """Which entry in `GameHints.specific_pickup_hints` this hint is for."""
         return self._target
-
-    def data_editor_message(self, region_list: RegionList, db: ResourceDatabase) -> str:
-        message = "Specific Pickup Hint"
-        details = db.game_enum.hints.specific_pickup_hints[self.specific_pickup_hint_id]
-        message += f"\n<br />Target: {details.long_name}"
-        if (requirement := self.requirement_name) != "Trivial":
-            message += f"\n<br />Requirement: {requirement}"
-        return message
 
 
 class HintNodeKind(Enum):
@@ -132,12 +101,9 @@ enum_lib.add_long_name(
     },
 )
 
-HINT_KIND_TO_CLASS = {
-    cls.hint_kind(): cls for cls in (GenericHintNode, SpecificLocationHintNode, SpecificPickupHintNode)
-}
 
 enum_lib.add_per_enum_field(
     HintNodeKind,
     "hint_node_class",
-    HINT_KIND_TO_CLASS,
+    {cls.hint_kind(): cls for cls in HintNode.__subclasses__()},
 )

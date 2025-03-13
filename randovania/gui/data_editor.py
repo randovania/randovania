@@ -24,7 +24,7 @@ from randovania.game_description import (
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.hint_node import HintNode, SpecificLocationHintNode, SpecificPickupHintNode
 from randovania.game_description.db.node import GenericNode, Node, NodeContext, NodeLocation
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.editor import Editor
@@ -502,7 +502,22 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 msg += f"\n<br />Lock Override: {node.override_default_lock_requirement}"
 
         elif isinstance(node, HintNode):
-            msg = node.data_editor_message(self.region_list, self.resource_database)
+            msg = f"{node.kind.long_name} Hint"
+
+            if isinstance(node, SpecificLocationHintNode):
+                target = self.region_list.node_from_pickup_index(node.target_index)
+                fmt_message = '\n<br />Target: <a href="node://{}">{}</a>'
+                msg += fmt_message.format(
+                    target.identifier.as_string,
+                    self.region_list.node_name(target, True, True),
+                )
+
+            elif isinstance(node, SpecificPickupHintNode):
+                details = self.resource_database.game_enum.hints.specific_pickup_hints[node.specific_pickup_hint_id]
+                msg += f"\n<br />Target: {details.long_name}"
+
+            if (requirement := node.requirement_name) != "Trivial":
+                msg += f"\n<br />Requirement: {requirement}"
 
         self.node_name_label.setText(node.name)
         self.node_details_label.setText(msg)
