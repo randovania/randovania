@@ -19,6 +19,8 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.exporter.hint_exporter import CSHintExporter
 from randovania.games.cave_story.exporter.hint_namer import CSHintNamer
+from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
+from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
 from randovania.games.cave_story.layout.preset_describer import get_ingame_hash
 from randovania.games.cave_story.patcher.caver_music_shuffle import CaverMusic
 from randovania.generator.pickup_pool import pickup_creator
@@ -28,16 +30,11 @@ if TYPE_CHECKING:
 
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
-    from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
-    from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
 
 NOTHING_ITEM_SCRIPT = "<PRI<MSG<TUR<IT+0000\r\nGot =Nothing=!<WAI0025<NOD<EVE0015"
 
 
-class CSPatchDataFactory(PatchDataFactory):
-    cosmetic_patches: CSCosmeticPatches
-    configuration: CSConfiguration
-
+class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
     # Variables shared between multiple functions
     _seed_number: int
     _maps: dict[MapName, CaverdataMaps]
@@ -62,7 +59,7 @@ class CSPatchDataFactory(PatchDataFactory):
         return CSHintExporter
 
     def create_game_specific_data(self) -> dict:
-        self._seed_number = self.description.get_seed_for_player(self.players_config.player_index)
+        self._seed_number = self.description.get_seed_for_world(self.players_config.player_index)
 
         self._maps = self._create_maps_data()
         self._maps["Start"]["pickups"]["0201"] = self._create_starting_script()
@@ -112,9 +109,7 @@ class CSPatchDataFactory(PatchDataFactory):
         )
 
         pickups: dict[MapName, dict[EventNumber, TscScript]] = defaultdict(dict)
-        for index in sorted(
-            node.pickup_index for node in self.game.region_list.iterate_nodes() if isinstance(node, PickupNode)
-        ):
+        for index in sorted(node.pickup_index for node in self.game.region_list.iterate_nodes_of_type(PickupNode)):
             target = self.patches.pickup_assignment.get(index, nothing_item)
 
             node = self.game.region_list.node_from_pickup_index(index)
@@ -157,10 +152,7 @@ class CSPatchDataFactory(PatchDataFactory):
 
         hints: dict[MapName, dict[EventNumber, CaverdataMapsHints]] = defaultdict(dict)
 
-        for hint_node in self.game.region_list.iterate_nodes():
-            if not isinstance(hint_node, HintNode):
-                continue
-
+        for hint_node in self.game.region_list.iterate_nodes_of_type(HintNode):
             mapname = typing.cast(
                 MapName,
                 hint_node.extra.get("event_map", self.game.region_list.nodes_to_area(hint_node).extra["map_name"]),

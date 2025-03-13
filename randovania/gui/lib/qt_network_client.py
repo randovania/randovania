@@ -21,9 +21,9 @@ from randovania.network_common.multiplayer_session import (
     MultiplayerSessionEntry,
     MultiplayerSessionListEntry,
     MultiplayerWorldPickups,
-    User,
     WorldUserInventory,
 )
+from randovania.network_common.user import CurrentUser
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -89,7 +89,7 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
     Connect = Signal()
     ConnectError = Signal()
     Disconnect = Signal()
-    UserChanged = Signal(User)
+    UserChanged = Signal(CurrentUser)
     ConnectionStateUpdated = Signal(ConnectionState)
 
     MultiplayerSessionMetaUpdated = Signal(MultiplayerSessionEntry)

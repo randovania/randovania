@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from typing import TYPE_CHECKING
 from unittest.mock import ANY, MagicMock
 
@@ -36,8 +37,8 @@ def test_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
 
     # Assert
     mock_patch.assert_called_with(
-        tmp_path.joinpath("input_path"),
-        tmp_path.joinpath("output", "path"),
+        os.fspath(tmp_path.joinpath("input_path")),
+        os.fspath(tmp_path.joinpath("output", "path")),
         ANY,
         ANY,
     )

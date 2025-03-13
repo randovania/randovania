@@ -59,9 +59,8 @@ def calculate_pool_pickup_count(layout: BaseConfiguration) -> dict[LocationCateg
 
     result: dict[LocationCategory | str, list[int]] = {cat: [0, 0] for cat in LocationCategory}
 
-    for node in game_description.region_list.iterate_nodes():
-        if isinstance(node, PickupNode):
-            result[node.location_category][1] += 1
+    for node in game_description.region_list.iterate_nodes_of_type(PickupNode):
+        result[node.location_category][1] += 1
 
     pool_results = calculate_pool_results(layout, game_description)
     result["Starting"] = [0, layout.standard_pickup_configuration.minimum_random_starting_pickups]

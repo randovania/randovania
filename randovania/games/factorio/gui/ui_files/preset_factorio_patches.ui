@@ -34,54 +34,140 @@
      <number>4</number>
     </property>
     <item>
-     <widget class="QCheckBox" name="full_tech_tree_check">
-      <property name="enabled">
-       <bool>true</bool>
+     <widget class="QGroupBox" name="tech_tree_group">
+      <property name="title">
+       <string>Tech Tree</string>
       </property>
-      <property name="text">
-       <string>Full Tech Tree</string>
-      </property>
+      <layout class="QVBoxLayout" name="tech_tree_layout">
+       <item>
+        <widget class="QCheckBox" name="full_tech_tree_check">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Full Tech Tree</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="full_tech_tree_label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Include checks for every single tier of the damage and speed upgrades. When unchecked only the first two tiers are used.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+         <property name="openExternalLinks">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="full_tech_tree_label">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+     <widget class="QGroupBox" name="difficulty_group">
+      <property name="title">
+       <string>Difficulty</string>
       </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>60</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Include checks for every single tier of the damage and speed upgrades. When unchecked only the first two tiers are used.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-      <property name="openExternalLinks">
-       <bool>true</bool>
-      </property>
+      <layout class="QVBoxLayout" name="difficulty_layout">
+       <item>
+        <widget class="QCheckBox" name="allow_productivity_check">
+         <property name="text">
+          <string>Allow Productivity Modules everywhere</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="allow_productivity_label">
+         <property name="text">
+          <string>When enabled, all recipes allow the use of Productivity Modules not just intermediates.
+
+Recommended, due the non-intermediates being valid science ingredients.</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::TextFormat::MarkdownText</enum>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="stronger_solar_check">
+         <property name="text">
+          <string>Stronger Solar Panels and Accumulators</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="stronger_solar_label">
+         <property name="text">
+          <string>Increases how much power a Solar Panel gives and how much energy an Accumulator holds to 4 times as much.
+
+Recommended, as Solar can be your only source of Electricity and scaling it in early game is very expensive.</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::TextFormat::MarkdownText</enum>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
     <item>
-     <widget class="Line" name="full_tech_tree_line">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+     <widget class="QGroupBox" name="freebies_group">
+      <property name="title">
+       <string>Freebies</string>
       </property>
+      <layout class="QVBoxLayout" name="freebies_layout">
+       <item>
+        <widget class="QCheckBox" name="strict_multiplayer_freebie_check">
+         <property name="text">
+          <string>Strict Freebies in Multiplayer</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="strict_multiplayer_freebie_label">
+         <property name="text">
+          <string>When enabled, guarantee that the total amount of items distributed is not more than in singleplayer, even if it  means some players get nothing.
+
+When disabled, every player is guaranteed at least one, even if you were offline. This includes vehicles and armors.</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::TextFormat::MarkdownText</enum>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
     <item>
      <spacer name="vertical_spacer">
       <property name="orientation">
-       <enum>Qt::Vertical</enum>
+       <enum>Qt::Orientation::Vertical</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>

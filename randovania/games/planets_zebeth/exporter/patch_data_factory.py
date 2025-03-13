@@ -8,6 +8,8 @@ from randovania.exporter.hints import credits_spoiler
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.games.planets_zebeth.exporter.hint_namer import PlanetsZebethHintNamer
+from randovania.games.planets_zebeth.layout.planets_zebeth_configuration import PlanetsZebethConfiguration
+from randovania.games.planets_zebeth.layout.planets_zebeth_cosmetic_patches import PlanetsZebethCosmeticPatches
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.lib import json_lib
 
@@ -16,17 +18,12 @@ if TYPE_CHECKING:
 
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.games.planets_zebeth.layout.planets_zebeth_configuration import PlanetsZebethConfiguration
-    from randovania.games.planets_zebeth.layout.planets_zebeth_cosmetic_patches import PlanetsZebethCosmeticPatches
 
 
 MAX_CHARS_LIMIT_FOR_INGAME_MESSAGE_BOX = 33
 
 
-class PlanetsZebethPatchDataFactory(PatchDataFactory):
-    cosmetic_patches: PlanetsZebethCosmeticPatches
-    configuration: PlanetsZebethConfiguration
-
+class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration, PlanetsZebethCosmeticPatches]):
     @override
     @classmethod
     def hint_namer_type(cls) -> type[PlanetsZebethHintNamer]:
@@ -173,7 +170,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory):
         pickup_list = self.export_pickup_list()
 
         return {
-            "seed": self.description.get_seed_for_player(self.players_config.player_index),
+            "seed": self.description.get_seed_for_world(self.players_config.player_index),
             "game_config": self._create_game_config_dict(),
             "preferences": self._create_cosmetics(),
             "level_data": {"room": "rm_Zebeth", "pickups": self._create_pickups_dict(pickup_list, self.rng)},

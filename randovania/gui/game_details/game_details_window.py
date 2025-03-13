@@ -8,6 +8,7 @@ from qasync import asyncSlot
 import randovania
 from randovania import monitoring
 from randovania.gui import game_specific_gui
+from randovania.gui.dialog.async_race_creation_dialog import AsyncRaceCreationDialog
 from randovania.gui.game_details.dock_lock_details_tab import DockLockDetailsTab
 from randovania.gui.game_details.generation_order_widget import GenerationOrderWidget
 from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
@@ -19,6 +20,7 @@ from randovania.gui.lib.common_qt_lib import (
     prompt_user_for_output_game_log,
     set_default_window_icon,
 )
+from randovania.gui.lib.qt_network_client import handle_network_errors
 from randovania.gui.widgets.game_validator_widget import GameValidatorWidget
 from randovania.interface_common import generator_frontend
 from randovania.interface_common.options import InfoAlert, Options
@@ -53,6 +55,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
     _can_stop_background_process: bool = True
     _game_details_tabs: list[GameDetailsTab]
     validator_widget: GameValidatorWidget | None = None
+    race_creation: AsyncRaceCreationDialog | None = None
 
     def __init__(self, window_manager: WindowManager | None, options: Options):
         super().__init__()
@@ -84,6 +87,11 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self._action_copy_permalink.setText("Copy Permalink")
         self._tool_button_menu.addAction(self._action_copy_permalink)
 
+        self._action_create_async = QtGui.QAction(self)
+        self._action_create_async.setText("Create async race room")
+        self._tool_button_menu.addAction(self._action_create_async)
+        self._action_create_async.setEnabled(self._window_manager is not None)
+
         self._action_export_preset = QtGui.QAction(self)
         self._action_export_preset.setText("Export current player's preset")
         self._tool_button_menu.addAction(self._action_export_preset)
@@ -97,6 +105,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self.export_iso_button.clicked.connect(self._export_iso)
         self._action_open_tracker.triggered.connect(self._open_map_tracker)
         self._action_copy_permalink.triggered.connect(self._copy_permalink)
+        self._action_create_async.triggered.connect(self._create_async)
         self._action_export_preset.triggered.connect(self._export_preset)
         self._action_view_trick_usages.triggered.connect(self._view_trick_usages)
         self.player_index_combo.activated.connect(self._update_current_player)
@@ -128,8 +137,31 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         )
 
     # Operations
-    def _copy_permalink(self):
+    def _copy_permalink(self) -> None:
         common_qt_lib.set_clipboard(self.layout_description.permalink.as_base64_str)
+
+    @asyncSlot()
+    @handle_network_errors
+    async def _create_async(self) -> None:
+        assert self._window_manager is not None
+        network_client = common_qt_lib.get_network_client()
+
+        if not await network_client.ensure_logged_in(self):
+            return
+
+        if self.race_creation is not None:
+            self.race_creation.raise_()
+            return
+
+        self.race_creation = AsyncRaceCreationDialog(self)
+        result = await async_dialog.execute_dialog(self.race_creation)
+        if result == QtWidgets.QDialog.DialogCode.Accepted:
+            await network_client.create_async_race_room(
+                self.layout_description,
+                self.race_creation.create_settings_object(),
+            )
+            # TODO: open the room? confirmation popup?
+        self.race_creation = None
 
     def _export_log(self):
         all_games = self.layout_description.all_games
@@ -229,6 +261,8 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
             players = numbered_players
         self._player_names = dict(enumerate(players))
         assert len(self._player_names) == len(players)
+
+        self._action_create_async.setEnabled(self._window_manager is not None and description.world_count == 1)
 
         self.export_iso_button.setEnabled(description.world_count == 1 or not randovania.is_frozen())
         if description.world_count > 1:

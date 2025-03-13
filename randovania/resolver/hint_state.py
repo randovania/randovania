@@ -23,6 +23,6 @@ class ResolverHintState(HintState):
         collected = list(state.collected_pickup_indices)
         return [
             node.pickup_index
-            for node in game.region_list.iterate_nodes()
-            if isinstance(node, PickupNode) and node.pickup_index in collected
+            for node in game.region_list.iterate_nodes_of_type(PickupNode)
+            if node.pickup_index in collected
         ]

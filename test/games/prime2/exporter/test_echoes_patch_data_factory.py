@@ -10,6 +10,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime2.exporter import patch_data_factory
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.echoes_cosmetic_suits import EchoesSuitPreferences, SuitColor
+from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterList, TeleporterShuffleMode
 
 if TYPE_CHECKING:
@@ -80,8 +81,9 @@ def test_suit_cosmetics(randomize_separately: bool | None, expected: dict, mocke
     cosmetics = EchoesCosmeticPatches(suit_colors=suits)
 
     # Mocks
-    description = MagicMock()
-    description.get_seed_for_player = lambda _: 0
+    description = MagicMock(spec=LayoutDescription)
+    description.get_seed_for_world = lambda _: 0
+    description.all_patches = MagicMock()
 
     players = MagicMock()
 

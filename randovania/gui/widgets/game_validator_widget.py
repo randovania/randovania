@@ -24,6 +24,7 @@ class IndentedWidget(NamedTuple):
     indent: int
     item: QtWidgets.QTreeWidgetItem
     action_type: str | None = None
+    action_visibility_type: str | None = None
 
 
 _LABELS = ["Node", "Type", "Action", "Energy", "Resources"]
@@ -36,9 +37,22 @@ SATISFIABLE_CHAR = "="
 COMMENT_CHAR = "#"
 SKIP_ROLLBACK_CHAR = "*"
 
+location_pattern = r"(?P<region>.+?)/(?P<area>.+?)/(?P<node>.+?)"
+action_pattern = r"\[action (?P<action>.*?)]"
+
 action_re = re.compile(
-    r"^(?P<node>.+?) (?:\[(?P<energy>\d+?/\d+?) Energy] )?for (?:\[action (?P<action>.*?)] )?(?P<resources>\[.*?])$"
+    f"^{location_pattern} "
+    r"(?:\[(?P<energy>\d+?/\d+?) Energy] )?"
+    f"for (?:{action_pattern} )?"
+    r"(?P<resources>\[.*?])$"
 )
+rollback_skip_re = re.compile(
+    r"^(?P<action_type>.*?) "
+    f"{location_pattern} "
+    f"{action_pattern} ?"
+    r"(?:, (?P<additional>.*?))?$"
+)
+
 pickup_action_re = re.compile(r"^World (?P<world_num>\d+?)'s (?P<pickup_name>.*?)$")
 action_type_re = re.compile(r"^(?P<type>.*?) - (?P<action>.*?)$")
 
@@ -46,6 +60,8 @@ action_type_re = re.compile(r"^(?P<type>.*?) - (?P<action>.*?)$")
 def get_brush_for_action(action_type: str | None) -> QtGui.QBrush:
     ACTION_COLORS = {
         "Pickup": QtGui.QColorConstants.Cyan,
+        "Major": QtGui.QColorConstants.Cyan,
+        "Minor": QtGui.QColorConstants.DarkCyan,
         "Event": QtGui.QColorConstants.Magenta,
         "Lock": QtGui.QColorConstants.Green,
         "Hint": QtGui.QColorConstants.Yellow,
@@ -59,7 +75,7 @@ async def _run_validator(write_to_log: debug.DebugPrintFunction, debug_level: in
     try:
         debug.print_function = write_to_log
 
-        configuration = layout.get_preset(0).configuration
+        configuration: BaseConfiguration = layout.get_preset(0).configuration
         patches = layout.all_patches[0]
 
         before = time.perf_counter()
@@ -95,7 +111,8 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
 
         configs: list[BaseConfiguration] = [preset.configuration for preset in layout.all_presets]
         self._action_filters = {
-            "Pickup": True,
+            "Major": True,
+            "Minor": False,
             "Event": True,
             "Hint": False,
             "Lock": configs[players.player_index].dock_rando.is_enabled(),
@@ -106,7 +123,8 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
             check.setChecked(self._action_filters[action_type])
             signal_handling.on_checked(check, self._set_action_filter(action_type))
 
-        init_filter(self.show_pickups_check, "Pickup")
+        init_filter(self.show_pickups_check, "Major")
+        init_filter(self.show_minors_check, "Minor")
         init_filter(self.show_events_check, "Event")
         init_filter(self.show_hints_check, "Hint")
         init_filter(self.show_locks_check, "Lock")
@@ -144,10 +162,14 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
         self._verbosity = value
         self._update_needs_refresh()
 
+    def should_item_be_visible(self, widget: IndentedWidget) -> bool:
+        action_type = widget.action_visibility_type or widget.action_type
+        if action_type is None:
+            return True
+        return self._action_filters.get(action_type, True)
+
     def update_item_visibility(self, widget: IndentedWidget) -> None:
-        if widget.action_type is None:
-            return
-        hide = not self._action_filters.get(widget.action_type, True)
+        hide = not self.should_item_be_visible(widget)
         widget.item.setHidden(hide)
 
     @asyncSlot()
@@ -170,14 +192,14 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
         self.log_widget.setColumnHidden(LABEL_IDS["Energy"], self._verbosity < 2)
         self.log_widget.setColumnHidden(LABEL_IDS["Resources"], self._verbosity < 2)
 
-        self._current_tree = [IndentedWidget(-1, self.log_widget)]
+        self._current_tree = [IndentedWidget(-2, self.log_widget)]
 
         def write_to_log(*a: Any) -> None:
             scrollbar = self.log_widget.verticalScrollBar()
             autoscroll = scrollbar.value() == scrollbar.maximum()
 
             message = "    ".join(str(t) for t in a)
-            stripped = message.lstrip()
+            stripped = message.lstrip().rstrip()
             indent = len(message) - len(stripped)
 
             leading_char = stripped[0]
@@ -200,61 +222,96 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
             while self._current_tree[-1].indent >= indent:
                 self._current_tree.pop().item.setExpanded(False)
 
-            if indent == 0:
-                parent = self.log_widget
-            else:
-                parent = self._current_tree[-1].item
+            item = QtWidgets.QTreeWidgetItem()
+            region, area, node = ("", "", "")
 
-            item = QtWidgets.QTreeWidgetItem(parent)
+            def action_type_and_text(_action: str) -> tuple[str, str]:
+                action_type_match = action_type_re.match(_action)
+                if action_type_match is None:
+                    return "Other", _action
+
+                action_text = action_type_match.group("action")
+                action_type = action_type_match.group("type")
+
+                if (action_type in {"Major", "Minor", "Pickup"}) and action_text != "Nothing":
+                    pickup_match = pickup_action_re.match(action_text)
+                    assert pickup_match is not None
+
+                    player = int(pickup_match.group("world_num"))
+                    pickup = pickup_match.group("pickup_name")
+
+                    if self.layout_description.world_count == 1:
+                        action_text = pickup
+                    else:
+                        action_text = f"{self.players.player_names[player]}'s {pickup}"
+
+                return action_type, action_text
 
             if leading_char == ACTION_CHAR:
                 match = action_re.match(stripped)
                 assert match is not None
                 groups = match.groupdict()
 
-                item.setText(LABEL_IDS["Node"], groups["node"])
+                region = groups["region"]
+                area = groups["area"]
+                node = groups["node"]
+
+                item.setText(LABEL_IDS["Node"], f"{area}/{node}")
                 item.setText(LABEL_IDS["Resources"], groups["resources"])
                 item.setText(LABEL_IDS["Energy"], groups.get("energy", ""))
 
                 action = groups["action"]
                 if action is not None:
-                    if action.startswith("World"):
-                        pickup_match = pickup_action_re.match(action)
-                        assert pickup_match is not None
-
-                        player = int(pickup_match.group("world_num"))
-                        pickup = pickup_match.group("pickup_name")
-
-                        if self.layout_description.generator_parameters.world_count == 1:
-                            action = pickup
-                        else:
-                            action = f"{self.players.player_names[player]}'s {pickup}"
-
-                        action = f"Pickup - {action}"
-
-                    action_type_match = action_type_re.match(action)
-                    if action_type_match is None:
-                        item.setText(LABEL_IDS["Action"], action)
-                        action_type = "Other"
-                    else:
-                        item.setText(LABEL_IDS["Action"], action_type_match.group("action"))
-                        action_type = action_type_match.group("type")
+                    action_type, action_text = action_type_and_text(action)
 
                     item.setText(LABEL_IDS["Type"], action_type)
+                    item.setText(LABEL_IDS["Action"], action_text)
+
                     widget = IndentedWidget(indent, item, action_type)
                 else:
                     item.setText(LABEL_IDS["Type"], "Start")
                     widget = IndentedWidget(indent, item)
+
             elif leading_char == SKIP_ROLLBACK_CHAR:
-                action_type = stripped.split(" ")[0]
-                item.setText(LABEL_IDS["Node"], stripped)
+                rollback_skip_match = rollback_skip_re.match(stripped)
+                assert rollback_skip_match is not None
+                groups = rollback_skip_match.groupdict()
+
+                region = groups["region"]
+                area = groups["area"]
+                node = groups["node"]
+
+                action_type = groups["action_type"]
+
+                underlying_action_type, _ = action_type_and_text(groups["action"])
+
+                item.setText(LABEL_IDS["Node"], f"{action_type} {area}/{node}")
                 item.setText(LABEL_IDS["Type"], action_type)
-                widget = IndentedWidget(indent, item, action_type)
+                if (extra := groups.get("additional")) is not None:
+                    item.setText(LABEL_IDS["Action"], extra.capitalize())
+                widget = IndentedWidget(indent, item, action_type, underlying_action_type)
+
             else:
                 item.setText(0, stripped)
                 widget = IndentedWidget(indent, item)
 
-            item.setExpanded(indent == 0)
+            if self.should_item_be_visible(widget) and node:
+                if len(self._current_tree) == 2:
+                    region_item = self._current_tree[-1].item
+
+                    if region_item.text(LABEL_IDS["Node"]) != region:
+                        self._current_tree.pop()
+
+                if len(self._current_tree) == 1:
+                    region_item = QtWidgets.QTreeWidgetItem(self._current_tree[-1].item)
+                    region_item.setText(LABEL_IDS["Node"], region)
+                    self._current_tree.append(IndentedWidget(-1, region_item))
+
+                    region_item.setExpanded(True)
+
+            parent = self._current_tree[-1].item
+            parent.addChild(item)
+
             item.setForeground(LABEL_IDS["Type"], get_brush_for_action(widget.action_type))
             item.setBackground(LABEL_IDS["Type"], QtGui.QColor(32, 33, 36))  # ugly in light mode, but visible
 

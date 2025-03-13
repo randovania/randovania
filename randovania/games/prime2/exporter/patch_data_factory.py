@@ -21,6 +21,8 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.common import elevators
 from randovania.games.prime2.exporter import hints
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator
@@ -43,8 +45,6 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
-    from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-    from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
     from randovania.interface_common.players_configuration import PlayersConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.layout_description import LayoutDescription
@@ -178,8 +178,8 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription, elevato
 
 
 def _get_nodes_by_teleporter_id(region_list: RegionList, elevator_dock_type: DockType) -> Iterator[DockNode]:
-    for node in region_list.iterate_nodes():
-        if isinstance(node, DockNode) and node.dock_type == elevator_dock_type:
+    for node in region_list.iterate_nodes_of_type(DockNode):
+        if node.dock_type == elevator_dock_type:
             yield node
 
 
@@ -586,10 +586,7 @@ def should_keep_elevator_sounds(configuration: EchoesConfiguration) -> bool:
     )
 
 
-class EchoesPatchDataFactory(PatchDataFactory):
-    cosmetic_patches: EchoesCosmeticPatches
-    configuration: EchoesConfiguration
-
+class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeticPatches]):
     def __init__(
         self,
         description: LayoutDescription,
@@ -859,7 +856,7 @@ class EchoesPatchDataFactory(PatchDataFactory):
         }
 
     def add_new_patcher_cosmetics(self) -> dict:
-        cosmetic_rng = Random(self.description.get_seed_for_player(self.players_config.player_index))
+        cosmetic_rng = Random(self.description.get_seed_for_world(self.players_config.player_index))
 
         suits = self.cosmetic_patches.suit_colors.randomized(cosmetic_rng).as_json
         suits.pop("randomize_separately")
@@ -884,7 +881,7 @@ class EchoesPatchDataFactory(PatchDataFactory):
             "worlds": regions_patch_data,
             "area_patches": {"rebalance_world": True},
             "small_randomizations": {
-                "seed": self.description.get_seed_for_player(self.players_config.player_index),
+                "seed": self.description.get_seed_for_world(self.players_config.player_index),
                 "echo_locks": True,
                 "minigyro_chamber": True,
                 "rubiks": True,

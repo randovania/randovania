@@ -14,6 +14,7 @@ import construct
 import randovania
 from randovania.game.game_enum import RandovaniaGame
 from randovania.layout import description_migration, game_patches_serializer
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
@@ -205,11 +206,11 @@ class LayoutDescription:
     def all_presets(self) -> typing.Iterable[Preset]:
         return self.generator_parameters.presets
 
-    def get_preset(self, player_index: int) -> Preset:
-        return self.generator_parameters.get_preset(player_index)
+    def get_preset[Configuration: BaseConfiguration](self, world_index: int) -> Preset[Configuration]:
+        return self.generator_parameters.get_preset(world_index)
 
-    def get_seed_for_player(self, player_index: int) -> int:
-        return self.generator_parameters.seed_number + player_index
+    def get_seed_for_world(self, world_index: int) -> int:
+        return self.generator_parameters.seed_number + world_index
 
     @property
     def _serialized_patches(self):
@@ -281,7 +282,7 @@ class LayoutDescription:
     @property
     def shareable_word_hash(self) -> str:
         # We're not using self.all_games because we want multiple copies of a given game in the list,
-        # so a game that has more players is more likely to have words in the hash
+        # so a game that has more worlds is more likely to have words in the hash
         all_games = [preset.game for preset in self.all_presets]
 
         return shareable_word_hash(
