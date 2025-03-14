@@ -411,6 +411,26 @@ def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
     return room.create_session_entry(sa).as_json
 
 
+def get_own_proof(sa: ServerApp, room_id: int) -> tuple[str, str]:
+    """
+    This endpoint allows a user to request their own submission notes and proof url.
+    """
+    room = AsyncRaceRoom.get_by_id(room_id)
+    user = sa.get_current_user()
+    entry = database.AsyncRaceEntry.entry_for(room, user)
+    if entry is None:
+        raise error.NotAuthorizedForActionError
+
+    if entry.user_status() != AsyncRaceRoomUserStatus.FINISHED:
+        raise error.InvalidActionError("Only possible to submit proof after finishing")
+
+    database.AsyncRaceAuditEntry.create(
+        room=room, user=sa.get_current_user(), message="Requested own submission notes and proof."
+    )
+
+    return entry.submission_notes, entry.proof_url
+
+
 def submit_proof(sa: ServerApp, room_id: int, submission_notes: str, proof_url: str) -> None:
     """
     This endpoint allows a user to record submission notes and a link to proof for their run.
@@ -445,4 +465,5 @@ def setup_app(sa: ServerApp) -> None:
     sa.on("async_race_admin_update_entries", admin_update_entries, with_header_check=True)
     sa.on("async_race_join_and_export", join_and_export, with_header_check=True)
     sa.on("async_race_change_state", change_state, with_header_check=True)
+    sa.on("async_race_get_own_proof", get_own_proof, with_header_check=True)
     sa.on("async_race_submit_proof", submit_proof, with_header_check=True)

@@ -660,6 +660,23 @@ def test_join_and_export_success(simple_room, mocker: pytest_mock.MockFixture):
     assert result is mock_data.return_value
 
 
+def test_get_own_proof(simple_room):
+    # Setup
+    sa = MagicMock()
+    sa.get_current_user.return_value = User.get_by_id(1235)
+
+    entry = AsyncRaceEntry.entry_for(simple_room, sa.get_current_user.return_value)
+    entry.finish_datetime = datetime.datetime(year=2020, month=5, day=12, tzinfo=datetime.UTC)
+    entry.save()
+
+    # Run
+    notes, url = room_api.get_own_proof(sa, simple_room.id)
+
+    # Assert
+    assert notes == ""
+    assert url == ""
+
+
 def test_submit_proof_not_joined(simple_room):
     # Setup
     sa = MagicMock()

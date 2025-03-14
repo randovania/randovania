@@ -574,6 +574,14 @@ class NetworkClient:
         """
         return AsyncRaceRoomEntry.from_json(await self.server_call("async_race_change_state", (room_id, status.value)))
 
+    async def async_race_get_own_proof(self, room_id: int) -> tuple[str, str]:
+        """
+        Gets your own submission_notes and proof_url in the given room.
+        :param room_id:
+        :return: submission_notes and proof_url
+        """
+        return await self.server_call("async_race_get_own_proof", (room_id,))
+
     async def async_race_submit_proof(self, room_id: int, submission_notes: str, proof_url: str) -> None:
         """
         Uploads the proof data for the given room.

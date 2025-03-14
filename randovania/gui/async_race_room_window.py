@@ -252,7 +252,17 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
     @asyncSlot()
     async def _on_submit_proof(self) -> None:
         """Called when the `Submit Proof` button is pressed."""
+
+        try:
+            self.setEnabled(False)
+            submission_notes, proof_url = await self._network_client.async_race_get_own_proof(self.room.id)
+        finally:
+            self.setEnabled(True)
+
         dialog = AsyncRaceProofPopup(self)
+        dialog.ui.notes_edit.setPlainText(submission_notes)
+        dialog.ui.proof_edit.setText(proof_url)
+
         result = await async_dialog.execute_dialog(dialog)
         if result != QtWidgets.QDialog.DialogCode.Accepted:
             return
