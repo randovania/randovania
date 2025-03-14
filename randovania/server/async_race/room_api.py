@@ -287,6 +287,8 @@ def admin_update_entries(sa: ServerApp, room_id: int, raw_new_entries: JsonType)
             entry.start_datetime = modification.start_date
             entry.finish_datetime = modification.finish_date
             entry.forfeit = modification.forfeit
+            entry.submission_notes = modification.submission_notes
+            entry.proof_url = modification.proof_url
             entry.save()
 
         database.AsyncRaceAuditEntry.create(
