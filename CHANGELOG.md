@@ -65,6 +65,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: In White EMMI Arena: Reaching Door to EMMI Zone Spinner (Middle) from Door to Central Unit Access (Charge) with Spin Boost now requires Wall Jump (Beginner).
 - Changed: In EMMI First Chase End: Reaching Door to Teleport to Dairon (Top) with Spin Boost now requires Wall Jump (Beginner).
 - Changed: In Screw Attack Room: Reaching Next to Upper Tank from Total Recharge with Spin Boost no longer requires a Wall Jump trick.
+- Changed: The connection in Arbitrary Enky Room directly from Total Recharge to Dock to Teleport to Dairon is now always logical when having Morph Ball.
+- Changed: The two Blobs in Arbitrary Enky Room now use the same event for logical purposes.
 - Fixed: Using Speed Booster to Shinespark to the top pickup in Screw Attack Room now requires Door Lock Rando to be Disabled.
 
 ##### Burenia
