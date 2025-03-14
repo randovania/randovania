@@ -26,15 +26,19 @@ class FieldDefinition[QtT, PyT]:
     """
     Defines an interface between a Dataclass field and a table column.
     When default_factory is set, the field is optional.
+    When from_qt is None, the field is read only.
     """
 
     display_name: str
     field_name: str
     _: dataclasses.KW_ONLY
-    read_only: bool = False
     default_factory: typing.Callable[[], PyT] | None = None
     to_qt: typing.Callable[[PyT], QtT] = _unmodified_to_qt  # type: ignore[assignment]
-    from_qt: typing.Callable[[QtT], tuple[bool, PyT | None]] = _unmodified_from_qt  # type: ignore[assignment]
+    from_qt: typing.Callable[[QtT], tuple[bool, PyT | None]] | None = _unmodified_from_qt  # type: ignore[assignment]
+
+    @property
+    def read_only(self) -> bool:
+        return self.from_qt is None
 
 
 def BoolFieldDefinition(display_name: str, field_name: str, *, read_only: bool = False) -> FieldDefinition[str, bool]:
@@ -51,9 +55,8 @@ def BoolFieldDefinition(display_name: str, field_name: str, *, read_only: bool =
     return FieldDefinition[str, bool](
         display_name=display_name,
         field_name=field_name,
-        read_only=read_only,
         to_qt=bool_to_qt,
-        from_qt=bool_from_qt,
+        from_qt=None if read_only else bool_from_qt,
     )
 
 
@@ -80,10 +83,9 @@ def DateFieldDefinition(
     return FieldDefinition[QDateTime, datetime.datetime](
         display_name=display_name,
         field_name=field_name,
-        read_only=read_only,
         default_factory=default_factory,
         to_qt=date_to_qt,
-        from_qt=date_from_qt,
+        from_qt=None if read_only else date_from_qt,
     )
 
 
