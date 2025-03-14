@@ -9,13 +9,15 @@ from randovania.layout.layout_description import LayoutDescription
 if TYPE_CHECKING:
     from argparse import ArgumentParser, Namespace, _SubParsersAction
 
+    from randovania.layout.preset import Preset
+
 
 def describe_command_logic(args: Namespace) -> None:
     description = LayoutDescription.from_file(args.layout_file)
 
     print(f"{description.world_count} players")
     for player in range(description.world_count):
-        preset = description.get_preset(player)
+        preset: Preset = description.get_preset(player)
 
         print(f"## Player {player + 1} - {preset.game.long_name}")
         for category, items in preset_describer.describe(preset):

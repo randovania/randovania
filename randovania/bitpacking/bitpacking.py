@@ -204,6 +204,9 @@ class BitPackDataclass(BitPackValue):
             if not field.init:
                 continue
 
+            if field.metadata.get("manual_bitpacking"):
+                continue
+
             item = getattr(self, field.name)
             field_type = resolved_types[field.name]
 
@@ -252,6 +255,10 @@ class BitPackDataclass(BitPackValue):
 
         for field in dataclasses.fields(dc):
             if not field.init:
+                continue
+
+            if field.metadata.get("manual_bitpacking"):
+                args[field.name] = metadata["extra_args"][field.name]
                 continue
 
             resolved_type, optional = type_lib.resolve_optional(resolved_types[field.name])

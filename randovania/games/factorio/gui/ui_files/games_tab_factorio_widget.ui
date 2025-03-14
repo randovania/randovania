@@ -33,7 +33,12 @@
       <item>
        <widget class="QLabel" name="intro_label">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Build a factory, research new technologies and automate the whole process in order to launch a rocket.&lt;/p&gt;&lt;p&gt;What each technology you unlock gives is shuffled, but which science packs you'll need and how many is still the same. However, the recipes for each pack plus the rocket is random!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>Build a factory, research new technologies and automate the whole process in order to launch a rocket.
+
+What each technology you unlock gives is shuffled, but which science packs you'll need and how many is still the same. However, the recipes for each pack plus the rocket and satellite are random!</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::TextFormat::MarkdownText</enum>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
@@ -52,7 +57,7 @@
     <item>
      <spacer name="intro_spacer">
       <property name="orientation">
-       <enum>Qt::Vertical</enum>
+       <enum>Qt::Orientation::Vertical</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
@@ -107,7 +112,101 @@
            <string># updated from code</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="differences_tab">
+   <attribute name="title">
+    <string>Differences</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="differences_layout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="differences_scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="differences_scroll_area_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>485</width>
+         <height>929</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="differences_scroll_layout">
+        <item>
+         <widget class="QLabel" name="differences_label">
+          <property name="text">
+           <string>### Freebies
+Whenever a technology is researched, any eligible items from the unlocked recipes are distributed to online players as bonus.
+
+Using buildings acquired by freebies is expected by logic, such as solar panels for power.
+
+#### Eligible Items
+- Placeable entities, such as buildings and robots.
+- Armors, equipment and guns.
+
+### New Items and Recipes
+- Burner Assembling Machine and Burner Lab have been added, always available.
+- Longer Handed Inserters have been added, with a unique technology to unlock them.
+- Alternative recipes for handcrafting Construction and Logistic Robots were added.
+
+### Starting Items and Recipes
+- Transport Belts are now unlocked by Logistics 1, along with Underground Belts and Splitters.
+- Pipes and Pipe to Ground are now unlocked by default, instead of by Steam Power.
+- Copper Cable, Small Electric Poles, Iron Stick and Labs are once again unlocked by default.
+
+### Inserter Changes
+- Inserters now have their own technology, progressive with Fast Inserters and Bulk Inserters.
+- Long Handed Inserters are unlocked by their own technology, separately from other Inserters.
+- Inserter Capactity Bonus is split into Regular and Bulk Inserter Capacity Bonus.
+
+### Fluid Changes
+- Fluid Handling now only unlocks barreling recipes.
+- New technology Fluid Storage has been added that unlocks Fluid Tanks and Pumps.
+- Fluid Wagons no longer have Storage Tanks as an ingredient and the technology also unlocks Pumps.
+
+### Oil Changes
+- Solid Fuel recipes are now unlocked only by the new technology Solid Fuel.
+- Heavy and Light Oil Cracking are now unlocked by the Oil Cracking technology.
+- Coal Liquefaction now uses Steam as an ingredient instead of Heavy Oil and also unlocks Refineries.
+
+### Changed and New Technologies
+- Electronics now unlocks only Electronic Circuits.
+- Medium Electric Pole and Big Electric Pole are now unlocked by separate technologies.
+- Research Productivity has been added.
+- Research Speed and Mining Productivity now give high bonuses per level.
+- Automated rail transportation has been merged with Railway.
+- Nuclear Fuel Reprocessing has been merged with Nuclear Power.</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::TextFormat::MarkdownText</enum>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
           </property>
           <property name="wordWrap">
            <bool>true</bool>

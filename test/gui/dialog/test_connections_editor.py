@@ -78,9 +78,7 @@ def test_build_change_root(
 
     elif resource_type == NodeRequirement:
         expected = NodeRequirement(
-            next(
-                node for node in echoes_game_description.region_list.iterate_nodes() if isinstance(node, ResourceNode)
-            ).identifier
+            next(node for node in echoes_game_description.region_list.iterate_nodes_of_type(ResourceNode)).identifier
         )
 
     elif resource_type == RequirementTemplate:

@@ -117,6 +117,7 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
         yield f"{node.name} is not an Event Node, but naming suggests it is"
 
     if isinstance(node, PickupNode):
+        yield from check_for_redundant_hint_features(area, node)
         if pickup_node_re.match(node.name) is None:
             yield f"{node.name} is a Pickup Node, but naming doesn't match 'Pickup (...)'"
     elif pickup_node_re.match(node.name) is not None:
@@ -185,6 +186,8 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
 
         if node in nodes_with_paths_in:
             yield f"{area.name} - '{node.name}': Node has paths in, but no connections out."
+
+    yield from check_for_unnormalized_hint_features(area)
 
 
 def find_region_errors(game: GameDescription, region: Region) -> Iterator[str]:
@@ -402,6 +405,35 @@ def get_videos(req: Requirement, node: Node, target: Node) -> Iterator[str]:
                     yield f"YouTube Playlist linked in {node.identifier.as_string} -> {target.name}."
         for i in req.items:
             yield from get_videos(i, node, target)
+
+
+def check_for_redundant_hint_features(area: Area, node: PickupNode) -> Iterator[str]:
+    """
+    If a hint feature is present on an Area, all of its child pickups
+    are treated as if they have that feature. Explicitly including
+    them on the pickup is redundant.
+    """
+    for feature in sorted(node.hint_features):
+        if feature in area.hint_features:
+            yield f"{node.name} shares the hint feature '{feature.long_name}' with the area it's in."
+
+
+def check_for_unnormalized_hint_features(area: Area) -> Iterator[str]:
+    """
+    If all pickups in an Area share the same hint feature, that feature
+    should be included on the Area instead of the pickups.
+    """
+    pickups = [node for node in area.nodes if isinstance(node, PickupNode)]
+    if not pickups:
+        return
+    features = pickups[0].hint_features
+    for pickup in pickups:
+        features &= pickup.hint_features
+    for feature in sorted(features):
+        yield (
+            f"{area.name}'s pickups all share the hint feature '{feature.long_name}'. "
+            "Add feature to the area and remove from the pickups."
+        )
 
 
 def find_database_errors(game: GameDescription) -> list[str]:

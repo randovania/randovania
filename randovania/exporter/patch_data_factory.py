@@ -30,7 +30,7 @@ class PatcherDataMeta(typing.TypedDict):
     layout_was_user_modified: bool
 
 
-class PatchDataFactory:
+class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCosmeticPatches]:
     """
     Class with the purpose of creating a JSON-serializable dictionary from a randomized game.
     The resulting dictionary-data will later be passed to the patcher.
@@ -45,14 +45,14 @@ class PatchDataFactory:
     patches: GamePatches
     rng: Random
 
-    cosmetic_patches: BaseCosmeticPatches
-    configuration: BaseConfiguration
+    cosmetic_patches: CosmeticPatches
+    configuration: Configuration
 
     def __init__(
         self,
         description: LayoutDescription,
         players_config: PlayersConfiguration,
-        cosmetic_patches: BaseCosmeticPatches,
+        cosmetic_patches: CosmeticPatches,
     ):
         self.description = description
         self.players_config = players_config
@@ -62,7 +62,7 @@ class PatchDataFactory:
 
         self.patches = description.all_patches[players_config.player_index]
         self.configuration = description.get_preset(players_config.player_index).configuration
-        self.rng = Random(description.get_seed_for_player(players_config.player_index))
+        self.rng = Random(description.get_seed_for_world(players_config.player_index))
         self.game = filtered_database.game_description_for_layout(self.configuration)
         self.memo_data = self.create_memo_data()
 

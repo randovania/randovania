@@ -3,9 +3,7 @@ from __future__ import annotations
 import dataclasses
 from enum import Enum
 
-from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
-from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
+from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.lib import enum_lib
@@ -51,17 +49,11 @@ enum_lib.add_per_enum_field(
 
 
 @dataclasses.dataclass(frozen=True)
-class HintConfiguration(BitPackDataclass, DataclassPostInitTypeCheck, JsonDataclass):
-    item_hints: bool = True
-
-
-@dataclasses.dataclass(frozen=True)
 class CSConfiguration(BaseConfiguration):
     puppies_anywhere: bool
     objective: CSObjective
     no_blocks: bool
     starting_hp: int = dataclasses.field(metadata={"min": 1, "max": 56, "precision": 1})
-    hints: HintConfiguration = HintConfiguration()
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

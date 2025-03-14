@@ -521,7 +521,7 @@ class Options:
     def per_game_options[PerGame: PerGameOptions](self, per_game: type[PerGame]) -> PerGame:
         return self.generic_per_game_options(per_game.game_enum())
 
-    def generic_per_game_options[PerGame: PerGameOptions](self, game: RandovaniaGame) -> PerGame:
+    def generic_per_game_options(self, game: RandovaniaGame) -> PerGameOptions:
         return getattr(self, f"game_{game.value}")
 
     def set_per_game_options(self, per_game: PerGameOptions):

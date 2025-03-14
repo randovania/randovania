@@ -220,7 +220,7 @@ def test_create_pickup_list(
     )
 
     region_list = MagicMock()
-    region_list.iterate_nodes.return_value = [
+    region_list.iterate_nodes_of_type.return_value = [
         PickupNode(
             NodeIdentifier.create("World", "Area", f"Name {i}"),
             i,
@@ -439,7 +439,7 @@ def test_create_pickup_list_random_data_source(
     creator = pickup_exporter.PickupExporterSolo(memo_data, RandovaniaGame.METROID_PRIME_ECHOES)
 
     region_list = MagicMock()
-    region_list.iterate_nodes.return_value = [
+    region_list.iterate_nodes_of_type.return_value = [
         PickupNode(
             NodeIdentifier.create("W", "A", f"Name {i}"),
             i,

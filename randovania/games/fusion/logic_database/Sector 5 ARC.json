@@ -2462,7 +2462,9 @@
         },
         "Level 3 Security Room": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "security_room"
+            ],
             "extra": {
                 "map_name": "Sector 510",
                 "room_id": [
@@ -3623,7 +3625,9 @@
         },
         "Mini-Fridge": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "pillar"
+            ],
             "extra": {
                 "map_name": "Sector 514",
                 "room_id": [
@@ -3789,7 +3793,9 @@
         },
         "Data Room": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "data_room"
+            ],
             "extra": {
                 "map_name": "Sector 516",
                 "room_id": [
@@ -4388,7 +4394,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Space jump into Mid-Air Morph: https://youtu.be/H1K0xkWlhAU",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -4404,12 +4410,45 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "SpaceJump",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Space jump into Mid-Air Morph: https://youtu.be/H1K0xkWlhAU",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "SpaceJump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Wall Jump int Mid-Air Morph: https://youtu.be/qBnKq9YeK0w",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "WallJump",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -4651,7 +4690,10 @@
         },
         "Nightmare Arena": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "boss",
+                "climbable"
+            ],
             "extra": {
                 "map_name": "Sector 520",
                 "room_id": [
@@ -8124,7 +8166,9 @@
         },
         "Crow's Nest": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "shutter"
+            ],
             "extra": {
                 "map_name": "Sector 536",
                 "room_id": [

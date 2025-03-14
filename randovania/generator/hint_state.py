@@ -46,9 +46,7 @@ class HintState:
             }
             for hint, pickups in self.hint_initial_pickups.items()
         }
-        for node in self.game.region_list.iterate_nodes():
-            if not isinstance(node, HintNode):
-                continue
+        for node in self.game.region_list.iterate_nodes_of_type(HintNode):
             # ensure all hint nodes are included, even if they have no targets
             targets.setdefault(node.identifier, set())
         return targets

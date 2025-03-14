@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Major** - Changed: Hints are now placed after pickup placement, rather than during. This should result in more interesting hints in all games.
 - **Major** - Added: Co-op as an additional Multiworld Mode. In Co-op, multiple people can share Worlds together, which means that they will share their inventory. This works for all games that support Multiworld.
 - **Major** - Changed: The trick level "Hypermode" has been renamed to "Ludicrous". This new name is game agnostic and more properly describes the difficulty of this category.
+- Added: Async Races can now be hosted and joined directly from Randovania.
+- Added: Games with hints now share a unified Hints tab in the preset editor window. New settings have been added to disable various kinds of hints.
 - Added: Every game now has a "Pickup Hint Features" tab where you can view which Features apply to which pickups.
 - Added: Cave Story and Echoes now have a "Pickup Location Features" tab where you can view which Features apply to which locations.
 - Added: Location Features can be viewed in the Database Viewer.
@@ -20,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The Hints Spoiler tab sorts its entries in a more helpful manner.
 - Changed: Some joke hints are now shared between all games that use them.
 - Changed: Hints now prioritize non-progression major items rather than progression minor items.
+- Changed: The "Spoiler: Playthrough" tab is significantly easier to read and follow along with.
+- Fixed: The "Spoiler: Playthrough" tab is much faster when calculating the playthrough.
 - Fixed: It is now properly impossible for multiple hints to point to the same location.
 - Fixed: A recent regression in the resolver that made it significantly slower has been fixed.
 - Fixed: Generator action weights were being incorrectly calculated.
@@ -30,7 +34,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Hint placement for seeds with individual door lock randomization now uses the resolver to help determine what to hint. This should result in significantly more useful hints in these seeds.
 - Changed: When checking doors that are completely unreachable (such as uncrashed Frigate in most Metroid Prime presets), the resolver is no longer run. This should improve generation time slightly.
+- Changed: The lists of weaknesses in the Door Locks preset settings tab are now sorted more naturally, and aligned with each other.
 - Fixed: Bug in the revised door solver that would result in permanently locked doors being placed when they shouldn't.
+- Fixed: Minor edge case where damage wasn't considered when placing permanently locked doors.
 
 ### Resolver
 
@@ -81,6 +87,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Dairon
 
 - Changed: Reaching the tunnel at the top of Central Unit Access with Spin Boost now requires Movement (Beginner), but remains trickless with Space Jump.
+
+##### Elun
+
+- Changed: Using Cross Bombs to get past the Fan in Fan Room left to right has been increased from Movement Beginner to Intermediate.
+
+##### Ferenia
+
+- Changed: Using Cross Bombs to get past the Fan in Fan Room right to left has been increased from Movement Beginner to Intermediate.
 
 ##### Ghavoran
 

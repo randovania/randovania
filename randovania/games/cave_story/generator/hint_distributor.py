@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING, override
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
-from randovania.game_description.db.hint_node import HintNodeKind
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision, LocationHint, PrecisionPair
@@ -12,11 +11,7 @@ from randovania.games.cave_story.layout.cs_configuration import CSConfiguration,
 from randovania.generator.hint_distributor import HintDistributor, HintTargetPrecision
 
 if TYPE_CHECKING:
-    from collections.abc import Container, Sequence
-    from random import Random
-
     from randovania.game_description.game_patches import GamePatches
-    from randovania.generator.filler.filler_configuration import PlayerPool
     from randovania.generator.hint_distributor import HintFeatureGaussianParams
     from randovania.generator.pre_fill_params import PreFillParams
 
@@ -63,9 +58,8 @@ class CSHintDistributor(HintDistributor):
             already_hinted_indices = [hint.target for hint in patches.hints.values() if isinstance(hint, LocationHint)]
             indices_with_hint = [
                 (node.pickup_index, PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, False))
-                for node in patches.game.region_list.iterate_nodes()
-                if isinstance(node, PickupNode)
-                and node.pickup_index not in already_hinted_indices
+                for node in patches.game.region_list.iterate_nodes_of_type(PickupNode)
+                if node.pickup_index not in already_hinted_indices
                 and patches.pickup_assignment[node.pickup_index].pickup.name in items_with_hint
             ]
             return indices_with_hint
@@ -81,21 +75,6 @@ class CSHintDistributor(HintDistributor):
     @property
     def use_region_location_precision(self) -> bool:
         return False
-
-    @override
-    async def assign_precision_to_hints(
-        self,
-        patches: GamePatches,
-        rng: Random,
-        player_pool: PlayerPool,
-        player_pools: Sequence[PlayerPool],
-        hint_kinds: Container[HintNodeKind] = {HintNodeKind.GENERIC},
-    ) -> GamePatches:
-        assert isinstance(player_pool.configuration, CSConfiguration)
-        if player_pool.configuration.hints.item_hints:
-            return await super().assign_precision_to_hints(patches, rng, player_pool, player_pools, hint_kinds)
-        else:
-            return self.replace_hints_without_precision_with_jokes(patches)
 
     @override
     @classmethod

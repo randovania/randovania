@@ -18,6 +18,7 @@ def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> li
     from randovania.games.dread.gui.preset_settings.dread_patches_tab import PresetDreadPatches
     from randovania.games.dread.gui.preset_settings.dread_teleporters_tab import PresetTeleportersDread
     from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
+    from randovania.gui.preset_settings.hints_tab import PresetHints
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
@@ -25,6 +26,7 @@ def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> li
     return [
         PresetTrickLevel,
         PresetDreadGeneration,
+        PresetHints,
         PresetLocationPool,
         PresetDreadGoal,
         DreadPresetItemPool,

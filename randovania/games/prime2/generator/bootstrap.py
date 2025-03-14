@@ -119,10 +119,7 @@ class EchoesBootstrap(Bootstrap):
 
         translator_gates = patches.game_specific["translator_gates"]
 
-        for node in game.region_list.iterate_nodes():
-            if not isinstance(node, ConfigurableNode):
-                continue
-
+        for node in game.region_list.iterate_nodes_of_type(ConfigurableNode):
             requirement = LayoutTranslatorRequirement(translator_gates[node.identifier.as_string])
             translator = game.resource_database.get_item(requirement.item_name)
             game.region_list.configurable_nodes[node.identifier] = RequirementAnd(

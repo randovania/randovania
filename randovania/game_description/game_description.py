@@ -8,6 +8,7 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.hint_node import HintNode, HintNodeKind
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.requirements.resource_requirement import DamageResourceRequirement
@@ -155,8 +156,8 @@ class GameDescription:
         dock_connection = [None] * len(region_list.all_nodes)
         connections: list[int | None] = list(dock_connection)
         teleporter_dock_types = self.dock_weakness_database.all_teleporter_dock_types
-        for source in region_list.iterate_nodes():
-            if isinstance(source, DockNode) and source.dock_type in teleporter_dock_types:
+        for source in region_list.iterate_nodes_of_type(DockNode):
+            if source.dock_type in teleporter_dock_types:
                 target = region_list.node_by_identifier(source.default_connection)
                 connections[source.node_index] = target.node_index
         return connections
@@ -230,6 +231,21 @@ class GameDescription:
             self._victory_condition_as_set = self.victory_condition.as_set(context)
         return self._victory_condition_as_set
         # return self.victory_condition.as_set(context)
+
+    def _has_hint_with_kind(self, kind: HintNodeKind) -> bool:
+        return any(node.kind == kind for node in self.region_list.iterate_nodes_of_type(HintNode))
+
+    @property
+    def has_random_hints(self) -> bool:
+        return self._has_hint_with_kind(HintNodeKind.GENERIC)
+
+    @property
+    def has_specific_location_hints(self) -> bool:
+        return self._has_hint_with_kind(HintNodeKind.SPECIFIC_LOCATION)
+
+    @property
+    def has_specific_pickup_hints(self) -> bool:
+        return bool(self.game.hints.specific_pickup_hints) or self._has_hint_with_kind(HintNodeKind.SPECIFIC_PICKUP)
 
 
 def _resources_for_damage(

@@ -325,7 +325,7 @@ async def _inner_advance_depth(
     for action, damage_state in actions:
         action_additional_requirements = logic.get_additional_requirements(action)
         if not action_additional_requirements.satisfied(context, damage_state.health_for_damage_requirements()):
-            logic.log_skip_action_missing_requirement(action, logic.game)
+            logic.log_skip_action_missing_requirement(action, state.patches, logic.game)
             continue
         new_state = state.act_on_node(action, path=reach.path_to_node(action), new_damage_state=damage_state)
         _assign_hint_available_locations(new_state, action, logic)
@@ -410,6 +410,7 @@ async def resolve(
     status_update: Callable[[str], None] | None = None,
     *,
     collect_hint_data: bool = False,
+    fully_indent_log: bool = True,
 ) -> State | None:
     if status_update is None:
         status_update = _quiet_print
@@ -422,5 +423,7 @@ async def resolve(
             FillerConfiguration.from_configuration(configuration),
             patches.game,
         )
+
+    logic.increment_indent = fully_indent_log
 
     return await advance_depth(starting_state, logic, status_update)

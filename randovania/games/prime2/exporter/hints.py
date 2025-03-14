@@ -45,8 +45,7 @@ def create_patches_hints(
             logbook_node.extra["string_asset_id"],
             hints_for_asset.get(logbook_node.identifier, "Someone forgot to leave a message."),
         )
-        for logbook_node in region_list.iterate_nodes()
-        if isinstance(logbook_node, HintNode)
+        for logbook_node in region_list.iterate_nodes_of_type(HintNode)
     ]
 
 
@@ -59,8 +58,7 @@ def hide_patches_hints(region_list: RegionList) -> list:
 
     return [
         create_simple_logbook_hint(logbook_node.extra["string_asset_id"], "Some item was placed somewhere.")
-        for logbook_node in region_list.iterate_nodes()
-        if isinstance(logbook_node, HintNode)
+        for logbook_node in region_list.iterate_nodes_of_type(HintNode)
     ]
 
 

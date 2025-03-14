@@ -2,11 +2,15 @@ from __future__ import annotations
 
 import dataclasses
 
+import pytest
+from frozendict import frozendict
+
 from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime2.layout import preset_describer
 from randovania.games.prime2.layout.beam_configuration import BeamAmmoConfiguration, BeamConfiguration
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.base.available_locations import RandomizationMode
+from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
@@ -45,12 +49,33 @@ def test_create_beam_configuration_description_custom():
     ]
 
 
-def test_echoes_format_params(default_echoes_configuration):
+@pytest.mark.parametrize("enable_random_hints", [False, True])
+@pytest.mark.parametrize("enable_specific_location_hints", [False, True])
+@pytest.mark.parametrize("stk_hint_mode", list(SpecificPickupHintMode))
+def test_echoes_format_params(
+    enable_random_hints: bool,
+    enable_specific_location_hints: bool,
+    stk_hint_mode: SpecificPickupHintMode,
+    default_echoes_configuration,
+):
     # Setup
     layout_configuration = dataclasses.replace(
         default_echoes_configuration,
         sky_temple_keys=LayoutSkyTempleKeyMode.ALL_BOSSES,
+        hints=dataclasses.replace(
+            default_echoes_configuration.hints,
+            enable_random_hints=enable_random_hints,
+            enable_specific_location_hints=enable_specific_location_hints,
+            specific_pickup_hints=frozendict({"sky_temple_keys": stk_hint_mode}),
+        ),
     )
+
+    expected_hints = []
+    if not enable_random_hints:
+        expected_hints.append("Random hints disabled")
+    if not enable_specific_location_hints:
+        expected_hints.append("Specific location hints disabled")
+    expected_hints.append(f"Sky Temple Keys Hint: {stk_hint_mode.long_name}")
 
     # Run
     result = RandovaniaGame.METROID_PRIME_ECHOES.data.layout.preset_describer.format_params(layout_configuration)
@@ -76,6 +101,7 @@ def test_echoes_format_params(default_echoes_configuration):
             "Split beam ammo",
             "Sky Temple Keys at all bosses",
         ],
+        "Hints": expected_hints,
     }
 
 
@@ -139,4 +165,5 @@ def test_echoes_format_params2(default_echoes_configuration):
             "Split beam ammo",
             "Sky Temple Keys at all bosses",
         ],
+        "Hints": ["Sky Temple Keys Hint: Region and area"],
     }

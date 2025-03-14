@@ -25,8 +25,13 @@ class PresetTab[Configuration: BaseConfiguration](QtWidgets.QMainWindow):
         self._window_manager = window_manager
 
     def update_experimental_visibility(self):
+        show_experimental = self._editor._options.experimental_settings
+        show_development = show_experimental and self._window_manager.is_preview_mode
+
         for w in self.experimental_settings:
-            w.setVisible(self._editor._options.experimental_settings)
+            w.setVisible(show_experimental)
+        for w in self.development_settings:
+            w.setVisible(show_development)
 
     @classmethod
     def is_experimental(cls) -> bool:
@@ -34,6 +39,15 @@ class PresetTab[Configuration: BaseConfiguration](QtWidgets.QMainWindow):
 
     @property
     def experimental_settings(self) -> typing.Iterable[QtWidgets.QWidget]:
+        """Widgets to be hidden unless experimental settings are enabled."""
+        yield from []
+
+    @property
+    def development_settings(self) -> typing.Iterable[QtWidgets.QWidget]:
+        """
+        Widgets to be hidden unless experimental settings are enabled
+        and RDV is running in preview mode.
+        """
         yield from []
 
     @classmethod

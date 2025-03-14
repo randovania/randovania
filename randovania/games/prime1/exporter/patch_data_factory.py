@@ -11,14 +11,15 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.prime1.exporter.hint_namer import PrimeHintNamer
 from randovania.games.prime1.exporter.vanilla_maze_seeds import VANILLA_MAZE_SEEDS
-from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode, PhazonSuitHintMode
 from randovania.games.prime1.layout.prime_configuration import (
     LayoutCutsceneMode,
     PrimeConfiguration,
     RoomRandoMode,
 )
+from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 
 if TYPE_CHECKING:
     from random import Random
@@ -31,7 +32,6 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
     from randovania.layout.layout_description import LayoutDescription
 
 _EASTER_EGG_SHINY_MISSILE = 1024
@@ -613,10 +613,7 @@ def _serialize_dock_modifications(
                         rng.shuffle(candidates)
 
 
-class PrimePatchDataFactory(PatchDataFactory):
-    cosmetic_patches: PrimeCosmeticPatches
-    configuration: PrimeConfiguration
-
+class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPatches]):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME
 
@@ -759,8 +756,8 @@ class PrimePatchDataFactory(PatchDataFactory):
 
         # Replace vanilla missile blast shields with the new ones
         if not self.configuration.legacy_mode:
-            for node in db.region_list.iterate_nodes():
-                if isinstance(node, DockNode) and node.dock_type not in elevator_dock_types:
+            for node in db.region_list.iterate_nodes_of_type(DockNode):
+                if node.dock_type not in elevator_dock_types:
                     if node.default_dock_weakness.name != "Missile Blast Shield (randomprime)":
                         continue
 
@@ -809,7 +806,7 @@ class PrimePatchDataFactory(PatchDataFactory):
         )
 
         # serialize text modifications
-        if self.configuration.hints.phazon_suit != PhazonSuitHintMode.DISABLED:
+        if self.configuration.hints.specific_pickup_hints["phazon_suit"] != SpecificPickupHintMode.DISABLED:
             try:
                 phazon_suit_resource_info = self.game.resource_database.get_item_by_name("Phazon Suit")
 
@@ -817,7 +814,7 @@ class PrimePatchDataFactory(PatchDataFactory):
                     self.description.all_patches,
                     self.players_config,
                     namer,
-                    self.configuration.hints.phazon_suit == PhazonSuitHintMode.HIDE_AREA,
+                    self.configuration.hints.specific_pickup_hints["phazon_suit"] == SpecificPickupHintMode.HIDE_AREA,
                     [phazon_suit_resource_info],
                     True,
                 )
@@ -875,14 +872,14 @@ class PrimePatchDataFactory(PatchDataFactory):
 
         artifacts = [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS]
         hint_config = self.configuration.hints
-        if hint_config.artifacts == ArtifactHintMode.DISABLED:
+        if hint_config.specific_pickup_hints["artifacts"] == SpecificPickupHintMode.DISABLED:
             resulting_hints = {art: f"{art.long_name} is lost somewhere on Tallon IV." for art in artifacts}
         else:
             resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
                 namer,
-                hint_config.artifacts == ArtifactHintMode.HIDE_AREA,
+                hint_config.specific_pickup_hints["artifacts"] == SpecificPickupHintMode.HIDE_AREA,
                 [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS],
                 True,
             )
@@ -986,7 +983,7 @@ class PrimePatchDataFactory(PatchDataFactory):
 
         data: dict = {
             "$schema": "https://randovania.github.io/randomprime/randomprime.schema.json",
-            "seed": self.description.get_seed_for_player(self.players_config.player_index),
+            "seed": self.description.get_seed_for_world(self.players_config.player_index),
             "preferences": {
                 "defaultGameOptions": self.get_default_game_options(),
                 "qolGameBreaking": not self.configuration.legacy_mode,

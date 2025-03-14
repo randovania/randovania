@@ -79,7 +79,7 @@ exporters = [
     "tsc-utils>=0.2.5",
 
     # Factorio
-    "factorio-randovania-mod>=0.7.2",
+    "factorio-randovania-mod>=0.8.0",
 
     # Metroid Dread
     "open-dread-rando>=2.16.0",
@@ -116,6 +116,8 @@ gui = [
     "appdirs",
     # Minimum version compatible with PySide 6.4. 3.6 is also needed for Python 3.11
     "matplotlib>=3.6.2",
+
+    "humanize",  # formatting dates
 
     "nod>=1.9",
     "async-wiiload",
@@ -252,24 +254,27 @@ files = [
     "randovania/games/cave_story/",
     "randovania/games/dread/exporter/hint_namer.py",
     "randovania/games/dread/gui/",
-    "randovania/games/fusion/gui/",
-    "randovania/games/fusion/generator/",
-    "randovania/games/fusion/layout/",
+    "randovania/games/fusion/",
     "randovania/games/prime1/gui/dialog/prime_cosmetic_patches_dialog.py",
     "randovania/games/prime2/exporter/patch_data_factory.py",
     "randovania/games/prime2/gui/dialog/echoes_cosmetic_patches_dialog.py",
     "randovania/games/prime2/layout/echoes_user_preferences.py",
     "randovania/games/samus_returns/",
     "randovania/generator/",
+    "randovania/gui/main_online_interaction.py",
     "randovania/gui/data_editor.py",
     "randovania/gui/game_specific_gui.py",
+    "randovania/gui/async_race_room_window.py",
     "randovania/gui/docks/resource_database_editor.py",
+    "randovania/gui/dialog/async_race_creation_dialog.py",
     "randovania/gui/dialog/base_cosmetic_patches_dialog.py",
     "randovania/gui/dialog/connections_editor.py",
     "randovania/gui/dialog/connector_prompt_dialog.py",
     "randovania/gui/preset_settings/trick_level_tab.py",
+    "randovania/gui/preset_settings/hints_tab.py",
     "randovania/gui/lib/signal_handling.py",
     "randovania/gui/widgets/game_connection_window.py",
+    "randovania/gui/widgets/game_validator_widget.py",
     "randovania/gui/widgets/node_selector_widget.py",
     "randovania/lib/",
     "test/bitpacking/",

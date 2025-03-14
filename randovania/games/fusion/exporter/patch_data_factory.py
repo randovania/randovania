@@ -7,25 +7,28 @@ from typing import TYPE_CHECKING, override
 
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
+from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.hint_node import HintNode
 from randovania.games.fusion.exporter.hint_namer import FusionColor, FusionHintNamer
+from randovania.games.fusion.exporter.joke_hints import FUSION_JOKE_HINTS
+from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
+from randovania.games.fusion.layout.fusion_cosmetic_patches import FusionCosmeticPatches
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.lib import json_lib
 
 if TYPE_CHECKING:
+    from mars_patcher.auto_generated_types import MarsschemaStartingitems
+
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
-    from randovania.games.fusion.layout.fusion_cosmetic_patches import FusionCosmeticPatches
 
 
-class FusionPatchDataFactory(PatchDataFactory):
-    cosmetic_patches: FusionCosmeticPatches
-    configuration: FusionConfiguration
+class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeticPatches]):
     _placeholder_metroid_message = "placeholder metroid text"
     _lang_list = ["JapaneseKanji", "JapaneseHiragana", "English", "German", "French", "Italian", "Spanish"]
     _easter_egg_bob = 64
@@ -115,8 +118,8 @@ class FusionPatchDataFactory(PatchDataFactory):
         }
         return starting_location_dict
 
-    def _create_starting_items(self) -> dict:
-        starting_dict = {
+    def _create_starting_items(self) -> MarsschemaStartingitems:
+        starting_dict: MarsschemaStartingitems = {
             "Energy": self.configuration.energy_per_tank - 1,
             "Abilities": [],
             "SecurityLevels": [],
@@ -138,16 +141,18 @@ class FusionPatchDataFactory(PatchDataFactory):
         starting_dict["PowerBombs"] = pb_launcher.included_ammo[0]
 
         for item, quantity in self.patches.starting_resources().as_resource_gain():
-            category = item.extra["StartingItemCategory"]
-            # Special Case for Ammo and Metroids
-            if category in ["Missiles", "PowerBombs", "Metroids"]:
-                continue
-            # Special Case for E-Tanks
-            elif category == "Energy":
-                starting_dict[category] += self.configuration.energy_per_tank * quantity
-                continue
-            # Normal Case
-            starting_dict[category].append(item.extra["StartingItemName"])
+            match item.extra["StartingItemCategory"]:
+                case "Missiles" | "PowerBombs" | "Metroids":
+                    continue
+                case "Energy":
+                    starting_dict["Energy"] += self.configuration.energy_per_tank * quantity
+                case "SecurityLevels":
+                    starting_dict["SecurityLevels"].append(item.extra["StartingItemName"])
+                case "Abilities":
+                    starting_dict["Abilities"].append(item.extra["StartingItemName"])
+                case _:
+                    raise ValueError(f"{item.extra['StartingItemCategory']} is unsupported as starting")
+
         return starting_dict
 
     def _create_tank_increments(self) -> dict:
@@ -188,7 +193,7 @@ class FusionPatchDataFactory(PatchDataFactory):
                     "HueMax": getattr(cosmetics, f"{attr_name}_hue_max"),
                 }
         palette_dict = {
-            "Seed": self.description.get_seed_for_player(self.players_config.player_index),
+            "Seed": self.description.get_seed_for_world(self.players_config.player_index),
             "Randomize": palettes,
             "ColorSpace": cosmetics.color_space.long_name,
         }
@@ -196,46 +201,50 @@ class FusionPatchDataFactory(PatchDataFactory):
 
     def _create_nav_text(self) -> dict:
         nav_text_json = {}
-        # namer = FusionHintNamer(self.description.all_patches, self.players_config)
-        # exporter = HintExporter(namer, self.rng, GENERIC_JOKE_HINTS)
+        namer = FusionHintNamer(self.description.all_patches, self.players_config)
+        exporter = HintExporter(namer, self.rng, FUSION_JOKE_HINTS)
 
         artifacts = [self.game.resource_database.get_item(f"Infant Metroid {i + 1}") for i in range(20)]
 
-        metroid_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
-            self.description.all_patches,
-            self.players_config,
-            FusionHintNamer(self.description.all_patches, self.players_config),
-            False,  # TODO: make this depending on hint settings later:tm:
-            artifacts,
-            True,
-        )
+        metroid_precision = self.configuration.hints.specific_pickup_hints["artifacts"]
+        charge_precision = self.configuration.hints.specific_pickup_hints["charge_beam"]
 
-        charge_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
-            self.description.all_patches,
-            self.players_config,
-            FusionHintNamer(self.description.all_patches, self.players_config),
-            True,  # TODO: make this depending on hint settings later:tm:
-            [self.game.resource_database.get_item("ChargeBeam")],
-            True,
-        )
+        if metroid_precision != SpecificPickupHintMode.DISABLED:
+            metroid_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+                self.description.all_patches,
+                self.players_config,
+                namer,
+                True if metroid_precision == SpecificPickupHintMode.HIDE_AREA else False,
+                artifacts,
+                True,
+            )
+        if charge_precision != SpecificPickupHintMode.DISABLED:
+            charge_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+                self.description.all_patches,
+                self.players_config,
+                namer,
+                True if charge_precision == SpecificPickupHintMode.HIDE_AREA else False,
+                [self.game.resource_database.get_item("ChargeBeam")],
+                True,
+            )
 
         hints = {}
 
-        for node in self.game.region_list.iterate_nodes():
-            if not isinstance(node, HintNode):
-                continue
-
+        for node in self.game.region_list.iterate_nodes_of_type(HintNode):
             hint_location = node.extra["hint_name"]
-            if hint_location == "AuxiliaryPower":
+            if hint_location == "AuxiliaryPower" and charge_precision != SpecificPickupHintMode.DISABLED:
                 hints[hint_location] = " ".join(
                     [text for _, text in charge_hint_mapping.items() if "has no need to be located" not in text]
                 )
-            elif hint_location == "RestrictedLabs":
+            elif hint_location == "RestrictedLabs" and metroid_precision != SpecificPickupHintMode.DISABLED:
                 hints[hint_location] = " ".join(
                     [text for _, text in metroid_hint_mapping.items() if "has no need to be located" not in text]
                 )
             else:
-                hints[hint_location] = " ".join(["Hint system still in development, we appreciate your patience."])
+                hints[hint_location] = exporter.create_message_for_hint(
+                    self.patches.hints[node.identifier],
+                    True,
+                ).strip()
 
         starting_items_list = item_names.additional_starting_equipment(
             self.patches.configuration, self.patches.game, self.patches
@@ -286,7 +295,7 @@ class FusionPatchDataFactory(PatchDataFactory):
             }
         return nav_text_json
 
-    def _credits_elements(self) -> dict:
+    def _credits_elements(self) -> defaultdict[str, list[dict]]:
         elements = defaultdict(list)
         majors = credits_spoiler.get_locations_for_major_pickups_and_keys(
             self.description.all_patches, self.players_config
@@ -305,7 +314,7 @@ class FusionPatchDataFactory(PatchDataFactory):
                 )
         return elements
 
-    def _create_credits_text(self) -> dict:
+    def _create_credits_text(self) -> list:
         credits_array = []
         spoiler_dict = self._credits_elements()
 
@@ -314,7 +323,7 @@ class FusionPatchDataFactory(PatchDataFactory):
             for index, pickup in enumerate(self.configuration.standard_pickup_configuration.pickups_state.keys())
         }
 
-        def sort_pickup(p: PickupEntry):
+        def sort_pickup(p: str) -> tuple[int | float, str]:
             return major_pickup_name_order.get(p, math.inf), p
 
         for pickup in sorted(spoiler_dict.keys(), key=sort_pickup):
@@ -324,6 +333,7 @@ class FusionPatchDataFactory(PatchDataFactory):
                     credits_array.append({"LineType": "Blue", "Text": location["World"], "BlankLines": 0})
                 credits_array.append({"LineType": "White1", "Text": location["Region"], "BlankLines": 0})
                 credits_array.append({"LineType": "White1", "Text": location["Area"], "BlankLines": 1})
+
         return credits_array
 
     def _create_nav_locks(self) -> dict:

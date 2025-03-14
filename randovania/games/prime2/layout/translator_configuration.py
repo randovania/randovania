@@ -69,8 +69,7 @@ def _get_vanilla_translator_configuration(extra_field: str) -> dict[NodeIdentifi
     game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
     return {
         node.identifier: LayoutTranslatorRequirement.from_item_short_name(node.extra[extra_field])
-        for node in game.region_list.iterate_nodes()
-        if isinstance(node, ConfigurableNode)
+        for node in game.region_list.iterate_nodes_of_type(ConfigurableNode)
     }
 
 

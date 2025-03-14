@@ -7,6 +7,7 @@ import randovania.game.data
 import randovania.game.development_state
 import randovania.game.generator
 import randovania.game.gui
+import randovania.game.hints
 import randovania.game.layout
 import randovania.game.web_info
 from randovania.games.blank import layout
@@ -47,8 +48,16 @@ def _generator() -> randovania.game.generator.GameGenerator:
         pickup_pool_creator=generator.pool_creator,
         bootstrap=generator.BlankBootstrap(),
         base_patches_factory=generator.BlankBasePatchesFactory(),
-        hint_distributor=generator.BlankHintDistributor(),
         action_weights=ActionWeights(),
+    )
+
+
+def _hints() -> randovania.game.hints.GameHints:
+    from randovania.games.blank import generator
+
+    return randovania.game.hints.GameHints(
+        hint_distributor=generator.BlankHintDistributor(),
+        specific_pickup_hints={},
     )
 
 
@@ -97,6 +106,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     options=_options,
     gui=_gui,
     generator=_generator,
+    hints=_hints,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     multiple_start_nodes_per_area=True,

@@ -13,14 +13,16 @@
             "hint_details": [
                 "a ",
                 "missile system"
-            ]
+            ],
+            "hidden": true
         },
         "morph_ball": {
             "long_name": "Morph Ball",
             "hint_details": [
                 "a ",
                 "morph ball system"
-            ]
+            ],
+            "hidden": true
         },
         "movement": {
             "long_name": "Movement",
@@ -48,13 +50,6 @@
             "hint_details": [
                 "a ",
                 "morph ball-related upgrade"
-            ]
-        },
-        "beam_related": {
-            "long_name": "Beam Related",
-            "hint_details": [
-                "a ",
-                "beam-related upgrade"
             ]
         },
         "missile_related": {
@@ -104,7 +99,16 @@
             "hint_details": [
                 "a ",
                 "key"
-            ]
+            ],
+            "hidden": true
+        },
+        "charge": {
+            "long_name": "Charge",
+            "hint_details": [
+                "a ",
+                "beam"
+            ],
+            "hidden": true
         }
     },
     "generated_pickups": {
@@ -130,8 +134,8 @@
             "gui_category": "beam",
             "hint_features": [
                 "beam",
-                "beam_related",
-                "major"
+                "major",
+                "charge"
             ],
             "model_name": "ChargeBeam",
             "offworld_models": {
@@ -157,7 +161,6 @@
             "gui_category": "beam",
             "hint_features": [
                 "beam",
-                "beam_related",
                 "major"
             ],
             "model_name": "WideBeam",
@@ -183,7 +186,6 @@
             "gui_category": "beam",
             "hint_features": [
                 "beam",
-                "beam_related",
                 "major"
             ],
             "model_name": "PlasmaBeam",
@@ -209,7 +211,6 @@
             "gui_category": "beam",
             "hint_features": [
                 "beam",
-                "beam_related",
                 "major"
             ],
             "model_name": "WaveBeam",
@@ -235,7 +236,6 @@
             "gui_category": "beam",
             "hint_features": [
                 "beam",
-                "beam_related",
                 "major"
             ],
             "model_name": "IceBeam",
@@ -538,6 +538,7 @@
                 "am2r": "sItemScrewAttack"
             },
             "preferred_location_category": "major",
+            "probability_multiplier": 0.5,
             "extra": {
                 "StartingItemCategory": "Abilities",
                 "StartingItemName": "ScrewAttack"

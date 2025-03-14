@@ -13,6 +13,7 @@ if TYPE_CHECKING:
     from randovania.game.development_state import DevelopmentState
     from randovania.game.generator import GameGenerator
     from randovania.game.gui import GameGui
+    from randovania.game.hints import GameHints
     from randovania.game.layout import GameLayout
     from randovania.game_description.game_description import GameDescription
     from randovania.interface_common.options import PerGameOptions
@@ -53,6 +54,8 @@ class GameData:
 
     generator: Callable[[], GameGenerator]
     """Contains game-specific generation data."""
+
+    hints: Callable[[], GameHints]
 
     patch_data_factory: Callable[[], type[PatchDataFactory]]
 

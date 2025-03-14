@@ -4,10 +4,10 @@ import json
 import typing
 from pathlib import Path
 
+from randovania.games.factorio import importer_util
 from randovania.games.factorio.data_importer import data_parser
+from randovania.games.factorio.importer_util import and_req, or_req, tech_req, template_req
 from randovania.lib import json_lib
-from tools.factorio import util
-from tools.factorio.util import and_req, or_req, tech_req, template_req
 
 _k_items_for_crafting_category = {
     "crafting": [],
@@ -120,7 +120,7 @@ def create_resources(header: dict, techs_for_recipe: dict) -> None:
 
     for tech_name, recipes_unlocked in techs_for_recipe.items():
         header["resource_database"]["items"][tech_name] = {
-            "long_name": util.get_localized_name(tech_name),
+            "long_name": importer_util.get_localized_name(tech_name),
             "max_capacity": 1,
             "extra": {"recipes_unlocked": recipes_unlocked},
         }
@@ -185,7 +185,7 @@ def update_templates(header: dict, recipes_raw: dict, techs_for_recipe: dict[str
 
     # Add the templates for crafting all recipes
     for item_name, recipes in data_parser.get_recipes_for(recipes_raw).items():
-        localized_name = util.get_localized_name(item_name)
+        localized_name = importer_util.get_localized_name(item_name)
 
         techs = set()
         for recipe in recipes:
@@ -207,7 +207,7 @@ def update_templates(header: dict, recipes_raw: dict, techs_for_recipe: dict[str
 
     # Mining all resources
     for resource_name, requirement in _k_miner_for_resource.items():
-        localized_name = util.get_localized_name(resource_name)
+        localized_name = importer_util.get_localized_name(resource_name)
         header["resource_database"]["requirement_template"][f"craft-{resource_name}"] = {
             "display_name": f"Mine {localized_name}",
             "requirement": requirement,
@@ -272,16 +272,15 @@ def create_pickups(techs_raw: dict, existing_pickup_ids: dict[str, int], tech_cs
                 icon = tech["icon"]
 
             result[pickup_name] = {
-                "pickup_category": data["category"],
+                "gui_category": data["category"],
                 "hint_features": [data["category"]],
                 "model_name": icon,
                 "offworld_models": {},
-                "progression": [tech_name],
                 "preferred_location_category": "major" if data["category"] != "enhancement" else "minor",
+                "description": "",
+                "progression": [tech_name],
                 "expected_case_for_describer": "shuffled",
             }
-            if tech_name in existing_pickup_ids:
-                result[pickup_name]["original_locations"] = [existing_pickup_ids[tech_name]]
 
             if pickup_name in _custom_shuffled_count:
                 if _custom_shuffled_count[pickup_name] == 0:
@@ -289,15 +288,21 @@ def create_pickups(techs_raw: dict, existing_pickup_ids: dict[str, int], tech_cs
                 else:
                     result[pickup_name]["custom_count_for_shuffled_case"] = _custom_shuffled_count[pickup_name]
 
+            if tech_name in existing_pickup_ids:
+                result[pickup_name]["original_locations"] = [existing_pickup_ids[tech_name]]
+
     for pickup in result.values():
         if len(pickup["progression"]) > 1:
             pickup["description"] = "Provides in order: " + " → ".join(
-                util.get_localized_name(tech_name) for tech_name in pickup["progression"]
+                importer_util.get_localized_name(tech_name) for tech_name in pickup["progression"]
             )
+        else:
+            pickup.pop("description")
 
     result["Uranium Mining"]["expected_case_for_describer"] = "starting_item"
     result["Rocket Silo"]["expected_case_for_describer"] = "vanilla"
     result["Rocket Silo"]["hide_from_gui"] = True
+    result["Rocket Silo"]["original_locations"] = result["Rocket Silo"].pop("original_locations")  # move to the end
 
     return result
 
@@ -326,10 +331,10 @@ def main():
     header_path = rdv_factorio_path.joinpath("logic_database/header.json")
 
     raw_dump_path = factorio_path.joinpath("script-output/data-raw-dump.json")
-    util.read_locales(factorio_path)
+    importer_util.read_locales(factorio_path)
     tech_csv = read_tech_csv(csv_path)
 
-    existing_pickup_ids = util.load_existing_pickup_ids(rdv_factorio_path.joinpath("logic_database/Tech.json"))
+    existing_pickup_ids = importer_util.load_existing_pickup_ids(rdv_factorio_path.joinpath("logic_database/Tech.json"))
 
     with raw_dump_path.open() as f:
         raw_dump: dict[str, dict[str, typing.Any]] = json.load(f)
