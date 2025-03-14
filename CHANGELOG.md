@@ -86,6 +86,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Reaching the tunnel at the top of Central Unit Access with Spin Boost now requires Movement (Beginner), but remains trickless with Space Jump.
 
+##### Elun
+
+- Changed: Using Cross Bombs to get past the Fan in Fan Room left to right has been increased from Movement Beginner to Intermediate.
+
+##### Ferenia
+
+- Changed: Using Cross Bombs to get past the Fan in Fan Room right to left has been increased from Movement Beginner to Intermediate.
+
 ### Metroid Prime
 
 #### Logic Database
