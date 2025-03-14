@@ -563,7 +563,7 @@ def test_admin_get_admin_data(simple_room):
                 "finish_date": None,
                 "forfeit": False,
                 "submission_notes": "",
-                "proof_url": None,
+                "proof_url": "",
                 "pauses": [],
             }
         ]
@@ -597,7 +597,7 @@ def test_admin_update_entries(simple_room, mocker: pytest_mock.MockFixture):
             forfeit=False,
             pauses=[],
             submission_notes="",
-            proof_url=None,
+            proof_url="",
         ).as_json
     ]
 

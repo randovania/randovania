@@ -25,24 +25,16 @@ class AsyncRaceEntryDataDatabaseModel(EditableTableModel[AsyncRaceEntryData]):
     @override
     def _all_columns(self) -> list[FieldDefinition]:
         return [
-            FieldDefinition[str, str](
-                "User",
-                "user",
-                read_only=True,
-                to_qt=lambda v: v.name,
-                from_qt=lambda v: (False, None),
-            ),
+            FieldDefinition("User", "user", read_only=True, from_qt=lambda v: (False, None)),
             DateFieldDefinition("Join Date", "join_date", read_only=True),
             DateFieldDefinition("Start Date", "start_date", optional=True),
             DateFieldDefinition("Finish Date", "finish_date", optional=True),
             BoolFieldDefinition("Forfeited?", "forfeit"),
-            FieldDefinition[str, str](
-                "Pauses?",
-                "pauses",
-                read_only=True,
-                to_qt=lambda v: len(v),
-                from_qt=lambda v: (False, None),
+            FieldDefinition(
+                "Pauses?", "pauses", read_only=True, to_qt=lambda v: len(v), from_qt=lambda v: (False, None)
             ),
+            FieldDefinition("Submission Notes", "submission_notes"),
+            FieldDefinition("Proof URL", "proof_url"),
         ]
 
     @override
