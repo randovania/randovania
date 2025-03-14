@@ -4,6 +4,7 @@ import math
 import typing
 
 from peewee import Case
+from retro_data_structures.json_util import JsonArray
 
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
@@ -240,6 +241,20 @@ def get_layout(sa: ServerApp, room_id: int, auth_token: str) -> bytes:
     return room.layout_description_json
 
 
+def get_audit_log(sa: ServerApp, room_id: int, auth_token: str) -> JsonArray:
+    """
+    Gets the audit log for the given room.
+    :param sa:
+    :param room_id: The room to get audit log for
+    :param auth_token:
+    :return: A list of json-encoded AuditEntry
+    """
+    room = AsyncRaceRoom.get_by_id(room_id)
+    _verify_authorization(sa, room, auth_token)
+
+    return [log.as_entry().as_json for log in room.audit_log]
+
+
 def admin_get_admin_data(sa: ServerApp, room_id: int) -> JsonType:
     """
     Gets the all details of every user who has joined the room. Only accessible by admins.
@@ -463,6 +478,7 @@ def setup_app(sa: ServerApp) -> None:
     sa.on("async_race_refresh_room", refresh_room, with_header_check=True)
     sa.on("async_race_get_leaderboard", get_leaderboard, with_header_check=True)
     sa.on("async_race_get_layout", get_layout, with_header_check=True)
+    sa.on("async_race_get_audit_log", get_audit_log, with_header_check=True)
     sa.on("async_race_admin_get_admin_data", admin_get_admin_data, with_header_check=True)
     sa.on("async_race_admin_update_entries", admin_update_entries, with_header_check=True)
     sa.on("async_race_join_and_export", join_and_export, with_header_check=True)

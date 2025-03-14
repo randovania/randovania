@@ -14,6 +14,7 @@ from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
+from randovania.gui.widgets.audit_log_model import AuditEntryListDatabaseModel
 from randovania.interface_common.options import Options
 from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
@@ -31,6 +32,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
     room: AsyncRaceRoomEntry
     preset: VersionedPreset
     _leaderboard_dialog: AsyncRaceLeaderboardDialog | None = None
+    _audit_log_dialog: QtWidgets.QDialog | None = None
 
     def __init__(
         self,
@@ -50,12 +52,16 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
 
         self._administration_menu = QtWidgets.QMenu(self.ui.administration_button)
         self.ui.administration_button.setMenu(self._administration_menu)
-        self._administration_menu.addAction("Change options").triggered.connect(self._on_change_options)
-        self._administration_menu.addAction("View user entries").triggered.connect(self._on_view_user_entries)
-        self.ui.view_preset_description_button.clicked.connect(self._preset_view_summary)
+        self._view_audit_log_action = self._administration_menu.addAction("View audit log")
+        self._change_options_action = self._administration_menu.addAction("Change options")
+        self._view_user_entries_action = self._administration_menu.addAction("View user entries")
 
+        self.ui.view_preset_description_button.clicked.connect(self._preset_view_summary)
         self.ui.view_spoiler_button.clicked.connect(self._view_spoiler)
         self.ui.view_leaderboard_button.clicked.connect(self._view_leaderboard)
+        self._view_audit_log_action.triggered.connect(self._on_view_audit_log)
+        self._change_options_action.triggered.connect(self._on_change_options)
+        self._view_user_entries_action.triggered.connect(self._on_view_user_entries)
 
         # TODO: background task things
 
@@ -121,7 +127,8 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
             "Forfeit" if room.self_status != AsyncRaceRoomUserStatus.FORFEITED else "Undo Forfeit"
         )
         self.ui.submit_proof_button.setEnabled(room.self_status == AsyncRaceRoomUserStatus.FINISHED)
-        self.ui.administration_button.setEnabled(room.is_admin)
+        self._change_options_action.setEnabled(room.is_admin)
+        self._view_user_entries_action.setEnabled(room.is_admin)
 
         participation_text = None
         match room.race_status:
@@ -303,6 +310,41 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
             await async_dialog.execute_dialog(self._leaderboard_dialog)
         finally:
             self._leaderboard_dialog = None
+
+    @asyncSlot()
+    async def _on_view_audit_log(self) -> None:
+        """Opens a widget with the audit log."""
+        if self._audit_log_dialog is not None:
+            self._audit_log_dialog.raise_()
+            return
+
+        try:
+            self.setEnabled(False)
+            audit_log = await self._network_client.async_race_get_audit_log(self.room)
+        finally:
+            self.setEnabled(True)
+
+        self._audit_log_dialog = QtWidgets.QDialog(self)
+        self._audit_log_dialog.resize(625, 250)
+        self._audit_log_dialog.setWindowTitle("Audit Log")
+        root_layout = QtWidgets.QVBoxLayout(self._audit_log_dialog)
+
+        table_view = QtWidgets.QTableView(self._audit_log_dialog)
+        table_view.setAlternatingRowColors(True)
+        audit_item_model = AuditEntryListDatabaseModel(audit_log)
+        table_view.setModel(audit_item_model)
+        root_layout.addWidget(table_view)
+        table_view.resizeColumnsToContents()
+
+        button_box = QtWidgets.QDialogButtonBox(self._audit_log_dialog)
+        button_box.setStandardButtons(QtWidgets.QDialogButtonBox.StandardButton.Ok)
+        button_box.accepted.connect(self._audit_log_dialog.accept)
+        root_layout.addWidget(button_box)
+
+        try:
+            await async_dialog.execute_dialog(self._audit_log_dialog)
+        finally:
+            self._audit_log_dialog = None
 
     @asyncSlot()
     async def _on_change_options(self) -> None:

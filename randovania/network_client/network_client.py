@@ -42,6 +42,7 @@ from randovania.network_common.async_race_room import (
     AsyncRaceSettings,
     RaceRoomLeaderboard,
 )
+from randovania.network_common.audit import AuditEntry
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionActions,
     MultiplayerSessionAuditLog,
@@ -533,6 +534,15 @@ class NetworkClient:
         from randovania.layout.layout_description import LayoutDescription
 
         return LayoutDescription.from_bytes(await self.server_call("async_race_get_layout", (room.id, room.auth_token)))
+
+    async def async_race_get_audit_log(self, room: AsyncRaceRoomEntry) -> list[AuditEntry]:
+        """
+        Gets all the AuditEntry for the given room.
+        :param room: The room's data from get_async_race_room
+        :return: The room's audit log entries
+        """
+        log_entries = await self.server_call("async_race_get_audit_log", (room.id, room.auth_token))
+        return [AuditEntry.from_json(entry) for entry in log_entries]
 
     async def async_race_admin_get_admin_data(self, room_id: int) -> AsyncRaceRoomAdminData:
         """

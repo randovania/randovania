@@ -22,6 +22,9 @@ def get_texts(model: QtCore.QAbstractProxyModel, *, max_rows: int | None = None)
         row_count = min(max_rows, row_count)
 
     if column_count == 1:
-        return [model.data(model.index(row, 0)) for row in range(row_count)]
+        return [model.data(model.index(row, 0), QtCore.Qt.ItemDataRole.DisplayRole) for row in range(row_count)]
     else:
-        return [[model.data(model.index(row, col)) for col in range(column_count)] for row in range(row_count)]
+        return [
+            [model.data(model.index(row, col), QtCore.Qt.ItemDataRole.DisplayRole) for col in range(column_count)]
+            for row in range(row_count)
+        ]

@@ -6,6 +6,7 @@ import typing
 
 from PySide6 import QtCore
 from PySide6.QtCore import QDateTime, Qt
+from typing_extensions import override
 
 if typing.TYPE_CHECKING:
     from types import EllipsisType
@@ -89,14 +90,14 @@ def DateFieldDefinition(
     )
 
 
-class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
+class DataclassTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
     """
-    Generic base class for using a QTableView to edit a Dataclass.
+    Generic base class for using a QTableView to view a Dataclass.
     """
 
     def __init__(self):
         super().__init__()
-        self.allow_edits = True
+        self.allow_edits = False
 
     def _all_columns(self) -> list[FieldDefinition]:
         """Return a list of FieldDefinitions describing each field in the items"""
@@ -106,20 +107,7 @@ class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
         """All items controlled by this model. Automatically handles both list and dict"""
         raise NotImplementedError
 
-    def _iterate_items(self) -> typing.Iterator[T]:
-        """Iterate items, regardless of list vs dict"""
-        items = self._get_items()
-        if isinstance(items, list):
-            yield from items
-        else:
-            yield from items.values()
-
-    def set_allow_edits(self, value: bool) -> None:
-        """Setter for `allow_edits`"""
-        self.beginResetModel()
-        self.allow_edits = value
-        self.endResetModel()
-
+    @override
     def headerData(
         self, section: int, orientation: QtCore.Qt.Orientation, role: int | EllipsisType = ...
     ) -> typing.Any:
@@ -131,9 +119,11 @@ class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
 
         return self._all_columns()[section].display_name
 
+    @override
     def rowCount(self, parent: QtCore.QModelIndex | QtCore.QPersistentModelIndex | EllipsisType = ...) -> int:
         return len(self._get_items())
 
+    @override
     def columnCount(self, parent: QtCore.QModelIndex | QtCore.QPersistentModelIndex | EllipsisType = ...) -> int:
         return len(self._all_columns())
 
@@ -144,14 +134,7 @@ class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
             return all_items[row]
         return all_items[list(all_items.keys())[row]]
 
-    def _set_item(self, row: int, item: T) -> None:
-        """Set the given row to the given item."""
-        all_items = self._get_items()
-        if isinstance(all_items, list):
-            all_items[row] = item
-        else:
-            all_items[list(all_items.keys())[row]] = item
-
+    @override
     def data(
         self, index: QtCore.QModelIndex | QtCore.QPersistentModelIndex, role: int | EllipsisType = ...
     ) -> typing.Any:
@@ -178,6 +161,79 @@ class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
         else:
             return ""
 
+    @override
+    def setData(
+        self,
+        index: QtCore.QModelIndex | QtCore.QPersistentModelIndex,
+        value: typing.Any,
+        role: int | EllipsisType = ...,
+    ) -> bool:
+        return False
+
+    @override
+    def flags(self, index: QtCore.QModelIndex | QtCore.QPersistentModelIndex) -> QtCore.Qt.ItemFlag:
+        return Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
+
+
+class EditableTableModel[T: DataclassInstance](DataclassTableModel[T]):
+    """
+    Generic base class for using a QTableView to edit a Dataclass.
+    """
+
+    def __init__(self):
+        super().__init__()
+        self.allow_edits = True
+
+    def _iterate_items(self) -> typing.Iterator[T]:
+        """Iterate items, regardless of list vs dict"""
+        items = self._get_items()
+        if isinstance(items, list):
+            yield from items
+        else:
+            yield from items.values()
+
+    def set_allow_edits(self, value: bool) -> None:
+        """Setter for `allow_edits`"""
+        self.beginResetModel()
+        self.allow_edits = value
+        self.endResetModel()
+
+    def _set_item(self, row: int, item: T) -> None:
+        """Set the given row to the given item."""
+        all_items = self._get_items()
+        if isinstance(all_items, list):
+            all_items[row] = item
+        else:
+            all_items[list(all_items.keys())[row]] = item
+
+    @override
+    def data(
+        self, index: QtCore.QModelIndex | QtCore.QPersistentModelIndex, role: int | EllipsisType = ...
+    ) -> typing.Any:
+        if role not in {Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.EditRole, Qt.ItemDataRole.CheckStateRole}:
+            return None
+
+        if index.row() < len(self._get_items()):
+            item = self._get_item(index.row())
+            field = self._all_columns()[index.column()]
+
+            value = getattr(item, field.field_name)
+            if role == Qt.ItemDataRole.CheckStateRole:
+                if field.default_factory is not None:
+                    if value is not None:
+                        return Qt.CheckState.Checked
+                    else:
+                        return Qt.CheckState.Unchecked
+                return None
+
+            if field.default_factory is not None and value is None:
+                return ""
+            return field.to_qt(value)
+
+        else:
+            return ""
+
+    @override
     def setData(
         self,
         index: QtCore.QModelIndex | QtCore.QPersistentModelIndex,
@@ -216,6 +272,7 @@ class EditableTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
                     return True
         return False
 
+    @override
     def flags(self, index: QtCore.QModelIndex | QtCore.QPersistentModelIndex) -> QtCore.Qt.ItemFlag:
         result = Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
         if self.allow_edits:
