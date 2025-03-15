@@ -11,7 +11,6 @@ from randovania.gui.dialog.async_race_proof_popup import AsyncRaceProofPopup
 from randovania.gui.dialog.async_race_settings_dialog import AsyncRaceSettingsDialog
 from randovania.gui.generated.async_race_room_window_ui import Ui_AsyncRaceRoomWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
-from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.widgets.audit_log_model import AuditEntryListDatabaseModel
@@ -25,7 +24,7 @@ from randovania.network_common.async_race_room import (
 )
 
 
-class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
+class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
     CloseEvent = QtCore.Signal()
 
     ui: Ui_AsyncRaceRoomWindow
@@ -50,6 +49,8 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         self.ui = Ui_AsyncRaceRoomWindow()
         self.ui.setupUi(self)
 
+        self.ui.background_task_widget.progress_label.setVisible(False)
+
         self._administration_menu = QtWidgets.QMenu(self.ui.administration_button)
         self.ui.administration_button.setMenu(self._administration_menu)
         self._view_audit_log_action = self._administration_menu.addAction("View audit log")
@@ -62,8 +63,6 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         self._view_audit_log_action.triggered.connect(self._on_view_audit_log)
         self._change_options_action.triggered.connect(self._on_change_options)
         self._view_user_entries_action.triggered.connect(self._on_view_user_entries)
-
-        # TODO: background task things
 
         self.ui.customize_cosmetic_button.clicked.connect(self._open_user_preferences_dialog)
         self.ui.join_and_export_button.clicked.connect(self._on_join_and_export)
@@ -235,17 +234,20 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         )
 
         dialog.save_options()
-        self._can_stop_background_process = game.exporter.export_can_be_aborted
-        await game_exporter.export_game(
-            exporter=game.exporter,
-            export_dialog=dialog,
-            patch_data=patch_data,
-            layout_for_spoiler=None,
-            background=self,
-            progress_update_signal=self.progress_update_signal,
-        )
-        self._can_stop_background_process = True
-        await self.refresh_data()
+        self.ui.join_and_export_button.setEnabled(False)
+        try:
+            self.ui.background_task_widget.can_stop_background_process = game.exporter.export_can_be_aborted
+            await game_exporter.export_game(
+                exporter=game.exporter,
+                export_dialog=dialog,
+                patch_data=patch_data,
+                layout_for_spoiler=None,
+                background=self.ui.background_task_widget,
+                progress_update_signal=self.ui.background_task_widget.progress_update_signal,
+            )
+            self.ui.background_task_widget.can_stop_background_process = True
+        finally:
+            await self.refresh_data()
 
     @asyncSlot()
     async def _open_user_preferences_dialog(self) -> None:
