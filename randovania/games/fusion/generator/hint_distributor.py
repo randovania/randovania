@@ -29,7 +29,7 @@ class FusionHintDistributor(HintDistributor):
     # Makes the listed features less interesting to hint
     @override
     def is_pickup_interesting(self, target: PickupTarget, player_id: int, hint_node: HintNode) -> bool:
-        non_interesting_features = ["key", "charge"]
+        non_interesting_features = ["key", "charge", "extra"]
         for feature in non_interesting_features:
             if target.pickup.has_hint_feature(feature):
                 return False

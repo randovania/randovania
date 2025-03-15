@@ -108,6 +108,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "fusion/starter_preset.rdvgame",
         "fusion/short_intro.rdvgame",
         "fusion/all_hidden_with_nothing.rdvgame",
+        "fusion/random_starting.rdvgame",
         # Dread
         "dread/starter_preset.rdvgame",  # starter preset
         "dread/crazy_settings.rdvgame",  # crazy settings
