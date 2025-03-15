@@ -235,7 +235,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
             patch_data=patch_data,
             layout_for_spoiler=None,
             background=self,
-            progress_update_signal=self.progress_update_signal,
+            progress_update_emit=self.progress_update_signal.emit,
         )
         self._can_stop_background_process = True
         await self.refresh_data()

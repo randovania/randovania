@@ -17,6 +17,7 @@ if typing.TYPE_CHECKING:
 
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     from randovania.layout.versioned_preset import VersionedPreset
+    from randovania.lib.json_lib import JsonType
     from randovania.network_common.multiplayer_session import MultiplayerWorld
     from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
@@ -29,7 +30,7 @@ def handle_network_errors(
     fn: typing.Callable[typing.Concatenate[MultiplayerSessionApi, Param], RetType],
 ) -> typing.Callable[Param, RetType]:
     @functools.wraps(fn)
-    async def wrapper(self: MultiplayerSessionApi, *args, **kwargs):
+    async def wrapper(self: MultiplayerSessionApi, *args: typing.Any, **kwargs: typing.Any) -> RetType | None:
         parent = self.widget_root
         try:
             return await fn(self, *args, **kwargs)
@@ -102,7 +103,9 @@ class SessionIdLoggerAdapter(logging.LoggerAdapter):
         super().__init__(logger)
         self.api = api
 
-    def process(self, msg, kwargs):
+    def process(
+        self, msg: str, kwargs: typing.MutableMapping[str, typing.Any]
+    ) -> tuple[str, typing.MutableMapping[str, typing.Any]]:
         kwargs["extra"] = {
             "session_id": self.api.current_session_id,
         }
@@ -124,7 +127,10 @@ class MultiplayerSessionApi(QtCore.QObject):
         self.current_session_id = session_id
         self.logger = SessionIdLoggerAdapter(_base_logger, self)
 
-    async def _session_admin_global(self, action: admin_actions.SessionAdminGlobalAction, *args):
+    async def _session_admin_global(
+        self, action: admin_actions.SessionAdminGlobalAction, *args: JsonType | bytes
+    ) -> JsonType | None:
+        assert self.widget_root is not None
         try:
             self.widget_root.setEnabled(False)
             return await self.network_client.server_call(
@@ -134,7 +140,10 @@ class MultiplayerSessionApi(QtCore.QObject):
         finally:
             self.widget_root.setEnabled(True)
 
-    async def _session_admin_player(self, user_id: int, action: admin_actions.SessionAdminUserAction, *args):
+    async def _session_admin_player(
+        self, user_id: int, action: admin_actions.SessionAdminUserAction, *args: JsonType | bytes
+    ) -> JsonType | None:
+        assert self.widget_root is not None
         try:
             self.widget_root.setEnabled(False)
             return await self.network_client.server_call(
@@ -145,31 +154,31 @@ class MultiplayerSessionApi(QtCore.QObject):
             self.widget_root.setEnabled(True)
 
     @handle_network_errors
-    async def rename_session(self, new_name: str):
+    async def rename_session(self, new_name: str) -> None:
         self.logger.info("Renaming session to %s", new_name)
         await self._session_admin_global(admin_actions.SessionAdminGlobalAction.CHANGE_TITLE, new_name)
 
     @handle_network_errors
-    async def change_password(self, password: str):
+    async def change_password(self, password: str) -> None:
         self.logger.info("Changing password")
         await self._session_admin_global(admin_actions.SessionAdminGlobalAction.CHANGE_PASSWORD, password)
 
     @handle_network_errors
-    async def duplicate_session(self, new_name: str):
+    async def duplicate_session(self, new_name: str) -> None:
         self.logger.info("Duplicating session as %s", new_name)
         await self._session_admin_global(admin_actions.SessionAdminGlobalAction.DUPLICATE_SESSION, new_name)
 
     @handle_network_errors
-    async def change_visibility(self, new_visibility: MultiplayerSessionVisibility):
+    async def change_visibility(self, new_visibility: MultiplayerSessionVisibility) -> None:
         self.logger.info("Setting visibility to %s", new_visibility)
         await self._session_admin_global(admin_actions.SessionAdminGlobalAction.CHANGE_VISIBILITY, new_visibility.value)
 
     @handle_network_errors
-    async def abort_generation(self):
+    async def abort_generation(self) -> None:
         self.logger.info("Aborting generation")
         await self._session_admin_global(admin_actions.SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, [])
 
-    async def _upload_layout(self, layout: LayoutDescription):
+    async def _upload_layout(self, layout: LayoutDescription) -> None:
         self.logger.info("Uploading a layout description")
         await self._session_admin_global(
             admin_actions.SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION,
@@ -186,30 +195,33 @@ class MultiplayerSessionApi(QtCore.QObject):
         await self._session_admin_global(admin_actions.SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, [])
 
     @handle_network_errors
-    async def clear_generated_game(self):
+    async def clear_generated_game(self) -> None:
         self.logger.info("Clearing current layout description")
         await self._session_admin_global(admin_actions.SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION, None)
 
     @handle_network_errors
     async def request_permalink(self) -> str | None:
         self.logger.info("Requesting permalink")
-        return await self._session_admin_global(admin_actions.SessionAdminGlobalAction.REQUEST_PERMALINK)
+        result = await self._session_admin_global(admin_actions.SessionAdminGlobalAction.REQUEST_PERMALINK)
+        assert isinstance(result, str | None)
+        return result
 
     @handle_network_errors
     async def request_layout_description(self, worlds: list[MultiplayerWorld]) -> LayoutDescription | None:
         self.logger.info("Requesting layout description")
-        description_binary: bytes | None = await self._session_admin_global(
+        description_binary = await self._session_admin_global(
             admin_actions.SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION
         )
         if description_binary is None:
             return None
 
+        assert isinstance(description_binary, bytes)
         return LayoutDescription.from_bytes(description_binary, presets=[world.preset for world in worlds])
 
     #
 
     @handle_network_errors
-    async def replace_preset_for(self, world_uid: uuid.UUID, preset: VersionedPreset):
+    async def replace_preset_for(self, world_uid: uuid.UUID, preset: VersionedPreset) -> None:
         self.logger.info("Replacing preset for %s with %s", world_uid, preset.name)
         await self._session_admin_global(
             admin_actions.SessionAdminGlobalAction.CHANGE_WORLD,
@@ -218,17 +230,17 @@ class MultiplayerSessionApi(QtCore.QObject):
         )
 
     @handle_network_errors
-    async def claim_world_for(self, world_uid: uuid.UUID, owner: int):
+    async def claim_world_for(self, world_uid: uuid.UUID, owner: int) -> None:
         self.logger.info("Claiming %s for %d", world_uid, owner)
         await self._session_admin_player(owner, admin_actions.SessionAdminUserAction.CLAIM, str(world_uid))
 
     @handle_network_errors
-    async def unclaim_world(self, world_uid: uuid.UUID, owner: int):
+    async def unclaim_world(self, world_uid: uuid.UUID, owner: int) -> None:
         self.logger.info("Unclaiming %s from %d", world_uid, owner)
         await self._session_admin_player(owner, admin_actions.SessionAdminUserAction.UNCLAIM, str(world_uid))
 
     @handle_network_errors
-    async def rename_world(self, world_uid: uuid.UUID, new_name: str):
+    async def rename_world(self, world_uid: uuid.UUID, new_name: str) -> None:
         self.logger.info("Renaming world %s to %s", world_uid, new_name)
         await self._session_admin_global(
             admin_actions.SessionAdminGlobalAction.RENAME_WORLD,
@@ -237,7 +249,7 @@ class MultiplayerSessionApi(QtCore.QObject):
         )
 
     @handle_network_errors
-    async def delete_world(self, world_uid: uuid.UUID):
+    async def delete_world(self, world_uid: uuid.UUID) -> None:
         self.logger.info("Deleting world %s", world_uid)
         await self._session_admin_global(
             admin_actions.SessionAdminGlobalAction.DELETE_WORLD,
@@ -245,7 +257,7 @@ class MultiplayerSessionApi(QtCore.QObject):
         )
 
     @handle_network_errors
-    async def create_new_world(self, name: str, preset: VersionedPreset, owner: int):
+    async def create_new_world(self, name: str, preset: VersionedPreset, owner: int) -> None:
         self.logger.info("Creating world named '%s' with %s for %d", name, preset.name, owner)
         await self._session_admin_player(
             owner,
@@ -255,7 +267,7 @@ class MultiplayerSessionApi(QtCore.QObject):
         )
 
     @handle_network_errors
-    async def create_unclaimed_world(self, name: str, preset: VersionedPreset):
+    async def create_unclaimed_world(self, name: str, preset: VersionedPreset) -> None:
         self.logger.info("Creating unclaimed world named '%s' with %s", name, preset.name)
         await self._session_admin_global(
             admin_actions.SessionAdminGlobalAction.CREATE_WORLD,
@@ -266,14 +278,17 @@ class MultiplayerSessionApi(QtCore.QObject):
     @handle_network_errors
     async def create_patcher_file(self, world_uid: uuid.UUID, cosmetic_patches: dict) -> dict:
         self.logger.info("Requesting patcher file for %s", world_uid)
-        return await self._session_admin_global(
-            admin_actions.SessionAdminGlobalAction.CREATE_PATCHER_FILE,
-            str(world_uid),
-            cosmetic_patches,
+        return typing.cast(
+            dict,
+            await self._session_admin_global(
+                admin_actions.SessionAdminGlobalAction.CREATE_PATCHER_FILE,
+                str(world_uid),
+                cosmetic_patches,
+            ),
         )
 
     @handle_network_errors
-    async def kick_player(self, kick_id: int):
+    async def kick_player(self, kick_id: int) -> None:
         self.logger.info("Kicking player %d", kick_id)
         await self._session_admin_player(
             kick_id,
@@ -281,7 +296,7 @@ class MultiplayerSessionApi(QtCore.QObject):
         )
 
     @handle_network_errors
-    async def switch_admin(self, new_admin_id: int):
+    async def switch_admin(self, new_admin_id: int) -> None:
         self.logger.info("Switching admin-ness of %d", new_admin_id)
         await self._session_admin_player(
             new_admin_id,
@@ -289,7 +304,7 @@ class MultiplayerSessionApi(QtCore.QObject):
         )
 
     @handle_network_errors
-    async def set_allow_coop(self, flag: bool):
+    async def set_allow_coop(self, flag: bool) -> None:
         self.logger.info("Setting whether to allow coop to %s", flag)
         await self._session_admin_global(
             admin_actions.SessionAdminGlobalAction.SET_ALLOW_COOP,
@@ -297,7 +312,7 @@ class MultiplayerSessionApi(QtCore.QObject):
         )
 
     @handle_network_errors
-    async def set_everyone_can_claim(self, flag: bool):
+    async def set_everyone_can_claim(self, flag: bool) -> None:
         self.logger.info("Setting whether everyone can claim to %s", flag)
         await self._session_admin_global(
             admin_actions.SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM,
@@ -305,13 +320,13 @@ class MultiplayerSessionApi(QtCore.QObject):
         )
 
     @handle_network_errors
-    async def switch_readiness(self, user_id: int):
+    async def switch_readiness(self, user_id: int) -> None:
         self.logger.info("Switching ready-ness of %d", user_id)
         await self._session_admin_player(
             user_id,
             admin_actions.SessionAdminUserAction.SWITCH_READY,
         )
 
-    async def request_session_update(self):
+    async def request_session_update(self) -> None:
         self.logger.info("Requesting updated session data")
         await self.network_client.server_call("multiplayer_request_session_update", self.current_session_id)

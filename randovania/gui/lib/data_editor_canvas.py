@@ -20,11 +20,11 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region import Region
     from randovania.resolver.state import State
 
-_color_for_node: dict[type[Node], int] = {
-    GenericNode: QtGui.Qt.red,
-    DockNode: QtGui.Qt.green,
-    PickupNode: QtGui.Qt.cyan,
-    EventNode: QtGui.Qt.magenta,
+_color_for_node: dict[type[Node], QtCore.Qt.GlobalColor] = {
+    GenericNode: QtCore.Qt.GlobalColor.red,
+    DockNode: QtCore.Qt.GlobalColor.green,
+    PickupNode: QtCore.Qt.GlobalColor.cyan,
+    EventNode: QtCore.Qt.GlobalColor.magenta,
 }
 
 
@@ -50,9 +50,9 @@ class BoundsFloat(NamedTuple):
         return QRectF(QPointF(self.min_x, self.min_y), QPointF(self.max_x, self.max_y))
 
 
-def centered_text(painter: QtGui.QPainter, pos: QPointF, text: str):
+def centered_text(painter: QtGui.QPainter, pos: QPointF, text: str) -> None:
     rect = QRectF(pos.x() - 32767 * 0.5, pos.y() - 32767 * 0.5, 32767, 32767)
-    painter.drawText(rect, QtGui.Qt.AlignCenter, text)
+    painter.drawText(rect, QtGui.Qt.AlignmentFlag.AlignCenter, text)
 
 
 class DataEditorCanvas(QtWidgets.QWidget):
@@ -102,19 +102,19 @@ class DataEditorCanvas(QtWidgets.QWidget):
         self._move_node_action = QtGui.QAction("Move selected node here", self)
         self._move_node_action.triggered.connect(self._on_move_node)
 
-    def _on_create_node(self):
+    def _on_create_node(self) -> None:
         self.CreateNodeRequest.emit(self._next_node_location)
 
-    def _on_move_node(self):
+    def _on_move_node(self) -> None:
         self.MoveNodeRequest.emit(self.highlighted_node, self._next_node_location)
 
-    def set_edit_mode(self, value: bool):
+    def set_edit_mode(self, value: bool) -> None:
         self.edit_mode = value
 
-    def select_game(self, game: RandovaniaGame):
+    def select_game(self, game: RandovaniaGame) -> None:
         self.game = game
 
-    def select_region(self, region: Region):
+    def select_region(self, region: Region) -> None:
         self.region = region
         image_path = (
             self.game.data_path.joinpath("assets", "maps", f"{region.name}.png") if self.game is not None else None
@@ -133,7 +133,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
         self.update_region_bounds()
         self.update()
 
-    def update_region_bounds(self):
+    def update_region_bounds(self) -> None:
         if self.region is None:
             return
 
@@ -156,13 +156,13 @@ class DataEditorCanvas(QtWidgets.QWidget):
             max_y=max_y,
         )
 
-    def get_image_point(self, x: float, y: float):
+    def get_image_point(self, x: float, y: float) -> QPointF:
         bounds = self.image_bounds
         return QPointF(
             bounds.min_x + (bounds.max_x - bounds.min_x) * x, bounds.min_y + (bounds.max_y - bounds.min_y) * y
         )
 
-    def select_area(self, area: Area | None):
+    def select_area(self, area: Area | None) -> None:
         self.area = area
         if area is None:
             return
@@ -206,20 +206,20 @@ class DataEditorCanvas(QtWidgets.QWidget):
         )
         self.update()
 
-    def highlight_node(self, node: Node):
+    def highlight_node(self, node: Node) -> None:
         self.highlighted_node = node
         self.update()
 
-    def set_connected_node(self, node: Node | None):
+    def set_connected_node(self, node: Node | None) -> None:
         self.connected_node = node
         self.update()
 
-    def set_state(self, state: State | None):
+    def set_state(self, state: State | None) -> None:
         self.state = state
-        self.highlighted_node = state.node
+        self.highlighted_node = state.node if state is not None else None
         self.update()
 
-    def set_visible_nodes(self, visible_nodes: set[Node] | None):
+    def set_visible_nodes(self, visible_nodes: set[Node] | None) -> None:
         self.visible_nodes = visible_nodes
         self.update()
 
@@ -231,7 +231,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
             self.state.node_context(), self.state.health_for_damage_requirements
         )
 
-    def _update_scale_variables(self):
+    def _update_scale_variables(self) -> None:
         self.border_x = self.rect().width() * 0.05
         self.border_y = self.rect().height() * 0.05
         canvas_width = max(self.rect().width() - self.border_x * 2, 1)
@@ -243,7 +243,9 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
         self.canvas_size = QSizeF(canvas_width, canvas_width)
 
-    def _nodes_at_position(self, qt_local_position: QPointF):
+    def _nodes_at_position(self, qt_local_position: QPointF) -> list[Node]:
+        if self.area is None:
+            return []
         return [
             node
             for node in self.area.actual_nodes
@@ -251,7 +253,10 @@ class DataEditorCanvas(QtWidgets.QWidget):
             and (self.game_loc_to_qt_local(node.location) - qt_local_position).manhattanLength() < 10
         ]
 
-    def _other_areas_at_position(self, qt_local_position: QPointF):
+    def _other_areas_at_position(self, qt_local_position: QPointF) -> list[Area]:
+        if self.region is None:
+            return []
+
         result = []
 
         for area in self.region.areas:
@@ -322,9 +327,9 @@ class DataEditorCanvas(QtWidgets.QWidget):
             menu.addMenu(sub_menu)
 
         if not areas_at_mouse:
-            sub_menu = QtGui.QAction("No areas here", self)
-            sub_menu.setEnabled(False)
-            menu.addAction(sub_menu)
+            sub_action = QtGui.QAction("No areas here", self)
+            sub_action.setEnabled(False)
+            menu.addAction(sub_action)
 
         # Nodes Menu
         menu.addSeparator()
@@ -333,6 +338,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
             nodes_at_mouse.remove(self.highlighted_node)
 
         for node in nodes_at_mouse:
+            assert self.area
+
             if len(nodes_at_mouse) == 1:
                 menu.addAction(node.name).setEnabled(False)
                 sub_menu = menu
@@ -343,7 +350,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
             view_connections = sub_menu.addAction("View connections to this")
             view_connections.setEnabled(
                 (self.edit_mode and self.highlighted_node != node)
-                or (node in self.area.connections.get(self.highlighted_node, {}))
+                or (node in self.area.connections.get(self.highlighted_node, {}))  # type: ignore[arg-type]
             )
             view_connections.triggered.connect(functools.partial(self.SelectConnectionsRequest.emit, node))
 
@@ -379,9 +386,9 @@ class DataEditorCanvas(QtWidgets.QWidget):
                 menu.addMenu(sub_menu)
 
         if not nodes_at_mouse:
-            sub_menu = QtGui.QAction("No other nodes here", self)
-            sub_menu.setEnabled(False)
-            menu.addAction(sub_menu)
+            sub_action = QtGui.QAction("No other nodes here", self)
+            sub_action.setEnabled(False)
+            menu.addAction(sub_action)
 
         # Done
 
@@ -401,7 +408,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
             (pos.x() / self.scale) + self.area_bounds.min_x, self.area_bounds.max_y - (pos.y() / self.scale), 0.0
         )
 
-    def get_area_canvas_offset(self):
+    def get_area_canvas_offset(self) -> QPointF:
         return QPointF(
             (self.width() - self.area_size.width() * self.scale) / 2,
             (self.height() - self.area_size.height() * self.scale) / 2,
@@ -414,13 +421,13 @@ class DataEditorCanvas(QtWidgets.QWidget):
         self._update_scale_variables()
 
         painter = QtGui.QPainter(self)
-        painter.setPen(QtGui.Qt.transparent)
+        painter.setPen(QtCore.Qt.GlobalColor.transparent)
         painter.setBrush(QtGui.QColor(45, 45, 45))
         painter.drawRect(0, 0, 32767, 32767)
 
-        painter.setRenderHint(QtGui.QPainter.Antialiasing)
-        painter.setPen(QtGui.Qt.white)
-        painter.setBrush(QtGui.Qt.transparent)
+        painter.setRenderHint(QtGui.QPainter.RenderHint.Antialiasing)
+        painter.setPen(QtCore.Qt.GlobalColor.white)
+        painter.setBrush(QtCore.Qt.GlobalColor.transparent)
         painter.setFont(QtGui.QFont("Arial", 10))
 
         # Center what we're drawing
@@ -460,7 +467,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
         pen_widget = painter.pen().width()
 
-        def draw_connections_from(source_node: Node, highlighted_target: Node | None):
+        def draw_connections_from(source_node: Node, highlighted_target: Node | None) -> None:
             if source_node.location is None:
                 return
 
@@ -469,15 +476,15 @@ class DataEditorCanvas(QtWidgets.QWidget):
                     continue
 
                 if not self.is_connection_visible(requirement):
-                    painter.setPen(QtGui.Qt.darkGray)
+                    painter.setPen(QtCore.Qt.GlobalColor.darkGray)
                 elif source_node == self.highlighted_node or self.state is not None:
                     if highlighted_target is target_node:
                         painter.setPen(QtGui.QPen(QtGui.QColor(255, 200, 255), pen_widget + 2))
                     else:
-                        painter.setPen(QtGui.Qt.white)
+                        painter.setPen(QtCore.Qt.GlobalColor.white)
                 else:
-                    painter.setPen(QtGui.Qt.gray)
-                painter.setBrush(QtGui.Qt.black)
+                    painter.setPen(QtCore.Qt.GlobalColor.gray)
+                painter.setBrush(QtCore.Qt.GlobalColor.black)
 
                 source = self.game_loc_to_qt_local(source_node.location)
                 target = self.game_loc_to_qt_local(target_node.location)
@@ -512,16 +519,16 @@ class DataEditorCanvas(QtWidgets.QWidget):
         if self.highlighted_node is not None and self.highlighted_node in area.nodes:
             draw_connections_from(self.highlighted_node, self.connected_node)
 
-        painter.setPen(QtGui.Qt.white)
+        painter.setPen(QtCore.Qt.GlobalColor.white)
 
         for node in area.actual_nodes:
             if node.location is None:
                 continue
 
             if self.is_node_visible(node):
-                brush.setColor(_color_for_node.get(type(node), QtGui.Qt.yellow))
+                brush.setColor(_color_for_node.get(type(node), QtCore.Qt.GlobalColor.yellow))
             else:
-                brush.setColor(QtGui.Qt.darkGray)
+                brush.setColor(QtCore.Qt.GlobalColor.darkGray)
             painter.setBrush(brush)
 
             p = self.game_loc_to_qt_local(node.location)
@@ -530,9 +537,9 @@ class DataEditorCanvas(QtWidgets.QWidget):
             painter.drawEllipse(p, 5, 5)
             centered_text(painter, p + QPointF(0, 15), node.name)
 
-    def set_zoom_value(self, new_zoom):
+    def set_zoom_value(self, new_zoom: int) -> None:
         self.additional_zoom = new_zoom / 20
         self.repaint()
 
-    def wheelEvent(self, event):
+    def wheelEvent(self, event: QtGui.QWheelEvent) -> None:
         self.UpdateSlider.emit(event.angleDelta().y() > 0)

@@ -10,7 +10,7 @@ from randovania.gui.lib import async_dialog, error_message_box
 from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
-    from PySide6.QtCore import Signal
+    from collections.abc import Callable
 
     from randovania.exporter.game_exporter import GameExporter
     from randovania.gui.dialog.game_export_dialog import GameExportDialog
@@ -25,24 +25,25 @@ async def export_game(
     patch_data: dict,
     layout_for_spoiler: LayoutDescription | None,
     background: BackgroundTaskMixin,
-    progress_update_signal: Signal(str, int),
-):
+    progress_update_emit: Callable[[str, float], None],
+) -> None:
     export_params = export_dialog.get_game_export_params()
     if exporter.can_start_new_export:
-        return await async_dialog.message_box(
+        await async_dialog.message_box(
             None,
             QtWidgets.QMessageBox.Icon.Critical,
             "Can't export game",
             "Error: Unable to export multiple games at the same time and another window is exporting a game right now.",
         )
+        return
 
-    def work(progress_update: ProgressUpdateCallable):
+    def work(progress_update: ProgressUpdateCallable) -> None:
         exporter.export_game(patch_data, export_params, progress_update=progress_update)
 
-        has_spoiler = layout_for_spoiler is not None and layout_for_spoiler.has_spoiler
-        if export_params.spoiler_output is not None and has_spoiler:
-            export_params.spoiler_output.parent.mkdir(parents=True, exist_ok=True)
-            layout_for_spoiler.save_to_file(export_params.spoiler_output)
+        if layout_for_spoiler is not None:
+            if export_params.spoiler_output is not None and layout_for_spoiler.has_spoiler:
+                export_params.spoiler_output.parent.mkdir(parents=True, exist_ok=True)
+                layout_for_spoiler.save_to_file(export_params.spoiler_output)
 
         progress_update("Finished!", 1)
 
@@ -54,12 +55,12 @@ async def export_game(
 
     except UnableToExportError as e:
         logging.warning(e.reason)
-        progress_update_signal.emit(f"Unable to export game: {e.reason}", 0.0)
+        progress_update_emit(f"Unable to export game: {e.reason}", 0.0)
         await export_dialog.handle_unable_to_export(e)
 
     except Exception as e:
         logging.exception("Unable to export game")
-        progress_update_signal.emit("Fatal error, unable to export game", 0.0)
+        progress_update_emit("Fatal error, unable to export game", 0.0)
 
         box = error_message_box.create_box_for_exception(e)
         await async_dialog.execute_dialog(box)

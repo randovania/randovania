@@ -238,7 +238,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
             patch_data=patch_data,
             layout_for_spoiler=layout,
             background=self,
-            progress_update_signal=self.progress_update_signal,
+            progress_update_emit=self.progress_update_signal.emit,
         )
         self._can_stop_background_process = True
 
