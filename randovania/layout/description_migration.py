@@ -616,11 +616,12 @@ def _migrate_v32(data: dict) -> None:
 
 
 def _migrate_v33(data: dict) -> None:
-    banned_pickups = ["Cannon Ball", "Unlimited Beam Ammo", "Unlimited Missiles", "Double Damage"]
-    starting_pickups = data["game_modifications"]["starting_equipment"]["pickups"]
-    for pickup in banned_pickups:
-        if pickup in starting_pickups:
-            starting_pickups.pop(pickup)
+    if data["game_modifications"]["game"] == "prime2":
+        banned_pickups = ["Cannon Ball", "Unlimited Beam Ammo", "Unlimited Missiles", "Double Damage"]
+        starting_pickups = data["game_modifications"]["starting_equipment"]["pickups"]
+        for pickup in banned_pickups:
+            if pickup in starting_pickups:
+                starting_pickups.pop(pickup)
 
 
 _MIGRATIONS = [
