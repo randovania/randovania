@@ -625,7 +625,7 @@ def _migrate_v33(data: dict) -> None:
                 starting_pickups = game["starting_equipment"]["pickups"]
                 for pickup in banned_pickups:
                     if pickup in starting_pickups:
-                        starting_pickups.pop(pickup)
+                        starting_pickups.remove(pickup)
 
 
 _MIGRATIONS = [
