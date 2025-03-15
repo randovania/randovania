@@ -9,6 +9,7 @@ from qasync import asyncSlot
 
 from randovania import monitoring
 from randovania.gui.async_race_room_window import AsyncRaceRoomWindow
+from randovania.gui.dialog.async_race_creation_dialog import AsyncRaceCreationDialog
 from randovania.gui.dialog.async_race_room_browser_dialog import AsyncRaceRoomBrowserDialog
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.multiplayer_session_browser_dialog import MultiplayerSessionBrowserDialog
@@ -37,6 +38,7 @@ class BaseBrowser(async_dialog.DialogLike, typing.Protocol[BaseSession]):
 class OnlineInteractions(QtWidgets.QWidget):
     network_client: QtNetworkClient
     _login_window: QtWidgets.QDialog | None = None
+    _async_race_creation: AsyncRaceCreationDialog | None = None
 
     def __init__(
         self,
@@ -61,6 +63,7 @@ class OnlineInteractions(QtWidgets.QWidget):
 
         # Menu Bar
         main_window.menu_action_login_window.triggered.connect(self._action_login_window)
+        main_window.menu_action_async_race.triggered.connect(self._action_create_async_race)
 
     async def _base_browse(
         self,
@@ -138,6 +141,34 @@ class OnlineInteractions(QtWidgets.QWidget):
             await async_dialog.execute_dialog(self._login_window)
         finally:
             self._login_window = None
+
+    @asyncSlot()
+    @handle_network_errors
+    async def _action_create_async_race(self) -> None:
+        if not await self.network_client.ensure_logged_in(self):
+            return
+
+        if self._async_race_creation is not None:
+            self._async_race_creation.raise_()
+            return
+
+        self._async_race_creation = AsyncRaceCreationDialog(
+            self,
+            self.window_manager,
+            self.options,
+        )
+        try:
+            result = await async_dialog.execute_dialog(self._async_race_creation)
+
+            if result == QtWidgets.QDialog.DialogCode.Accepted:
+                await self.network_client.create_async_race_room(
+                    self._async_race_creation.layout_description,
+                    self._async_race_creation.create_settings_object(),
+                )
+                # TODO: open the room? confirmation popup?
+
+        finally:
+            self._async_race_creation = None
 
     @asyncSlot()
     @handle_network_errors

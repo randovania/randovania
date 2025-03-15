@@ -298,7 +298,7 @@ def set_icon_data_paths(label: QtWidgets.QLabel):
     label.setText(new_text)
 
 
-def alert_user_on_generation(parent: QtWidgets, options: Options):
+def alert_user_on_generation(parent: QtWidgets.QWidget, options: Options) -> None:
     if options.audible_generation_alert:
         QtWidgets.QApplication.beep()
     if options.visual_generation_alert:

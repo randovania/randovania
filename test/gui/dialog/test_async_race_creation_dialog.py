@@ -2,11 +2,13 @@ from __future__ import annotations
 
 import dataclasses
 import datetime
+from unittest.mock import MagicMock
 
 from PySide6 import QtCore, QtWidgets
 
 from randovania.gui.dialog.async_race_creation_dialog import AsyncRaceCreationDialog
 from randovania.gui.dialog.async_race_settings_dialog import AsyncRaceSettingsDialog
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.network_common.async_race_room import (
     AsyncRaceRoomEntry,
     AsyncRaceRoomRaceStatus,
@@ -17,19 +19,23 @@ from randovania.network_common.game_details import GameDetails
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
 
-def test_validate(skip_qtbot):
+def test_validate(skip_qtbot, preset_manager, options):
     parent = QtWidgets.QMainWindow()
     skip_qtbot.add_widget(parent)
 
-    dialog = AsyncRaceCreationDialog(parent)
+    window_manager = MagicMock(spec=WindowManager)
+    window_manager.preset_manager = preset_manager
+    dialog = AsyncRaceCreationDialog(parent, window_manager, options)
 
-    assert not dialog.button_group.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).isEnabled()
+    assert not dialog.ui.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).isEnabled()
 
-    dialog.ui.name_edit.setText("The Name")
-    dialog.ui.start_time_edit.setDateTime(QtCore.QDateTime(2020, 1, 1, 0, 0, 0))
-    dialog.ui.end_time_edit.setDateTime(QtCore.QDateTime(2021, 1, 1, 0, 0, 0))
+    dialog.ui.settings_widget.ui.name_edit.setText("The Name")
+    dialog.ui.settings_widget.ui.start_time_edit.setDateTime(QtCore.QDateTime(2020, 1, 1, 0, 0, 0))
+    dialog.ui.settings_widget.ui.end_time_edit.setDateTime(QtCore.QDateTime(2021, 1, 1, 0, 0, 0))
 
-    assert dialog.button_group.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).isEnabled()
+    assert not dialog.ui.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).isEnabled()
+    dialog.selected_preset = MagicMock()
+    assert dialog.ui.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).isEnabled()
 
     settings = AsyncRaceSettings(
         name="The Name",
@@ -41,11 +47,11 @@ def test_validate(skip_qtbot):
     )
     assert dialog.create_settings_object() == settings
 
-    dialog.ui.password_check.setChecked(True)
-    assert not dialog.button_group.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).isEnabled()
+    dialog.ui.settings_widget.ui.password_check.setChecked(True)
+    assert not dialog.ui.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).isEnabled()
 
-    dialog.ui.password_edit.setText("The Secret")
-    assert dialog.button_group.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).isEnabled()
+    dialog.ui.settings_widget.ui.password_edit.setText("The Secret")
+    assert dialog.ui.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).isEnabled()
     assert dialog.create_settings_object() == dataclasses.replace(settings, password="The Secret")
 
 
