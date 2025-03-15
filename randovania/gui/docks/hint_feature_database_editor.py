@@ -18,7 +18,7 @@ class HintFeatureDatabaseModel(AppendableEditableTableModel[HintFeature]):
     @override
     def _all_columns(self) -> list[FieldDefinition]:
         return [
-            FieldDefinition[str, str]("Short Name", "name", read_only=True),
+            FieldDefinition[str, str]("Short Name", "name", from_qt=None),
             FieldDefinition[str, str]("Long Name", "long_name"),
             FieldDefinition[str, HintDetails](
                 "Hint Details",

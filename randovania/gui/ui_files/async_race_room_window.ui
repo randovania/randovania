@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>468</width>
+    <width>542</width>
     <height>386</height>
    </rect>
   </property>
@@ -183,6 +183,9 @@
       </property>
      </widget>
     </item>
+    <item row="6" column="0">
+     <widget class="BackgroundTaskWidget" name="background_task_widget" native="true"/>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -190,13 +193,21 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>468</width>
+     <width>542</width>
      <height>17</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>BackgroundTaskWidget</class>
+   <extends>QWidget</extends>
+   <header>randovania.gui.widgets.background_task_widget</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

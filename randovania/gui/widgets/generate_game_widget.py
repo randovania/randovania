@@ -1,24 +1,17 @@
 from __future__ import annotations
 
-import asyncio
 import datetime
 import logging
-import random
 from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 from qasync import asyncSlot
 
-import randovania
 from randovania import monitoring
 from randovania.gui.generated.generate_game_widget_ui import Ui_GenerateGameWidget
-from randovania.gui.lib import async_dialog
 from randovania.gui.lib.common_qt_lib import alert_user_on_generation
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
-from randovania.interface_common import generator_frontend
-from randovania.layout.generator_parameters import GeneratorParameters
-from randovania.layout.permalink import Permalink
-from randovania.resolver.exceptions import ImpossibleForSolver
+from randovania.gui.widgets.generate_game_mixin import GenerateGameMixin
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -28,8 +21,8 @@ if TYPE_CHECKING:
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.options import Options
     from randovania.layout.layout_description import LayoutDescription
+    from randovania.layout.permalink import Permalink
     from randovania.layout.versioned_preset import VersionedPreset
-    from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 
 class RetryGeneration(Exception):
@@ -48,7 +41,7 @@ def persist_layout(history_dir: Path, description: LayoutDescription) -> None:
     description.save_to_file(file_path)
 
 
-class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
+class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget, GenerateGameMixin):
     _background_task: BackgroundTaskMixin
     _window_manager: WindowManager
     _options: Options
@@ -76,7 +69,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         # Progress
         self._background_task.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
 
-        self.num_players_spin_box.setVisible(self._window_manager.is_preview_mode)
+        self.num_worlds_spin_box.setVisible(self._window_manager.is_preview_mode)
         self.create_generate_no_retry_button.setVisible(self._window_manager.is_preview_mode)
 
         # Signals
@@ -113,94 +106,24 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         monitoring.metrics.incr("gui_generate_race", tags={"game": self.game.value})
         return await self.generate_new_layout(spoiler=False)
 
-    async def generate_new_layout(self, spoiler: bool, retries: int | None = None) -> None:
-        preset = self.preset
-        num_players = self.num_players_spin_box.value()
+    @property
+    def num_worlds(self) -> int:
+        return 1
 
-        unsupported_features = preset.get_preset().configuration.unsupported_features()
-        if unsupported_features:
-            if randovania.is_dev_version():
-                confirmation = "Are you sure you want to continue?"
-                buttons = async_dialog.StandardButton.Yes | async_dialog.StandardButton.No
-            else:
-                confirmation = "These features are not available outside of development builds."
-                buttons = async_dialog.StandardButton.No
-
-            result = await async_dialog.warning(
-                self,
-                "Unsupported Features",
-                "Preset '{}' uses the unsupported features:\n{}\n\n{}".format(
-                    preset.name,
-                    ", ".join(unsupported_features),
-                    confirmation,
-                ),
-                buttons=buttons,
-                default_button=async_dialog.StandardButton.No,
-            )
-            if result != async_dialog.StandardButton.Yes:
-                return
-
-        while True:
-            try:
-                return await self.generate_layout_from_permalink(
-                    permalink=Permalink.from_parameters(
-                        GeneratorParameters(
-                            seed_number=random.randint(0, 2**31),
-                            spoiler=spoiler,
-                            presets=[preset.get_preset()] * num_players,
-                        )
-                    ),
-                    retries=retries,
-                )
-            except RetryGeneration:
-                pass
+    @property
+    def generate_parent_widget(self) -> QtWidgets.QWidget:
+        return self
 
     async def generate_layout_from_permalink(self, permalink: Permalink, retries: int | None = None) -> None:
-        def work(progress_update: ProgressUpdateCallable) -> LayoutDescription:
-            return generator_frontend.generate_layout(
-                progress_update=progress_update, parameters=permalink.parameters, options=self._options, retries=retries
-            )
-
         if self._window_manager.is_preview_mode:
             logging.info(f"Permalink: {permalink.as_base64_str}")
 
-        try:
-            layout = await self._background_task.run_in_background_async(work, "Creating a game...")
-        except ImpossibleForSolver as e:
-            code = await async_dialog.warning(
-                self,
-                "Solver Error",
-                f"{e}.\n\nDo you want to:"
-                f"\n- Keep the generated game, even without any guarantees it's possible"
-                f"\n- Retry the generation"
-                f"\n- Cancel the process",
-                buttons=(
-                    async_dialog.StandardButton.Save
-                    | async_dialog.StandardButton.Retry
-                    | async_dialog.StandardButton.Cancel
-                ),
-                default_button=async_dialog.StandardButton.Cancel,
-            )
-            alert_user_on_generation(self, self._options)
-            if code == async_dialog.StandardButton.Save:
-                layout = e.layout
-            elif code == async_dialog.StandardButton.Retry:
-                raise RetryGeneration
-            else:
-                self._background_task.progress_update_signal.emit("Solver Error", 0)
-                return
-
-        except asyncio.exceptions.CancelledError:
-            return
-
-        except Exception as e:
-            alert_user_on_generation(self, self._options)
-            return await self.failure_handler.handle_exception(e, self._background_task.progress_update_signal.emit)
-
-        self._background_task.progress_update_signal.emit(f"Success! (Seed hash: {layout.shareable_hash})", 100)
+        layout = await super().generate_layout_from_permalink(permalink, retries)
         alert_user_on_generation(self, self._options)
-        persist_layout(self._options.game_history_path, layout)
-        self._window_manager.open_game_details(layout)
+
+        if layout is not None:
+            persist_layout(self._options.game_history_path, layout)
+            self._window_manager.open_game_details(layout)
 
     def on_options_changed(self, options: Options) -> None:
         self.select_preset_widget.on_options_changed(options)

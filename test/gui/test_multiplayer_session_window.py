@@ -1023,9 +1023,11 @@ async def test_on_close_event(window: MultiplayerSessionWindow, mocker, is_membe
 
 async def test_update_session_audit_log(window: MultiplayerSessionWindow):
     window._session = MagicMock()
+    now = datetime.datetime(2020, 1, 1, 5, 1)
+
     log = MultiplayerSessionAuditLog(
         session_id=window._session.id,
-        entries=[AuditEntry("You", f"Did something for the {i}-th time.", datetime.datetime.now()) for i in range(50)],
+        entries=[AuditEntry("You", f"Did something for the {i}-th time.", now) for i in range(50)],
     )
     scrollbar = window.tab_audit.verticalScrollBar()
 
@@ -1033,8 +1035,9 @@ async def test_update_session_audit_log(window: MultiplayerSessionWindow):
     window.update_session_audit_log(log)
     assert scrollbar.value() == scrollbar.maximum()
 
-    assert window.audit_item_model.item(0, 0).text() == "You"
-    assert window.audit_item_model.item(0, 1).text() == "Did something for the 0-th time."
+    assert model_lib.get_texts(window.audit_item_model, max_rows=1) == [
+        ["You", "Did something for the 0-th time.", QtCore.QDateTime(2020, 1, 1, 5, 1, 0, 0, 0)]
+    ]
 
     window.tab_audit.scrollToTop()
     window.update_session_audit_log(log)

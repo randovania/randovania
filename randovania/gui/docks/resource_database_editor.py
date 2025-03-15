@@ -39,7 +39,7 @@ def encode_extra(qt_value: str) -> tuple[bool, typing.Any]:
 
 
 GENERIC_FIELDS: list[FieldDefinition] = [
-    FieldDefinition[str, str]("Short Name", "short_name", read_only=True),
+    FieldDefinition[str, str]("Short Name", "short_name", from_qt=None),
     FieldDefinition[str, str]("Long Name", "long_name"),
     FieldDefinition[str, frozendict](
         "Extra", "extra", to_qt=lambda v: json.dumps(frozen_lib.unwrap(v)), from_qt=encode_extra

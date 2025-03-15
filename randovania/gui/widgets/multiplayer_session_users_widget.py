@@ -15,7 +15,7 @@ from randovania import monitoring
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.gui import game_specific_gui
-from randovania.gui.dialog.multiplayer_select_preset_dialog import MultiplayerSelectPresetDialog
+from randovania.gui.dialog.select_preset_dialog import SelectPresetDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.interface_common.options import InfoAlert, Options
@@ -151,9 +151,10 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     #
 
     def _create_select_preset_dialog(self, include_world_name_prompt: bool, default_game: RandovaniaGame | None):
-        return MultiplayerSelectPresetDialog(
+        return SelectPresetDialog(
             self._window_manager,
             self._options,
+            for_multiworld=True,
             allowed_games=self._session.allowed_games,
             default_game=default_game,
             include_world_name_prompt=include_world_name_prompt,

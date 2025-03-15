@@ -95,7 +95,7 @@ class AsyncRaceEntryData(JsonDataclass):
     forfeit: bool
     pauses: list[AsyncRacePauseEntry]
     submission_notes: str
-    proof_url: str | None
+    proof_url: str
 
     def is_valid(self) -> bool:
         """Returns True if all three dates are consistent, False otherwise."""

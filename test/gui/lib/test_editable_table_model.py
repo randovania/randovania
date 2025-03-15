@@ -32,7 +32,7 @@ _FIELD_DEFS = [
     FieldDefinition[int, int]("A", "a"),
     BoolFieldDefinition("B", "b"),
     DateFieldDefinition("C", "c"),
-    FieldDefinition[str, str]("D", "d", read_only=True),
+    FieldDefinition[str, str]("D", "d", from_qt=None),
     FieldDefinition[str, str]("E", "e", default_factory=lambda: "@@@"),
 ]
 
