@@ -161,12 +161,13 @@ class OnlineInteractions(QtWidgets.QWidget):
             result = await async_dialog.execute_dialog(self._async_race_creation)
 
             if result == QtWidgets.QDialog.DialogCode.Accepted:
-                await self.network_client.create_async_race_room(
+                room = await self.network_client.create_async_race_room(
                     self._async_race_creation.layout_description,
                     self._async_race_creation.create_settings_object(),
                 )
-                # TODO: open the room? confirmation popup?
-
+                async_room = AsyncRaceRoomWindow(room, self.network_client, self.options, self.window_manager)
+                async_room.show()
+                self.window_manager.track_window(async_room)
         finally:
             self._async_race_creation = None
 
