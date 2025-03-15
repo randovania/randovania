@@ -1140,11 +1140,11 @@ def _migrate_v101(preset: dict, game: RandovaniaGame) -> None:
 def _migrate_v102(preset: dict, game: RandovaniaGame) -> None:
     if game == RandovaniaGame.METROID_PRIME_ECHOES:
         banned_pickups = ["Cannon Ball", "Unlimited Beam Ammo", "Unlimited Missiles", "Double Damage"]
-        pickup_config = preset["info"]["presets"]["configuration"]["standard_pickup_configuration"]["pickups_state"]
+        pickup_config = preset["configuration"]["standard_pickup_configuration"]["pickups_state"]
         for pickup in banned_pickups:
             if pickup in pickup_config:
                 if "num_included_in_starting_pickups" in pickup_config[pickup]:
-                    pickup_config[pickup].pop(["num_included_in_starting_pickups"])
+                    pickup_config[pickup].pop("num_included_in_starting_pickups")
 
 
 _MIGRATIONS = [
