@@ -161,6 +161,7 @@ class OnlineInteractions(QtWidgets.QWidget):
             result = await async_dialog.execute_dialog(self._async_race_creation)
 
             if result == QtWidgets.QDialog.DialogCode.Accepted:
+                assert self._async_race_creation.layout_description is not None
                 room = await self.network_client.create_async_race_room(
                     self._async_race_creation.layout_description,
                     self._async_race_creation.create_settings_object(),

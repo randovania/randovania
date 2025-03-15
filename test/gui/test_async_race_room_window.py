@@ -201,8 +201,8 @@ async def test_on_join_and_forfeit(
         export_dialog=export_dialog_class.return_value,
         patch_data=network_client.async_race_join_and_export.return_value,
         layout_for_spoiler=None,
-        background=window,
-        progress_update_signal=window.progress_update_signal,
+        background=window.ui.background_task_widget,
+        progress_update_signal=window.ui.background_task_widget.progress_update_signal,
     )
 
     window.refresh_data.assert_awaited_once_with()

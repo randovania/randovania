@@ -35,6 +35,7 @@ def test_validate(skip_qtbot, preset_manager, options):
 
     assert not dialog.ui.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).isEnabled()
     dialog.selected_preset = MagicMock()
+    dialog.ui.settings_widget.validate()
     assert dialog.ui.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).isEnabled()
 
     settings = AsyncRaceSettings(

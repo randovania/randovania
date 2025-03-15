@@ -82,6 +82,7 @@ class AsyncRaceCreationDialog(QtWidgets.QDialog, GenerateGameMixin):
             self._preset_selection_dialog = dialog
             if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.DialogCode.Accepted:
                 self.selected_preset = dialog.selected_preset
+                assert self.selected_preset is not None
                 self.ui.preset_label.setText(f"{self.selected_preset.game.long_name}<br />{self.selected_preset.name}")
                 self.ui.settings_widget.validate()
         finally:
