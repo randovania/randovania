@@ -150,7 +150,7 @@ async def test_keybearer_hint_precisions(
     hint_distributor = EchoesHintDistributor()
 
     hint_node = NodeIdentifier.create("Agon Wastes", "Central Mining Station", "Keybearer Corpse (J-Stl)")
-    keybearer_precision = (await hint_distributor.get_specific_pickup_precision_pairs())[hint_node]
+    keybearer_precision = (await hint_distributor.get_specific_location_precision_pairs())[hint_node]
     hint = LocationHint(keybearer_precision, PickupIndex(0))
 
     categories = echoes_pickup_database.pickup_categories

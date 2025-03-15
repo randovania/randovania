@@ -8,7 +8,7 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.hint_node import HintNode, HintNodeKind
+from randovania.game_description.db.hint_node import GenericHintNode, SpecificLocationHintNode, SpecificPickupHintNode
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.requirements.resource_requirement import DamageResourceRequirement
@@ -232,20 +232,19 @@ class GameDescription:
         return self._victory_condition_as_set
         # return self.victory_condition.as_set(context)
 
-    def _has_hint_with_kind(self, kind: HintNodeKind) -> bool:
-        return any(node.kind == kind for node in self.region_list.iterate_nodes_of_type(HintNode))
-
     @property
     def has_random_hints(self) -> bool:
-        return self._has_hint_with_kind(HintNodeKind.GENERIC)
+        return any(self.region_list.iterate_nodes_of_type(GenericHintNode))
 
     @property
     def has_specific_location_hints(self) -> bool:
-        return self._has_hint_with_kind(HintNodeKind.SPECIFIC_LOCATION)
+        return any(self.region_list.iterate_nodes_of_type(SpecificLocationHintNode))
 
     @property
     def has_specific_pickup_hints(self) -> bool:
-        return bool(self.game.hints.specific_pickup_hints) or self._has_hint_with_kind(HintNodeKind.SPECIFIC_PICKUP)
+        return bool(self.game.hints.specific_pickup_hints) or any(
+            self.region_list.iterate_nodes_of_type(SpecificPickupHintNode)
+        )
 
 
 def _resources_for_damage(

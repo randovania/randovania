@@ -245,7 +245,7 @@
    <item>
     <widget class="QTabWidget" name="tab_widget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="tab_generic">
       <attribute name="title">
@@ -650,12 +650,39 @@
        <string>Hint</string>
       </attribute>
       <layout class="QGridLayout" name="hint_layout">
-       <item row="1" column="0" colspan="2">
-        <widget class="QPushButton" name="hint_requirement_to_collect_button">
+       <item row="3" column="0">
+        <widget class="QLabel" name="override_requirement_display_name_label">
          <property name="text">
-          <string>Edit requirement to collect</string>
+          <string>Override requirement display name:</string>
          </property>
         </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="hint_kind_label">
+         <property name="text">
+          <string>Kind:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QSpinBox" name="specific_location_target_spin">
+         <property name="maximum">
+          <number>999</number>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QComboBox" name="specific_pickup_target_combo"/>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="specific_pickup_target_label">
+         <property name="text">
+          <string>Target Pickup:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="override_requirement_display_name_edit"/>
        </item>
        <item row="2" column="0" colspan="2">
         <widget class="QGroupBox" name="hint_requirement_to_collect_group">
@@ -681,15 +708,35 @@
          </layout>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="hint_kind_label">
+       <item row="1" column="0" colspan="2">
+        <widget class="QPushButton" name="hint_requirement_to_collect_button">
          <property name="text">
-          <string>Kind</string>
+          <string>Edit requirement to collect</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="specific_location_target_label">
+         <property name="text">
+          <string>Target Pickup Index:</string>
          </property>
         </widget>
        </item>
        <item row="0" column="1">
         <widget class="QComboBox" name="hint_kind_combo"/>
+       </item>
+       <item row="7" column="1">
+        <spacer name="verticalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>

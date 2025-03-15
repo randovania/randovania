@@ -221,19 +221,26 @@ Extra - map_name: Square
       Trivial
   > Hint no Translator
       Trivial
+  > Hint specific Location
+      Trivial
 
 > Hint with Translator; Heals? False
   * Layers: default
-  * Hint
-  * Extra - translator: BlueKey
+  * Generic Hint; Requirement? BlueKey
   * Extra - string_asset_id: 0
   > Door to Explosive Depot
       Trivial
 
 > Hint no Translator; Heals? False
   * Layers: default
-  * Hint
+  * Generic Hint
   * Extra - string_asset_id: 1
+  > Door to Explosive Depot
+      Trivial
+
+> Hint specific Location; Heals? False
+  * Layers: default
+  * Specific Location Hint; Target? PickupIndex 0
   > Door to Explosive Depot
       Trivial
 

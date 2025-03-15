@@ -312,6 +312,18 @@ def _migrate_v28(data: dict, game: RandovaniaGame) -> None:
                     node["kind"] = hint_types[node["kind"]]
 
 
+def _migrate_v29(data: dict, game: RandovaniaGame) -> None:
+    for region in data["regions"]:
+        for area in region["areas"].values():
+            for node in area["nodes"].values():
+                if node["node_type"] == "hint":
+                    if node["kind"] == "generic":
+                        if "translator" in node["extra"]:
+                            node["requirement_display_name"] = node["extra"].pop("translator")
+                    elif node["kind"] == "specific-location":
+                        node["target"] = node["extra"].pop("hint_index")
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -341,6 +353,7 @@ _MIGRATIONS = [
     _migrate_v26,  # remove initial_states
     _migrate_v27,  # add hint features
     _migrate_v28,  # rename HintNodeKind
+    _migrate_v29,  # refactor HintNode
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: 3 more joke hints.
 - Added: The Hints Spoiler tab now indicates which location a hint is pointing to.
 - Added: Experimental option under Generation -> Logic Settings that improves the results of generation but increases generation time.
+- Added: The Data Visualizer now displays more information about Hint nodes.
 - Changed: The Hints Spoiler tab sorts its entries in a more helpful manner.
 - Changed: Some joke hints are now shared between all games that use them.
 - Changed: Hints now prioritize non-progression major items rather than progression minor items.

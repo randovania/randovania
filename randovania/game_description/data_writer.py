@@ -316,6 +316,10 @@ def write_node(node: Node) -> dict:
         data.update(common_fields)
         data["kind"] = node.kind.value
         data["requirement_to_collect"] = write_requirement(node.lock_requirement)
+        if node.requirement_display_name is not None:
+            data["requirement_display_name"] = node.requirement_display_name
+        if node._target is not None:
+            data["target"] = node._target
 
     elif isinstance(node, TeleporterNetworkNode):
         data["node_type"] = "teleporter_network"

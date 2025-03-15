@@ -7,7 +7,7 @@ from randovania.game_description.data_writer import REGION_NAME_TO_FILE_NAME_RE
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.hint_node import HintNode, SpecificLocationHintNode, SpecificPickupHintNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.requirements.array_base import RequirementArrayBase
@@ -148,7 +148,15 @@ def pretty_print_node_type(node: Node, region_list: RegionList, db: ResourceData
         return "Configurable Node"
 
     elif isinstance(node, HintNode):
-        return "Hint"
+        message = f"{node.kind.long_name} Hint"
+        if (requirement := node.requirement_name) != "Trivial":
+            message += f"; Requirement? {requirement}"
+        if isinstance(node, SpecificLocationHintNode):
+            message += f"; Target? {node.target_index}"
+        elif isinstance(node, SpecificPickupHintNode):
+            details = db.game_enum.hints.specific_pickup_hints[node.specific_pickup_hint_id]
+            message += f"; Target? {details.long_name}"
+        return message
 
     elif isinstance(node, TeleporterNetworkNode):
         unlocked_pretty = list(pretty_format_requirement(node.is_unlocked, db))
