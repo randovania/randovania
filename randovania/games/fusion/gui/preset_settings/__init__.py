@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-import randovania
-
 if TYPE_CHECKING:
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.preset_settings.preset_tab import PresetTab
@@ -30,9 +28,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         MetroidPresetItemPool,
         PresetFusionPatches,
         PresetMetroidStartingArea,
+        PresetFusionDocks,
     ]
-
-    if not randovania.is_frozen():  # Tabs to only show when running from source
-        tabs.append(PresetFusionDocks)
 
     return tabs

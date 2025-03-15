@@ -92,6 +92,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     development_state=randovania.game.development_state.DevelopmentState.STAGING,
     presets=[
         {"path": "starter_preset.rdvpreset"},
+        {"path": "open_sector_hub.rdvpreset"},
     ],
     faq=[
         (

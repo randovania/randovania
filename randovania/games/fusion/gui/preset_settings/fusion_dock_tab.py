@@ -10,12 +10,14 @@ from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
 
 if TYPE_CHECKING:
+    from collections.abc import Iterator
+
     from randovania.game_description.game_description import GameDescription
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
 
-_CHECKBOX_FIELDS = ["open_save_recharge_hatches"]
+_CHECKBOX_FIELDS = ["open_save_recharge_hatches", "unlock_sector_hub"]
 
 
 class PresetFusionDocks(PresetDockRando):
@@ -28,6 +30,15 @@ class PresetFusionDocks(PresetDockRando):
         self.changes_layout = QtWidgets.QVBoxLayout(self.changes_box)
 
         extra_widgets: list[tuple[type[QtWidgets.QCheckBox | QtWidgets.QLabel], str, str]] = [
+            (QtWidgets.QCheckBox, "unlock_sector_hub_check", "Unlock hatches in Sector Hub"),
+            (
+                QtWidgets.QLabel,
+                "unlock_sector_hub_label",
+                (
+                    "Ensures all doors in the Sector Hub are open hatches, "
+                    "giving access to the sector elevators at all times."
+                ),
+            ),
             (QtWidgets.QCheckBox, "open_save_recharge_hatches_check", "Unlock Save and Recharge Station Hatches"),
             (
                 QtWidgets.QLabel,
@@ -53,6 +64,11 @@ class PresetFusionDocks(PresetDockRando):
         # Checkbox Signals
         for f in _CHECKBOX_FIELDS:
             self._add_checkbox_persist_option(getattr(self, f"{f}_check"), f)
+
+    @property
+    def development_settings(self) -> Iterator[QtWidgets.QWidget]:
+        # Hide the randomization settings unless running in preview mode
+        yield self.settings_group
 
     def _add_checkbox_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str) -> None:
         def persist(value: bool) -> None:
