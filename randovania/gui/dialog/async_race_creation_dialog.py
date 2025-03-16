@@ -56,7 +56,7 @@ class AsyncRaceCreationDialog(QtWidgets.QDialog, GenerateGameMixin):
         self.ui.button_box.accepted.connect(self._generate_and_accept)
         self.ui.button_box.rejected.connect(self.reject)
 
-        self.ui.preset_button.clicked.connect(self._on_select_preset)
+        self.ui.preset_button.clicked.connect(self._on_select_preset_slot)
 
         self.ui.settings_widget.Changed.connect(self._post_validate)
         self.ui.settings_widget.validate()
@@ -65,6 +65,9 @@ class AsyncRaceCreationDialog(QtWidgets.QDialog, GenerateGameMixin):
         return self.ui.settings_widget.create_settings_object()
 
     @asyncSlot()
+    async def _on_select_preset_slot(self) -> None:
+        await self._on_select_preset()
+
     async def _on_select_preset(self) -> None:
         if self._preset_selection_dialog is not None:
             self._preset_selection_dialog.raise_()

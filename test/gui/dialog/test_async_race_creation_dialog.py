@@ -2,12 +2,15 @@ from __future__ import annotations
 
 import dataclasses
 import datetime
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 from PySide6 import QtCore, QtWidgets
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.gui.dialog.async_race_creation_dialog import AsyncRaceCreationDialog
 from randovania.gui.dialog.async_race_settings_dialog import AsyncRaceSettingsDialog
+from randovania.gui.lib import signal_handling
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.network_common.async_race_room import (
     AsyncRaceRoomEntry,
@@ -18,8 +21,13 @@ from randovania.network_common.async_race_room import (
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
+if TYPE_CHECKING:
+    import pytest_mock
 
-def test_validate(skip_qtbot, preset_manager, options):
+    from randovania.gui.dialog.select_preset_dialog import SelectPresetDialog
+
+
+async def test_validate(skip_qtbot, preset_manager, options, mocker: pytest_mock.MockFixture):
     parent = QtWidgets.QMainWindow()
     skip_qtbot.add_widget(parent)
 
@@ -34,8 +42,20 @@ def test_validate(skip_qtbot, preset_manager, options):
     dialog.ui.settings_widget.ui.end_time_edit.setDateTime(QtCore.QDateTime(2021, 1, 1, 0, 0, 0))
 
     assert not dialog.ui.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).isEnabled()
-    dialog.selected_preset = MagicMock()
-    dialog.ui.settings_widget.validate()
+
+    async def execute_dialog_effect(diag: SelectPresetDialog) -> QtWidgets.QDialog.DialogCode:
+        signal_handling.set_combo_with_value(diag.game_selection_combo, RandovaniaGame.BLANK)
+        diag.select_preset_widget.create_preset_tree.select_preset(
+            preset_manager.default_preset_for_game(RandovaniaGame.BLANK)
+        )
+        return QtWidgets.QDialog.DialogCode.Accepted
+
+    mocker.patch(
+        "randovania.gui.lib.async_dialog.execute_dialog",
+        autospec=True,
+        side_effect=execute_dialog_effect,
+    )
+    await dialog._on_select_preset()
     assert dialog.ui.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).isEnabled()
 
     settings = AsyncRaceSettings(
