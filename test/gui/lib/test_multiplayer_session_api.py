@@ -24,7 +24,7 @@ if TYPE_CHECKING:
     [
         None,
         error.NotAuthorizedForActionError(),
-        error.UserNotAuthorizedToUseServerError(),
+        error.UserNotAuthorizedToUseServerError("John Doe"),
         error.ServerError(),
         error.NotLoggedInError(),
         error.RequestTimeoutError("timeout"),
