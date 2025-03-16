@@ -202,7 +202,6 @@ async def test_on_join_and_forfeit(
         patch_data=network_client.async_race_join_and_export.return_value,
         layout_for_spoiler=None,
         background=window,
-        progress_update_signal=window.progress_update_signal,
     )
 
     window.refresh_data.assert_awaited_once_with()

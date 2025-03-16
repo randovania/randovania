@@ -202,20 +202,20 @@ class MultiplayerSessionApi(QtCore.QObject):
     @handle_network_errors
     async def request_permalink(self) -> str | None:
         self.logger.info("Requesting permalink")
-        result = await self._session_admin_global(admin_actions.SessionAdminGlobalAction.REQUEST_PERMALINK)
-        assert isinstance(result, str | None)
-        return result
+        return typing.cast(
+            str | None, await self._session_admin_global(admin_actions.SessionAdminGlobalAction.REQUEST_PERMALINK)
+        )
 
     @handle_network_errors
     async def request_layout_description(self, worlds: list[MultiplayerWorld]) -> LayoutDescription | None:
         self.logger.info("Requesting layout description")
-        description_binary = await self._session_admin_global(
-            admin_actions.SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION
+        description_binary = typing.cast(
+            bytes | None,
+            await self._session_admin_global(admin_actions.SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION),
         )
         if description_binary is None:
             return None
 
-        assert isinstance(description_binary, bytes)
         return LayoutDescription.from_bytes(description_binary, presets=[world.preset for world in worlds])
 
     #

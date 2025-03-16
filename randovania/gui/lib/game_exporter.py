@@ -10,8 +10,6 @@ from randovania.gui.lib import async_dialog, error_message_box
 from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
-
     from randovania.exporter.game_exporter import GameExporter
     from randovania.gui.dialog.game_export_dialog import GameExportDialog
     from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
@@ -25,7 +23,6 @@ async def export_game(
     patch_data: dict,
     layout_for_spoiler: LayoutDescription | None,
     background: BackgroundTaskMixin,
-    progress_update_emit: Callable[[str, float], None],
 ) -> None:
     export_params = export_dialog.get_game_export_params()
     if exporter.can_start_new_export:
@@ -55,12 +52,12 @@ async def export_game(
 
     except UnableToExportError as e:
         logging.warning(e.reason)
-        progress_update_emit(f"Unable to export game: {e.reason}", 0.0)
+        background.progress_update_signal.emit(f"Unable to export game: {e.reason}", 0.0)
         await export_dialog.handle_unable_to_export(e)
 
     except Exception as e:
         logging.exception("Unable to export game")
-        progress_update_emit("Fatal error, unable to export game", 0.0)
+        background.progress_update_signal.emit("Fatal error, unable to export game", 0.0)
 
         box = error_message_box.create_box_for_exception(e)
         await async_dialog.execute_dialog(box)
