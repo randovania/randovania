@@ -8,7 +8,7 @@ on:
 
 jobs:
   benchmark:
-    runs-on: 'ubuntu-latest'
+    runs-on: 'codspeed-macro'
     name: Benchmark
 
     timeout-minutes: 30
@@ -37,5 +37,5 @@ jobs:
       - name: run pytest (benchmark)
         uses: CodSpeedHQ/action@v3
         with:
-          run: python -m pytest --skip-gui-tests -p no:qt -n auto --codspeed --codspeed-mode=walltime --codspeed-max-rounds=1
+          run: python -m pytest --skip-gui-tests -p no:qt --codspeed
           token: ${{ secrets.CODSPEED_TOKEN }}
