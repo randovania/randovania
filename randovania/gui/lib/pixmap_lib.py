@@ -4,9 +4,9 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QImage, QPainter, QPixmap
 
 
-def paint_with_opacity(pixmap: QPixmap, opacity: float):
+def paint_with_opacity(pixmap: QPixmap, opacity: float) -> QPixmap:
     transparent_image = QImage(pixmap.size(), QImage.Format.Format_ARGB32_Premultiplied)
-    transparent_image.fill(Qt.transparent)
+    transparent_image.fill(Qt.GlobalColor.transparent)
     painter = QPainter(transparent_image)
     painter.setOpacity(opacity)
     painter.drawPixmap(0, 0, pixmap)

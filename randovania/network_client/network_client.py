@@ -60,6 +60,7 @@ if TYPE_CHECKING:
 
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
     from randovania.layout.layout_description import LayoutDescription
+    from randovania.lib.json_lib import JsonType
 
 
 class ConnectionState(Enum):
@@ -433,7 +434,14 @@ class NetworkClient:
 
         self._current_timeout = min(max(self._current_timeout, _MINIMUM_TIMEOUT), _MAXIMUM_TIMEOUT)
 
-    async def server_call(self, event: str, data=None, *, namespace=None, handle_invalid_session: bool = True):
+    async def server_call(
+        self,
+        event: str,
+        data: JsonType | bytes | None = None,
+        *,
+        namespace: str | None = None,
+        handle_invalid_session: bool = True,
+    ) -> JsonType | bytes | None:
         self.logger.debug("performing call for %s", event)
 
         if self.connection_state.is_disconnected:

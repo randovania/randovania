@@ -13,7 +13,7 @@ class VerticalTabBar(QtWidgets.QTabBar):
 
         for i in range(self.count()):
             self.initStyleOption(opt, i)
-            painter.drawControl(QtWidgets.QStyle.CE_TabBarTabShape, opt)
+            painter.drawControl(QtWidgets.QStyle.ControlElement.CE_TabBarTabShape, opt)
             painter.save()
 
             s = opt.rect.size()
@@ -26,5 +26,5 @@ class VerticalTabBar(QtWidgets.QTabBar):
             painter.translate(c)
             painter.rotate(90)
             painter.translate(-c)
-            painter.drawControl(QtWidgets.QStyle.CE_TabBarTabLabel, opt)
+            painter.drawControl(QtWidgets.QStyle.ControlElement.CE_TabBarTabLabel, opt)
             painter.restore()
