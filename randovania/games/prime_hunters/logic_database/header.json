@@ -1,0 +1,104 @@
+{
+    "schema_version": 29,
+    "game": "prime_hunters",
+    "resource_database": {
+        "items": {
+            "Weapon": {
+                "long_name": "Powerful Weapon",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "VictoryKey": {
+                "long_name": "Victory Key",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Health": {
+                "long_name": "Health",
+                "max_capacity": 500,
+                "extra": {}
+            }
+        },
+        "events": {},
+        "tricks": {},
+        "damage": {},
+        "versions": {},
+        "misc": {},
+        "requirement_template": {},
+        "damage_reductions": [],
+        "energy_tank_item_index": "Health"
+    },
+    "layers": [
+        "default"
+    ],
+    "starting_location": {
+        "region": "Main",
+        "area": "First Area",
+        "node": "Spawn Point"
+    },
+    "minimal_logic": null,
+    "victory_condition": {
+        "type": "resource",
+        "data": {
+            "type": "items",
+            "name": "VictoryKey",
+            "amount": 1,
+            "negate": false
+        }
+    },
+    "dock_weakness_database": {
+        "types": {
+            "Door": {
+                "name": "Door",
+                "extra": {},
+                "items": {
+                    "Normal": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": null
+            },
+            "Other": {
+                "name": "Other",
+                "extra": {},
+                "items": {
+                    "Not Determined": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": null
+            }
+        },
+        "default_weakness": {
+            "type": "Other",
+            "name": "Not Determined"
+        },
+        "dock_rando": {
+            "force_change_two_way": false,
+            "resolver_attempts": 100,
+            "to_shuffle_proportion": 1.0
+        }
+    },
+    "hint_feature_database": {},
+    "used_trick_levels": {},
+    "flatten_to_set_on_patch": false,
+    "regions": [
+        "Main.json"
+    ]
+}
