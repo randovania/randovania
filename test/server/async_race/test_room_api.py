@@ -19,7 +19,7 @@ from randovania.network_common.game_details import GameDetails
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.network_common.user import RandovaniaUser
 from randovania.server.async_race import room_api
-from randovania.server.database import AsyncRaceEntry, AsyncRaceEntryPause, AsyncRaceRoom, User
+from randovania.server.database import AsyncRaceAuditEntry, AsyncRaceEntry, AsyncRaceEntryPause, AsyncRaceRoom, User
 from randovania.server.server_app import ServerApp
 
 
@@ -716,4 +716,27 @@ def test_submit_proof_valid(simple_room):
 
     assert [x.as_entry() for x in simple_room.audit_log] == [
         AuditEntry(user="The Player", message="Updated submission notes and proof.", time=ANY)
+    ]
+
+
+def test_get_audit_log(simple_room, mocker: pytest_mock.MockFixture):
+    # Setup
+    sa = MagicMock()
+    sa.get_current_user.return_value = User.get_by_id(1235)
+    mock_verify = mocker.patch("randovania.server.async_race.room_api._verify_authorization")
+
+    AsyncRaceAuditEntry.create(
+        room=simple_room,
+        user=User.get_by_id(1235),
+        message="Someone did a thing",
+        time=datetime.datetime(year=2020, month=5, day=12, tzinfo=datetime.UTC),
+    )
+
+    # Run
+    result = room_api.get_audit_log(sa, simple_room.id, "AuthTokenx")
+
+    # Assert
+    mock_verify.assert_called_once_with(sa, simple_room, "AuthTokenx")
+    assert result == [
+        {"user": "The Player", "message": "Someone did a thing", "time": "2020-05-12T00:00:00+00:00"},
     ]
