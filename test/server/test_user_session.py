@@ -105,7 +105,7 @@ def test_browser_discord_login_callback_not_authorized(flask_app, mocker: pytest
     mock_render = mocker.patch("flask.render_template")
     mock_create = mocker.patch(
         "randovania.server.user_session._create_session_with_discord_token",
-        side_effect=error.UserNotAuthorizedToUseServerError,
+        side_effect=error.UserNotAuthorizedToUseServerError("Magoo"),
     )
 
     sa = MagicMock()
@@ -120,7 +120,7 @@ def test_browser_discord_login_callback_not_authorized(flask_app, mocker: pytest
     assert result == (mock_render.return_value, 403)
     mock_render.assert_called_once_with(
         "unable_to_login.html",
-        error_message="You're not authorized to use this build.\nPlease check #dev-builds for more details.",
+        error_message="You (Magoo) are not authorized to use this build.\nPlease check #dev-builds for more details.",
     )
 
 
