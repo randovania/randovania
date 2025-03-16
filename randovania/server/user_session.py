@@ -81,7 +81,7 @@ def _create_session_with_discord_token(sa: ServerApp, sid: str | None) -> User:
     if sa.enforce_role is not None:
         if not sa.enforce_role.verify_user(discord_user.id):
             logger().info("User %s is not authorized for connecting to the server", discord_user.name)
-            raise error.UserNotAuthorizedToUseServerError
+            raise error.UserNotAuthorizedToUseServerError(discord_user.name)
 
     user = _create_user_from_discord(discord_user)
 
@@ -249,11 +249,12 @@ def browser_discord_login_callback(sa: ServerApp):
             401,
         )
 
-    except error.UserNotAuthorizedToUseServerError:
+    except error.UserNotAuthorizedToUseServerError as unauthorized_user:
         return (
             flask.render_template(
                 "unable_to_login.html",
-                error_message="You're not authorized to use this build.\nPlease check #dev-builds for more details.",
+                error_message=f"You ({unauthorized_user}) are not authorized to use this build.\n"
+                f"Please check #dev-builds for more details.",
             ),
             403,
         )
