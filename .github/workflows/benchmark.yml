@@ -36,5 +36,5 @@ jobs:
       - name: run pytest (benchmark)
         uses: CodSpeedHQ/action@v3
         with:
-          run: python -m pytest --skip-gui-tests -p no:pytest-qt --continue-on-collection-errors --ignore-glob='**/gui' --codspeed
+          run: python -m pytest --skip-gui-tests -p no:pytest-qt --continue-on-collection-errors --ignore-glob='**/gui' --ignore=test/cli/commands/test_export_game.py --ignore=test/game_connection --ignore-glob='test/games/**/exporter' --ignore=test/interface_common --ignore=test/games/patchers --ignore=test/games/common/prime_family --codspeed
           token: ${{ secrets.CODSPEED_TOKEN }}
