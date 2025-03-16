@@ -137,7 +137,7 @@ class UserNotAuthorizedToUseServerError(BaseNetworkError):
     def code(cls):
         return 8
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.human_readable_name()}({self.unauthorized_user})"
 
 
