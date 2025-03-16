@@ -138,7 +138,7 @@ class UserNotAuthorizedToUseServerError(BaseNetworkError):
         return 8
 
     def __str__(self):
-        return self.unauthorized_user
+        return f"{self.human_readable_name()}({self.unauthorized_user})"
 
 
 class UnsupportedClientError(BaseNetworkError):

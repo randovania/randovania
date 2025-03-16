@@ -249,11 +249,11 @@ def browser_discord_login_callback(sa: ServerApp):
             401,
         )
 
-    except error.UserNotAuthorizedToUseServerError as unauthorized_user:
+    except error.UserNotAuthorizedToUseServerError as unauthorized_error:
         return (
             flask.render_template(
                 "unable_to_login.html",
-                error_message=f"You ({unauthorized_user}) are not authorized to use this build.\n"
+                error_message=f"You ({unauthorized_error.unauthorized_user}) are not authorized to use this build.\n"
                 f"Please check #dev-builds for more details.",
             ),
             403,
