@@ -97,23 +97,18 @@ class AsyncRaceCreationDialog(QtWidgets.QDialog, GenerateGameMixin):
         )
 
     @property
-    def preset(self) -> VersionedPreset:
-        assert self.selected_preset is not None
-        return self.selected_preset
-
-    @property
-    def num_worlds(self) -> int:
-        return 1
-
-    @property
     def generate_parent_widget(self) -> QtWidgets.QWidget:
         return self
 
     @asyncSlot()
     async def _generate_and_accept(self) -> None:
+        selected_preset = self.selected_preset
+        if selected_preset is None:
+            return
+
         try:
             self._post_validate(False)
-            self.layout_description = await self.generate_new_layout(spoiler=True)
+            self.layout_description = await self.generate_layout_from_preset(preset=selected_preset, spoiler=True)
         finally:
             self.ui.settings_widget.validate()
 

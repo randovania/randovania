@@ -91,6 +91,17 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget, GenerateGameM
 
     # Generate seed
 
+    async def generate_new_layout(self, spoiler: bool, retries: int | None = None) -> LayoutDescription | None:
+        """
+        Generates a LayoutDescription based on the selected preset.
+        """
+        return await self.generate_layout_from_preset(
+            self.preset,
+            spoiler=spoiler,
+            num_worlds=self.num_worlds_spin_box.value(),
+            retries=retries,
+        )
+
     @asyncSlot()
     async def generate_new_layout_regular(self) -> None:
         monitoring.metrics.incr("gui_generate_plain", tags={"game": self.game.value})
@@ -105,10 +116,6 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget, GenerateGameM
     async def generate_new_layout_race(self) -> None:
         monitoring.metrics.incr("gui_generate_race", tags={"game": self.game.value})
         return await self.generate_new_layout(spoiler=False)
-
-    @property
-    def num_worlds(self) -> int:
-        return 1
 
     @property
     def generate_parent_widget(self) -> QtWidgets.QWidget:

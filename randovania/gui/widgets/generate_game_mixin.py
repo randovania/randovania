@@ -29,33 +29,31 @@ class RetryGeneration(Exception):
 
 
 class GenerateGameMixin:
+    """
+    Mixing for adding the functionality of generating a LayoutDescription from Presets/Permalinks,
+    with all the proper checks and user feedback.
+    """
+
     _background_task: BackgroundTaskMixin
     _window_manager: WindowManager
     _options: Options
     failure_handler: GenerationFailureHandler
 
     @property
-    def preset(self) -> VersionedPreset:
-        raise NotImplementedError
-
-    @property
-    def num_worlds(self) -> int:
-        return 1
-
-    @property
     def generate_parent_widget(self) -> QtWidgets.QWidget:
         raise NotImplementedError
 
-    async def generate_new_layout(self, spoiler: bool, retries: int | None = None) -> LayoutDescription | None:
+    async def generate_layout_from_preset(
+        self, preset: VersionedPreset, spoiler: bool, num_worlds: int = 1, retries: int | None = None
+    ) -> LayoutDescription | None:
         """
-
+        Generates a new LayoutDescription for the given preset. Checks the preset for unsupported features.
+        :param preset:
         :param spoiler:
+        :param num_worlds: Generate a multiworld layout instead, with all worlds sharing the preset.
         :param retries:
         :return:
         """
-        preset = self.preset
-        num_players = self.num_worlds
-
         unsupported_features = preset.get_preset().configuration.unsupported_features()
         if unsupported_features:
             if randovania.is_dev_version():
@@ -86,7 +84,7 @@ class GenerateGameMixin:
                         GeneratorParameters(
                             seed_number=random.randint(0, 2**31),
                             spoiler=spoiler,
-                            presets=[preset.get_preset()] * num_players,
+                            presets=[preset.get_preset()] * num_worlds,
                         )
                     ),
                     retries=retries,
