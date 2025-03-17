@@ -3,6 +3,7 @@ from __future__ import annotations
 import dataclasses
 import typing
 
+from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
@@ -107,6 +108,12 @@ class ResourceDatabase:
 
     def get_item_by_name(self, name: str) -> ItemResourceInfo:
         return search.find_resource_info_with_long_name(self.item, name)
+
+    def get_pickup_model(self, name: str) -> PickupModel:
+        return PickupModel(
+            game=self.game_enum,
+            name=name,
+        )
 
     @property
     def energy_tank(self) -> ItemResourceInfo:

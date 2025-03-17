@@ -17,7 +17,13 @@ def test_artifact_pool(dread_game_description, dread_configuration, count: int):
 
     # Assert
     assert results == PoolResults(
-        to_place=[create_generated_pickup("Metroid DNA", db, i=i + 1) for i in range(count)],
+        to_place=[
+            create_generated_pickup("Metroid DNA", db, dread_game_description.get_pickup_database(), i=i + 1)
+            for i in range(count)
+        ],
         assignment={},
-        starting=[create_generated_pickup("Metroid DNA", db, i=i + 1) for i in range(count, 12)],
+        starting=[
+            create_generated_pickup("Metroid DNA", db, dread_game_description.get_pickup_database(), i=i + 1)
+            for i in range(count, 12)
+        ],
     )

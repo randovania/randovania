@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 def echoes_specific_pool(results: PoolResults, configuration: BaseConfiguration, game: GameDescription):
     assert isinstance(configuration, EchoesConfiguration)
     # Adding Dark Temple Keys to pool
-    results.extend_with(add_dark_temple_keys(game.resource_database))
+    results.extend_with(add_dark_temple_keys(game.resource_database, game.get_pickup_database()))
 
     # Adding Sky Temple Keys to pool
     results.extend_with(add_sky_temple_key_distribution_logic(game, configuration.sky_temple_keys))

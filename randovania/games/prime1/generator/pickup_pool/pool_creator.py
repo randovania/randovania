@@ -16,6 +16,7 @@ def prime1_specific_pool(results: PoolResults, configuration: BaseConfiguration,
     results.extend_with(
         add_artifacts(
             game.resource_database,
+            game.get_pickup_database(),
             configuration.artifact_target,
             configuration.artifact_minimum_progression,
         )
