@@ -74,14 +74,14 @@ cutscenes happen. Inferior to the above options, but kept around because it's fu
     def header_name(cls) -> str | None:
         return None
 
-    def _add_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str):
-        def persist(value: bool):
+    def _add_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str) -> None:
+        def persist(value: bool) -> None:
             with self._editor as editor:
                 editor.set_configuration_field(attribute_name, value)
 
         signal_handling.on_checked(check, persist)
 
-    def _on_cutscene_changed(self, value: LayoutCutsceneMode):
+    def _on_cutscene_changed(self, value: LayoutCutsceneMode) -> None:
         with self._editor as editor:
             try:
                 editor.set_configuration_field("qol_cutscenes", value)
@@ -89,7 +89,7 @@ cutscenes happen. Inferior to the above options, but kept around because it's fu
                 editor.set_configuration_field("qol_cutscenes", LayoutCutsceneMode.COMPETITIVE)
                 signal_handling.set_combo_with_value(self.cutscene_combo, LayoutCutsceneMode.COMPETITIVE)
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration
         for f in _FIELDS:
             typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))

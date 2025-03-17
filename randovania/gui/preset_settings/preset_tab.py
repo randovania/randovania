@@ -18,13 +18,15 @@ class PresetTab[Configuration: BaseConfiguration](QtWidgets.QMainWindow):
     RANDOMIZER_LOGIC_HEADER = "Randomizer Logic"
     GAME_MODIFICATIONS_HEADER = "Game Modifications"
 
-    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+    def __init__(
+        self, editor: PresetEditor[Configuration], game_description: GameDescription, window_manager: WindowManager
+    ):
         super().__init__()
         self._editor = editor
         self.game_description = game_description
         self._window_manager = window_manager
 
-    def update_experimental_visibility(self):
+    def update_experimental_visibility(self) -> None:
         show_experimental = self._editor._options.experimental_settings
         show_development = show_experimental and self._window_manager.is_preview_mode
 

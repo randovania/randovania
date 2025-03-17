@@ -45,7 +45,7 @@ def get_patch_version(game_root: Path) -> int:
         return 0
 
 
-def write_patch_version(game_root: Path, version: int):
+def write_patch_version(game_root: Path, version: int) -> None:
     _patch_version_file(game_root).write_text(str(version))
 
 
@@ -67,14 +67,16 @@ def _get_menu_mod_path() -> Path:
     return _get_randomizer_folder().joinpath("EchoesMenu.exe")
 
 
-def _run_with_args(args: list[str | Path], input_data: str, finish_string: str, status_update: Callable[[str], None]):
+def _run_with_args(
+    args: list[str | Path], input_data: str, finish_string: str, status_update: Callable[[str], None]
+) -> None:
     finished_updates = False
 
     new_args = [str(arg) for arg in args]
     logger.info("Invoking external tool with: %s", new_args)
     all_lines = []
 
-    def read_callback(line: str):
+    def read_callback(line: str) -> None:
         nonlocal finished_updates
         logger.info(line)
         all_lines.append(line)
@@ -132,7 +134,7 @@ def restore_pak_backups(
     game_root: Path,
     backup_files_path: Path,
     progress_update: ProgressUpdateCallable,
-):
+) -> None:
     """
     Ensures the given game_root has unmodified paks.
     :param game_root:
@@ -154,7 +156,7 @@ def create_pak_backups(
     game_root: Path,
     backup_files_path: Path,
     progress_update: ProgressUpdateCallable,
-):
+) -> None:
     pak_folder = backup_files_path.joinpath("paks")
     pak_folder.mkdir(parents=True, exist_ok=True)
 
@@ -168,7 +170,7 @@ def create_pak_backups(
 def add_menu_mod_to_files(
     game_root: Path,
     progress_update: ProgressUpdateCallable,
-):
+) -> None:
     status_update = status_update_lib.create_progress_update_from_successive_messages(progress_update, 300)
     files_folder = game_root.joinpath("files")
     _run_with_args([_get_menu_mod_path(), files_folder], "", "Done!", status_update)
@@ -181,7 +183,7 @@ def apply_patcher_file(
     patcher_data: dict,
     randomizer_data: dict,
     progress_update: ProgressUpdateCallable,
-):
+) -> None:
     """
     Applies the modifications listed in the given patcher_data to the game in game_root.
     :param game_root:

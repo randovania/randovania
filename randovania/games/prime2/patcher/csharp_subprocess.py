@@ -24,12 +24,12 @@ def is_mac() -> bool:
     return platform.system() == "Darwin"
 
 
-async def _write_data(stream: StreamWriter, data: str):
+async def _write_data(stream: StreamWriter, data: str) -> None:
     stream.write(data.encode("UTF-8"))
     stream.close()
 
 
-async def _read_data(stream: StreamReader, read_callback: Callable[[str], None]):
+async def _read_data(stream: StreamReader, read_callback: Callable[[str], None]) -> None:
     while True:
         try:
             line = await stream.readuntil(b"\r")
@@ -49,7 +49,7 @@ async def _read_data(stream: StreamReader, read_callback: Callable[[str], None])
 
 async def _process_command_async(
     args: list[str], input_data: str, read_callback: Callable[[str], None], additional_path_entries: Sequence[str] = ()
-):
+) -> None:
     environment_vars = os.environ.copy()
     if len(additional_path_entries) > 0:
         appending_paths = ":".join(additional_path_entries)
@@ -62,6 +62,9 @@ async def _process_command_async(
         env=environment_vars,
     )
 
+    assert process.stdin is not None
+    assert process.stdout is not None
+
     await asyncio.gather(
         _write_data(process.stdin, input_data),
         _read_data(process.stdout, read_callback),
@@ -71,12 +74,12 @@ async def _process_command_async(
 
 def process_command(
     args: list[str], input_data: str, read_callback: Callable[[str], None], add_mono_if_needed: bool = True
-):
+) -> None:
     if not Path(args[0]).is_file():
         raise FileNotFoundError(f"{args[0]} not found")
 
     needs_mono = add_mono_if_needed and not is_windows()
-    additional_paths = ()
+    additional_paths: tuple[str, ...] = ()
 
     if needs_mono:
         args = ["mono", *args]

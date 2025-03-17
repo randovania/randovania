@@ -9,6 +9,7 @@ from randovania.games.common import elevators
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.node_list_helper import NodeListHelper
 from randovania.gui.preset_settings.preset_tab import PresetTab
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.lib.teleporters import (
     TeleporterList,
     TeleporterShuffleMode,
@@ -16,6 +17,7 @@ from randovania.layout.lib.teleporters import (
 )
 
 if TYPE_CHECKING:
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_description import GameDescription
@@ -24,7 +26,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.preset_editor import PresetEditor
 
 
-class PresetTeleporterTab(PresetTab, NodeListHelper):
+class PresetTeleporterTab[Configuration: BaseConfiguration](PresetTab[Configuration], NodeListHelper):
     _teleporters_source_for_location: dict[NodeIdentifier, QtWidgets.QCheckBox]
     _teleporters_target_for_region: dict[str, QtWidgets.QCheckBox]
     _teleporters_target_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
@@ -37,7 +39,9 @@ class PresetTeleporterTab(PresetTab, NodeListHelper):
     teleporters_target_group: QtWidgets.QGroupBox
     teleporters_target_layout: QtWidgets.QGridLayout
 
-    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+    def __init__(
+        self, editor: PresetEditor[Configuration], game_description: GameDescription, window_manager: WindowManager
+    ):
         super().__init__(editor, game_description, window_manager)
         self.setup_ui()
 
@@ -73,17 +77,17 @@ class PresetTeleporterTab(PresetTab, NodeListHelper):
         return None
 
     @property
-    def game_enum(self):
+    def game_enum(self) -> RandovaniaGame:
         return self.game_description.game
 
-    def _update_teleporter_mode(self):
+    def _update_teleporter_mode(self) -> None:
         with self._editor as editor:
             editor.layout_configuration_teleporters = dataclasses.replace(
                 editor.layout_configuration_teleporters,
                 mode=self.teleporters_combo.currentData(),
             )
 
-    def _on_teleporter_source_check_changed(self, checked: bool):
+    def _on_teleporter_source_check_changed(self, checked: bool) -> None:
         with self._editor as editor:
             config = editor.layout_configuration_teleporters
             editor.layout_configuration_teleporters = dataclasses.replace(
@@ -98,7 +102,7 @@ class PresetTeleporterTab(PresetTab, NodeListHelper):
                 ),
             )
 
-    def _on_teleporter_target_check_changed(self, areas: list[NodeIdentifier], checked: bool):
+    def _on_teleporter_target_check_changed(self, areas: list[NodeIdentifier], checked: bool) -> None:
         with self._editor as editor:
             config = editor.layout_configuration_teleporters
             editor.layout_configuration_teleporters = dataclasses.replace(
@@ -117,5 +121,5 @@ class PresetTeleporterTab(PresetTab, NodeListHelper):
         signal_handling.on_checked(check, self._on_teleporter_source_check_changed)
         return check
 
-    def _create_source_teleporters(self):
+    def _create_source_teleporters(self) -> None:
         raise NotImplementedError

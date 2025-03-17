@@ -42,7 +42,7 @@ class PrimePresetDescriber(GamePresetDescriber):
 
         room_rando = _PRIME1_ROOM_RANDO_MODE_DESCRIPTION[configuration.room_rando]
 
-        def describe_probability(probability, attribute):
+        def describe_probability(probability: float, attribute: str) -> str | None:
             if probability == 0:
                 return None
 
@@ -51,7 +51,7 @@ class PrimePresetDescriber(GamePresetDescriber):
         superheated_probability = describe_probability(configuration.superheated_probability, "superheated")
         submerged_probability = describe_probability(configuration.submerged_probability, "submerged")
 
-        def attribute_in_range(rand_range, attribute):
+        def attribute_in_range(rand_range: tuple[float, float], attribute: str) -> str | None:
             if rand_range[0] == 1.0 and rand_range[1] == 1.0:
                 return None
             elif rand_range[0] > rand_range[1]:
@@ -59,46 +59,47 @@ class PrimePresetDescriber(GamePresetDescriber):
 
             return f"Random {attribute} within range {rand_range[0]} - {rand_range[1]}"
 
-        def different_xyz_randomization(diff_xyz):
+        def different_xyz_randomization(diff_xyz: bool) -> str | None:
             if enemy_rando_range_scale is None:
                 return None
             elif diff_xyz:
                 return "Enemies will be stretched randomly"
+            return None
 
         if configuration.enemy_attributes is not None:
             enemy_rando_range_scale = attribute_in_range(
-                [
+                (
                     configuration.enemy_attributes.enemy_rando_range_scale_low,
                     configuration.enemy_attributes.enemy_rando_range_scale_high,
-                ],
+                ),
                 "Size",
             )
             enemy_rando_range_health = attribute_in_range(
-                [
+                (
                     configuration.enemy_attributes.enemy_rando_range_health_low,
                     configuration.enemy_attributes.enemy_rando_range_health_high,
-                ],
+                ),
                 "Health",
             )
             enemy_rando_range_speed = attribute_in_range(
-                [
+                (
                     configuration.enemy_attributes.enemy_rando_range_speed_low,
                     configuration.enemy_attributes.enemy_rando_range_speed_high,
-                ],
+                ),
                 "Speed",
             )
             enemy_rando_range_damage = attribute_in_range(
-                [
+                (
                     configuration.enemy_attributes.enemy_rando_range_damage_low,
                     configuration.enemy_attributes.enemy_rando_range_damage_high,
-                ],
+                ),
                 "Damage",
             )
             enemy_rando_range_knockback = attribute_in_range(
-                [
+                (
                     configuration.enemy_attributes.enemy_rando_range_knockback_low,
                     configuration.enemy_attributes.enemy_rando_range_knockback_high,
-                ],
+                ),
                 "Knockback",
             )
             enemy_rando_diff_xyz = different_xyz_randomization(configuration.enemy_attributes.enemy_rando_diff_xyz)
