@@ -5,8 +5,7 @@ import random
 from typing import TYPE_CHECKING
 
 import randovania
-from randovania.gui.lib import async_dialog
-from randovania.gui.lib.common_qt_lib import alert_user_on_generation
+from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.interface_common import generator_frontend
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
@@ -17,7 +16,6 @@ if TYPE_CHECKING:
 
     from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
     from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
-    from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.options import Options
     from randovania.layout.layout_description import LayoutDescription
     from randovania.layout.versioned_preset import VersionedPreset
@@ -35,7 +33,6 @@ class GenerateGameMixin:
     """
 
     _background_task: BackgroundTaskMixin
-    _window_manager: WindowManager
     _options: Options
     failure_handler: GenerationFailureHandler
 
@@ -109,6 +106,7 @@ class GenerateGameMixin:
 
         try:
             layout = await self._background_task.run_in_background_async(work, "Creating a game...")
+            common_qt_lib.alert_user_on_generation(self.generate_parent_widget, self._options)
         except ImpossibleForSolver as e:
             code = await async_dialog.warning(
                 self.generate_parent_widget,
@@ -124,7 +122,7 @@ class GenerateGameMixin:
                 ),
                 default_button=async_dialog.StandardButton.Cancel,
             )
-            alert_user_on_generation(self.generate_parent_widget, self._options)
+            common_qt_lib.alert_user_on_generation(self.generate_parent_widget, self._options)
             if code == async_dialog.StandardButton.Save:
                 layout = e.layout
             elif code == async_dialog.StandardButton.Retry:
@@ -137,10 +135,9 @@ class GenerateGameMixin:
             return None
 
         except Exception as e:
-            alert_user_on_generation(self.generate_parent_widget, self._options)
+            common_qt_lib.alert_user_on_generation(self.generate_parent_widget, self._options)
             await self.failure_handler.handle_exception(e, self._background_task.progress_update_signal.emit)
             return None
 
         self._background_task.progress_update_signal.emit(f"Success! (Seed hash: {layout.shareable_hash})", 100)
-        alert_user_on_generation(self.generate_parent_widget, self._options)
         return layout
