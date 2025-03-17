@@ -5,13 +5,13 @@ from typing import TYPE_CHECKING
 from randovania.generator.pickup_pool.pickup_creator import create_ammo_pickup
 
 if TYPE_CHECKING:
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 
 
 def add_ammo_pickups(
-    resource_database: ResourceDatabase,
+    resource_database: ResourceDatabaseView,
     ammo_configuration: AmmoPickupConfiguration,
 ) -> list[PickupEntry]:
     """

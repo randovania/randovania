@@ -9,15 +9,15 @@ from randovania.generator.pickup_pool.pickup_creator import create_generated_pic
 from randovania.layout.exceptions import InvalidConfiguration
 
 if TYPE_CHECKING:
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.pickup.pickup_entry import PickupEntry
 
 
-def pickup_nodes_for_stk_mode(game: GameDescription, mode: LayoutSkyTempleKeyMode) -> list[PickupNode]:
+def pickup_nodes_for_stk_mode(game: GameDatabaseView, mode: LayoutSkyTempleKeyMode) -> list[PickupNode]:
     locations = []
 
     if mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
-        for node in game.region_list.iterate_nodes_of_type(PickupNode):
+        for _, _, node in game.iterate_nodes_of_type(PickupNode):
             boss = node.extra.get("boss")
             if boss is not None:
                 if boss == "guardian" or mode == LayoutSkyTempleKeyMode.ALL_BOSSES:
@@ -27,14 +27,14 @@ def pickup_nodes_for_stk_mode(game: GameDescription, mode: LayoutSkyTempleKeyMod
 
 
 def add_sky_temple_key_distribution_logic(
-    game: GameDescription,
+    game: GameDatabaseView,
     mode: LayoutSkyTempleKeyMode,
 ) -> PoolResults:
     """
     Adds the given Sky Temple Keys to the item pool
     :return:
     """
-    resource_database = game.resource_database
+    resource_database = game.get_resource_database_view()
     pickup_db = game.get_pickup_database()
     item_pool: list[PickupEntry] = []
     keys_to_place: int
