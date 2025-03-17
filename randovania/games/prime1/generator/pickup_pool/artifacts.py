@@ -7,14 +7,14 @@ from randovania.generator.pickup_pool import PoolResults
 from randovania.generator.pickup_pool.pickup_creator import create_generated_pickup
 
 if TYPE_CHECKING:
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.games.prime1.layout.artifact_mode import LayoutArtifactMode
 
 
 def add_artifacts(
-    resource_database: ResourceDatabase,
+    resource_database: ResourceDatabaseView,
     pickup_database: PickupDatabase,
     total: LayoutArtifactMode,
     artifact_minimum_progression: int,
