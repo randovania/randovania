@@ -5,12 +5,14 @@ from __future__ import annotations
 import collections
 import copy
 import dataclasses
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode, HintNodeKind
-from randovania.game_description.db.node import NodeContext
+from randovania.game_description.db.node import Node, NodeContext
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region_list import RegionList
+from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
 from randovania.game_description.requirements.resource_requirement import DamageResourceRequirement
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
@@ -18,16 +20,19 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Iterable, Iterator
 
     from randovania.game.game_enum import RandovaniaGame
-    from randovania.game_description.db.dock import DockWeaknessDatabase
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.dock import DockType, DockWeakness, DockWeaknessDatabase
     from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.db.region import Region
     from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
     from randovania.game_description.requirements.requirement_set import RequirementSet
+    from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
 
@@ -70,7 +75,7 @@ class MinimalLogicData:
     description: str
 
 
-class GameDescription:
+class GameDescription(GameDatabaseView):
     game: RandovaniaGame
     dock_weakness_database: DockWeaknessDatabase
     resource_database: ResourceDatabase
@@ -248,10 +253,74 @@ class GameDescription:
     def has_specific_pickup_hints(self) -> bool:
         return bool(self.game.hints.specific_pickup_hints) or self._has_hint_with_kind(HintNodeKind.SPECIFIC_PICKUP)
 
+    # Game Database View
+
+    def node_iterator(self) -> Iterable[tuple[Region, Area, Node]]:
+        return self.region_list.all_regions_areas_nodes
+
+    @override
+    def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
+        return self.region_list.node_by_identifier(identifier)
+
+    @override
+    def assert_pickup_index_exists(self, index: PickupIndex) -> None:
+        self.region_list.node_from_pickup_index(index)
+
+    @override
+    def create_resource_collection(self) -> ResourceCollection:
+        return ResourceCollection.with_database(self.resource_database)
+
+    @override
+    def default_starting_location(self) -> NodeIdentifier:
+        return self.starting_location
+
+    @override
+    def get_dock_types(self) -> list[DockType]:
+        return self.dock_weakness_database.dock_types
+
+    @override
+    def get_dock_weakness(self, dock_type_name: str, weakness_name: str) -> DockWeakness:
+        return self.dock_weakness_database.get_by_weakness(dock_type_name, weakness_name)
+
+    @override
+    def get_resource_database_view(self) -> ResourceDatabaseView:
+        return self.resource_database
+
+    @override
     def get_pickup_database(self) -> PickupDatabase:
         from randovania.game_description import default_database
 
         return default_database.pickup_database_for_game(self.game)
+
+    @override
+    def get_victory_condition(self) -> Requirement:
+        return self.victory_condition
+
+    @override
+    def node_from_pickup_index(self, index: PickupIndex) -> PickupNode:
+        return self.region_list.node_from_pickup_index(index)
+
+    @override
+    def area_from_node(self, node: Node) -> Area:
+        return self.region_list.nodes_to_area(node)
+
+    @override
+    def pickup_nodes_with_feature(self, feature: HintFeature) -> tuple[PickupNode, ...]:
+        """
+        Returns an iterable tuple of PickupNodes with the given feature (either directly or in their area)
+        """
+        return tuple(
+            node
+            for _, area, node in self.iterate_nodes_of_type(PickupNode)
+            if (feature in area.hint_features) or (feature in node.hint_features)
+        )
+
+    @override
+    def iterate_nodes_of_type[NodeT: Node](self, node_type: type[NodeT]) -> Iterator[tuple[Region, Area, NodeT]]:
+        """
+        Iterates over only the nodes that are of the given type.
+        """
+        yield from ((region, area, node) for region, area, node in self.node_iterator() if isinstance(node, node_type))
 
 
 def _resources_for_damage(
