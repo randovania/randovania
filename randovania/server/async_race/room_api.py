@@ -4,6 +4,7 @@ import math
 import typing
 
 from peewee import Case
+from retro_data_structures.json_util import JsonArray
 
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
@@ -240,6 +241,20 @@ def get_layout(sa: ServerApp, room_id: int, auth_token: str) -> bytes:
     return room.layout_description_json
 
 
+def get_audit_log(sa: ServerApp, room_id: int, auth_token: str) -> JsonArray:
+    """
+    Gets the audit log for the given room.
+    :param sa:
+    :param room_id: The room to get audit log for
+    :param auth_token:
+    :return: A list of json-encoded AuditEntry
+    """
+    room = AsyncRaceRoom.get_by_id(room_id)
+    _verify_authorization(sa, room, auth_token)
+
+    return [log.as_entry().as_json for log in room.audit_log]
+
+
 def admin_get_admin_data(sa: ServerApp, room_id: int) -> JsonType:
     """
     Gets the all details of every user who has joined the room. Only accessible by admins.
@@ -287,6 +302,8 @@ def admin_update_entries(sa: ServerApp, room_id: int, raw_new_entries: JsonType)
             entry.start_datetime = modification.start_date
             entry.finish_datetime = modification.finish_date
             entry.forfeit = modification.forfeit
+            entry.submission_notes = modification.submission_notes
+            entry.proof_url = modification.proof_url
             entry.save()
 
         database.AsyncRaceAuditEntry.create(
@@ -411,6 +428,26 @@ def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
     return room.create_session_entry(sa).as_json
 
 
+def get_own_proof(sa: ServerApp, room_id: int) -> tuple[str, str]:
+    """
+    This endpoint allows a user to request their own submission notes and proof url.
+    """
+    room = AsyncRaceRoom.get_by_id(room_id)
+    user = sa.get_current_user()
+    entry = database.AsyncRaceEntry.entry_for(room, user)
+    if entry is None:
+        raise error.NotAuthorizedForActionError
+
+    if entry.user_status() != AsyncRaceRoomUserStatus.FINISHED:
+        raise error.InvalidActionError("Only possible to submit proof after finishing")
+
+    database.AsyncRaceAuditEntry.create(
+        room=room, user=sa.get_current_user(), message="Requested own submission notes and proof."
+    )
+
+    return entry.submission_notes, entry.proof_url
+
+
 def submit_proof(sa: ServerApp, room_id: int, submission_notes: str, proof_url: str) -> None:
     """
     This endpoint allows a user to record submission notes and a link to proof for their run.
@@ -441,8 +478,10 @@ def setup_app(sa: ServerApp) -> None:
     sa.on("async_race_refresh_room", refresh_room, with_header_check=True)
     sa.on("async_race_get_leaderboard", get_leaderboard, with_header_check=True)
     sa.on("async_race_get_layout", get_layout, with_header_check=True)
+    sa.on("async_race_get_audit_log", get_audit_log, with_header_check=True)
     sa.on("async_race_admin_get_admin_data", admin_get_admin_data, with_header_check=True)
     sa.on("async_race_admin_update_entries", admin_update_entries, with_header_check=True)
     sa.on("async_race_join_and_export", join_and_export, with_header_check=True)
     sa.on("async_race_change_state", change_state, with_header_check=True)
+    sa.on("async_race_get_own_proof", get_own_proof, with_header_check=True)
     sa.on("async_race_submit_proof", submit_proof, with_header_check=True)

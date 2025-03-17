@@ -42,6 +42,7 @@ from randovania.network_common.async_race_room import (
     AsyncRaceSettings,
     RaceRoomLeaderboard,
 )
+from randovania.network_common.audit import AuditEntry
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionActions,
     MultiplayerSessionAuditLog,
@@ -542,6 +543,15 @@ class NetworkClient:
 
         return LayoutDescription.from_bytes(await self.server_call("async_race_get_layout", (room.id, room.auth_token)))
 
+    async def async_race_get_audit_log(self, room: AsyncRaceRoomEntry) -> list[AuditEntry]:
+        """
+        Gets all the AuditEntry for the given room.
+        :param room: The room's data from get_async_race_room
+        :return: The room's audit log entries
+        """
+        log_entries = await self.server_call("async_race_get_audit_log", (room.id, room.auth_token))
+        return [AuditEntry.from_json(entry) for entry in log_entries]
+
     async def async_race_admin_get_admin_data(self, room_id: int) -> AsyncRaceRoomAdminData:
         """
         Gets all details regarding a room that are exclusive to administrators
@@ -581,6 +591,14 @@ class NetworkClient:
         :return: Updated room details
         """
         return AsyncRaceRoomEntry.from_json(await self.server_call("async_race_change_state", (room_id, status.value)))
+
+    async def async_race_get_own_proof(self, room_id: int) -> tuple[str, str]:
+        """
+        Gets your own submission_notes and proof_url in the given room.
+        :param room_id:
+        :return: submission_notes and proof_url
+        """
+        return await self.server_call("async_race_get_own_proof", (room_id,))
 
     async def async_race_submit_proof(self, room_id: int, submission_notes: str, proof_url: str) -> None:
         """
