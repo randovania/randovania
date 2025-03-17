@@ -247,10 +247,14 @@ ConstructNode = NodeAdapter(
                 "configurable_node": Struct(
                     **NodeBaseFields,
                 ),
-                "hint": Struct(
-                    **NodeBaseFields,
-                    kind=ConstructHintNodeKind,
-                    requirement_to_collect=ConstructRequirement,
+                "hint": DefaultsAdapter(
+                    Struct(
+                        **NodeBaseFields,
+                        kind=ConstructHintNodeKind,
+                        requirement_to_collect=ConstructRequirement,
+                        requirement_display_name=Default(OptionalValue(String), None),
+                        target=Default(OptionalValue(construct.Select(VarInt, String)), None),
+                    )
                 ),
                 "teleporter_network": Struct(
                     **NodeBaseFields,

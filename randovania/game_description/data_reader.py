@@ -21,7 +21,7 @@ from randovania.game_description.db.dock import (
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.hint_node import HintNode, HintNodeKind
+from randovania.game_description.db.hint_node import HintNodeKind
 from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
@@ -376,12 +376,13 @@ class RegionReader:
                 )
 
             elif node_type == "hint":
-                lock_requirement = read_requirement(data["requirement_to_collect"], self.resource_database)
+                kind = HintNodeKind(data["kind"])
 
-                return HintNode(
+                return kind.hint_node_class(
                     **generic_args,
-                    kind=HintNodeKind(data["kind"]),
-                    lock_requirement=lock_requirement,
+                    lock_requirement=read_requirement(data["requirement_to_collect"], self.resource_database),
+                    requirement_display_name=data.get("requirement_display_name"),
+                    _target=data.get("target"),
                 )
 
             elif node_type == "teleporter_network":

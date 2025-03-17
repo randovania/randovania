@@ -283,10 +283,8 @@ class HintType(Enum):
     hint_class: type[BaseHint]
 
 
-HINT_TYPE_TO_CLASS = {cls.hint_type(): cls for cls in (LocationHint, JokeHint, RedTempleHint)}
-
 enum_lib.add_per_enum_field(
     HintType,
     "hint_class",
-    HINT_TYPE_TO_CLASS,
+    {cls.hint_type(): cls for cls in BaseHint.__subclasses__()},
 )

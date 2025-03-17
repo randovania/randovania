@@ -38,7 +38,8 @@ class EchoesHintDistributor(HintDistributor):
                 return False
         if target.player == player_id and ("Translator" in target.pickup.name):
             # don't place a translator hint on its color of lore scan
-            return hint_node.extra.get("translator") not in target.pickup.name
+            # FIXME: don't use the display name for this
+            return hint_node.requirement_display_name not in target.pickup.name
         return True
 
     @override
@@ -79,7 +80,7 @@ class EchoesHintDistributor(HintDistributor):
         return PrecisionPair.featural()
 
     @override
-    async def get_specific_pickup_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
+    async def get_specific_location_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
         game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
         keybearer = game.hint_feature_database["specific_hint_keybearer"]
 

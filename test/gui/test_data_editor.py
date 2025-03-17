@@ -11,6 +11,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import data_reader, pretty_print
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.node import NodeContext, NodeLocation
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
@@ -161,9 +162,8 @@ def test_on_filters_changed_view_mode(tmp_path, mocker, skip_qtbot):
 
 def test_create_new_dock(skip_qtbot, tmp_path, blank_game_data):
     db_path = Path(tmp_path.joinpath("test-game", "game"))
-    game_data = default_data.read_json_then_binary(RandovaniaGame.BLANK)[1]
 
-    window = DataEditorWindow(game_data, db_path, True, True)
+    window = DataEditorWindow(blank_game_data, db_path, True, True)
     window.set_warning_dialogs_disabled(True)
     skip_qtbot.addWidget(window)
 
@@ -253,3 +253,48 @@ def test_ui_patch_and_simplify_template(echoes_resource_database):
     assert _ui_patch_and_simplify(
         RequirementTemplate("Use Screw Attack (No Space Jump)"), context(col)
     ) == RequirementAnd([ResourceRequirement.simple(db.get_item("MorphBall"))])
+
+
+@pytest.mark.parametrize(
+    ("identifier", "expected"),
+    [
+        (("Starting Area", "Pickup (Weapon)"), "Pickup 0; Category? Major"),
+        (("Starting Area", "Spawn Point"), ""),
+        (
+            ("Starting Area", "Door to Boss Arena"),
+            ('Explosive Door to <a href="node://Intro/Boss Arena/Door to Starting Area">Door to Starting Area</a>'),
+        ),
+        (
+            ("Hint Room", "Hint with Translator"),
+            ("Generic Hint\n<br />Requirement: BlueKey"),
+        ),
+        (
+            ("Hint Room", "Hint no Translator"),
+            "Generic Hint",
+        ),
+        (
+            ("Hint Room", "Hint specific Location"),
+            (
+                "Specific Location Hint"
+                '\n<br />Target: <a href="node://Intro/Starting Area/Pickup (Weapon)">'
+                "Intro/Starting Area/Pickup (Weapon)</a>"
+            ),
+        ),
+    ],
+)
+def test_node_details(identifier: tuple[str, str], expected: str, skip_qtbot, tmp_path, blank_game_data):
+    # Setup
+    db_path = Path(tmp_path.joinpath("test-game", "game"))
+
+    window = DataEditorWindow(blank_game_data, db_path, True, True)
+    window.set_warning_dialogs_disabled(True)
+    skip_qtbot.addWidget(window)
+
+    area_id, node_id = identifier
+    node = window.game_description.region_list.node_by_identifier(NodeIdentifier.create("Intro", area_id, node_id))
+
+    # Run
+    result = window.node_details(node)
+
+    # Assert
+    assert result == expected
