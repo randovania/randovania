@@ -10,6 +10,8 @@ from randovania.lib import enum_lib
 if TYPE_CHECKING:
     from argparse import ArgumentParser, _SubParsersAction
 
+    from randovania.layout.base.base_configuration import BaseConfiguration
+
 
 def refresh_presets_command_logic(args: ArgumentParser) -> None:
     for game in enum_lib.iterate_enum(RandovaniaGame):
@@ -18,7 +20,7 @@ def refresh_presets_command_logic(args: ArgumentParser) -> None:
 
         for preset_relative_path in game.data.presets:
             preset_path = base_path.joinpath(preset_relative_path["path"])
-            preset = VersionedPreset.from_file_sync(preset_path)
+            preset: VersionedPreset[BaseConfiguration] = VersionedPreset.from_file_sync(preset_path)
             preset.ensure_converted()
             preset.save_to_file(preset_path)
 
