@@ -3,12 +3,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, cast
 
 import pytest
-from PySide6 import QtWidgets
 
 from randovania.gui.widgets.changelog_widget import ChangeLogWidget
 from randovania.gui.widgets.delayed_text_label import DelayedTextLabel
 
 if TYPE_CHECKING:
+    from PySide6 import QtWidgets
     from pytestqt.qtbot import QtBot
 
 IMG_LINK = "https://user-images.githubusercontent.com/884928/42738464-8a68e82a-885a-11e8-8b05-a2af0b8ad9e9.png"

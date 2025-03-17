@@ -2,16 +2,16 @@ from __future__ import annotations
 
 import typing
 
-from PySide6 import QtWidgets
-
 from randovania.games.samus_returns.gui.generated.preset_msr_patches_ui import Ui_PresetMSRPatches
-from randovania.games.samus_returns.layout import MSRConfiguration
 from randovania.games.samus_returns.layout.msr_configuration import FinalBossConfiguration
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if typing.TYPE_CHECKING:
+    from PySide6 import QtWidgets
+
     from randovania.game_description.game_description import GameDescription
+    from randovania.games.samus_returns.layout import MSRConfiguration
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset

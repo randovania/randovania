@@ -2,14 +2,14 @@ from __future__ import annotations
 
 import typing
 
-from PySide6 import QtWidgets
-
 from randovania.games.am2r.gui.generated.preset_am2r_room_design_ui import Ui_PresetAM2RRoomDesign
 from randovania.games.am2r.layout import AM2RConfiguration
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if typing.TYPE_CHECKING:
+    from PySide6 import QtWidgets
+
     from randovania.game_description.game_description import GameDescription
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor

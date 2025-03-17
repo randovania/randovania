@@ -6,7 +6,6 @@ from random import Random
 from typing import TYPE_CHECKING, override
 
 from caver.patcher import wrap_msg_text
-from caver.schema import EventNumber, MapName
 from tsc_utils.flags import set_flag
 from tsc_utils.numbers import num_to_tsc_value
 
@@ -26,7 +25,15 @@ from randovania.games.cave_story.patcher.caver_music_shuffle import CaverMusic
 from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
-    from caver.schema import CaverData, CaverdataMaps, CaverdataMapsHints, CaverdataOtherTsc, TscScript
+    from caver.schema import (
+        CaverData,
+        CaverdataMaps,
+        CaverdataMapsHints,
+        CaverdataOtherTsc,
+        EventNumber,
+        MapName,
+        TscScript,
+    )
 
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo

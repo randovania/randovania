@@ -11,12 +11,14 @@ from randovania.game_description.db.node import GenericNode, NodeContext, NodeIn
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+
+if typing.TYPE_CHECKING:
+    from randovania.game_description.game_patches import GamePatches
 
 
 @pytest.mark.parametrize(

@@ -4,8 +4,6 @@ import itertools
 import typing
 from collections import defaultdict
 
-from randovania.game_description.db.node import Node
-from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements import fast_as_set
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -15,7 +13,8 @@ from randovania.game_description.resources.resource_type import ResourceType
 if typing.TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from randovania.game_description.db.node import NodeContext
+    from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.logic import Logic

@@ -4,7 +4,6 @@ import copy
 import typing
 from typing import TYPE_CHECKING
 
-from randovania.game_description.db.dock_node import DockNode
 from randovania.games.am2r.gui.generated.preset_teleporters_am2r_ui import Ui_PresetTeleportersAM2R
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 from randovania.gui.lib import signal_handling
@@ -19,6 +18,7 @@ from randovania.layout.lib.teleporters import (
 if TYPE_CHECKING:
     from PySide6 import QtWidgets
 
+    from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_description import GameDescription
     from randovania.gui.lib.window_manager import WindowManager

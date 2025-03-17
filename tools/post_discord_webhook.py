@@ -6,6 +6,7 @@ import datetime
 import os
 import pprint
 import subprocess
+from pathlib import Path
 
 import aiohttp
 
@@ -46,7 +47,7 @@ async def post_to_discord():
             f"actions/runs/{run_id}/{artifact.replace(' ', '%20')}.zip)",
             "inline": True,
         }
-        for artifact in os.listdir("packages")
+        for artifact in [artifact.name for artifact in Path("packages").iterdir()]
         if artifact != "Python Package"
     ]
 

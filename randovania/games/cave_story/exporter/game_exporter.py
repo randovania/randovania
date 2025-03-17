@@ -7,12 +7,14 @@ from pathlib import Path
 
 from caver import patcher as caver_patcher
 from caver.patcher import CSPlatform
-from caver.schema import CaverData
 
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.game.game_enum import RandovaniaGame
 from randovania.lib import json_lib, status_update_lib
+
+if typing.TYPE_CHECKING:
+    from caver.schema import CaverData
 
 
 @dataclasses.dataclass(frozen=True)

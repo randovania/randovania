@@ -5,7 +5,6 @@ import functools
 import typing
 from typing import TYPE_CHECKING, NamedTuple, Self, override
 
-from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -17,6 +16,7 @@ from randovania.generator.generator_reach import GeneratorReach
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
+    from randovania.game_description.db.node import Node, NodeContext
     from randovania.game_description.game_description import GameDescription
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.resolver.state import State
