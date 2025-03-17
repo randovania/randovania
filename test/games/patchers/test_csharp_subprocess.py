@@ -71,6 +71,8 @@ def test_process_command_no_thread(
     monkeypatch.setattr(asyncio, "WindowsProactorEventLoopPolicy", loop_policy, raising=False)
     input_data = "hello\r\nthis is a nice db\r\n\r\nWe some crazy stuff."
 
+    monkeypatch.setattr(sys, "platform", "win32" if mock_is_windows else "darwin" if mock_is_mac else "linux")
+
     # Run
     csharp_subprocess.process_command(
         [

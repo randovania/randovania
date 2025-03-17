@@ -4,6 +4,7 @@ import asyncio
 import os
 import platform
 import re
+import sys
 from asyncio import IncompleteReadError, StreamReader, StreamWriter
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -95,7 +96,8 @@ def process_command(
 
     try:
         if IO_LOOP is None:
-            if is_windows():
+            # not using is_windows because of mypy
+            if sys.platform == "win32":
                 asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
             asyncio.run(work)
         else:
