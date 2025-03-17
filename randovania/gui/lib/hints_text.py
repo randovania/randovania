@@ -6,13 +6,13 @@ from typing import TYPE_CHECKING
 from PySide6 import QtCore, QtWidgets
 
 from randovania.game_description import default_database
-from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.hint_node import HintNode, HintNodeKind
 
 if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
 
 
-def update_hint_locations(game: RandovaniaGame, hint_tree_widget: QtWidgets.QTreeWidget):
+def update_hint_locations(game: RandovaniaGame, hint_tree_widget: QtWidgets.QTreeWidget) -> None:
     game_description = default_database.game_description_for(game)
 
     used_hint_kind = set()
@@ -20,7 +20,7 @@ def update_hint_locations(game: RandovaniaGame, hint_tree_widget: QtWidgets.QTre
     hint_tree_widget.clear()
     hint_tree_widget.setSortingEnabled(False)
 
-    hint_type_tree = collections.defaultdict(dict)
+    hint_type_tree: collections.defaultdict[str, dict[str, dict[HintNodeKind, str]]] = collections.defaultdict(dict)
 
     # First figure out which areas uses what hints.
     # This lets us use detect which hint types are used
@@ -58,7 +58,7 @@ def update_hint_locations(game: RandovaniaGame, hint_tree_widget: QtWidgets.QTre
 
     hint_tree_widget.resizeColumnToContents(0)
     hint_tree_widget.setSortingEnabled(True)
-    hint_tree_widget.sortByColumn(0, QtCore.Qt.AscendingOrder)
+    hint_tree_widget.sortByColumn(0, QtCore.Qt.SortOrder.AscendingOrder)
 
     for hint_kind in used_hint_kind:
         hint_tree_widget.headerItem().setText(number_for_hint_type[hint_kind], hint_kind.long_name)

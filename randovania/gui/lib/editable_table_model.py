@@ -63,7 +63,7 @@ def BoolFieldDefinition(display_name: str, field_name: str, *, read_only: bool =
 
 def DateFieldDefinition(
     display_name: str, field_name: str, *, read_only: bool = False, optional: bool = False
-) -> FieldDefinition[datetime.datetime, QDateTime]:
+) -> FieldDefinition[QDateTime, datetime.datetime]:
     """Creates a FieldDefinition for editing a datetime.datetime"""
 
     default_factory = None
@@ -95,7 +95,7 @@ class DataclassTableModel[T: DataclassInstance](QtCore.QAbstractTableModel):
     Generic base class for using a QTableView to view a Dataclass.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.allow_edits = False
 
@@ -323,8 +323,8 @@ class AppendableEditableTableModel[T: DataclassInstance](EditableTableModel[T]):
         if role == Qt.ItemDataRole.EditRole:
             all_items = self._get_items()
             if index.row() >= len(all_items) and value:
-                all_items = set(self._iterate_items())
-                if any(self._get_item_identifier(item) == value for item in all_items):
+                all_items_set = set(self._iterate_items())
+                if any(self._get_item_identifier(item) == value for item in all_items_set):
                     return False
                 return self.append_item(self._create_item(value))
         return super().setData(index, value, role)
