@@ -35,6 +35,7 @@ def add_sky_temple_key_distribution_logic(
     :return:
     """
     resource_database = game.resource_database
+    pickup_db = game.get_pickup_database()
     item_pool: list[PickupEntry] = []
     keys_to_place: int
 
@@ -47,11 +48,11 @@ def add_sky_temple_key_distribution_logic(
             raise InvalidConfiguration(f"Unknown Sky Temple Key mode: {mode}")
 
     for key_number in range(keys_to_place):
-        item_pool.append(create_generated_pickup("Sky Temple Key", resource_database, i=key_number + 1))
+        item_pool.append(create_generated_pickup("Sky Temple Key", resource_database, pickup_db, i=key_number + 1))
     first_automatic_key = keys_to_place
 
     starting = [
-        create_generated_pickup("Sky Temple Key", resource_database, i=automatic_key_number + 1)
+        create_generated_pickup("Sky Temple Key", resource_database, pickup_db, i=automatic_key_number + 1)
         for automatic_key_number in range(first_automatic_key, 9)
     ]
 

@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from frozendict import frozendict
 
-from randovania.game_description import default_database, hint_features
+from randovania.game_description import hint_features
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
 
@@ -13,6 +13,7 @@ if TYPE_CHECKING:
     from typing import Any
 
     from randovania.game.game_enum import RandovaniaGame
+    from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.pickup.pickup_definition.ammo_pickup import AmmoPickupDefinition
     from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -111,6 +112,7 @@ def create_ammo_pickup(
 def create_generated_pickup(
     pickup_group: str,
     resource_database: ResourceDatabase,
+    pickup_database: PickupDatabase,
     *,
     minimum_progression: int = 0,
     **format_kwargs: Any,
@@ -119,13 +121,12 @@ def create_generated_pickup(
     Creates a concrete PickupEntry given a generated pickup group and an identifier
     :param pickup_group:
     :param resource_database:
+    :param pickup_database:
     :param minimum_progression:
     :return:
     """
 
-    pickup_database = default_database.pickup_database_for_game(resource_database.game_enum)
     pickup = pickup_database.generated_pickups[pickup_group]
-
     assert not pickup.ammo
     assert not pickup.unlocks_ammo
 
