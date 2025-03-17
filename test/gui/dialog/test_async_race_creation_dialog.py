@@ -3,8 +3,9 @@ from __future__ import annotations
 import dataclasses
 import datetime
 from typing import TYPE_CHECKING
-from unittest.mock import MagicMock
+from unittest.mock import AsyncMock, MagicMock
 
+import pytest
 from PySide6 import QtCore, QtWidgets
 
 from randovania.game.game_enum import RandovaniaGame
@@ -74,6 +75,42 @@ async def test_validate(skip_qtbot, preset_manager, options, mocker: pytest_mock
     dialog.ui.settings_widget.ui.password_edit.setText("The Secret")
     assert dialog.ui.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).isEnabled()
     assert dialog.create_settings_object() == dataclasses.replace(settings, password="The Secret")
+
+
+@pytest.mark.parametrize(
+    ("has_preset", "success"),
+    [
+        (False, False),
+        (True, False),
+        (True, True),
+    ],
+)
+async def test_generate_and_accept(skip_qtbot, preset_manager, options, has_preset: bool, success: bool):
+    parent = QtWidgets.QMainWindow()
+    skip_qtbot.add_widget(parent)
+
+    window_manager = MagicMock(spec=WindowManager)
+    window_manager.preset_manager = preset_manager
+    dialog = AsyncRaceCreationDialog(parent, window_manager, options)
+    dialog.generate_layout_from_preset = AsyncMock()
+    if not success:
+        dialog.generate_layout_from_preset.return_value = None
+
+    dialog.selected_preset = MagicMock() if has_preset else None
+
+    # Run
+    await dialog._generate_and_accept()
+
+    # Assert
+    if has_preset:
+        dialog.generate_layout_from_preset.assert_awaited_once_with(preset=dialog.selected_preset, spoiler=True)
+        dialog.result()
+    else:
+        dialog.generate_layout_from_preset.assert_not_called()
+
+    assert dialog.result() == (
+        QtWidgets.QDialog.DialogCode.Accepted if success else QtWidgets.QDialog.DialogCode.Rejected
+    )
 
 
 def test_settings_dialog(skip_qtbot) -> None:
