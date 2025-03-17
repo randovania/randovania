@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import dataclasses
 import typing
+from typing import override
 
+from randovania.game_description.game_database_view import ResourceDatabaseView
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_type import ResourceType
@@ -41,7 +43,7 @@ class NamedRequirementTemplate:
 
 
 @dataclasses.dataclass(frozen=True)
-class ResourceDatabase:
+class ResourceDatabase(ResourceDatabaseView):
     game_enum: RandovaniaGame
     item: list[ItemResourceInfo]
     event: list[SimpleResourceInfo]
@@ -109,6 +111,7 @@ class ResourceDatabase:
     def get_item_by_name(self, name: str) -> ItemResourceInfo:
         return search.find_resource_info_with_long_name(self.item, name)
 
+    @override
     def get_pickup_model(self, name: str) -> PickupModel:
         return PickupModel(
             game=self.game_enum,
