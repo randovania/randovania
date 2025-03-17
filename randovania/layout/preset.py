@@ -33,7 +33,7 @@ class Preset[Configuration: BaseConfiguration](BitPackValue):
         }
 
     @classmethod
-    def from_json_dict(cls, value) -> Preset:
+    def from_json_dict(cls, value: dict) -> Preset:
         game = RandovaniaGame(value["game"])
         return Preset(
             name=value["name"],
@@ -52,14 +52,14 @@ class Preset[Configuration: BaseConfiguration](BitPackValue):
     def is_same_configuration(self, other: Preset) -> bool:
         return self.configuration == other.configuration
 
-    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
+    def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
         manager: PresetManager = metadata["manager"]
 
         reference = manager.reference_preset_for_game(self.game).get_preset()
         yield from self.configuration.bit_pack_encode({"reference": reference.configuration})
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> Preset:
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata: dict) -> Preset:
         manager: PresetManager = metadata["manager"]
         game: RandovaniaGame = metadata["game"]
 

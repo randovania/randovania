@@ -61,14 +61,14 @@ class TeleporterList(location_list.LocationList):
         return nodes
 
     @classmethod
-    def element_type(cls):
+    def element_type(cls) -> type[NodeIdentifier]:
         return NodeIdentifier
 
     def ensure_has_locations(self, area_locations: list[NodeIdentifier], enabled: bool) -> TeleporterList:
         return super().ensure_has_locations(area_locations, enabled)
 
 
-def _valid_teleporter_target(area: Area, node: Node, game: RandovaniaGame):
+def _valid_teleporter_target(area: Area, node: Node, game: RandovaniaGame) -> bool:
     if (
         game in (RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES)
         and area.name == "Credits"
@@ -84,7 +84,7 @@ def _valid_teleporter_target(area: Area, node: Node, game: RandovaniaGame):
 
 class TeleporterTargetList(location_list.LocationList):
     @classmethod
-    def nodes_list(cls, game: RandovaniaGame):
+    def nodes_list(cls, game: RandovaniaGame) -> list[NodeIdentifier]:
         return location_list.node_and_area_with_filter(
             game, lambda area, node: _valid_teleporter_target(area, node, game)
         )
@@ -101,11 +101,11 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
         return self.excluded_teleporters.game
 
     @property
-    def is_vanilla(self):
+    def is_vanilla(self) -> bool:
         return self.mode == TeleporterShuffleMode.VANILLA
 
     @property
-    def has_shuffled_target(self):
+    def has_shuffled_target(self) -> bool:
         return self.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING
 
     @property
@@ -155,7 +155,7 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
     def static_teleporters(self) -> dict[NodeIdentifier, NodeIdentifier]:
         return {}
 
-    def description(self, teleporter_name: str):
+    def description(self, teleporter_name: str) -> str:
         result = []
         if self.mode not in {TeleporterShuffleMode.VANILLA, TeleporterShuffleMode.ECHOES_SHUFFLED}:
             if not self.is_vanilla and self.excluded_teleporters.locations:
@@ -169,7 +169,7 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
         else:
             return self.mode.long_name
 
-    def dangerous_settings(self):
+    def dangerous_settings(self) -> list[str]:
         if self.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
             return ["One-way anywhere teleporters"]
         return []
