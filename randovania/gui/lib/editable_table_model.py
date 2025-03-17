@@ -37,10 +37,6 @@ class FieldDefinition[QtT, PyT]:
     to_qt: typing.Callable[[PyT], QtT] = _unmodified_to_qt  # type: ignore[assignment]
     from_qt: typing.Callable[[QtT], tuple[bool, PyT | None]] | None = _unmodified_from_qt  # type: ignore[assignment]
 
-    @property
-    def read_only(self) -> bool:
-        return self.from_qt is None
-
 
 def BoolFieldDefinition(display_name: str, field_name: str, *, read_only: bool = False) -> FieldDefinition[str, bool]:
     def bool_to_qt(value: bool) -> str:
@@ -180,7 +176,7 @@ class EditableTableModel[T: DataclassInstance](DataclassTableModel[T]):
     Generic base class for using a QTableView to edit a Dataclass.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.allow_edits = True
 
@@ -246,7 +242,7 @@ class EditableTableModel[T: DataclassInstance](DataclassTableModel[T]):
                 item = self._get_item(index.row())
                 field = self._all_columns()[index.column()]
 
-                if field.read_only:
+                if field.from_qt is None:
                     return False
 
                 if role == Qt.ItemDataRole.CheckStateRole:
@@ -277,7 +273,7 @@ class EditableTableModel[T: DataclassInstance](DataclassTableModel[T]):
         result = Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
         if self.allow_edits:
             field = self._all_columns()[index.column()]
-            if not field.read_only:
+            if field.from_qt is not None:
                 result |= Qt.ItemFlag.ItemIsEditable
             if field.default_factory is not None:
                 result |= Qt.ItemFlag.ItemIsUserCheckable
