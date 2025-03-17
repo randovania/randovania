@@ -92,5 +92,5 @@ cutscenes happen. Inferior to the above options, but kept around because it's fu
     def on_preset_changed(self, preset: Preset):
         config = preset.configuration
         for f in _FIELDS:
-            typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))
+            typing.cast("QtWidgets.QCheckBox", getattr(self, f"{f}_check")).setChecked(getattr(config, f))
         signal_handling.set_combo_with_value(self.cutscene_combo, config.qol_cutscenes)

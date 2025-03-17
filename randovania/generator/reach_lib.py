@@ -23,7 +23,7 @@ if TYPE_CHECKING:
 def _filter_resource_nodes(nodes: Iterator[Node]) -> Iterator[ResourceNode]:
     for node in nodes:
         if node.is_resource_node:
-            yield typing.cast(ResourceNode, node)
+            yield typing.cast("ResourceNode", node)
 
 
 def filter_pickup_nodes(nodes: Iterator[Node]) -> Iterator[PickupNode]:

@@ -366,7 +366,7 @@ def update_pyuic(enum_value: str) -> None:
     new_entry = [f"randovania/games/{enum_value}/gui/ui_files/*.ui", f"randovania/games/{enum_value}/gui/generated"]
 
     pyuic_path = _ROOT_PATH.parent.joinpath("pyuic.json")
-    pyuic = typing.cast(dict[str, list[list[str]]], json_lib.read_path(pyuic_path))
+    pyuic = typing.cast("dict[str, list[list[str]]]", json_lib.read_path(pyuic_path))
 
     if not any(it == new_entry for it in pyuic["files"]):
         pyuic["files"].append(new_entry)

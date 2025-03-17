@@ -58,5 +58,5 @@ class PresetFusionPatches(PresetTab, Ui_PresetFusionPatches):
         config = preset.configuration
         assert isinstance(config, FusionConfiguration)
         for f in _FIELDS:
-            typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))
+            typing.cast("QtWidgets.QCheckBox", getattr(self, f"{f}_check")).setChecked(getattr(config, f))
         self.etank_capacity_spin_box.setValue(config.energy_per_tank)

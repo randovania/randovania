@@ -60,7 +60,7 @@ def _empty_context():
 def _ctx_for(db: ResourceDatabase, *args: ResourceInfo):
     return NodeContext(
         MagicMock(),
-        ResourceCollection.from_dict(db, {resource: 1 for resource in args}),
+        ResourceCollection.from_dict(db, dict.fromkeys(args, 1)),
         db,
         MagicMock(),
     )

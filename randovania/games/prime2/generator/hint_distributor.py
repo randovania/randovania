@@ -98,7 +98,7 @@ class EchoesHintDistributor(HintDistributor):
             c("Torvus Bog", "Catacombs", "Keybearer Corpse (G-Sch)"),
         ]
 
-        return {keybearer: precision for keybearer in keybearers}
+        return dict.fromkeys(keybearers, precision)
 
     @override
     @property

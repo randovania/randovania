@@ -91,7 +91,7 @@ class ResourceDatabase:
 
     def get_by_type_and_index(self, resource_type: ResourceType, name: str) -> ResourceInfo:
         return search.find_resource_info_with_id(
-            typing.cast(list[ResourceInfo], self.get_by_type(resource_type)), name, resource_type
+            typing.cast("list[ResourceInfo]", self.get_by_type(resource_type)), name, resource_type
         )
 
     def get_item(self, short_name: str) -> ItemResourceInfo:

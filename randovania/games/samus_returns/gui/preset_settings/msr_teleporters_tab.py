@@ -83,7 +83,7 @@ class PresetTeleportersMSR(PresetTeleporterTab, Ui_PresetTeleportersMSR, NodeLis
 
             self.teleporters_source_layout.addWidget(checks.pop(location), row, 1)
 
-            teleporter_in_target = typing.cast(DockNode, region_list.node_by_identifier(location)).default_connection
+            teleporter_in_target = typing.cast("DockNode", region_list.node_by_identifier(location)).default_connection
 
             self._teleporters_source_destination[location] = None
 

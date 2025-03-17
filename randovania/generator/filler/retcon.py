@@ -163,7 +163,7 @@ def weighted_potential_actions(
     if len(actions) == 1:
         debug.debug_print(f"{actions[0]}")
         debug.debug_print("Only one action, weighting skipped")
-        return {action: 1.0 for action in actions}
+        return dict.fromkeys(actions, 1.0)
 
     current_uncollected = UncollectedState.from_reach(player_state.reach)
     current_unsafe_uncollected = UncollectedState.from_reach_only_unsafe(player_state.reach)
@@ -495,7 +495,7 @@ def _calculate_weights_for(
     potential_unsafe_uncollected = UncollectedState.from_reach_only_unsafe(potential_reach) - current_unsafe_uncollected
 
     if debug.debug_level() > 2:
-        nodes = typing.cast(tuple[Node, ...], potential_reach.game.region_list.all_nodes)
+        nodes = typing.cast("tuple[Node, ...]", potential_reach.game.region_list.all_nodes)
 
         def print_weight_factors(uncollected: UncollectedState) -> None:
             print(f"  indices: {uncollected.pickup_indices}")

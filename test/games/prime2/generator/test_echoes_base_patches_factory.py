@@ -77,10 +77,9 @@ def test_gate_assignment_for_configuration_all_emerald(echoes_game_description, 
         default_echoes_configuration,
         translator_configuration=dataclasses.replace(
             translator_configuration,
-            translator_requirement={
-                key: LayoutTranslatorRequirement.EMERALD
-                for key in translator_configuration.translator_requirement.keys()
-            },
+            translator_requirement=dict.fromkeys(
+                translator_configuration.translator_requirement.keys(), LayoutTranslatorRequirement.EMERALD
+            ),
         ),
     )
 

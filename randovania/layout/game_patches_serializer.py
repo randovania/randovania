@@ -229,7 +229,7 @@ def decode_single(
 
     pickup_assignment: PickupAssignment = {}
     for world_name, world_data in game_modifications["locations"].items():
-        for area_node_name, target_name in typing.cast(dict[str, str], world_data).items():
+        for area_node_name, target_name in typing.cast("dict[str, str]", world_data).items():
             if target_name == _ETM_NAME:
                 continue
 

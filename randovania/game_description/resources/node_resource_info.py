@@ -39,7 +39,7 @@ class NodeResourceInfo:
 
     def to_node(self, context: NodeContext) -> Node:
         node_index = self.resource_index - context.database.first_unused_resource_index()
-        return typing.cast(Node, context.node_provider.all_nodes[node_index])
+        return typing.cast("Node", context.node_provider.all_nodes[node_index])
 
     @property
     def extra(self) -> dict:

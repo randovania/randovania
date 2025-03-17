@@ -203,7 +203,7 @@ class OldGeneratorReach(GeneratorReach):
         if self._reachable_paths is not None:
             return
 
-        all_nodes = typing.cast(tuple[Node, ...], self.all_nodes)
+        all_nodes = typing.cast("tuple[Node, ...]", self.all_nodes)
         context = self.node_context()
 
         @functools.cache
@@ -256,7 +256,7 @@ class OldGeneratorReach(GeneratorReach):
         """
         self._calculate_reachable_paths()
         assert self._reachable_paths is not None
-        all_nodes = typing.cast(tuple[Node, ...], self.all_nodes)
+        all_nodes = typing.cast("tuple[Node, ...]", self.all_nodes)
         for index in self._reachable_paths.keys():
             yield all_nodes[index]
 
@@ -270,7 +270,7 @@ class OldGeneratorReach(GeneratorReach):
 
     @property
     def nodes(self) -> Iterator[Node]:
-        for i, node in enumerate(typing.cast(tuple[Node, ...], self.all_nodes)):
+        for i, node in enumerate(typing.cast("tuple[Node, ...]", self.all_nodes)):
             if i in self._digraph:
                 yield node
 
@@ -279,7 +279,7 @@ class OldGeneratorReach(GeneratorReach):
         self._calculate_safe_nodes()
         assert self._safe_nodes is not None
 
-        all_nodes = typing.cast(tuple[Node, ...], self.all_nodes)
+        all_nodes = typing.cast("tuple[Node, ...]", self.all_nodes)
         for i in self._safe_nodes.as_list:
             yield all_nodes[i]
 
@@ -314,7 +314,7 @@ class OldGeneratorReach(GeneratorReach):
 
         self._state = new_state
 
-        all_nodes = typing.cast(tuple[Node, ...], self.all_nodes)
+        all_nodes = typing.cast("tuple[Node, ...]", self.all_nodes)
         paths_to_check: list[GraphPath] = []
 
         edges_to_remove = []
@@ -357,7 +357,7 @@ class OldGeneratorReach(GeneratorReach):
 
     def unreachable_nodes_with_requirements(self) -> dict[Node, RequirementSet]:
         results: dict[Node, RequirementSet] = {}
-        all_nodes = typing.cast(tuple[Node, ...], self.all_nodes)
+        all_nodes = typing.cast("tuple[Node, ...]", self.all_nodes)
         context = self._state.node_context()
 
         to_check = [

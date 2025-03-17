@@ -54,10 +54,10 @@ class PresetMSRPatches(PresetTab, Ui_PresetMSRPatches):
         signal_handling.on_checked(check, persist)
 
     def on_preset_changed(self, preset: Preset) -> None:
-        config = typing.cast(MSRConfiguration, preset.configuration)
+        config = typing.cast("MSRConfiguration", preset.configuration)
 
         if config.final_boss == FinalBossConfiguration.QUEEN:
             self.reverse_area8_check.setEnabled(False)
 
         for f in _FIELDS:
-            typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))
+            typing.cast("QtWidgets.QCheckBox", getattr(self, f"{f}_check")).setChecked(getattr(config, f))

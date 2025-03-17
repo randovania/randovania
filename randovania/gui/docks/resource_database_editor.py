@@ -61,7 +61,7 @@ class ResourceDatabaseGenericModel(AppendableEditableTableModel[ResourceInfo]):
 
     @typing.override
     def _get_items(self) -> list[ResourceInfo]:
-        return typing.cast(list[ResourceInfo], self.db.get_by_type(self.resource_type))
+        return typing.cast("list[ResourceInfo]", self.db.get_by_type(self.resource_type))
 
     @typing.override
     def _create_item(self, short_name: str) -> ResourceInfo:

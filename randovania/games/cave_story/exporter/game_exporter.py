@@ -57,7 +57,7 @@ class CSGameExporter(GameExporter[CSGameExportParams]):
         export_params: CSGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
-        new_patch = typing.cast(CaverData, copy.copy(patch_data))
+        new_patch = typing.cast("CaverData", copy.copy(patch_data))
         if new_patch["mychar"] is not None:
             new_patch["mychar"] = str(RandovaniaGame.CAVE_STORY.data_path.joinpath(patch_data["mychar"]))
 

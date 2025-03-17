@@ -37,7 +37,7 @@ layer_name_re = re.compile(r"[a-zA-Z0-9 _-]+")
 
 def _create_node_context(game: GameDescription) -> NodeContext:
     return NodeContext(
-        patches=GamePatches.create_from_game(game, 0, typing.cast(BaseConfiguration, None)),
+        patches=GamePatches.create_from_game(game, 0, typing.cast("BaseConfiguration", None)),
         current_resources=ResourceCollection.with_database(game.resource_database),
         database=game.resource_database,
         node_provider=game.region_list,

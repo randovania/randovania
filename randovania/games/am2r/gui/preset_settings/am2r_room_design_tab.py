@@ -56,4 +56,4 @@ class PresetAM2RRoomDesign(PresetTab, Ui_PresetAM2RRoomDesign):
         config = preset.configuration
         assert isinstance(config, AM2RConfiguration)
         for f in self._CHECKBOX_FIELDS:
-            typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))
+            typing.cast("QtWidgets.QCheckBox", getattr(self, f"{f}_check")).setChecked(getattr(config, f))

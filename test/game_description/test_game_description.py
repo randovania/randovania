@@ -68,7 +68,7 @@ def test_calculate_dangerous_resources(danger_a: list[str], danger_b: list[str],
     rl = RegionList([region])
 
     # Run
-    context = NodeContext(typing.cast(GamePatches, None), ResourceCollection(), db, rl)
+    context = NodeContext(typing.cast("GamePatches", None), ResourceCollection(), db, rl)
     result = game_description._calculate_dangerous_resources_in_areas(context)
 
     # Assert

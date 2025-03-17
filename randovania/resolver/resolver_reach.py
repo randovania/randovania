@@ -87,7 +87,7 @@ class ResolverReach:
     @classmethod
     def calculate_reach(cls, logic: Logic, initial_state: State) -> ResolverReach:
         # all_nodes is only accessed via indices that guarantee a non-None result
-        all_nodes = typing.cast(tuple[Node, ...], logic.game.region_list.all_nodes)
+        all_nodes = typing.cast("tuple[Node, ...]", logic.game.region_list.all_nodes)
         checked_nodes: dict[int, DamageState] = {}
         context = initial_state.node_context()
 
@@ -181,7 +181,7 @@ class ResolverReach:
         for node in self.nodes:
             if not node.is_resource_node:
                 continue
-            node = typing.cast(ResourceNode, node)
+            node = typing.cast("ResourceNode", node)
             if node.should_collect(context) and node.requirement_to_collect().satisfied(
                 context, self._game_state_at_node[node.node_index].health_for_damage_requirements()
             ):

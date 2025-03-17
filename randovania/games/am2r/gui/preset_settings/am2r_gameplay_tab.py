@@ -54,7 +54,7 @@ class PresetAM2RGameplay(PresetTab, Ui_PresetAM2RGameplay):
         self.first_suit_spin_box.setValue(config.first_suit_dr)
         self.second_suit_spin_box.setValue(config.second_suit_dr)
         for f in self._CHECKBOX_FIELDS:
-            typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))
+            typing.cast("QtWidgets.QCheckBox", getattr(self, f"{f}_check")).setChecked(getattr(config, f))
 
     def _persist_tank_capacity(self) -> None:
         with self._editor as editor:
