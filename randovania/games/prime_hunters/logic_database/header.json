@@ -3,20 +3,324 @@
     "game": "prime_hunters",
     "resource_database": {
         "items": {
-            "Weapon": {
-                "long_name": "Powerful Weapon",
-                "max_capacity": 1,
-                "extra": {}
+            "EnergyTank": {
+                "long_name": "Energy Tank",
+                "max_capacity": 7,
+                "extra": {
+                    "item_type": 4
+                }
             },
-            "VictoryKey": {
-                "long_name": "Victory Key",
+            "VoltDriver": {
+                "long_name": "Volt Driver",
                 "max_capacity": 1,
-                "extra": {}
+                "extra": {
+                    "item_type": 5
+                }
             },
-            "Health": {
-                "long_name": "Health",
-                "max_capacity": 500,
-                "extra": {}
+            "Missile": {
+                "long_name": "Missile",
+                "max_capacity": 95,
+                "extra": {
+                    "item_type": 6
+                }
+            },
+            "Battlehammer": {
+                "long_name": "Battlehammer",
+                "max_capacity": 1,
+                "extra": {
+                    "item_type": 7
+                }
+            },
+            "Imperialist": {
+                "long_name": "Imperialist",
+                "max_capacity": 1,
+                "extra": {
+                    "item_type": 8
+                }
+            },
+            "Judicator": {
+                "long_name": "Judicator",
+                "max_capacity": 1,
+                "extra": {
+                    "item_type": 9
+                }
+            },
+            "Magmaul": {
+                "long_name": "Magmaul",
+                "max_capacity": 1,
+                "extra": {
+                    "item_type": 10
+                }
+            },
+            "ShockCoil": {
+                "long_name": "Shock Coil",
+                "max_capacity": 1,
+                "extra": {
+                    "item_type": 11
+                }
+            },
+            "UAExpansion": {
+                "long_name": "UA Expansion",
+                "max_capacity": 400,
+                "extra": {
+                    "item_type": 18
+                }
+            },
+            "AlinosArtifact1C": {
+                "long_name": "Alinos Cartograph Artifact 1",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 0,
+                    "artifact_id": 0
+                }
+            },
+            "AlinosArtifact2C": {
+                "long_name": "Alinos Cartograph Artifact 2",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 1,
+                    "artifact_id": 0
+                }
+            },
+            "AlinosArtifact1A": {
+                "long_name": "Alinos Attameter Artifact 1",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 0,
+                    "artifact_id": 1
+                }
+            },
+            "AlinosArtifact2A": {
+                "long_name": "Alinos Attameter Artifact 2",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 1,
+                    "artifact_id": 1
+                }
+            },
+            "AlinosArtifact1BS": {
+                "long_name": "Alinos Binary Subscripture Artifact 1",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 0,
+                    "artifact_id": 2
+                }
+            },
+            "AlinosArtifact2BS": {
+                "long_name": "Alinos Binary Subscripture Artifact 2",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 1,
+                    "artifact_id": 2
+                }
+            },
+            "CelestialArtifact1C": {
+                "long_name": "Celestial Archives Cartograph Artifact 1",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 2,
+                    "artifact_id": 0
+                }
+            },
+            "CelestialArtifact2C": {
+                "long_name": "Celestial Archives Cartograph Artifact 2",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 3,
+                    "artifact_id": 0
+                }
+            },
+            "CelestialArtifact1A": {
+                "long_name": "Celestial Archives Attameter Artifact 1",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 2,
+                    "artifact_id": 1
+                }
+            },
+            "CelestialArtifact2A": {
+                "long_name": "Celestial Archives Attameter Artifact 2",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 3,
+                    "artifact_id": 1
+                }
+            },
+            "CelestialArtifact1BS": {
+                "long_name": "Celestial Archives Binary Subscripture Artifact 1",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 2,
+                    "artifact_id": 2
+                }
+            },
+            "CelestialArtifact2BS": {
+                "long_name": "Celestial Archives Binary Subscripture Artifact 2",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 3,
+                    "artifact_id": 2
+                }
+            },
+            "VDOArtifact1C": {
+                "long_name": "Vesper Defense Outpost Cartograph Artifact 1",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 4,
+                    "artifact_id": 0
+                }
+            },
+            "VDOArtifact2C": {
+                "long_name": "Vesper Defense Outpost Cartograph Artifact 2",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 5,
+                    "artifact_id": 0
+                }
+            },
+            "VDOArtifact1A": {
+                "long_name": "Vesper Defense Outpost Attameter Artifact 1",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 4,
+                    "artifact_id": 1
+                }
+            },
+            "VDOArtifact2A": {
+                "long_name": "Vesper Defense Outpost Attameter Artifact 2",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 5,
+                    "artifact_id": 1
+                }
+            },
+            "VDOArtifact1BS": {
+                "long_name": "Vesper Defense Outpost Binary Subscripture Artifact 1",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 4,
+                    "artifact_id": 2
+                }
+            },
+            "VDOArtifact2BS": {
+                "long_name": "Vesper Defense Outpost Binary Subscripture Artifact 2",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 5,
+                    "artifact_id": 2
+                }
+            },
+            "ArcterraArtifact1C": {
+                "long_name": "Arcterra Cartograph Artifact 1",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 6,
+                    "artifact_id": 0
+                }
+            },
+            "ArcterraArtifact2C": {
+                "long_name": "Arcterra Cartograph Artifact 2",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 7,
+                    "artifact_id": 0
+                }
+            },
+            "ArcterraArtifact1A": {
+                "long_name": "Arcterra Attameter Artifact 1",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 6,
+                    "artifact_id": 1
+                }
+            },
+            "ArcterraArtifact2A": {
+                "long_name": "Arcterra Attameter Artifact 2",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 7,
+                    "artifact_id": 1
+                }
+            },
+            "ArcterraArtifact1BS": {
+                "long_name": "Arcterra Binary Subscripture Artifact 1",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 6,
+                    "artifact_id": 2
+                }
+            },
+            "ArcterraArtifact2BS": {
+                "long_name": "Arcterra Binary Subscripture Artifact 2",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 7,
+                    "artifact_id": 2
+                }
+            },
+            "Octolith1": {
+                "long_name": "Octolith 1",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 8,
+                    "artifact_id": 0
+                }
+            },
+            "Octolith2": {
+                "long_name": "Octolith 2",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 8,
+                    "artifact_id": 1
+                }
+            },
+            "Octolith3": {
+                "long_name": "Octolith 3",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 8,
+                    "artifact_id": 2
+                }
+            },
+            "Octolith4": {
+                "long_name": "Octolith 4",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 8,
+                    "artifact_id": 3
+                }
+            },
+            "Octolith5": {
+                "long_name": "Octolith 5",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 8,
+                    "artifact_id": 4
+                }
+            },
+            "Octolith6": {
+                "long_name": "Octolith 6",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 8,
+                    "artifact_id": 5
+                }
+            },
+            "Octolith7": {
+                "long_name": "Octolith 7",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 8,
+                    "artifact_id": 6
+                }
+            },
+            "Octolith8": {
+                "long_name": "Octolith 8",
+                "max_capacity": 1,
+                "extra": {
+                    "model_id": 8,
+                    "artifact_id": 7
+                }
             }
         },
         "events": {},
@@ -26,22 +330,22 @@
         "misc": {},
         "requirement_template": {},
         "damage_reductions": [],
-        "energy_tank_item_index": "Health"
+        "energy_tank_item_index": "EnergyTank"
     },
     "layers": [
         "default"
     ],
     "starting_location": {
-        "region": "Main",
-        "area": "First Area",
-        "node": "Spawn Point"
+        "region": "Celestial Archives",
+        "area": "Celestial Gateway",
+        "node": "Player Spawn"
     },
     "minimal_logic": null,
     "victory_condition": {
         "type": "resource",
         "data": {
             "type": "items",
-            "name": "VictoryKey",
+            "name": "VoltDriver",
             "amount": 1,
             "negate": false
         }
@@ -99,6 +403,10 @@
     "used_trick_levels": {},
     "flatten_to_set_on_patch": false,
     "regions": [
-        "Main.json"
+        "Celestial Archives.json",
+        "Alinos.json",
+        "Arcterra.json",
+        "Vesper Defense Outpost.json",
+        "Oubliette.json"
     ]
 }
