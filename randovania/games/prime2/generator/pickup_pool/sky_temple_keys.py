@@ -17,9 +17,9 @@ def pickup_nodes_for_stk_mode(game: GameDescription, mode: LayoutSkyTempleKeyMod
     locations = []
 
     if mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
-        for node in game.region_list.all_nodes:
+        for node in game.region_list.iterate_nodes_of_type(PickupNode):
             boss = node.extra.get("boss")
-            if boss is not None and isinstance(node, PickupNode):
+            if boss is not None:
                 if boss == "guardian" or mode == LayoutSkyTempleKeyMode.ALL_BOSSES:
                     locations.append(node)
 

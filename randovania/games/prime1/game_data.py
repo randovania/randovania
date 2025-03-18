@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import randovania.game.data
 import randovania.game.development_state
 import randovania.game.generator
@@ -14,8 +16,13 @@ from randovania.games.prime1.layout.preset_describer import (
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 
+if TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExporter
+    from randovania.exporter.patch_data_factory import PatchDataFactory
+    from randovania.interface_common.options import PerGameOptions
 
-def _options():
+
+def _options() -> type[PerGameOptions]:
     from randovania.games.prime1.exporter.options import PrimePerGameOptions
 
     return PrimePerGameOptions
@@ -78,7 +85,7 @@ def _hints() -> randovania.game.hints.GameHints:
     )
 
 
-def _patch_data_factory():
+def _patch_data_factory() -> type[PatchDataFactory]:
     from randovania.games.prime1.exporter.patch_data_factory import (
         PrimePatchDataFactory,
     )
@@ -86,7 +93,7 @@ def _patch_data_factory():
     return PrimePatchDataFactory
 
 
-def _exporter():
+def _exporter() -> GameExporter:
     from randovania.games.prime1.exporter.game_exporter import PrimeGameExporter
 
     return PrimeGameExporter()

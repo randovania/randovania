@@ -4,7 +4,7 @@ import copy
 import shutil
 from typing import TYPE_CHECKING
 
-import mp2hudcolor
+import mp2hudcolor  # type: ignore[import-untyped]
 from open_prime_rando.dol_patching.echoes import dol_patcher
 from ppc_asm import dol_file
 from retro_data_structures.asset_manager import AssetManager, PathFileProvider
@@ -48,11 +48,11 @@ class EchoesGameExporter(GameExporter[EchoesGameExportParams]):
         """
         return EchoesGameExportParams
 
-    def _before_export(self):
+    def _before_export(self) -> None:
         assert not self._busy
         self._busy = True
 
-    def _after_export(self):
+    def _after_export(self) -> None:
         self._busy = False
 
     def known_good_hashes(self) -> dict[str, tuple[str, ...]]:
@@ -66,7 +66,7 @@ class EchoesGameExporter(GameExporter[EchoesGameExportParams]):
         patch_data: dict,
         export_params: EchoesGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
-    ):
+    ) -> None:
         new_patcher = patch_data.pop("new_patcher", None)
         monitoring.set_tag("echoes_new_patcher", new_patcher is not None)
 
@@ -183,7 +183,7 @@ class EchoesGameExporter(GameExporter[EchoesGameExportParams]):
         )
 
 
-def copy_coin_chest(contents_path: Path):
+def copy_coin_chest(contents_path: Path) -> None:
     """
     Claris patcher doesn't read from Metroid6.pak, where these assets are found.
     Copy them into the main paks so that we can actually use the Coin Chest model

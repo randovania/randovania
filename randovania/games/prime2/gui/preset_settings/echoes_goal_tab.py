@@ -40,11 +40,11 @@ class PresetEchoesGoal(PresetTab, Ui_PresetEchoesGoal):
     def header_name(cls) -> str | None:
         return None
 
-    def _set_slider_visible(self, visible: bool):
+    def _set_slider_visible(self, visible: bool) -> None:
         for w in [self.skytemple_slider, self.skytemple_slider_label]:
             w.setVisible(visible)
 
-    def _on_sky_temple_key_combo_changed(self):
+    def _on_sky_temple_key_combo_changed(self) -> None:
         combo_enum = self.skytemple_combo.currentData()
         with self._editor as editor:
             if combo_enum is int:
@@ -56,13 +56,14 @@ class PresetEchoesGoal(PresetTab, Ui_PresetEchoesGoal):
 
             editor.set_configuration_field("sky_temple_keys", new_value)
 
-    def _on_sky_temple_key_combo_slider_changed(self):
+    def _on_sky_temple_key_combo_slider_changed(self) -> None:
         self.skytemple_slider_label.setText(str(self.skytemple_slider.value()))
         self._on_sky_temple_key_combo_changed()
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         assert isinstance(preset.configuration, EchoesConfiguration)
         keys = preset.configuration.sky_temple_keys
+        data: LayoutSkyTempleKeyMode | type[int]
         if isinstance(keys.value, int):
             self.skytemple_slider.setValue(keys.value)
             data = int

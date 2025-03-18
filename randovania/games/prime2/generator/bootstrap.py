@@ -9,7 +9,6 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.damage_reduction import DamageReduction
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.resolver.bootstrap import Bootstrap
@@ -93,7 +92,7 @@ class EchoesBootstrap(Bootstrap):
 
     def patch_resource_database(self, db: ResourceDatabase, configuration: EchoesConfiguration) -> ResourceDatabase:
         damage_reductions = copy.copy(db.damage_reductions)
-        damage_reductions[db.get_by_type_and_index(ResourceType.DAMAGE, "DarkWorld1")] = [
+        damage_reductions[db.get_damage("DarkWorld1")] = [
             DamageReduction(None, configuration.varia_suit_damage / 6.0),
             DamageReduction(db.get_item_by_name("Dark Suit"), configuration.dark_suit_damage / 6.0),
             DamageReduction(db.get_item_by_name("Light Suit"), 0.0),

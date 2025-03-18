@@ -38,12 +38,12 @@ class EchoesHintDistributor(HintDistributor):
                 return False
         if target.player == player_id and ("Translator" in target.pickup.name):
             # don't place a translator hint on its color of lore scan
-            return hint_node.extra.get("translator") not in target.pickup.name
+            return hint_node.extra["translator"] not in target.pickup.name
         return True
 
     @override
     async def get_guaranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
-        def g(index: int, loc: str):
+        def g(index: int, loc: str) -> tuple[PickupIndex, PrecisionPair]:
             return (
                 PickupIndex(index),
                 PrecisionPair(patches.game.hint_feature_database[loc], HintItemPrecision.DETAILED, include_owner=False),

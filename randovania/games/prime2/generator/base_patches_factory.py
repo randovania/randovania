@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import dataclasses
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Self
 
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
@@ -29,7 +29,7 @@ class WorldEntrances:
     right: AreaIdentifier
 
     @classmethod
-    def create(cls, world, front, left, right):
+    def create(cls, world: str, front: str, left: str, right: str) -> Self:
         return cls(
             front=AreaIdentifier(world, front),
             left=AreaIdentifier(world, left),
