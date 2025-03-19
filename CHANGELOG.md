@@ -7,14 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.10.x] - 2025-03-??
 
-- **Major** - Added: Featural Hints. Echoes and Cave Story now use a brand new hint system, where hints may refer to various Features of a pickup or of a location. Read the complete changelog for more details.
+- **Major** - Added: Featural Hints. Echoes, Cave Story, and Samus Returns now use a brand new hint system, where hints may refer to various Features of a pickup or of a location. Read the complete changelog for more details.
 - **Major** - Changed: Hints are now placed after pickup placement, rather than during. This should result in more interesting hints in all games.
 - **Major** - Added: Co-op as an additional Multiworld Mode. In Co-op, multiple people can share Worlds together, which means that they will share their inventory. This works for all games that support Multiworld.
 - **Major** - Changed: The trick level "Hypermode" has been renamed to "Ludicrous". This new name is game agnostic and more properly describes the difficulty of this category.
 - Added: Async Races can now be hosted and joined directly from Randovania.
 - Added: Games with hints now share a unified Hints tab in the preset editor window. New settings have been added to disable various kinds of hints.
 - Added: Every game now has a "Pickup Hint Features" tab where you can view which Features apply to which pickups.
-- Added: Cave Story and Echoes now have a "Pickup Location Features" tab where you can view which Features apply to which locations.
+- Added: Cave Story, Echoes, and Samus Returns now have a "Location Location Features" tab where you can view which Features apply to which locations.
 - Added: Location Features can be viewed in the Database Viewer.
 - Added: 3 more joke hints.
 - Added: The Hints Spoiler tab now indicates which location a hint is pointing to.
