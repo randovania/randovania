@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 
 class FusionBasePatchesFactory(BasePatchesFactory[FusionConfiguration]):
-    def apply_static_dock_weakness(
+    def assign_static_dock_weakness(
         self, configuration: FusionConfiguration, game: GameDescription, initial_patches: GamePatches
     ) -> GamePatches:
         get_node = game.region_list.typed_node_by_identifier

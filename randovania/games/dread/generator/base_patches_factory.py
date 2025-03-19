@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 
 
 class DreadBasePatchesFactory(BasePatchesFactory[DreadConfiguration]):
-    def apply_static_dock_weakness(
+    def assign_static_dock_weakness(
         self, configuration: DreadConfiguration, game: GameDescription, initial_patches: GamePatches
     ) -> GamePatches:
         dock_weakness = []

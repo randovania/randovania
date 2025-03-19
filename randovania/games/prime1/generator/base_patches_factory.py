@@ -22,7 +22,7 @@ if TYPE_CHECKING:
 
 
 class PrimeBasePatchesFactory(BasePatchesFactory[PrimeConfiguration]):
-    def apply_static_dock_weakness(
+    def assign_static_dock_weakness(
         self, configuration: PrimeConfiguration, game: GameDescription, initial_patches: GamePatches
     ) -> GamePatches:
         nic = NodeIdentifier.create

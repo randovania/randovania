@@ -66,7 +66,7 @@ WORLDS = [
 
 
 class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
-    def apply_static_dock_weakness(
+    def assign_static_dock_weakness(
         self, configuration: EchoesConfiguration, game: GameDescription, initial_patches: GamePatches
     ) -> GamePatches:
         if not configuration.blue_save_doors:
