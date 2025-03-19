@@ -6,7 +6,7 @@ from randovania.game_connection.connector.remote_connector import RemoteConnecto
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.resource_collection import ResourceCollection
-from randovania.gui.lib.signal import RdvSignal
+from randovania.lib.signal import RdvSignal
 
 if TYPE_CHECKING:
     import uuid

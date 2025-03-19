@@ -54,7 +54,7 @@ class RdvSignalInstance(Generic[P, T]):
         self._slots: list[Slot[P, T]] = []
 
     def __call__(self, *args: P.args, **kwargs: P.kwargs) -> SignalResults[P, T]:
-        self.emit(*args, **kwargs)
+        return self.emit(*args, **kwargs)
 
     def emit(self, *args: P.args, **kwargs: P.kwargs) -> SignalResults[P, T]:
         """
@@ -111,15 +111,6 @@ class RdvSignalInstance(Generic[P, T]):
         slot_ref = self._get_slot(slot)
         self._slots.remove(slot_ref)
 
-    def result(self, slot: Callable[P, T]) -> T:
-        """
-        Returns this slot's return value from the last time the signal was emitted
-        """
-        slot_ref = self._get_slot(slot)
-        if slot_ref not in self._results:
-            raise ValueError(f"{slot} was not called last time {self} was emitted!")
-        return self._results[slot_ref]
-
     def clear(self) -> None:
         """Clears the signal of all connected slots"""
         self._slots = []
@@ -131,7 +122,7 @@ class RdvSignal(Generic[P, T]):
     This emulates the behavior of a PyQt signal
     """
 
-    _map: dict[RdvSignal, weakref.WeakKeyDictionary[Any, RdvSignalInstance]] = {}
+    _map: dict[Self, weakref.WeakKeyDictionary[Any, RdvSignalInstance]] = {}
 
     @overload
     def __get__(self, instance: None, owner: Any) -> Self: ...
@@ -144,7 +135,7 @@ class RdvSignal(Generic[P, T]):
             # we return the RdvSignal itself
             return self
         tmp = self._map.setdefault(self, weakref.WeakKeyDictionary())
-        return tmp.setdefault(instance, RdvSignalInstance[P, T]())
+        return tmp.setdefault(instance, RdvSignalInstance[P, T]())  # type: ignore[arg-type, return-value]
 
     def __set__(self, instance: Any, value: Any) -> Never:
         raise RuntimeError("Cannot reassign an RdvSignal")

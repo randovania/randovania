@@ -1,4 +1,4 @@
-from randovania.gui.lib.signal import RdvSignal
+from randovania.lib.signal import RdvSignal
 
 
 class ExecutorToConnectorSignals:

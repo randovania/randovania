@@ -5,8 +5,8 @@ import typing
 
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.gui.lib.signal import RdvSignal
 from randovania.lib import enum_lib
+from randovania.lib.signal import RdvSignal
 
 if typing.TYPE_CHECKING:
     import uuid
