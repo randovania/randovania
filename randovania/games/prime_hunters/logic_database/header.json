@@ -323,7 +323,68 @@
                 }
             }
         },
-        "events": {},
+        "events": {
+            "Cretaphid1": {
+                "long_name": "Cretaphid v1",
+                "extra": {}
+            },
+            "Cretaphid2": {
+                "long_name": "Cretaphid v2",
+                "extra": {}
+            },
+            "Cretaphid3": {
+                "long_name": "Cretaphid v3",
+                "extra": {}
+            },
+            "Cretaphid4": {
+                "long_name": "Cretaphid v4",
+                "extra": {}
+            },
+            "Slench1": {
+                "long_name": "Slench 1",
+                "extra": {}
+            },
+            "Slench2": {
+                "long_name": "Slench 2",
+                "extra": {}
+            },
+            "Slench3": {
+                "long_name": "Slench 3",
+                "extra": {}
+            },
+            "Slench4": {
+                "long_name": "Slench 4",
+                "extra": {}
+            },
+            "UnlockOubliette": {
+                "long_name": "Unlock Oubliette",
+                "extra": {}
+            },
+            "AlinosHighGroundSpireFight": {
+                "long_name": "Alinos High Ground Spire Fight",
+                "extra": {}
+            },
+            "AlinosElderPassageSpireFight": {
+                "long_name": "Alinos Elder Passage Spire Fight",
+                "extra": {}
+            },
+            "AlinosHighGroundZoomers1": {
+                "long_name": "Alinos High Ground Unlock East Zoomer Door",
+                "extra": {}
+            },
+            "AlinosHighGroundZoomers2": {
+                "long_name": "Alinos High Ground Unlock North Zoomer Door",
+                "extra": {}
+            },
+            "AlinosHighGroundUpperPlatform": {
+                "long_name": "Alinos High Ground Activate Upper Platform",
+                "extra": {}
+            },
+            "AlinosHighGroundLowerPlatform": {
+                "long_name": "Alinos High Ground Activate Lower Platform",
+                "extra": {}
+            }
+        },
         "tricks": {},
         "damage": {},
         "versions": {},
@@ -356,10 +417,230 @@
                 "name": "Door",
                 "extra": {},
                 "items": {
-                    "Normal": {
+                    "Normal Door": {
+                        "extra": {
+                            "door_type": "Normal Door"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Missile Blast Shield": {
+                        "extra": {
+                            "door_type": "Missile"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missile",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        }
+                    },
+                    "Volt Driver Blast Shield": {
+                        "extra": {
+                            "door_type": "VoltDriver"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "VoltDriver",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        }
+                    },
+                    "Battlehammer Blast Shield": {
+                        "extra": {
+                            "door_type": "Battlehammer"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Battlehammer",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        }
+                    },
+                    "Imperialist Blast Shield": {
+                        "extra": {
+                            "door_type": "Imperialist"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Imperialist",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        }
+                    },
+                    "Judicator Blast Shield": {
+                        "extra": {
+                            "door_type": "Judicator"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Judicator",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        }
+                    },
+                    "Magmaul Blast Shield": {
+                        "extra": {
+                            "door_type": "Magmaul"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Magmaul",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        }
+                    },
+                    "Shock Coil Blast Shield": {
+                        "extra": {
+                            "door_type": "ShockCoil"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "ShockCoil",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "dock_rando": null
+            },
+            "Morph Ball": {
+                "name": "Morph Ball Door",
+                "extra": {},
+                "items": {
+                    "Morph Ball Door": {
                         "extra": {},
                         "requirement": {
                             "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": null
+            },
+            "Teleporter": {
+                "name": "Teleporter",
+                "extra": {
+                    "is_teleporter": true,
+                    "ignore_for_hints": true
+                },
+                "items": {
+                    "Two-Way Teleporter": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    },
+                    "One-Way Teleporter": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": []
