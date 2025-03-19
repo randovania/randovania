@@ -27,6 +27,29 @@ HintTargetPrecision = tuple[PickupIndex, HintLocationPrecision, HintItemPrecisio
 
 
 class BasePatchesFactory[Configuration: BaseConfiguration]:
+    def apply_static_configuration_patches(
+        self, configuration: Configuration, game: GameDescription, initial_patches: GamePatches
+    ) -> GamePatches:
+        """
+        Allows games to apply their own static (non-randomized) patches based on the configuration.
+        """
+        return initial_patches
+
+    def create_static_base_patches(
+        self, configuration: Configuration, game: GameDescription, player_index: int
+    ) -> GamePatches:
+        """
+        Creates game patches that are intrinsic to the game's configuration, before any randomization
+        has been applied.
+
+        This can be used by trackers to ensure they have the same information about a generated game
+        that the player would have based on the preset itself, before actually playing the seed.
+        """
+        patches = GamePatches.create_from_game(game, player_index, configuration)
+        patches = self.apply_static_configuration_patches(configuration, game, patches)
+
+        return patches
+
     def create_base_patches(
         self,
         configuration: Configuration,
@@ -37,7 +60,7 @@ class BasePatchesFactory[Configuration: BaseConfiguration]:
         rng_required: bool = True,
     ) -> GamePatches:
         """ """
-        patches = GamePatches.create_from_game(game, player_index, configuration)
+        patches = self.create_static_base_patches(configuration, game, player_index)
 
         # Teleporters
         try:

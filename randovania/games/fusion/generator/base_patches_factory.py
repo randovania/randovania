@@ -15,17 +15,9 @@ if TYPE_CHECKING:
 
 
 class FusionBasePatchesFactory(BasePatchesFactory[FusionConfiguration]):
-    def create_base_patches(
-        self,
-        configuration: FusionConfiguration,
-        rng: Random,
-        game: GameDescription,
-        is_multiworld: bool,
-        player_index: int,
-        rng_required: bool = True,
+    def apply_static_configuration_patches(
+        self, configuration: FusionConfiguration, game: GameDescription, initial_patches: GamePatches
     ) -> GamePatches:
-        parent = super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
-
         get_node = game.region_list.typed_node_by_identifier
 
         dock_weakness: list[tuple[DockNode, DockWeakness]] = []
@@ -48,4 +40,20 @@ class FusionBasePatchesFactory(BasePatchesFactory[FusionConfiguration]):
                                     (get_node(node.default_connection, DockNode), open_transition_door)
                                 )
 
-        return parent.assign_dock_weakness(dock_weakness)
+        return initial_patches.assign_dock_weakness(dock_weakness)
+
+    def create_static_base_patches(
+        self, configuration: FusionConfiguration, game: GameDescription, player_index: int
+    ) -> GamePatches:
+        return super().create_static_base_patches(configuration, game, player_index)
+
+    def create_base_patches(
+        self,
+        configuration: FusionConfiguration,
+        rng: Random,
+        game: GameDescription,
+        is_multiworld: bool,
+        player_index: int,
+        rng_required: bool = True,
+    ) -> GamePatches:
+        return super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.generator.base_patches_factory import BasePatchesFactory
@@ -14,24 +15,15 @@ if TYPE_CHECKING:
     from collections.abc import Iterable
     from random import Random
 
-    from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.node import Node
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
 
 
 class DreadBasePatchesFactory(BasePatchesFactory[DreadConfiguration]):
-    def create_base_patches(
-        self,
-        configuration: DreadConfiguration,
-        rng: Random,
-        game: GameDescription,
-        is_multiworld: bool,
-        player_index: int,
-        rng_required: bool = True,
+    def apply_static_configuration_patches(
+        self, configuration: DreadConfiguration, game: GameDescription, initial_patches: GamePatches
     ) -> GamePatches:
-        parent = super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
-
         dock_weakness = []
         if configuration.hanubia_easier_path_to_itorash:
             nic = NodeIdentifier.create
@@ -44,9 +36,28 @@ class DreadBasePatchesFactory(BasePatchesFactory[DreadConfiguration]):
                 ]
             )
 
-        return parent.assign_dock_weakness(
-            ((game.region_list.node_by_identifier(identifier), target) for identifier, target in dock_weakness)
+        return initial_patches.assign_dock_weakness(
+            (
+                (game.region_list.typed_node_by_identifier(identifier, DockNode), target)
+                for identifier, target in dock_weakness
+            )
         )
+
+    def create_static_base_patches(
+        self, configuration: DreadConfiguration, game: GameDescription, player_index: int
+    ) -> GamePatches:
+        return super().create_static_base_patches(configuration, game, player_index)
+
+    def create_base_patches(
+        self,
+        configuration: DreadConfiguration,
+        rng: Random,
+        game: GameDescription,
+        is_multiworld: bool,
+        player_index: int,
+        rng_required: bool = True,
+    ) -> GamePatches:
+        return super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
 
     def dock_connections_assignment(
         self, configuration: DreadConfiguration, game: GameDescription, rng: Random

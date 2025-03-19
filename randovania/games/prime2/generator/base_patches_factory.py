@@ -66,6 +66,11 @@ WORLDS = [
 
 
 class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
+    def apply_static_configuration_patches(
+        self, configuration: EchoesConfiguration, game: GameDescription, initial_patches: GamePatches
+    ) -> GamePatches:
+        return self.assign_save_door_weaknesses(initial_patches, configuration, game)
+
     def create_base_patches(
         self,
         configuration: EchoesConfiguration,
@@ -75,8 +80,12 @@ class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
         player_index: int,
         rng_required: bool = True,
     ) -> GamePatches:
-        parent = super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
-        return self.assign_save_door_weaknesses(parent, configuration, game)
+        return super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
+
+    def create_static_base_patches(
+        self, configuration: EchoesConfiguration, game: GameDescription, player_index: int
+    ) -> GamePatches:
+        return super().create_static_base_patches(configuration, game, player_index)
 
     def dock_connections_assignment(
         self, configuration: EchoesConfiguration, game: GameDescription, rng: Random
