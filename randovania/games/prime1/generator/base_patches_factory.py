@@ -22,7 +22,7 @@ if TYPE_CHECKING:
 
 
 class PrimeBasePatchesFactory(BasePatchesFactory[PrimeConfiguration]):
-    def apply_static_configuration_patches(
+    def apply_static_dock_weakness(
         self, configuration: PrimeConfiguration, game: GameDescription, initial_patches: GamePatches
     ) -> GamePatches:
         nic = NodeIdentifier.create
@@ -46,22 +46,6 @@ class PrimeBasePatchesFactory(BasePatchesFactory[PrimeConfiguration]):
                             dock_weakness.append((get_node(node.default_connection, DockNode), power_weak))
 
         return initial_patches.assign_dock_weakness(dock_weakness)
-
-    def create_base_patches(
-        self,
-        configuration: PrimeConfiguration,
-        rng: Random,
-        game: GameDescription,
-        is_multiworld: bool,
-        player_index: int,
-        rng_required: bool = True,
-    ) -> GamePatches:
-        return super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
-
-    def create_static_base_patches(
-        self, configuration: PrimeConfiguration, game: GameDescription, player_index: int
-    ) -> GamePatches:
-        return super().create_static_base_patches(configuration, game, player_index)
 
     def dock_connections_assignment(
         self, configuration: PrimeConfiguration, game: GameDescription, rng: Random

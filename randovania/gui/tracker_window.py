@@ -145,11 +145,6 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         )
 
         pool_results = pool_creator.calculate_pool_results(self.game_configuration, game)
-        # patches = (
-        #     GamePatches.create_from_game(game, 0, self.game_configuration)
-        #     .assign_new_pickups((index, PickupTarget(pickup, 0)) for index, pickup in pool_results.assignment.items())
-        #     .assign_extra_starting_pickups(pool_results.starting)
-        # )
         patches = (
             game.game.generator.base_patches_factory.create_static_base_patches(self.game_configuration, game, 0)
             .assign_new_pickups((index, PickupTarget(pickup, 0)) for index, pickup in pool_results.assignment.items())

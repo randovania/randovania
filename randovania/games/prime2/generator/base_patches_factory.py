@@ -66,26 +66,26 @@ WORLDS = [
 
 
 class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
-    def apply_static_configuration_patches(
+    def apply_static_dock_weakness(
         self, configuration: EchoesConfiguration, game: GameDescription, initial_patches: GamePatches
     ) -> GamePatches:
-        return self.assign_save_door_weaknesses(initial_patches, configuration, game)
+        if not configuration.blue_save_doors:
+            return initial_patches
 
-    def create_base_patches(
-        self,
-        configuration: EchoesConfiguration,
-        rng: Random,
-        game: GameDescription,
-        is_multiworld: bool,
-        player_index: int,
-        rng_required: bool = True,
-    ) -> GamePatches:
-        return super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
+        get_node = game.region_list.typed_node_by_identifier
+        power_weak = game.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)")
+        dock_weakness: list[tuple[DockNode, DockWeakness]] = []
 
-    def create_static_base_patches(
-        self, configuration: EchoesConfiguration, game: GameDescription, player_index: int
-    ) -> GamePatches:
-        return super().create_static_base_patches(configuration, game, player_index)
+        if configuration.blue_save_doors:
+            for area in game.region_list.all_areas:
+                if area.extra.get("unlocked_save_station"):
+                    for node in area.nodes:
+                        if isinstance(node, DockNode) and node.dock_type.short_name == "door":
+                            dock_weakness.append((node, power_weak))
+                            # TODO: This is not correct in entrance rando
+                            dock_weakness.append((get_node(node.default_connection, DockNode), power_weak))
+
+        return initial_patches.assign_dock_weakness(dock_weakness)
 
     def dock_connections_assignment(
         self, configuration: EchoesConfiguration, game: GameDescription, rng: Random
@@ -143,24 +143,3 @@ class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
         return {
             "translator_gates": translator_gates,
         }
-
-    def assign_save_door_weaknesses(
-        self, patches: GamePatches, configuration: EchoesConfiguration, game: GameDescription
-    ) -> GamePatches:
-        if not configuration.blue_save_doors:
-            return patches
-
-        get_node = game.region_list.typed_node_by_identifier
-        power_weak = game.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)")
-        dock_weakness: list[tuple[DockNode, DockWeakness]] = []
-
-        if configuration.blue_save_doors:
-            for area in game.region_list.all_areas:
-                if area.extra.get("unlocked_save_station"):
-                    for node in area.nodes:
-                        if isinstance(node, DockNode) and node.dock_type.short_name == "door":
-                            dock_weakness.append((node, power_weak))
-                            # TODO: This is not correct in entrance rando
-                            dock_weakness.append((get_node(node.default_connection, DockNode), power_weak))
-
-        return patches.assign_dock_weakness(dock_weakness)
