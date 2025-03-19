@@ -10,6 +10,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.prime1.exporter.hint_namer import PrimeHintNamer
+from randovania.games.prime1.exporter.scan_tips import SCAN_TIPS
 from randovania.games.prime1.exporter.vanilla_maze_seeds import VANILLA_MAZE_SEEDS
 from randovania.games.prime1.layout.prime_configuration import (
     LayoutCutsceneMode,
@@ -1065,6 +1066,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
             },
             "tweaks": ctwk_config,
             "levelData": level_data,
+            "strg": SCAN_TIPS if not self.configuration.legacy_mode else {},
             "hasSpoiler": self.description.has_spoiler,
             "roomRandoMode": self.configuration.room_rando.value,
             "randEnemyAttributes": (
