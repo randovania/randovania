@@ -152,7 +152,8 @@ async def test_receive_remote_pickups(connector: MSRRemoteConnector, msr_ice_bea
         'MultiworldPickup.OnPickedUp({\\\n{\\\n{\\\nitem_id = "ITEM_WEAPON_ICE_BEAM",\\\nquantity = 1,\\\n},\\\n},\\\n}'
         ',nil,"")\',0,2)'
     )
-    connector.executor.run_lua_code.assert_called_once_with(execute_string)
+    connector.executor.run_lua_code.assert_awaited_once_with(execute_string)
+    connector.executor.run_lua_code.reset_mock()
 
     connector.in_cooldown = False
     connector.received_pickups = 1
@@ -171,7 +172,7 @@ async def test_receive_remote_pickups(connector: MSRRemoteConnector, msr_ice_bea
         'MultiworldPickup.OnPickedUp({\\\n{\\\n{\\\nitem_id = "ITEM_WEAPON_ICE_BEAM",\\\nquantity = 1,\\\n},\\\n},\\\n}'
         ',nil,"s000_surface")\',1,3)'
     )
-    connector.executor.run_lua_code.assert_called_with(execute_string)
+    connector.executor.run_lua_code.assert_awaited_once_with(execute_string)
 
 
 @pytest.mark.parametrize("is_coop", [False, True])
@@ -185,7 +186,7 @@ async def test_receive_remote_pickups_coop_logic(connector: MSRRemoteConnector, 
     connector.inventory_index = 2
     await connector.receive_remote_pickups()
     assert connector.in_cooldown is True
-    connector.game_specific_execute.assert_called_once_with(
+    connector.game_specific_execute.assert_awaited_once_with(
         "Ice Beam", [[{"item_id": "ITEM_WEAPON_ICE_BEAM", "quantity": 1}]], "Dummy 1", "s033_area3b" if is_coop else ""
     )
 
@@ -206,5 +207,5 @@ async def test_new_collected_locations_received(connector: MSRRemoteConnector):
     new_indices = b"locations:1"
     connector.new_collected_locations_received(new_indices)
 
-    connector.logger.warning.assert_not_called
-    collected_mock.assert_has_calls([call(PickupIndex(0)), call(PickupIndex(4)), call(PickupIndex(5))])
+    connector.logger.warning.assert_not_called()
+    assert collected_mock.call_args_list == [call(PickupIndex(0)), call(PickupIndex(4)), call(PickupIndex(5))]

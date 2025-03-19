@@ -3,6 +3,8 @@ from __future__ import annotations
 import enum
 import typing
 
+from randovania.game_description.resources.inventory import Inventory
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.gui.lib.signal import RdvSignal
 from randovania.lib import enum_lib
 
@@ -12,8 +14,6 @@ if typing.TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.region import Region
-    from randovania.game_description.resources.inventory import Inventory
-    from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.network_common.remote_pickup import RemotePickup
 
 
@@ -42,14 +42,9 @@ enum_lib.add_long_name(
 
 class RemoteConnector:
     _layout_uuid: uuid.UUID
-    PlayerLocationChanged: RdvSignal[PlayerLocationEvent]
-    PickupIndexCollected: RdvSignal[PickupIndex]
-    InventoryUpdated: RdvSignal[Inventory]
-
-    def __init__(self) -> None:
-        self.PlayerLocationChanged = RdvSignal()
-        self.PickupIndexCollected = RdvSignal()
-        self.InventoryUpdated = RdvSignal()
+    PlayerLocationChanged = RdvSignal[[PlayerLocationEvent]]()
+    PickupIndexCollected = RdvSignal[[PickupIndex]]()
+    InventoryUpdated = RdvSignal[[Inventory]]()
 
     @property
     def game_enum(self) -> RandovaniaGame:

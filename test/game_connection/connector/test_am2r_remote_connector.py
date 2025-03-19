@@ -161,10 +161,10 @@ async def test_receive_remote_pickups(connector: AM2RRemoteConnector, am2r_varia
 async def test_new_collected_locations_received_wrong_answer(connector: AM2RRemoteConnector):
     connector.logger = MagicMock()
     connector.current_region = Region("Golden Temple", [], {})
-    new_indices = "Foo"
+    new_indices = b"Foo"
     connector.new_collected_locations_received(new_indices)
 
-    connector.logger.warning.assert_called_once_with("Unknown response: %s", new_indices)
+    connector.logger.warning.assert_called_once_with("Unknown response: %s", new_indices.decode("utf-8"))
 
 
 async def test_new_collected_locations_received(connector: AM2RRemoteConnector):
@@ -172,7 +172,7 @@ async def test_new_collected_locations_received(connector: AM2RRemoteConnector):
 
     connector.logger = MagicMock()
     connector.PickupIndexCollected.connect(collected_mock)
-    new_indices = "locations:1,"
+    new_indices = b"locations:1,"
 
     connector.current_region = None
     connector.new_collected_locations_received(new_indices)

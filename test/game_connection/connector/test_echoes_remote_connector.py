@@ -173,7 +173,8 @@ async def test_check_for_collected_location_found(
 
     connector.executor.perform_single_memory_operation.return_value = struct.pack(">II", 10, 10 + capacity)
     connector.execute_remote_patches = AsyncMock()
-    connector.PickupIndexCollected = MagicMock()
+    collected = MagicMock()
+    connector.PickupIndexCollected.connect(collected)
 
     # Run
     assert await connector.check_for_collected_location()
@@ -183,7 +184,7 @@ async def test_check_for_collected_location_found(
         version.powerup_functions, RDSGame.ECHOES, connector.multiworld_magic_item.extra["item_id"], -10
     )
 
-    connector.PickupIndexCollected.emit.assert_called_once_with(PickupIndex(9))
+    collected.assert_called_once_with(PickupIndex(9))
     connector.execute_remote_patches.assert_awaited_once_with([DolRemotePatch([], mock_item_patch.return_value)])
 
 

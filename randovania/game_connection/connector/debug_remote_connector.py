@@ -21,16 +21,14 @@ class DebugRemoteConnector(RemoteConnector):
     _finished: bool = False
     _last_inventory_event: Inventory
     item_collection: ResourceCollection
-    RemotePickupsUpdated: RdvSignal
-    MessagesUpdated: RdvSignal
+    RemotePickupsUpdated = RdvSignal()
+    MessagesUpdated = RdvSignal()
 
     def __init__(self, game: RandovaniaGame, layout_uuid: uuid.UUID):
         super().__init__()
         self._game = game
         self._layout_uuid = layout_uuid
         self._last_inventory_event = Inventory({})
-        self.RemotePickupsUpdated = RdvSignal()
-        self.MessagesUpdated = RdvSignal()
 
         self.messages = []
         self.item_collection = ResourceCollection.with_database(default_database.resource_database_for(game))
