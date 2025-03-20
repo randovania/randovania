@@ -92,15 +92,23 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Omega Cannon)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (63)": {
+                "Pickup (Omega Cannon)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -4.2353515625,
-                        "y": 38.1728515625,
-                        "z": -4.78955078125
+                        "x": -4.24,
+                        "y": 38.17,
+                        "z": -4.79
                     },
                     "description": "",
                     "layers": [
@@ -139,7 +147,7 @@
                     },
                     "valid_starting_location": false,
                     "pickup_index": 63,
-                    "location_category": "minor",
+                    "location_category": "major",
                     "hint_features": [],
                     "connections": {}
                 }
@@ -157,9 +165,9 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 352.00537109375,
-                        "y": 192.00537109375,
-                        "z": 192.0029296875
+                        "x": 24.987256233745953,
+                        "y": -7.724962677350796,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -719,7 +727,22 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (64)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Player Spawn": {
                     "node_type": "generic",
@@ -756,7 +779,15 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Teleporter to Oubliette Gateway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Pickup (64)": {
                     "node_type": "pickup",
@@ -805,7 +836,15 @@
                     "pickup_index": 64,
                     "location_category": "minor",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Teleporter to Oubliette Gateway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         }
