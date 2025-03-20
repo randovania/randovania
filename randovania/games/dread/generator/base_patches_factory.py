@@ -24,6 +24,8 @@ class DreadBasePatchesFactory(BasePatchesFactory[DreadConfiguration]):
     def assign_static_dock_weakness(
         self, configuration: DreadConfiguration, game: GameDescription, initial_patches: GamePatches
     ) -> GamePatches:
+        parent = super().assign_static_dock_weakness(configuration, game, initial_patches)
+
         dock_weakness = []
         if configuration.hanubia_easier_path_to_itorash:
             nic = NodeIdentifier.create
@@ -36,7 +38,7 @@ class DreadBasePatchesFactory(BasePatchesFactory[DreadConfiguration]):
                 ]
             )
 
-        return initial_patches.assign_dock_weakness(
+        return parent.assign_dock_weakness(
             (
                 (game.region_list.typed_node_by_identifier(identifier, DockNode), target)
                 for identifier, target in dock_weakness

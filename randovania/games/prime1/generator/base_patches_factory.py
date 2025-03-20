@@ -25,6 +25,8 @@ class PrimeBasePatchesFactory(BasePatchesFactory[PrimeConfiguration]):
     def assign_static_dock_weakness(
         self, configuration: PrimeConfiguration, game: GameDescription, initial_patches: GamePatches
     ) -> GamePatches:
+        parent = super().assign_static_dock_weakness(configuration, game, initial_patches)
+
         nic = NodeIdentifier.create
         get_node = game.region_list.typed_node_by_identifier
 
@@ -45,7 +47,7 @@ class PrimeBasePatchesFactory(BasePatchesFactory[PrimeConfiguration]):
                             # TODO: This is not correct in entrance rando
                             dock_weakness.append((get_node(node.default_connection, DockNode), power_weak))
 
-        return initial_patches.assign_dock_weakness(dock_weakness)
+        return parent.assign_dock_weakness(dock_weakness)
 
     def dock_connections_assignment(
         self, configuration: PrimeConfiguration, game: GameDescription, rng: Random

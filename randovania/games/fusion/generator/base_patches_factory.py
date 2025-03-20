@@ -16,6 +16,8 @@ class FusionBasePatchesFactory(BasePatchesFactory[FusionConfiguration]):
     def assign_static_dock_weakness(
         self, configuration: FusionConfiguration, game: GameDescription, initial_patches: GamePatches
     ) -> GamePatches:
+        parent = super().assign_static_dock_weakness(configuration, game, initial_patches)
+
         get_node = game.region_list.typed_node_by_identifier
 
         dock_weakness: list[tuple[DockNode, DockWeakness]] = []
@@ -38,4 +40,4 @@ class FusionBasePatchesFactory(BasePatchesFactory[FusionConfiguration]):
                                     (get_node(node.default_connection, DockNode), open_transition_door)
                                 )
 
-        return initial_patches.assign_dock_weakness(dock_weakness)
+        return parent.assign_dock_weakness(dock_weakness)
