@@ -138,7 +138,7 @@ class PresetEchoesBeamConfiguration(PresetTab[EchoesConfiguration], Ui_PresetEch
                 "beam_configuration", dataclasses.replace(beam_configuration, **{beam: new_config})
             )
 
-    def on_preset_changed(self, preset: Preset) -> None:
+    def on_preset_changed(self, preset: Preset[EchoesConfiguration]) -> None:
         beam_configuration = preset.configuration.beam_configuration
 
         for beam in _BEAMS:

@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import dataclasses
 import typing
+from typing import Generic
 
 from PySide6 import QtWidgets
 
-from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.base.base_configuration import ConfigurationT_co
 
 if typing.TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
@@ -14,12 +15,12 @@ if typing.TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-class PresetTab[Configuration: BaseConfiguration](QtWidgets.QMainWindow):
+class PresetTab(QtWidgets.QMainWindow, Generic[ConfigurationT_co]):
     RANDOMIZER_LOGIC_HEADER = "Randomizer Logic"
     GAME_MODIFICATIONS_HEADER = "Game Modifications"
 
     def __init__(
-        self, editor: PresetEditor[Configuration], game_description: GameDescription, window_manager: WindowManager
+        self, editor: PresetEditor[ConfigurationT_co], game_description: GameDescription, window_manager: WindowManager
     ):
         super().__init__()
         self._editor = editor
@@ -61,7 +62,7 @@ class PresetTab[Configuration: BaseConfiguration](QtWidgets.QMainWindow):
         """If this tab starts a new header, returns the name of the header. If it doesn't, returns None."""
         raise NotImplementedError
 
-    def on_preset_changed(self, preset: Preset[Configuration]) -> None:
+    def on_preset_changed(self, preset: Preset[ConfigurationT_co]) -> None:
         raise NotImplementedError
 
     # Persistence helpers
