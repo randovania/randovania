@@ -41,8 +41,8 @@ class AM2RBasePatchesFactory(BasePatchesFactory[AM2RConfiguration]):
         if configuration.blue_save_doors or configuration.force_blue_labs:
 
             def area_filter(area: Area) -> bool:
-                return (configuration.blue_save_doors and area.extra.get("unlocked_save_station")) or (
-                    configuration.force_blue_labs and area.extra.get("force_blue_labs")
+                return (configuration.blue_save_doors and area.extra.get("unlocked_save_station") is True) or (
+                    configuration.force_blue_labs and area.extra.get("force_blue_labs") is True
                 )
 
             def dock_filter(node: DockNode) -> bool:

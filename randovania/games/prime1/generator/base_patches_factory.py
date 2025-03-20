@@ -44,7 +44,7 @@ class PrimeBasePatchesFactory(BasePatchesFactory[PrimeConfiguration]):
                     game,
                     unlocked_weakness=power_weak,
                     target_dock_type=game.dock_weakness_database.find_type("door"),
-                    area_filter=lambda area: area.extra.get("unlocked_save_station"),
+                    area_filter=lambda area: area.extra.get("unlocked_save_station") is True,
                 )
             )
 

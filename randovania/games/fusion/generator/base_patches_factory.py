@@ -32,7 +32,7 @@ class FusionBasePatchesFactory(BasePatchesFactory[FusionConfiguration]):
                     game,
                     unlocked_weakness=open_transition_door,
                     target_dock_type=game.dock_weakness_database.find_type("Door"),
-                    area_filter=lambda area: area.extra.get("unlocked_save_recharge_station"),
+                    area_filter=lambda area: area.extra.get("unlocked_save_recharge_station") is True,
                     dock_filter=lambda node: node.default_dock_weakness != open_transition_door,
                 )
             )

@@ -79,7 +79,7 @@ class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
                     game,
                     unlocked_weakness=game.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)"),
                     target_dock_type=game.dock_weakness_database.find_type("door"),
-                    area_filter=lambda area: area.extra.get("unlocked_save_station"),
+                    area_filter=lambda area: area.extra.get("unlocked_save_station") is True,
                 )
             )
 
