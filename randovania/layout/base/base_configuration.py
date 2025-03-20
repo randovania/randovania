@@ -3,6 +3,8 @@ from __future__ import annotations
 import dataclasses
 from typing import TYPE_CHECKING
 
+from typing_extensions import TypeVar
+
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
@@ -100,3 +102,6 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     def should_hide_generation_log(self) -> bool:
         """Certain settings makes the generation log full of nonsense. It should be hidden in these cases."""
         return self.dock_rando.mode == DockRandoMode.DOCKS
+
+
+ConfigurationT_co = TypeVar("ConfigurationT_co", bound=BaseConfiguration, default=BaseConfiguration, covariant=True)

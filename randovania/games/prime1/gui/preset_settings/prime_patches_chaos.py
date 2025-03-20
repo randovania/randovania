@@ -5,7 +5,7 @@ import typing
 from PySide6 import QtWidgets
 
 from randovania.games.prime1.gui.generated.preset_prime_chaos_ui import Ui_PresetPrimeChaos
-from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
+from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration, RoomRandoMode
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
@@ -25,7 +25,7 @@ _FIELDS = [
 ]
 
 
-class PresetPrimeChaos(PresetTab, Ui_PresetPrimeChaos):
+class PresetPrimeChaos(PresetTab[PrimeConfiguration], Ui_PresetPrimeChaos):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
@@ -79,7 +79,7 @@ class PresetPrimeChaos(PresetTab, Ui_PresetPrimeChaos):
         with self._editor as editor:
             editor.set_configuration_field("room_rando", value)
 
-    def on_preset_changed(self, preset: Preset) -> None:
+    def on_preset_changed(self, preset: Preset[PrimeConfiguration]) -> None:
         config = preset.configuration
         for f in _FIELDS:
             typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))

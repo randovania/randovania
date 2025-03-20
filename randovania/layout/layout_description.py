@@ -14,7 +14,6 @@ import construct
 import randovania
 from randovania.game.game_enum import RandovaniaGame
 from randovania.layout import description_migration, game_patches_serializer
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
@@ -206,7 +205,7 @@ class LayoutDescription:
     def all_presets(self) -> typing.Iterable[Preset]:
         return self.generator_parameters.presets
 
-    def get_preset[Configuration: BaseConfiguration](self, world_index: int) -> Preset[Configuration]:
+    def get_preset(self, world_index: int) -> Preset:
         return self.generator_parameters.get_preset(world_index)
 
     def get_seed_for_world(self, world_index: int) -> int:

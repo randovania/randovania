@@ -11,7 +11,7 @@ from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.game_patches import GamePatches, StartingEquipment
 from randovania.game_description.hint import BaseHint
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_collection import ResourceCollection
@@ -224,7 +224,7 @@ def decode_single(
     starting_location = NodeIdentifier.from_string(game_modifications["starting_location"])
 
     # Starting Equipment
-    starting_equipment: list | ResourceCollection
+    starting_equipment: StartingEquipment
     if "items" in game_modifications["starting_equipment"]:
         starting_equipment = ResourceCollection.from_dict(
             game.resource_database,

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import json
-from typing import TYPE_CHECKING, Self
+from typing import TYPE_CHECKING, Generic, Self
 from uuid import UUID
 
 import aiofiles
@@ -11,7 +11,7 @@ import slugify
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.layout import preset_migration
-from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.base.base_configuration import ConfigurationT_co
 from randovania.layout.preset import Preset
 from randovania.lib import json_lib
 from randovania.lib.construct_lib import CompressedJsonValue, NullTerminatedCompressedJsonValue
@@ -45,11 +45,11 @@ class InvalidPreset(Exception):
         self.original_exception = original_exception
 
 
-class VersionedPreset[Configuration: BaseConfiguration]:
+class VersionedPreset(Generic[ConfigurationT_co]):
     is_included_preset: bool = False
     data: dict | None
     exception: InvalidPreset | None = None
-    _preset: Preset[Configuration] | None = None
+    _preset: Preset[ConfigurationT_co] | None = None
 
     def __init__(self, data: dict | None) -> None:
         self.data = data
@@ -116,7 +116,7 @@ class VersionedPreset[Configuration: BaseConfiguration]:
                 self.exception = InvalidPreset(e)
                 raise self.exception from e
 
-    def get_preset(self) -> Preset[Configuration]:
+    def get_preset(self) -> Preset[ConfigurationT_co]:
         self.ensure_converted()
         if self.exception:
             raise self.exception
@@ -143,7 +143,7 @@ class VersionedPreset[Configuration: BaseConfiguration]:
         return cls(json_lib.read_dict(path))
 
     @classmethod
-    def with_preset(cls, preset: Preset) -> Self:
+    def with_preset(cls, preset: Preset[ConfigurationT_co]) -> Self:
         result = cls(None)
         result._preset = preset
         return result

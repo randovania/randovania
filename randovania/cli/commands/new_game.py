@@ -32,7 +32,7 @@ from randovania.game_description.resources.location_category import LocationCate
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase, default_base_damage_reduction
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
-from randovania.layout.base.base_configuration import BaseConfiguration, StartingLocationList
+from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration, DockRandoMode, DockTypeState
 from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.standard_pickup_state import StandardPickupState
@@ -314,9 +314,7 @@ def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
 
 def load_presets(template: RandovaniaGame) -> dict[str, VersionedPreset]:
     def get(path: str) -> VersionedPreset:
-        v: VersionedPreset[BaseConfiguration] = VersionedPreset.from_file_sync(
-            _GAMES_PATH.joinpath(template.value, "presets", path)
-        )
+        v = VersionedPreset.from_file_sync(_GAMES_PATH.joinpath(template.value, "presets", path))
         v.get_preset()
         return v
 

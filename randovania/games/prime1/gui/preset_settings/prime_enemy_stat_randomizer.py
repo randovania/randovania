@@ -96,7 +96,7 @@ class PresetEnemyAttributeRandomizer(PresetTab[PrimeConfiguration], Ui_EnemyAttr
         for e in widget_arr:
             e.setEnabled(checked)
 
-    def on_preset_changed(self, preset: Preset) -> None:
+    def on_preset_changed(self, preset: Preset[PrimeConfiguration]) -> None:
         config = preset.configuration
         if config.enemy_attributes is not None:
             self.activate_randomizer.setChecked(True)
