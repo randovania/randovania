@@ -27,10 +27,11 @@ class LayerFilteredGameDatabaseView(GameDatabaseViewProxy):
 
 def filter_view_for_configuration(view: GameDatabaseView, configuration: BaseConfiguration) -> GameDatabaseView:
     """
-    Creates a new GameDatabaseView that filters
-    :param view:
-    :param configuration:
-    :return:
+    Creates a new GameDatabaseView that filters what nodes are visible based on what layers are
+    active in the given Configuration.
+    :param view: A view to wrap
+    :param configuration: The configuration to query for active layers.
+    :return: A new view with filters applied
     """
     return LayerFilteredGameDatabaseView(
         view,
