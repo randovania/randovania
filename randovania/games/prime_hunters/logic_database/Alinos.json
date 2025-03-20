@@ -270,7 +270,15 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Stronghold Void B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Stronghold Void B": {
                     "node_type": "dock",
@@ -327,15 +335,30 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Slench 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (0)": {
+                "Pickup (Octolith)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
-                        "y": -0.2119140625,
-                        "z": -6.82373046875
+                        "y": -0.21,
+                        "z": -6.82
                     },
                     "description": "",
                     "layers": [
@@ -375,7 +398,40 @@
                     "pickup_index": 0,
                     "location_category": "major",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Door to Stronghold Void B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Slench 1": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.19,
+                        "y": 0.96,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Slench1",
+                    "connections": {
+                        "Pickup (Octolith)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -422,7 +478,15 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Stronghold Void A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Stronghold Void A": {
                     "node_type": "dock",
@@ -479,14 +543,29 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Cretaphid v3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (1)": {
+                "Pickup (Octolith)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
-                        "y": 0.0009765625,
+                        "y": 0.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -527,7 +606,40 @@
                     "pickup_index": 1,
                     "location_category": "major",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Door to Stronghold Void A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Cretaphid v3": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.16,
+                        "y": -0.43,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Cretaphid3",
+                    "connections": {
+                        "Pickup (Octolith)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -574,7 +686,15 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Alinos Gateway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to High Ground": {
                     "node_type": "dock",
@@ -631,7 +751,22 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Cartograph Artifact)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Inside Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Alinos Gateway": {
                     "node_type": "dock",
@@ -688,15 +823,30 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Inside Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (2)": {
+                "Pickup (Cartograph Artifact)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -12.148193359375,
-                        "y": 3.576416015625,
-                        "z": -0.861083984375
+                        "x": -12.15,
+                        "y": 3.58,
+                        "z": -0.86
                     },
                     "description": "",
                     "layers": [
@@ -736,15 +886,23 @@
                     "pickup_index": 2,
                     "location_category": "major",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Door to High Ground": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (3)": {
+                "Pickup (Energy Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -14.240966796875,
-                        "y": 0.078125,
-                        "z": 5.13330078125
+                        "x": -14.24,
+                        "y": 0.08,
+                        "z": 5.13
                     },
                     "description": "",
                     "layers": [
@@ -785,121 +943,89 @@
                     "pickup_index": 3,
                     "location_category": "minor",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Inside Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door to Echo Hall": {
-                    "node_type": "dock",
+                "Event - Unlock Morph Ball Door": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -4.179443359375,
-                        "y": -1.515625,
-                        "z": -1.6083984375
+                        "x": 0.34,
+                        "y": -5.81,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "entity_id": 17,
-                        "position": {
-                            "x": -4.179443359375,
-                            "y": -1.515625,
-                            "z": -1.6083984375
-                        },
-                        "up_vector": {
-                            "x": 0.0,
-                            "y": 1.0,
-                            "z": 0.0
-                        },
-                        "facing_vector": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 1.0
-                        },
-                        "entity_type_data": {
-                            "node_name": "",
-                            "palette_id": 9,
-                            "door_type": 1,
-                            "connector_id": 255,
-                            "target_layer_id": 0,
-                            "locked": true,
-                            "out_connector_id": 255,
-                            "out_loader_id": 32,
-                            "entity_filename": " ",
-                            "room_name": " "
-                        }
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Alinos",
-                        "area": "Echo Hall",
-                        "node": "Door to Echo Hall"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {}
+                    "event_name": "AlinosEchoHallZoomers",
+                    "connections": {
+                        "Inside Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door to Echo Hall 4": {
-                    "node_type": "dock",
+                "Inside Tunnel": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -17.391357421875,
-                        "y": 3.27734375,
-                        "z": 4.086181640625
+                        "x": 9.426738828156473,
+                        "y": -0.3108786478793144,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "entity_id": 14,
-                        "position": {
-                            "x": -17.391357421875,
-                            "y": 3.27734375,
-                            "z": 4.086181640625
-                        },
-                        "up_vector": {
-                            "x": 0.0,
-                            "y": 1.0,
-                            "z": 0.0
-                        },
-                        "facing_vector": {
-                            "x": 0.999755859375,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "entity_type_data": {
-                            "node_name": "port_rmC0B",
-                            "palette_id": 9,
-                            "door_type": 1,
-                            "connector_id": 255,
-                            "target_layer_id": 0,
-                            "locked": true,
-                            "out_connector_id": 255,
-                            "out_loader_id": 32,
-                            "entity_filename": " ",
-                            "room_name": " "
-                        }
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Alinos",
-                        "area": "Echo Hall",
-                        "node": "Door to Echo Hall"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to High Ground": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosEchoHallZoomers",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Alinos Gateway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Energy Tank)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosEchoHallZoomers",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Unlock Morph Ball Door": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -946,7 +1072,15 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to High Ground": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Thermal Vast": {
                     "node_type": "dock",
@@ -1003,7 +1137,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to High Ground": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to High Ground": {
                     "node_type": "dock",
@@ -1060,7 +1202,22 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Thermal Vast": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1107,7 +1264,15 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Alimbic Gardens": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Alimbic Gardens": {
                     "node_type": "dock",
@@ -1164,7 +1329,22 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Alinos Perch": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Alinos Perch": {
                     "node_type": "dock",
@@ -1221,7 +1401,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Alimbic Gardens": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1268,15 +1456,23 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Alinos Perch (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door to Alinos Perch": {
+                "Door to Alinos Perch (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -9.005615234375,
+                        "x": -9.01,
                         "y": 15.0,
-                        "z": -11.2490234375
+                        "z": -11.25
                     },
                     "description": "",
                     "layers": [
@@ -1317,7 +1513,7 @@
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Alinos Perch",
-                        "node": "Door to Crash Site"
+                        "node": "Door to Crash Site (Upper)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1325,15 +1521,39 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Alinos Perch (Lower)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosCrashSiteForceField",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Deactivate Force Field": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door to Alinos Perch 2": {
+                "Door to Alinos Perch (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 13.994384765625,
+                        "x": 13.99,
                         "y": 0.5,
-                        "z": -6.2890625
+                        "z": -6.29
                     },
                     "description": "",
                     "layers": [
@@ -1374,7 +1594,7 @@
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Alinos Perch",
-                        "node": "Door to Crash Site"
+                        "node": "Door to Crash Site (Lower)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1382,15 +1602,34 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Alinos Perch (Upper)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosCrashSiteForceField",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Cartograph Artifact)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosCrashSiteForceField",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
-                "Pickup (4)": {
+                "Pickup (Cartograph Artifact)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 13.573486328125,
+                        "x": 13.57,
                         "y": 0.5,
-                        "z": -1.370849609375
+                        "z": -1.37
                     },
                     "description": "",
                     "layers": [
@@ -1430,7 +1669,40 @@
                     "pickup_index": 4,
                     "location_category": "major",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Door to Alinos Perch (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Deactivate Force Field": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.71,
+                        "y": 7.13,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "AlinosCrashSiteForceField",
+                    "connections": {
+                        "Door to Alinos Perch (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1722,15 +1994,23 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Morph Ball Door to Processor Core (Entrance)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door to Processor Core": {
+                "Morph Ball Door to Processor Core (Entrance)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -27.0380859375,
-                        "y": 1.92041015625,
-                        "z": 25.99072265625
+                        "x": -27.04,
+                        "y": 1.92,
+                        "z": 25.99
                     },
                     "description": "",
                     "layers": [
@@ -1767,27 +2047,42 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Morph Ball",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Processor Core",
-                        "node": "Door to Piston Cave"
+                        "node": "Morph Ball Door to Piston Cave (Entrance)"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Morph Ball Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (UA Expansion)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door to Processor Core 2": {
+                "Morph Ball Door to Processor Core (Exit)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -39.99658203125,
-                        "y": 23.14208984375,
-                        "z": -11.2509765625
+                        "x": -40.0,
+                        "y": 23.14,
+                        "z": -11.25
                     },
                     "description": "",
                     "layers": [
@@ -1824,27 +2119,35 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Morph Ball",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Processor Core",
-                        "node": "Door to Piston Cave"
+                        "node": "Morph Ball Door to Piston Cave (Exit)"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Morph Ball Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (UA Expansion)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (6)": {
+                "Pickup (UA Expansion)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -39.970947265625,
-                        "y": 17.058349609375,
-                        "z": -26.702880859375
+                        "x": -39.97,
+                        "y": 17.06,
+                        "z": -26.7
                     },
                     "description": "",
                     "layers": [
@@ -1884,12 +2187,27 @@
                     "pickup_index": 6,
                     "location_category": "major",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Morph Ball Door to Processor Core (Entrance)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Morph Ball Door to Processor Core (Exit)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Alinos Gateway": {
-            "default_node": "Player Spawn",
+            "default_node": "Ship",
             "hint_features": [],
             "extra": {
                 "room_id": 27,
@@ -1951,15 +2269,23 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Ship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Player Spawn": {
-                    "node_type": "generic",
+                "Ship": {
+                    "node_type": "teleporter_network",
                     "heal": false,
                     "coordinates": {
-                        "x": 592.010009765625,
-                        "y": 128.009521484375,
-                        "z": 128.001953125
+                        "x": 365.02,
+                        "y": 65.49,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -1988,15 +2314,63 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "is_unlocked": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "network": "Ship",
+                    "requirement_to_activate": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "connections": {
+                        "Door to Echo Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Missile Expansion)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Teleporter to Council Chamber": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosCouncilChamberTeleporter",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Teleporter to Elder Passage": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosElderPassageUnlockTeleporter",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
-                "Pickup (7)": {
+                "Pickup (Missile Expansion)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -62.045654296875,
-                        "y": 8.9091796875,
-                        "z": 30.408203125
+                        "x": 61.1155008115725,
+                        "y": -113.48280926708756,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -2037,15 +2411,23 @@
                     "pickup_index": 7,
                     "location_category": "minor",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Ship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Teleporter to Council Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 14.37890625,
-                        "y": 14.46875,
-                        "z": -11.133544921875
+                        "x": 365.0157457697155,
+                        "y": 137.5652191765958,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -2084,27 +2466,35 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
+                    "dock_type": "Teleporter",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Council Chamber",
                         "node": "Teleporter to Alinos Gateway"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Two-Way Teleporter",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Ship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Teleporter to Elder Passage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 14.37890625,
-                        "y": 14.46875,
-                        "z": 11.133544921875
+                        "x": 369.8204927255755,
+                        "y": -25.796177322643132,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -2143,19 +2533,27 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
+                    "dock_type": "Teleporter",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Elder Passage",
                         "node": "Teleporter to Alinos Gateway"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Two-Way Teleporter",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Ship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -2628,7 +3026,7 @@
                         }
                     }
                 },
-                "Pickup (Binary Subscripture Artifact 1)": {
+                "Pickup (Binary Subscripture Artifact)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -3713,7 +4111,7 @@
                     "valid_starting_location": false,
                     "event_name": "AlinosHighGroundLowerPlatform",
                     "connections": {
-                        "Pickup (Binary Subscripture Artifact 1)": {
+                        "Pickup (Binary Subscripture Artifact)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3732,13 +4130,13 @@
                 "entity_file": "unit1_RM2_Ent.bin"
             },
             "nodes": {
-                "Door to Crash Site": {
+                "Door to Crash Site (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -26.412353515625,
-                        "y": 3.95361328125,
-                        "z": 23.06640625
+                        "x": -26.41,
+                        "y": 3.95,
+                        "z": 23.07
                     },
                     "description": "",
                     "layers": [
@@ -3779,7 +4177,7 @@
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Crash Site",
-                        "node": "Door to Alinos Perch"
+                        "node": "Door to Alinos Perch (Upper)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3787,7 +4185,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Thermal Vast": {
                     "node_type": "dock",
@@ -3844,7 +4250,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Player Spawn": {
                     "node_type": "generic",
@@ -3881,72 +4295,23 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
-                },
-                "Door to Council Chamber": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3.56103515625,
-                        "y": 0.6416015625,
-                        "z": -6.975341796875
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "entity_id": 5,
-                        "position": {
-                            "x": 3.56103515625,
-                            "y": 0.6416015625,
-                            "z": -6.975341796875
-                        },
-                        "up_vector": {
-                            "x": 0.0,
-                            "y": 1.0,
-                            "z": 0.0
-                        },
-                        "facing_vector": {
-                            "x": -0.999755859375,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "entity_type_data": {
-                            "node_name": "",
-                            "palette_id": 9,
-                            "door_type": 0,
-                            "connector_id": 0,
-                            "target_layer_id": 0,
-                            "locked": true,
-                            "out_connector_id": 8,
-                            "out_loader_id": 117,
-                            "entity_filename": "unit1_RM3_Ent.b",
-                            "room_name": "unit1_RM3_Ent.b"
+                    "connections": {
+                        "Force Field 0": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Alinos",
-                        "area": "Council Chamber",
-                        "node": "Door to Alinos Perch"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {}
+                    }
                 },
-                "Pickup (10)": {
+                "Pickup (Missile Expansion)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 35.51025390625,
-                        "y": 20.9765625,
-                        "z": -1.131591796875
+                        "x": 35.51,
+                        "y": 20.98,
+                        "z": -1.13
                     },
                     "description": "",
                     "layers": [
@@ -3987,15 +4352,23 @@
                     "pickup_index": 10,
                     "location_category": "minor",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Force Field 0": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door to Council Chamber 4": {
+                "Door to Council Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 3.56103515625,
-                        "y": 0.6416015625,
-                        "z": -6.975341796875
+                        "x": 3.56,
+                        "y": 0.64,
+                        "z": -6.98
                     },
                     "description": "",
                     "layers": [
@@ -4044,7 +4417,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Force Field 0": {
                     "node_type": "configurable_node",
@@ -4091,15 +4472,37 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Missile Expansion)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door to Crash Site 5": {
+                "Door to Crash Site (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -42.612548828125,
-                        "y": 18.089599609375,
-                        "z": 16.7333984375
+                        "x": -42.61,
+                        "y": 18.09,
+                        "z": 16.73
                     },
                     "description": "",
                     "layers": [
@@ -4140,7 +4543,7 @@
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Crash Site",
-                        "node": "Door to Alinos Perch"
+                        "node": "Door to Alinos Perch (Lower)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4148,7 +4551,204 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3.4941963974913293,
+                        "y": 16.97566078541842,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Crash Site (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "AlinosAlinosPerchEntrancePlatforms",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "AlinosAlinosPerchSecuritySystem",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Thermal Vast": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Council Chamber": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosAlinosPerchGuardianFIght",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Force Field 0": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Defeat Guardian": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Deactivate Security System": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosAlinosPerchForceFieldPlatform",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Entrance Platforms": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Defeat Guardian": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 14.05,
+                        "y": 8.6,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "AlinosAlinosPerchGuardianFIght",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Force Field Platform": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 29.83,
+                        "y": 29.35,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "AlinosAlinosPerchForceFieldPlatform",
+                    "connections": {
+                        "Force Field 0": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Deactivate Security System": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -21.66,
+                        "y": 32.26,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "AlinosAlinosPerchSecuritySystem",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Entrance Platforms": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3.62,
+                        "y": 29.09,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "AlinosAlinosPerchEntrancePlatforms",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -4164,9 +4764,9 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 45.871826171875,
-                        "y": 13.80078125,
-                        "z": -18.155029296875
+                        "x": 31.880352113341054,
+                        "y": -11.482627008209104,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -4195,15 +4795,23 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Alinos Perch": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Alinos Perch": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 3.189697265625,
-                        "y": 0.554443359375,
-                        "z": -6.975341796875
+                        "x": 3.19,
+                        "y": 0.55,
+                        "z": -6.98
                     },
                     "description": "",
                     "layers": [
@@ -4252,7 +4860,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Inside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Processor Core": {
                     "node_type": "dock",
@@ -4309,15 +4925,23 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Upper Level": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (11)": {
+                "Pickup (Energy Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 5.829833984375,
-                        "y": 7.302001953125,
-                        "z": -8.988037109375
+                        "x": 5.83,
+                        "y": 7.3,
+                        "z": -8.99
                     },
                     "description": "",
                     "layers": [
@@ -4358,15 +4982,23 @@
                     "pickup_index": 11,
                     "location_category": "minor",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Force Field 0": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (12)": {
+                "Pickup (Attameter Artifact)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 37.2998046875,
-                        "y": 21.013427734375,
-                        "z": -18.7294921875
+                        "x": 37.3,
+                        "y": 21.01,
+                        "z": -18.73
                     },
                     "description": "",
                     "layers": [
@@ -4406,15 +5038,23 @@
                     "pickup_index": 12,
                     "location_category": "major",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Upper Level": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (13)": {
+                "Pickup (Magmaul)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 24.421630859375,
-                        "y": 5.755126953125,
-                        "z": -10.3544921875
+                        "x": 24.42,
+                        "y": 5.76,
+                        "z": -10.35
                     },
                     "description": "",
                     "layers": [
@@ -4453,9 +5093,17 @@
                     },
                     "valid_starting_location": false,
                     "pickup_index": 13,
-                    "location_category": "minor",
+                    "location_category": "major",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Inside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Force Field 0": {
                     "node_type": "configurable_node",
@@ -4502,15 +5150,30 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Inside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Force Field 1": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": 19.282958984375,
-                        "y": 2.516357421875,
-                        "z": 8.253662109375
+                        "x": 18.968540822043714,
+                        "y": 2.058879125012588,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -4549,7 +5212,22 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Inside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Deactivate Lower Force Fields": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Force Field 2": {
                     "node_type": "configurable_node",
@@ -4596,15 +5274,23 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Inside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Teleporter to Alinos Gateway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 49.560546875,
-                        "y": 13.80078125,
-                        "z": -19.9423828125
+                        "x": 49.56,
+                        "y": 13.8,
+                        "z": -19.94
                     },
                     "description": "",
                     "layers": [
@@ -4643,19 +5329,280 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
+                    "dock_type": "Teleporter",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Alinos Gateway",
                         "node": "Teleporter to Council Chamber"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Two-Way Teleporter",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Upper Level": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Defeat Fire Spawn": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 37.67,
+                        "y": 4.2,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "AlinosCouncilChamberFireSpawnFight",
+                    "connections": {
+                        "Pickup (Magmaul)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Inside Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 30.343231721519945,
+                        "y": 12.957587221746577,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Force Field 0": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Force Field 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Force Field 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Defeat Fire Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Upper Level": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "AlinosCouncilChamberArtifactForceField",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "AlinosCouncilChamberJumpPadForceField",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Unlock Teleporter": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 48.89,
+                        "y": 8.5,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "AlinosCouncilChamberTeleporter",
+                    "connections": {
+                        "Upper Level": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Upper Level": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 48.43001499861502,
+                        "y": 19.186999505816882,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Processor Core": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Attameter Artifact)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosCouncilChamberArtifactForceField",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Teleporter to Alinos Gateway": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosCouncilChamberTeleporter",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Inside Arena": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "AlinosCouncilChamberArtifactForceField",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "AlinosCouncilChamberJumpPadForceField",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Unlock Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Deactivate Artifact Force Field": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Deactivate Artifact Force Field": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 47.66,
+                        "y": 25.69,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "AlinosCouncilChamberArtifactForceField",
+                    "connections": {
+                        "Upper Level": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Deactivate Lower Force Fields": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.3,
+                        "y": -0.5,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "AlinosCouncilChamberJumpPadForceField",
+                    "connections": {
+                        "Force Field 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -4894,7 +5841,15 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Council Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Council Chamber": {
                     "node_type": "dock",
@@ -4951,15 +5906,72 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Teleporter to Stronghold Void A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AlinosArtifact2A",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AlinosArtifact2BS",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AlinosArtifact2C",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Morph Ball Door to Piston Cave (Entrance)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (UA Expansion)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Teleporter to Stronghold Void A": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 4.05908203125,
-                        "y": 4.415771484375,
-                        "z": 1.34130859375
+                        "x": 4.06,
+                        "y": 4.42,
+                        "z": 1.34
                     },
                     "description": "",
                     "layers": [
@@ -4998,27 +6010,35 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
+                    "dock_type": "Teleporter",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Stronghold Void A",
                         "node": "Teleporter to Processor Core"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Two-Way Teleporter",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Council Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door to Piston Cave": {
+                "Morph Ball Door to Piston Cave (Entrance)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 3.0,
-                        "y": -5.996826171875,
-                        "z": 6.00732421875
+                        "y": -6.0,
+                        "z": 6.01
                     },
                     "description": "",
                     "layers": [
@@ -5055,27 +6075,35 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Morph Ball",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Piston Cave",
-                        "node": "Door to Processor Core"
+                        "node": "Morph Ball Door to Processor Core (Entrance)"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Morph Ball Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Council Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door to Piston Cave 3": {
+                "Morph Ball Door to Piston Cave (Exit)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 0.003173828125,
-                        "y": 15.140380859375,
-                        "z": -21.246337890625
+                        "x": 0.0,
+                        "y": 15.14,
+                        "z": -21.25
                     },
                     "description": "",
                     "layers": [
@@ -5112,27 +6140,35 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Morph Ball",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Piston Cave",
-                        "node": "Door to Processor Core"
+                        "node": "Morph Ball Door to Processor Core (Exit)"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Morph Ball Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Council Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (14)": {
+                "Pickup (UA Expansion)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 7.448974609375,
-                        "y": 13.2490234375,
-                        "z": -8.745849609375
+                        "x": 7.45,
+                        "y": 13.25,
+                        "z": -8.75
                     },
                     "description": "",
                     "layers": [
@@ -5173,7 +6209,15 @@
                     "pickup_index": 14,
                     "location_category": "minor",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Door to Council Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -5240,15 +6284,23 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Small Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to High Ground (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 17.8,
-                        "y": 17.34,
-                        "z": 8.16
+                        "x": 16.85937213956109,
+                        "y": 17.19393563999337,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -5297,15 +6349,81 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Teleporter to Stronghold Void B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AlinosArtifact1A",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AlinosArtifact1BS",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AlinosArtifact1C",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Teleporter to Alinos Gateway": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosElderPassageUnlockTeleporter",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Unlock Ship Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Small Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Teleporter to Stronghold Void B": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 22.7255859375,
-                        "y": 17.335693359375,
-                        "z": 0.04833984375
+                        "x": 22.73,
+                        "y": 17.34,
+                        "z": 0.05
                     },
                     "description": "",
                     "layers": [
@@ -5344,27 +6462,35 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
+                    "dock_type": "Teleporter",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Stronghold Void B",
                         "node": "Teleporter to Elder Passage"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Two-Way Teleporter",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to High Ground (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (15)": {
+                "Pickup (Attameter Artifact)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 23.92236328125,
-                        "y": 12.037109375,
-                        "z": -13.091552734375
+                        "x": 23.92,
+                        "y": 12.04,
+                        "z": -13.09
                     },
                     "description": "",
                     "layers": [
@@ -5404,7 +6530,15 @@
                     "pickup_index": 15,
                     "location_category": "major",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Small Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Player Spawn": {
                     "node_type": "generic",
@@ -5441,15 +6575,23 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to High Ground (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Teleporter to Alinos Gateway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 23.944091796875,
-                        "y": 17.335693359375,
-                        "z": 9.141357421875
+                        "x": 23.94,
+                        "y": 17.34,
+                        "z": 9.14
                     },
                     "description": "",
                     "layers": [
@@ -5488,19 +6630,102 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
+                    "dock_type": "Teleporter",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Alinos Gateway",
                         "node": "Teleporter to Elder Passage"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Two-Way Teleporter",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
+                    "connections": {
+                        "Door to High Ground (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Spire Encounter": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 18.99,
+                        "y": 14.53,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "AlinosElderPassageSpireFight",
+                    "connections": {
+                        "Pickup (Attameter Artifact)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Unlock Ship Teleporter": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 22.32,
+                        "y": 15.96,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "AlinosElderPassageUnlockTeleporter",
                     "connections": {}
+                },
+                "Small Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 18.83420688724441,
+                        "y": 15.878824454037822,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to High Ground (Bottom)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosElderPassageSpireFight",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Spire Encounter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -5547,7 +6772,15 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Teleporter to Elder Passage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Teleporter to Elder Passage": {
                     "node_type": "dock",
@@ -5606,7 +6839,22 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Biodefense Chamber B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Biodefense Chamber B": {
                     "node_type": "dock",
@@ -5663,7 +6911,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Teleporter to Elder Passage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -5710,7 +6966,15 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Teleporter to Processor Core": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Teleporter to Processor Core": {
                     "node_type": "dock",
@@ -5769,7 +7033,22 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Biodefense Chamber A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Biodefense Chamber A": {
                     "node_type": "dock",
@@ -5826,7 +7105,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Teleporter to Processor Core": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         }
