@@ -27,6 +27,18 @@ HintTargetPrecision = tuple[PickupIndex, HintLocationPrecision, HintItemPrecisio
 
 
 class BasePatchesFactory[Configuration: BaseConfiguration]:
+    def create_static_base_patches(
+        self, configuration: Configuration, game: GameDescription, player_index: int
+    ) -> GamePatches:
+        """
+        Creates game patches that are intrinsic to the game's configuration, before any randomization
+        has been applied.
+        """
+        patches = GamePatches.create_from_game(game, player_index, configuration)
+        patches = self.assign_static_dock_weakness(configuration, game, patches)
+
+        return patches
+
     def create_base_patches(
         self,
         configuration: Configuration,
@@ -37,7 +49,7 @@ class BasePatchesFactory[Configuration: BaseConfiguration]:
         rng_required: bool = True,
     ) -> GamePatches:
         """ """
-        patches = GamePatches.create_from_game(game, player_index, configuration)
+        patches = self.create_static_base_patches(configuration, game, player_index)
 
         # Teleporters
         try:
@@ -65,6 +77,12 @@ class BasePatchesFactory[Configuration: BaseConfiguration]:
         self.check_item_pool(configuration)
 
         return patches
+
+    def assign_static_dock_weakness(
+        self, configuration: Configuration, game: GameDescription, initial_patches: GamePatches
+    ) -> GamePatches:
+        """Add/Update dock weaknesses that don't depend on RNG."""
+        return initial_patches
 
     def check_item_pool(self, configuration: Configuration) -> None:
         """
