@@ -71,9 +71,6 @@ class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
     ) -> GamePatches:
         parent = super().assign_static_dock_weakness(configuration, game, initial_patches)
 
-        if not configuration.blue_save_doors:
-            return initial_patches
-
         get_node = game.region_list.typed_node_by_identifier
         power_weak = game.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)")
         dock_weakness: list[tuple[DockNode, DockWeakness]] = []
