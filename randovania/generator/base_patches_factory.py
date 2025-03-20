@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -9,10 +10,11 @@ from randovania.generator.pickup_pool import pool_creator
 from randovania.layout.exceptions import InvalidConfiguration
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable
+    from collections.abc import Callable, Iterable, Sequence
     from random import Random
 
-    from randovania.game_description.db.dock_node import DockNode
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.dock import DockType, DockWeakness
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_description import GameDescription
@@ -129,3 +131,35 @@ class BasePatchesFactory[Configuration: BaseConfiguration]:
 
     def create_game_specific(self, configuration: Configuration, game: GameDescription, rng: Random) -> dict:
         return {}
+
+
+def weaknesses_for_unlocked_saves(
+    game: GameDescription,
+    unlocked_weakness: DockWeakness,
+    target_dock_type: DockType,
+    area_filter: Callable[[Area], bool],
+    dock_filter: Callable[[DockNode], bool] = lambda node: True,
+) -> Sequence[tuple[DockNode, DockWeakness]]:
+    """
+    Helper function for the common functionality of ensuring that doors to a save room are always unlocked.
+
+    :param game: The GameDescription
+    :param area_filter: Decides which areas should be unlocked.
+    :param target_dock_type: Only change DockNodes of the given type.
+    :param dock_filter: Decides which dock nodes should be changed.
+    :param unlocked_weakness: The DockWeakness to replace with.
+    :return:
+    """
+
+    get_node = game.region_list.typed_node_by_identifier
+    result = []
+
+    for area in game.region_list.all_areas:
+        if area_filter(area):
+            for node in area.nodes:
+                if isinstance(node, DockNode) and node.dock_type == target_dock_type and dock_filter(node):
+                    result.append((node, unlocked_weakness))
+                    # TODO: This is not correct in entrance rando
+                    result.append((get_node(node.default_connection, DockNode), unlocked_weakness))
+
+    return result

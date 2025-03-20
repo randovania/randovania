@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
-from randovania.generator.base_patches_factory import BasePatchesFactory
+from randovania.generator.base_patches_factory import BasePatchesFactory, weaknesses_for_unlocked_saves
 from randovania.generator.teleporter_distributor import (
     get_dock_connections_assignment_for_teleporter,
     get_teleporter_connections,
@@ -39,13 +39,14 @@ class PrimeBasePatchesFactory(BasePatchesFactory[PrimeConfiguration]):
             )
 
         if configuration.blue_save_doors:
-            for area in game.region_list.all_areas:
-                if area.extra.get("unlocked_save_station"):
-                    for node in area.nodes:
-                        if isinstance(node, DockNode) and node.dock_type.short_name == "door":
-                            dock_weakness.append((node, power_weak))
-                            # TODO: This is not correct in entrance rando
-                            dock_weakness.append((get_node(node.default_connection, DockNode), power_weak))
+            dock_weakness.extend(
+                weaknesses_for_unlocked_saves(
+                    game,
+                    unlocked_weakness=power_weak,
+                    target_dock_type=game.dock_weakness_database.find_type("door"),
+                    area_filter=lambda area: area.extra.get("unlocked_save_station"),
+                )
+            )
 
         return parent.assign_dock_weakness(dock_weakness)
 

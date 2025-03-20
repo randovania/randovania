@@ -9,7 +9,7 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.games.prime2.generator.teleporter_distributor import get_teleporter_connections_echoes
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
-from randovania.generator.base_patches_factory import BasePatchesFactory, MissingRng
+from randovania.generator.base_patches_factory import BasePatchesFactory, MissingRng, weaknesses_for_unlocked_saves
 from randovania.generator.teleporter_distributor import get_dock_connections_assignment_for_teleporter
 
 if TYPE_CHECKING:
@@ -71,18 +71,17 @@ class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
     ) -> GamePatches:
         parent = super().assign_static_dock_weakness(configuration, game, initial_patches)
 
-        get_node = game.region_list.typed_node_by_identifier
-        power_weak = game.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)")
         dock_weakness: list[tuple[DockNode, DockWeakness]] = []
 
         if configuration.blue_save_doors:
-            for area in game.region_list.all_areas:
-                if area.extra.get("unlocked_save_station"):
-                    for node in area.nodes:
-                        if isinstance(node, DockNode) and node.dock_type.short_name == "door":
-                            dock_weakness.append((node, power_weak))
-                            # TODO: This is not correct in entrance rando
-                            dock_weakness.append((get_node(node.default_connection, DockNode), power_weak))
+            dock_weakness.extend(
+                weaknesses_for_unlocked_saves(
+                    game,
+                    unlocked_weakness=game.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)"),
+                    target_dock_type=game.dock_weakness_database.find_type("door"),
+                    area_filter=lambda area: area.extra.get("unlocked_save_station"),
+                )
+            )
 
         return parent.assign_dock_weakness(dock_weakness)
 
