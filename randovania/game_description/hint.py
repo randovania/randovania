@@ -193,9 +193,9 @@ PRECISION_PAIR_UNASSIGNED = PrecisionPair(
 @dataclass(frozen=True)
 class BaseHint(JsonDataclass):
     @classmethod
-    def from_json(cls, json_dict: dict, **extra: typing.Any) -> BaseHint:
+    def from_json(cls, json_dict: dict, **extra: typing.Any) -> Hint:
         hint_type = HintType(json_dict["hint_type"])
-
+        assert hint_type.hint_class is not BaseHint
         return hint_type.hint_class.from_json(json_dict, **extra)
 
     @property

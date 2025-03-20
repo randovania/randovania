@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import json
+import typing
 from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
@@ -695,7 +696,7 @@ def test_generate_patcher_data(
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", rdvgame_filename))
     player_index = 0
-    preset: Preset[EchoesConfiguration] = description.get_preset(player_index)
+    preset = typing.cast("Preset[EchoesConfiguration]", description.get_preset(player_index))
     cosmetic_patches = EchoesCosmeticPatches()
     configuration = dataclasses.replace(preset.configuration, use_new_patcher=use_new_patcher)
     description.generator_parameters.presets[player_index] = dataclasses.replace(preset, configuration=configuration)

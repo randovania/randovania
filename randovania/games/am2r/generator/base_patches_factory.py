@@ -21,16 +21,10 @@ if TYPE_CHECKING:
 
 
 class AM2RBasePatchesFactory(BasePatchesFactory[AM2RConfiguration]):
-    def create_base_patches(
-        self,
-        configuration: AM2RConfiguration,
-        rng: Random,
-        game: GameDescription,
-        is_multiworld: bool,
-        player_index: int,
-        rng_required: bool = True,
+    def assign_static_dock_weakness(
+        self, configuration: AM2RConfiguration, game: GameDescription, initial_patches: GamePatches
     ) -> GamePatches:
-        parent = super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
+        parent = super().assign_static_dock_weakness(configuration, game, initial_patches)
 
         get_node = game.region_list.typed_node_by_identifier
 

@@ -18,7 +18,7 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.lib.construct_lib import is_path_not_equals_to
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Iterator
+    from collections.abc import Callable, Iterable, Iterator
 
     from randovania.game.game_enum import RandovaniaGame
 
@@ -31,7 +31,7 @@ class UnsupportedPermalink(Exception):
     randovania_version: bytes
     games: tuple[RandovaniaGame, ...] | None
 
-    def __init__(self, msg, seed_hash, version, games):
+    def __init__(self, msg: str, seed_hash: bytes | None, version: bytes, games: tuple[RandovaniaGame, ...] | None):
         super().__init__(msg)
         self.seed_hash = seed_hash
         self.randovania_version = version
@@ -60,7 +60,7 @@ def rotate_bytes(data: Iterable[int], rotation: int, per_byte_adjustment: int, i
         rotation = (rotation + per_byte_adjustment) % 256
 
 
-def create_rotator(inverse: bool):
+def create_rotator(inverse: bool) -> Callable:
     return lambda obj, ctx: bytes(rotate_bytes(obj, ctx.header.bytes_rotation, ctx.header.bytes_rotation, inverse))
 
 
@@ -107,7 +107,7 @@ class Permalink:
     seed_hash: bytes | None
     randovania_version: bytes
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if len(self.randovania_version) != 4:
             raise ValueError(f"randovania_version must be 4 bytes long, got {len(self.randovania_version)}")
 
@@ -119,7 +119,7 @@ class Permalink:
         return _CURRENT_SCHEMA_VERSION
 
     @classmethod
-    def _raise_if_different_schema_version(cls, version: int):
+    def _raise_if_different_schema_version(cls, version: int) -> None:
         if version != cls.current_schema_version():
             raise ValueError(
                 f"Given permalink has version {version}, "
@@ -127,11 +127,11 @@ class Permalink:
             )
 
     @classmethod
-    def validate_version(cls, b: bytes):
+    def validate_version(cls, b: bytes) -> None:
         cls._raise_if_different_schema_version(b[0])
 
     @classmethod
-    def current_randovania_version(cls):
+    def current_randovania_version(cls) -> bytes:
         return randovania.GIT_HASH
 
     @classmethod

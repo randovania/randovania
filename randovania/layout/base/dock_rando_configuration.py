@@ -92,7 +92,7 @@ class DockTypeState(BitPackValue, DataclassPostInitTypeCheck):
             },
         )
 
-    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
+    def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
         yield from bitpacking.pack_sorted_array_elements(
             sorted(self.can_change_from),
             sorted(self.possible_change_from),
@@ -103,7 +103,7 @@ class DockTypeState(BitPackValue, DataclassPostInitTypeCheck):
         )
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> DockTypeState:
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata: dict) -> DockTypeState:
         reference: DockTypeState = metadata["reference"]
         ref_change_from = sorted(cls._possible_change_from(reference.game, reference.dock_type_name))
         ref_change_to = sorted(cls._possible_change_to(reference.game, reference.dock_type_name))
@@ -169,10 +169,10 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
             },
         )
 
-    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
+    def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
         reference: DockRandoConfiguration = metadata["reference"]
 
-        yield from self.mode.bit_pack_encode(None)
+        yield from self.mode.bit_pack_encode({})
 
         modified_types = sorted(
             dock_type
@@ -184,10 +184,10 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
             yield from self.types_state[dock_type].bit_pack_encode({"reference": reference.types_state[dock_type]})
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> Self:
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata: dict) -> Self:
         reference: DockRandoConfiguration = metadata["reference"]
 
-        mode = DockRandoMode.bit_pack_unpack(decoder, None)
+        mode = DockRandoMode.bit_pack_unpack(decoder, {})
 
         modified_types = bitpacking.decode_sorted_array_elements(
             decoder, sorted(reference.weakness_database.dock_types)

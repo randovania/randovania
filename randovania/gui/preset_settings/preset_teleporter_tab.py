@@ -9,7 +9,7 @@ from randovania.games.common import elevators
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.node_list_helper import NodeListHelper
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.base.base_configuration import ConfigurationT_co
 from randovania.layout.lib.teleporters import (
     TeleporterList,
     TeleporterShuffleMode,
@@ -26,7 +26,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.preset_editor import PresetEditor
 
 
-class PresetTeleporterTab[Configuration: BaseConfiguration](PresetTab[Configuration], NodeListHelper):
+class PresetTeleporterTab(PresetTab[ConfigurationT_co], NodeListHelper):
     _teleporters_source_for_location: dict[NodeIdentifier, QtWidgets.QCheckBox]
     _teleporters_target_for_region: dict[str, QtWidgets.QCheckBox]
     _teleporters_target_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
@@ -40,7 +40,7 @@ class PresetTeleporterTab[Configuration: BaseConfiguration](PresetTab[Configurat
     teleporters_target_layout: QtWidgets.QGridLayout
 
     def __init__(
-        self, editor: PresetEditor[Configuration], game_description: GameDescription, window_manager: WindowManager
+        self, editor: PresetEditor[ConfigurationT_co], game_description: GameDescription, window_manager: WindowManager
     ):
         super().__init__(editor, game_description, window_manager)
         self.setup_ui()
