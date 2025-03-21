@@ -89,11 +89,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Elun
 
-- Changed: Using Cross Bombs to get past the Fan in Fan Room left to right has been increased from Movement Beginner to Intermediate.
+- Changed: Using Cross Bombs to get past the Fan in Fan Room left to right has been increased from Movement Beginner to Intermediate, and a video has been added to the database.
 
 ##### Ferenia
 
-- Changed: Using Cross Bombs to get past the Fan in Fan Room right to left has been increased from Movement Beginner to Intermediate.
+- Changed: Using Cross Bombs to get past the Fan in Fan Room right to left has been increased from Movement Beginner to Intermediate, and a video has been added to the database.
 
 ### Metroid Prime
 
