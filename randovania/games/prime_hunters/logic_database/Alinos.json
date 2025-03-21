@@ -214,7 +214,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "UnlockOubliette",
+                    "event_name": "OublietteUnlocked",
                     "connections": {
                         "Door to Combat Hall": {
                             "type": "and",
@@ -1750,7 +1750,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Teleporter from High Ground": {
+                        "Portal from High Ground": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1759,7 +1759,7 @@
                         }
                     }
                 },
-                "Teleporter to High Ground": {
+                "Portal to High Ground": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1804,13 +1804,13 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Teleporter",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "High Ground",
-                        "node": "Teleporter to Magma Drop"
+                        "node": "Portal to Magma Drop"
                     },
-                    "default_dock_weakness": "Two-Way Teleporter",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1818,7 +1818,7 @@
                     "ui_custom_name": null,
                     "connections": {}
                 },
-                "Teleporter from High Ground": {
+                "Portal from High Ground": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1863,13 +1863,13 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Teleporter",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "High Ground",
-                        "node": "Teleporter to Magma Drop"
+                        "node": "Portal to Magma Drop"
                     },
-                    "default_dock_weakness": "One-Way Teleporter",
+                    "default_dock_weakness": "No Return Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1940,7 +1940,7 @@
                     "location_category": "minor",
                     "hint_features": [],
                     "connections": {
-                        "Teleporter to High Ground": {
+                        "Portal to High Ground": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2344,20 +2344,20 @@
                                 "items": []
                             }
                         },
-                        "Teleporter to Council Chamber": {
+                        "Portal to Council Chamber": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "AlinosCouncilChamberTeleporter",
+                                "name": "AlinosCouncilChamberPortal",
                                 "amount": 1,
                                 "negate": false
                             }
                         },
-                        "Teleporter to Elder Passage": {
+                        "Portal to Elder Passage": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "AlinosElderPassageUnlockTeleporter",
+                                "name": "AlinosElderPassagePortal",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -2421,7 +2421,7 @@
                         }
                     }
                 },
-                "Teleporter to Council Chamber": {
+                "Portal to Council Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2466,13 +2466,13 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Teleporter",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Council Chamber",
-                        "node": "Teleporter to Alinos Gateway"
+                        "node": "Portal to Alinos Gateway"
                     },
-                    "default_dock_weakness": "Two-Way Teleporter",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2488,7 +2488,7 @@
                         }
                     }
                 },
-                "Teleporter to Elder Passage": {
+                "Portal to Elder Passage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2533,13 +2533,13 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Teleporter",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Elder Passage",
-                        "node": "Teleporter to Alinos Gateway"
+                        "node": "Portal to Alinos Gateway"
                     },
-                    "default_dock_weakness": "Two-Way Teleporter",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3323,7 +3323,7 @@
                         }
                     }
                 },
-                "Teleporter to Magma Drop": {
+                "Portal to Magma Drop": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3368,13 +3368,13 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Teleporter",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Magma Drop",
-                        "node": "Teleporter to High Ground"
+                        "node": "Portal to High Ground"
                     },
-                    "default_dock_weakness": "Two-Way Teleporter",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3382,7 +3382,7 @@
                     "ui_custom_name": null,
                     "connections": {}
                 },
-                "Teleporter from Magma Drop": {
+                "Portal from Magma Drop": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3427,13 +3427,13 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Teleporter",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Magma Drop",
-                        "node": "Teleporter to High Ground"
+                        "node": "Portal to High Ground"
                     },
-                    "default_dock_weakness": "One-Way Teleporter",
+                    "default_dock_weakness": "No Return Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3580,7 +3580,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Teleporter to Magma Drop": {
+                        "Portal to Magma Drop": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4038,7 +4038,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "AlinosElderPassageSpireFight",
+                                "name": "AlinosElderPassageSpire",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -4059,7 +4059,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "AlinosHighGroundSpireFight",
+                    "event_name": "AlinosHighGroundSpire",
                     "connections": {
                         "Upper Level": {
                             "type": "and",
@@ -4613,7 +4613,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "AlinosAlinosPerchGuardianFIght",
+                                "name": "AlinosAlinosPerchGuardian",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -4664,7 +4664,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "AlinosAlinosPerchGuardianFIght",
+                    "event_name": "AlinosAlinosPerchGuardian",
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -5284,7 +5284,7 @@
                         }
                     }
                 },
-                "Teleporter to Alinos Gateway": {
+                "Portal to Alinos Gateway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5329,13 +5329,13 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Teleporter",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Alinos Gateway",
-                        "node": "Teleporter to Council Chamber"
+                        "node": "Portal to Council Chamber"
                     },
-                    "default_dock_weakness": "Two-Way Teleporter",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5365,7 +5365,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "AlinosCouncilChamberFireSpawnFight",
+                    "event_name": "AlinosCouncilChamberFireSpawn",
                     "connections": {
                         "Pickup (Magmaul)": {
                             "type": "and",
@@ -5447,7 +5447,7 @@
                         }
                     }
                 },
-                "Event - Unlock Teleporter": {
+                "Event - Unlock Portal": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -5461,7 +5461,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "AlinosCouncilChamberTeleporter",
+                    "event_name": "AlinosCouncilChamberPortal",
                     "connections": {
                         "Upper Level": {
                             "type": "and",
@@ -5503,11 +5503,11 @@
                                 "negate": false
                             }
                         },
-                        "Teleporter to Alinos Gateway": {
+                        "Portal to Alinos Gateway": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "AlinosCouncilChamberTeleporter",
+                                "name": "AlinosCouncilChamberPortal",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -5538,7 +5538,7 @@
                                 ]
                             }
                         },
-                        "Event - Unlock Teleporter": {
+                        "Event - Unlock Portal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5914,7 +5914,7 @@
                                 "items": []
                             }
                         },
-                        "Teleporter to Stronghold Void A": {
+                        "Portal to Stronghold Void A": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5965,7 +5965,7 @@
                         }
                     }
                 },
-                "Teleporter to Stronghold Void A": {
+                "Portal to Stronghold Void A": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6010,13 +6010,13 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Teleporter",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Stronghold Void A",
-                        "node": "Teleporter to Processor Core"
+                        "node": "Portal to Processor Core"
                     },
-                    "default_dock_weakness": "Two-Way Teleporter",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6350,7 +6350,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Teleporter to Stronghold Void B": {
+                        "Portal to Stronghold Void B": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6392,16 +6392,16 @@
                                 "items": []
                             }
                         },
-                        "Teleporter to Alinos Gateway": {
+                        "Portal to Alinos Gateway": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "AlinosElderPassageUnlockTeleporter",
+                                "name": "AlinosElderPassagePortal",
                                 "amount": 1,
                                 "negate": false
                             }
                         },
-                        "Event - Unlock Ship Teleporter": {
+                        "Event - Unlock Ship Portal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6417,7 +6417,7 @@
                         }
                     }
                 },
-                "Teleporter to Stronghold Void B": {
+                "Portal to Stronghold Void B": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6462,13 +6462,13 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Teleporter",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Stronghold Void B",
-                        "node": "Teleporter to Elder Passage"
+                        "node": "Portal to Elder Passage"
                     },
-                    "default_dock_weakness": "Two-Way Teleporter",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6585,7 +6585,7 @@
                         }
                     }
                 },
-                "Teleporter to Alinos Gateway": {
+                "Portal to Alinos Gateway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6630,13 +6630,13 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Teleporter",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Alinos Gateway",
-                        "node": "Teleporter to Elder Passage"
+                        "node": "Portal to Elder Passage"
                     },
-                    "default_dock_weakness": "Two-Way Teleporter",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6666,7 +6666,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "AlinosElderPassageSpireFight",
+                    "event_name": "AlinosElderPassageSpire",
                     "connections": {
                         "Pickup (Attameter Artifact)": {
                             "type": "and",
@@ -6677,7 +6677,7 @@
                         }
                     }
                 },
-                "Event - Unlock Ship Teleporter": {
+                "Event - Unlock Ship Portal": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -6691,7 +6691,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "AlinosElderPassageUnlockTeleporter",
+                    "event_name": "AlinosElderPassagePortal",
                     "connections": {}
                 },
                 "Small Arena": {
@@ -6713,7 +6713,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "AlinosElderPassageSpireFight",
+                                "name": "AlinosElderPassageSpire",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -6773,7 +6773,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Teleporter to Elder Passage": {
+                        "Portal to Elder Passage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6782,7 +6782,7 @@
                         }
                     }
                 },
-                "Teleporter to Elder Passage": {
+                "Portal to Elder Passage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6831,7 +6831,7 @@
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Elder Passage",
-                        "node": "Teleporter to Stronghold Void B"
+                        "node": "Portal to Stronghold Void B"
                     },
                     "default_dock_weakness": "Not Determined",
                     "exclude_from_dock_rando": false,
@@ -6912,7 +6912,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Teleporter to Elder Passage": {
+                        "Portal to Elder Passage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6967,7 +6967,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Teleporter to Processor Core": {
+                        "Portal to Processor Core": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6976,7 +6976,7 @@
                         }
                     }
                 },
-                "Teleporter to Processor Core": {
+                "Portal to Processor Core": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7025,7 +7025,7 @@
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Processor Core",
-                        "node": "Teleporter to Stronghold Void A"
+                        "node": "Portal to Stronghold Void A"
                     },
                     "default_dock_weakness": "Not Determined",
                     "exclude_from_dock_rando": false,
@@ -7106,7 +7106,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Teleporter to Processor Core": {
+                        "Portal to Processor Core": {
                             "type": "and",
                             "data": {
                                 "comment": null,

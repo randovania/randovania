@@ -45,7 +45,15 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Stronghold Void A": {
                     "node_type": "dock",
@@ -102,15 +110,23 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (45)": {
+                "Pickup (Octolith)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
-                        "y": -0.2119140625,
-                        "z": -6.82373046875
+                        "y": -0.21,
+                        "z": -6.82
                     },
                     "description": "",
                     "layers": [
@@ -150,7 +166,82 @@
                     "pickup_index": 45,
                     "location_category": "major",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Slench 2": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.03,
+                        "y": 0.71,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Slench2",
+                    "connections": {
+                        "Pickup (Octolith)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.29788724218549845,
+                        "y": 1.2460157138239016,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Stronghold Void A": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Slench2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Slench 2": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Judicator",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -197,7 +288,15 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Stronghold Void B": {
                     "node_type": "dock",
@@ -254,14 +353,22 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (46)": {
+                "Pickup (Octolith)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
-                        "y": 0.0009765625,
+                        "y": 0.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -302,7 +409,80 @@
                     "pickup_index": 46,
                     "location_category": "major",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Cretaphid v4": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.1422001471670346,
+                        "y": -0.12518395879323033,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Cretaphid4",
+                    "connections": {
+                        "Pickup (Octolith)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0860927152317881,
+                        "y": -0.4379139072847682,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Stronghold Void B": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Cretaphid4",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Cretaphid v4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -318,9 +498,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 59.49951171875,
-                        "y": 0.029541015625,
-                        "z": -13.45166015625
+                        "x": 59.5,
+                        "y": 0.03,
+                        "z": -13.45
                     },
                     "description": "",
                     "layers": [
@@ -363,21 +543,29 @@
                         "area": "Sanctorus",
                         "node": "Door to Frost Labyrinth"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Imperialist Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Inside Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Sic Transit": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -57.419921875,
-                        "y": 2.78857421875,
-                        "z": 13.564453125
+                        "x": -57.42,
+                        "y": 2.79,
+                        "z": 13.56
                     },
                     "description": "",
                     "layers": [
@@ -420,21 +608,36 @@
                         "area": "Sic Transit",
                         "node": "Door to Frost Labyrinth"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Judicator Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Inside Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Fault Line": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 15.811279296875,
-                        "y": -4.6005859375,
-                        "z": 37.51611328125
+                        "x": 15.81,
+                        "y": -4.6,
+                        "z": 37.52
                     },
                     "description": "",
                     "layers": [
@@ -477,21 +680,29 @@
                         "area": "Fault Line",
                         "node": "Door to Frost Labyrinth"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Imperialist Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Inside Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Player Spawn": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -52.66796875,
-                        "y": 3.453369140625,
-                        "z": 13.59912109375
+                        "x": -46.852264232159044,
+                        "y": 15.285729223062301,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -520,15 +731,23 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Sic Transit": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (47)": {
+                "Pickup (Binary Subscripture Artifact)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -9.53955078125,
-                        "y": -0.40625,
-                        "z": 3.166748046875
+                        "x": -9.54,
+                        "y": -0.41,
+                        "z": 3.17
                     },
                     "description": "",
                     "layers": [
@@ -568,15 +787,23 @@
                     "pickup_index": 47,
                     "location_category": "major",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Inside Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (48)": {
+                "Pickup (Energy Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 38.525390625,
-                        "y": 0.031005859375,
-                        "z": 6.42333984375
+                        "x": 38.53,
+                        "y": 0.03,
+                        "z": 6.42
                     },
                     "description": "",
                     "layers": [
@@ -617,64 +844,67 @@
                     "pickup_index": 48,
                     "location_category": "minor",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Inside Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door to Frost Labyrinth": {
-                    "node_type": "dock",
+                "Inside Tunnel": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -19.94384765625,
-                        "y": 0.029541015625,
-                        "z": -2.983642578125
+                        "x": 2.7670495143155733,
+                        "y": 8.326011393360318,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "entity_id": 76,
-                        "position": {
-                            "x": -19.94384765625,
-                            "y": 0.029541015625,
-                            "z": -2.983642578125
-                        },
-                        "up_vector": {
-                            "x": 0.0,
-                            "y": 1.0,
-                            "z": 0.0
-                        },
-                        "facing_vector": {
-                            "x": 0.166015625,
-                            "y": 0.0,
-                            "z": 0.986083984375
-                        },
-                        "entity_type_data": {
-                            "node_name": "port_rmC0b",
-                            "palette_id": 9,
-                            "door_type": 1,
-                            "connector_id": 255,
-                            "target_layer_id": 1,
-                            "locked": true,
-                            "out_connector_id": 255,
-                            "out_loader_id": 32,
-                            "entity_filename": " ",
-                            "room_name": " "
-                        }
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Arcterra",
-                        "area": "Frost Labyrinth",
-                        "node": "Door to Frost Labyrinth"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Sanctorus": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Sic Transit": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Fault Line": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Binary Subscripture Artifact)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -721,7 +951,15 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Fault Line": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Subterranean": {
                     "node_type": "dock",
@@ -778,15 +1016,23 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Fault Line": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Fault Line": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -56.748779296875,
-                        "y": 0.0,
-                        "z": -22.4931640625
+                        "x": 1268.2272263618363,
+                        "y": -43.28510038990798,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -835,15 +1081,37 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Subterranean": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (UA Expansion)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (49)": {
+                "Pickup (UA Expansion)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -47.447265625,
-                        "y": -4.9931640625,
-                        "z": -22.654541015625
+                        "x": 101.86,
+                        "y": -246.76,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -884,25 +1152,33 @@
                     "pickup_index": 49,
                     "location_category": "minor",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Door to Fault Line": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Arcterra Gateway": {
-            "default_node": "Player Spawn",
+            "default_node": "Ship",
             "hint_features": [],
             "extra": {
                 "room_id": 77,
                 "entity_file": "unit4_Land_Ent.bin"
             },
             "nodes": {
-                "Player Spawn": {
-                    "node_type": "generic",
+                "Ship": {
+                    "node_type": "teleporter_network",
                     "heal": false,
                     "coordinates": {
-                        "x": -0.607666015625,
-                        "y": 35.5263671875,
-                        "z": 1.462158203125
+                        "x": -0.61,
+                        "y": 35.53,
+                        "z": 1.46
                     },
                     "description": "",
                     "layers": [
@@ -931,7 +1207,48 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "is_unlocked": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "network": "Ship",
+                    "requirement_to_activate": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "connections": {
+                        "Door to Sic Transit": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Portal to Ice Hive": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraIceHivePortal",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Portal to Fault Line": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraFaultLinePortal",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Door to Sic Transit": {
                     "node_type": "dock",
@@ -988,15 +1305,23 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Ship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Teleporter to Ice Hive": {
+                "Portal to Ice Hive": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -4.44189453125,
-                        "y": 31.87109375,
-                        "z": -5.018798828125
+                        "x": -4.44,
+                        "y": 31.87,
+                        "z": -5.02
                     },
                     "description": "",
                     "layers": [
@@ -1035,27 +1360,35 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Arcterra",
                         "area": "Ice Hive",
-                        "node": "Teleporter to Arcterra Gateway"
+                        "node": "Portal to Arcterra Gateway"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Ship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Teleporter to Fault Line": {
+                "Portal to Fault Line": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 5.830322265625,
-                        "y": 31.87109375,
-                        "z": 5.312744140625
+                        "x": 5.83,
+                        "y": 31.87,
+                        "z": 5.31
                     },
                     "description": "",
                     "layers": [
@@ -1094,19 +1427,27 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Arcterra",
                         "area": "Fault Line",
-                        "node": "Teleporter to Arcterra Gateway"
+                        "node": "Portal to Arcterra Gateway"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Ship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1173,15 +1514,37 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Force Field 0": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "War Wasp Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Teleporter to Stronghold Void A": {
+                "Portal to Stronghold Void A": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -14.984619140625,
-                        "y": 30.419921875,
-                        "z": -21.7490234375
+                        "x": -14.98,
+                        "y": 30.42,
+                        "z": -21.75
                     },
                     "description": "",
                     "layers": [
@@ -1220,27 +1583,35 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Arcterra",
                         "area": "Stronghold Void A",
-                        "node": "Teleporter to Ice Hive"
+                        "node": "Portal to Ice Hive"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "On Top of Ice Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (50)": {
+                "Pickup (Cartograph Artifact)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -16.976318359375,
-                        "y": 26.738525390625,
-                        "z": -31.666015625
+                        "x": -16.98,
+                        "y": 26.74,
+                        "z": -31.67
                     },
                     "description": "",
                     "layers": [
@@ -1280,15 +1651,25 @@
                     "pickup_index": 50,
                     "location_category": "major",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Force Field 0": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraIceHiveArifactForceField",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Player Spawn": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -0.16552734375,
-                        "y": 26.857421875,
-                        "z": 15.560791015625
+                        "x": -0.0387257000402883,
+                        "y": 22.801085294589797,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -1317,7 +1698,15 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Sic Transit": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Force Field 0": {
                     "node_type": "configurable_node",
@@ -1364,7 +1753,38 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Sic Transit": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Missile Expansion)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Portal to Arcterra Gateway": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraIceHivePortal",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Unlock Ship Portal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Force Field 1": {
                     "node_type": "configurable_node",
@@ -1411,15 +1831,30 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "On Top of Ice Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Inside Judicator Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Force Field 2": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": -5.322021484375,
-                        "y": 32.861083984375,
-                        "z": -30.161865234375
+                        "x": -5.32,
+                        "y": 32.86,
+                        "z": -30.16
                     },
                     "description": "",
                     "layers": [
@@ -1458,15 +1893,23 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Inside Alcove": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (51)": {
+                "Pickup (Missile Expansion)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 16.449951171875,
-                        "y": 38.501708984375,
-                        "z": -14.47607421875
+                        "x": 16.45,
+                        "y": 38.5,
+                        "z": -14.48
                     },
                     "description": "",
                     "layers": [
@@ -1507,15 +1950,23 @@
                     "pickup_index": 51,
                     "location_category": "minor",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Force Field 0": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (52)": {
+                "Pickup (UA Expansion - War Wasps)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -14.024658203125,
-                        "y": 19.939453125,
-                        "z": -0.005126953125
+                        "x": -14.02,
+                        "y": 19.94,
+                        "z": -0.01
                     },
                     "description": "",
                     "layers": [
@@ -1556,7 +2007,15 @@
                     "pickup_index": 52,
                     "location_category": "minor",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Force Field 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Force Field 3": {
                     "node_type": "configurable_node",
@@ -1603,15 +2062,30 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (UA Expansion - War Wasps)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "War Wasp Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (53)": {
+                "Pickup (Judicator)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -6.83203125,
-                        "y": 26.857421875,
-                        "z": 9.05810546875
+                        "x": -6.83,
+                        "y": 26.86,
+                        "z": 9.06
                     },
                     "description": "",
                     "layers": [
@@ -1650,17 +2124,25 @@
                     },
                     "valid_starting_location": false,
                     "pickup_index": 53,
-                    "location_category": "minor",
+                    "location_category": "major",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Inside Judicator Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Teleporter to Arcterra Gateway": {
+                "Portal to Arcterra Gateway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -11.10595703125,
-                        "y": 26.87841796875,
-                        "z": -12.2939453125
+                        "x": -11.11,
+                        "y": 26.88,
+                        "z": -12.29
                     },
                     "description": "",
                     "layers": [
@@ -1699,27 +2181,35 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Arcterra",
                         "area": "Arcterra Gateway",
-                        "node": "Teleporter to Ice Hive"
+                        "node": "Portal to Ice Hive"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Force Field 0": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (54)": {
+                "Pickup (UA Expansion - Alcove)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -2.535400390625,
-                        "y": 31.412109375,
-                        "z": -33.565673828125
+                        "x": -6.565487957740174,
+                        "y": 37.076903035186675,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -1760,7 +2250,356 @@
                     "pickup_index": 54,
                     "location_category": "minor",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Inside Alcove": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Unlock Ship Portal": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8.840248455546602,
+                        "y": 30.462138956039034,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ArcterraIceHivePortal",
+                    "connections": {
+                        "Force Field 0": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Disable Artifact Force Field": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12.91,
+                        "y": 35.13,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ArcterraIceHiveArifactForceField",
+                    "connections": {
+                        "Inside Alcove": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "War Wasp Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7.223971259736771,
+                        "y": 23.099098397349806,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Sic Transit": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraIceHiveWarWasps",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Force Field 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Defeat Barbed War Wasps": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Inside Judicator Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Defeat Barbed War Wasps": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5.88,
+                        "y": 20.46,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ArcterraIceHiveWarWasps",
+                    "connections": {
+                        "War Wasp Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Inside Alcove": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -16.44273748768914,
+                        "y": 41.14752708389292,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Cartograph Artifact)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraIceHiveArifactForceField",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Force Field 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (UA Expansion - Alcove)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Disable Artifact Force Field": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "On Top of Ice Bridge": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.2887245948607742,
+                        "y": 36.388488674008414,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Portal to Stronghold Void A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ArcterraArtifact1A",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ArcterraArtifact1BS",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ArcterraArtifact1C",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Force Field 0": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Force Field 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Force Field 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Inside Judicator Room": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3.8804516966603977,
+                        "y": 29.47441400304414,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Force Field 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Judicator)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Force Field 11": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Force Field 11": {
+                    "node_type": "configurable_node",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6.604248046875,
+                        "y": 28.39794921875,
+                        "z": -35.998779296875
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 72,
+                        "position": {
+                            "x": 6.604248046875,
+                            "y": 28.39794921875,
+                            "z": -35.998779296875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.999755859375,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entity_type_data": {
+                            "type": 5,
+                            "width": {
+                                "x": 103424.0,
+                                "y": 109920.0,
+                                "z": 0.0
+                            },
+                            "height": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            }
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "War Wasp Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Inside Judicator Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1772,13 +2611,13 @@
                 "entity_file": "Unit4_RM2_Ent.bin"
             },
             "nodes": {
-                "Pickup (55)": {
+                "Pickup (Cartograph Artifact)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 41.689697265625,
+                        "x": 41.69,
                         "y": 0.0,
-                        "z": -1.554931640625
+                        "z": -1.55
                     },
                     "description": "",
                     "layers": [
@@ -1818,7 +2657,15 @@
                     "pickup_index": 55,
                     "location_category": "major",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Basement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Drip Moat": {
                     "node_type": "dock",
@@ -1875,7 +2722,22 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Elevator": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Player Spawn": {
                     "node_type": "generic",
@@ -1912,15 +2774,23 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Drip Moat": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (56)": {
+                "Pickup (Missile Expansion)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 25.970703125,
-                        "y": 0.125732421875,
-                        "z": 3.485107421875
+                        "x": 25.97,
+                        "y": 0.13,
+                        "z": 3.49
                     },
                     "description": "",
                     "layers": [
@@ -1961,7 +2831,188 @@
                     "pickup_index": 56,
                     "location_category": "minor",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Basement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Elevator": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 33.83,
+                        "y": 10.63,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Drip Moat": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraSubterraneanGuardians",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Basement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraSubterraneanImperialistLocks",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Imperialist Locks": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Imperialist",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Guardians": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraSubterraneanShieldKey",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Basement": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 33.72335251929605,
+                        "y": 3.998391797392099,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Missile Expansion)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Elevator": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Shield Key": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Shield Key": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 33.69,
+                        "y": 0.3,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ArcterraSubterraneanShieldKey",
+                    "connections": {
+                        "Pickup (Cartograph Artifact)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Basement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Imperialist Locks": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.14,
+                        "y": 18.4,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ArcterraSubterraneanImperialistLocks",
+                    "connections": {
+                        "Elevator": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Guardians": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 39.93,
+                        "y": 11.11,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ArcterraSubterraneanGuardians",
+                    "connections": {
+                        "Elevator": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -2028,15 +3079,23 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Fault Line": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 19.454833984375,
-                        "y": 0.090087890625,
-                        "z": 15.862060546875
+                        "x": 19.45,
+                        "y": 0.09,
+                        "z": 15.86
                     },
                     "description": "",
                     "layers": [
@@ -2079,21 +3138,29 @@
                         "area": "Fault Line",
                         "node": "Door to Sic Transit"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Magmaul Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Frost Labyrinth": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 23.249267578125,
-                        "y": 7.3896484375,
-                        "z": -26.301513671875
+                        "x": 23.25,
+                        "y": 7.39,
+                        "z": -26.3
                     },
                     "description": "",
                     "layers": [
@@ -2136,13 +3203,21 @@
                         "area": "Frost Labyrinth",
                         "node": "Door to Sic Transit"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Judicator Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Arcterra Gateway": {
                     "node_type": "dock",
@@ -2199,15 +3274,23 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door to Sic Transit": {
+                "Door to Inner Room (Outside)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -3.58984375,
-                        "y": -0.004638671875,
-                        "z": -0.0908203125
+                        "x": -3.59,
+                        "y": 0.0,
+                        "z": -0.09
                     },
                     "description": "",
                     "layers": [
@@ -2248,7 +3331,7 @@
                     "default_connection": {
                         "region": "Arcterra",
                         "area": "Sic Transit",
-                        "node": "Door to Sic Transit"
+                        "node": "Door to Inner Room (Inside)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2258,13 +3341,13 @@
                     "ui_custom_name": null,
                     "connections": {}
                 },
-                "Pickup (57)": {
+                "Pickup (Energy Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 14.00732421875,
-                        "y": 8.243408203125,
-                        "z": 0.08154296875
+                        "x": 14.01,
+                        "y": 8.24,
+                        "z": 0.08
                     },
                     "description": "",
                     "layers": [
@@ -2305,14 +3388,22 @@
                     "pickup_index": 57,
                     "location_category": "minor",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Inner Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (58)": {
+                "Pickup (Attameter Artifact)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 5.122314453125,
-                        "y": 0.427001953125,
+                        "x": 5.12,
+                        "y": 0.43,
                         "z": 0.0
                     },
                     "description": "",
@@ -2353,22 +3444,30 @@
                     "pickup_index": 58,
                     "location_category": "major",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Inner Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door to Sic Transit 6": {
+                "Door to Inner Room (Inside)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -3.58984375,
-                        "y": -0.004638671875,
-                        "z": -0.0908203125
+                        "x": -3.62,
+                        "y": -2.04,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
                     "extra": {
-                        "entity_id": 11,
+                        "entity_id": 24,
                         "position": {
                             "x": -3.58984375,
                             "y": -0.004638671875,
@@ -2389,7 +3488,7 @@
                             "palette_id": 9,
                             "door_type": 0,
                             "connector_id": 255,
-                            "target_layer_id": 0,
+                            "target_layer_id": 1,
                             "locked": true,
                             "out_connector_id": 255,
                             "out_loader_id": 32,
@@ -2402,7 +3501,7 @@
                     "default_connection": {
                         "region": "Arcterra",
                         "area": "Sic Transit",
-                        "node": "Door to Sic Transit"
+                        "node": "Door to Inner Room (Outside)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2410,7 +3509,198 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Inner Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2.4203928652013182,
+                        "y": 5.087551563254521,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Ice Hive": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraSicTransitNoxus",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Fault Line": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraSicTransitNoxus",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Frost Labyrinth": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraSicTransitNoxus",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Arcterra Gateway": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraSicTransitNoxus",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Inner Room (Outside)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ArcterraSicTransitInnerDoor",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ArcterraSicTransitNoxus",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Noxus Defeated": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Inner Door Unlocked": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraSicTransitNoxus",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Noxus Defeated": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.8065242135761608,
+                        "y": 13.57031671542293,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ArcterraSicTransitNoxus",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Inner Door Unlocked": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9.94,
+                        "y": 12.74,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ArcterraSicTransitInnerDoor",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Inner Room": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7.166755592059875,
+                        "y": -5.494713749383813,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Attameter Artifact)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Inner Room (Inside)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -2477,7 +3767,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Player Spawn": {
                     "node_type": "generic",
@@ -2514,14 +3812,22 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (59)": {
+                "Pickup (Binary Subscripture Artifact)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 24.79736328125,
-                        "y": 2.9443359375,
+                        "x": 24.8,
+                        "y": 2.94,
                         "z": 0.0
                     },
                     "description": "",
@@ -2562,15 +3868,23 @@
                     "pickup_index": 59,
                     "location_category": "major",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (60)": {
+                "Pickup (UA Expansion)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 4.853271484375,
-                        "y": 9.615234375,
-                        "z": -4.284912109375
+                        "x": 4.85,
+                        "y": 9.62,
+                        "z": -4.28
                     },
                     "description": "",
                     "layers": [
@@ -2611,7 +3925,96 @@
                     "pickup_index": 60,
                     "location_category": "minor",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7.596457823135118,
+                        "y": 1.9172172855155445,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Frost Labyrinth": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraSanctorusGuardians",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Binary Subscripture Artifact)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Imperialist",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (UA Expansion)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Guardians Defeated": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Guardians Defeated": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13.88,
+                        "y": 7.3,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ArcterraSanctorusGuardians",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -2678,15 +4081,32 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Arctic Spawn Arena": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraFaultLineEntranceForceField",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Door to Frost Labyrinth": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 8.9990234375,
-                        "y": 0.089599609375,
-                        "z": -9.0849609375
+                        "x": 9.0,
+                        "y": 0.09,
+                        "z": -9.08
                     },
                     "description": "",
                     "layers": [
@@ -2729,21 +4149,29 @@
                         "area": "Frost Labyrinth",
                         "node": "Door to Fault Line"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Imperialist Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Arctic Spawn Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (61)": {
+                "Pickup (Imperialist)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 5.791015625,
-                        "y": 0.837158203125,
-                        "z": -6.158447265625
+                        "x": 7.208307660205563,
+                        "y": -10.273332137877091,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -2782,17 +4210,25 @@
                     },
                     "valid_starting_location": false,
                     "pickup_index": 61,
-                    "location_category": "minor",
+                    "location_category": "major",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Arctic Spawn Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (62)": {
+                "Pickup (Attameter Artifact)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -49.0869140625,
-                        "y": 1.238525390625,
-                        "z": 2.371337890625
+                        "x": -49.09,
+                        "y": 1.24,
+                        "z": 2.37
                     },
                     "description": "",
                     "layers": [
@@ -2832,7 +4268,15 @@
                     "pickup_index": 62,
                     "location_category": "major",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Arctic Spawn Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Drip Moat": {
                     "node_type": "dock",
@@ -2889,15 +4333,23 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "North Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Teleporter to Stronghold Void B": {
+                "Portal to Stronghold Void B": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -58.685791015625,
+                        "x": -58.69,
                         "y": 14.5,
-                        "z": -11.09228515625
+                        "z": -11.09
                     },
                     "description": "",
                     "layers": [
@@ -2936,27 +4388,35 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Arcterra",
                         "area": "Stronghold Void B",
-                        "node": "Teleporter to Fault Line"
+                        "node": "Portal to Fault Line"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "South Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Teleporter to Arcterra Gateway": {
+                "Portal to Arcterra Gateway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 6.345703125,
-                        "y": 11.6484375,
-                        "z": -10.521484375
+                        "x": 6.35,
+                        "y": 11.65,
+                        "z": -10.52
                     },
                     "description": "",
                     "layers": [
@@ -2995,19 +4455,27 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Arcterra",
                         "area": "Arcterra Gateway",
-                        "node": "Teleporter to Fault Line"
+                        "node": "Portal to Fault Line"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "North Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Player Spawn": {
                     "node_type": "generic",
@@ -3044,7 +4512,489 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Sic Transit": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Arctic Spawn Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -22.83,
+                        "y": -10.76,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Sic Transit": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ArcterraFaultLineEntranceForceField",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ArcterraFaultLineArcticSpawn",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Frost Labyrinth": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Attameter Artifact)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ArcterraFaultLineArcticSpawn",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ArcterraFaultLineArtifactForceField",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ArcterraFaultLineElectricity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Upper Level": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraFaultLinePlatform",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Defeat Arctic Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Activate Platform": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Imperialist",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Upper Level": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -18.67,
+                        "y": 26.01,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Arctic Spawn Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "South Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "North Side": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraFaultLineUpperForceField",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Disable Large Force Field": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Imperialist",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Defeat Arctic Spawn": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3.56,
+                        "y": -16.64,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ArcterraFaultLineArcticSpawn",
+                    "connections": {
+                        "Pickup (Imperialist)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Arctic Spawn Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Activate Platform": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -32.83648883287797,
+                        "y": 3.1314938068415508,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ArcterraFaultLinePlatform",
+                    "connections": {
+                        "Arctic Spawn Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Unlock Ship Portal": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7.335494031747068,
+                        "y": 20.026812104954107,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ArcterraFaultLinePortal",
+                    "connections": {
+                        "North Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Disable Gun Turret CPU": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -68.97861448129657,
+                        "y": 29.148005171085984,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ArcterraFaultLineElectricity",
+                    "connections": {
+                        "South Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "South Side": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -52.77404640888354,
+                        "y": 28.46933691032465,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Portal to Stronghold Void B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ArcterraArtifact2A",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ArcterraArtifact2BS",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ArcterraArtifact2C",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Upper Level": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraFaultLinePillar",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Disable Gun Turret CPU": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Disable Artifact Force Field": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Knock Down Pillar": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Missile",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Disable Artifact Force Field": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -52.43,
+                        "y": 40.26,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ArcterraFaultLineUpperForceField",
+                    "connections": {
+                        "South Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Knock Down Pillar": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -31.94,
+                        "y": 34.25,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ArcterraFaultLinePillar",
+                    "connections": {
+                        "South Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "North Side": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5.862494323360565,
+                        "y": 35.09806332336734,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Drip Moat": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Portal to Arcterra Gateway": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraFaultLinePortal",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Upper Level": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArcterraFaultLineUpperForceField",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Unlock Ship Portal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Disable Large Force Field": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -16.28,
+                        "y": 45.91,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ArcterraFaultLineUpperForceField",
+                    "connections": {
+                        "Upper Level": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -3091,7 +5041,15 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Portal to Ice Hive": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Biodefense Chamber A": {
                     "node_type": "dock",
@@ -3148,15 +5106,23 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Portal to Ice Hive": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Teleporter to Ice Hive": {
+                "Portal to Ice Hive": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 0.37109375,
-                        "y": 0.222412109375,
-                        "z": 65.701904296875
+                        "x": 0.37,
+                        "y": 0.22,
+                        "z": 65.7
                     },
                     "description": "",
                     "layers": [
@@ -3195,19 +5161,34 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Arcterra",
                         "area": "Ice Hive",
-                        "node": "Teleporter to Stronghold Void A"
+                        "node": "Portal to Stronghold Void A"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Biodefense Chamber A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -3254,15 +5235,23 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Portal to Fault Line": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Teleporter to Fault Line": {
+                "Portal to Fault Line": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 0.37109375,
-                        "y": 0.222412109375,
-                        "z": 65.701904296875
+                        "x": 0.37,
+                        "y": 0.22,
+                        "z": 65.7
                     },
                     "description": "",
                     "layers": [
@@ -3301,19 +5290,34 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Arcterra",
                         "area": "Fault Line",
-                        "node": "Teleporter to Stronghold Void B"
+                        "node": "Portal to Stronghold Void B"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Biodefense Chamber B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Biodefense Chamber B": {
                     "node_type": "dock",
@@ -3370,7 +5374,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Portal to Fault Line": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         }
