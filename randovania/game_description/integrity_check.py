@@ -18,7 +18,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.resource_collection import ResourceCollection
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Iterator, Mapping
 
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.area_identifier import AreaIdentifier
@@ -357,7 +357,7 @@ def check_for_items_to_be_replaced_by_templates(
 
 
 def check_for_resources_to_use_together(
-    game: GameDescription, combined_resources: dict[str, tuple[str, ...]]
+    game: GameDescription, combined_resources: Mapping[str, tuple[str, ...]]
 ) -> Iterator[str]:
     """
     Checks the logic database for resources that should always be used together with other resources.

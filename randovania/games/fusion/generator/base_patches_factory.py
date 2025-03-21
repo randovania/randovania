@@ -7,24 +7,16 @@ from randovania.games.fusion.layout.fusion_configuration import FusionConfigurat
 from randovania.generator.base_patches_factory import BasePatchesFactory
 
 if TYPE_CHECKING:
-    from random import Random
-
     from randovania.game_description.db.dock import DockWeakness
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
 
 
 class FusionBasePatchesFactory(BasePatchesFactory[FusionConfiguration]):
-    def create_base_patches(
-        self,
-        configuration: FusionConfiguration,
-        rng: Random,
-        game: GameDescription,
-        is_multiworld: bool,
-        player_index: int,
-        rng_required: bool = True,
+    def assign_static_dock_weakness(
+        self, configuration: FusionConfiguration, game: GameDescription, initial_patches: GamePatches
     ) -> GamePatches:
-        parent = super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
+        parent = super().assign_static_dock_weakness(configuration, game, initial_patches)
 
         get_node = game.region_list.typed_node_by_identifier
 

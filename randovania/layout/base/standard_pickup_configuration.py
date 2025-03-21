@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import dataclasses
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING, Self, TypeVar
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 T = TypeVar("T")
 
 
-def _check_matching_pickups(actual: Iterable[T], reference: Iterable[T]):
+def _check_matching_pickups(actual: Iterable[T], reference: Iterable[T]) -> None:
     actual_pickups = set(actual)
     reference_pickups = set(reference)
     if actual_pickups != reference_pickups:
@@ -34,7 +34,7 @@ class StandardPickupConfiguration(BitPackValue):
     minimum_random_starting_pickups: int
     maximum_random_starting_pickups: int
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         pickup_database = default_database.pickup_database_for_game(self.game)
 
         _check_matching_pickups(self.pickups_state.keys(), pickup_database.standard_pickups.values())
@@ -87,7 +87,7 @@ class StandardPickupConfiguration(BitPackValue):
             maximum_random_starting_pickups=value["maximum_random_starting_pickups"],
         )
 
-    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
+    def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
         reference: StandardPickupConfiguration = metadata["reference"]
 
         name_to_pickup: dict[str, StandardPickupDefinition] = {
@@ -112,7 +112,7 @@ class StandardPickupConfiguration(BitPackValue):
         yield from bitpacking.encode_big_int(self.maximum_random_starting_pickups)
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> StandardPickupConfiguration:
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata: dict) -> Self:
         reference: StandardPickupConfiguration = metadata["reference"]
 
         name_to_pickup: dict[str, StandardPickupDefinition] = {

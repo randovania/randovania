@@ -47,7 +47,7 @@ class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
     def header_name(cls) -> str | None:
         return None
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration
         assert isinstance(config, EchoesConfiguration)
         self.warp_to_start_check.setChecked(config.warp_to_start)

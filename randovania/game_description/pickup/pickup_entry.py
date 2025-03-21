@@ -1,16 +1,17 @@
 from __future__ import annotations
 
 import dataclasses
+import enum
 import typing
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 from frozendict import frozendict
 
+from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.layout.base.standard_pickup_state import StartingPickupBehavior
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -23,6 +24,12 @@ if TYPE_CHECKING:
         ResourceGainTuple,
         ResourceQuantity,
     )
+
+
+class StartingPickupBehavior(BitPackEnum, enum.StrEnum):
+    CAN_BE_STARTING = "can_start"
+    MUST_BE_STARTING = "must_start"
+    CAN_NEVER_BE_STARTING = "never_start"
 
 
 @dataclass(frozen=True)

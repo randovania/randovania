@@ -6,13 +6,13 @@ from PySide6 import QtWidgets
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QGraphicsOpacityEffect, QWidget
 
+from randovania.game_description.pickup.pickup_entry import StartingPickupBehavior
 from randovania.gui.generated.standard_pickup_widget_ui import Ui_StandardPickupWidget
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.layout.base import standard_pickup_state
 from randovania.layout.base.standard_pickup_state import (
     StandardPickupState,
     StandardPickupStateCase,
-    StartingPickupBehavior,
 )
 from randovania.lib import enum_lib
 

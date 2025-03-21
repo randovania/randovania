@@ -15,7 +15,6 @@ from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -46,6 +45,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.region import Region
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.preset import Preset
@@ -136,7 +136,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.game_configuration = preset.configuration
         self.persistence_path = persistence_path
 
-    async def configure(self):
+    async def configure(self) -> None:
         game = filtered_database.game_description_for_layout(self.game_configuration).get_mutable()
         game_generator = game.game.generator
         game.resource_database = game_generator.bootstrap.patch_resource_database(
@@ -146,7 +146,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         pool_results = pool_creator.calculate_pool_results(self.game_configuration, game)
         patches = (
-            GamePatches.create_from_game(game, 0, self.game_configuration)
+            game.game.generator.base_patches_factory.create_static_base_patches(self.game_configuration, game, 0)
             .assign_new_pickups((index, PickupTarget(pickup, 0)) for index, pickup in pool_results.assignment.items())
             .assign_extra_starting_pickups(pool_results.starting)
         )

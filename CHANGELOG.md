@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Generator action weights were being incorrectly calculated.
 - Fixed: When calculating reach with unsafe resources, the generator no longer ignores some valid options.
 - Fixed: Typo in dialog about generated game hash being different from expected.
+- Fixed: The map tracker now correctly accounts for door locks that have been modified statically by settings such as unlocked Save Station doors.
 
 ### Door Lock Randomizer
 

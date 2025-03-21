@@ -29,7 +29,7 @@ class LayoutTranslatorRequirement(BitPackEnum, Enum):
     RANDOM_WITH_REMOVED = "random-removed"
 
     @classmethod
-    def from_item_short_name(cls, name: str) -> Self:
+    def from_item_short_name(cls, name: str) -> LayoutTranslatorRequirement:
         for key, value in ITEM_NAMES.items():
             if value == name:
                 return key
@@ -90,7 +90,7 @@ class TranslatorConfiguration(BitPackValue):
     fixed_torvus_temple: bool = True
     fixed_great_temple: bool = True
 
-    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
+    def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
         templates = [
             _get_vanilla_actual_translator_configurations(),
             _get_vanilla_colors_translator_configurations(),
@@ -103,13 +103,13 @@ class TranslatorConfiguration(BitPackValue):
                 yield from translator.bit_pack_encode({})
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> Self:
-        templates = [
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata: dict) -> Self:
+        templates = (
             _get_vanilla_actual_translator_configurations(),
             _get_vanilla_colors_translator_configurations(),
             cls.default().with_full_random().translator_requirement,
             None,
-        ]
+        )
         translator_requirement = decoder.decode_element(templates)
         if translator_requirement is None:
             translator_requirement = {}

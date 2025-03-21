@@ -6,7 +6,7 @@ from randovania.gui.widgets.base_game_tab_widget import BaseGameTabWidget
 
 
 class PrimeGameTabWidget(BaseGameTabWidget, Ui_PrimeGameTabWidget):
-    def setup_ui(self):
+    def setup_ui(self) -> None:
         self.setupUi(self)
 
     @classmethod
