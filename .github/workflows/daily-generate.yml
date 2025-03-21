@@ -50,7 +50,7 @@ jobs:
         run: git config --unset-all extensions.worktreeConfig || true
 
       - name: Install Python packages
-        run: uv sync --with server
+        run: uv sync --extra server
 
       - name: Bulk Generate (AM2R)
         run: uv run tools/bulk_generate_for_discord.py --game am2r
