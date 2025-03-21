@@ -38,7 +38,7 @@ jobs:
         uses: actions/setup-python@v5
 
       - name: Install Python packages
-        run: uv sync --with server
+        run: uv sync --extra server
 
       - name: Post Report
         run: uv run --with discord tools/trick_documentation_report.py reports/
