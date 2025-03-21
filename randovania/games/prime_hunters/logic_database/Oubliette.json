@@ -45,7 +45,132 @@
                         }
                     },
                     "valid_starting_location": false,
+                    "connections": {
+                        "Event - Gorea 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Gorea Arena B": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 752.63,
+                        "y": 79.98,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Other",
+                    "default_connection": {
+                        "region": "Oubliette",
+                        "area": "Gorea Arena B",
+                        "node": "Player Spawn"
+                    },
+                    "default_dock_weakness": "Not Determined",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {}
+                },
+                "Event - Gorea 1": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 752.29,
+                        "y": 80.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Gorea1",
+                    "connections": {
+                        "Dock to Gorea Arena B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Gorea1",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Imperialist",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Magmaul",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VoltDriver",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Battlehammer",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ShockCoil",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Judicator",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -92,15 +217,23 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Omega Cannon)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (63)": {
+                "Pickup (Omega Cannon)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -4.2353515625,
-                        "y": 38.1728515625,
-                        "z": -4.78955078125
+                        "x": -4.24,
+                        "y": 38.17,
+                        "z": -4.79
                     },
                     "description": "",
                     "layers": [
@@ -139,27 +272,62 @@
                     },
                     "valid_starting_location": false,
                     "pickup_index": 63,
-                    "location_category": "minor",
+                    "location_category": "major",
                     "hint_features": [],
+                    "connections": {
+                        "Event - Gorea 2": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "OmegaCannon",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Gorea 2": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 365.72,
+                        "y": 175.99,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Gorea2",
                     "connections": {}
                 }
             }
         },
         "Oubliette Gateway": {
-            "default_node": "Player Spawn",
+            "default_node": "Ship",
             "hint_features": [],
             "extra": {
                 "room_id": 89,
                 "entity_file": "Gorea_Land_Ent.bin"
             },
             "nodes": {
-                "Player Spawn": {
-                    "node_type": "generic",
+                "Ship": {
+                    "node_type": "teleporter_network",
                     "heal": false,
                     "coordinates": {
-                        "x": 352.00537109375,
-                        "y": 192.00537109375,
-                        "z": 192.0029296875
+                        "x": 24.99,
+                        "y": -7.72,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -188,15 +356,30 @@
                         }
                     },
                     "valid_starting_location": false,
+                    "is_unlocked": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "network": "Ship",
+                    "requirement_to_activate": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {}
                 },
-                "Portal to Oubliette Storage ": {
+                "Portal to Oubliette Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
-                        "y": 4.44921875,
-                        "z": -74.98583984375
+                        "y": 4.45,
+                        "z": -74.99
                     },
                     "description": "",
                     "layers": [
@@ -235,13 +418,13 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Oubliette",
-                        "area": "Oubliette Storage ",
+                        "area": "Oubliette Storage",
                         "node": "Portal to Oubliette Gateway"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -654,7 +837,7 @@
                 }
             }
         },
-        "Oubliette Storage ": {
+        "Oubliette Storage": {
             "default_node": "Player Spawn",
             "hint_features": [],
             "extra": {
@@ -666,9 +849,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 0.30078125,
-                        "y": 14.27490234375,
-                        "z": 38.311767578125
+                        "x": 0.3,
+                        "y": 14.27,
+                        "z": 38.31
                     },
                     "description": "",
                     "layers": [
@@ -707,19 +890,34 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Oubliette",
                         "area": "Oubliette Gateway",
-                        "node": "Portal to Oubliette Storage "
+                        "node": "Portal to Oubliette Storage"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (64)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Player Spawn": {
                     "node_type": "generic",
@@ -756,7 +954,15 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Portal to Oubliette Gateway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Pickup (64)": {
                     "node_type": "pickup",
@@ -805,7 +1011,15 @@
                     "pickup_index": 64,
                     "location_category": "minor",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Portal to Oubliette Gateway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         }
