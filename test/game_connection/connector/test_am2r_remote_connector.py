@@ -19,7 +19,7 @@ from randovania.network_common.remote_pickup import RemotePickup
 def am2r_remote_connector():
     executor_mock = MagicMock(AM2RExecutor)
     executor_mock.layout_uuid_str = "00000000-0000-1111-0000-000000000000"
-    executor_mock.signals = MagicMock(ExecutorToConnectorSignals)
+    executor_mock.signals = ExecutorToConnectorSignals()
     connector = AM2RRemoteConnector(executor_mock)
     return connector
 
@@ -161,10 +161,10 @@ async def test_receive_remote_pickups(connector: AM2RRemoteConnector, am2r_varia
 async def test_new_collected_locations_received_wrong_answer(connector: AM2RRemoteConnector):
     connector.logger = MagicMock()
     connector.current_region = Region("Golden Temple", [], {})
-    new_indices = "Foo"
+    new_indices = b"Foo"
     connector.new_collected_locations_received(new_indices)
 
-    connector.logger.warning.assert_called_once_with("Unknown response: %s", new_indices)
+    connector.logger.warning.assert_called_once_with("Unknown response: %s", new_indices.decode("utf-8"))
 
 
 async def test_new_collected_locations_received(connector: AM2RRemoteConnector):
@@ -172,7 +172,7 @@ async def test_new_collected_locations_received(connector: AM2RRemoteConnector):
 
     connector.logger = MagicMock()
     connector.PickupIndexCollected.connect(collected_mock)
-    new_indices = "locations:1,"
+    new_indices = b"locations:1,"
 
     connector.current_region = None
     connector.new_collected_locations_received(new_indices)

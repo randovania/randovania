@@ -3,11 +3,10 @@ from __future__ import annotations
 import enum
 import typing
 
-from PySide6 import QtCore
-
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.lib import enum_lib
+from randovania.lib.signal import RdvSignal
 
 if typing.TYPE_CHECKING:
     import uuid
@@ -41,12 +40,11 @@ enum_lib.add_long_name(
 )
 
 
-class RemoteConnector(QtCore.QObject):
+class RemoteConnector:
     _layout_uuid: uuid.UUID
-
-    PlayerLocationChanged = QtCore.Signal(PlayerLocationEvent)
-    PickupIndexCollected = QtCore.Signal(PickupIndex)
-    InventoryUpdated = QtCore.Signal(Inventory)
+    PlayerLocationChanged = RdvSignal[[PlayerLocationEvent]]()
+    PickupIndexCollected = RdvSignal[[PickupIndex]]()
+    InventoryUpdated = RdvSignal[[Inventory]]()
 
     @property
     def game_enum(self) -> RandovaniaGame:
