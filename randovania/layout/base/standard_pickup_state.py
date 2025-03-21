@@ -5,8 +5,8 @@ import enum
 from typing import TYPE_CHECKING
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.game_description import default_database
+from randovania.game_description.pickup.pickup_entry import StartingPickupBehavior
 from randovania.lib import enum_lib
 
 if TYPE_CHECKING:
@@ -23,12 +23,6 @@ PRIORITY_LIMITS = {
     "max": 10.0,
     "precision": 1.0,
 }
-
-
-class StartingPickupBehavior(BitPackEnum, enum.StrEnum):
-    CAN_BE_STARTING = "can_start"
-    MUST_BE_STARTING = "must_start"
-    CAN_NEVER_BE_STARTING = "never_start"
 
 
 class StandardPickupStateCase(enum.Enum):

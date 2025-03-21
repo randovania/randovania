@@ -7,12 +7,12 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.node import Node
+from randovania.game_description.pickup.pickup_entry import StartingPickupBehavior
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
 from randovania.generator.filler.filler_library import UnableToGenerate, UncollectedState
 from randovania.generator.filler.filler_logging import debug_print_collect_event
 from randovania.generator.filler.weighted_locations import WeightedLocations
-from randovania.layout.base.standard_pickup_state import StartingPickupBehavior
 from randovania.lib import random_lib
 from randovania.resolver import debug
 
