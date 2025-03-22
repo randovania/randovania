@@ -88,7 +88,7 @@ class RequirementOr(RequirementArrayBase):
                 return Requirement.trivial()
             if potential_item != Requirement.impossible():
                 isolated_items.append(potential_item)
-        return isolated_items[0] if len(isolated_items) == 1 else RequirementAnd(isolated_items)
+        return isolated_items[0] if len(isolated_items) == 1 else RequirementOr(isolated_items)
 
     def as_set(self, context: NodeContext) -> RequirementSet:
         alternatives: set[RequirementList] = set()
