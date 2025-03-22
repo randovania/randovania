@@ -5,7 +5,6 @@ import typing
 
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.game_description.resources import search
-from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 
 if typing.TYPE_CHECKING:
@@ -16,6 +15,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.resources.damage_reduction import DamageReduction
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
+    from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
@@ -91,7 +91,7 @@ class ResourceDatabase:
 
     def get_by_type_and_index(self, resource_type: ResourceType, name: str) -> ResourceInfo:
         return search.find_resource_info_with_id(
-            typing.cast(list[ResourceInfo], self.get_by_type(resource_type)), name, resource_type
+            typing.cast("list[ResourceInfo]", self.get_by_type(resource_type)), name, resource_type
         )
 
     def get_item(self, short_name: str) -> ItemResourceInfo:

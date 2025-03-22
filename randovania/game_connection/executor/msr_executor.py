@@ -148,7 +148,7 @@ class MSRExecutor:
             await asyncio.wait_for(writer.drain(), timeout=30)
 
             self.logger.debug("Waiting for API details response.")
-            response = typing.cast(bytes, await self._read_response())
+            response = typing.cast("bytes", await self._read_response())
             (api_version, buffer_size, self.layout_uuid_str) = response.decode("ascii").split(",")
             self.logger.debug(
                 "Remote replied with API level %s, buffer_size %s and layout_uuid %s, connection successful.",

@@ -6,7 +6,6 @@ import typing
 from typing import TYPE_CHECKING
 
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.db.node import Node
 from randovania.game_description.pickup.pickup_entry import StartingPickupBehavior
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
@@ -20,6 +19,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable, Mapping, Set
     from random import Random
 
+    from randovania.game_description.db.node import Node
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.pickup_index import PickupIndex
@@ -163,7 +163,7 @@ def weighted_potential_actions(
     if len(actions) == 1:
         debug.debug_print(f"{actions[0]}")
         debug.debug_print("Only one action, weighting skipped")
-        return {action: 1.0 for action in actions}
+        return dict.fromkeys(actions, 1.0)
 
     current_uncollected = UncollectedState.from_reach(player_state.reach)
     current_unsafe_uncollected = UncollectedState.from_reach_only_unsafe(player_state.reach)
@@ -495,7 +495,7 @@ def _calculate_weights_for(
     potential_unsafe_uncollected = UncollectedState.from_reach_only_unsafe(potential_reach) - current_unsafe_uncollected
 
     if debug.debug_level() > 2:
-        nodes = typing.cast(tuple[Node, ...], potential_reach.game.region_list.all_nodes)
+        nodes = typing.cast("tuple[Node, ...]", potential_reach.game.region_list.all_nodes)
 
         def print_weight_factors(uncollected: UncollectedState) -> None:
             print(f"  indices: {uncollected.pickup_indices}")

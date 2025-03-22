@@ -203,14 +203,14 @@ class MultiplayerSessionApi(QtCore.QObject):
     async def request_permalink(self) -> str | None:
         self.logger.info("Requesting permalink")
         return typing.cast(
-            str | None, await self._session_admin_global(admin_actions.SessionAdminGlobalAction.REQUEST_PERMALINK)
+            "str | None", await self._session_admin_global(admin_actions.SessionAdminGlobalAction.REQUEST_PERMALINK)
         )
 
     @handle_network_errors
     async def request_layout_description(self, worlds: list[MultiplayerWorld]) -> LayoutDescription | None:
         self.logger.info("Requesting layout description")
         description_binary = typing.cast(
-            bytes | None,
+            "bytes | None",
             await self._session_admin_global(admin_actions.SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION),
         )
         if description_binary is None:
@@ -279,7 +279,7 @@ class MultiplayerSessionApi(QtCore.QObject):
     async def create_patcher_file(self, world_uid: uuid.UUID, cosmetic_patches: dict) -> dict:
         self.logger.info("Requesting patcher file for %s", world_uid)
         return typing.cast(
-            dict,
+            "dict",
             await self._session_admin_global(
                 admin_actions.SessionAdminGlobalAction.CREATE_PATCHER_FILE,
                 str(world_uid),

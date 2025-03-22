@@ -92,7 +92,7 @@ class PickupEntry:
     resource_lock: ResourceLock | None = None
     respects_lock: bool = True
     offworld_models: frozendict[RandovaniaGame, str] = dataclasses.field(
-        default_factory=typing.cast(typing.Callable[[], frozendict[RandovaniaGame, str]], frozendict),
+        default_factory=typing.cast("typing.Callable[[], frozendict[RandovaniaGame, str]]", frozendict),
     )
     show_in_credits_spoiler: bool = True  # TODO: rename. this is effectively an "is important item" flag
     is_expansion: bool = False

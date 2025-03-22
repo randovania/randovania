@@ -6,7 +6,6 @@ from random import Random
 from typing import TYPE_CHECKING, override
 
 from caver.patcher import wrap_msg_text
-from caver.schema import EventNumber, MapName
 from tsc_utils.flags import set_flag
 from tsc_utils.numbers import num_to_tsc_value
 
@@ -26,7 +25,15 @@ from randovania.games.cave_story.patcher.caver_music_shuffle import CaverMusic
 from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
-    from caver.schema import CaverData, CaverdataMaps, CaverdataMapsHints, CaverdataOtherTsc, TscScript
+    from caver.schema import (
+        CaverData,
+        CaverdataMaps,
+        CaverdataMapsHints,
+        CaverdataOtherTsc,
+        EventNumber,
+        MapName,
+        TscScript,
+    )
 
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
@@ -71,7 +78,7 @@ class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
             "hash": get_ingame_hash(self.description.shareable_hash_bytes),
             "uuid": f"{{{self.players_config.get_own_uuid()}}}",
         }
-        return typing.cast(dict, data)
+        return typing.cast("dict", data)
 
     def _create_maps_data(self) -> dict[MapName, CaverdataMaps]:
         pickups = self._create_pickups_data()
@@ -115,8 +122,8 @@ class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
             node = self.game.region_list.node_from_pickup_index(index)
             area = self.game.region_list.nodes_to_area(node)
 
-            mapname = typing.cast(MapName, node.extra.get("event_map", area.extra["map_name"]))
-            event = typing.cast(EventNumber, node.extra["event"])
+            mapname = typing.cast("MapName", node.extra.get("event_map", area.extra["map_name"]))
+            event = typing.cast("EventNumber", node.extra["event"])
 
             if not self.players_config.should_target_local_player(target.player):
                 message = f"Sent ={target.pickup.name}= to ={self.players_config.player_names[target.player]}=!"
@@ -154,10 +161,10 @@ class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
 
         for hint_node in self.game.region_list.iterate_nodes_of_type(HintNode):
             mapname = typing.cast(
-                MapName,
+                "MapName",
                 hint_node.extra.get("event_map", self.game.region_list.nodes_to_area(hint_node).extra["map_name"]),
             )
-            event = typing.cast(EventNumber, hint_node.extra["event"])
+            event = typing.cast("EventNumber", hint_node.extra["event"])
 
             hints[mapname][event] = {
                 "text": hints_for_identifier[hint_node.identifier],
@@ -368,7 +375,7 @@ class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
 
     def _tra_for_warp_to_start(self) -> str:
         return typing.cast(
-            str,
+            "str",
             self.game.region_list.area_by_area_location(self.patches.starting_location.area_identifier).extra[
                 "starting_script"
             ],

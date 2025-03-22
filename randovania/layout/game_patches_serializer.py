@@ -157,7 +157,7 @@ def _decode_pickup_assignment(
     initial_pickup_assignment = all_pools[player_index].assignment
 
     for world_name, world_data in locations.items():
-        for area_node_name, target_name in typing.cast(dict[str, str], world_data).items():
+        for area_node_name, target_name in typing.cast("dict[str, str]", world_data).items():
             if target_name == _ETM_NAME:
                 continue
 

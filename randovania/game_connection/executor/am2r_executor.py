@@ -79,7 +79,7 @@ class AM2RExecutor:
             await asyncio.wait_for(writer.drain(), timeout=30)
 
             self.logger.debug("Waiting for API details response.")
-            response = typing.cast(bytes, await self._read_response())
+            response = typing.cast("bytes", await self._read_response())
             api_version, self.layout_uuid_str = response.decode("ascii").split(",")
             if int(api_version) != self._current_version:
                 raise AM2RConnectionException("API versions mismatch!")

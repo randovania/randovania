@@ -6,7 +6,6 @@ from __future__ import annotations
 
 import argparse
 import asyncio
-import copy
 import os
 import subprocess
 from pathlib import Path
@@ -15,7 +14,7 @@ _FOLDER = Path(__file__).parent
 
 
 async def deploy(remote_host: str, host2: str, remote_user: str, server_environment: str, version: str):
-    new_env = copy.copy(os.environ)
+    new_env = os.environ.copy()
     new_env["DOCKER_HOST"] = f"ssh://{remote_user}@{remote_host}"
     new_env["DOMAIN"] = remote_host
     new_env["VERSION"] = version

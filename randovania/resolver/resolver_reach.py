@@ -4,8 +4,6 @@ import itertools
 import typing
 from collections import defaultdict
 
-from randovania.game_description.db.node import Node
-from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements import fast_as_set
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -15,7 +13,8 @@ from randovania.game_description.resources.resource_type import ResourceType
 if typing.TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from randovania.game_description.db.node import NodeContext
+    from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.logic import Logic
@@ -87,7 +86,7 @@ class ResolverReach:
     @classmethod
     def calculate_reach(cls, logic: Logic, initial_state: State) -> ResolverReach:
         # all_nodes is only accessed via indices that guarantee a non-None result
-        all_nodes = typing.cast(tuple[Node, ...], logic.game.region_list.all_nodes)
+        all_nodes = typing.cast("tuple[Node, ...]", logic.game.region_list.all_nodes)
         checked_nodes: dict[int, DamageState] = {}
         context = initial_state.node_context()
 
@@ -181,7 +180,7 @@ class ResolverReach:
         for node in self.nodes:
             if not node.is_resource_node:
                 continue
-            node = typing.cast(ResourceNode, node)
+            node = typing.cast("ResourceNode", node)
             if node.should_collect(context) and node.requirement_to_collect().satisfied(
                 context, self._game_state_at_node[node.node_index].health_for_damage_requirements()
             ):

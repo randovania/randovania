@@ -82,4 +82,4 @@ class PresetFusionDocks(PresetDockRando):
         config = preset.configuration
         assert isinstance(config, FusionConfiguration)
         for f in _CHECKBOX_FIELDS:
-            typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))
+            typing.cast("QtWidgets.QCheckBox", getattr(self, f"{f}_check")).setChecked(getattr(config, f))

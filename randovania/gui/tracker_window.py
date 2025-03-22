@@ -283,7 +283,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         return True
 
     def reset(self):
-        self.bulk_change_quantity({pickup: 0 for pickup in self._collected_pickups.keys()})
+        self.bulk_change_quantity(dict.fromkeys(self._collected_pickups.keys(), 0))
 
         while len(self._actions) > 1:
             self._actions.pop()
@@ -434,7 +434,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
                     node_item = self._node_to_item[node]
                     if node.is_resource_node:
-                        resource_node = typing.cast(ResourceNode, node)
+                        resource_node = typing.cast("ResourceNode", node)
 
                         if self._show_only_resource_nodes:
                             is_visible = is_visible and not isinstance(node, ConfigurableNode)

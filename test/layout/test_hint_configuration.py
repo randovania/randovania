@@ -30,14 +30,14 @@ T = TypeVar("T")
     ],
 )
 def hint_config_with_data(request, default_echoes_configuration):
-    data = typing.cast(dict, default_echoes_configuration.hints.as_json)
+    data = typing.cast("dict", default_echoes_configuration.hints.as_json)
     reference = HintConfiguration.from_json(data)
     specific_pickup = dict(data["specific_pickup_hints"])
     specific_pickup["sky_temple_keys"] = request.param["sky_temple_keys"]
     data["specific_pickup_hints"] = frozendict(specific_pickup)
 
     return (
-        typing.cast(bytes, request.param["encoded"]),
+        typing.cast("bytes", request.param["encoded"]),
         HintConfiguration.from_json(data),
         data,
         reference,
