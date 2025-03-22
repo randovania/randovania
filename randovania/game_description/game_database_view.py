@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import abc
 from abc import ABC
-from typing import TYPE_CHECKING, override
+from typing import TYPE_CHECKING, final, override
 
 if TYPE_CHECKING:
     from collections.abc import Iterator, Sequence
@@ -185,6 +185,15 @@ class GameDatabaseView(ABC):
         Raises KeyError if no node could be found.
         """
 
+    @final
+    def typed_node_by_identifier[NodeT: Node](self, i: NodeIdentifier, t: type[NodeT]) -> NodeT:
+        """
+        Wrapper for calling node_by_identifier, followed by an isinstance.
+        """
+        result = self.node_by_identifier(i)
+        assert isinstance(result, t)
+        return result
+
     @abc.abstractmethod
     def assert_pickup_index_exists(self, index: PickupIndex) -> None:
         """
@@ -318,12 +327,3 @@ class GameDatabaseViewProxy(GameDatabaseView):
     @override
     def area_from_node(self, node: Node) -> Area:
         return self._original.area_from_node(node)
-
-
-def typed_node_by_identifier[NodeT: Node](game: GameDatabaseView, i: NodeIdentifier, t: type[NodeT]) -> NodeT:
-    """
-    Wrapper for calling game.node_by_identifier, followed by an isinstance.
-    """
-    result = game.node_by_identifier(i)
-    assert isinstance(result, t)
-    return result
