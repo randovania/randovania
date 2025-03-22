@@ -300,6 +300,7 @@ def write_node(node: Node) -> dict:
         data.update(common_fields)
         data["pickup_index"] = node.pickup_index.index
         data["location_category"] = node.location_category.value
+        data["custom_index_group"] = node.custom_index_group
         data["hint_features"] = [ft.name for ft in sorted(node.hint_features)]
 
     elif isinstance(node, EventNode):
