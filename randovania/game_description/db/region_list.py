@@ -93,7 +93,7 @@ class RegionList(NodeProvider):
 
     def region_with_name(self, name: str) -> Region:
         for region in self.regions:
-            if region.name == name or region.dark_name == name:
+            if region.name == name:
                 return region
         raise KeyError(f"Unknown name: {name}")
 

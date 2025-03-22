@@ -47,8 +47,6 @@ class Region:
         return self.area_by_name(location.area)
 
     def correct_name(self, use_dark_name: bool) -> str:
-        if use_dark_name and self.dark_name is not None:
-            return self.dark_name
         return self.name
 
     def duplicate(self) -> Region:

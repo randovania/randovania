@@ -41,7 +41,7 @@ def test_click_on_link(skip_qtbot, trick_levels):
     "area_id",
     [
         AreaIdentifier("Agon Wastes", "Agon Temple"),
-        AreaIdentifier("Agon Wastes", "Dark Agon Temple"),
+        AreaIdentifier("Dark Agon Wastes", "Dark Agon Temple"),
     ],
 )
 def test_data_editor_href(echoes_game_description, text: str | None, area_id: AreaIdentifier):
