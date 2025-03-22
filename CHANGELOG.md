@@ -43,6 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Some seeds being considered impossible when finding a progressive item in an area where a later item in the progressive chain is required to leave.
 - Fixed: Minor edge case where a seed might be considered impossible due to missing consideration of damage.
+- Fixed: Some seeds being considered impossible in cases where damage requirements are spread between multiple connections.
 
 ### Metroid Prime 2: Echoes
 
