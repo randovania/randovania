@@ -312,6 +312,18 @@ def _migrate_v28(data: dict, game: RandovaniaGame) -> None:
                     node["kind"] = hint_types[node["kind"]]
 
 
+def _migrate_v29(data: dict, game: RandovaniaGame) -> None:
+    for region in data["regions"]:
+        for area in region["areas"].values():
+            for node in area["nodes"].values():
+                if node["node_type"] == "pickup":
+                    custom_index_group = None
+                    if game.value == "prime2":
+                        if area["extra"]["in_dark_aether"]:
+                            custom_index_group = region["name"]
+                    node["custom_index_group"] = custom_index_group
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -341,6 +353,7 @@ _MIGRATIONS = [
     _migrate_v26,  # remove initial_states
     _migrate_v27,  # add hint features
     _migrate_v28,  # rename HintNodeKind
+    _migrate_v29,  # add custom_index_group
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

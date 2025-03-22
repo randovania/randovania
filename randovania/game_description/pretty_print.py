@@ -139,7 +139,10 @@ def pretty_print_node_type(node: Node, region_list: RegionList, db: ResourceData
         return message
 
     elif isinstance(node, PickupNode):
-        return f"Pickup {node.pickup_index.index}; Category? {node.location_category.long_name}"
+        message = f"Pickup {node.pickup_index.index}; Category? {node.location_category.long_name}"
+        if node.custom_index_group is not None:
+            message += f"; Index Group: {node.custom_index_group}"
+        return message
 
     elif isinstance(node, EventNode):
         return f"Event {node.event.long_name}"

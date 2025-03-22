@@ -238,6 +238,7 @@ ConstructNode = NodeAdapter(
                     **NodeBaseFields,
                     pickup_index=VarInt,
                     location_category=construct.Enum(Byte, major=0, minor=1),
+                    custom_index_group=OptionalValue(String),
                     hint_features=PrefixedArray(VarInt, String),
                 ),
                 "event": Struct(
