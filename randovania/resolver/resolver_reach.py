@@ -46,6 +46,16 @@ def _is_requirement_viable_as_additional(requirement: Requirement) -> bool:
     )
 
 
+def _combine_damage_requirements(
+    heal: bool, requirement: Requirement, satisfied_requirement: Requirement, context: NodeContext
+) -> Requirement:
+    return (
+        requirement
+        if heal
+        else RequirementAnd([requirement, satisfied_requirement]).isolate_damage_requirements(context).simplify()
+    )
+
+
 class ResolverReach:
     _node_indices: tuple[int, ...]
     _game_state_at_node: dict[int, DamageState]
@@ -144,26 +154,19 @@ class ResolverReach:
                     )
                     path_to_node[target_node_index] = list(path_to_node[node_index])
                     path_to_node[target_node_index].append(node_index)
-                    satisfied_requirement_on_node[target_node_index] = (
-                        requirement_including_leaving
-                        if node.heal
-                        else RequirementAnd(
-                            [requirement_including_leaving, satisfied_requirement_on_node[node.node_index]]
-                        )
-                        .isolate_damage_requirements(context)
-                        .simplify()
+                    satisfied_requirement_on_node[target_node_index] = _combine_damage_requirements(
+                        node.heal,
+                        requirement_including_leaving,
+                        satisfied_requirement_on_node[node.node_index],
+                        context,
                     )
 
                 elif target_node:
                     # If we can't go to this node, store the reason in order to build the satisfiable requirements.
                     # Note we ignore the 'additional requirements' here because it'll be added on the end.
                     if not requirement.satisfied(context, damage_health):
-                        full_requirement_for_target = (
-                            requirement
-                            if node.heal
-                            else RequirementAnd([requirement, satisfied_requirement_on_node[node.node_index]])
-                            .isolate_damage_requirements(context)
-                            .simplify()
+                        full_requirement_for_target = _combine_damage_requirements(
+                            node.heal, requirement, satisfied_requirement_on_node[node.node_index], context
                         )
                         requirements_excluding_leaving_by_node[target_node_index].append(full_requirement_for_target)
 
