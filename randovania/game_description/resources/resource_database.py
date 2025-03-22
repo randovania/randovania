@@ -10,7 +10,7 @@ from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_type import ResourceType
 
 if typing.TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Sequence
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.requirements.base import Requirement
@@ -96,20 +96,40 @@ class ResourceDatabase(ResourceDatabaseView):
             typing.cast("list[ResourceInfo]", self.get_by_type(resource_type)), name, resource_type
         )
 
+    def get_item_by_name(self, name: str) -> ItemResourceInfo:
+        return search.find_resource_info_with_long_name(self.item, name)
+
+    @override
     def get_item(self, short_name: str) -> ItemResourceInfo:
         return search.find_resource_info_with_id(self.item, short_name, ResourceType.ITEM)
 
+    @override
     def get_event(self, short_name: str) -> SimpleResourceInfo:
         return search.find_resource_info_with_id(self.event, short_name, ResourceType.EVENT)
 
+    @override
+    def get_misc(self, short_name: str) -> SimpleResourceInfo:
+        return search.find_resource_info_with_id(self.misc, short_name, ResourceType.MISC)
+
+    @override
     def get_trick(self, short_name: str) -> TrickResourceInfo:
         return search.find_resource_info_with_id(self.trick, short_name, ResourceType.TRICK)
 
+    @override
     def get_damage(self, short_name: str) -> SimpleResourceInfo:
         return search.find_resource_info_with_id(self.damage, short_name, ResourceType.DAMAGE)
 
-    def get_item_by_name(self, name: str) -> ItemResourceInfo:
-        return search.find_resource_info_with_long_name(self.item, name)
+    @override
+    def get_all_tricks(self) -> Sequence[TrickResourceInfo]:
+        return self.trick
+
+    @override
+    def get_template_requirement(self, name: str) -> NamedRequirementTemplate:
+        return self.requirement_template[name]
+
+    @override
+    def get_all_resources_of_type(self, resource_type: ResourceType) -> Sequence[ResourceInfo]:
+        return self.get_by_type(resource_type)
 
     @override
     def get_pickup_model(self, name: str) -> PickupModel:
