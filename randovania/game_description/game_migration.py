@@ -318,6 +318,7 @@ def _migrate_v29(data: dict, game: RandovaniaGame) -> None:
             for node in area["nodes"].values():
                 if node["node_type"] == "pickup":
                     custom_index_group = None
+                    # while Cave Story uses this flag, it actually wants to consider it separate regions
                     if game.value == "prime2":
                         if area["extra"]["in_dark_aether"]:
                             custom_index_group = region["name"]
