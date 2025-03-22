@@ -165,9 +165,9 @@ class ResolverReach:
                     # If we can't go to this node, store the reason in order to build the satisfiable requirements.
                     # Note we ignore the 'additional requirements' here because it'll be added on the end.
                     if not requirement.satisfied(context, damage_health):
-                        full_requirement_for_target = _combine_damage_requirements(
-                            node.heal, requirement, satisfied_requirement_on_node[node.node_index], context
-                        )
+                        full_requirement_for_target = RequirementAnd(
+                            [requirement, satisfied_requirement_on_node[node.node_index]]
+                        ).simplify()
                         requirements_excluding_leaving_by_node[target_node_index].append(full_requirement_for_target)
 
         # Discard satisfiable requirements of nodes reachable by other means
