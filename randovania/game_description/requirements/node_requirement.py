@@ -48,6 +48,9 @@ class NodeRequirement(Requirement):
     def simplify(self, keep_comments: bool = False) -> Requirement:
         return self
 
+    def isolate_damage_requirements(self, context: NodeContext) -> Requirement:
+        return Requirement.trivial() if self.satisfied(context, 0) else Requirement.impossible()
+
     @property
     def pretty_text(self) -> str:
         return str(self.node_identifier)
