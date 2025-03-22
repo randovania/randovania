@@ -2,16 +2,6 @@
 Biodefense Chamber A
 Extra - room_id: 55
 Extra - entity_file: Unit2_b1_Ent.bin
-> Player Spawn; Heals? False; Default Node
-  * Layers: default
-  * Extra - entity_id: 0
-  * Extra - position: frozendict.frozendict({'x': 0.06787109375, 'y': -0.898681640625, 'z': 7.6806640625})
-  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
-  * Extra - facing_vector: frozendict.frozendict({'x': -0.03466796875, 'y': 0.0, 'z': -0.999267578125})
-  * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
-  > Room Center
-      Trivial
-
 > Door to Stronghold Void A; Heals? False
   * Layers: default
   * Normal Door to Stronghold Void A/Door to Biodefense Chamber A
@@ -42,8 +32,11 @@ Extra - entity_file: Unit2_b1_Ent.bin
 
 > Room Center; Heals? False
   * Layers: default
-  > Player Spawn
-      Trivial
+  * Extra - entity_id: 0
+  * Extra - position: frozendict.frozendict({'x': 0.06787109375, 'y': -0.898681640625, 'z': 7.6806640625})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': -0.03466796875, 'y': 0.0, 'z': -0.999267578125})
+  * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
   > Door to Stronghold Void A
       After Celestial Archives - Defeat Cretaphid v1
   > Event - Cretaphid v1
@@ -53,16 +46,6 @@ Extra - entity_file: Unit2_b1_Ent.bin
 Biodefense Chamber B
 Extra - room_id: 64
 Extra - entity_file: Unit2_b2_Ent.bin
-> Player Spawn; Heals? False; Default Node
-  * Layers: default
-  * Extra - entity_id: 0
-  * Extra - position: frozendict.frozendict({'x': 0.06494140625, 'y': 1.61669921875, 'z': 14.279296875})
-  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
-  * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
-  * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
-  > Room Center
-      Trivial
-
 > Door to Stronghold Void B; Heals? False
   * Layers: default
   * Normal Door to Stronghold Void B/Door to Biodefense Chamber B
@@ -93,8 +76,11 @@ Extra - entity_file: Unit2_b2_Ent.bin
 
 > Room Center; Heals? False
   * Layers: default
-  > Player Spawn
-      Trivial
+  * Extra - entity_id: 0
+  * Extra - position: frozendict.frozendict({'x': 0.06494140625, 'y': 1.61669921875, 'z': 14.279296875})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
+  * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
   > Door to Stronghold Void B
       After Celestial Archives - Defeat Slench 3
   > Event - Slench 3
@@ -667,7 +653,7 @@ Extra - entity_file: Unit2_C7_Ent.bin
   > Door to New Arrival Registration (Outside Room Door West)
       Trivial
 
-> Event - Unlock Ship Deck Portal; Heals? False
+> Event - Ship Deck Portal Unlocked; Heals? False
   * Layers: default
   * Event CA - New Arrival Registration Ship Deck Portal Unlocked
   > Door to New Arrival Registration (Outside Room Door West)
@@ -705,7 +691,7 @@ Extra - entity_file: Unit2_C7_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'node_name': 'port_rmC7', 'palette_id': 9, 'door_type': 0, 'connector_id': 255, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 255, 'out_loader_id': 32, 'entity_filename': ' ', 'room_name': ' '})
   > Portal to Celestial Gateway
       After CA - New Arrival Registration Ship Deck Portal Unlocked
-  > Event - Unlock Ship Deck Portal
+  > Event - Ship Deck Portal Unlocked
       Trivial
   > Middle Section
       Trivial
@@ -733,7 +719,7 @@ Extra - entity_file: unit2_Land_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': 'port_rmMain', 'palette_id': 9, 'door_type': 0, 'connector_id': 255, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 255, 'out_loader_id': 32, 'entity_filename': ' ', 'room_name': ' '})
-  > Player Spawn
+  > Ship
       Trivial
 
 > Door to Helm Room; Heals? False
@@ -755,7 +741,7 @@ Extra - entity_file: unit2_Land_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.97802734375, 'y': 0.0, 'z': -0.207763671875})
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 20, 'target_index': 20, 'artifact_id': 8, 'active': False, 'invisible': False, 'entity_filename': 'unit2_C4_Ent.b', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
-  > Player Spawn
+  > Ship
       Trivial
 
 > Portal to New Arrival Registration; Heals? False
@@ -766,10 +752,10 @@ Extra - entity_file: unit2_Land_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.97802734375, 'y': 0.0, 'z': 0.207763671875})
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 21, 'target_index': 21, 'artifact_id': 8, 'active': False, 'invisible': False, 'entity_filename': 'unit2_C7_Ent.b', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
-  > Player Spawn
+  > Ship
       Trivial
 
-> Player Spawn; Heals? False; Default Node
+> Ship; Heals? False; Default Node
   * Layers: default
   * Teleporter Network (Unlocked by Trivial)
   * Extra - entity_id: 0
@@ -793,8 +779,8 @@ Extra - entity_file: unit2_Land_Ent.bin
   * Extra - position: frozendict.frozendict({'x': 0.0, 'y': -0.729736328125, 'z': 0.0})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.999755859375, 'z': 0.0})
-  * Extra - entity_type_data: frozendict.frozendict({'type': 3, 'width': frozendict.frozendict({'x': 132960.0, 'y': 122704.0, 'z': 16.0}), 'height': frozendict.frozendict({'x': 470304.0051269531, 'y': 15.999755859375, 'z': 65536.0}), 'active': False})
-  > Player Spawn
+  * Extra - entity_type_data: frozendict.frozendict({'type': 3, 'width': frozendict.frozendict({'x': 2.02880859375, 'y': 1.872314453125, 'z': 0.000244140625}), 'height': frozendict.frozendict({'x': 336.0009765625, 'y': -8.82373046875, 'z': -10.499755859375}), 'active': False})
+  > Ship
       Trivial
   > Pickup (UA Expansion)
       Trivial
@@ -1386,7 +1372,7 @@ Extra - entity_file: Unit2_RM5_Ent.bin
   * Extra - position: frozendict.frozendict({'x': -10.991455078125, 'y': 1.449951171875, 'z': -5.9912109375})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
-  * Extra - entity_type_data: frozendict.frozendict({'type': 7, 'width': frozendict.frozendict({'x': 67872.0, 'y': 103584.0, 'z': 16.0}), 'height': frozendict.frozendict({'x': 8912.0048828125, 'y': 255712.0, 'z': 65536.0}), 'active': False})
+  * Extra - entity_type_data: frozendict.frozendict({'type': 7, 'width': frozendict.frozendict({'x': 1.03564453125, 'y': 1.58056640625, 'z': 0.000244140625}), 'height': frozendict.frozendict({'x': 320.001953125, 'y': 0.135986328125, 'z': 8.324951171875}), 'active': True})
   > Behind Force Field
       Trivial
   > Lower Level
@@ -1394,7 +1380,11 @@ Extra - entity_file: Unit2_RM5_Ent.bin
 
 > Lower Level; Heals? False
   * Layers: default
+  > Portal to Docking Bay (Lower Level)
+      Trivial
   > Portal to Incubation Vault 01 (Lower Level)
+      Trivial
+  > Portal from Incubation Vault 02 (Lower Level)
       Trivial
   > Shock Coil Force Field
       Trivial
@@ -1405,6 +1395,8 @@ Extra - entity_file: Unit2_RM5_Ent.bin
   * Layers: default
   > Behind Force Field
       After CA - Incubation Vault 01 Guardians Defeated
+  > Portal from Incubation Vault 02 (Upper Level)
+      Trivial
   > Pickup (Attameter Artifact)
       After CA - Incubation Vault 01 Guardians Defeated
   > Lower Level
@@ -1427,6 +1419,8 @@ Extra - entity_file: Unit2_RM6_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
+  > Portal from Docking Bay
+      Trivial
   > Portal to Incubation Vault 01 (Lower Level)
       Trivial
   > Shock Coil Force Field
@@ -1494,7 +1488,7 @@ Extra - entity_file: Unit2_RM6_Ent.bin
   * Extra - position: frozendict.frozendict({'x': -10.991455078125, 'y': 1.449951171875, 'z': -5.9912109375})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
-  * Extra - entity_type_data: frozendict.frozendict({'type': 7, 'width': frozendict.frozendict({'x': 67872.0, 'y': 103584.0, 'z': 16.0}), 'height': frozendict.frozendict({'x': -251823.99877929688, 'y': -171984.0, 'z': 65536.0}), 'active': False})
+  * Extra - entity_type_data: frozendict.frozendict({'type': 7, 'width': frozendict.frozendict({'x': 1.03564453125, 'y': 1.58056640625, 'z': 0.000244140625}), 'height': frozendict.frozendict({'x': 80.00146484375, 'y': -3.842529296875, 'z': 0.19970703125}), 'active': True})
   > Lower Level
       Trivial
   > Behind Force Field
@@ -1505,6 +1499,8 @@ Extra - entity_file: Unit2_RM6_Ent.bin
   > Lower Level
       Trivial
   > Portal to Incubation Vault 01 (Upper Level)
+      Trivial
+  > Portal from Incubation Vault 03
       Trivial
   > Behind Force Field
       Trivial
@@ -1530,7 +1526,7 @@ Extra - entity_file: Unit2_RM7_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.017333984375, 'y': 0.0, 'z': 0.999755859375})
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 31, 'target_index': 32, 'artifact_id': 10, 'active': True, 'invisible': False, 'entity_filename': 'unit2_C6_Ent.b', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
-  > Shock Coil Force Field (Lower)
+  > Behind Force Fields
       Trivial
 
 > Pickup (Missile Expansion); Heals? False
@@ -1564,6 +1560,8 @@ Extra - entity_file: Unit2_RM7_Ent.bin
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'type': 7, 'width': frozendict.frozendict({'x': 108384.0, 'y': 109024.0, 'z': 16.0}), 'height': frozendict.frozendict({'x': -243615.99536132812, 'y': 418480.0, 'z': 65536.0}), 'active': False})
   > Upper Level
+      Trivial
+  > Behind Force Fields
       Trivial
 
 > Upper Level; Heals? False; Default Node
@@ -1611,15 +1609,28 @@ Extra - entity_file: Unit2_RM7_Ent.bin
   * Extra - position: frozendict.frozendict({'x': -10.991455078125, 'y': 1.449951171875, 'z': -5.9912109375})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
-  * Extra - entity_type_data: frozendict.frozendict({'type': 7, 'width': frozendict.frozendict({'x': 67872.0, 'y': 103584.0, 'z': 16.0}), 'height': frozendict.frozendict({'x': 215488.00073242188, 'y': -326544.0, 'z': 65536.0}), 'active': False})
-  > Portal to Tetra Vista
-      Trivial
+  * Extra - entity_type_data: frozendict.frozendict({'type': 7, 'width': frozendict.frozendict({'x': 1.03564453125, 'y': 1.58056640625, 'z': 0.000244140625}), 'height': frozendict.frozendict({'x': 48.000244140625, 'y': -12.7119140625, 'z': 0.0}), 'active': True})
   > Lower Level
+      Trivial
+  > Behind Force Fields
       Trivial
 
 > Lower Level; Heals? False
   * Layers: default
+  > Upper Level
+      Trivial
   > Portal to Docking Bay
+      Trivial
+  > Portal from Docking Bay
+      Trivial
+  > Shock Coil Force Field (Lower)
+      Trivial
+
+> Behind Force Fields; Heals? False
+  * Layers: default
+  > Portal to Tetra Vista
+      Trivial
+  > Shock Coil Force Field (Upper)
       Trivial
   > Shock Coil Force Field (Lower)
       Trivial
@@ -1719,6 +1730,10 @@ Extra - entity_file: unit2_RM8_Ent.bin
   > Portal to Transfer Lock
       Trivial
   > Pickup (UA Expansion)
+      Trivial
+  > Portal from Incubation Vault 01
+      Trivial
+  > Portal from Incubation Vault 03
       Trivial
 
 > Portal from Incubation Vault 01; Heals? False

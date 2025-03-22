@@ -568,6 +568,14 @@
             "CAIncubationVault01Guardian": {
                 "long_name": "CA - Incubation Vault 01 Guardians Defeated",
                 "extra": {}
+            },
+            "Credits": {
+                "long_name": "Credits",
+                "extra": {}
+            },
+            "VDOStasisBunkerGuardians": {
+                "long_name": "VDO - Stasis Bunker Guardians Defeated",
+                "extra": {}
             }
         },
         "tricks": {},
@@ -584,7 +592,7 @@
     "starting_location": {
         "region": "Celestial Archives",
         "area": "Celestial Gateway",
-        "node": "Player Spawn"
+        "node": "Ship"
     },
     "minimal_logic": null,
     "victory_condition": {
@@ -826,6 +834,24 @@
                         "extra": {},
                         "requirement": {
                             "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": null
+            },
+            "Dock": {
+                "name": "Dock",
+                "extra": {},
+                "items": {
+                    "Dock": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []

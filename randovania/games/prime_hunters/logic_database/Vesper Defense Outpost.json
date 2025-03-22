@@ -10,51 +10,6 @@
                 "entity_file": "Unit3_b1_Ent.bin"
             },
             "nodes": {
-                "Player Spawn": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -0.18068852141959207,
-                        "y": -0.8472101344164007,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "entity_id": 0,
-                        "position": {
-                            "x": 0.06787109375,
-                            "y": -0.898681640625,
-                            "z": 7.6806640625
-                        },
-                        "up_vector": {
-                            "x": 0.0,
-                            "y": 1.0,
-                            "z": 0.0
-                        },
-                        "facing_vector": {
-                            "x": -0.03466796875,
-                            "y": 0.0,
-                            "z": -0.999267578125
-                        },
-                        "entity_type_data": {
-                            "availabilty": 0,
-                            "active": true
-                        }
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Room Center": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Door to Stronghold Void A": {
                     "node_type": "dock",
                     "heal": false,
@@ -205,24 +160,38 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 0.03723373520235493,
-                        "y": -0.572156790891887,
+                        "x": 0.04,
+                        "y": -0.57,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "entity_id": 0,
+                        "position": {
+                            "x": 0.06787109375,
+                            "y": -0.898681640625,
+                            "z": 7.6806640625
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": -0.03466796875,
+                            "y": 0.0,
+                            "z": -0.999267578125
+                        },
+                        "entity_type_data": {
+                            "availabilty": 0,
+                            "active": true
+                        }
+                    },
                     "valid_starting_location": false,
                     "connections": {
-                        "Player Spawn": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Stronghold Void A": {
                             "type": "or",
                             "data": {
@@ -259,51 +228,6 @@
                 "entity_file": "Unit3_b2_Ent.bin"
             },
             "nodes": {
-                "Player Spawn": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 0.7982113748274249,
-                        "y": 2.465840756785423,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "entity_id": 0,
-                        "position": {
-                            "x": 0.06494140625,
-                            "y": 1.61669921875,
-                            "z": 14.279296875
-                        },
-                        "up_vector": {
-                            "x": 0.0,
-                            "y": 1.0,
-                            "z": 0.0
-                        },
-                        "facing_vector": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": -0.999755859375
-                        },
-                        "entity_type_data": {
-                            "availabilty": 0,
-                            "active": true
-                        }
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Room Center": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Door to Stronghold Void B": {
                     "node_type": "dock",
                     "heal": false,
@@ -465,13 +389,6 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Player Spawn": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Stronghold Void B": {
                             "type": "or",
                             "data": {
@@ -1028,7 +945,7 @@
                 "entity_file": "Unit3_C2_Ent.bin"
             },
             "nodes": {
-                "Door to Weapons Complex": {
+                "Morph Ball Door to Weapons Complex": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1075,7 +992,7 @@
                     "default_connection": {
                         "region": "Vesper Defense Outpost",
                         "area": "Weapons Complex",
-                        "node": "Door to Cortex CPU"
+                        "node": "Morph Ball Door to Cortex CPU"
                     },
                     "default_dock_weakness": "Morph Ball Door",
                     "exclude_from_dock_rando": false,
@@ -1084,14 +1001,14 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Compression Chamber (First Floor)": {
+                        "Morph Ball Door to Compression Chamber (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Compression Chamber (Second Floor)": {
+                        "Morph Ball Door to Compression Chamber (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1107,7 +1024,7 @@
                         }
                     }
                 },
-                "Door to Compression Chamber (First Floor)": {
+                "Morph Ball Door to Compression Chamber (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1154,7 +1071,7 @@
                     "default_connection": {
                         "region": "Vesper Defense Outpost",
                         "area": "Compression Chamber",
-                        "node": "Door to Cortex CPU (Left)"
+                        "node": "Morph Ball Door to Cortex CPU (Lower)"
                     },
                     "default_dock_weakness": "Morph Ball Door",
                     "exclude_from_dock_rando": false,
@@ -1163,7 +1080,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Weapons Complex": {
+                        "Morph Ball Door to Weapons Complex": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1172,7 +1089,7 @@
                         }
                     }
                 },
-                "Door to Compression Chamber (Second Floor)": {
+                "Morph Ball Door to Compression Chamber (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1219,7 +1136,7 @@
                     "default_connection": {
                         "region": "Vesper Defense Outpost",
                         "area": "Compression Chamber",
-                        "node": "Door to Cortex CPU (Left)"
+                        "node": "Morph Ball Door to Cortex CPU (Upper)"
                     },
                     "default_dock_weakness": "Morph Ball Door",
                     "exclude_from_dock_rando": false,
@@ -1228,7 +1145,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Weapons Complex": {
+                        "Morph Ball Door to Weapons Complex": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1292,7 +1209,7 @@
                     "location_category": "major",
                     "hint_features": [],
                     "connections": {
-                        "Player Spawn": {
+                        "Battlehammer Force Field": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1349,7 +1266,7 @@
                     "location_category": "minor",
                     "hint_features": [],
                     "connections": {
-                        "Door to Weapons Complex": {
+                        "Morph Ball Door to Weapons Complex": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1390,21 +1307,28 @@
                         "entity_type_data": {
                             "type": 3,
                             "width": {
-                                "x": 63856.0,
-                                "y": 63456.0,
+                                "x": 0.974365234375,
+                                "y": 0.96826171875,
                                 "z": 0.0
                             },
                             "height": {
-                                "x": 398688.0068359375,
-                                "y": -120447.99975585938,
-                                "z": 65536.0
+                                "x": 448.0009765625,
+                                "y": 22.08349609375,
+                                "z": 24.519287109375
                             },
-                            "active": false
+                            "active": true
                         }
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Compression Chamber (Second Floor)": {
+                        "Morph Ball Door to Compression Chamber (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Battlehammer)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1475,14 +1399,14 @@
             }
         },
         "VDO Gateway": {
-            "default_node": "Samus Ship",
+            "default_node": "Ship",
             "hint_features": [],
             "extra": {
                 "room_id": 65,
                 "entity_file": "unit3_Land_Ent.bin"
             },
             "nodes": {
-                "Samus Ship": {
+                "Ship": {
                     "node_type": "teleporter_network",
                     "heal": false,
                     "coordinates": {
@@ -1524,7 +1448,7 @@
                             "items": []
                         }
                     },
-                    "network": "",
+                    "network": "Ship",
                     "requirement_to_activate": {
                         "type": "and",
                         "data": {
@@ -1632,7 +1556,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Samus Ship": {
+                        "Ship": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1699,7 +1623,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Samus Ship": {
+                        "Ship": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1776,7 +1700,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Samus Ship": {
+                        "Ship": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1861,7 +1785,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Cortex CPU": {
+                        "Morph Ball Door to Cortex CPU": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1936,13 +1860,13 @@
                         }
                     }
                 },
-                "Door to Cortex CPU": {
+                "Morph Ball Door to Cortex CPU": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 0.0,
-                        "y": 4.02,
-                        "z": 24.69
+                        "x": 16.396429072575536,
+                        "y": 1.8534741650792235,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -1983,7 +1907,7 @@
                     "default_connection": {
                         "region": "Vesper Defense Outpost",
                         "area": "Cortex CPU",
-                        "node": "Door to Weapons Complex"
+                        "node": "Morph Ball Door to Weapons Complex"
                     },
                     "default_dock_weakness": "Morph Ball Door",
                     "exclude_from_dock_rando": false,
@@ -2328,7 +2252,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Cortex CPU": {
+                        "Morph Ball Door to Cortex CPU": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2900,7 +2824,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Ascension": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2956,7 +2880,7 @@
                     "location_category": "major",
                     "hint_features": [],
                     "connections": {
-                        "Door to Weapons Complex": {
+                        "Event - Guardians Defeated": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3021,28 +2945,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Cartograph Artifact)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Ascension": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Player Spawn": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Pickup (UA Expansion)": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3107,42 +3010,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Portal to Stronghold Void B": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "VDOArtifact2A",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "VDOArtifact2BS",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "VDOArtifact2C",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Door to Weapons Complex": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3187,7 +3055,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Weapons Complex": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3242,7 +3110,15 @@
                     "pickup_index": 42,
                     "location_category": "major",
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Pickup (UA Expansion)": {
                     "node_type": "pickup",
@@ -3292,7 +3168,132 @@
                     "location_category": "minor",
                     "hint_features": [],
                     "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 17.08,
+                        "y": -7.05,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Portal to Stronghold Void B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VDOArtifact2A",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VDOArtifact2BS",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VDOArtifact2C",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Cartograph Artifact)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Weapons Complex": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "VDOStasisBunkerGuardians",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Ascension": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "VDOStasisBunkerGuardians",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Attameter Artifact)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "VDOStasisBunkerGuardians",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (UA Expansion)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Guardians Defeated": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.23,
+                        "y": -8.27,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "VDOStasisBunkerGuardians",
+                    "connections": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3378,7 +3379,7 @@
                         }
                     }
                 },
-                "Door to Cortex CPU (Left)": {
+                "Morph Ball Door to Cortex CPU (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3425,7 +3426,7 @@
                     "default_connection": {
                         "region": "Vesper Defense Outpost",
                         "area": "Cortex CPU",
-                        "node": "Door to Compression Chamber (First Floor)"
+                        "node": "Morph Ball Door to Compression Chamber (Lower)"
                     },
                     "default_dock_weakness": "Morph Ball Door",
                     "exclude_from_dock_rando": false,
@@ -3470,12 +3471,12 @@
                         }
                     }
                 },
-                "Door to Cortex CPU (Center)": {
+                "Morph Ball Door to Cortex CPU (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -6.463519943763201,
-                        "y": 4.602671755565663,
+                        "x": -6.46,
+                        "y": 4.6,
                         "z": 0.0
                     },
                     "description": "",
@@ -3517,7 +3518,7 @@
                     "default_connection": {
                         "region": "Vesper Defense Outpost",
                         "area": "Cortex CPU",
-                        "node": "Door to Compression Chamber (First Floor)"
+                        "node": "Morph Ball Door to Compression Chamber (Upper)"
                     },
                     "default_dock_weakness": "Morph Ball Door",
                     "exclude_from_dock_rando": false,
@@ -3646,7 +3647,7 @@
                     "location_category": "minor",
                     "hint_features": [],
                     "connections": {
-                        "Door to Cortex CPU (Left)": {
+                        "Morph Ball Door to Cortex CPU (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3655,7 +3656,7 @@
                         }
                     }
                 },
-                "Battlehammer Force Field Left": {
+                "Battlehammer Force Field (Left)": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
@@ -3687,16 +3688,16 @@
                         "entity_type_data": {
                             "type": 3,
                             "width": {
-                                "x": 89264.0,
-                                "y": 156848.0,
-                                "z": 16.0
+                                "x": 1.362060546875,
+                                "y": 2.393310546875,
+                                "z": 0.000244140625
                             },
                             "height": {
-                                "x": -95.98681640625,
-                                "y": -225712.0,
-                                "z": 65536.0
+                                "x": 864.004638671875,
+                                "y": -0.00146484375,
+                                "z": 6.7705078125
                             },
-                            "active": false
+                            "active": true
                         }
                     },
                     "valid_starting_location": false,
@@ -3717,11 +3718,11 @@
                         }
                     }
                 },
-                "Battlehammer Force Field Right": {
+                "Battlehammer Force Field (Right)": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": -0.0,
+                        "x": 0.0,
                         "y": 6.77,
                         "z": -3.44
                     },
@@ -3749,16 +3750,16 @@
                         "entity_type_data": {
                             "type": 3,
                             "width": {
-                                "x": 89264.0,
-                                "y": 156848.0,
-                                "z": 16.0
+                                "x": 1.362060546875,
+                                "y": 2.393310546875,
+                                "z": 0.000244140625
                             },
                             "height": {
-                                "x": -404895.9865722656,
-                                "y": 5728.0,
-                                "z": 65536.0
+                                "x": 880.00439453125,
+                                "y": -6.17822265625,
+                                "z": 11.149169921875
                             },
-                            "active": false
+                            "active": true
                         }
                     },
                     "valid_starting_location": false,
@@ -3850,21 +3851,21 @@
                                 ]
                             }
                         },
-                        "Door to Cortex CPU (Center)": {
+                        "Morph Ball Door to Cortex CPU (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Battlehammer Force Field Left": {
+                        "Battlehammer Force Field (Left)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Battlehammer Force Field Right": {
+                        "Battlehammer Force Field (Right)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3889,14 +3890,14 @@
                     "valid_starting_location": false,
                     "event_name": "VDOCompressionChamberForceFields",
                     "connections": {
-                        "Battlehammer Force Field Left": {
+                        "Battlehammer Force Field (Left)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Battlehammer Force Field Right": {
+                        "Battlehammer Force Field (Right)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3920,7 +3921,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Cortex CPU (Left)": {
+                        "Morph Ball Door to Cortex CPU (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,

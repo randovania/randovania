@@ -2,16 +2,6 @@
 Biodefense Chamber A
 Extra - room_id: 71
 Extra - entity_file: Unit3_b1_Ent.bin
-> Player Spawn; Heals? False; Default Node
-  * Layers: default
-  * Extra - entity_id: 0
-  * Extra - position: frozendict.frozendict({'x': 0.06787109375, 'y': -0.898681640625, 'z': 7.6806640625})
-  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
-  * Extra - facing_vector: frozendict.frozendict({'x': -0.03466796875, 'y': 0.0, 'z': -0.999267578125})
-  * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
-  > Room Center
-      Trivial
-
 > Door to Stronghold Void A; Heals? False
   * Layers: default
   * Normal Door to Stronghold Void A/Door to Biodefense Chamber A
@@ -42,8 +32,11 @@ Extra - entity_file: Unit3_b1_Ent.bin
 
 > Room Center; Heals? False
   * Layers: default
-  > Player Spawn
-      Trivial
+  * Extra - entity_id: 0
+  * Extra - position: frozendict.frozendict({'x': 0.06787109375, 'y': -0.898681640625, 'z': 7.6806640625})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': -0.03466796875, 'y': 0.0, 'z': -0.999267578125})
+  * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
   > Door to Stronghold Void A
       After VDO - Defeat Cretaphid v2
   > Event - Cretaphid v2
@@ -53,16 +46,6 @@ Extra - entity_file: Unit3_b1_Ent.bin
 Biodefense Chamber B
 Extra - room_id: 76
 Extra - entity_file: Unit3_b2_Ent.bin
-> Player Spawn; Heals? False; Default Node
-  * Layers: default
-  * Extra - entity_id: 0
-  * Extra - position: frozendict.frozendict({'x': 0.06494140625, 'y': 1.61669921875, 'z': 14.279296875})
-  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
-  * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
-  * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
-  > Room Center
-      Trivial
-
 > Door to Stronghold Void B; Heals? False
   * Layers: default
   * Normal Door to Stronghold Void B/Door to Biodefense Chamber B
@@ -93,8 +76,6 @@ Extra - entity_file: Unit3_b2_Ent.bin
 
 > Room Center; Heals? False
   * Layers: default
-  > Player Spawn
-      Trivial
   > Door to Stronghold Void B
       After VDO - Defeat Slench 4
   > Event - Slench 4
@@ -201,41 +182,41 @@ Extra - entity_file: unit3_C1_Ent.bin
 Cortex CPU
 Extra - room_id: 67
 Extra - entity_file: Unit3_C2_Ent.bin
-> Door to Weapons Complex; Heals? False
+> Morph Ball Door to Weapons Complex; Heals? False
   * Layers: default
-  * Morph Ball Door to Weapons Complex/Door to Cortex CPU
+  * Morph Ball Door to Weapons Complex/Morph Ball Door to Cortex CPU
   * Extra - entity_id: 6
   * Extra - position: frozendict.frozendict({'x': 8.717041015625, 'y': 0.709716796875, 'z': -19.755615234375})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 1, 'connector_id': 26, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 3, 'out_loader_id': 117, 'entity_filename': 'unit3_RM1_Ent.b', 'room_name': 'unit3_RM1_Ent.b'})
-  > Door to Compression Chamber (First Floor)
+  > Morph Ball Door to Compression Chamber (Lower)
       Trivial
-  > Door to Compression Chamber (Second Floor)
+  > Morph Ball Door to Compression Chamber (Upper)
       Trivial
   > Pickup (Missile Expansion)
       Trivial
 
-> Door to Compression Chamber (First Floor); Heals? False
+> Morph Ball Door to Compression Chamber (Lower); Heals? False
   * Layers: default
-  * Morph Ball Door to Compression Chamber/Door to Cortex CPU (Left)
+  * Morph Ball Door to Compression Chamber/Morph Ball Door to Cortex CPU (Lower)
   * Extra - entity_id: 7
   * Extra - position: frozendict.frozendict({'x': 8.393310546875, 'y': 0.51708984375, 'z': 42.215576171875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 1, 'connector_id': 25, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 4, 'out_loader_id': 117, 'entity_filename': 'unit3_RM4_Ent.b', 'room_name': 'unit3_RM4_Ent.b'})
-  > Door to Weapons Complex
+  > Morph Ball Door to Weapons Complex
       Trivial
 
-> Door to Compression Chamber (Second Floor); Heals? False
+> Morph Ball Door to Compression Chamber (Upper); Heals? False
   * Layers: default
-  * Morph Ball Door to Compression Chamber/Door to Cortex CPU (Left)
+  * Morph Ball Door to Compression Chamber/Morph Ball Door to Cortex CPU (Upper)
   * Extra - entity_id: 8
   * Extra - position: frozendict.frozendict({'x': -10.742919921875, 'y': 5.51708984375, 'z': 41.471923828125})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 1, 'connector_id': 25, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 5, 'out_loader_id': 117, 'entity_filename': 'unit3_RM4_Ent.b', 'room_name': 'unit3_RM4_Ent.b'})
-  > Door to Weapons Complex
+  > Morph Ball Door to Weapons Complex
       Trivial
   > Player Spawn
       Trivial
@@ -248,7 +229,7 @@ Extra - entity_file: Unit3_C2_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'item_type': 7, 'enabled': True, 'has_base': True, 'always_active': False, 'max_spawn_count': 1, 'spawn_interval': 0, 'spawn_delay': 0, 'notify_entity_id': 19, 'collected_message': 9, 'collected_message_param1': 0, 'collected_message_param2': 0})
-  > Player Spawn
+  > Battlehammer Force Field
       Trivial
 
 > Pickup (Missile Expansion); Heals? False
@@ -259,7 +240,7 @@ Extra - entity_file: Unit3_C2_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'item_type': 6, 'enabled': True, 'has_base': False, 'always_active': False, 'max_spawn_count': 1, 'spawn_interval': 0, 'spawn_delay': 0, 'notify_entity_id': -1, 'collected_message': 0, 'collected_message_param1': 0, 'collected_message_param2': 0})
-  > Door to Weapons Complex
+  > Morph Ball Door to Weapons Complex
       Trivial
 
 > Battlehammer Force Field; Heals? False
@@ -269,8 +250,10 @@ Extra - entity_file: Unit3_C2_Ent.bin
   * Extra - position: frozendict.frozendict({'x': 21.991943359375, 'y': 25.456787109375, 'z': 33.178466796875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
-  * Extra - entity_type_data: frozendict.frozendict({'type': 3, 'width': frozendict.frozendict({'x': 63856.0, 'y': 63456.0, 'z': 0.0}), 'height': frozendict.frozendict({'x': 398688.0068359375, 'y': -120447.99975585938, 'z': 65536.0}), 'active': False})
-  > Door to Compression Chamber (Second Floor)
+  * Extra - entity_type_data: frozendict.frozendict({'type': 3, 'width': frozendict.frozendict({'x': 0.974365234375, 'y': 0.96826171875, 'z': 0.0}), 'height': frozendict.frozendict({'x': 448.0009765625, 'y': 22.08349609375, 'z': 24.519287109375}), 'active': True})
+  > Morph Ball Door to Compression Chamber (Upper)
+      Trivial
+  > Pickup (Battlehammer)
       Trivial
   > Player Spawn
       Trivial
@@ -291,7 +274,7 @@ Extra - entity_file: Unit3_C2_Ent.bin
 VDO Gateway
 Extra - room_id: 65
 Extra - entity_file: unit3_Land_Ent.bin
-> Samus Ship; Heals? False; Default Node
+> Ship; Heals? False; Default Node
   * Layers: default
   * Teleporter Network (Unlocked by Trivial)
   * Extra - entity_id: 0
@@ -314,7 +297,7 @@ Extra - entity_file: unit3_Land_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 13, 'target_layer_id': 0, 'locked': False, 'out_connector_id': 0, 'out_loader_id': 117, 'entity_filename': 'unit3_C0_Ent.bi', 'room_name': 'unit3_C0_Ent.bi'})
-  > Samus Ship
+  > Ship
       Trivial
 
 > Portal to Ascension; Heals? False
@@ -325,7 +308,7 @@ Extra - entity_file: unit3_Land_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.58740234375, 'y': 0.0, 'z': 0.80908203125})
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 15, 'target_index': 15, 'artifact_id': 8, 'active': False, 'invisible': False, 'entity_filename': 'unit3_C1_Ent.b', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
-  > Samus Ship
+  > Ship
       After VDO - Ascension Ship Deck Portal Unlocked
 
 > Portal to Weapons Complex; Heals? False
@@ -336,7 +319,7 @@ Extra - entity_file: unit3_Land_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.77685546875, 'y': 0.0, 'z': -0.62939453125})
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 40, 'target_index': 40, 'artifact_id': 8, 'active': False, 'invisible': False, 'entity_filename': 'unit3_RM1_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
-  > Samus Ship
+  > Ship
       After VDO - Weapons Complex Ship Deck Portal Unlocked
 
 ----------------
@@ -351,7 +334,7 @@ Extra - entity_file: Unit3_RM1_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 12, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 1, 'out_loader_id': 117, 'entity_filename': 'unit3_C0_Ent.bi', 'room_name': 'unit3_C0_Ent.bi'})
-  > Door to Cortex CPU
+  > Morph Ball Door to Cortex CPU
       Trivial
 
 > Pickup (Cartograph Artifact); Heals? False
@@ -365,9 +348,9 @@ Extra - entity_file: Unit3_RM1_Ent.bin
   > Sylux Arena
       After VDO - Weapons Complex Sylux Defeated
 
-> Door to Cortex CPU; Heals? False
+> Morph Ball Door to Cortex CPU; Heals? False
   * Layers: default
-  * Morph Ball Door to Cortex CPU/Door to Weapons Complex
+  * Morph Ball Door to Cortex CPU/Morph Ball Door to Weapons Complex
   * Extra - entity_id: 24
   * Extra - position: frozendict.frozendict({'x': 0.0, 'y': 4.0166015625, 'z': 24.68798828125})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -435,7 +418,7 @@ Extra - entity_file: Unit3_RM1_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.998046875, 'y': 0.0, 'z': 0.060546875})
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 1, 'active': True})
-  > Door to Cortex CPU
+  > Morph Ball Door to Cortex CPU
       Trivial
   > Pickup (Attameter Artifact)
       After VDO - Weapons Complex Shield Key
@@ -550,7 +533,7 @@ Extra - entity_file: Unit3_RM3_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 5, 'target_index': 5, 'artifact_id': 5, 'active': False, 'invisible': False, 'entity_filename': 'Unit3_TP2_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
-  > Door to Ascension
+  > Room Center
       Trivial
 
 > Pickup (Cartograph Artifact); Heals? False
@@ -561,7 +544,7 @@ Extra - entity_file: Unit3_RM3_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'model_id': 5, 'artifact_id': 0, 'active': True, 'has_base': False, 'message1_target': 17, 'message1': 18, 'message2_target': -1, 'message2': 0, 'message3_target': -1, 'message3': 0})
-  > Door to Weapons Complex
+  > Event - Guardians Defeated
       Trivial
 
 > Door to Weapons Complex; Heals? False
@@ -572,13 +555,7 @@ Extra - entity_file: Unit3_RM3_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 12, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 2, 'out_loader_id': 117, 'entity_filename': 'unit3_RM1_Ent.b', 'room_name': 'unit3_RM1_Ent.b'})
-  > Pickup (Cartograph Artifact)
-      Trivial
-  > Door to Ascension
-      Trivial
-  > Player Spawn
-      Trivial
-  > Pickup (UA Expansion)
+  > Room Center
       Trivial
 
 > Door to Ascension; Heals? False
@@ -589,9 +566,7 @@ Extra - entity_file: Unit3_RM3_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 15, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 4, 'out_loader_id': 117, 'entity_filename': 'unit3_C1_Ent.bi', 'room_name': 'unit3_C1_Ent.bi'})
-  > Portal to Stronghold Void B
-      Vesper Defense Outpost Attameter Artifact 2 and Vesper Defense Outpost Binary Subscripture Artifact 2 and Vesper Defense Outpost Cartograph Artifact 2
-  > Door to Weapons Complex
+  > Room Center
       Trivial
 
 > Player Spawn; Heals? False; Default Node
@@ -601,7 +576,7 @@ Extra - entity_file: Unit3_RM3_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.999755859375, 'y': 0.0, 'z': 0.002685546875})
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
-  > Door to Weapons Complex
+  > Room Center
       Trivial
 
 > Pickup (Attameter Artifact); Heals? False
@@ -612,6 +587,8 @@ Extra - entity_file: Unit3_RM3_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'model_id': 5, 'artifact_id': 1, 'active': True, 'has_base': False, 'message1_target': 36, 'message1': 18, 'message2_target': -1, 'message2': 0, 'message3_target': -1, 'message3': 0})
+  > Room Center
+      Trivial
 
 > Pickup (UA Expansion); Heals? False
   * Layers: default
@@ -621,7 +598,30 @@ Extra - entity_file: Unit3_RM3_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.70361328125, 'y': 0.0, 'z': 0.710205078125})
   * Extra - entity_type_data: frozendict.frozendict({'item_type': 18, 'enabled': True, 'has_base': True, 'always_active': False, 'max_spawn_count': 1, 'spawn_interval': 0, 'spawn_delay': 0, 'notify_entity_id': -1, 'collected_message': 0, 'collected_message_param1': 0, 'collected_message_param2': 0})
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Portal to Stronghold Void B
+      Vesper Defense Outpost Attameter Artifact 2 and Vesper Defense Outpost Binary Subscripture Artifact 2 and Vesper Defense Outpost Cartograph Artifact 2
+  > Pickup (Cartograph Artifact)
+      Trivial
   > Door to Weapons Complex
+      After VDO - Stasis Bunker Guardians Defeated
+  > Door to Ascension
+      After VDO - Stasis Bunker Guardians Defeated
+  > Player Spawn
+      Trivial
+  > Pickup (Attameter Artifact)
+      After VDO - Stasis Bunker Guardians Defeated
+  > Pickup (UA Expansion)
+      Trivial
+
+> Event - Guardians Defeated; Heals? False
+  * Layers: default
+  * Event VDO - Stasis Bunker Guardians Defeated
+  > Room Center
       Trivial
 
 ----------------
@@ -639,9 +639,9 @@ Extra - entity_file: unit3_rm4_Ent.bin
   > Player Spawn
       Trivial
 
-> Door to Cortex CPU (Left); Heals? False
+> Morph Ball Door to Cortex CPU (Lower); Heals? False
   * Layers: default
-  * Morph Ball Door to Cortex CPU/Door to Compression Chamber (First Floor)
+  * Morph Ball Door to Cortex CPU/Morph Ball Door to Compression Chamber (Lower)
   * Extra - entity_id: 1
   * Extra - position: frozendict.frozendict({'x': 11.210693359375, 'y': 0.0, 'z': -10.64892578125})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -652,9 +652,9 @@ Extra - entity_file: unit3_rm4_Ent.bin
   > Shield Key
       After VDO - Compression Chamber Force Fields Unlocked
 
-> Door to Cortex CPU (Center); Heals? False
+> Morph Ball Door to Cortex CPU (Upper); Heals? False
   * Layers: default
-  * Morph Ball Door to Cortex CPU/Door to Compression Chamber (First Floor)
+  * Morph Ball Door to Cortex CPU/Morph Ball Door to Compression Chamber (Upper)
   * Extra - entity_id: 16
   * Extra - position: frozendict.frozendict({'x': -7.92529296875, 'y': 5.0, 'z': -11.39990234375})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -684,30 +684,30 @@ Extra - entity_file: unit3_rm4_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'item_type': 18, 'enabled': True, 'has_base': False, 'always_active': False, 'max_spawn_count': 1, 'spawn_interval': 0, 'spawn_delay': 0, 'notify_entity_id': -1, 'collected_message': 0, 'collected_message_param1': 0, 'collected_message_param2': 0})
-  > Door to Cortex CPU (Left)
+  > Morph Ball Door to Cortex CPU (Lower)
       Trivial
 
-> Battlehammer Force Field Left; Heals? False
+> Battlehammer Force Field (Left); Heals? False
   * Layers: default
   * Configurable Node
   * Extra - entity_id: 53
   * Extra - position: frozendict.frozendict({'x': -0.00146484375, 'y': 6.7705078125, 'z': 3.504638671875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.999755859375, 'y': 0.0, 'z': 0.0})
-  * Extra - entity_type_data: frozendict.frozendict({'type': 3, 'width': frozendict.frozendict({'x': 89264.0, 'y': 156848.0, 'z': 16.0}), 'height': frozendict.frozendict({'x': -95.98681640625, 'y': -225712.0, 'z': 65536.0}), 'active': False})
+  * Extra - entity_type_data: frozendict.frozendict({'type': 3, 'width': frozendict.frozendict({'x': 1.362060546875, 'y': 2.393310546875, 'z': 0.000244140625}), 'height': frozendict.frozendict({'x': 864.004638671875, 'y': -0.00146484375, 'z': 6.7705078125}), 'active': True})
   > Player Spawn
       Trivial
   > Event - Scan Panels
       Trivial
 
-> Battlehammer Force Field Right; Heals? False
+> Battlehammer Force Field (Right); Heals? False
   * Layers: default
   * Configurable Node
   * Extra - entity_id: 54
   * Extra - position: frozendict.frozendict({'x': -0.00146484375, 'y': 6.7705078125, 'z': -3.444091796875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.999755859375, 'y': 0.0, 'z': 0.0})
-  * Extra - entity_type_data: frozendict.frozendict({'type': 3, 'width': frozendict.frozendict({'x': 89264.0, 'y': 156848.0, 'z': 16.0}), 'height': frozendict.frozendict({'x': -404895.9865722656, 'y': 5728.0, 'z': 65536.0}), 'active': False})
+  * Extra - entity_type_data: frozendict.frozendict({'type': 3, 'width': frozendict.frozendict({'x': 1.362060546875, 'y': 2.393310546875, 'z': 0.000244140625}), 'height': frozendict.frozendict({'x': 880.00439453125, 'y': -6.17822265625, 'z': 11.149169921875}), 'active': True})
   > Player Spawn
       Trivial
   > Event - Scan Panels
@@ -722,24 +722,24 @@ Extra - entity_file: unit3_rm4_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
   > Portal to Stronghold Void A
       Vesper Defense Outpost Attameter Artifact 1 and Vesper Defense Outpost Binary Subscripture Artifact 1 and Vesper Defense Outpost Cartograph Artifact 1
-  > Door to Cortex CPU (Center)
+  > Morph Ball Door to Cortex CPU (Upper)
       Trivial
-  > Battlehammer Force Field Left
+  > Battlehammer Force Field (Left)
       Trivial
-  > Battlehammer Force Field Right
+  > Battlehammer Force Field (Right)
       Trivial
 
 > Event - Scan Panels; Heals? False
   * Layers: default
   * Event VDO - Compression Chamber Force Fields Unlocked
-  > Battlehammer Force Field Left
+  > Battlehammer Force Field (Left)
       Trivial
-  > Battlehammer Force Field Right
+  > Battlehammer Force Field (Right)
       Trivial
 
 > Shield Key; Heals? False
   * Layers: default
-  > Door to Cortex CPU (Left)
+  > Morph Ball Door to Cortex CPU (Lower)
       After VDO - Compression Chamber Force Fields Unlocked
   > Pickup (Binary Subscripture Artifact)
       Trivial

@@ -118,7 +118,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Unlock Oubliette": {
+                        "Event - Oubliette Unlocked": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -200,7 +200,7 @@
                         }
                     }
                 },
-                "Event - Unlock Oubliette": {
+                "Event - Oubliette Unlocked": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -228,20 +228,20 @@
             }
         },
         "Biodefense Chamber B": {
-            "default_node": "Player Spawn",
+            "default_node": "Room Center",
             "hint_features": [],
             "extra": {
                 "room_id": 35,
                 "entity_file": "Unit1_b1_Ent.bin"
             },
             "nodes": {
-                "Player Spawn": {
+                "Room Center": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 0.06494140625,
-                        "y": 1.61669921875,
-                        "z": 14.279296875
+                        "x": 0.02175964652590967,
+                        "y": 1.1173985043055823,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -272,6 +272,15 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Stronghold Void B": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Slench1",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Slench 1": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -336,14 +345,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Player Spawn": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - Slench 1": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -399,7 +401,7 @@
                     "location_category": "major",
                     "hint_features": [],
                     "connections": {
-                        "Door to Stronghold Void B": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -412,8 +414,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -0.19,
-                        "y": 0.96,
+                        "x": -0.5707982116120611,
+                        "y": 1.4205676410273347,
                         "z": 0.0
                     },
                     "description": "",
@@ -436,20 +438,20 @@
             }
         },
         "Biodefense Chamber A": {
-            "default_node": "Player Spawn",
+            "default_node": "Room Center",
             "hint_features": [],
             "extra": {
                 "room_id": 44,
                 "entity_file": "Unit1_b2_Ent.bin"
             },
             "nodes": {
-                "Player Spawn": {
+                "Room Center": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 0.06787109375,
-                        "y": -0.898681640625,
-                        "z": 7.6806640625
+                        "x": 0.04692971218720646,
+                        "y": -0.492740626868221,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -480,6 +482,15 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Stronghold Void A": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Cretaphid3",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Cretaphid v3": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -544,14 +555,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Player Spawn": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - Cretaphid v3": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -607,7 +611,7 @@
                     "location_category": "major",
                     "hint_features": [],
                     "connections": {
-                        "Door to Stronghold Void A": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -620,8 +624,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 0.16,
-                        "y": -0.43,
+                        "x": 0.28435391579127167,
+                        "y": -0.21005209667776925,
                         "z": 0.0
                     },
                     "description": "",
@@ -655,9 +659,9 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 49.431884765625,
-                        "y": 5.925537109375,
-                        "z": -16.833251953125
+                        "x": 32.90529121187764,
+                        "y": 17.91484155244059,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -844,9 +848,9 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -12.15,
-                        "y": 3.58,
-                        "z": -0.86
+                        "x": -12.096615494086564,
+                        "y": 17.09213759072278,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -900,9 +904,9 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -14.24,
-                        "y": 0.08,
-                        "z": 5.13
+                        "x": -14.235645794552873,
+                        "y": -7.424440468467958,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -953,12 +957,12 @@
                         }
                     }
                 },
-                "Event - Unlock Morph Ball Door": {
+                "Event - Morph Ball Door Unlocked": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 0.34,
-                        "y": -5.81,
+                        "x": 22.87,
+                        "y": -10.63,
                         "z": 0.0
                     },
                     "description": "",
@@ -1018,7 +1022,7 @@
                                 "negate": false
                             }
                         },
-                        "Event - Unlock Morph Ball Door": {
+                        "Event - Morph Ball Door Unlocked": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1350,9 +1354,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -0.00830078125,
-                        "y": 0.1181640625,
-                        "z": 82.819580078125
+                        "x": 55.95478947498308,
+                        "y": -53.251734103536776,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -1425,9 +1429,9 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -8.827392578125,
-                        "y": 15.0009765625,
-                        "z": -4.6181640625
+                        "x": -2.8333052547131974,
+                        "y": 15.657026588510329,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -1538,7 +1542,7 @@
                                 "negate": false
                             }
                         },
-                        "Event - Deactivate Force Field": {
+                        "Event - Force Field Disabled": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1627,9 +1631,9 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 13.57,
-                        "y": 0.5,
-                        "z": -1.37
+                        "x": 12.444673084636984,
+                        "y": 5.467602744716457,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -1679,12 +1683,12 @@
                         }
                     }
                 },
-                "Event - Deactivate Force Field": {
+                "Event - Force Field Disabled": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 1.71,
-                        "y": 7.13,
+                        "x": -4.770730044123546,
+                        "y": 6.740767606328971,
                         "z": 0.0
                     },
                     "description": "",
@@ -1763,9 +1767,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 0.900146484375,
-                        "y": 116.433349609375,
-                        "z": 5.60546875
+                        "x": 0.9,
+                        "y": 116.43,
+                        "z": 5.61
                     },
                     "description": "",
                     "layers": [
@@ -1808,7 +1812,7 @@
                     "default_connection": {
                         "region": "Alinos",
                         "area": "High Ground",
-                        "node": "Portal to Magma Drop"
+                        "node": "Portal from Magma Drop"
                     },
                     "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
@@ -1822,9 +1826,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 0.99,
-                        "y": 114.47,
-                        "z": -15.31
+                        "x": 432.43755376381995,
+                        "y": 375.75836586583057,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -2673,7 +2677,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Lower Level East (South)": {
+                        "Door to High Ground (Lower Level East Door South)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -2682,14 +2686,14 @@
                                 "negate": false
                             }
                         },
-                        "Volt Driver Force Field South": {
+                        "Volt Driver Force Field (South)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Event - Unlock East Zoomer Door": {
+                        "Event - Zoomer Door East Unlocked": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2754,7 +2758,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Force Field 4": {
+                        "Judicator Force Field (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2820,12 +2824,12 @@
                     "ui_custom_name": null,
                     "connections": {}
                 },
-                "Door to Lower Level East (South)": {
+                "Door to High Ground (Lower Level East Door South)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -2.9169308687859576,
-                        "y": -1.6404958293301632,
+                        "x": -2.92,
+                        "y": -1.64,
                         "z": 0.0
                     },
                     "description": "",
@@ -2867,7 +2871,7 @@
                     "default_connection": {
                         "region": "Alinos",
                         "area": "High Ground",
-                        "node": "Door to Lower Level East (North)"
+                        "node": "Door to High Ground (Lower Level East Door North)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2887,13 +2891,13 @@
                         }
                     }
                 },
-                "Door to Lower Level North (East)": {
+                "Door to High Ground (Lower Level North Door East)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -9.72,
-                        "y": 0.11,
-                        "z": 2.7
+                        "x": -8.46,
+                        "y": -1.37,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -2934,7 +2938,7 @@
                     "default_connection": {
                         "region": "Alinos",
                         "area": "High Ground",
-                        "node": "Door to Lower Level North (West)"
+                        "node": "Door to High Ground (Lower Level North Door West)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2943,14 +2947,14 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Volt Driver Force Field North": {
+                        "Volt Driver Force Field (North)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Lower Level East (North)": {
+                        "Door to High Ground (Lower Level East Door North)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -3030,9 +3034,9 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -11.11,
-                        "y": 9.39,
-                        "z": -14.77
+                        "x": -9.14360008022463,
+                        "y": 8.432920176494184,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -3073,7 +3077,7 @@
                     "location_category": "major",
                     "hint_features": [],
                     "connections": {
-                        "Force Field 4": {
+                        "Judicator Force Field (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3082,13 +3086,13 @@
                         }
                     }
                 },
-                "Force Field 0": {
+                "Volt Driver Force Field (Upper)": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": 14.21826171875,
-                        "y": 11.351318359375,
-                        "z": -0.24560546875
+                        "x": 13.81,
+                        "y": 9.02,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -3114,16 +3118,16 @@
                         "entity_type_data": {
                             "type": 1,
                             "width": {
-                                "x": 124544.0,
-                                "y": 127264.0,
-                                "z": 16.0
+                                "x": 1.900390625,
+                                "y": 1.94189453125,
+                                "z": 0.000244140625
                             },
                             "height": {
-                                "x": 1520.010009765625,
-                                "y": -64112.0,
-                                "z": 0.0
+                                "x": 656.004638671875,
+                                "y": 0.023193359375,
+                                "z": 4.343017578125
                             },
-                            "active": false
+                            "active": true
                         }
                     },
                     "valid_starting_location": false,
@@ -3137,7 +3141,7 @@
                         }
                     }
                 },
-                "Volt Driver Force Field East": {
+                "Volt Driver Force Field (East)": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
@@ -3169,16 +3173,16 @@
                         "entity_type_data": {
                             "type": 1,
                             "width": {
-                                "x": 65536.0,
-                                "y": 100640.0,
-                                "z": 16.0
+                                "x": 1.0,
+                                "y": 1.53564453125,
+                                "z": 0.000244140625
                             },
                             "height": {
-                                "x": -309055.998046875,
-                                "y": -14096.0,
-                                "z": 65536.0
+                                "x": 128.004638671875,
+                                "y": 11.2841796875,
+                                "z": 1.62255859375
                             },
-                            "active": false
+                            "active": true
                         }
                     },
                     "valid_starting_location": false,
@@ -3190,7 +3194,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Lower Level East (North)": {
+                        "Door to High Ground (Lower Level East Door North)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3199,13 +3203,13 @@
                         }
                     }
                 },
-                "Volt Driver Force Field South": {
+                "Volt Driver Force Field (South)": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": 11.28,
-                        "y": 1.62,
-                        "z": -0.22
+                        "x": 12.25,
+                        "y": 3.11,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -3231,16 +3235,16 @@
                         "entity_type_data": {
                             "type": 1,
                             "width": {
-                                "x": 65536.0,
-                                "y": 100640.0,
-                                "z": 16.0
+                                "x": 1.0,
+                                "y": 1.53564453125,
+                                "z": 0.000244140625
                             },
                             "height": {
-                                "x": -443199.9978027344,
-                                "y": -14096.0,
-                                "z": 65536.0
+                                "x": 144.004638671875,
+                                "y": -6.7626953125,
+                                "z": 1.91650390625
                             },
-                            "active": false
+                            "active": true
                         }
                     },
                     "valid_starting_location": false,
@@ -3261,7 +3265,7 @@
                         }
                     }
                 },
-                "Volt Driver Force Field North": {
+                "Volt Driver Force Field (North)": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
@@ -3293,21 +3297,21 @@
                         "entity_type_data": {
                             "type": 1,
                             "width": {
-                                "x": 65536.0,
-                                "y": 98720.0,
-                                "z": 16.0
+                                "x": 1.0,
+                                "y": 1.50634765625,
+                                "z": 0.000244140625
                             },
                             "height": {
-                                "x": 174240.01391601562,
-                                "y": -323568.0002441406,
-                                "z": 65520.0
+                                "x": 912.00341796875,
+                                "y": -13.34130859375,
+                                "z": -2.190673828125
                             },
                             "active": false
                         }
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Lower Level North (East)": {
+                        "Door to High Ground (Lower Level North Door East)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3372,7 +3376,7 @@
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Magma Drop",
-                        "node": "Portal to High Ground"
+                        "node": "Portal from High Ground"
                     },
                     "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
@@ -3380,15 +3384,23 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Judicator Force Field (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Portal from Magma Drop": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -9.54,
-                        "y": 0.79,
-                        "z": 4.26
+                        "x": -9.86,
+                        "y": 5.83,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -3440,7 +3452,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Lower Level North (West)": {
+                        "Judicator Force Field (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3449,13 +3461,13 @@
                         }
                     }
                 },
-                "Force Field 4": {
+                "Judicator Force Field (Upper)": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": -13.25732421875,
-                        "y": 13.150390625,
-                        "z": -18.60107421875
+                        "x": -10.39,
+                        "y": 16.25,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -3481,16 +3493,16 @@
                         "entity_type_data": {
                             "type": 5,
                             "width": {
-                                "x": 69744.0,
-                                "y": 247664.0,
-                                "z": 16.0
+                                "x": 1.064208984375,
+                                "y": 3.779052734375,
+                                "z": 0.000244140625
                             },
                             "height": {
-                                "x": 194096.01831054688,
-                                "y": -490160.0002441406,
-                                "z": 64175.999755859375
+                                "x": 1200.000244140625,
+                                "y": -13.038330078125,
+                                "z": -0.219482421875
                             },
-                            "active": false
+                            "active": true
                         }
                     },
                     "valid_starting_location": false,
@@ -3518,14 +3530,14 @@
                                 "items": []
                             }
                         },
-                        "Event - Activate Upper Platform": {
+                        "Event - Upper Platform Activated": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Event - Activate Lower Platform": {
+                        "Event - Lower Platform Activated": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3534,13 +3546,13 @@
                         }
                     }
                 },
-                "Judicator Force Field (Magma Drop)": {
+                "Judicator Force Field (Lower)": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": -11.38,
-                        "y": 0.53,
-                        "z": 11.09
+                        "x": -12.81,
+                        "y": 1.35,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -3566,16 +3578,16 @@
                         "entity_type_data": {
                             "type": 5,
                             "width": {
-                                "x": 54272.0,
-                                "y": 52928.0,
-                                "z": 16.0
+                                "x": 0.828125,
+                                "y": 0.8076171875,
+                                "z": 0.000244140625
                             },
                             "height": {
-                                "x": -122319.98095703125,
-                                "y": -7792.0,
-                                "z": 65536.0
+                                "x": 1248.001708984375,
+                                "y": 14.133544921875,
+                                "z": 2.20703125
                             },
-                            "active": false
+                            "active": true
                         }
                     },
                     "valid_starting_location": false,
@@ -3587,7 +3599,21 @@
                                 "items": []
                             }
                         },
-                        "Door to Lower Level North (West)": {
+                        "Portal from Magma Drop": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Lower Level": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to High Ground (Lower Level North Door West)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3733,28 +3759,35 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Volt Driver Force Field East": {
+                        "Volt Driver Force Field (East)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Volt Driver Force Field South": {
+                        "Volt Driver Force Field (South)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Volt Driver Force Field North": {
+                        "Volt Driver Force Field (North)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Lower Level North (West)": {
+                        "Judicator Force Field (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to High Ground (Lower Level North Door West)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3770,7 +3803,7 @@
                         }
                     }
                 },
-                "Door to Lower Level East (North)": {
+                "Door to High Ground (Lower Level East Door North)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3817,7 +3850,7 @@
                     "default_connection": {
                         "region": "Alinos",
                         "area": "High Ground",
-                        "node": "Door to Lower Level East (South)"
+                        "node": "Door to High Ground (Lower Level East Door South)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3826,7 +3859,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Lower Level North (East)": {
+                        "Door to High Ground (Lower Level North Door East)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -3835,14 +3868,14 @@
                                 "negate": false
                             }
                         },
-                        "Volt Driver Force Field East": {
+                        "Volt Driver Force Field (East)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Event - Unlock North Zoomer Door": {
+                        "Event - Zoomer Door North Unlocked": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -3853,12 +3886,12 @@
                         }
                     }
                 },
-                "Door to Lower Level North (West)": {
+                "Door to High Ground (Lower Level North Door West)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -12.543437850022402,
-                        "y": 2.725528805093525,
+                        "x": -7.793620136381869,
+                        "y": 2.956586442037704,
                         "z": 0.0
                     },
                     "description": "",
@@ -3900,7 +3933,7 @@
                     "default_connection": {
                         "region": "Alinos",
                         "area": "High Ground",
-                        "node": "Door to Lower Level North (East)"
+                        "node": "Door to High Ground (Lower Level North Door East)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3909,7 +3942,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Judicator Force Field (Magma Drop)": {
+                        "Judicator Force Field (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3925,7 +3958,7 @@
                         }
                     }
                 },
-                "Event - Unlock East Zoomer Door": {
+                "Event - Zoomer Door East Unlocked": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -3950,7 +3983,7 @@
                         }
                     }
                 },
-                "Event - Unlock North Zoomer Door": {
+                "Event - Zoomer Door North Unlocked": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -3966,7 +3999,7 @@
                     "valid_starting_location": false,
                     "event_name": "AlinosHighGroundZoomers2",
                     "connections": {
-                        "Door to Lower Level East (North)": {
+                        "Door to High Ground (Lower Level East Door North)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3997,14 +4030,14 @@
                                 "items": []
                             }
                         },
-                        "Force Field 0": {
+                        "Volt Driver Force Field (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Force Field 4": {
+                        "Judicator Force Field (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4034,7 +4067,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Spire": {
+                        "Event - Spire Defeated": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -4045,7 +4078,7 @@
                         }
                     }
                 },
-                "Event - Spire": {
+                "Event - Spire Defeated": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -4070,12 +4103,12 @@
                         }
                     }
                 },
-                "Event - Activate Upper Platform": {
+                "Event - Upper Platform Activated": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -0.8754296604296616,
-                        "y": 16.342144452144453,
+                        "x": -0.88,
+                        "y": 16.34,
                         "z": 0.0
                     },
                     "description": "",
@@ -4086,7 +4119,7 @@
                     "valid_starting_location": false,
                     "event_name": "AlinosHighGroundUpperPlatform",
                     "connections": {
-                        "Force Field 4": {
+                        "Judicator Force Field (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4095,12 +4128,12 @@
                         }
                     }
                 },
-                "Event - Activate Lower Platform": {
+                "Event - Lower Platform Activated": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -12.243528528528529,
-                        "y": 7.736615846615848,
+                        "x": -12.89,
+                        "y": 10.9,
                         "z": 0.0
                     },
                     "description": "",
@@ -4296,7 +4329,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Force Field 0": {
+                        "Magmaul Force Field": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4353,7 +4386,7 @@
                     "location_category": "minor",
                     "hint_features": [],
                     "connections": {
-                        "Force Field 0": {
+                        "Magmaul Force Field": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4427,13 +4460,13 @@
                         }
                     }
                 },
-                "Force Field 0": {
+                "Magmaul Force Field": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": 24.6640625,
-                        "y": 23.06884765625,
-                        "z": 7.53466796875
+                        "x": 24.66,
+                        "y": 23.07,
+                        "z": 7.53
                     },
                     "description": "",
                     "layers": [
@@ -4459,16 +4492,16 @@
                         "entity_type_data": {
                             "type": 6,
                             "width": {
-                                "x": 107392.0,
-                                "y": 158224.0,
-                                "z": 16.0
+                                "x": 1.638671875,
+                                "y": 2.414306640625,
+                                "z": 0.000244140625
                             },
                             "height": {
-                                "x": -466863.99267578125,
-                                "y": -414720.0,
-                                "z": 65536.0
+                                "x": 480.002197265625,
+                                "y": -55.123779296875,
+                                "z": 13.166015625
                             },
-                            "active": false
+                            "active": true
                         }
                     },
                     "valid_starting_location": false,
@@ -4488,6 +4521,13 @@
                             }
                         },
                         "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Force Field Platform Moved": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4618,21 +4658,21 @@
                                 "negate": false
                             }
                         },
-                        "Force Field 0": {
+                        "Magmaul Force Field": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Event - Defeat Guardian": {
+                        "Event - Guardian Defeated": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Event - Deactivate Security System": {
+                        "Event - Security System Disabled": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -4641,7 +4681,7 @@
                                 "negate": false
                             }
                         },
-                        "Event - Entrance Platforms": {
+                        "Event - Entrance Platforms Moved": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4650,7 +4690,7 @@
                         }
                     }
                 },
-                "Event - Defeat Guardian": {
+                "Event - Guardian Defeated": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -4675,7 +4715,7 @@
                         }
                     }
                 },
-                "Event - Force Field Platform": {
+                "Event - Force Field Platform Moved": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -4691,7 +4731,7 @@
                     "valid_starting_location": false,
                     "event_name": "AlinosAlinosPerchForceFieldPlatform",
                     "connections": {
-                        "Force Field 0": {
+                        "Magmaul Force Field": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4700,7 +4740,7 @@
                         }
                     }
                 },
-                "Event - Deactivate Security System": {
+                "Event - Security System Disabled": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -4725,7 +4765,7 @@
                         }
                     }
                 },
-                "Event - Entrance Platforms": {
+                "Event - Entrance Platforms Moved": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -4983,7 +5023,7 @@
                     "location_category": "minor",
                     "hint_features": [],
                     "connections": {
-                        "Force Field 0": {
+                        "Magmaul Force Field (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5052,9 +5092,9 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 24.42,
-                        "y": 5.76,
-                        "z": -10.35
+                        "x": 44.08445911834386,
+                        "y": 6.897090856229383,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -5105,13 +5145,13 @@
                         }
                     }
                 },
-                "Force Field 0": {
+                "Magmaul Force Field (Upper)": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": 16.88525390625,
-                        "y": 7.91357421875,
-                        "z": -8.39306640625
+                        "x": 16.89,
+                        "y": 7.91,
+                        "z": -8.39
                     },
                     "description": "",
                     "layers": [
@@ -5137,20 +5177,27 @@
                         "entity_type_data": {
                             "type": 6,
                             "width": {
-                                "x": 105024.0,
-                                "y": 268608.0,
-                                "z": 16.0
+                                "x": 1.6025390625,
+                                "y": 4.0986328125,
+                                "z": 0.000244140625
                             },
                             "height": {
-                                "x": 215152.00561523438,
-                                "y": -507664.0,
-                                "z": 65536.0
+                                "x": 368.004638671875,
+                                "y": 19.282958984375,
+                                "z": 2.516357421875
                             },
-                            "active": false
+                            "active": true
                         }
                     },
                     "valid_starting_location": false,
                     "connections": {
+                        "Door to Alinos Perch": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
@@ -5167,12 +5214,12 @@
                         }
                     }
                 },
-                "Force Field 1": {
+                "Magmaul Force Field (Jump Pad)": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": 18.968540822043714,
-                        "y": 2.058879125012588,
+                        "x": 20.07,
+                        "y": 0.1,
                         "z": 0.0
                     },
                     "description": "",
@@ -5199,16 +5246,16 @@
                         "entity_type_data": {
                             "type": 6,
                             "width": {
-                                "x": 150144.0,
-                                "y": 177312.0,
-                                "z": 16.0
+                                "x": 2.291015625,
+                                "y": 2.70556640625,
+                                "z": 0.000244140625
                             },
                             "height": {
-                                "x": -249311.994140625,
-                                "y": -507664.0,
-                                "z": 65536.0
+                                "x": 384.004638671875,
+                                "y": 28.19580078125,
+                                "z": 2.516357421875
                             },
-                            "active": false
+                            "active": true
                         }
                     },
                     "valid_starting_location": false,
@@ -5220,7 +5267,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Deactivate Lower Force Fields": {
+                        "Event - Lower Force Fields Disabled": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5229,13 +5276,13 @@
                         }
                     }
                 },
-                "Force Field 2": {
+                "Magmaul Force Field (Entrance)": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": 13.855224609375,
-                        "y": 2.67236328125,
-                        "z": 1.6982421875
+                        "x": 13.86,
+                        "y": 2.67,
+                        "z": 1.7
                     },
                     "description": "",
                     "layers": [
@@ -5261,16 +5308,16 @@
                         "entity_type_data": {
                             "type": 6,
                             "width": {
-                                "x": 145440.0,
-                                "y": 182704.0,
+                                "x": 2.21923828125,
+                                "y": 2.787841796875,
                                 "z": 0.0
                             },
                             "height": {
-                                "x": 346400.0065917969,
-                                "y": -174000.0,
-                                "z": 0.0
+                                "x": 432.004638671875,
+                                "y": 37.28564453125,
+                                "z": 13.603515625
                             },
-                            "active": false
+                            "active": true
                         }
                     },
                     "valid_starting_location": false,
@@ -5351,7 +5398,7 @@
                         }
                     }
                 },
-                "Event - Defeat Fire Spawn": {
+                "Event - Fire Spawn Defeated": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -5391,28 +5438,28 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Force Field 0": {
+                        "Magmaul Force Field (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Force Field 1": {
+                        "Magmaul Force Field (Jump Pad)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Force Field 2": {
+                        "Magmaul Force Field (Entrance)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Event - Defeat Fire Spawn": {
+                        "Event - Fire Spawn Defeated": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5447,12 +5494,12 @@
                         }
                     }
                 },
-                "Event - Unlock Portal": {
+                "Event - Portal Unlocked": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 48.89,
-                        "y": 8.5,
+                        "x": 43.03,
+                        "y": 11.81,
                         "z": 0.0
                     },
                     "description": "",
@@ -5538,14 +5585,14 @@
                                 ]
                             }
                         },
-                        "Event - Unlock Portal": {
+                        "Event - Portal Unlocked": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Event - Deactivate Artifact Force Field": {
+                        "Event - Artifact Force Fields Disabled": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5554,7 +5601,7 @@
                         }
                     }
                 },
-                "Event - Deactivate Artifact Force Field": {
+                "Event - Artifact Force Fields Disabled": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -5579,12 +5626,12 @@
                         }
                     }
                 },
-                "Event - Deactivate Lower Force Fields": {
+                "Event - Lower Force Fields Disabled": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 24.3,
-                        "y": -0.5,
+                        "x": 31.505080169787906,
+                        "y": -1.2290043039691732,
                         "z": 0.0
                     },
                     "description": "",
@@ -5595,7 +5642,7 @@
                     "valid_starting_location": false,
                     "event_name": "AlinosCouncilChamberJumpPadForceField",
                     "connections": {
-                        "Force Field 1": {
+                        "Magmaul Force Field (Jump Pad)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5618,9 +5665,9 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -2.0341796875,
-                        "y": 6.593505859375,
-                        "z": 24.231689453125
+                        "x": -1.8874069562744435,
+                        "y": 4.62978189516584,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -5810,9 +5857,9 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -0.056640625,
-                        "y": 13.37451171875,
-                        "z": 9.306640625
+                        "x": -0.11114643633503185,
+                        "y": 11.981367324280468,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -6233,9 +6280,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 14.27,
-                        "y": 12.04,
-                        "z": -7.73
+                        "x": 15.563600080224628,
+                        "y": 12.28616836713109,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -6401,7 +6448,7 @@
                                 "negate": false
                             }
                         },
-                        "Event - Unlock Ship Portal": {
+                        "Event - Ship Deck Portal Unlocked": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6421,9 +6468,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 22.73,
-                        "y": 17.34,
-                        "z": 0.05
+                        "x": 17.65,
+                        "y": 19.18,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -6488,9 +6535,9 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 23.92,
-                        "y": 12.04,
-                        "z": -13.09
+                        "x": 23.298048535900524,
+                        "y": 11.94482861582744,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -6677,7 +6724,7 @@
                         }
                     }
                 },
-                "Event - Unlock Ship Portal": {
+                "Event - Ship Deck Portal Unlocked": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -6692,7 +6739,15 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "AlinosElderPassagePortal",
-                    "connections": {}
+                    "connections": {
+                        "Door to High Ground (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Small Arena": {
                     "node_type": "generic",
@@ -6741,9 +6796,9 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 0.358642578125,
-                        "y": 0.2236328125,
-                        "z": 62.451416015625
+                        "x": -0.04698442437441275,
+                        "y": 0.6562143036339569,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -6786,9 +6841,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 0.37109375,
-                        "y": 0.222412109375,
-                        "z": 65.701904296875
+                        "x": 0.37,
+                        "y": 0.22,
+                        "z": 65.7
                     },
                     "description": "",
                     "layers": [
@@ -6827,13 +6882,13 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Elder Passage",
                         "node": "Portal to Stronghold Void B"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6935,9 +6990,9 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 0.358642578125,
-                        "y": 0.2236328125,
-                        "z": 62.451171875
+                        "x": 0.01919813951874634,
+                        "y": 0.5263003819177556,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -6980,9 +7035,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 0.37109375,
-                        "y": 0.222412109375,
-                        "z": 65.701904296875
+                        "x": 0.37,
+                        "y": 0.22,
+                        "z": 65.7
                     },
                     "description": "",
                     "layers": [
@@ -7021,13 +7076,13 @@
                         }
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
+                    "dock_type": "Portal",
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Processor Core",
                         "node": "Portal to Stronghold Void A"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
