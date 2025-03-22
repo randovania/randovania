@@ -100,6 +100,7 @@ class ResolverReach:
         path_to_node: dict[int, list[int]] = {
             initial_state.node.node_index: [],
         }
+        satisfied_requirement_on_node: dict[int, Requirement] = {initial_state.node.node_index: Requirement.trivial()}
 
         while nodes_to_check:
             node_index = next(iter(nodes_to_check))
@@ -143,12 +144,24 @@ class ResolverReach:
                     )
                     path_to_node[target_node_index] = list(path_to_node[node_index])
                     path_to_node[target_node_index].append(node_index)
+                    satisfied_requirement_on_node[target_node_index] = (
+                        requirement_including_leaving
+                        if node.heal
+                        else RequirementAnd(
+                            [requirement_including_leaving, satisfied_requirement_on_node[node.node_index]]
+                        )
+                    )
 
                 elif target_node:
                     # If we can't go to this node, store the reason in order to build the satisfiable requirements.
                     # Note we ignore the 'additional requirements' here because it'll be added on the end.
                     if not requirement.satisfied(context, damage_health):
-                        requirements_excluding_leaving_by_node[target_node_index].append(requirement)
+                        full_requirement_for_target = (
+                            requirement
+                            if node.heal
+                            else RequirementAnd([requirement, satisfied_requirement_on_node[node.node_index]])
+                        )
+                        requirements_excluding_leaving_by_node[target_node_index].append(full_requirement_for_target)
 
         # Discard satisfiable requirements of nodes reachable by other means
         for node_index in set(reach_nodes.keys()).intersection(requirements_excluding_leaving_by_node.keys()):
