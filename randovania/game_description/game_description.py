@@ -315,13 +315,6 @@ class GameDescription(GameDatabaseView):
             if (feature in area.hint_features) or (feature in node.hint_features)
         )
 
-    @override
-    def iterate_nodes_of_type[NodeT: Node](self, node_type: type[NodeT]) -> Iterator[tuple[Region, Area, NodeT]]:
-        """
-        Iterates over only the nodes that are of the given type.
-        """
-        yield from ((region, area, node) for region, area, node in self.node_iterator() if isinstance(node, node_type))
-
 
 def _resources_for_damage(
     resource: SimpleResourceInfo, database: ResourceDatabase, collection: ResourceCollection

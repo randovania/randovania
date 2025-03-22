@@ -172,11 +172,12 @@ class GameDatabaseView(ABC):
         Iterates over all nodes in the database, including the region and area they belong to
         """
 
-    @abc.abstractmethod
+    @final
     def iterate_nodes_of_type[NodeT: Node](self, node_type: type[NodeT]) -> Iterator[tuple[Region, Area, NodeT]]:
         """
         Iterates over only the nodes that are of the given type.
         """
+        yield from ((region, area, node) for region, area, node in self.node_iterator() if isinstance(node, node_type))
 
     @abc.abstractmethod
     def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
@@ -275,10 +276,6 @@ class GameDatabaseViewProxy(GameDatabaseView):
     @override
     def node_iterator(self) -> Iterator[tuple[Region, Area, Node]]:
         return self._original.node_iterator()
-
-    @override
-    def iterate_nodes_of_type[NodeT: Node](self, node_type: type[NodeT]) -> Iterator[tuple[Region, Area, NodeT]]:
-        return self._original.iterate_nodes_of_type(node_type)
 
     @override
     def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
