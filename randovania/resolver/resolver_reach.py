@@ -150,6 +150,8 @@ class ResolverReach:
                         else RequirementAnd(
                             [requirement_including_leaving, satisfied_requirement_on_node[node.node_index]]
                         )
+                        .isolate_damage_requirements(context)
+                        .simplify()
                     )
 
                 elif target_node:
@@ -160,6 +162,8 @@ class ResolverReach:
                             requirement
                             if node.heal
                             else RequirementAnd([requirement, satisfied_requirement_on_node[node.node_index]])
+                            .isolate_damage_requirements(context)
+                            .simplify()
                         )
                         requirements_excluding_leaving_by_node[target_node_index].append(full_requirement_for_target)
 
