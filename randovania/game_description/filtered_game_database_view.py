@@ -5,7 +5,7 @@ import typing
 from randovania.game_description.game_database_view import GameDatabaseView, GameDatabaseViewProxy
 
 if typing.TYPE_CHECKING:
-    from collections.abc import Iterable
+    from collections.abc import Iterator
 
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
@@ -19,7 +19,7 @@ class LayerFilteredGameDatabaseView(GameDatabaseViewProxy):
         self.enabled_layers = enabled_layers
 
     @typing.override
-    def node_iterator(self) -> Iterable[tuple[Region, Area, Node]]:
+    def node_iterator(self) -> Iterator[tuple[Region, Area, Node]]:
         for entry in super().node_iterator():
             if self.enabled_layers.intersection(entry[2].layers):
                 yield entry

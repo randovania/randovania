@@ -5,7 +5,7 @@ from abc import ABC
 from typing import TYPE_CHECKING, override
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Iterator, Sequence
+    from collections.abc import Iterator, Sequence
 
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.dock import DockType, DockWeakness
@@ -32,6 +32,7 @@ class ResourceDatabaseView(ABC):
     An interface for giving access to a database of resources.
     """
 
+    @abc.abstractmethod
     def get_item(self, short_name: str) -> ItemResourceInfo:
         """
         Gets a ItemResourceInfo, using internal name
@@ -39,13 +40,23 @@ class ResourceDatabaseView(ABC):
         """
         raise NotImplementedError
 
+    @abc.abstractmethod
     def get_event(self, short_name: str) -> SimpleResourceInfo:
         """
-        Gets a ResourceInfo of type Event, using internal name
+        Gets a ResourceInfo of type EVENT, using internal name
         Raises KeyError if it doesn't exist.
         """
         raise NotImplementedError
 
+    @abc.abstractmethod
+    def get_misc(self, short_name: str) -> SimpleResourceInfo:
+        """
+        Gets a ResourceInfo of type MISC, using internal name
+        Raises KeyError if it doesn't exist.
+        """
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def get_trick(self, short_name: str) -> TrickResourceInfo:
         """
         Gets a TrickResourceInfo using internal name
@@ -53,12 +64,14 @@ class ResourceDatabaseView(ABC):
         """
         raise NotImplementedError
 
+    @abc.abstractmethod
     def get_all_tricks(self) -> Sequence[TrickResourceInfo]:
         """
         Gets a list of all TrickResourceInfo
         """
         raise NotImplementedError
 
+    @abc.abstractmethod
     def get_damage(self, short_name: str) -> SimpleResourceInfo:
         """
         Gets a ResourceInfo of type Damage, using internal name
@@ -66,12 +79,14 @@ class ResourceDatabaseView(ABC):
         """
         raise NotImplementedError
 
+    @abc.abstractmethod
     def get_damage_reduction(self, resource: SimpleResourceInfo, current_resources: ResourceCollection) -> float:
         """
         Gets the damage reduction for given resource with the given current resources.
         """
         raise NotImplementedError
 
+    @abc.abstractmethod
     def get_template_requirement(self, name: str) -> NamedRequirementTemplate:
         """
         Gets a RequirementTemplate, using internal name.
@@ -79,12 +94,14 @@ class ResourceDatabaseView(ABC):
         """
         raise NotImplementedError
 
+    @abc.abstractmethod
     def get_all_resources_of_type(self, resource_type: ResourceType) -> Sequence[ResourceInfo]:
         """
         Gets a list of all resources of the given type.
         """
         raise NotImplementedError
 
+    @abc.abstractmethod
     def get_pickup_model(self, name: str) -> PickupModel:
         """
         Gets a model with the given name.
@@ -110,6 +127,10 @@ class ResourceDatabaseViewProxy(ResourceDatabaseView):
         return self._original.get_event(short_name)
 
     @override
+    def get_misc(self, short_name: str) -> SimpleResourceInfo:
+        return self._original.get_misc(short_name)
+
+    @override
     def get_trick(self, short_name: str) -> TrickResourceInfo:
         return self._original.get_trick(short_name)
 
@@ -133,6 +154,10 @@ class ResourceDatabaseViewProxy(ResourceDatabaseView):
     def get_all_resources_of_type(self, resource_type: ResourceType) -> Sequence[ResourceInfo]:
         return self._original.get_all_resources_of_type(resource_type)
 
+    @override
+    def get_pickup_model(self, name: str) -> PickupModel:
+        return self._original.get_pickup_model(name)
+
 
 class GameDatabaseView(ABC):
     """
@@ -142,7 +167,7 @@ class GameDatabaseView(ABC):
     """
 
     @abc.abstractmethod
-    def node_iterator(self) -> Iterable[tuple[Region, Area, Node]]:
+    def node_iterator(self) -> Iterator[tuple[Region, Area, Node]]:
         """
         Iterates over all nodes in the database, including the region and area they belong to
         """
@@ -239,7 +264,7 @@ class GameDatabaseViewProxy(GameDatabaseView):
         self._original = original
 
     @override
-    def node_iterator(self) -> Iterable[tuple[Region, Area, Node]]:
+    def node_iterator(self) -> Iterator[tuple[Region, Area, Node]]:
         return self._original.node_iterator()
 
     @override
