@@ -8,18 +8,18 @@ from randovania.generator.pickup_pool.pickup_creator import create_generated_pic
 from randovania.layout.exceptions import InvalidConfiguration
 
 if TYPE_CHECKING:
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_description import GameDatabaseView
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDescription) -> None:
+def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDatabaseView) -> None:
     assert isinstance(configuration, AM2RConfiguration)
 
     results.extend_with(artifact_pool(game, configuration.artifacts))
 
 
-def artifact_pool(game: GameDescription, config: AM2RArtifactConfig) -> PoolResults:
+def artifact_pool(game: GameDatabaseView, config: AM2RArtifactConfig) -> PoolResults:
     # Check whether we have valid artifact requirements in configuration
     max_artifacts = 0
     if config.prefer_anywhere:
@@ -32,7 +32,7 @@ def artifact_pool(game: GameDescription, config: AM2RArtifactConfig) -> PoolResu
         raise InvalidConfiguration("More Metroid DNA than allowed!")
 
     keys: list[PickupEntry] = [
-        create_generated_pickup("Metroid DNA", game.resource_database, game.get_pickup_database(), i=i + 1)
+        create_generated_pickup("Metroid DNA", game.get_resource_database_view(), game.get_pickup_database(), i=i + 1)
         for i in range(46)
     ]
     keys_to_shuffle = keys[: config.placed_artifacts]
