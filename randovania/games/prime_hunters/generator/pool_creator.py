@@ -29,10 +29,10 @@ def add_alimbic_artifacts(
     """
     item_pool: list[PickupEntry] = []
 
-    for region in ("Celestial Archives", "Alinos", "Arcterra", "Vesper Defense Outpost"):
+    for region in ("Celestial", "Alinos", "Arcterra", "VDO"):
         for artifact_type in ("Attameter", "Cartograph", "Binary Subscripture"):
-            for i in range(1, 4):
-                artifact = f"{region} {artifact_type} Artifact {i}"
+            for i in range(2):
+                artifact = f"{region} {artifact_type} Artifact"
                 item_pool.append(create_generated_pickup(artifact, resource_database, i=i + 1))
 
     return PoolResults(item_pool, {}, [])
