@@ -49,6 +49,16 @@ def _is_requirement_viable_as_additional(requirement: Requirement) -> bool:
 def _combine_damage_requirements(
     heal: bool, requirement: Requirement, satisfied_requirement: Requirement, context: NodeContext
 ) -> Requirement:
+    """
+    Helper function combining damage requirements from requirement and satisfied_requirement. Other requirements are
+    considered either trivial or impossible. The heal argument can be used to ignore the damage requirements from the
+    satisfied requirement, which is relevant when requirement comes from a connection out of a heal node.
+    :param heal:
+    :param requirement:
+    :param satisfied_requirement:
+    :param context:
+    :return:
+    """
     return (
         requirement
         if heal
