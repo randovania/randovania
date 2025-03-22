@@ -31,7 +31,7 @@ class PickupNode(ResourceNode):
     What kind of Pickup should be assigned here, in major/minor mode.
     """
 
-    custom_index_group: str | None
+    custom_index_group: str | None = None
     """
     The generator groups pickup indices and weights them based on how many indices in the group are unassigned.
     Defaults to the region name.
