@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, NamedTuple
 
-from randovania.game_description import filtered_game_database_view
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.filtered_game_database_view import LayerFilteredGameDatabaseView
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.generator.pickup_pool import PoolResults
 from randovania.generator.pickup_pool.ammo_pickup import add_ammo_pickups
@@ -56,7 +56,7 @@ def calculate_pool_pickup_count(configuration: BaseConfiguration) -> dict[Locati
     :return:
     """
 
-    view = filtered_game_database_view.filter_view_for_configuration(
+    view = LayerFilteredGameDatabaseView.create_for_configuration(
         configuration.game_enum().game_description,
         configuration,
     )
