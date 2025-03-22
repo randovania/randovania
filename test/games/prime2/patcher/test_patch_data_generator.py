@@ -224,7 +224,7 @@ def test_create_elevators_field_elevators_for_a_seed(
 
     if not vanilla_gateway:
         add(
-            "Temple Grounds",
+            "Sky Temple Grounds",
             "Sky Temple Gateway",
             "Elevator to Great Temple",
             "Great Temple",
