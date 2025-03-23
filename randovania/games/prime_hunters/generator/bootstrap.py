@@ -10,9 +10,21 @@ from randovania.resolver.bootstrap import Bootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
+    from random import Random
+
+    from randovania.game_description.db.pickup_node import PickupNode
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
+    from randovania.generator.pickup_pool import PoolResults
     from randovania.resolver.damage_state import DamageState
+
+
+def is_boss_location(node: PickupNode, config: HuntersConfiguration) -> bool:
+    octolith = node.extra.get("entity_type_data", {}).get("model_id")
+    if octolith is not None and octolith == 8 and config.octoliths:
+        return True
+
+    return False
 
 
 class HuntersBootstrap(Bootstrap[HuntersConfiguration]):
@@ -23,6 +35,14 @@ class HuntersBootstrap(Bootstrap[HuntersConfiguration]):
             game.resource_database,
             game.region_list,
         )
+
+    def assign_pool_results(
+        self, rng: Random, configuration: HuntersConfiguration, patches: GamePatches, pool_results: PoolResults
+    ) -> GamePatches:
+        locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_boss_location)
+        self.pre_place_pickups(rng, locations, pool_results, "octolith", patches.game.game)
+
+        return super().assign_pool_results(rng, configuration, patches, pool_results)
 
     def apply_game_specific_patches(
         self, configuration: HuntersConfiguration, game: GameDescription, patches: GamePatches

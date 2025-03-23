@@ -2,7 +2,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.games.prime_hunters.layout.prime_hunters_configuration import HuntersConfiguration
+from randovania.games.prime_hunters.layout.prime_hunters_configuration import (
+    HuntersConfiguration,
+    HuntersOctolithConfig,
+)
 from randovania.generator.pickup_pool import PoolResults
 from randovania.generator.pickup_pool.pickup_creator import create_generated_pickup
 
@@ -20,7 +23,7 @@ def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: G
     results.extend_with(add_alimbic_artifacts(game.resource_database))
 
     # Add Octoliths to the item pool
-    results.extend_with(add_octoliths(game.resource_database))
+    results.extend_with(add_octoliths(game, configuration.octoliths))
 
 
 def add_alimbic_artifacts(
@@ -42,22 +45,18 @@ def add_alimbic_artifacts(
 
 
 def add_octoliths(
-    resource_database: ResourceDatabase,
+    game: GameDescription,
+    config: HuntersOctolithConfig,
 ) -> PoolResults:
     """
     :param resource_database:
     :return:
     """
-    item_pool: list[PickupEntry] = []
-    octoliths_to_place: int = 8
-
-    for key_number in range(octoliths_to_place):
-        item_pool.append(create_generated_pickup("Octolith", resource_database, i=key_number + 1))
-    first_automatic_key = octoliths_to_place
-
-    starting = [
-        create_generated_pickup("Octolith", resource_database, i=automatic_key_number + 1)
-        for automatic_key_number in range(first_automatic_key, 8)
+    octoliths: list[PickupEntry] = [
+        create_generated_pickup("Octolith", game.resource_database, i=i + 1) for i in range(8)
     ]
 
-    return PoolResults(item_pool, {}, starting)
+    octoliths_to_shuffle = octoliths[: config.placed_octoliths]
+    starting_octoliths = octoliths[config.placed_octoliths :]
+
+    return PoolResults(octoliths_to_shuffle, {}, starting_octoliths)
