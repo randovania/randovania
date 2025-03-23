@@ -638,6 +638,12 @@ def _migrate_v34(data: dict) -> None:
             return f"{new_region}/{area}/{node}"
         return identifier
 
+    def fix_elevator(conn: dict[str, str], old_name: str, new_name: str) -> None:
+        conn[new_name] = conn.pop(old_name)
+        for key, target in conn.items():
+            if target == old_name:
+                conn[key] = new_name
+
     for game in game_modifications:
         if game["game"] in {"prime2", "cave_story"}:
             rename = migration_data.get_raw_data(RandovaniaGame(game["game"]))["in_dark_world_rename"]
@@ -675,6 +681,18 @@ def _migrate_v34(data: dict) -> None:
                 new_source = replace(source_name, rename)
                 if new_source != source_name:
                     game["hints"][new_source] = game["hints"].pop(source_name)
+
+        if game["game"] == "prime2":
+            fix_elevator(
+                game["dock_connections"],
+                "Sky Temple Grounds/Sky Temple Gateway/Elevator to Great Temple",
+                "Sky Temple Grounds/Sky Temple Gateway/Elevator to Sky Temple",
+            )
+            fix_elevator(
+                game["dock_connections"],
+                "Sky Temple/Sky Temple Energy Controller/Elevator to Temple Grounds",
+                "Sky Temple/Sky Temple Energy Controller/Elevator to Sky Temple Grounds",
+            )
 
 
 _MIGRATIONS = [

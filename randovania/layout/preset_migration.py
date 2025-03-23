@@ -1147,6 +1147,11 @@ def _migrate_v102(preset: dict, game: RandovaniaGame) -> None:
         region_rename = rename.get(f"{identifier['region']}/{identifier['area']}")
         if region_rename:
             identifier["region"] = region_rename
+            if region_rename in {"Sky Temple", "Sky Temple Grounds"}:
+                if identifier["node"] == "Elevator to Great Temple":
+                    identifier["node"] = "Elevator to Sky Temple"
+                elif identifier["node"] == "Elevator to Temple Grounds":
+                    identifier["node"] = "Elevator to Sky Temple Grounds"
 
     for starting_location in preset["configuration"]["starting_location"]:
         fix(starting_location)
