@@ -1987,6 +1987,7 @@
                         },
                         "entity_type_data": {
                             "type": 1,
+                            "weapon": "VoltDriver",
                             "width": {
                                 "x": 194304.0,
                                 "y": 186736.0,
@@ -4105,7 +4106,7 @@
                             "active": false
                         }
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "is_unlocked": {
                         "type": "and",
                         "data": {
@@ -4187,6 +4188,7 @@
                         },
                         "entity_type_data": {
                             "type": 3,
+                            "weapon": "Battlehammer",
                             "width": {
                                 "x": 2.02880859375,
                                 "y": 1.872314453125,
@@ -6625,6 +6627,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (UA Expansion)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -6755,6 +6764,63 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "CATransferLockPortal",
+                    "connections": {
+                        "Portal to Synergy Core": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (UA Expansion)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8.51,
+                        "y": -2.77,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 64,
+                        "position": {
+                            "x": 16.968017578125,
+                            "y": 5.0625,
+                            "z": -14.395751953125
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "item_type": 18,
+                            "enabled": true,
+                            "has_base": true,
+                            "always_active": false,
+                            "max_spawn_count": 1,
+                            "spawn_interval": 0,
+                            "spawn_delay": 0,
+                            "notify_entity_id": -1,
+                            "collected_message": 0,
+                            "collected_message_param1": 0,
+                            "collected_message_param2": 0
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 63,
+                    "location_category": "minor",
+                    "hint_features": [],
                     "connections": {
                         "Portal to Synergy Core": {
                             "type": "and",
@@ -7332,6 +7398,7 @@
                         },
                         "entity_type_data": {
                             "type": 7,
+                            "weapon": "ShockCoil",
                             "width": {
                                 "x": 1.03564453125,
                                 "y": 1.58056640625,
@@ -7914,6 +7981,7 @@
                         },
                         "entity_type_data": {
                             "type": 7,
+                            "weapon": "ShockCoil",
                             "width": {
                                 "x": 1.03564453125,
                                 "y": 1.58056640625,
@@ -8233,8 +8301,8 @@
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": -6.437570985445003,
-                        "y": 2.6461978048198542,
+                        "x": -6.44,
+                        "y": 2.65,
                         "z": 0.0
                     },
                     "description": "",
@@ -8260,6 +8328,7 @@
                         },
                         "entity_type_data": {
                             "type": 7,
+                            "weapon": "ShockCoil",
                             "width": {
                                 "x": 108384.0,
                                 "y": 109024.0,
@@ -8495,8 +8564,8 @@
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": -5.732822715342403,
-                        "y": -1.0401777618706731,
+                        "x": -5.73,
+                        "y": -1.04,
                         "z": 0.0
                     },
                     "description": "",
@@ -8522,6 +8591,7 @@
                         },
                         "entity_type_data": {
                             "type": 7,
+                            "weapon": "ShockCoil",
                             "width": {
                                 "x": 1.03564453125,
                                 "y": 1.58056640625,

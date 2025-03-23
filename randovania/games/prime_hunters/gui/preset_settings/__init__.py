@@ -15,8 +15,8 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
     from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
     from randovania.gui.preset_settings.hints_tab import PresetHints
-    from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
+    from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
 
     return [
@@ -24,7 +24,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         PresetGeneration,
         PresetHints,
         PresetLocationPool,
-        PresetItemPool,
+        MetroidPresetItemPool,
         PresetHuntersPatches,
         PresetDockRando,
         PresetStartingArea,

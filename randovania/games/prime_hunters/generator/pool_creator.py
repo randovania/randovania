@@ -19,6 +19,9 @@ def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: G
     # Add Alimbic Artifacts to the item pool
     results.extend_with(add_alimbic_artifacts(game.resource_database))
 
+    # Add Octoliths to the item pool
+    results.extend_with(add_octoliths(game.resource_database))
+
 
 def add_alimbic_artifacts(
     resource_database: ResourceDatabase,
@@ -36,3 +39,25 @@ def add_alimbic_artifacts(
                 item_pool.append(create_generated_pickup(artifact, resource_database, i=i + 1))
 
     return PoolResults(item_pool, {}, [])
+
+
+def add_octoliths(
+    resource_database: ResourceDatabase,
+) -> PoolResults:
+    """
+    :param resource_database:
+    :return:
+    """
+    item_pool: list[PickupEntry] = []
+    octoliths_to_place: int = 8
+
+    for key_number in range(octoliths_to_place):
+        item_pool.append(create_generated_pickup("Octolith", resource_database, i=key_number + 1))
+    first_automatic_key = octoliths_to_place
+
+    starting = [
+        create_generated_pickup("Octolith", resource_database, i=automatic_key_number + 1)
+        for automatic_key_number in range(first_automatic_key, 8)
+    ]
+
+    return PoolResults(item_pool, {}, starting)
