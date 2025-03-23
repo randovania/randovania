@@ -67,6 +67,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: In White EMMI Arena: Reaching Door to EMMI Zone Spinner (Middle) from Door to Central Unit Access (Charge) with Spin Boost now requires Wall Jump (Beginner).
 - Changed: In EMMI First Chase End: Reaching Door to Teleport to Dairon (Top) with Spin Boost now requires Wall Jump (Beginner).
 - Changed: In Screw Attack Room: Reaching Next to Upper Tank from Total Recharge with Spin Boost no longer requires a Wall Jump trick.
+- Changed: It is now logical to access the Chain Reaction Device after ending the Chain Reaction sequence. This also means climbing the Chain Reaction Room later has slightly fewer requirements.
 - Fixed: Using Speed Booster to Shinespark to the top pickup in Screw Attack Room now requires Door Lock Rando to be Disabled.
 
 ##### Burenia
