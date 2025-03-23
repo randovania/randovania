@@ -259,7 +259,7 @@ class RegionList(NodeProvider):
             self._identifier_to_node[identifier] = node
             return node
 
-        raise ValueError(f"No node with name {identifier.node} found in {area}")
+        raise KeyError(f"No node with name {identifier.node} found in {area}")
 
     def typed_node_by_identifier(self, i: NodeIdentifier, t: type[NodeType]) -> NodeType:
         result = self.node_by_identifier(i)

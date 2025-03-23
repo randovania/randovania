@@ -243,6 +243,13 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 )
                 for item in previous_state["teleporters"]
             }
+            for teleporter, node_location in teleporters.items():
+                if teleporter not in self._teleporter_id_to_combo:
+                    return False
+                if node_location is not None:
+                    # check if destination exists
+                    self.game_description.region_list.node_by_identifier(node_location)
+
             if self.game_configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:
                 configurable_nodes = {
                     NodeIdentifier.from_string(identifier): (
