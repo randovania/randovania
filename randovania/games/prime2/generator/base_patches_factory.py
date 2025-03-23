@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import collections
 import copy
 import dataclasses
 from typing import TYPE_CHECKING, Self
 
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
+from randovania.games.prime2 import dark_aether_helper
 from randovania.games.prime2.generator.teleporter_distributor import get_teleporter_connections_echoes
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
@@ -93,27 +95,26 @@ class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
             configuration.teleporters, game, teleporter_connection
         )
 
-        if not configuration.portal_rando:
-            yield from dock_assignment
-            return
+        if configuration.portal_rando:
+            light_portals_by_region = collections.defaultdict(list)
+            dark_portals_by_region = collections.defaultdict(list)
 
-        for world in game.region_list.regions:
-            light_portals = []
-            dark_portals = []
+            for region, area, node in game.region_list.all_regions_areas_nodes:
+                if isinstance(node, DockNode) and node.dock_type.short_name == "portal":
+                    if dark_aether_helper.is_region_light(region):
+                        portal_list = light_portals_by_region[region.name]
+                    else:
+                        portal_list = dark_portals_by_region[dark_aether_helper.get_counterpart_name(region)]
+                    portal_list.append(node)
 
-            for area in world.areas:
-                for node in area.nodes:
-                    if isinstance(node, DockNode) and node.dock_type.short_name == "portal":
-                        if area.in_dark_aether:
-                            dark_portals.append(node)
-                        else:
-                            light_portals.append(node)
-
-            assert len(light_portals) == len(dark_portals)
-            rng.shuffle(light_portals)
-            rng.shuffle(dark_portals)
-            dock_assignment.extend(zip(light_portals, dark_portals))
-            dock_assignment.extend(zip(dark_portals, light_portals))
+            for region_name in light_portals_by_region.keys():
+                light_portals = light_portals_by_region[region_name]
+                dark_portals = dark_portals_by_region[region_name]
+                assert len(light_portals) == len(dark_portals)
+                rng.shuffle(light_portals)
+                rng.shuffle(dark_portals)
+                dock_assignment.extend(zip(light_portals, dark_portals))
+                dock_assignment.extend(zip(dark_portals, light_portals))
 
         yield from dock_assignment
 
