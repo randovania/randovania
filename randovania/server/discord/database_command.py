@@ -145,32 +145,28 @@ async def create_split_regions(db: GameDescription) -> list[SplitRegion]:
         return [AreaWidget(it, f"{create_id()}_area_{i}") for i, it in enumerate(a)]
 
     for region in db.region_list.regions:
-        for use_dark_name in [False, True]:
-            if use_dark_name and region.dark_name is None:
-                continue
+        areas = sorted(
+            (area for area in region.areas if area.nodes),
+            key=lambda it: it.name,
+        )
+        name = region.name
+        if len(areas) > 25:
+            per_part = math.ceil(len(areas) / math.ceil(len(areas) / 25))
 
-            areas = sorted(
-                (area for area in region.areas if area.in_dark_aether == use_dark_name and area.nodes),
-                key=lambda it: it.name,
-            )
-            name = region.correct_name(use_dark_name)
-            if len(areas) > 25:
-                per_part = math.ceil(len(areas) / math.ceil(len(areas) / 25))
+            while areas:
+                areas_part = areas[:per_part]
+                del areas[:per_part]
 
-                while areas:
-                    areas_part = areas[:per_part]
-                    del areas[:per_part]
-
-                    region_options.append(
-                        SplitRegion(
-                            region,
-                            f"{name} ({areas_part[0].name[:2]}-{areas_part[-1].name[:2]})",
-                            create_areas(areas_part),
-                            create_id(),
-                        )
+                region_options.append(
+                    SplitRegion(
+                        region,
+                        f"{name} ({areas_part[0].name[:2]}-{areas_part[-1].name[:2]})",
+                        create_areas(areas_part),
+                        create_id(),
                     )
-            else:
-                region_options.append(SplitRegion(region, name, create_areas(areas), create_id()))
+                )
+        else:
+            region_options.append(SplitRegion(region, name, create_areas(areas), create_id()))
 
     region_options.sort(key=lambda it: it.name)
     return region_options
