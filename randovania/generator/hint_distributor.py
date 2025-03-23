@@ -505,13 +505,10 @@ class HintDistributor(ABC):
         for feature in patches.game.hint_feature_database.values():
             locations_with_feature[feature].extend(region_list.pickup_nodes_with_feature(feature))
 
-        area = region_list.nodes_to_area
         if location is not None:
             if self.use_region_location_precision:
                 locations_with_feature[HintLocationPrecision.REGION_ONLY] = [
-                    node
-                    for node in region_list.nodes_to_region(location).all_nodes
-                    if (isinstance(node, PickupNode) and area(node).in_dark_aether == area(location).in_dark_aether)
+                    node for node in region_list.nodes_to_region(location).all_nodes if isinstance(node, PickupNode)
                 ]
             if self.use_detailed_location_precision:
                 locations_with_feature[HintLocationPrecision.DETAILED] = [

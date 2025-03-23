@@ -54,4 +54,4 @@ def test_data_editor_href(echoes_game_description, text: str | None, area_id: Ar
     url = data_editor_href(region, area, text)
 
     # Assert
-    assert url == f'<a href="data-editor://{region.correct_name(area.in_dark_aether)}/{area.name}">{text}</a>'
+    assert url == f'<a href="data-editor://{region.name}/{area.name}">{text}</a>'

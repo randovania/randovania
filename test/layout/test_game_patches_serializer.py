@@ -104,8 +104,7 @@ def patches_with_data(request, echoes_game_description, echoes_game_patches, ech
     locations = collections.defaultdict(dict)
     for region, area, node in game.region_list.all_regions_areas_nodes:
         if node.is_resource_node and isinstance(node, PickupNode):
-            world_name = region.dark_name if area.in_dark_aether else region.name
-            locations[world_name][game.region_list.node_name(node)] = game_patches_serializer._ETM_NAME
+            locations[region.name][game.region_list.node_name(node)] = game_patches_serializer._ETM_NAME
 
     data["locations"] = {region: dict(sorted(locations[region].items())) for region in sorted(locations.keys())}
 

@@ -48,8 +48,8 @@ def data_editor_href(region: Region, area: Area, text: str | None = None) -> str
 
     if text is None:
         text = get_human_readable_region_and_area(region, area)
-    return f'<a href="data-editor://{region.correct_name(area.in_dark_aether)}/{area.name}">{text}</a>'
+    return f'<a href="data-editor://{region.name}/{area.name}">{text}</a>'
 
 
 def get_human_readable_region_and_area(region: Region, area: Area) -> str:
-    return f"{region.correct_name(area.in_dark_aether)} - {area.name}"
+    return f"{region.name} - {area.name}"

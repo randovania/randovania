@@ -134,10 +134,7 @@ class RegionList(NodeProvider):
         if region is None:
             region = self.region_with_area(area)
 
-        if distinguish_dark_aether:
-            return region.correct_name(area.in_dark_aether)
-        else:
-            return region.name
+        return region.name
 
     def region_name_from_node(self, node: Node, distinguish_dark_aether: bool = False) -> str:
         region = self.nodes_to_region(node)
@@ -282,7 +279,7 @@ class RegionList(NodeProvider):
 
     def correct_area_identifier_name(self, identifier: AreaIdentifier) -> str:
         region, area = self.region_and_area_by_area_identifier(identifier)
-        return f"{region.correct_name(area.in_dark_aether)} - {area.name}"
+        return f"{region.name} - {area.name}"
 
     def node_from_pickup_index(self, index: PickupIndex) -> PickupNode:
         self.ensure_has_node_cache()
