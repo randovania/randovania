@@ -13,7 +13,7 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.gui.generated.preset_location_pool_ui import Ui_PresetLocationPool
 from randovania.gui.lib.foldable import Foldable
-from randovania.gui.lib.node_list_helper import NodeListHelper, dark_name_flags
+from randovania.gui.lib.node_list_helper import NodeListHelper
 from randovania.gui.preset_settings.location_pool_row_widget import LocationPoolRowWidget
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.layout.base.available_locations import RandomizationMode
@@ -49,19 +49,16 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
         pickup_match = re.compile(r"^Pickup \((.+)\)$")
 
         for region in region_list.regions:
-            for use_dark_name in dark_name_flags(region):
-                for area in region.areas:
-                    if area.in_dark_aether != use_dark_name:
-                        continue
-                    for node in area.nodes:
-                        if isinstance(node, PickupNode):
-                            nodes_by_region[region.correct_name(use_dark_name)].append(node)
-                            match = pickup_match.match(node.name)
-                            if match is not None:
-                                node_name = match.group(1)
-                            else:
-                                node_name = node.name
-                            node_names[node] = f"{region_list.nodes_to_area(node).name} ({node_name})"
+            for area in region.areas:
+                for node in area.nodes:
+                    if isinstance(node, PickupNode):
+                        nodes_by_region[region.name].append(node)
+                        match = pickup_match.match(node.name)
+                        if match is not None:
+                            node_name = match.group(1)
+                        else:
+                            node_name = node.name
+                        node_names[node] = f"{region_list.nodes_to_area(node).name} ({node_name})"
 
         for region_name in sorted(nodes_by_region.keys()):
             spoiler = Foldable(None, region_name, initially_folded=len(nodes_by_region) > 1)
