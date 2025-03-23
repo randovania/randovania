@@ -226,7 +226,7 @@ def test_create_elevators_field_elevators_for_a_seed(
         add(
             "Sky Temple Grounds",
             "Sky Temple Gateway",
-            "Elevator to Great Temple",
+            "Elevator to Sky Temple",
             "Sky Temple",
             "Sanctum",
             "Door to Sanctum Access",
