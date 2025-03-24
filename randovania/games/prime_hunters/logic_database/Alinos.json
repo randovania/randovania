@@ -3535,14 +3535,14 @@
                                 "items": []
                             }
                         },
-                        "Event - Upper Platform Activated": {
+                        "Event - Lower Platform Activated": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Event - Lower Platform Activated": {
+                        "Next to Scan Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3741,6 +3741,32 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Door to Alimbic Gardens": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missile",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "MissileJump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Upper Level": {
                             "type": "and",
                             "data": {
@@ -4058,12 +4084,38 @@
                             }
                         },
                         "Door to Elder Passage (Top)": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "events",
-                                "name": "AlinosHighGroundLowerPlatform",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "AlinosHighGroundUpperPlatform",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "BombJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "MissileJump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Lower Level": {
@@ -4079,6 +4131,15 @@
                                 "type": "events",
                                 "name": "AlinosElderPassageSpire",
                                 "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Next to Scan Point": {
+                            "type": "resource",
+                            "data": {
+                                "type": "tricks",
+                                "name": "MissileJump",
+                                "amount": 2,
                                 "negate": false
                             }
                         }
@@ -4113,8 +4174,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -0.88,
-                        "y": 16.34,
+                        "x": 4.042302312096833,
+                        "y": 15.055180836413715,
                         "z": 0.0
                     },
                     "description": "",
@@ -4125,7 +4186,7 @@
                     "valid_starting_location": false,
                     "event_name": "AlinosHighGroundUpperPlatform",
                     "connections": {
-                        "Judicator Force Field (Upper)": {
+                        "Next to Scan Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4151,6 +4212,53 @@
                     "event_name": "AlinosHighGroundLowerPlatform",
                     "connections": {
                         "Pickup (Binary Subscripture Artifact)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Next to Scan Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.6364894542291815,
+                        "y": 16.297842284554616,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Judicator Force Field (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Elder Passage (Top)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "tricks",
+                                "name": "Movement",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Upper Level": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Upper Platform Activated": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4670,6 +4778,66 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Door to Crash Site (Lower)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "BombJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MissileJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missile",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Magmaul",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Event - Guardian Defeated": {
@@ -6407,41 +6575,6 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Portal to Stronghold Void B": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "AlinosAArtifact1",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "AlinosBSArtifact1",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "AlinosCArtifact1",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Player Spawn": {
                             "type": "and",
                             "data": {
@@ -6465,7 +6598,7 @@
                                 "items": []
                             }
                         },
-                        "Small Arena": {
+                        "Next to Stronghold Portal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6532,7 +6665,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to High Ground (Top)": {
+                        "Next to Stronghold Portal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6601,9 +6734,9 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 19.994873046875,
-                        "y": 17.768798828125,
-                        "z": 8.237548828125
+                        "x": 16.02766476987777,
+                        "y": 18.11509281636738,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -6713,8 +6846,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 18.99,
-                        "y": 14.53,
+                        "x": 19.13864085350524,
+                        "y": 12.338487847806,
                         "z": 0.0
                     },
                     "description": "",
@@ -6738,8 +6871,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 22.32,
-                        "y": 15.96,
+                        "x": 16.1373879927443,
+                        "y": 16.294978178228487,
                         "z": 0.0
                     },
                     "description": "",
@@ -6784,6 +6917,83 @@
                             }
                         },
                         "Event - Spire Encounter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Next to Stronghold Portal": {
+                            "type": "resource",
+                            "data": {
+                                "type": "tricks",
+                                "name": "BombJump",
+                                "amount": 2,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Next to Stronghold Portal": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 19.04,
+                        "y": 18.32,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to High Ground (Top)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosHighGroundSpire",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Portal to Stronghold Void B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AlinosAArtifact1",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AlinosBSArtifact1",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AlinosCArtifact1",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Small Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
