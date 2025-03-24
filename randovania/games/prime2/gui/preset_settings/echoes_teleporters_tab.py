@@ -15,7 +15,7 @@ from randovania.games.prime2.gui.generated.preset_teleporters_prime2_ui import (
 )
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.gui.lib import signal_handling
-from randovania.gui.lib.node_list_helper import NodeListGrouping, NodeListHelper
+from randovania.gui.lib.node_list_helper import NodeListHelper
 from randovania.gui.preset_settings.preset_teleporter_tab import PresetTeleporterTab
 from randovania.layout.lib.teleporters import (
     TeleporterList,
@@ -28,6 +28,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_description import GameDescription
+    from randovania.games.common.elevators import NodeListGrouping
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
