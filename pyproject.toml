@@ -355,6 +355,14 @@ ignore_missing_imports = true
 [tool.uv]
 cache-keys = [
     { git = { commit = true, tags = true } },
+    { file = "pyproject.toml" },
+    { file = "setup.py" },
+    { file = "setup.cfg" },
     { file = "pyuic.json" },
     { file = "**/*.ui" },
+
+    # Listing these files forces uv to rebuild Randovania every time you run,
+    # but otherwise it's not rebuilt when these are deleted.
+    { file = "randovania/version.py" },
+    { file = "randovania/version_hash.py" },
 ]
