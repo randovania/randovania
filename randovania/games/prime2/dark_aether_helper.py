@@ -29,7 +29,7 @@ def region_list_grouping(region_list: Iterable[Region]) -> list[list[Region]]:
     Given a list of region, creates a list of Regions pairs, where each pair is the Light World
     and Dark World of each one.
     """
-    new_groups = []
+    new_groups: list[list[Region]] = []
     group_index = {}
     dark_regions = []
 

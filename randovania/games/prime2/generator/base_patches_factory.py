@@ -96,8 +96,8 @@ class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
         )
 
         if configuration.portal_rando:
-            light_portals_by_region = collections.defaultdict(list)
-            dark_portals_by_region = collections.defaultdict(list)
+            light_portals_by_region: dict[str, list[DockNode]] = collections.defaultdict(list)
+            dark_portals_by_region: dict[str, list[DockNode]] = collections.defaultdict(list)
 
             for region, area, node in game.region_list.all_regions_areas_nodes:
                 if isinstance(node, DockNode) and node.dock_type.short_name == "portal":
@@ -107,8 +107,7 @@ class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
                         portal_list = dark_portals_by_region[dark_aether_helper.get_counterpart_name(region)]
                     portal_list.append(node)
 
-            for region_name in light_portals_by_region.keys():
-                light_portals = light_portals_by_region[region_name]
+            for region_name, light_portals in light_portals_by_region.items():
                 dark_portals = dark_portals_by_region[region_name]
                 assert len(light_portals) == len(dark_portals)
                 rng.shuffle(light_portals)
