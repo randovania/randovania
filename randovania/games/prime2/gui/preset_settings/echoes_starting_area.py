@@ -7,7 +7,7 @@ from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStarti
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
-    from randovania.gui.lib.node_list_helper import NodeListGrouping
+    from randovania.games.common.elevators import NodeListGrouping
 
 
 class PresetEchoesStartingArea(PresetMetroidStartingArea):

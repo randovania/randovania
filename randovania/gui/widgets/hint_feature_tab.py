@@ -130,14 +130,8 @@ class LocationHintFeatureTab(HintFeatureTab):
             if feature.hidden:
                 continue
 
-            # sort normally, but put dark regions immediately after their light region
-            def nodes_keyfunc(node: PickupNode) -> tuple[str, str, str]:
-                id_ = node.identifier
-                return id_.region, id_.area, id_.node
-
             sorted_nodes = sorted(
                 game.region_list.pickup_nodes_with_feature(feature),
-                key=nodes_keyfunc,
             )
 
             # group pickup nodes by area

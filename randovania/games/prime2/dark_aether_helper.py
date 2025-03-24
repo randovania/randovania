@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.gui.lib.node_list_helper import NodeListGrouping
+from randovania.games.common.elevators import NodeListGrouping
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
