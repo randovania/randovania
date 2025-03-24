@@ -25,6 +25,7 @@ from randovania.games.fusion.layout.fusion_configuration import FusionConfigurat
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+from randovania.games.prime_hunters.layout.prime_hunters_configuration import HuntersConfiguration
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.preset import Preset
 from randovania.lib import json_lib
@@ -244,6 +245,27 @@ def fusion_game_patches(
 @pytest.fixture(scope="session")
 def planets_zebeth_game_description() -> GameDescription:
     return default_database.game_description_for(RandovaniaGame.METROID_PLANETS_ZEBETH)
+
+
+@pytest.fixture(scope="session")
+def prime_hunters_game_description() -> GameDescription:
+    return default_database.game_description_for(RandovaniaGame.METROID_PRIME_HUNTERS)
+
+
+@pytest.fixture(scope="session")
+def default_prime_hunters_preset() -> Preset:
+    return PresetManager(None).default_preset_for_game(RandovaniaGame.METROID_PRIME_HUNTERS).get_preset()
+
+
+@pytest.fixture(scope="session")
+def default_prime_hunters_configuration(default_prime_hunters_preset: Preset) -> HuntersConfiguration:
+    assert isinstance(default_prime_hunters_preset.configuration, HuntersConfiguration)
+    return default_prime_hunters_preset.configuration
+
+
+@pytest.fixture(scope="session")
+def prime_hunters_resource_database() -> ResourceDatabase:
+    return default_database.resource_database_for(RandovaniaGame.METROID_PRIME_HUNTERS)
 
 
 @pytest.fixture(scope="session")
