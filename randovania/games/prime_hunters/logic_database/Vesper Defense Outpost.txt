@@ -544,7 +544,7 @@ Extra - entity_file: Unit3_RM3_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'model_id': 5, 'artifact_id': 0, 'active': True, 'has_base': False, 'message1_target': 17, 'message1': 18, 'message2_target': -1, 'message2': 0, 'message3_target': -1, 'message3': 0})
-  > Event - Guardians Defeated
+  > Room Center
       Trivial
 
 > Door to Weapons Complex; Heals? False
@@ -608,20 +608,32 @@ Extra - entity_file: Unit3_RM3_Ent.bin
   > Pickup (VDO Cartograph Artifact 2)
       Trivial
   > Door to Weapons Complex
-      After VDO - Stasis Bunker Guardians Defeated
+      After VDO - Stasis Bunker Unlock Doors
   > Door to Ascension
-      After VDO - Stasis Bunker Guardians Defeated
+      After VDO - Stasis Bunker Unlock Doors
   > Player Spawn
       Trivial
   > Pickup (VDO Attameter Artifact 2)
       After VDO - Stasis Bunker Guardians Defeated
   > Pickup (UA Expansion)
       Trivial
+  > Event - Guardians Defeated
+      Trivial
+  > Event - Unlock Doors
+      Any of the following:
+          After VDO - Stasis Bunker Guardians Defeated
+          Movement (Advanced) and Wall Clip (Intermediate)
 
 > Event - Guardians Defeated; Heals? False
   * Layers: default
   * Event VDO - Stasis Bunker Guardians Defeated
-  > Room Center
+  > Pickup (VDO Cartograph Artifact 2)
+      Trivial
+
+> Event - Unlock Doors; Heals? False
+  * Layers: default
+  * Event VDO - Stasis Bunker Unlock Doors
+  > Pickup (VDO Attameter Artifact 2)
       Trivial
 
 ----------------

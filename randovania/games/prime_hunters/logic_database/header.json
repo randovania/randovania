@@ -581,6 +581,10 @@
             "VDOStasisBunkerGuardians": {
                 "long_name": "VDO - Stasis Bunker Guardians Defeated",
                 "extra": {}
+            },
+            "VDOStasisBunkerDoors": {
+                "long_name": "VDO - Stasis Bunker Unlock Doors",
+                "extra": {}
             }
         },
         "tricks": {
@@ -624,7 +628,66 @@
         "damage": {},
         "versions": {},
         "misc": {},
-        "requirement_template": {},
+        "requirement_template": {
+            "Can Missile Jump": {
+                "display_name": "Can Missile Jump",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Magmaul",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missile",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Charged Missile Jump": {
+                "display_name": "Can Charged Missile Jump",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Magmaul",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missile",
+                                    "amount": 3,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
         "damage_reductions": [],
         "energy_tank_item_index": "EnergyTank"
     },
@@ -935,16 +998,25 @@
     },
     "hint_feature_database": {},
     "used_trick_levels": {
-        "MissileJump": [
+        "StandableTerrain": [
             1,
-            2
+            3
         ],
         "BombJump": [
             1,
             2
         ],
+        "MissileJump": [
+            1,
+            2,
+            3
+        ],
+        "WallClip": [
+            2
+        ],
         "Movement": [
-            1
+            1,
+            3
         ]
     },
     "flatten_to_set_on_patch": false,

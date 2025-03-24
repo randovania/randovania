@@ -1349,8 +1349,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 15.972940747586115,
-                        "y": 30.468411510882916,
+                        "x": 16.519619440526704,
+                        "y": 26.088576967803053,
                         "z": 0.0
                     },
                     "description": "",
@@ -2882,7 +2882,7 @@
                     "location_category": "major",
                     "hint_features": [],
                     "connections": {
-                        "Event - Guardians Defeated": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3240,7 +3240,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "VDOStasisBunkerGuardians",
+                                "name": "VDOStasisBunkerDoors",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -3249,7 +3249,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "VDOStasisBunkerGuardians",
+                                "name": "VDOStasisBunkerDoors",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -3276,6 +3276,56 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Guardians Defeated": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Unlock Doors": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VDOStasisBunkerGuardians",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallClip",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -3295,7 +3345,32 @@
                     "valid_starting_location": false,
                     "event_name": "VDOStasisBunkerGuardians",
                     "connections": {
-                        "Room Center": {
+                        "Pickup (VDO Cartograph Artifact 2)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Unlock Doors": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 33.759486421085754,
+                        "y": 6.894841427653308,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "VDOStasisBunkerDoors",
+                    "connections": {
+                        "Pickup (VDO Attameter Artifact 2)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
