@@ -55,19 +55,27 @@ Extra - entity_file: gorea_b2_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 105, 'active': True})
   > Dock to Gorea 1 Arena
       Trivial
-  > Event - Credits
-      Trivial
 
 > Dock to Gorea 1 Arena; Heals? False
   * Layers: default
   * Dock to Gorea 1 Arena/Dock to Gorea 2 Arena
   > Player Spawn
       Trivial
+  > Event - Credits
+      After Defeat Gorea 2
+  > Event - Gorea 2 Defeated
+      Trivial
 
 > Event - Credits; Heals? False
   * Layers: default
   * Event Credits
-  > Player Spawn
+  > Dock to Gorea 1 Arena
+      Trivial
+
+> Event - Gorea 2 Defeated; Heals? False
+  * Layers: default
+  * Event Defeat Gorea 2
+  > Dock to Gorea 1 Arena
       Trivial
 
 ----------------

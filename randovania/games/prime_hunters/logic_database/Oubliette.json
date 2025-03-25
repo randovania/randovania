@@ -316,13 +316,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Event - Credits": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -359,6 +352,22 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Credits": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Gorea2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Gorea 2 Defeated": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -378,7 +387,32 @@
                     "valid_starting_location": false,
                     "event_name": "Credits",
                     "connections": {
-                        "Player Spawn": {
+                        "Dock to Gorea 1 Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Gorea 2 Defeated": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 534.05,
+                        "y": 143.72,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Gorea2",
+                    "connections": {
+                        "Dock to Gorea 1 Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
