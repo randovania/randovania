@@ -5,8 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.10.x] - 2025-03-??
+## [9.1.x] - 2025-05-??
 
+- TODO
+
+## [9.0.0] - 2025-04-01
+
+- **Major** - Added: Factorio has been added. Shuffle the tech tree, recipes for science packs. The native multiplayer is fully supported, while Multiworld isnt'.
 - **Major** - Added: Featural Hints. Echoes and Cave Story now use a brand new hint system, where hints may refer to various Features of a pickup or of a location. Read the complete changelog for more details.
 - **Major** - Changed: Hints are now placed after pickup placement, rather than during. This should result in more interesting hints in all games.
 - **Major** - Added: Co-op as an additional Multiworld Mode. In Co-op, multiple people can share Worlds together, which means that they will share their inventory. This works for all games that support Multiworld.
