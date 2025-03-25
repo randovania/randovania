@@ -2,12 +2,11 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from PySide6.QtCore import Signal
-
 from randovania.game_connection.connector.remote_connector import RemoteConnector
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.resource_collection import ResourceCollection
+from randovania.gui.lib.signal import RdvSignal
 
 if TYPE_CHECKING:
     import uuid
@@ -22,15 +21,16 @@ class DebugRemoteConnector(RemoteConnector):
     _finished: bool = False
     _last_inventory_event: Inventory
     item_collection: ResourceCollection
-
-    RemotePickupsUpdated = Signal()
-    MessagesUpdated = Signal()
+    RemotePickupsUpdated: RdvSignal
+    MessagesUpdated: RdvSignal
 
     def __init__(self, game: RandovaniaGame, layout_uuid: uuid.UUID):
         super().__init__()
         self._game = game
         self._layout_uuid = layout_uuid
         self._last_inventory_event = Inventory({})
+        self.RemotePickupsUpdated = RdvSignal()
+        self.MessagesUpdated = RdvSignal()
 
         self.messages = []
         self.item_collection = ResourceCollection.with_database(default_database.resource_database_for(game))
