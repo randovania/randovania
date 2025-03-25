@@ -22,11 +22,12 @@ from randovania.game_description.hint import (
     SpecificHintPrecision,
 )
 from randovania.game_description.hint_features import HintFeature
+from randovania.game_description.pickup.pickup_entry import StartingPickupBehavior
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
 from randovania.generator.generator import create_player_pool
 from randovania.generator.pre_fill_params import PreFillParams
-from randovania.layout.base.standard_pickup_state import StandardPickupState, StartingPickupBehavior
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.resolver import debug
 
 if TYPE_CHECKING:

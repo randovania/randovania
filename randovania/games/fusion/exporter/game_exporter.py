@@ -56,7 +56,7 @@ class FusionGameExporter(GameExporter[FusionGameExportParams]):
             patcher.patch(
                 os.fspath(export_params.input_path),
                 os.fspath(export_params.output_path),
-                typing.cast(patcher.MarsSchema, patch_data),
+                typing.cast("patcher.MarsSchema", patch_data),
                 progress_update,
             )
         finally:

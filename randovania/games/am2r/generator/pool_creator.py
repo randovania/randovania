@@ -32,7 +32,8 @@ def artifact_pool(game: GameDescription, config: AM2RArtifactConfig) -> PoolResu
         raise InvalidConfiguration("More Metroid DNA than allowed!")
 
     keys: list[PickupEntry] = [
-        create_generated_pickup("Metroid DNA", game.resource_database, i=i + 1) for i in range(46)
+        create_generated_pickup("Metroid DNA", game.resource_database, game.get_pickup_database(), i=i + 1)
+        for i in range(46)
     ]
     keys_to_shuffle = keys[: config.placed_artifacts]
     starting_keys = keys[config.placed_artifacts :]

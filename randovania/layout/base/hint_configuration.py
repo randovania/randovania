@@ -75,7 +75,7 @@ class HintConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
 
     @override
     def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
-        reference = typing.cast(HintConfiguration, metadata["reference"])
+        reference = typing.cast("HintConfiguration", metadata["reference"])
 
         modified_specific_hints = [
             hint
@@ -96,7 +96,7 @@ class HintConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     @override
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata: dict) -> Self:
-        reference = typing.cast(HintConfiguration, metadata["reference"])
+        reference = typing.cast("HintConfiguration", metadata["reference"])
 
         modified_specific_hints = bitpacking.decode_sorted_array_elements(
             decoder, sorted(reference.specific_pickup_hints.keys())

@@ -51,7 +51,7 @@ async def message_box(
     box.setDefaultButton(default_button)
     box.setTextFormat(QtCore.Qt.TextFormat.MarkdownText)
     common_qt_lib.set_default_window_icon(box)
-    return typing.cast(StandardButton, await execute_dialog(box))
+    return typing.cast("StandardButton", await execute_dialog(box))
 
 
 async def warning(

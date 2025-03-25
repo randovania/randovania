@@ -43,7 +43,7 @@ def create_report(seeds_dir: str, output_file: Path):
     seed_files = list(Path(seeds_dir).glob(f"**/*.{LayoutDescription.file_extension()}"))
     seed_files.extend(Path(seeds_dir).glob("**/*.json"))
     for seed in iterate_with_log(seed_files):
-        seed = typing.cast(Path, seed)
+        seed = typing.cast("Path", seed)
         try:
             seed_data = read_json(seed)
         except json.JSONDecodeError:

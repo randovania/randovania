@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Self
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
@@ -19,7 +19,7 @@ class AmmoPickupState(BitPackValue):
     pickup_count: int = 0
     requires_main_item: bool = True
 
-    def check_consistency(self, ammo: AmmoPickupDefinition):
+    def check_consistency(self, ammo: AmmoPickupDefinition) -> None:
         db = default_database.resource_database_for(ammo.game)
 
         if len(self.ammo_count) != len(ammo.items):
@@ -37,7 +37,7 @@ class AmmoPickupState(BitPackValue):
         if self.pickup_count < 0:
             raise ValueError(f"Pickup count must be at least 0, got {self.pickup_count}")
 
-    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
+    def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
         ammo: AmmoPickupDefinition = metadata["ammo"]
         db = default_database.resource_database_for(ammo.game)
 
@@ -55,7 +55,7 @@ class AmmoPickupState(BitPackValue):
             yield from bitpacking.encode_bool(self.requires_main_item)
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> AmmoPickupState:
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata: dict) -> Self:
         ammo: AmmoPickupDefinition = metadata["ammo"]
         db = default_database.resource_database_for(ammo.game)
 
@@ -98,7 +98,7 @@ class AmmoPickupState(BitPackValue):
         return result
 
     @classmethod
-    def from_json(cls, value: dict) -> AmmoPickupState:
+    def from_json(cls, value: dict) -> Self:
         kwargs = {}
 
         for field in dataclasses.fields(cls):

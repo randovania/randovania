@@ -33,7 +33,7 @@ def _migrate_v3(json_dict: dict) -> None:
     if len(json_dict["game_modifications"]) > 1:
         for game in json_dict["game_modifications"]:
             for area in game["locations"].values():
-                for location_name, contents in typing.cast(dict[str, str], area).items():
+                for location_name, contents in typing.cast("dict[str, str]", area).items():
                     m = target_name_re.match(contents)
                     if m is not None:
                         part_one, part_two = m.group(1, 2)
@@ -615,6 +615,19 @@ def _migrate_v32(data: dict) -> None:
                     region_location[new_area_name] = region_location.pop(old_area_name)
 
 
+def _migrate_v33(data: dict) -> None:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        if game["game"] == "prime2":
+            banned_pickups = ["Cannon Ball", "Unlimited Beam Ammo", "Unlimited Missiles", "Double Damage"]
+            if "pickups" in game["starting_equipment"]:
+                starting_pickups = game["starting_equipment"]["pickups"]
+                for pickup in banned_pickups:
+                    if pickup in starting_pickups:
+                        starting_pickups.remove(pickup)
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -648,6 +661,7 @@ _MIGRATIONS = [
     _migrate_v30,  # migrate some HintLocationPrecision and HintItemPrecision to HintFeature
     _migrate_v31,  # remove HintLocationPrecision.BROAD_CATEGORY
     _migrate_v32,  # MSR Rename Area 4 Crystal Mines - Gamma Arena to Gamma+ Arena
+    _migrate_v33,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -57,7 +57,7 @@ def test_hint_node_should_collect(hint_node, empty_patches):
     node_provider = MagicMock()
 
     def ctx(*args: ResourceInfo):
-        resources = ResourceCollection.from_dict(db, {r: 1 for r in args})
+        resources = ResourceCollection.from_dict(db, dict.fromkeys(args, 1))
         return NodeContext(empty_patches, resources, db, node_provider)
 
     assert node.requirement_to_collect().satisfied(ctx(), 0) != has_translator

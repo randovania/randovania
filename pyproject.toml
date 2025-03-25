@@ -6,6 +6,7 @@ requires = [
     "wheel>=0.37.0",
     "dulwich",
     "randovania-scm-version-schema",
+    "PySide6-Essentials>=6.5",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -67,6 +68,9 @@ dependencies = [
 
     # For the Version class
     "packaging",
+
+    # For TypeVar default
+    "typing-extensions>=4.4.0",
 ]
 
 [project.optional-dependencies]
@@ -152,15 +156,21 @@ test = [
     "pytest-codspeed",
 ]
 
+website = [
+    "htmlmin2",
+    "ruamel.yaml",
+]
+
+[dependency-groups]
+installer = [
+    "pyinstaller",
+    "pyinstaller-hooks-contrib",
+]
+
 typing = [
     "mypy",
     "types-aiofiles",
     "types-peewee",
-]
-
-website = [
-    "htmlmin2",
-    "ruamel.yaml",
 ]
 
 [project.readme]
@@ -175,6 +185,9 @@ randovania = "randovania.__main__:main"
 
 [tool.setuptools.packages.find]
 include = ["randovania*"]
+
+[tool.setuptools.package-data]
+"randovania.data" = ["README.md"]
 
 [tool.setuptools_scm]
 local_scheme = "no-local-version"
@@ -255,10 +268,8 @@ files = [
     "randovania/games/dread/exporter/hint_namer.py",
     "randovania/games/dread/gui/",
     "randovania/games/fusion/",
-    "randovania/games/prime1/gui/dialog/prime_cosmetic_patches_dialog.py",
-    "randovania/games/prime2/exporter/patch_data_factory.py",
-    "randovania/games/prime2/gui/dialog/echoes_cosmetic_patches_dialog.py",
-    "randovania/games/prime2/layout/echoes_user_preferences.py",
+    "randovania/games/prime1/",
+    "randovania/games/prime2/",
     "randovania/games/samus_returns/",
     "randovania/generator/",
     "randovania/gui/main_online_interaction.py",
@@ -267,15 +278,26 @@ files = [
     "randovania/gui/async_race_room_window.py",
     "randovania/gui/docks/resource_database_editor.py",
     "randovania/gui/dialog/async_race_creation_dialog.py",
+    "randovania/gui/dialog/async_race_settings_dialog.py",
+    "randovania/gui/dialog/async_race_admin_dialog.py",
     "randovania/gui/dialog/base_cosmetic_patches_dialog.py",
     "randovania/gui/dialog/connections_editor.py",
     "randovania/gui/dialog/connector_prompt_dialog.py",
     "randovania/gui/preset_settings/trick_level_tab.py",
     "randovania/gui/preset_settings/hints_tab.py",
+    "randovania/gui/lib/editable_table_model.py",
+    "randovania/gui/lib/pixmap_lib.py",
+    "randovania/gui/lib/faq_lib.py",
     "randovania/gui/lib/signal_handling.py",
+    "randovania/gui/lib/hints_text.py",
+    "randovania/gui/lib/tracker_item_image.py",
+    "randovania/gui/lib/data_editor_canvas.py",
+    "randovania/gui/lib/connections_visualizer.py",
+    "randovania/gui/widgets/async_race_room_settings_widget.py",
     "randovania/gui/widgets/game_connection_window.py",
     "randovania/gui/widgets/game_validator_widget.py",
     "randovania/gui/widgets/node_selector_widget.py",
+    "randovania/layout/",
     "randovania/lib/",
     "test/bitpacking/",
     "test/game_connection",
@@ -332,3 +354,20 @@ module = [
     "ruamel.*",
 ]
 ignore_missing_imports = true
+
+[tool.uv]
+cache-keys = [
+    { git = { commit = true, tags = true } },
+    { file = "pyproject.toml" },
+    { file = "setup.py" },
+    { file = "setup.cfg" },
+    { file = "README.md" },
+    { file = "pyuic.json" },
+    { file = "**/*.ui" },
+
+    # Listing these files forces uv to rebuild Randovania every time you run,
+    # but otherwise it's not rebuilt when these are deleted.
+    { file = "randovania/version.py" },
+    { file = "randovania/version_hash.py" },
+    { file = "randovania/data/README.md" },
+]

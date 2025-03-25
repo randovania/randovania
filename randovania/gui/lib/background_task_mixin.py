@@ -4,6 +4,7 @@ import asyncio
 import asyncio.futures
 import concurrent.futures
 import threading
+import typing
 
 from PySide6.QtCore import Signal
 
@@ -21,12 +22,12 @@ class BackgroundTaskMixin:
     abort_background_task_requested: bool = False
     _background_thread: threading.Thread | None = None
 
-    def _start_thread_for(self, target):
+    def _start_thread_for(self, target: typing.Callable[[], None]) -> None:
         randovania.games.prime2.patcher.csharp_subprocess.IO_LOOP = asyncio.get_event_loop()
         self._background_thread = threading.Thread(target=target, name=f"BackgroundThread for {self}")
         self._background_thread.start()
 
-    def run_in_background_thread(self, target, starting_message: str):
+    def run_in_background_thread(self, target, starting_message: str) -> None:
         last_progress = 0.0
 
         def progress_update(message: str, progress: float | None):
@@ -42,9 +43,9 @@ class BackgroundTaskMixin:
             else:
                 self.progress_update_signal.emit(message, int(progress * 100))
 
-        def thread(**_kwargs):
+        def thread() -> None:
             try:
-                target(progress_update=progress_update, **_kwargs)
+                target(progress_update=progress_update)
             except AbortBackgroundTask:
                 pass
             finally:
@@ -63,7 +64,7 @@ class BackgroundTaskMixin:
     async def run_in_background_async(self, target, starting_message: str):
         fut = concurrent.futures.Future()
 
-        def work(**_kwargs):
+        def work(**_kwargs) -> None:
             try:
                 fut.set_result(target(**_kwargs))
             except AbortBackgroundTask:
@@ -75,7 +76,7 @@ class BackgroundTaskMixin:
 
         return await asyncio.futures.wrap_future(fut)
 
-    def stop_background_process(self):
+    def stop_background_process(self) -> None:
         self.abort_background_task_requested = True
 
     @property

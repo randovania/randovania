@@ -129,9 +129,24 @@ class RequestTimeoutError(BaseNetworkError):
 class UserNotAuthorizedToUseServerError(BaseNetworkError):
     """When the user is not authorized to log in to the server. Used for the Beta Tester role enforcement."""
 
+    def __init__(self, unauthorized_user: str):
+        super().__init__()
+        self.unauthorized_user = unauthorized_user
+
     @classmethod
     def code(cls):
         return 8
+
+    @property
+    def detail(self):
+        return self.unauthorized_user
+
+    @classmethod
+    def from_detail(cls, detail) -> Self:
+        return cls(detail)
+
+    def __str__(self) -> str:
+        return f"{self.human_readable_name()}({self.unauthorized_user})"
 
 
 class UnsupportedClientError(BaseNetworkError):

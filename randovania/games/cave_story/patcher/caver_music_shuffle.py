@@ -20,7 +20,7 @@ class CaverCue:
     default_song: CSSong
 
     def assign_song(self, song: CSSong) -> dict[str, CSSong]:
-        return {event: song for event in self.events}
+        return dict.fromkeys(self.events, song)
 
     def assign_songs(self, songs: dict[str, CSSong]) -> dict[str, CSSong]:
         return {event: songs.get(event, self.default_song) for event in self.events}

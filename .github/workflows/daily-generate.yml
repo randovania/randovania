@@ -49,59 +49,53 @@ jobs:
       - name: Workaround for worktree config
         run: git config --unset-all extensions.worktreeConfig || true
 
-      - name: Create venv
-        run: python3.12 -m venv venv
-
-      - name: Install core Python packages
-        run: venv/bin/python -m pip install --upgrade -r requirements-setuptools.txt
-
       - name: Install Python packages
-        run: venv/bin/python -m pip install -c requirements.txt -e .[server]
+        run: uv sync --extra server
 
       - name: Bulk Generate (AM2R)
-        run: venv/bin/python tools/bulk_generate_for_discord.py --game am2r
+        run: uv run tools/bulk_generate_for_discord.py --game am2r
         if: inputs.game == 'am2r' || github.event.schedule == '0 10 * * 1,5'
         env:
           WEBHOOK_URL: ${{ secrets.AM2R_DEV_TALK_WEBHOOK }}
 
       - name: Bulk Generate (Blank)
-        run: venv/bin/python tools/bulk_generate_for_discord.py --game blank
+        run: uv run tools/bulk_generate_for_discord.py --game blank
         if: inputs.game == 'blank' || github.event.schedule == '0 16 * * 0'
         env:
           WEBHOOK_URL: ${{ secrets.GENERAL_TALK_WEBHOOK }}
 
       - name: Bulk Generate (Cave Story)
-        run: venv/bin/python tools/bulk_generate_for_discord.py --game cave_story
+        run: uv run tools/bulk_generate_for_discord.py --game cave_story
         if: inputs.game == 'cave_story' || github.event.schedule == '0 16 * * 3'
         env:
           WEBHOOK_URL: ${{ secrets.CAVE_STORY_DEV_TALK_WEBHOOK }}
 
       - name: Bulk Generate (Dread)
-        run: venv/bin/python tools/bulk_generate_for_discord.py --game dread
+        run: uv run tools/bulk_generate_for_discord.py --game dread
         if: inputs.game == 'dread' || github.event.schedule == '0 16 * * 5'
         env:
           WEBHOOK_URL: ${{ secrets.DREAD_DEV_TALK_WEBHOOK }}
 
       - name: Bulk Generate (Fusion)
-        run: venv/bin/python tools/bulk_generate_for_discord.py --game fusion
+        run: uv run tools/bulk_generate_for_discord.py --game fusion
         if: inputs.game == 'fusion' || github.event.schedule == '0 10 * * 2,6'
         env:
           WEBHOOK_URL: ${{ secrets.FUSION_DEV_TALK_WEBHOOK }}
 
       - name: Bulk Generate (Prime 1)
-        run: venv/bin/python tools/bulk_generate_for_discord.py --game prime1
+        run: uv run tools/bulk_generate_for_discord.py --game prime1
         if: inputs.game == 'prime1' || github.event.schedule == '0 16 * * 2'
         env:
           WEBHOOK_URL: ${{ secrets.PRIME_DEV_TALK_WEBHOOK }}
 
       - name: Bulk Generate (Echoes)
-        run: venv/bin/python tools/bulk_generate_for_discord.py --game prime2
+        run: uv run tools/bulk_generate_for_discord.py --game prime2
         if: inputs.game == 'prime2' || github.event.schedule == '0 16 * * 1'
         env:
           WEBHOOK_URL: ${{ secrets.ECHOES_DEV_TALK_WEBHOOK }}
 
       - name: Bulk Generate (Samus Returns)
-        run: venv/bin/python tools/bulk_generate_for_discord.py --game samus_returns
+        run: uv run tools/bulk_generate_for_discord.py --game samus_returns
         if: inputs.game == 'samus_returns' || github.event.schedule == '0 16 * * 4'
         env:
           WEBHOOK_URL: ${{ secrets.SR_DEV_TALK_WEBHOOK }}

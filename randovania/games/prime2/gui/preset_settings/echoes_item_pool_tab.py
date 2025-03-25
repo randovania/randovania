@@ -26,13 +26,13 @@ class EchoesPresetItemPool(MetroidPresetItemPool):
 
         self._create_split_ammo_widgets(pickup_database)
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         super().on_preset_changed(preset)
 
         for split_ammo in self._split_ammo_widgets:
             split_ammo.on_preset_changed(preset, self._ammo_pickup_widgets)
 
-    def _create_split_ammo_widgets(self, pickup_database: PickupDatabase):
+    def _create_split_ammo_widgets(self, pickup_database: PickupDatabase) -> None:
         parent, layout, _ = self._boxes_for_category["beam"]
 
         self._split_ammo_widgets = []

@@ -175,7 +175,7 @@ class NodeListHelper:
         location_for_region: dict[str, QtWidgets.QCheckBox],
         location_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox],
         location_for_nodes: dict[NodeIdentifier, QtWidgets.QCheckBox],
-    ):
+    ) -> None:
         self.during_batch_check_update = True
 
         for region in self.game_description.region_list.regions:

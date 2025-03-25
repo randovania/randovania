@@ -28,9 +28,9 @@ class EchoesCosmeticPatches(BaseCosmeticPatches):
         return cls()
 
     @classmethod
-    def game(cls):
+    def game(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME_ECHOES
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if len(self.hud_color) != 3:
             raise ValueError("HUD color must be a tuple of 3 ints.")

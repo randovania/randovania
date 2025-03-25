@@ -6,7 +6,7 @@ from enum import IntEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 
 
-def _int_field(default: int, min_value: int, max_value: int, display_as_percentage: bool = True):
+def _int_field(default: int, min_value: int, max_value: int, display_as_percentage: bool = True) -> int:
     return dataclasses.field(
         default=default, metadata={"min": min_value, "max": max_value, "display_as_percentage": display_as_percentage}
     )
@@ -34,7 +34,7 @@ class PrimeUserPreferences(JsonDataclass):
     rumble: bool = True
     swap_beam_controls: bool = False
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         for field in dataclasses.fields(self):
             value = getattr(self, field.name)
             if "min" in field.metadata and value < field.metadata["min"]:
