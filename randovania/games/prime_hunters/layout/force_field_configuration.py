@@ -28,7 +28,7 @@ class LayoutForceFieldRequirement(BitPackEnum, StrEnum):
     RANDOM = "random"
 
     @classmethod
-    def from_item_short_name(cls, name: str) -> Self:
+    def from_item_short_name(cls, name: str) -> LayoutForceFieldRequirement:
         for key, value in ITEM_NAMES.items():
             if value == name:
                 return key
@@ -94,11 +94,11 @@ class ForceFieldConfiguration(BitPackValue):
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata: dict) -> Self:
-        templates = [
+        templates = (
             _get_vanilla_force_field_configuration(),
             cls.default().with_full_random().force_field_requirement,
             None,
-        ]
+        )
         force_field_requirement = decoder.decode_element(templates)
         if force_field_requirement is None:
             force_field_requirement = {}

@@ -8,14 +8,14 @@ from randovania.games.prime_hunters.layout.force_field_configuration import Layo
 
 
 def test_force_field_assignment_for_configuration_all_missile(
-    prime_hunters_game_description, default_prime_hunters_configuration
+    prime_hunters_game_description, prime_hunters_configuration
 ):
     # Setup
     factory = HuntersBasePatchesFactory()
 
-    force_field_configuration = default_prime_hunters_configuration.force_field_configuration
+    force_field_configuration = prime_hunters_configuration.force_field_configuration
     configuration = dataclasses.replace(
-        default_prime_hunters_configuration,
+        prime_hunters_configuration,
         force_field_configuration=dataclasses.replace(
             force_field_configuration,
             force_field_requirement=dict.fromkeys(
@@ -38,14 +38,14 @@ def test_force_field_assignment_for_configuration_all_missile(
 
 
 def test_force_field_assignment_for_configuration_all_random(
-    prime_hunters_game_description, default_prime_hunters_configuration
+    prime_hunters_game_description, prime_hunters_configuration
 ):
     # Setup
     factory = HuntersBasePatchesFactory()
 
-    force_field_configuration = default_prime_hunters_configuration.force_field_configuration
+    force_field_configuration = prime_hunters_configuration.force_field_configuration
     configuration = dataclasses.replace(
-        default_prime_hunters_configuration,
+        prime_hunters_configuration,
         force_field_configuration=force_field_configuration.with_full_random(),
     )
 

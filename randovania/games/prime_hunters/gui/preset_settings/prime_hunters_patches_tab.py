@@ -21,20 +21,9 @@ class PresetHuntersPatches(PresetTab[HuntersConfiguration]):
         self.root_widget = QtWidgets.QWidget(self)
         self.root_layout = QtWidgets.QVBoxLayout(self.root_widget)
 
-        self.include_extra_pickups_check = QtWidgets.QCheckBox(self.root_widget)
-        self.include_extra_pickups_check.setEnabled(True)
-        self.include_extra_pickups_check.setText("Include Extra Pickups")
-        self.root_layout.addWidget(self.include_extra_pickups_check)
-
-        self.include_extra_pickups_label = QtWidgets.QLabel(self.root_widget)
-        self.include_extra_pickups_label.setWordWrap(True)
-        self.include_extra_pickups_label.setText("Include some optional pickups.")
-        self.root_layout.addWidget(self.include_extra_pickups_label)
-
         self.setCentralWidget(self.root_widget)
 
         # Signals
-        self.include_extra_pickups_check.stateChanged.connect(self._persist_option_then_notify("include_extra_pickups"))
 
     @classmethod
     def tab_title(cls) -> str:
@@ -45,5 +34,5 @@ class PresetHuntersPatches(PresetTab[HuntersConfiguration]):
         return cls.GAME_MODIFICATIONS_HEADER
 
     def on_preset_changed(self, preset: Preset[HuntersConfiguration]) -> None:
-        config = preset.configuration
-        self.include_extra_pickups_check.setChecked(config.include_extra_pickups)
+        # config = preset.configuration
+        pass

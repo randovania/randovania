@@ -21,15 +21,15 @@ from randovania.generator.pickup_pool import pool_creator
     ],
 )
 def test_assign_pool_results_predetermined(
-    prime_hunters_game_description, default_prime_hunters_configuration, octoliths, expected
+    prime_hunters_game_description, prime_hunters_configuration, octoliths, expected
 ):
-    default_prime_hunters_configuration = dataclasses.replace(default_prime_hunters_configuration, octoliths=octoliths)
-    patches = GamePatches.create_from_game(prime_hunters_game_description, 0, default_prime_hunters_configuration)
-    pool_results = pool_creator.calculate_pool_results(default_prime_hunters_configuration, patches.game)
+    prime_hunters_configuration = dataclasses.replace(prime_hunters_configuration, octoliths=octoliths)
+    patches = GamePatches.create_from_game(prime_hunters_game_description, 0, prime_hunters_configuration)
+    pool_results = pool_creator.calculate_pool_results(prime_hunters_configuration, patches.game)
     # Run
     result = HuntersBootstrap().assign_pool_results(
         Random(8000),
-        default_prime_hunters_configuration,
+        prime_hunters_configuration,
         patches,
         pool_results,
     )
