@@ -591,7 +591,6 @@ class AsyncRaceRoom(BaseModel):
             id=self.id,
             name=self.name,
             visibility=self.visibility,
-            has_password=self.password is not None,
             creator=self.creator.name,
             creation_date=self.creation_datetime,
             start_date=self.start_datetime,

@@ -122,7 +122,6 @@ def test_settings_dialog(skip_qtbot) -> None:
         AsyncRaceRoomEntry(
             id=1000,
             name="Async Room",
-            has_password=False,
             creator="TheCreator",
             creation_date=datetime.datetime(2020, 1, 1),
             start_date=datetime.datetime(2020, 2, 1),
