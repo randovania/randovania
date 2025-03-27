@@ -13,14 +13,10 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
 
 
-class HuntersGameSpecific(TypedDict):
-    force_fields: dict[str, str]
-
-
 class HuntersBasePatchesFactory(BasePatchesFactory[HuntersConfiguration]):
     def create_game_specific(
         self, configuration: HuntersConfiguration, game: GameDescription, rng: Random
-    ) -> HuntersGameSpecific:
+    ) -> dict:
         all_choices = list(LayoutForceFieldRequirement)
         all_choices.remove(LayoutForceFieldRequirement.RANDOM)
         without_removed = copy(all_choices)
