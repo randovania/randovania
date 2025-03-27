@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from copy import copy
-from typing import TYPE_CHECKING, TypedDict
+from typing import TYPE_CHECKING
 
 from randovania.games.prime_hunters.layout import HuntersConfiguration
 from randovania.games.prime_hunters.layout.force_field_configuration import LayoutForceFieldRequirement
@@ -14,9 +14,7 @@ if TYPE_CHECKING:
 
 
 class HuntersBasePatchesFactory(BasePatchesFactory[HuntersConfiguration]):
-    def create_game_specific(
-        self, configuration: HuntersConfiguration, game: GameDescription, rng: Random
-    ) -> dict:
+    def create_game_specific(self, configuration: HuntersConfiguration, game: GameDescription, rng: Random) -> dict:
         all_choices = list(LayoutForceFieldRequirement)
         all_choices.remove(LayoutForceFieldRequirement.RANDOM)
         without_removed = copy(all_choices)
