@@ -51,10 +51,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Minor edge case where a seed might be considered impossible due to missing consideration of damage.
 - Fixed: Some seeds being considered impossible in cases where damage requirements are spread between multiple connections.
 
-### Metroid Prime 2: Echoes
-
-- Fixed: Cannon Ball and the multiplayer pickups can no longer be selected as starting pickups, since they did not work in-game when doing so.
-
 ### Metroid Dread
 
 - Fixed: GUI formatting on the game page.
@@ -119,6 +115,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Seeds with individual Door Lock Randomizer enabled should see more door variety in the lategame.
 - Fixed: When using the new experimental generator setting to consider possible unsafe resources, the Starter Preset can once again see Missile Launcher placed in the GFMC Compound crate.
 - Fixed: Translators will no longer be hinted by hints of their own color.
+- Fixed: Cannon Ball and the multiplayer pickups can no longer be selected as starting pickups, since they did not work in-game when doing so.
 
 #### Logic Database
 
