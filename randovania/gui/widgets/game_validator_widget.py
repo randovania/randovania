@@ -275,7 +275,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
             elif leading_char == SKIP_ROLLBACK_CHAR:
                 rollback_skip_match = rollback_skip_re.match(stripped)
                 if rollback_skip_match is None:
-                    # This happens is when rolling an action that isn't a Resource Node
+                    # This happens when rolling back an action that isn't a Resource Node
                     # The only time this is the case is when rolling back the first action, aka it's impossible
                     return
                 groups = rollback_skip_match.groupdict()
