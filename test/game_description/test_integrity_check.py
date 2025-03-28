@@ -30,7 +30,7 @@ def test_find_database_errors(game_enum: RandovaniaGame):
 def test_invalid_db():
     trivial_req = {"type": "and", "data": {"comment": "", "items": []}}
     sample_data = {
-        "schema_version": 30,
+        "schema_version": 31,
         "game": "prime2",
         "resource_database": {
             "items": {

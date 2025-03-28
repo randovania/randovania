@@ -224,10 +224,10 @@ def test_create_elevators_field_elevators_for_a_seed(
 
     if not vanilla_gateway:
         add(
-            "Temple Grounds",
+            "Sky Temple Grounds",
             "Sky Temple Gateway",
-            "Elevator to Great Temple",
-            "Great Temple",
+            "Elevator to Sky Temple",
+            "Sky Temple",
             "Sanctum",
             "Door to Sanctum Access",
         )
@@ -266,15 +266,6 @@ def test_create_elevators_field_elevators_for_a_seed(
             "room_name": "Transport to Temple Transport Violet",
         },
         {
-            "instance_id": 136970379,
-            "origin_location": {"world_asset_id": 1006255871, "area_asset_id": 2278776548},
-            "target_location": {
-                "world_asset_id": 2252328306,
-                "area_asset_id": 2068511343 if vanilla_gateway else 3619928121,
-            },
-            "room_name": "Sky Temple Gateway" if vanilla_gateway else "Transport to Sanctum",
-        },
-        {
             "instance_id": 3342446,
             "origin_location": {"world_asset_id": 1006255871, "area_asset_id": 3455543403},
             "target_location": {"world_asset_id": 464164546, "area_asset_id": 3528156989},
@@ -285,6 +276,15 @@ def test_create_elevators_field_elevators_for_a_seed(
             "origin_location": {"world_asset_id": 1006255871, "area_asset_id": 1345979968},
             "target_location": {"world_asset_id": 2252328306, "area_asset_id": 408633584},
             "room_name": "Transport to Temple Transport Emerald",
+        },
+        {
+            "instance_id": 136970379,
+            "origin_location": {"world_asset_id": 1006255871, "area_asset_id": 2278776548},
+            "target_location": {
+                "world_asset_id": 2252328306,
+                "area_asset_id": 2068511343 if vanilla_gateway else 3619928121,
+            },
+            "room_name": "Sky Temple Gateway" if vanilla_gateway else "Transport to Sanctum",
         },
         {
             "instance_id": 152,

@@ -114,14 +114,6 @@ def render_region_graph_logic(args: Namespace) -> None:
     if colors is None:
         colors = {region.name: _hash_to_color(region.name) for region in gd.region_list.regions}
 
-    dark_colors = {
-        "Agon Wastes": "#a88332",
-        "Torvus Bog": "#149612",
-        "Sanctuary Fortress": "#112991",
-        "Temple Grounds": "#7d2996",
-        "Great Temple": "#7d2996",
-    }
-
     if single_image:
         full_dot = graphviz.Digraph(name=gd.game.short_name, comment=gd.game.long_name)
     else:
@@ -141,7 +133,7 @@ def render_region_graph_logic(args: Namespace) -> None:
             if any(isinstance(node, DockNode) and _cross_region_dock(node) for node in area.nodes):
                 shape = "polygon"
 
-            c = (dark_colors if area.in_dark_aether else colors)[region.name]
+            c = colors[region.name]
             fillcolor = "".join(f"{max(0, int(c[i * 2 + 1 : i * 2 + 3], 16) - 64):02x}" for i in range(3))
             this_dot.node(
                 f"{region.name}-{area.name}",

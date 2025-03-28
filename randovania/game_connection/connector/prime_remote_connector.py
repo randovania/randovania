@@ -108,7 +108,7 @@ class PrimeRemoteConnector(RemoteConnector):
 
     def world_by_asset_id(self, asset_id: int) -> Region | None:
         for region in self.game.region_list.regions:
-            if region.extra["asset_id"] == asset_id:
+            if region.extra.get("asset_id") == asset_id:
                 return region
         return None
 
