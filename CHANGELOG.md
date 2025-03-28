@@ -100,6 +100,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Fixed: A very precise situation that could lead to pickups not being sent properly.
+
 #### Logic Database
 
 ##### Phazon Mines
@@ -108,6 +110,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Ore Processing: Getting from Door to Elevator Access A to Door to Storage Depot B via Power Bombs, Space Jump and L-Jumps now requires Morph Ball.
 
 ### Metroid Prime 2: Echoes
+
 - Removed: Relative hints will no longer be placed.
 - Changed: Legacy multiworld sessions where an Echoes hint points to a Cave Story item may have very slightly altered wording.
 - Changed: A legacy relative hint pointing to a Nothing will now always refer to it by name.
@@ -116,6 +119,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: When using the new experimental generator setting to consider possible unsafe resources, the Starter Preset can once again see Missile Launcher placed in the GFMC Compound crate.
 - Fixed: Translators will no longer be hinted by hints of their own color.
 - Fixed: Cannon Ball and the multiplayer pickups can no longer be selected as starting pickups, since they did not work in-game when doing so.
+- Fixed: A very precise situation that could lead to pickups not being sent properly.
 
 #### Logic Database
 
