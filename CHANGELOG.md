@@ -65,7 +65,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - On Combat Intermediate: 199HP
   - Or simply Combat Advanced
 - Changed: The Gold Robot fight have the same upgrade to the requirements as the Silver version, except all HP requirements are 100 higher.
-- CHanged: The Twin Robot fights have the same upgrade to the requirements as the Gold version, except all HP requirements are 100 higher again.
+- Changed: The Twin Robot fights have the same upgrade to the requirements as the Gold version, except all HP requirements are 100 higher again.
 
 ##### Artaria
 
