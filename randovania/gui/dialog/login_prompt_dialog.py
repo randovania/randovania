@@ -1,8 +1,13 @@
 from __future__ import annotations
 
+import os
+import tempfile
+import textwrap
+from pathlib import Path
 from typing import TYPE_CHECKING
 
-from PySide6 import QtWidgets
+import qrcode
+from PySide6 import QtGui, QtWidgets
 from PySide6.QtWidgets import QDialog
 from qasync import asyncSlot
 
@@ -29,6 +34,7 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
         self.discord_button.setToolTip(
             "" if self.discord_button.isEnabled() else "This Randovania build is not configured to login with Discord."
         )
+        self.discord_qr_label.setVisible(False)
         self.privacy_policy_label.setText(self.privacy_policy_label.text().replace("color:#0000ff;", ""))
 
         self.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Reset).setText("Logout")
@@ -74,7 +80,23 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
     @asyncSlot()
     @handle_network_errors
     async def on_login_with_discord_button(self):
-        await self.network_client.login_with_discord()
+        url = await self.network_client.login_with_discord()
+
+        with tempfile.TemporaryDirectory() as tmpdirname:
+            qr_path = Path(tmpdirname).joinpath("qr.png")
+            img = qrcode.make(url, box_size=7)
+            img.save(qr_path)
+            pixmap = QtGui.QPixmap(os.fspath(qr_path))
+
+        self.discord_label.setText(
+            textwrap.dedent(f"""
+            Open the following link in your browser:
+
+            [{url}]({url})
+        """)
+        )
+        self.discord_qr_label.setVisible(True)
+        self.discord_qr_label.setPixmap(pixmap)
 
     def on_ok_button(self):
         self.accept()
