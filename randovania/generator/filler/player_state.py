@@ -5,6 +5,7 @@ import re
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.common import elevators
 from randovania.generator import reach_lib
@@ -295,7 +296,14 @@ def build_available_indices(
     """
     Groups indices into separated groups, so each group can be weighted separately.
     """
-    indices_groups = [set(region.pickup_indices) - configuration.indices_to_exclude for region in region_list.regions]
+    named_index_group = collections.defaultdict(set)
+
+    for region, area, node in region_list.all_regions_areas_nodes:
+        if isinstance(node, PickupNode) and node.pickup_index not in configuration.indices_to_exclude:
+            group_name = node.custom_index_group or region.name
+            named_index_group[group_name].add(node.pickup_index)
+
+    indices_groups = list(named_index_group.values())
     all_indices = set().union(*indices_groups)
 
     return indices_groups, all_indices

@@ -16,10 +16,9 @@ from randovania.game_description.requirements.requirement_template import Requir
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_collection import ResourceCollection
-from randovania.layout.base.base_configuration import BaseConfiguration
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Iterator, Mapping
 
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.area_identifier import AreaIdentifier
@@ -29,6 +28,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
 dock_node_suffix_re = re.compile(r" \([^()]+?\)$")
@@ -37,7 +37,7 @@ layer_name_re = re.compile(r"[a-zA-Z0-9 _-]+")
 
 def _create_node_context(game: GameDescription) -> NodeContext:
     return NodeContext(
-        patches=GamePatches.create_from_game(game, 0, typing.cast(BaseConfiguration, None)),
+        patches=GamePatches.create_from_game(game, 0, typing.cast("BaseConfiguration", None)),
         current_resources=ResourceCollection.with_database(game.resource_database),
         database=game.resource_database,
         node_provider=game.region_list,
@@ -357,7 +357,7 @@ def check_for_items_to_be_replaced_by_templates(
 
 
 def check_for_resources_to_use_together(
-    game: GameDescription, combined_resources: dict[str, tuple[str, ...]]
+    game: GameDescription, combined_resources: Mapping[str, tuple[str, ...]]
 ) -> Iterator[str]:
     """
     Checks the logic database for resources that should always be used together with other resources.

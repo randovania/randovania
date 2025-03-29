@@ -118,11 +118,10 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         yield self.check_if_beatable_after_base_patches_check
         yield self.local_first_progression_check
         yield self.local_first_progression_label
-        yield self.dangerous_combo
-        yield self.dangerous_label
-        yield self.dangerous_description
         yield self.line_2
+
         yield self.experimental_generator_line
+        yield self.consider_unsafe_line
         yield self.minimal_logic_line
         yield self.logical_pickup_placement_line
         yield self.logical_pickup_placement_combo

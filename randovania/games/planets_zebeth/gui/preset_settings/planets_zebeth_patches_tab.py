@@ -56,4 +56,4 @@ class PresetPlanetsZebethPatches(PresetTab):
         config = preset.configuration
         assert isinstance(config, PlanetsZebethConfiguration)
         for f in _FIELDS:
-            typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))
+            typing.cast("QtWidgets.QCheckBox", getattr(self, f"{f}_check")).setChecked(getattr(config, f))

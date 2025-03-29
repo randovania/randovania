@@ -1,3 +1,8 @@
+# /// script
+# dependencies = [
+# ]
+# ///
+
 """Helper for finding Randovania version out of a directory with release artifacts. Used by CI."""
 
 import argparse

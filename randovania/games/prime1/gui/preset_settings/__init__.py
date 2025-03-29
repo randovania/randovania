@@ -4,10 +4,11 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from randovania.gui.lib.window_manager import WindowManager
+    from randovania.gui.preset_settings.preset_tab import PresetTab
     from randovania.interface_common.preset_editor import PresetEditor
 
 
-def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
+def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
     from randovania.games.prime1.gui.preset_settings.prime_enemy_stat_randomizer import PresetEnemyAttributeRandomizer
     from randovania.games.prime1.gui.preset_settings.prime_generation_tab import PresetPrimeGeneration
     from randovania.games.prime1.gui.preset_settings.prime_goal_tab import PresetPrimeGoal

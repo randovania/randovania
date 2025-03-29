@@ -11,11 +11,12 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def prime1_specific_pool(results: PoolResults, configuration: BaseConfiguration, game: GameDescription):
+def prime1_specific_pool(results: PoolResults, configuration: BaseConfiguration, game: GameDescription) -> None:
     assert isinstance(configuration, PrimeConfiguration)
     results.extend_with(
         add_artifacts(
             game.resource_database,
+            game.get_pickup_database(),
             configuration.artifact_target,
             configuration.artifact_minimum_progression,
         )

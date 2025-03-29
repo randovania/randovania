@@ -638,7 +638,7 @@
                                     "type": "resource",
                                     "data": {
                                         "type": "items",
-                                        "name": "L2Locks",
+                                        "name": "L3Locks",
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -689,6 +689,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 42,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Behind Wall": {
@@ -1076,7 +1077,9 @@
         },
         "Level 2 Security Room": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "security_room"
+            ],
             "extra": {
                 "map_name": "Sector 34",
                 "room_id": [
@@ -1115,7 +1118,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Event - L2 Locks": {
+                        "Pickup (L2 Locks)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1164,37 +1167,12 @@
                         }
                     }
                 },
-                "Event - L2 Locks": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 138.3298638184466,
-                        "y": 79.76857799395205,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Level2Locks",
-                    "connections": {
-                        "Pickup (L2 Locks)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Pickup (L2 Locks)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 110.17,
-                        "y": 116.34,
+                        "x": 134.93144208037825,
+                        "y": 64.83687943262413,
                         "z": 0.0
                     },
                     "description": "",
@@ -1209,6 +1187,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 117,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Security Access": {
@@ -1511,6 +1490,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 43,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to B.O.X. Arena Access": {
@@ -1925,7 +1905,9 @@
         },
         "Alcove": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "pillar"
+            ],
             "extra": {
                 "map_name": "Sector 38",
                 "room_id": [
@@ -1954,6 +1936,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 44,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Other to Entrance Lobby": {
@@ -1998,6 +1981,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 45,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Above E-Tank": {
@@ -2901,6 +2885,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 46,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Alcove": {
@@ -3756,7 +3741,9 @@
         },
         "Lava Maze": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "climbable"
+            ],
             "extra": {
                 "map_name": "Sector 312",
                 "room_id": [
@@ -3785,6 +3772,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 47,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Lava Reservoirs": {
@@ -5211,7 +5199,9 @@
         },
         "Sova Processing": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "shutter"
+            ],
             "extra": {
                 "map_name": "Sector 319",
                 "room_id": [
@@ -5240,6 +5230,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 48,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Beside Pickups": {
@@ -5272,6 +5263,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 49,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Beside Lava": {
@@ -6235,7 +6227,10 @@
         },
         "Data Room": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "boss",
+                "data_room"
+            ],
             "extra": {
                 "map_name": "Sector 321",
                 "room_id": [
@@ -6303,6 +6298,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 112,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to B.O.X. Arena": {
@@ -7019,7 +7015,9 @@
         },
         "Main Boiler Control Room": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "boss"
+            ],
             "extra": {
                 "map_name": "Sector 325",
                 "room_id": [
@@ -7261,6 +7259,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 110,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Main Boiler": {
@@ -8386,7 +8385,9 @@
         },
         "Fiery Storage": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "pillar"
+            ],
             "extra": {
                 "map_name": "Sector 328",
                 "room_id": [
@@ -8415,6 +8416,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 50,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Behind Wall": {
@@ -8447,6 +8449,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 51,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Monkey Bars of Fire": {
@@ -8831,6 +8834,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 52,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Red Tower": {
@@ -9395,6 +9399,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 53,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Data Recharge Room": {
@@ -9484,6 +9489,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 54,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Red Tower": {
@@ -9926,6 +9932,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 55,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Beside Pickup": {
@@ -9958,6 +9965,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 56,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Sova Processing": {
@@ -10601,6 +10609,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 57,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Fiery Storage": {

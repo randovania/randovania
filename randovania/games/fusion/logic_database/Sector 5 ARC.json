@@ -480,7 +480,7 @@
                                     "type": "resource",
                                     "data": {
                                         "type": "items",
-                                        "name": "L3Locks",
+                                        "name": "L4Locks",
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -893,6 +893,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 73,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Training Grounds": {
@@ -925,6 +926,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 74,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Training Grounds": {
@@ -2462,7 +2464,9 @@
         },
         "Level 3 Security Room": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "security_room"
+            ],
             "extra": {
                 "map_name": "Sector 510",
                 "room_id": [
@@ -2548,31 +2552,6 @@
                                 "items": []
                             }
                         },
-                        "Event - L3 Locks": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - L3 Locks": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 148.53,
-                        "y": 94.03,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Level3Locks",
-                    "connections": {
                         "Pickup (L3 Locks)": {
                             "type": "and",
                             "data": {
@@ -2586,8 +2565,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 142.53,
-                        "y": 125.02,
+                        "x": 152.0,
+                        "y": 64.83687943262413,
                         "z": 0.0
                     },
                     "description": "",
@@ -2602,6 +2581,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 118,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Security Shaft East": {
@@ -2834,6 +2814,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 75,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Frozen Tower": {
@@ -3623,7 +3604,9 @@
         },
         "Mini-Fridge": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "pillar"
+            ],
             "extra": {
                 "map_name": "Sector 514",
                 "room_id": [
@@ -3652,6 +3635,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 76,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Other to Flooded Tower": {
@@ -3789,7 +3773,9 @@
         },
         "Data Room": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "data_room"
+            ],
             "extra": {
                 "map_name": "Sector 516",
                 "room_id": [
@@ -3944,6 +3930,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 113,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Data Checkpoint": {
@@ -4120,6 +4107,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 77,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Nightmare Recharge Room": {
@@ -4684,7 +4672,10 @@
         },
         "Nightmare Arena": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "boss",
+                "climbable"
+            ],
             "extra": {
                 "map_name": "Sector 520",
                 "room_id": [
@@ -5320,6 +5311,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 109,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Arena": {
@@ -5365,6 +5357,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 78,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Subway": {
@@ -6005,6 +5998,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 79,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Security Shaft East": {
@@ -6470,6 +6464,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 80,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Arctic Containment": {
@@ -7191,6 +7186,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 81,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Entrance Lobby": {
@@ -7558,6 +7554,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 82,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Entrance Lobby": {
@@ -7858,6 +7855,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 83,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Other to Nightmare Arena": {
@@ -8157,7 +8155,9 @@
         },
         "Crow's Nest": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "shutter"
+            ],
             "extra": {
                 "map_name": "Sector 536",
                 "room_id": [
@@ -8186,6 +8186,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 84,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Glass Tube to Sector 3 (PYR)": {
@@ -10500,6 +10501,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 85,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Other to Nightmare Hub": {
@@ -10746,6 +10748,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 86,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Zebesian Waters": {
@@ -11003,6 +11006,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 87,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Other to Frozen Tower": {

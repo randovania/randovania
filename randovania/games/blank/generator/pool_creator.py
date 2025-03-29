@@ -14,4 +14,4 @@ if TYPE_CHECKING:
 def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDescription) -> None:
     assert isinstance(configuration, BlankConfiguration)
 
-    results.to_place.append(create_generated_pickup("Victory Key", game.resource_database))
+    results.to_place.append(create_generated_pickup("Victory Key", game.resource_database, game.get_pickup_database()))

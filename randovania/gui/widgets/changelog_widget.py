@@ -41,7 +41,7 @@ class ChangeLogWidget(QtWidgets.QWidget):
 
     def select_version_index_changed(self) -> None:
         selected_widget = cast(
-            QtWidgets.QScrollArea,
+            "QtWidgets.QScrollArea",
             self.findChild(QtWidgets.QScrollArea, f"scroll_area {self.select_version.currentText()}"),
         )
 

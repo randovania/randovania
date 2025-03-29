@@ -51,6 +51,8 @@ class FusionPresetDescriber(GamePresetDescriber):
                 {
                     "Instant Hatch Transitions": configuration.instant_transitions,
                 },
+                {"Unlocked hatches in Sector Hub": configuration.unlock_sector_hub},
+                {"Unlocked Save and Recharge Station hatches": configuration.open_save_recharge_hatches},
             ],
             "Goal": describe_artifacts(configuration.artifacts),
         }

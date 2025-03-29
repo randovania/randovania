@@ -15,6 +15,7 @@ from randovania.resolver import debug, resolver
         "prime1-vanilla.rdvgame",
         "prime2_seed_b.rdvgame",
         "blank/issue-3717.rdvgame",
+        "dread/vanilla.rdvgame",
     ],
 )
 async def test_resolver_with_log_file(test_files_dir, seed_name: str):

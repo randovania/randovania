@@ -4,13 +4,12 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description.pickup.pickup_entry import PickupEntry
+from randovania.game_description.pickup.pickup_entry import PickupEntry, StartingPickupBehavior
 from randovania.generator.filler.action import Action
 from randovania.generator.filler.filler_library import UncollectedState
 from randovania.generator.filler.retcon import EvaluatedAction, _calculate_weights_for, should_be_starting_pickup
 from randovania.generator.filler.weighted_locations import WeightedLocations
 from randovania.generator.generator_reach import GeneratorReach
-from randovania.layout.base.standard_pickup_state import StartingPickupBehavior
 from randovania.resolver import debug
 
 

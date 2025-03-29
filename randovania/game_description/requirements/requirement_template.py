@@ -41,6 +41,9 @@ class RequirementTemplate(Requirement):
     def simplify(self, keep_comments: bool = False) -> Requirement:
         return self
 
+    def isolate_damage_requirements(self, context: NodeContext) -> Requirement:
+        return self.template_requirement(context.database).isolate_damage_requirements(context)
+
     def as_set(self, context: NodeContext) -> RequirementSet:
         return self.template_requirement(context.database).as_set(context)
 

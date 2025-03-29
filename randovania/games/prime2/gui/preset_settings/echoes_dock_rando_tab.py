@@ -6,7 +6,7 @@ from randovania.layout.base.dock_rando_configuration import DockRandoMode
 
 
 class PresetEchoesDockRando(PresetDockRando):
-    def _on_mode_changed(self, value: DockRandoMode):
+    def _on_mode_changed(self, value: DockRandoMode) -> None:
         super()._on_mode_changed(value)
         if value != DockRandoMode.VANILLA:
             with self._editor as editor:

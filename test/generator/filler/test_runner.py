@@ -50,7 +50,7 @@ async def test_run_filler(
     filler_config.minimum_available_locations_for_hint_placement = 0
     player_state.hint_state = HintState(filler_config, blank_game_description)
     empty_set: frozenset[PickupIndex] = frozenset()
-    player_state.hint_state.hint_initial_pickups = {identifier: empty_set for identifier in hint_identifiers}
+    player_state.hint_state.hint_initial_pickups = dict.fromkeys(hint_identifiers, empty_set)
 
     mocker.patch(
         "randovania.generator.filler.runner.retcon_playthrough_filler",

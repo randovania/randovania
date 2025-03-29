@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>501</width>
-    <height>393</height>
+    <width>698</width>
+    <height>453</height>
    </rect>
   </property>
   <property name="currentIndex">
@@ -96,8 +96,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>499</width>
-         <height>363</height>
+         <width>696</width>
+         <height>423</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="faq_scroll_layout">
@@ -135,8 +135,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>467</width>
-         <height>775</height>
+         <width>664</width>
+         <height>631</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -234,8 +234,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>675</width>
-         <height>565</height>
+         <width>682</width>
+         <height>669</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -266,7 +266,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In Metroid Fusion, you can find hints for the following resources: &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Metroids&lt;/span&gt;: The Restricted Area Navigation Room hints where all your Infant Metroids are.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Major Items&lt;/span&gt;: All other Navigation Rooms provide a hint to a major item with varying degress of precision as described below:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In Metroid Fusion, players can find hints at the various Navigation Terminals spread throught the B.S.L. There are three main types of hints: &lt;/p&gt;&lt;p&gt;1) &lt;span style=&quot; font-weight:700;&quot;&gt;Infant Metroids&lt;/span&gt;: The Restricted Navigation Room gives a hint where all Infant Metroids can be found. This Navigation Terminal is always unlocked. &lt;/p&gt;&lt;p&gt;2) &lt;span style=&quot; font-weight:700;&quot;&gt;Charge Beam&lt;/span&gt;: The Auxiliary Navigation Terminal gives a hint where the Charge Beam can be found. This Navigation Terminal is always unlocked &lt;/p&gt;&lt;p&gt;3) &lt;span style=&quot; font-weight:700;&quot;&gt;Regular: &lt;/span&gt;The remaining Navigation Terminals give hints to random pickups with varying precision. Activating these Navigation Terminals require a specific Keycard to be acquired, and will prevent interaction before then.&lt;/p&gt;&lt;p&gt;The table below summarizes the above:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="textFormat">
            <enum>Qt::MarkdownText</enum>
@@ -282,28 +282,31 @@
         <item>
          <widget class="QTableWidget" name="tableWidget">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
           <property name="minimumSize">
            <size>
-            <width>660</width>
+            <width>400</width>
             <height>0</height>
            </size>
           </property>
           <property name="sizeAdjustPolicy">
-           <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
+           <enum>QAbstractScrollArea::AdjustToContents</enum>
           </property>
           <property name="autoScroll">
            <bool>true</bool>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
           </property>
           <property name="rowCount">
            <number>11</number>
           </property>
           <property name="columnCount">
-           <number>3</number>
+           <number>4</number>
           </property>
           <attribute name="horizontalHeaderVisible">
            <bool>true</bool>
@@ -312,10 +315,10 @@
            <bool>false</bool>
           </attribute>
           <attribute name="horizontalHeaderMinimumSectionSize">
-           <number>30</number>
+           <number>50</number>
           </attribute>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>220</number>
+           <number>150</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -400,7 +403,12 @@
           </column>
           <column>
            <property name="text">
-            <string>Hint Precision</string>
+            <string>Lock</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Hint Type</string>
            </property>
            <property name="font">
             <font>
@@ -420,7 +428,12 @@
           </item>
           <item row="0" column="2">
            <property name="text">
-            <string>Charge Beam, Configurable Precision</string>
+            <string>Unlocked</string>
+           </property>
+          </item>
+          <item row="0" column="3">
+           <property name="text">
+            <string>Specific Charge Beam, Configurable Precision</string>
            </property>
           </item>
           <item row="1" column="0">
@@ -430,12 +443,17 @@
           </item>
           <item row="1" column="1">
            <property name="text">
-            <string>Main Deck Navigation Room East</string>
+            <string>Crew Quarters Navigation Room</string>
            </property>
           </item>
           <item row="1" column="2">
            <property name="text">
-            <string>Broad Item, Broad Location</string>
+            <string>Level 1 Keycard (BLUE)</string>
+           </property>
+          </item>
+          <item row="1" column="3">
+           <property name="text">
+            <string>Regular Hint, Featural</string>
            </property>
           </item>
           <item row="2" column="0">
@@ -445,12 +463,17 @@
           </item>
           <item row="2" column="1">
            <property name="text">
-            <string>Main Deck Navigation Room West</string>
+            <string>Nexus Navigation Room</string>
            </property>
           </item>
           <item row="2" column="2">
            <property name="text">
-            <string>Broad Item, Broad Location</string>
+            <string>Level 4 Keycard (RED)</string>
+           </property>
+          </item>
+          <item row="2" column="3">
+           <property name="text">
+            <string>Regular Hint, Featural</string>
            </property>
           </item>
           <item row="3" column="0">
@@ -465,7 +488,12 @@
           </item>
           <item row="3" column="2">
            <property name="text">
-            <string>Broad Item, Broad Location</string>
+            <string>Level 0 Keycard (GREY)</string>
+           </property>
+          </item>
+          <item row="3" column="3">
+           <property name="text">
+            <string>Regular Hint, Featural</string>
            </property>
           </item>
           <item row="4" column="0">
@@ -480,7 +508,12 @@
           </item>
           <item row="4" column="2">
            <property name="text">
-            <string>Infant Metroids, Configurable Precision</string>
+            <string>Unlocked</string>
+           </property>
+          </item>
+          <item row="4" column="3">
+           <property name="text">
+            <string>Specific Infant Metroids, Configurable Precision</string>
            </property>
           </item>
           <item row="5" column="0">
@@ -495,7 +528,12 @@
           </item>
           <item row="5" column="2">
            <property name="text">
-            <string>Broad Item, Broad Location</string>
+            <string>Level 2 Keycard (GREEN)</string>
+           </property>
+          </item>
+          <item row="5" column="3">
+           <property name="text">
+            <string>Regular Hint, Featural</string>
            </property>
           </item>
           <item row="6" column="0">
@@ -510,7 +548,12 @@
           </item>
           <item row="6" column="2">
            <property name="text">
-            <string>Broad Item, Broad Location</string>
+            <string>Level 2 Keycard (GREEN)</string>
+           </property>
+          </item>
+          <item row="6" column="3">
+           <property name="text">
+            <string>Regular Hint, Featural</string>
            </property>
           </item>
           <item row="7" column="0">
@@ -525,7 +568,12 @@
           </item>
           <item row="7" column="2">
            <property name="text">
-            <string>Broad Item, Broad Location</string>
+            <string>Level 3 Keycard (YELLOW)</string>
+           </property>
+          </item>
+          <item row="7" column="3">
+           <property name="text">
+            <string>Regular Hint, Featural</string>
            </property>
           </item>
           <item row="8" column="0">
@@ -540,7 +588,12 @@
           </item>
           <item row="8" column="2">
            <property name="text">
-            <string>Broad Item, Broad Location</string>
+            <string>Level 3 Keycard (YELLOW)</string>
+           </property>
+          </item>
+          <item row="8" column="3">
+           <property name="text">
+            <string>Regular Hint, Featural</string>
            </property>
           </item>
           <item row="9" column="0">
@@ -555,7 +608,12 @@
           </item>
           <item row="9" column="2">
            <property name="text">
-            <string>Broad Item, Broad Location</string>
+            <string>Level 4 Keycard (RED)</string>
+           </property>
+          </item>
+          <item row="9" column="3">
+           <property name="text">
+            <string>Regular Hint, Featural</string>
            </property>
           </item>
           <item row="10" column="0">
@@ -570,7 +628,12 @@
           </item>
           <item row="10" column="2">
            <property name="text">
-            <string>Broad Item, Broad Location</string>
+            <string>Level 4 Keycard (RED)</string>
+           </property>
+          </item>
+          <item row="10" column="3">
+           <property name="text">
+            <string>Regular Hint, Featural</string>
            </property>
           </item>
          </widget>
@@ -636,6 +699,11 @@
     </property>
    </layout>
   </widget>
+  <widget class="LocationHintFeatureTab" name="location_hint_features_tab">
+   <attribute name="title">
+    <string>Location Hint Features</string>
+   </attribute>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -650,6 +718,11 @@
    <extends>QWidget</extends>
    <header location="global">randovania.gui.widgets.hint_feature_tab</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LocationHintFeatureTab</class>
+   <extends>QWidget</extends>
+   <header location="global">randovania.gui.widgets.hint_feature_tab</header>
   </customwidget>
  </customwidgets>
  <resources/>

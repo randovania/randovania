@@ -708,6 +708,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 0,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Docking Bay Climb": {
@@ -1203,7 +1204,7 @@
                                     "type": "resource",
                                     "data": {
                                         "type": "items",
-                                        "name": "L2Locks",
+                                        "name": "L1Locks",
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -3314,6 +3315,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 1,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Restricted Navigation Room": {
@@ -5100,7 +5102,8 @@
                     "extra": {
                         "door_idx": [
                             51
-                        ]
+                        ],
+                        "sector_hub_elevator_door": true
                     },
                     "valid_starting_location": false,
                     "dock_type": "Door",
@@ -5140,7 +5143,8 @@
                     "extra": {
                         "door_idx": [
                             57
-                        ]
+                        ],
+                        "sector_hub_elevator_door": true
                     },
                     "valid_starting_location": false,
                     "dock_type": "Door",
@@ -5217,7 +5221,8 @@
                     "extra": {
                         "door_idx": [
                             52
-                        ]
+                        ],
+                        "sector_hub_elevator_door": true
                     },
                     "valid_starting_location": false,
                     "dock_type": "Door",
@@ -5264,7 +5269,8 @@
                     "extra": {
                         "door_idx": [
                             53
-                        ]
+                        ],
+                        "sector_hub_elevator_door": true
                     },
                     "valid_starting_location": false,
                     "dock_type": "Door",
@@ -5356,7 +5362,8 @@
                     "extra": {
                         "door_idx": [
                             54
-                        ]
+                        ],
+                        "sector_hub_elevator_door": true
                     },
                     "valid_starting_location": false,
                     "dock_type": "Door",
@@ -5403,7 +5410,8 @@
                     "extra": {
                         "door_idx": [
                             55
-                        ]
+                        ],
+                        "sector_hub_elevator_door": true
                     },
                     "valid_starting_location": false,
                     "dock_type": "Door",
@@ -5495,7 +5503,8 @@
                     "extra": {
                         "door_idx": [
                             56
-                        ]
+                        ],
+                        "sector_hub_elevator_door": true
                     },
                     "valid_starting_location": false,
                     "dock_type": "Door",
@@ -5587,7 +5596,8 @@
                     "extra": {
                         "door_idx": [
                             58
-                        ]
+                        ],
+                        "sector_hub_elevator_door": true
                     },
                     "valid_starting_location": false,
                     "dock_type": "Door",
@@ -5634,7 +5644,8 @@
                     "extra": {
                         "door_idx": [
                             59
-                        ]
+                        ],
+                        "sector_hub_elevator_door": true
                     },
                     "valid_starting_location": false,
                     "dock_type": "Door",
@@ -5726,7 +5737,8 @@
                     "extra": {
                         "door_idx": [
                             60
-                        ]
+                        ],
+                        "sector_hub_elevator_door": true
                     },
                     "valid_starting_location": false,
                     "dock_type": "Door",
@@ -5773,7 +5785,8 @@
                     "extra": {
                         "door_idx": [
                             61
-                        ]
+                        ],
+                        "sector_hub_elevator_door": true
                     },
                     "valid_starting_location": false,
                     "dock_type": "Door",
@@ -5865,7 +5878,8 @@
                     "extra": {
                         "door_idx": [
                             62
-                        ]
+                        ],
+                        "sector_hub_elevator_door": true
                     },
                     "valid_starting_location": false,
                     "dock_type": "Door",
@@ -6052,7 +6066,17 @@
                         "type": "and",
                         "data": {
                             "comment": null,
-                            "items": []
+                            "items": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "items",
+                                        "name": "L0Locks",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
                         }
                     },
                     "connections": {
@@ -6289,7 +6313,9 @@
         },
         "Operations Ventilation": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "climbable"
+            ],
             "extra": {
                 "map_name": "Main Deck35",
                 "room_id": [
@@ -6319,6 +6345,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 2,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Other to Crew Quarters East": {
@@ -6908,6 +6935,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 3,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Next to Pickup": {
@@ -7168,7 +7196,10 @@
                     "valid_starting_location": false,
                     "pickup_index": 100,
                     "location_category": "major",
-                    "hint_features": [],
+                    "custom_index_group": null,
+                    "hint_features": [
+                        "boss"
+                    ],
                     "connections": {
                         "Arena": {
                             "type": "and",
@@ -7408,7 +7439,9 @@
         },
         "Operations Deck Data Room": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "data_room"
+            ],
             "extra": {
                 "map_name": "Main Deck39",
                 "room_id": [
@@ -7476,6 +7509,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 15,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Operations Deck Navigation Room": {
@@ -7837,6 +7871,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 4,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Other to Operations Ventilation": {
@@ -7965,6 +8000,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 5,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Other to Station Entrance": {
@@ -8926,6 +8962,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 6,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Other to Silo Scaffolding": {
@@ -9207,7 +9244,9 @@
         },
         "Silo Scaffolding": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "climbable"
+            ],
             "extra": {
                 "map_name": "Main Deck51",
                 "room_id": [
@@ -9236,6 +9275,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 7,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Beside Pickup": {
@@ -10282,6 +10322,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 8,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Central Nexus": {
@@ -11261,7 +11302,9 @@
         },
         "Habitation Deck": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "shutter"
+            ],
             "extra": {
                 "map_name": "Main Deck69",
                 "room_id": [
@@ -11290,6 +11333,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 9,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Beside Pickup": {
@@ -11890,6 +11934,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 10,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Other to Dark Stairwell": {
@@ -11994,6 +12039,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 11,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Other to Elevator to Sector Hub": {
@@ -12529,6 +12575,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 12,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Other to Arachnus Arena": {
@@ -12717,6 +12764,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 106,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Arena": {

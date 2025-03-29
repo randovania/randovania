@@ -10,6 +10,7 @@ from PySide6.QtCore import Qt
 
 from randovania.gui.async_race_room_window import AsyncRaceRoomWindow
 from randovania.gui.lib.qt_network_client import QtNetworkClient
+from randovania.gui.widgets.audit_log_model import AuditEntryListDatabaseModel
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.async_race_room import (
     AsyncRaceEntryData,
@@ -18,6 +19,7 @@ from randovania.network_common.async_race_room import (
     AsyncRaceRoomRaceStatus,
     AsyncRaceRoomUserStatus,
 )
+from randovania.network_common.audit import AuditEntry
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.network_common.user import RandovaniaUser
@@ -201,8 +203,7 @@ async def test_on_join_and_forfeit(
         export_dialog=export_dialog_class.return_value,
         patch_data=network_client.async_race_join_and_export.return_value,
         layout_for_spoiler=None,
-        background=window,
-        progress_update_signal=window.progress_update_signal,
+        background=window.ui.background_task_widget,
     )
 
     window.refresh_data.assert_awaited_once_with()
@@ -269,3 +270,69 @@ async def test_on_view_user_entries(skip_qtbot, options, default_blank_preset, m
             ),
         ],
     )
+
+
+@pytest.mark.parametrize("cancel", [False, True])
+async def test_on_submit_proof(skip_qtbot, options, default_blank_preset, mocker: pytest_mock.MockFixture, cancel):
+    mock_dialog = mocker.patch(
+        "randovania.gui.lib.async_dialog.execute_dialog",
+        autospec=True,
+        return_value=QtWidgets.QDialog.DialogCode.Rejected if cancel else QtWidgets.QDialog.DialogCode.Accepted,
+    )
+
+    window = create_window(
+        skip_qtbot, create_room(default_blank_preset, self_status=AsyncRaceRoomUserStatus.FINISHED), options
+    )
+    window._network_client.async_race_get_own_proof.return_value = (
+        "your extensive submission notes",
+        "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    )
+
+    # Run
+    await window._on_submit_proof()
+
+    # Assert
+    window._network_client.async_race_get_own_proof.assert_awaited_once_with(window.room.id)
+    mock_dialog.assert_awaited_once()
+    if cancel:
+        window._network_client.async_race_submit_proof.assert_not_awaited()
+    else:
+        window._network_client.async_race_submit_proof.assert_awaited_once_with(
+            window.room.id,
+            "your extensive submission notes",
+            "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        )
+
+
+async def test_on_view_audit_log(skip_qtbot, options, default_blank_preset, mocker: pytest_mock.MockFixture):
+    mock_dialog = mocker.patch(
+        "randovania.gui.lib.async_dialog.execute_dialog",
+        autospec=True,
+    )
+
+    window = create_window(
+        skip_qtbot, create_room(default_blank_preset, self_status=AsyncRaceRoomUserStatus.FINISHED), options
+    )
+    window._network_client.async_race_get_audit_log.return_value = [
+        AuditEntry(
+            user="The Name",
+            message="Did something",
+            time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.UTC),
+        ),
+        AuditEntry(
+            user="Other",
+            message="Did something else",
+            time=datetime.datetime(2020, 5, 3, 10, 20, tzinfo=datetime.UTC),
+        ),
+    ]
+
+    # Run
+    await window._on_view_audit_log()
+
+    # Assert
+    mock_dialog.assert_awaited_once()
+    dialog: QtWidgets.QDialog = mock_dialog.call_args[0][0]
+    table_view: QtWidgets.QTableView = dialog.findChild(QtWidgets.QTableView)
+    model = table_view.model()
+    assert isinstance(model, AuditEntryListDatabaseModel)
+    assert len(model.db) == 2

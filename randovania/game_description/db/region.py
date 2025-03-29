@@ -9,7 +9,6 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.db.node import Node
-    from randovania.game_description.resources.pickup_index import PickupIndex
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
@@ -33,11 +32,6 @@ class Region:
         """
         for area in self.areas:
             yield from area.nodes
-
-    @property
-    def pickup_indices(self) -> Iterator[PickupIndex]:
-        for area in self.areas:
-            yield from area.pickup_indices
 
     def area_by_name(self, area_name: str, is_dark_aether: bool | None = None) -> Area:
         for area in self.areas:

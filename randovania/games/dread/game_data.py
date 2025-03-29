@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import randovania.game.data
 import randovania.game.development_state
 import randovania.game.generator
@@ -11,8 +13,13 @@ from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.games.dread.layout.preset_describer import DreadPresetDescriber
 
+if TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExporter
+    from randovania.exporter.patch_data_factory import PatchDataFactory
+    from randovania.interface_common.options import PerGameOptions
 
-def _options():
+
+def _options() -> type[PerGameOptions]:
     from randovania.games.dread.exporter.options import DreadPerGameOptions
 
     return DreadPerGameOptions
@@ -33,13 +40,13 @@ def _gui() -> randovania.game.gui.GameGui:
     )
 
 
-def _patch_data_factory():
+def _patch_data_factory() -> type[PatchDataFactory]:
     from randovania.games.dread.exporter.patch_data_factory import DreadPatchDataFactory
 
     return DreadPatchDataFactory
 
 
-def _exporter():
+def _exporter() -> GameExporter:
     from randovania.games.dread.exporter.game_exporter import DreadGameExporter
 
     return DreadGameExporter()

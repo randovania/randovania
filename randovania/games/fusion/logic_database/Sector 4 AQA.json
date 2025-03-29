@@ -395,7 +395,7 @@
                                     "type": "resource",
                                     "data": {
                                         "type": "items",
-                                        "name": "L2Locks",
+                                        "name": "L3Locks",
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -1523,7 +1523,9 @@
         },
         "Data Room": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "data_room"
+            ],
             "extra": {
                 "map_name": "Sector 44",
                 "room_id": [
@@ -1591,6 +1593,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 103,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Powamp Playhouse": {
@@ -1698,7 +1701,9 @@
         },
         "Reservoir East": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "climbable"
+            ],
             "extra": {
                 "map_name": "Sector 46",
                 "room_id": [
@@ -1727,6 +1732,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 58,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Sciser Stall": {
@@ -1791,7 +1797,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": "Damage Run",
+                                                        "comment": null,
                                                         "items": [
                                                             {
                                                                 "type": "or",
@@ -1801,7 +1807,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "One Suit Damage Run: https://youtu.be/S05k8Y1aJTo",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
@@ -1834,7 +1840,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Suitless Damage Run: https://youtu.be/wKpeR_ap-E4",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -1850,7 +1856,7 @@
                                                                             "data": {
                                                                                 "type": "damage",
                                                                                 "name": "ElectricDamage",
-                                                                                "amount": 80,
+                                                                                "amount": 65,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -2201,7 +2207,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Reach blocks via PBs. Let crab crawl to top of bomb blocks, freeze there, lay PB, refreeze when its falling down. TODO: rerecord this with out standards: https://discord.com/channels/119665192110915584/859978611981287465/1297220448563761183",
+                                                                    "comment": "Reach blocks via PBs: https://youtu.be/97DOum62hkY",
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
@@ -2420,7 +2426,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Gravity and Speedboost: https://youtu.be/OXwnxmYxbO8",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -3035,6 +3041,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 59,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Bridge Access": {
@@ -3785,6 +3792,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 60,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Beside Upper Pickup": {
@@ -3817,6 +3825,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 61,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Beside Lower Pickup": {
@@ -3949,7 +3958,7 @@
                         "Next to Chain Blocks": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Wall Jump: https://youtu.be/c2ojj7S_-5c",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -3972,20 +3981,53 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Freeze the Owtch (Ice Beam or Ice Missiles): https://youtu.be/iztxJUZuEjA",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "StandOnFrozenEnemies",
-                                                        "amount": 1,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Freeze Enemies With Ice Beam"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Freeze Enemies With Ice Missiles"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Freeze the Owtch (Diffusion): https://youtu.be/ZsfwelK3eFs",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "StandOnFrozenEnemies",
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Freeze Enemies With Any Weapon"
+                                                    "data": "Can Freeze Enemies With Diffusion"
                                                 }
                                             ]
                                         }
@@ -4159,6 +4201,27 @@
                                                                                 "amount": 3,
                                                                                 "negate": false
                                                                             }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Freeze the Owtch: https://youtu.be/U1LHQA0NoFM",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "StandOnFrozenEnemies",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Freeze Enemies With Any Weapon"
                                                                         }
                                                                     ]
                                                                 }
@@ -4582,6 +4645,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 62,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Aquarium Shaft": {
@@ -5029,6 +5093,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 63,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Aquarium Shaft": {
@@ -6022,7 +6087,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Shinespark Through Powamp: https://youtu.be/GLR5Vjuk_x0",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -7762,6 +7827,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 64,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Small Nook": {
@@ -8437,6 +8503,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 65,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Other to Security Bypass": {
@@ -9319,7 +9386,9 @@
         },
         "Level 4 Security Room": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "security_room"
+            ],
             "extra": {
                 "map_name": "Sector 426",
                 "room_id": [
@@ -9358,7 +9427,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Event - Level 4 Doors Unlocked": {
+                        "Pickup (L4 Locks)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9407,37 +9476,12 @@
                         }
                     }
                 },
-                "Event - Level 4 Doors Unlocked": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 135.41,
-                        "y": 61.83,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Level4Locks",
-                    "connections": {
-                        "Pickup (L4 Locks)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Pickup (L4 Locks)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 125.17,
-                        "y": 115.55,
+                        "x": 135.82978723404253,
+                        "y": 63.04018912529554,
                         "z": 0.0
                     },
                     "description": "",
@@ -9452,6 +9496,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 119,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Security Access": {
@@ -9588,6 +9633,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 66,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Other to Reservoir West": {
@@ -10491,7 +10537,9 @@
         },
         "Pump Control Unit": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "climbable"
+            ],
             "extra": {
                 "map_name": "Sector 433",
                 "room_id": [
@@ -10520,6 +10568,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 67,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Next to Pickup": {
@@ -12600,7 +12649,9 @@
         },
         "Drain Pipe": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "shutter"
+            ],
             "extra": {
                 "map_name": "Sector 436",
                 "room_id": [
@@ -12629,6 +12680,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 68,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Other to Powamp Playhouse": {
@@ -13599,6 +13651,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 69,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Other to Aquarium Speedway": {
@@ -13631,6 +13684,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 70,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "After Kago": {
@@ -14714,6 +14768,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 71,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Sciser Sanctuary": {
@@ -14804,7 +14859,10 @@
         },
         "Serris Arena": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "boss",
+                "climbable"
+            ],
             "extra": {
                 "map_name": "Sector 442",
                 "room_id": [
@@ -14937,6 +14995,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 102,
                     "location_category": "major",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Arena": {
@@ -15587,6 +15646,7 @@
                     "valid_starting_location": false,
                     "pickup_index": 72,
                     "location_category": "minor",
+                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Other to Breeding Tank Access": {

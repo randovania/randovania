@@ -68,7 +68,7 @@ class PrimeBootstrap(Bootstrap):
 
         return enabled_resources
 
-    def prime1_progressive_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
+    def prime1_progressive_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection) -> float:
         num_suits = sum(
             current_resources[db.get_item_by_name(suit)] for suit in ["Varia Suit", "Gravity Suit", "Phazon Suit"]
         )
@@ -102,7 +102,7 @@ class PrimeBootstrap(Bootstrap):
 
         return dr
 
-    def prime1_absolute_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
+    def prime1_absolute_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection) -> float:
         if current_resources[db.get_item_by_name("Phazon Suit")] > 0:
             dr = 0.5
         elif current_resources[db.get_item_by_name("Gravity Suit")] > 0:
@@ -131,7 +131,7 @@ class PrimeBootstrap(Bootstrap):
 
         reductions = [DamageReduction(None, configuration.heat_damage / 10.0)]
         reductions.extend([DamageReduction(suit, 0) for suit in suits])
-        damage_reductions[db.get_by_type_and_index(ResourceType.DAMAGE, "HeatDamage1")] = reductions
+        damage_reductions[db.get_damage("HeatDamage1")] = reductions
 
         if configuration.damage_reduction == DamageReductionConfig.PROGRESSIVE:
             base_damage_reduction = self.prime1_progressive_damage_reduction
