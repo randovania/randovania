@@ -24,6 +24,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.dock import DockWeaknessDatabase
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.hint_features import HintFeature
+    from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
     from randovania.game_description.requirements.requirement_set import RequirementSet
@@ -246,6 +247,11 @@ class GameDescription:
     @property
     def has_specific_pickup_hints(self) -> bool:
         return bool(self.game.hints.specific_pickup_hints) or self._has_hint_with_kind(HintNodeKind.SPECIFIC_PICKUP)
+
+    def get_pickup_database(self) -> PickupDatabase:
+        from randovania.game_description import default_database
+
+        return default_database.pickup_database_for_game(self.game)
 
 
 def _resources_for_damage(

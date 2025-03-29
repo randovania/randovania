@@ -16,7 +16,7 @@ class PrimePerGameOptions(PerGameOptions):
     use_external_models: set[RandovaniaGame] = dataclasses.field(default_factory=set)
 
     @property
-    def as_json(self):
+    def as_json(self) -> dict:
         return {
             **super().as_json,
             "input_path": str(self.input_path) if self.input_path is not None else None,

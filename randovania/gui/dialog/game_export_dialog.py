@@ -79,7 +79,7 @@ class GameExportDialog[Configuration: BaseConfiguration](QtWidgets.QDialog):
         """Get the export params defined by the user. It'll be sent over to the `GameExporter`."""
         raise NotImplementedError
 
-    async def handle_unable_to_export(self, error: UnableToExportError):
+    async def handle_unable_to_export(self, error: UnableToExportError) -> None:
         """Called when exporting a game fails with `UnableToExportError`.
         Default implementation shows an error dialog, but custom implementations can
         perform additional troubleshooting."""

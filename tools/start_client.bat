@@ -1,8 +1,4 @@
-
-
 cd /D "%~dp0"
 cd ..
 
-call venv\scripts\activate
-python setup.py build_ui
-python -m randovania gui main
+uv run randovania gui main

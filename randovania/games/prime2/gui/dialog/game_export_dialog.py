@@ -27,7 +27,7 @@ if TYPE_CHECKING:
     from PySide6.QtWidgets import QLineEdit, QPushButton
 
     from randovania.exporter.game_exporter import GameExportParams
-    from randovania.interface_common.options import Options
+    from randovania.interface_common.options import Options, PerGameOptions
     from randovania.patching.patchers.exceptions import UnableToExportError
 
 _VALID_GAME_TEXT = "(internal game copy)"
@@ -42,7 +42,7 @@ def has_internal_copy(contents_file_path: Path) -> bool:
     return False
 
 
-def delete_internal_copy(internal_copies_path: Path):
+def delete_internal_copy(internal_copies_path: Path) -> None:
     internal_copies_path = internal_copies_path.joinpath("prime2")
     if internal_copies_path.exists():
         shutil.rmtree(internal_copies_path)
@@ -73,7 +73,7 @@ class EchoesGameExportDialog(GameExportDialog[EchoesConfiguration], Ui_EchoesGam
     _use_prime_models: bool
 
     @classmethod
-    def game_enum(cls):
+    def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME_ECHOES
 
     def __init__(
@@ -138,8 +138,10 @@ class EchoesGameExportDialog(GameExportDialog[EchoesConfiguration], Ui_EchoesGam
             },
         )
 
-    def update_per_game_options(self, per_game: EchoesPerGameOptions) -> EchoesPerGameOptions:
-        per_game_changes = {}
+    def update_per_game_options(self, per_game: PerGameOptions) -> PerGameOptions:
+        assert isinstance(per_game, EchoesPerGameOptions)
+
+        per_game_changes: dict = {}
         if self._prompt_input_file:
             per_game_changes["input_path"] = self.input_file
 
@@ -157,7 +159,7 @@ class EchoesGameExportDialog(GameExportDialog[EchoesConfiguration], Ui_EchoesGam
             **per_game_changes,
         )
 
-    def save_options(self):
+    def save_options(self) -> None:
         super().save_options()
         if not self._use_prime_models:
             return
@@ -177,6 +179,7 @@ class EchoesGameExportDialog(GameExportDialog[EchoesConfiguration], Ui_EchoesGam
     def input_file(self) -> Path | None:
         if self._prompt_input_file:
             return Path(self.input_file_edit.text())
+        return None
 
     @property
     def output_file(self) -> Path:
@@ -193,7 +196,7 @@ class EchoesGameExportDialog(GameExportDialog[EchoesConfiguration], Ui_EchoesGam
     # Checks
 
     # Input file
-    def _on_input_file_button(self):
+    def _on_input_file_button(self) -> None:
         if self._prompt_input_file:
             input_file = prompt_for_input_file(self, self.input_file_edit, ["iso"])
             if input_file is not None:
@@ -206,18 +209,18 @@ class EchoesGameExportDialog(GameExportDialog[EchoesConfiguration], Ui_EchoesGam
             )
 
     # Output File
-    def _on_output_file_button(self):
+    def _on_output_file_button(self) -> None:
         output_file = prompt_for_output_file(self, ["iso"], f"{self.default_output_name}.iso", self.output_file_edit)
         if output_file is not None:
             self.output_file_edit.setText(str(output_file))
 
     # Prime input
-    def _on_prime_file_button(self):
+    def _on_prime_file_button(self) -> None:
         prime_file = prompt_for_input_file(self, self.prime_file_edit, ["iso"])
         if prime_file is not None:
             self.prime_file_edit.setText(str(prime_file.absolute()))
 
-    def _on_prime_models_check(self):
+    def _on_prime_models_check(self) -> None:
         use_prime_models = self.prime_models_check.isChecked()
         self._use_prime_models = use_prime_models
         self.prime_file_edit.setEnabled(use_prime_models)
@@ -226,7 +229,7 @@ class EchoesGameExportDialog(GameExportDialog[EchoesConfiguration], Ui_EchoesGam
         update_validation(self.prime_file_edit)
 
     @property
-    def _contents_file_path(self):
+    def _contents_file_path(self) -> Path:
         return self._options.internal_copies_path.joinpath("prime2", "contents")
 
     def get_game_export_params(self) -> GameExportParams:
@@ -245,7 +248,7 @@ class EchoesGameExportDialog(GameExportDialog[EchoesConfiguration], Ui_EchoesGam
             use_prime_models=self._use_prime_models,
         )
 
-    async def handle_unable_to_export(self, error: UnableToExportError):
+    async def handle_unable_to_export(self, error: UnableToExportError) -> None:
         delete_internal_copy(self._options.internal_copies_path)
 
-        return await super().handle_unable_to_export(error)
+        await super().handle_unable_to_export(error)

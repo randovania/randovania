@@ -32,7 +32,7 @@ def read_preset_list() -> list[Path]:
 
 def _commit(message: str, file_path: Path, repository: Path, remove: bool):
     with dulwich.porcelain.open_repo_closing(repository) as r:
-        r = typing.cast(dulwich.repo.Repo, r)
+        r = typing.cast("dulwich.repo.Repo", r)
 
         # Detect invalid index
         try:
@@ -67,7 +67,7 @@ def _history_for_file(repository: Path, file_path: Path) -> Iterator[tuple[datet
     from dulwich.walk import WalkEntry
 
     with dulwich.porcelain.open_repo_closing(repository) as r:
-        r = typing.cast(dulwich.repo.Repo, r)
+        r = typing.cast("dulwich.repo.Repo", r)
 
         paths = [dulwich.porcelain.path_to_tree_path(repository, file_path)]
         walker = r.get_walker(paths=paths)
@@ -100,7 +100,7 @@ class PresetManager:
     async def load_user_presets(self):
         all_files = self._data_dir.glob(f"*.{VersionedPreset.file_extension()}")
         user_presets = await asyncio.gather(*[VersionedPreset.from_file(f) for f in all_files])
-        for preset in typing.cast(list[VersionedPreset], user_presets):
+        for preset in typing.cast("list[VersionedPreset]", user_presets):
             if preset.is_for_known_game():
                 self.custom_presets[preset.uuid] = preset
 

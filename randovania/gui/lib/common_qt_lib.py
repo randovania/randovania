@@ -16,6 +16,8 @@ from randovania import get_data_path
 if typing.TYPE_CHECKING:
     from collections.abc import Iterator
 
+    from randovania.game_connection.game_connection import GameConnection
+    from randovania.gui.lib.qt_network_client import QtNetworkClient
     from randovania.interface_common.options import Options
 
 
@@ -224,15 +226,11 @@ def set_edit_if_different_text(edit: QtWidgets.QTextEdit, new_text: str):
 
 
 def get_network_client():
-    from randovania.gui.lib.qt_network_client import QtNetworkClient
-
-    return typing.cast(QtNetworkClient, QtWidgets.QApplication.instance().network_client)
+    return typing.cast("QtNetworkClient", QtWidgets.QApplication.instance().network_client)
 
 
 def get_game_connection():
-    from randovania.game_connection.game_connection import GameConnection
-
-    return typing.cast(GameConnection, QtWidgets.QApplication.instance().game_connection)
+    return typing.cast("GameConnection", QtWidgets.QApplication.instance().game_connection)
 
 
 def show_install_visual_cpp_redist(details: str):
@@ -298,7 +296,7 @@ def set_icon_data_paths(label: QtWidgets.QLabel):
     label.setText(new_text)
 
 
-def alert_user_on_generation(parent: QtWidgets, options: Options):
+def alert_user_on_generation(parent: QtWidgets.QWidget, options: Options) -> None:
     if options.audible_generation_alert:
         QtWidgets.QApplication.beep()
     if options.visual_generation_alert:

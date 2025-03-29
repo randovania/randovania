@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from PySide6 import QtWidgets
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.gui.generated.multiplayer_select_preset_dialog_ui import Ui_MultiplayerSelectPresetDialog
+from randovania.gui.generated.select_preset_dialog_ui import Ui_SelectPresetDialog
 from randovania.gui.lib import common_qt_lib, signal_handling
 from randovania.network_common.multiplayer_session import MAX_WORLD_NAME_LENGTH, WORLD_NAME_RE
 
@@ -15,7 +15,7 @@ if TYPE_CHECKING:
     from randovania.layout.versioned_preset import VersionedPreset
 
 
-class MultiplayerSelectPresetDialog(QtWidgets.QDialog, Ui_MultiplayerSelectPresetDialog):
+class SelectPresetDialog(QtWidgets.QDialog, Ui_SelectPresetDialog):
     valid_preset: bool
 
     def __init__(
@@ -23,6 +23,7 @@ class MultiplayerSelectPresetDialog(QtWidgets.QDialog, Ui_MultiplayerSelectPrese
         window_manager: WindowManager,
         options: Options,
         *,
+        for_multiworld: bool,
         allowed_games: list[RandovaniaGame] | None = None,
         default_game: RandovaniaGame | None = None,
         include_world_name_prompt: bool = False,
@@ -41,7 +42,7 @@ class MultiplayerSelectPresetDialog(QtWidgets.QDialog, Ui_MultiplayerSelectPrese
         if default_game is not None:
             signal_handling.set_combo_with_value(self.game_selection_combo, default_game)
 
-        self.select_preset_widget.for_multiworld = True
+        self.select_preset_widget.for_multiworld = for_multiworld
         self.select_preset_widget.setup_ui(default_game or self.allowed_games[0], window_manager, options)
 
         signal_handling.on_combo(self.game_selection_combo, self._on_select_game)

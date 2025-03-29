@@ -364,6 +364,7 @@ class RegionReader:
                     **generic_args,
                     pickup_index=PickupIndex(data["pickup_index"]),
                     location_category=LocationCategory(data["location_category"]),
+                    custom_index_group=data["custom_index_group"],
                     hint_features=frozenset(self.hint_feature_database[feature] for feature in data["hint_features"]),
                 )
 
@@ -558,7 +559,7 @@ def read_split_file(dir_path: Path) -> dict:
         # This code runs before we can run old data migration, so we need to handle this difference here
         key_name = "worlds"
 
-    regions = typing.cast(list[str], data.pop(key_name))
+    regions = typing.cast("list[str]", data.pop(key_name))
 
     data[key_name] = [
         json_lib.read_path(dir_path.joinpath(region_file_name), raise_on_duplicate_keys=True)

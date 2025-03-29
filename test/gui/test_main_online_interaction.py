@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
@@ -9,6 +10,9 @@ from PySide6.QtWidgets import QDialog
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.gui.main_online_interaction import OnlineInteractions
 from randovania.interface_common.options import Options
+
+if TYPE_CHECKING:
+    import pytest_mock
 
 
 @pytest.fixture
@@ -78,3 +82,39 @@ async def test_host_game_session(mock_execute_dialog: AsyncMock, skip_qtbot, def
         default_online_interactions.network_client.create_new_session.return_value.id,
         default_online_interactions.options,
     )
+
+
+async def test_action_create_async_race(skip_qtbot, default_online_interactions, mocker: pytest_mock.MockFixture):
+    # Setup
+    interactions = default_online_interactions
+    interactions._ensure_logged_in = AsyncMock(return_value=True)
+    interactions.network_client.create_async_race_room = AsyncMock()
+    interactions.window_manager = MagicMock()
+
+    mock_execute_dialog = mocker.patch(
+        "randovania.gui.lib.async_dialog.execute_dialog",
+        autospec=True,
+        return_value=QtWidgets.QDialog.DialogCode.Accepted,
+    )
+    mock_dialog_creation = mocker.patch("randovania.gui.main_online_interaction.AsyncRaceCreationDialog", autospec=True)
+    mock_race_window = mocker.patch("randovania.gui.main_online_interaction.AsyncRaceRoomWindow", autospec=True)
+
+    dialog_creation = mock_dialog_creation.return_value
+
+    # Run
+    await interactions._action_create_async_race()
+
+    # Assert
+    mock_execute_dialog.assert_awaited_once()
+    interactions.network_client.create_async_race_room.assert_awaited_once_with(
+        dialog_creation.layout_description,
+        dialog_creation.create_settings_object.return_value,
+    )
+    mock_race_window.assert_called_once_with(
+        interactions.network_client.create_async_race_room.return_value,
+        interactions.network_client,
+        interactions.options,
+        interactions.window_manager,
+    )
+    mock_race_window.return_value.show.assert_called_once_with()
+    interactions.window_manager.track_window.assert_called_once_with(mock_race_window.return_value)

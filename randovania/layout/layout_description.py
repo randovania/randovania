@@ -14,7 +14,6 @@ import construct
 import randovania
 from randovania.game.game_enum import RandovaniaGame
 from randovania.layout import description_migration, game_patches_serializer
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
@@ -43,10 +42,10 @@ def shareable_hash(hash_bytes: bytes) -> str:
     return base64.b32encode(hash_bytes).decode()
 
 
-def shareable_word_hash(hash_bytes: bytes, all_games: list[RandovaniaGame]):
+def shareable_word_hash(hash_bytes: bytes, all_games: list[RandovaniaGame]) -> str:
     rng = Random(sum(hash_byte * (2**8) ** i for i, hash_byte in enumerate(hash_bytes)))
 
-    games_left = []
+    games_left: list[RandovaniaGame] = []
     selected_words = []
     for _ in range(3):
         if not games_left:
@@ -90,7 +89,7 @@ class LayoutDescription:
     item_order: tuple[str, ...]
     user_modified: bool
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         object.__setattr__(self, "__cached_serialized_patches", None)
 
     @classmethod
@@ -132,7 +131,7 @@ class LayoutDescription:
 
         json_dict = description_migration.convert_to_current_version(json_dict)
 
-        def get_preset(i, p):
+        def get_preset(i: int, p: dict) -> Preset:
             try:
                 return VersionedPreset(p).get_preset()
             except InvalidPreset as e:
@@ -162,7 +161,7 @@ class LayoutDescription:
                     f"Unable to parse game modifications and the rdvgame has been modified.\n\nOriginal error: {e}"
                 ) from e
 
-        return LayoutDescription(
+        return cls(
             randovania_version_text=json_dict["info"]["randovania_version"],
             randovania_version_git=bytes.fromhex(json_dict["info"]["randovania_version_git"]),
             generator_parameters=generator_parameters,
@@ -173,7 +172,7 @@ class LayoutDescription:
 
     @classmethod
     def from_file(cls, path: Path) -> typing.Self:
-        return cls.from_json_dict(json_lib.read_path(path))
+        return cls.from_json_dict(json_lib.read_dict(path))
 
     @classmethod
     def bytes_to_dict(cls, data: bytes, *, presets: list[VersionedPreset] | None = None) -> dict:
@@ -206,14 +205,14 @@ class LayoutDescription:
     def all_presets(self) -> typing.Iterable[Preset]:
         return self.generator_parameters.presets
 
-    def get_preset[Configuration: BaseConfiguration](self, world_index: int) -> Preset[Configuration]:
+    def get_preset(self, world_index: int) -> Preset:
         return self.generator_parameters.get_preset(world_index)
 
     def get_seed_for_world(self, world_index: int) -> int:
         return self.generator_parameters.seed_number + world_index
 
     @property
-    def _serialized_patches(self):
+    def _serialized_patches(self) -> list[dict]:
         cached_result = object.__getattribute__(self, "__cached_serialized_patches")
         if cached_result is None:
             cached_result = game_patches_serializer.serialize(self.all_patches)
@@ -222,7 +221,7 @@ class LayoutDescription:
         return cached_result
 
     def as_json(self, *, force_spoiler: bool = False) -> dict:
-        result = {
+        result: dict = {
             "schema_version": description_migration.CURRENT_VERSION,
             "info": {
                 "randovania_version": self.randovania_version_text,
@@ -290,5 +289,5 @@ class LayoutDescription:
             all_games,
         )
 
-    def save_to_file(self, json_path: Path):
+    def save_to_file(self, json_path: Path) -> None:
         json_lib.write_path(json_path, self.as_json())

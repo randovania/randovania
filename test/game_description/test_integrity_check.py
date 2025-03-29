@@ -30,7 +30,7 @@ def test_find_database_errors(game_enum: RandovaniaGame):
 def test_invalid_db():
     trivial_req = {"type": "and", "data": {"comment": "", "items": []}}
     sample_data = {
-        "schema_version": 29,
+        "schema_version": 30,
         "game": "prime2",
         "resource_database": {
             "items": {
@@ -484,6 +484,7 @@ def test_invalid_db():
                                 "valid_starting_location": False,
                                 "pickup_index": 5,
                                 "location_category": "minor",
+                                "custom_index_group": None,
                                 "hint_features": ["redundant", "unnormalized"],
                                 "connections": {"Door to World (1)": trivial_req},
                             },
@@ -497,6 +498,7 @@ def test_invalid_db():
                                 "valid_starting_location": False,
                                 "pickup_index": 5,
                                 "location_category": "minor",
+                                "custom_index_group": None,
                                 "hint_features": ["unnormalized"],
                                 "connections": {"Door to World (1)": trivial_req},
                             },

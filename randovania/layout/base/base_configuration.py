@@ -3,6 +3,8 @@ from __future__ import annotations
 import dataclasses
 from typing import TYPE_CHECKING
 
+from typing_extensions import TypeVar
+
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
@@ -19,16 +21,19 @@ from randovania.layout.base.trick_level_configuration import TrickLevelConfigura
 from randovania.layout.lib import location_list
 
 if TYPE_CHECKING:
+    from _typeshed import DataclassInstance
+
     from randovania.game.game_enum import RandovaniaGame
+    from randovania.game_description.db.node_identifier import NodeIdentifier
 
 
 class StartingLocationList(location_list.LocationList):
     @classmethod
-    def nodes_list(cls, game: RandovaniaGame):
+    def nodes_list(cls, game: RandovaniaGame) -> list[NodeIdentifier]:
         return location_list.node_locations_with_filter(game, lambda node: node.valid_starting_location)
 
 
-def _collect_from_fields(obj, field_name: str):
+def _collect_from_fields(obj: DataclassInstance, field_name: str) -> list[str]:
     result = []
 
     for field in dataclasses.fields(obj):
@@ -65,11 +70,11 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
         raise NotImplementedError
 
     @property
-    def game(self):
+    def game(self) -> RandovaniaGame:
         return self.game_enum()
 
     @classmethod
-    def json_extra_arguments(cls):
+    def json_extra_arguments(cls) -> dict:
         return {
             "game": cls.game_enum(),
         }
@@ -94,6 +99,9 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     def unsupported_features(self) -> list[str]:
         return _collect_from_fields(self, "unsupported_features")
 
-    def should_hide_generation_log(self):
+    def should_hide_generation_log(self) -> bool:
         """Certain settings makes the generation log full of nonsense. It should be hidden in these cases."""
         return self.dock_rando.mode == DockRandoMode.DOCKS
+
+
+ConfigurationT_co = TypeVar("ConfigurationT_co", bound=BaseConfiguration, default=BaseConfiguration, covariant=True)

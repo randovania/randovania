@@ -4,7 +4,6 @@ import copy
 import typing
 from typing import TYPE_CHECKING
 
-from randovania.game_description.db.dock_node import DockNode
 from randovania.games.samus_returns.gui.generated.preset_teleporters_msr_ui import (
     Ui_PresetTeleportersMSR,
 )
@@ -21,6 +20,7 @@ from randovania.layout.lib.teleporters import (
 if TYPE_CHECKING:
     from PySide6 import QtWidgets
 
+    from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_description import GameDescription
     from randovania.gui.lib.window_manager import WindowManager
@@ -83,7 +83,7 @@ class PresetTeleportersMSR(PresetTeleporterTab, Ui_PresetTeleportersMSR, NodeLis
 
             self.teleporters_source_layout.addWidget(checks.pop(location), row, 1)
 
-            teleporter_in_target = typing.cast(DockNode, region_list.node_by_identifier(location)).default_connection
+            teleporter_in_target = typing.cast("DockNode", region_list.node_by_identifier(location)).default_connection
 
             self._teleporters_source_destination[location] = None
 

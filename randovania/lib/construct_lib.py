@@ -133,7 +133,7 @@ class DefaultsAdapter(construct.Adapter):
     def subcons(self) -> list[construct.Subconstruct]:
         """Typed wrapper for `subcon.subcons`"""
         assert isinstance(self.subcon, Struct)
-        return typing.cast(list[construct.Subconstruct], self.subcon.subcons)
+        return typing.cast("list[construct.Subconstruct]", self.subcon.subcons)
 
     def _decode(self, obj: dict, context: construct.Container, path: str) -> construct.Container:
         decoded = construct.Container(obj)

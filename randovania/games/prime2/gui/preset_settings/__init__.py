@@ -4,10 +4,11 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from randovania.gui.lib.window_manager import WindowManager
+    from randovania.gui.preset_settings.preset_tab import PresetTab
     from randovania.interface_common.preset_editor import PresetEditor
 
 
-def prime2_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
+def prime2_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
     from randovania.games.prime2.gui.preset_settings.echoes_beam_configuration_tab import PresetEchoesBeamConfiguration
     from randovania.games.prime2.gui.preset_settings.echoes_dock_rando_tab import PresetEchoesDockRando
     from randovania.games.prime2.gui.preset_settings.echoes_goal_tab import PresetEchoesGoal

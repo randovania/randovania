@@ -73,9 +73,9 @@ class EchoesSuitPreferences(JsonDataclass):
                 randomize_separately=False,
             )
 
-        def random_if_needed(suit: str):
-            mine = getattr(self, suit)
-            other = getattr(random, suit)
+        def random_if_needed(suit: str) -> SuitColor:
+            mine: SuitColor = getattr(self, suit)
+            other: SuitColor = getattr(random, suit)
             return mine if mine != SuitColor.RANDOM else other
 
         return EchoesSuitPreferences(
