@@ -7,7 +7,7 @@ import json
 from typing import TYPE_CHECKING
 
 import PySide6
-from PySide6 import QtCore, QtGui, QtWidgets
+from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import Signal
 
 import randovania
@@ -150,15 +150,13 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
         await super().on_world_user_inventory(inventory)
         self.WorldUserInventoryUpdated.emit(inventory)
 
-    async def login_with_discord(self):
+    async def login_with_discord(self) -> str:
         if "discord_client_id" not in self.configuration:
             raise RuntimeError("Missing Discord configuration for Randovania")
 
         sid = await self.server_call("start_discord_login_flow")
         url = self.configuration["server_address"] + f"/login?sid={sid}"
-        result = QtGui.QDesktopServices.openUrl(QtCore.QUrl(url))
-        if not result:
-            raise RuntimeError("Unable to open a web-browser to login into Discord")
+        return url
 
     async def login_as_guest(self, name: str = "Unknown"):
         if "guest_secret" not in self.configuration:
