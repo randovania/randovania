@@ -6,8 +6,9 @@ from randovania.bitpacking.json_dataclass import EXCLUDE_DEFAULT
 from randovania.game_description.pickup.pickup_definition.base_pickup import (
     BasePickupDefinition,
 )
+from randovania.game_description.pickup.pickup_entry import StartingPickupBehavior
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.layout.base.standard_pickup_state import StandardPickupStateCase, StartingPickupBehavior
+from randovania.layout.base.standard_pickup_state import StandardPickupStateCase
 
 
 @dataclasses.dataclass(frozen=True, kw_only=True)

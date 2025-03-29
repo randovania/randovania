@@ -12,7 +12,7 @@ import bitstruct
 from randovania.lib import type_lib
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterator
+    from collections.abc import Callable, Iterator, Sequence
 
     from _typeshed import DataclassInstance, SupportsRichComparisonT
 
@@ -51,7 +51,7 @@ class BitPackDecoder:
     def decode_single(self, value: int) -> int:
         return self.decode(value)[0]
 
-    def decode_element(self, array: list[T]) -> T:
+    def decode_element(self, array: Sequence[T]) -> T:
         if len(array) == 1:
             return array[0]
         return array[self.decode_single(len(array))]

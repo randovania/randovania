@@ -13,12 +13,13 @@ from randovania.game_description.pickup.pickup_entry import (
     PickupGeneratorParams,
     PickupModel,
     ResourceLock,
+    StartingPickupBehavior,
 )
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator
-from randovania.layout.base.standard_pickup_state import StandardPickupState, StartingPickupBehavior
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
 @pytest.fixture

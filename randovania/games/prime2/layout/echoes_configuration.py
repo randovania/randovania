@@ -29,7 +29,7 @@ class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
     NINE = 9
 
     @property
-    def num_keys(self):
+    def num_keys(self) -> int:
         if self == self.ALL_BOSSES:
             return 9
         elif self == self.ALL_GUARDIANS:

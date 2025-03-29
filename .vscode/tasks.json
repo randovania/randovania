@@ -6,22 +6,7 @@
         {
             "label": "Create venv with all exporters",
             "type": "shell",
-            "linux": {
-                "command": "'${workspaceFolder}/tools/prepare_virtual_env.sh' ; source '${workspaceFolder}/venv/bin/activate' ; pip install -r requirements.txt",
-            },
-            "windows": {
-                "command": "@()|cmd /c '${workspaceFolder}/tools/prepare_virtual_env.bat' ; & '${workspaceFolder}/venv/Scripts/Activate.ps1'; pip install -r requirements.txt",
-            }
-        },
-        {
-            "label": "Build UI",
-            "type": "shell",
-            "linux": {
-                "command": "${command:python.interpreterPath} '${workspaceFolder}/setup.py' build_ui",
-            },
-            "windows": {
-                "command": "& '${command:python.interpreterPath}' '${workspaceFolder}/setup.py' build_ui"
-            }
+            "command": "uv sync --all-extras --all-groups"
         },
         {
             "label": "Run all tests on all cores",

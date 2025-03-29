@@ -1,5 +1,5 @@
 {
-    "schema_version": 93,
+    "schema_version": 102,
     "base_preset_uuid": null,
     "name": "Starter Preset",
     "uuid": "bb84005f-b0f1-4e7e-8057-f4275ff4b2a3",
@@ -130,8 +130,6 @@
         "logical_resource_action": "randomly",
         "first_progression_must_be_local": false,
         "two_sided_door_lock_search": false,
-        "minimum_available_locations_for_hint_placement": 5,
-        "minimum_location_weight_for_hint_placement": 0.1,
         "dock_rando": {
             "mode": "vanilla",
             "types_state": {
@@ -157,20 +155,30 @@
         "single_set_for_pickups_that_solve": true,
         "staggered_multi_pickup_placement": true,
         "check_if_beatable_after_base_patches": false,
+        "logical_pickup_placement": "minimal",
+        "consider_possible_unsafe_resources": false,
+        "hints": {
+            "enable_random_hints": true,
+            "enable_specific_location_hints": true,
+            "specific_pickup_hints": {
+                "artifacts": "precise",
+                "charge_beam": "hide-area"
+            },
+            "minimum_available_locations_for_hint_placement": 5,
+            "minimum_location_weight_for_hint_placement": 0.1,
+            "use_resolver_hints": false
+        },
         "anti_softlock": true,
         "instant_transitions": false,
-        "open_save_recharge_hatches": false,
         "energy_per_tank": 100,
-        "short_intro_text": false,
         "artifacts": {
             "prefer_bosses": true,
             "prefer_anywhere": false,
             "required_artifacts": 4,
             "placed_artifacts": 5
         },
-        "hints": {
-            "artifacts": "precise",
-            "charge_beam": "hide-area"
-        }
+        "open_save_recharge_hatches": false,
+        "unlock_sector_hub": false,
+        "short_intro_text": false
     }
 }

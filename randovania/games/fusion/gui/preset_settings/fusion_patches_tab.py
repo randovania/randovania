@@ -2,14 +2,14 @@ from __future__ import annotations
 
 import typing
 
-from PySide6 import QtWidgets
-
 from randovania.games.fusion.gui.generated.preset_fusion_patches_ui import Ui_PresetFusionPatches
 from randovania.games.fusion.layout import FusionConfiguration
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if typing.TYPE_CHECKING:
+    from PySide6 import QtWidgets
+
     from randovania.game_description.game_description import GameDescription
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor
@@ -58,5 +58,5 @@ class PresetFusionPatches(PresetTab, Ui_PresetFusionPatches):
         config = preset.configuration
         assert isinstance(config, FusionConfiguration)
         for f in _FIELDS:
-            typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))
+            typing.cast("QtWidgets.QCheckBox", getattr(self, f"{f}_check")).setChecked(getattr(config, f))
         self.etank_capacity_spin_box.setValue(config.energy_per_tank)

@@ -47,11 +47,11 @@ class PresetDreadLights(PresetTab, Ui_PresetDreadLights):
 
     def _enable_all(self) -> None:
         for region in self._regions.as_json.keys():
-            typing.cast(QCheckBox, getattr(self, f"{region}_check")).setChecked(True)
+            typing.cast("QCheckBox", getattr(self, f"{region}_check")).setChecked(True)
 
     def _disable_all(self) -> None:
         for region in self._regions.as_json.keys():
-            typing.cast(QCheckBox, getattr(self, f"{region}_check")).setChecked(False)
+            typing.cast("QCheckBox", getattr(self, f"{region}_check")).setChecked(False)
 
     def _add_persist_option(self, check: QCheckBox, attribute_name: str) -> None:
         def persist(value: bool) -> None:
@@ -62,7 +62,7 @@ class PresetDreadLights(PresetTab, Ui_PresetDreadLights):
         signal_handling.on_checked(check, persist)
 
     def on_preset_changed(self, preset: Preset) -> None:
-        config = typing.cast(DreadConfiguration, preset.configuration)
+        config = typing.cast("DreadConfiguration", preset.configuration)
 
         for region, is_checked in config.disabled_lights.as_json.items():
-            typing.cast(QCheckBox, getattr(self, f"{region}_check")).setChecked(is_checked)
+            typing.cast("QCheckBox", getattr(self, f"{region}_check")).setChecked(is_checked)

@@ -49,8 +49,8 @@ def test_save_stations_not_unlocked(echoes_game_patches, default_echoes_configur
     factory = EchoesBasePatchesFactory()
 
     # Run
-    result = factory.assign_save_door_weaknesses(
-        echoes_game_patches, default_echoes_configuration, echoes_game_description
+    result = factory.assign_static_dock_weakness(
+        default_echoes_configuration, echoes_game_description, echoes_game_patches
     )
 
     # Result
@@ -62,7 +62,7 @@ def test_save_stations_unlocked(echoes_game_patches, default_echoes_configuratio
     config = dataclasses.replace(default_echoes_configuration, blue_save_doors=True)
 
     # Run
-    result = factory.assign_save_door_weaknesses(echoes_game_patches, config, echoes_game_description)
+    result = factory.assign_static_dock_weakness(config, echoes_game_description, echoes_game_patches)
 
     # Result
     assert len(list(result.all_dock_weaknesses())) == 18 * 2
@@ -77,10 +77,9 @@ def test_gate_assignment_for_configuration_all_emerald(echoes_game_description, 
         default_echoes_configuration,
         translator_configuration=dataclasses.replace(
             translator_configuration,
-            translator_requirement={
-                key: LayoutTranslatorRequirement.EMERALD
-                for key in translator_configuration.translator_requirement.keys()
-            },
+            translator_requirement=dict.fromkeys(
+                translator_configuration.translator_requirement.keys(), LayoutTranslatorRequirement.EMERALD
+            ),
         ),
     )
 

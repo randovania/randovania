@@ -38,6 +38,16 @@ class RequirementAnd(RequirementArrayBase):
 
         return RequirementAnd(new_items, comment=self.comment)
 
+    def isolate_damage_requirements(self, context: NodeContext) -> Requirement:
+        isolated_items = []
+        for item in self.items:
+            potential_item = item.isolate_damage_requirements(context)
+            if potential_item == Requirement.impossible():
+                return Requirement.impossible()
+            if potential_item != Requirement.trivial():
+                isolated_items.append(potential_item)
+        return isolated_items[0] if len(isolated_items) == 1 else RequirementAnd(isolated_items)
+
     def as_set(self, context: NodeContext) -> RequirementSet:
         result = RequirementSet.trivial()
         for item in self.items:
