@@ -162,9 +162,24 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
         description = preset_describer.merge_categories(preset_describer.describe(preset))
 
         message_box = QtWidgets.QMessageBox(self)
+
+        def on_button(button: QtWidgets.QPushButton) -> None:
+            if button is message_box.button(QtWidgets.QMessageBox.StandardButton.Save):
+                path = common_qt_lib.prompt_user_for_preset_file(self, new_file=True)
+                if path is None:
+                    return
+
+                self.preset.save_to_file(path)
+                if not self._window_manager.preset_manager.is_included_preset_uuid(self.preset.uuid):
+                    self._window_manager.preset_manager.add_new_preset(self.preset)
+
         message_box.setWindowTitle(preset.name)
         message_box.setText(description)
         message_box.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
+        message_box.setStandardButtons(
+            QtWidgets.QMessageBox.StandardButton.Close | QtWidgets.QMessageBox.StandardButton.Save
+        )
+        message_box.buttonClicked.connect(on_button)
         await async_dialog.execute_dialog(message_box)
 
     async def _status_transition(self, new_status: AsyncRaceRoomUserStatus) -> None:

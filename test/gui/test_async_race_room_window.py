@@ -43,7 +43,6 @@ def create_room(
     return AsyncRaceRoomEntry(
         id=1000,
         name="Async Room",
-        has_password=False,
         creator="TheCreator",
         creation_date=datetime.datetime(2020, 1, 1, tzinfo=datetime.UTC),
         start_date=datetime.datetime(2020, 2, 1, tzinfo=datetime.UTC),
