@@ -71,7 +71,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Accessing the top pickup in Screw Attack Room with a Shinespark by going down through the water basin. Requires either Screw Attack or Morph Ball and Gravity Suit.
 - Added: Logically flipping the Screw Attack Room Spinner and using Shinespark to immediately reach the left side platform. Requires Highly Dangerous Logic or Screw Attack.
-- Added: Accessing Start Point 2 in Screw Attack Room using a Shinespark. Requires either Screw Attack or Morph Ball and Slide
+- Added: Accessing Start Point 2 in Screw Attack Room using a Shinespark. Requires either Screw Attack or Morph Ball and Slide.
+- Added: Damage Boost with Spin Boost to get Missile Tank 1 in Melee Tutorial Room, before X are released, using Highly Dangerous Logic.
 - Changed: Flipping the spinner in Screw Attack Room when by going from the door to the transport is now logically possible also after having flipped the spinner, unless Highly Dangerous Logic is enabled.
 - Changed: All other connections in Screw Attack Room that are only open before flipping the spinner are now only logical when Highly Dangerous Logic is enabled.
 - Changed: The conditions that depends on not having blown up the blob in Screw Attack Room are now only logical when Highly Dangerous Logic is enabled.
@@ -79,6 +80,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: In EMMI First Chase End: Reaching Door to Teleport to Dairon (Top) with Spin Boost now requires Wall Jump (Beginner).
 - Changed: In Screw Attack Room: Reaching Next to Upper Tank from Total Recharge with Spin Boost no longer requires a Wall Jump trick.
 - Changed: It is now logical to access the Chain Reaction Device after ending the Chain Reaction sequence. This also means climbing the Chain Reaction Room later has slightly fewer requirements.
+- Changed: Using the Stand On Frozen Enemies trick to get Missile Tank 1 in Melee Tutorial Room now requires Highly Dangerous Logic.
 - Fixed: Using Speed Booster to Shinespark to the top pickup in Screw Attack Room now requires Door Lock Rando to be Disabled.
 
 ##### Burenia
@@ -107,6 +109,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Ferenia
 
 - Changed: Using Cross Bombs to get past the Fan in Fan Room right to left has been increased from Movement Beginner to Intermediate, and a video has been added to the database.
+
+##### Ghavoran
+
+- Fixed: The connections to fight the Golden Robot no longer require the X to not be released when doing the fight normally. This doesn't change what is logical, but makes it easier for the generator and resolver to release the X.
 
 ### Metroid Prime
 
