@@ -81,10 +81,10 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
 
         self.ui.start_end_date_label.setText(
             f"Race Start: {humanize.naturaltime(room.start_date, when=now)},"
-            f" at {room.start_date.strftime('%c')}"
+            f" at {room.start_date.astimezone(None).strftime('%c')}"
             "<br />"
             f"Race End: {humanize.naturaltime(room.end_date, when=now)},"
-            f" at {room.end_date.strftime('%c')}"
+            f" at {room.end_date.astimezone(None).strftime('%c')}"
         )
         presets = room.presets
         if len(presets) > 1:
