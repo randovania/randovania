@@ -82,7 +82,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: It is now logical to access the Chain Reaction Device after ending the Chain Reaction sequence. This also means climbing the Chain Reaction Room later has slightly fewer requirements.
 - Changed: Using the Stand On Frozen Enemies trick to get Missile Tank 1 in Melee Tutorial Room now requires Highly Dangerous Logic.
 - Changed: Fighting Corpius without tricks now requires 198 damage, down from 199. This makes the fight logical on Strict Damage strictness with 1 Energy Tank.
-- Changed: The connection in Arbitrary Enky Room directly from Total Recharge to Dock to Teleport to Dairon is now always logical when having Morph Ball.
+- Changed: The connection in Arbitrary Enky Room directly from Start Point to Dock to Teleport to Dairon is now always logical when having Morph Ball.
 - Changed: The two Blobs in Arbitrary Enky Room now use the same event for logical purposes.
 - Fixed: Using Speed Booster to Shinespark to the top pickup in Screw Attack Room now requires Door Lock Rando to be Disabled.
 
