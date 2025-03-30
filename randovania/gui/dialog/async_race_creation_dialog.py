@@ -2,20 +2,18 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from PySide6 import QtCore, QtWidgets
+from PySide6 import QtWidgets
 from qasync import asyncSlot
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.gui.dialog.select_preset_dialog import SelectPresetDialog
 from randovania.gui.generated.async_race_creation_dialog_ui import Ui_AsyncRaceCreationDialog
 from randovania.gui.lib import async_dialog
+from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.widgets.generate_game_mixin import GenerateGameMixin
 
 if TYPE_CHECKING:
-    import datetime
-
-    from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.options import Options
     from randovania.layout.layout_description import LayoutDescription
@@ -23,11 +21,7 @@ if TYPE_CHECKING:
     from randovania.network_common.async_race_room import AsyncRaceSettings
 
 
-def _from_date(date: datetime.datetime) -> QtCore.QDateTime:
-    return QtCore.QDateTime.fromSecsSinceEpoch(int(date.timestamp()))
-
-
-class AsyncRaceCreationDialog(QtWidgets.QDialog, GenerateGameMixin):
+class AsyncRaceCreationDialog(QtWidgets.QDialog, GenerateGameMixin, BackgroundTaskMixin):
     ui: Ui_AsyncRaceCreationDialog
     selected_preset: VersionedPreset | None = None
     _preset_selection_dialog: SelectPresetDialog | None = None
@@ -50,11 +44,13 @@ class AsyncRaceCreationDialog(QtWidgets.QDialog, GenerateGameMixin):
         self._window_manager = window_manager
         self._options = options
         self.failure_handler = GenerationFailureHandler(self)
-        self._background_task = self.ui.background_task_widget
+        self._background_task = self
+
+        self.progress_update_signal.connect(self.update_progress)
 
         self.ui.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).setText("Generate then create")
         self.ui.button_box.accepted.connect(self._generate_and_accept)
-        self.ui.button_box.rejected.connect(self.reject)
+        self.ui.button_box.rejected.connect(self._on_rejected_button)
 
         self.ui.preset_button.clicked.connect(self._on_select_preset_slot)
 
@@ -63,6 +59,30 @@ class AsyncRaceCreationDialog(QtWidgets.QDialog, GenerateGameMixin):
 
     def create_settings_object(self) -> AsyncRaceSettings:
         return self.ui.settings_widget.create_settings_object()
+
+    def _on_rejected_button(self) -> None:
+        if self.has_background_process:
+            self.stop_background_process()
+        else:
+            reply = QtWidgets.QMessageBox.question(
+                self,
+                "Close?",
+                "Do you want to close the window?",
+                QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
+                QtWidgets.QMessageBox.StandardButton.No,
+            )
+            if reply == QtWidgets.QMessageBox.StandardButton.Yes:
+                self.reject()
+
+    def update_progress(self, message: str, percentage: int) -> None:
+        self.ui.progress_label.setText(message)
+        if "Aborted" in message:
+            percentage = 0
+        if percentage >= 0:
+            self.ui.progress_bar.setRange(0, 100)
+            self.ui.progress_bar.setValue(percentage)
+        else:
+            self.ui.progress_bar.setRange(0, 0)
 
     @asyncSlot()
     async def _on_select_preset_slot(self) -> None:
