@@ -7,6 +7,7 @@ from unittest.mock import ANY, AsyncMock, MagicMock, call
 import pytest
 from PySide6 import QtCore
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.gui.dialog.async_race_room_browser_dialog import AsyncRaceRoomBrowserDialog
 from randovania.network_common import error
 from randovania.network_common.async_race_room import AsyncRaceRoomListEntry, AsyncRaceRoomRaceStatus
@@ -23,6 +24,7 @@ def create_sessions() -> list[AsyncRaceRoomListEntry]:
     session_a = AsyncRaceRoomListEntry(
         id=1,
         name="A Game",
+        games=[RandovaniaGame.BLANK],
         has_password=False,
         creator="You",
         creation_date=datetime.datetime.now(utc) - datetime.timedelta(days=4),
@@ -34,6 +36,7 @@ def create_sessions() -> list[AsyncRaceRoomListEntry]:
     session_b = AsyncRaceRoomListEntry(
         id=2,
         name="B Game",
+        games=[RandovaniaGame.BLANK],
         has_password=True,
         creator="You",
         creation_date=datetime.datetime.now(utc) - datetime.timedelta(days=8),
@@ -46,6 +49,7 @@ def create_sessions() -> list[AsyncRaceRoomListEntry]:
     session_c = AsyncRaceRoomListEntry(
         id=3,
         name="C Game",
+        games=[RandovaniaGame.BLANK],
         has_password=True,
         creator="You",
         creation_date=datetime.datetime.now(utc) - datetime.timedelta(days=4),
