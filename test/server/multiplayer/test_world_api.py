@@ -10,9 +10,8 @@ from frozendict import frozendict
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel
+from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel, StartingPickupBehavior
 from randovania.game_description.resources.inventory import Inventory
-from randovania.layout.base.standard_pickup_state import StartingPickupBehavior
 from randovania.network_common import error, remote_inventory, signals
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.world_sync import (

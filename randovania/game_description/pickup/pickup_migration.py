@@ -3,8 +3,6 @@ from __future__ import annotations
 import itertools
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description import migration_data
-from randovania.layout.base.standard_pickup_state import StartingPickupBehavior
 from randovania.lib import migration_lib
 
 
@@ -85,6 +83,8 @@ def _migrate_v8(pickup_data: dict, game: RandovaniaGame) -> None:
 
 
 def _migrate_v9(pickup_data: dict, game: RandovaniaGame) -> None:
+    from randovania.game_description import migration_data
+
     generated = migration_data.get_generated_pickups(game)
     pickup_data["pickup_categories"].update(generated["categories"])
     pickup_data["generated_pickups"] = generated["pickups"]
@@ -204,15 +204,16 @@ def _migrate_v13(pickup_data: dict, game: RandovaniaGame) -> None:
     standard_pickups = pickup_data["standard_pickups"]
     for pickup in standard_pickups.values():
         if "must_be_starting" in pickup:
-            pickup["starting_condition"] = StartingPickupBehavior.MUST_BE_STARTING
+            pickup["starting_condition"] = "must_start"
             pickup.pop("must_be_starting")
         else:
-            pickup["starting_condition"] = StartingPickupBehavior.CAN_BE_STARTING
+            pickup["starting_condition"] = "can_start"
+
     if game == RandovaniaGame.METROID_PRIME_ECHOES:
         banned_starting_items = ["Cannon Ball", "Double Damage", "Unlimited Beam Ammo", "Unlimited Missiles"]
         for pickup in standard_pickups.keys():
             if pickup in banned_starting_items:
-                standard_pickups[pickup]["starting_condition"] = StartingPickupBehavior.CAN_NEVER_BE_STARTING
+                standard_pickups[pickup]["starting_condition"] = "never_start"
 
 
 _MIGRATIONS = [

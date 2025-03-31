@@ -3,7 +3,7 @@ from __future__ import annotations
 import collections
 import copy
 import dataclasses
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Self
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
 
-def _all_tricks(resource_database: ResourceDatabase):
+def _all_tricks(resource_database: ResourceDatabase) -> list[TrickResourceInfo]:
     return resource_database.trick
 
 
@@ -31,14 +31,14 @@ class TrickLevelConfiguration(BitPackValue):
     specific_levels: dict[str, LayoutTrickLevel]
     game: RandovaniaGame
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         for trick, level in self.specific_levels.items():
             if not isinstance(level, LayoutTrickLevel) or level == LayoutTrickLevel.DISABLED:
                 raise ValueError(
                     f"Invalid level `{level}` for trick {trick}, expected a LayoutTrickLevel that isn't NO_TRICKS"
                 )
 
-    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
+    def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
         resource_database = default_database.resource_database_for(self.game)
 
         yield from bitpacking.encode_bool(self.minimal_logic)
@@ -55,7 +55,7 @@ class TrickLevelConfiguration(BitPackValue):
                 yield from bitpacking.pack_array_element(self.level_for_trick(trick), encodable_levels)
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata: dict) -> Self:
         game = metadata["reference"].game
         resource_database = default_database.resource_database_for(game)
 
@@ -115,7 +115,7 @@ class TrickLevelConfiguration(BitPackValue):
         }
 
     @classmethod
-    def from_json(cls, value: dict, game: RandovaniaGame):
+    def from_json(cls, value: dict, game: RandovaniaGame) -> Self:
         minimal_logic = value["minimal_logic"]
         specific_levels = {
             trick_short_name: LayoutTrickLevel(level)

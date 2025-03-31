@@ -137,6 +137,14 @@ class UserNotAuthorizedToUseServerError(BaseNetworkError):
     def code(cls):
         return 8
 
+    @property
+    def detail(self):
+        return self.unauthorized_user
+
+    @classmethod
+    def from_detail(cls, detail) -> Self:
+        return cls(detail)
+
     def __str__(self) -> str:
         return f"{self.human_readable_name()}({self.unauthorized_user})"
 

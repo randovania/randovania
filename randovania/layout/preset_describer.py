@@ -63,6 +63,7 @@ class GamePresetDescriber:
                 expected_case_override.get(standard_pickup.name, standard_pickup.expected_case_for_describer),
                 pickup_state.included_ammo,
             )
+            assert expected_state is not None  # TODO: there's some better way for this
             expected_shuffled = expected_state.num_shuffled_pickups + int(
                 expected_state.include_copy_in_original_location
             )
@@ -197,7 +198,7 @@ class GamePresetDescriber:
         # Gameplay
         starting_locations = configuration.starting_location.locations
         if len(starting_locations) == 1:
-            area = game_description.region_list.area_by_area_location(starting_locations[0])
+            area = game_description.region_list.area_by_area_location(starting_locations[0].area_identifier)
             starting_location = f"Starts at {game_description.region_list.area_name(area)}"
         else:
             starting_location = f"{len(starting_locations)} starting locations"
@@ -231,7 +232,7 @@ def _require_majors_check(ammo_configuration: AmmoPickupConfiguration, ammo_name
     return result
 
 
-def message_for_required_mains(ammo_configuration: AmmoPickupConfiguration, message_to_item: dict[str, str]):
+def message_for_required_mains(ammo_configuration: AmmoPickupConfiguration, message_to_item: dict[str, str]) -> dict:
     item_names = list(message_to_item.values())
     main_required = _require_majors_check(ammo_configuration, item_names)
     return dict(zip(message_to_item.keys(), main_required))

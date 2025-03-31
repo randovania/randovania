@@ -356,7 +356,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def on_select_node(self, active: bool) -> None:
         if active:
-            self.selected_node_button = typing.cast(QRadioButton, self.sender())
+            self.selected_node_button = typing.cast("QRadioButton", self.sender())
             self.update_selected_node()
 
     def focus_on_region_by_name(self, name: str) -> None:

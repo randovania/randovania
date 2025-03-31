@@ -62,7 +62,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             custom_message = {}
             # Special case where we ignore metroid dna right now, because that needs more patcher work.
             if text != self._placeholder_metroid_message:
-                custom_message = {"Languages": {lang: text for lang in self._lang_list}}
+                custom_message = {"Languages": dict.fromkeys(self._lang_list, text)}
 
             # Shiny easter eggs
             if (
@@ -75,15 +75,11 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     and self.rng.randint(0, self._easter_egg_bob) == 0
                 ):
                     sprite = "ShinyMissileTank"
-                    custom_message = {
-                        "Languages": {lang: "Bob acquired.\nHe says hi to you." for lang in self._lang_list}
-                    }
+                    custom_message = {"Languages": dict.fromkeys(self._lang_list, "Bob acquired.\nHe says hi to you.")}
 
                 if resource == "PowerBombTank" and self.rng.randint(0, self._easter_egg_shiny) == 0:
                     sprite = "ShinyPowerBombTank"
-                    custom_message = {
-                        "Languages": {lang: "Shiny Power Bomb Tank acquired." for lang in self._lang_list}
-                    }
+                    custom_message = {"Languages": dict.fromkeys(self._lang_list, "Shiny Power Bomb Tank acquired.")}
 
             if is_major:
                 major_pickup = {
@@ -369,7 +365,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
     def create_memo_data(self) -> dict:
         """Used to generate pickup collection messages."""
         memo_data: dict = typing.cast(
-            dict, json_lib.read_path(RandovaniaGame.FUSION.data_path.joinpath("pickup_database", "memo_data.json"))
+            "dict", json_lib.read_path(RandovaniaGame.FUSION.data_path.joinpath("pickup_database", "memo_data.json"))
         )
 
         for i in range(1, 21):

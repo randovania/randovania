@@ -23,7 +23,7 @@ from randovania.layout.base.trick_level_configuration import TrickLevelConfigura
             "bit_count": 27,
             "json": {
                 "minimal_logic": False,
-                "specific_levels": {i: "ludicrous" for i in ["BombJump", "BSJ", "Dash", "Movement"]},
+                "specific_levels": dict.fromkeys(["BombJump", "BSJ", "Dash", "Movement"], "ludicrous"),
             },
         },
     ],
@@ -107,7 +107,7 @@ def test_pretty_description_minimal_logic(echoes_game_description):
     [
         ({}, "All tricks disabled"),
         (
-            {i: LayoutTrickLevel.LUDICROUS for i in ["Dash", "BombJump", "Movement", "BSJ"]},
+            dict.fromkeys(["Dash", "BombJump", "Movement", "BSJ"], LayoutTrickLevel.LUDICROUS),
             "Enabled tricks: 21 at Disabled, 4 at Ludicrous",
         ),
         (

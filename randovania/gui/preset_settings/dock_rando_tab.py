@@ -136,7 +136,7 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
             # shared weaknesses first, then by length, then by name
             return (weakness.long_name not in change_from_and_to), len(weakness.long_name), weakness.long_name
 
-        change_from = {weakness: True for weakness in natsort.natsorted(type_params.change_from, key=keyfunc)}
+        change_from = dict.fromkeys(natsort.natsorted(type_params.change_from, key=keyfunc), True)
         change_to = {
             weakness: weakness != type_params.unlocked
             for weakness in natsort.natsorted(type_params.change_to, key=keyfunc)

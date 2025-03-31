@@ -61,7 +61,9 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
         self.pickup_db = default_database.pickup_database_for_game(self.game_enum())
 
         self.patches = description.all_patches[players_config.player_index]
-        self.configuration = description.get_preset(players_config.player_index).configuration
+        self.configuration = typing.cast(
+            "Configuration", description.get_preset(players_config.player_index).configuration
+        )
         self.rng = Random(description.get_seed_for_world(players_config.player_index))
         self.game = filtered_database.game_description_for_layout(self.configuration)
         self.memo_data = self.create_memo_data()

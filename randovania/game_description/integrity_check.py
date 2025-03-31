@@ -16,7 +16,6 @@ from randovania.game_description.requirements.requirement_template import Requir
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_collection import ResourceCollection
-from randovania.layout.base.base_configuration import BaseConfiguration
 
 if TYPE_CHECKING:
     from collections.abc import Iterator, Mapping
@@ -29,6 +28,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
 dock_node_suffix_re = re.compile(r" \([^()]+?\)$")
@@ -37,7 +37,7 @@ layer_name_re = re.compile(r"[a-zA-Z0-9 _-]+")
 
 def _create_node_context(game: GameDescription) -> NodeContext:
     return NodeContext(
-        patches=GamePatches.create_from_game(game, 0, typing.cast(BaseConfiguration, None)),
+        patches=GamePatches.create_from_game(game, 0, typing.cast("BaseConfiguration", None)),
         current_resources=ResourceCollection.with_database(game.resource_database),
         database=game.resource_database,
         node_provider=game.region_list,

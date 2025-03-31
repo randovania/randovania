@@ -4,8 +4,6 @@ import itertools
 import typing
 from collections import defaultdict
 
-from randovania.game_description.db.node import Node
-from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements import fast_as_set
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -15,7 +13,8 @@ from randovania.game_description.resources.resource_type import ResourceType
 if typing.TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from randovania.game_description.db.node import NodeContext
+    from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.logic import Logic
@@ -44,6 +43,26 @@ def _is_requirement_viable_as_additional(requirement: Requirement) -> bool:
     return not isinstance(requirement, PositiveResourceRequirement) or requirement.resource.resource_type not in (
         ResourceType.EVENT,
         ResourceType.NODE_IDENTIFIER,
+    )
+
+
+def _combine_damage_requirements(
+    heal: bool, requirement: Requirement, satisfied_requirement: Requirement, context: NodeContext
+) -> Requirement:
+    """
+    Helper function combining damage requirements from requirement and satisfied_requirement. Other requirements are
+    considered either trivial or impossible. The heal argument can be used to ignore the damage requirements from the
+    satisfied requirement, which is relevant when requirement comes from a connection out of a heal node.
+    :param heal:
+    :param requirement:
+    :param satisfied_requirement:
+    :param context:
+    :return:
+    """
+    return (
+        requirement
+        if heal
+        else RequirementAnd([requirement, satisfied_requirement]).isolate_damage_requirements(context).simplify()
     )
 
 
@@ -87,7 +106,7 @@ class ResolverReach:
     @classmethod
     def calculate_reach(cls, logic: Logic, initial_state: State) -> ResolverReach:
         # all_nodes is only accessed via indices that guarantee a non-None result
-        all_nodes = typing.cast(tuple[Node, ...], logic.game.region_list.all_nodes)
+        all_nodes = typing.cast("tuple[Node, ...]", logic.game.region_list.all_nodes)
         checked_nodes: dict[int, DamageState] = {}
         context = initial_state.node_context()
 
@@ -101,6 +120,7 @@ class ResolverReach:
         path_to_node: dict[int, list[int]] = {
             initial_state.node.node_index: [],
         }
+        satisfied_requirement_on_node: dict[int, Requirement] = {initial_state.node.node_index: Requirement.trivial()}
 
         while nodes_to_check:
             node_index = next(iter(nodes_to_check))
@@ -144,12 +164,21 @@ class ResolverReach:
                     )
                     path_to_node[target_node_index] = list(path_to_node[node_index])
                     path_to_node[target_node_index].append(node_index)
+                    satisfied_requirement_on_node[target_node_index] = _combine_damage_requirements(
+                        node.heal,
+                        requirement_including_leaving,
+                        satisfied_requirement_on_node[node.node_index],
+                        context,
+                    )
 
                 elif target_node:
                     # If we can't go to this node, store the reason in order to build the satisfiable requirements.
                     # Note we ignore the 'additional requirements' here because it'll be added on the end.
                     if not requirement.satisfied(context, damage_health):
-                        requirements_excluding_leaving_by_node[target_node_index].append(requirement)
+                        full_requirement_for_target = RequirementAnd(
+                            [requirement, satisfied_requirement_on_node[node.node_index]]
+                        ).simplify()
+                        requirements_excluding_leaving_by_node[target_node_index].append(full_requirement_for_target)
 
         # Discard satisfiable requirements of nodes reachable by other means
         for node_index in set(reach_nodes.keys()).intersection(requirements_excluding_leaving_by_node.keys()):
@@ -181,7 +210,7 @@ class ResolverReach:
         for node in self.nodes:
             if not node.is_resource_node:
                 continue
-            node = typing.cast(ResourceNode, node)
+            node = typing.cast("ResourceNode", node)
             if node.should_collect(context) and node.requirement_to_collect().satisfied(
                 context, self._game_state_at_node[node.node_index].health_for_damage_requirements()
             ):
