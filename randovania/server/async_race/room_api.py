@@ -6,6 +6,7 @@ import typing
 from peewee import Case
 from retro_data_structures.json_util import JsonArray
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.json_lib import JsonObject, JsonType
@@ -59,10 +60,30 @@ def _verify_authorization(sa: ServerApp, room: AsyncRaceRoom, auth_token: str) -
             raise error.NotAuthorizedForActionError
 
 
+def _fast_get_games_list_from_raw_layout(layout_description_json: bytes) -> list[RandovaniaGame]:
+    """Gets a list of games in the given layout description, stored as bytes"""
+    layout = LayoutDescription.bytes_to_dict(layout_description_json)
+    # Skipping migration and decoding, to be fast
+
+    present_games = set()
+    for preset in layout["info"]["presets"]:
+        present_games.add(preset["game"])
+
+    return [g for g in RandovaniaGame.sorted_all_games() if g.value in present_games]
+
+
 def list_rooms(sa: ServerApp, limit: int | None) -> JsonType:
     now = lib.datetime_now()
 
     def construct_helper(**args: typing.Any) -> AsyncRaceRoomListEntry:
+        layout_description_json: bytes = args.pop("layout_description_json")
+        games = None
+        try:
+            games = _fast_get_games_list_from_raw_layout(layout_description_json)
+        except Exception:
+            lib.logger().exception("Unable to get list of games from room")
+
+        args["games"] = games
         args["creation_date"] = datetime.datetime.fromisoformat(args["creation_date"])
         args["start_date"] = datetime.datetime.fromisoformat(args["start_date"])
         args["end_date"] = datetime.datetime.fromisoformat(args["end_date"])
@@ -74,6 +95,7 @@ def list_rooms(sa: ServerApp, limit: int | None) -> JsonType:
         AsyncRaceRoom.select(
             AsyncRaceRoom.id,
             AsyncRaceRoom.name,
+            AsyncRaceRoom.layout_description_json,
             Case(None, ((AsyncRaceRoom.password.is_null(), False),), True).alias("has_password"),
             AsyncRaceRoom.visibility,
             User.name.alias("creator"),
