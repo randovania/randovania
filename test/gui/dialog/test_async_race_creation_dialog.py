@@ -29,6 +29,8 @@ if TYPE_CHECKING:
 
 
 async def test_validate(skip_qtbot, preset_manager, options, mocker: pytest_mock.MockFixture):
+    mocker.patch("randovania.is_dev_version", return_value=True)
+
     parent = QtWidgets.QMainWindow()
     skip_qtbot.add_widget(parent)
 
