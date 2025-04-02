@@ -12,28 +12,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [9.0.0] - 2025-04-01
 
 - **Major** - Added: Factorio has been added. Shuffle the tech tree, recipes for science packs. The native multiplayer is fully supported, while Multiworld isnt'.
-- **Major** - Added: Featural Hints. Echoes and Cave Story now use a brand new hint system, where hints may refer to various Features of a pickup or of a location. Read the complete changelog for more details.
-- **Major** - Changed: Hints are now placed after pickup placement, rather than during. This should result in more interesting hints in all games.
+- **Major** - Added: Featural Hints. Echoes and Cave Story now use a brand new hint system, where hints may refer to various Features of a pickup or of a location. Read the Hints section for more details.
 - **Major** - Added: Co-op as an additional Multiworld Mode. In Co-op, multiple people can share Worlds together, which means that they will share their inventory. This works for all games that support Multiworld.
 - **Major** - Changed: The trick level "Hypermode" has been renamed to "Ludicrous". This new name is game agnostic and more properly describes the difficulty of this category.
 - Added: Async Races can now be hosted and joined directly from Randovania.
-- Added: Games with hints now share a unified Hints tab in the preset editor window. New settings have been added to disable various kinds of hints.
-- Added: Every game now has a "Pickup Hint Features" tab where you can view which Features apply to which pickups.
-- Added: Cave Story and Echoes now have a "Pickup Location Features" tab where you can view which Features apply to which locations.
-- Added: Location Features can be viewed in the Database Viewer.
-- Added: 3 more joke hints.
-- Added: The Hints Spoiler tab now indicates which location a hint is pointing to.
-- Added: Experimental option under Generation -> Logic Settings that improves the results of generation but increases generation time.
-- Changed: The Hints Spoiler tab sorts its entries in a more helpful manner.
-- Changed: Some joke hints are now shared between all games that use them.
-- Changed: Hints now prioritize non-progression major items rather than progression minor items.
 - Changed: Updated included Nintendont to a newer version that includes the latest changes from the official Nintendont. This also means that the Nintendont configuration was reset to what it is by default.
 - Changed: The "Spoiler: Playthrough" tab is significantly easier to read and follow along with.
 - Fixed: The "Spoiler: Playthrough" tab is much faster when calculating the playthrough.
-- Fixed: It is now properly impossible for multiple hints to point to the same location.
-- Fixed: A recent regression in the resolver that made it significantly slower has been fixed.
-- Fixed: Generator action weights were being incorrectly calculated.
-- Fixed: When calculating reach with unsafe resources, the generator no longer ignores some valid options.
 - Fixed: Typo in dialog about generated game hash being different from expected.
 - Fixed: The map tracker now correctly accounts for door locks that have been modified statically by settings such as unlocked Save Station doors.
 
@@ -45,11 +30,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Bug in the revised door solver that would result in permanently locked doors being placed when they shouldn't.
 - Fixed: Minor edge case where damage wasn't considered when placing permanently locked doors.
 
+### Generator
+
+- Added: Experimental option under Generation -> Logic Settings that improves the results of generation but increases generation time.
+- Fixed: Generator action weights were being incorrectly calculated.
+- Fixed: When calculating reach with unsafe resources, the generator no longer ignores some valid options.
+
+### Hints
+
+- **Major** - Changed: Hints are now placed after pickup placement, rather than during. This should result in more interesting hints in all games.
+- Added: Games with hints now share a unified Hints tab in the preset editor window. New settings have been added to disable various kinds of hints.
+- Added: Every game now has a "Pickup Hint Features" tab where you can view which Features apply to which pickups.
+- Added: Cave Story and Echoes now have a "Pickup Location Features" tab where you can view which Features apply to which locations.
+- Added: Location Features can be viewed in the Database Viewer.
+- Added: 3 more generic joke hints.
+- Added: The Hints Spoiler tab now indicates which location a hint is pointing to.
+- Changed: The Hints Spoiler tab sorts its entries in a more helpful manner.
+- Changed: Some joke hints are now shared between all games that use them.
+- Changed: Hints now prioritize non-progression major items rather than progression minor items.
+- Fixed: It is now properly impossible for multiple hints to point to the same location.
+
 ### Resolver
 
 - Fixed: Some seeds being considered impossible when finding a progressive item in an area where a later item in the progressive chain is required to leave.
 - Fixed: Minor edge case where a seed might be considered impossible due to missing consideration of damage.
 - Fixed: Some seeds being considered impossible in cases where damage requirements are spread between multiple connections.
+- Fixed: A recent regression in the resolver that made it significantly slower has been fixed.
 
 ### Metroid Dread
 
