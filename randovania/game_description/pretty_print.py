@@ -20,13 +20,14 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout.base.trick_level import LayoutTrickLevel
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Iterable, Iterator
     from pathlib import Path
 
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
@@ -138,7 +139,10 @@ def pretty_print_node_type(node: Node, region_list: RegionList, db: ResourceData
         return message
 
     elif isinstance(node, PickupNode):
-        return f"Pickup {node.pickup_index.index}; Category? {node.location_category.long_name}"
+        message = f"Pickup {node.pickup_index.index}; Category? {node.location_category.long_name}"
+        if node.custom_index_group is not None:
+            message += f"; Index Group: {node.custom_index_group}"
+        return message
 
     elif isinstance(node, EventNode):
         return f"Event {node.event.long_name}"
@@ -160,10 +164,17 @@ def pretty_print_node_type(node: Node, region_list: RegionList, db: ResourceData
     return ""
 
 
+def pretty_print_hint_features(features: Iterable[HintFeature]) -> str:
+    return f"Hint Features - {', '.join([feature.long_name for feature in sorted(features)])}"
+
+
 def pretty_print_area(game: GameDescription, area: Area, print_function: typing.Callable[[str], None] = print) -> None:
     print_function(area.name)
     for extra_name, extra_field in area.extra.items():
         print_function(f"Extra - {extra_name}: {extra_field}")
+
+    if area.hint_features:
+        print_function(pretty_print_hint_features(area.hint_features))
 
     for i, node in enumerate(area.nodes):
         if node.is_derived_node:
@@ -180,6 +191,8 @@ def pretty_print_area(game: GameDescription, area: Area, print_function: typing.
         description_line = pretty_print_node_type(node, game.region_list, game.resource_database)
         if description_line:
             print_function(f"  * {description_line}")
+        if isinstance(node, PickupNode) and node.hint_features:
+            print_function(f"  * {pretty_print_hint_features(node.hint_features)}")
         if node.description:
             print_function(f"  * {node.description}")
         for extra_name, extra_field in node.extra.items():

@@ -9,8 +9,8 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import multiplayer_session
+from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import (
-    GameDetails,
     MultiplayerSessionAction,
     MultiplayerSessionActions,
     MultiplayerWorld,
@@ -114,3 +114,32 @@ def test_multiplayer_session_defaults_to_now(clean_database):
 
     session: database.MultiplayerSession = database.MultiplayerSession.get_by_id(1)
     assert (datetime.datetime.now(datetime.UTC) - session.creation_datetime) < datetime.timedelta(seconds=5)
+
+
+def test_async_race_active_pause(clean_database):
+    someone = database.User.create(name="Someone")
+    room = database.AsyncRaceRoom.create(
+        name="Debug",
+        creator=someone,
+        layout_description_json=b"",
+        game_details_json="{}",
+        start_date=datetime.datetime.now(datetime.UTC),
+        end_date=datetime.datetime.now(datetime.UTC) + datetime.timedelta(days=30),
+        allow_pause=True,
+    )
+    entry = database.AsyncRaceEntry.create(
+        room=room,
+        user=someone,
+    )
+
+    assert database.AsyncRaceEntryPause.active_pause(entry) is None
+    database.AsyncRaceEntryPause.create(entry=entry, start=datetime.datetime.now(datetime.UTC))
+
+    pause = database.AsyncRaceEntryPause.active_pause(entry)
+    assert pause is not None
+    pause.end = datetime.datetime.now(datetime.UTC)
+    pause.save()
+
+    assert database.AsyncRaceEntryPause.active_pause(entry) is None
+
+    assert entry.pauses == [pause]

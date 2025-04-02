@@ -148,7 +148,7 @@ def test_format_player(fusion_game_patches, default_fusion_configuration, player
     expected = f"[COLOR=1]{player}[/COLOR]" if color else f"{player}"
     players = PlayersConfiguration(0, {0: player})
     namer = FusionHintNamer({0: fusion_game_patches}, players)
-    hint = namer.format_player(player, color)
+    hint = namer.format_world(player, color)
     assert hint == expected
 
 

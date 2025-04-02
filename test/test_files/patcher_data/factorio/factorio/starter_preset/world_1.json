@@ -1,6 +1,13 @@
 {
     "configuration_identifier": "XXXXXXXX",
     "layout_uuid": "00000000-0000-1111-0000-000000000000",
+    "optional_modifications": {
+        "can_send_fish_to_space": false,
+        "stronger_solar": true,
+        "productivity_everywhere": true,
+        "single_item_freebie": false,
+        "strict_multiplayer_freebie": false
+    },
     "technologies": [
         {
             "tech_name": "randovania-steam-power",
@@ -8,17 +15,13 @@
             "description": "Provides the following in order: Electronics, Advanced circuit, Processing unit.",
             "icon": "__base__/graphics/technology/electronics.png",
             "icon_size": 256,
+            "cost_reference": "steam-power",
             "prerequisites": [],
             "unlocks": [
                 "electronics",
                 "advanced-circuit",
                 "processing-unit"
-            ],
-            "research_trigger": {
-                "type": "craft-item",
-                "item": "iron-plate",
-                "count": 50
-            }
+            ]
         },
         {
             "tech_name": "randovania-electronics",
@@ -26,15 +29,11 @@
             "description": "",
             "icon": "__base__/graphics/technology/construction-robotics.png",
             "icon_size": 256,
+            "cost_reference": "electronics",
             "prerequisites": [],
             "unlocks": [
                 "construction-robotics"
-            ],
-            "research_trigger": {
-                "type": "craft-item",
-                "item": "copper-plate",
-                "count": 10
-            }
+            ]
         },
         {
             "tech_name": "randovania-automation-science-pack",
@@ -42,17 +41,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/automation-science-pack.png",
             "icon_size": 256,
+            "cost_reference": "automation-science-pack",
             "prerequisites": [
                 "randovania-steam-power",
                 "randovania-electronics"
             ],
             "unlocks": [
                 "automation-science-pack"
-            ],
-            "research_trigger": {
-                "type": "craft-item",
-                "item": "burner-lab"
-            }
+            ]
         },
         {
             "tech_name": "randovania-electric-mining-drill",
@@ -60,19 +56,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/steel-processing.png",
             "icon_size": 256,
+            "cost_reference": "electric-mining-drill",
             "prerequisites": [
                 "randovania-automation-science-pack"
             ],
             "unlocks": [
                 "steel-processing"
-            ],
-            "cost": {
-                "count": 25,
-                "time": 10,
-                "ingredients": [
-                    "automation-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-repair-pack",
@@ -80,19 +70,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/belt-immunity-equipment.png",
             "icon_size": 256,
+            "cost_reference": "repair-pack",
             "prerequisites": [
                 "randovania-automation-science-pack"
             ],
             "unlocks": [
                 "belt-immunity-equipment"
-            ],
-            "cost": {
-                "count": 25,
-                "time": 10,
-                "ingredients": [
-                    "automation-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-radar",
@@ -100,19 +84,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/electric-energy-acumulators.png",
             "icon_size": 256,
+            "cost_reference": "radar",
             "prerequisites": [
                 "randovania-automation-science-pack"
             ],
             "unlocks": [
                 "electric-energy-accumulators"
-            ],
-            "cost": {
-                "count": 20,
-                "time": 10,
-                "ingredients": [
-                    "automation-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-automation",
@@ -120,19 +98,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/military-science-pack.png",
             "icon_size": 256,
+            "cost_reference": "automation",
             "prerequisites": [
                 "randovania-automation-science-pack"
             ],
             "unlocks": [
                 "military-science-pack"
-            ],
-            "cost": {
-                "count": 10,
-                "time": 10,
-                "ingredients": [
-                    "automation-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-logistic-science-pack",
@@ -140,19 +112,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/atomic-bomb.png",
             "icon_size": 256,
+            "cost_reference": "logistic-science-pack",
             "prerequisites": [
                 "randovania-automation-science-pack"
             ],
             "unlocks": [
                 "atomic-bomb"
-            ],
-            "cost": {
-                "count": 75,
-                "time": 5,
-                "ingredients": [
-                    "automation-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-steel-processing",
@@ -160,6 +126,7 @@
             "description": "Provides the following in order: Logistics, Logistics 2, Logistics 3.",
             "icon": "__base__/graphics/technology/logistics-1.png",
             "icon_size": 256,
+            "cost_reference": "steel-processing",
             "prerequisites": [
                 "randovania-automation-science-pack"
             ],
@@ -167,14 +134,7 @@
                 "logistics",
                 "logistics-2",
                 "logistics-3"
-            ],
-            "cost": {
-                "count": 50,
-                "time": 5,
-                "ingredients": [
-                    "automation-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-military",
@@ -182,19 +142,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/effect-transmission.png",
             "icon_size": 256,
+            "cost_reference": "military",
             "prerequisites": [
                 "randovania-automation-science-pack"
             ],
             "unlocks": [
                 "effect-transmission"
-            ],
-            "cost": {
-                "count": 10,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-fast-inserter",
@@ -202,19 +156,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/logistic-science-pack.png",
             "icon_size": 256,
+            "cost_reference": "fast-inserter",
             "prerequisites": [
                 "randovania-automation-science-pack"
             ],
             "unlocks": [
                 "logistic-science-pack"
-            ],
-            "cost": {
-                "count": 30,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-logistics",
@@ -222,19 +170,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/electric-mining-drill.png",
             "icon_size": 256,
+            "cost_reference": "logistics",
             "prerequisites": [
                 "randovania-automation-science-pack"
             ],
             "unlocks": [
                 "electric-mining-drill"
-            ],
-            "cost": {
-                "count": 20,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-lamp",
@@ -242,39 +184,27 @@
             "description": "",
             "icon": "__base__/graphics/technology/solar-energy.png",
             "icon_size": 256,
+            "cost_reference": "lamp",
             "prerequisites": [
                 "randovania-automation-science-pack"
             ],
             "unlocks": [
                 "solar-energy"
-            ],
-            "cost": {
-                "count": 10,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-gun-turret",
             "locale_name": "Medium Electric Pole",
             "description": "",
-            "icon": "__base__/graphics/technology/electric-energy-distribution-1.png",
+            "icon": "__randovania-assets__/graphics/technology/medium-electric-pole.png",
             "icon_size": 256,
+            "cost_reference": "gun-turret",
             "prerequisites": [
                 "randovania-automation-science-pack"
             ],
             "unlocks": [
                 "electric-energy-distribution-1"
-            ],
-            "cost": {
-                "count": 10,
-                "time": 10,
-                "ingredients": [
-                    "automation-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-stone-wall",
@@ -282,6 +212,7 @@
             "description": "Provides the following in order: Speed module, Speed module 2, Speed module 3.",
             "icon": "__base__/graphics/technology/speed-module-1.png",
             "icon_size": 256,
+            "cost_reference": "stone-wall",
             "prerequisites": [
                 "randovania-automation-science-pack"
             ],
@@ -289,14 +220,7 @@
                 "speed-module",
                 "speed-module-2",
                 "speed-module-3"
-            ],
-            "cost": {
-                "count": 10,
-                "time": 10,
-                "ingredients": [
-                    "automation-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-landfill",
@@ -304,20 +228,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/railway.png",
             "icon_size": 256,
+            "cost_reference": "landfill",
             "prerequisites": [
                 "randovania-logistic-science-pack"
             ],
             "unlocks": [
                 "railway"
-            ],
-            "cost": {
-                "count": 50,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-toolbelt",
@@ -325,20 +242,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/sulfur-processing.png",
             "icon_size": 256,
+            "cost_reference": "toolbelt",
             "prerequisites": [
                 "randovania-logistic-science-pack"
             ],
             "unlocks": [
                 "sulfur-processing"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-circuit-network",
@@ -346,21 +256,14 @@
             "description": "Provides the following in order: Oil processing, Advanced oil processing.",
             "icon": "__base__/graphics/technology/oil-processing.png",
             "icon_size": 256,
+            "cost_reference": "circuit-network",
             "prerequisites": [
                 "randovania-logistic-science-pack"
             ],
             "unlocks": [
                 "oil-processing",
                 "advanced-oil-processing"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-automation-c",
@@ -368,6 +271,7 @@
             "description": "",
             "icon": "__base__/graphics/technology/chemical-science-pack.png",
             "icon_size": 256,
+            "cost_reference": "automation-2",
             "prerequisites": [
                 "randovania-automation",
                 "randovania-steel-processing",
@@ -375,15 +279,7 @@
             ],
             "unlocks": [
                 "chemical-science-pack"
-            ],
-            "cost": {
-                "count": 40,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-steel-axe",
@@ -391,6 +287,7 @@
             "description": "Provides the following in order: Logistics, Logistics 2, Logistics 3.",
             "icon": "__base__/graphics/technology/logistics-1.png",
             "icon_size": 256,
+            "cost_reference": "steel-axe",
             "prerequisites": [
                 "randovania-steel-processing"
             ],
@@ -398,12 +295,7 @@
                 "logistics",
                 "logistics-2",
                 "logistics-3"
-            ],
-            "research_trigger": {
-                "type": "craft-item",
-                "item": "steel-plate",
-                "count": 50
-            }
+            ]
         },
         {
             "tech_name": "randovania-solar-energy",
@@ -411,6 +303,7 @@
             "description": "Provides the following in order: Modular armor, Power armor, Power armor MK2.",
             "icon": "__base__/graphics/technology/armor-making.png",
             "icon_size": 256,
+            "cost_reference": "solar-energy",
             "prerequisites": [
                 "randovania-steel-processing",
                 "randovania-logistic-science-pack"
@@ -419,15 +312,7 @@
                 "modular-armor",
                 "power-armor",
                 "power-armor-mk2"
-            ],
-            "cost": {
-                "count": 250,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-electric-energy-distribution-b",
@@ -435,21 +320,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/laser-turret.png",
             "icon_size": 256,
+            "cost_reference": "electric-energy-distribution-1",
             "prerequisites": [
                 "randovania-steel-processing",
                 "randovania-logistic-science-pack"
             ],
             "unlocks": [
                 "laser-turret"
-            ],
-            "cost": {
-                "count": 120,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-advanced-material-processing",
@@ -457,6 +335,7 @@
             "description": "Provides the following in order: Efficiency module, Efficiency module 2, Efficiency module 3.",
             "icon": "__base__/graphics/technology/efficiency-module-1.png",
             "icon_size": 256,
+            "cost_reference": "advanced-material-processing",
             "prerequisites": [
                 "randovania-steel-processing",
                 "randovania-logistic-science-pack"
@@ -465,15 +344,7 @@
                 "efficiency-module",
                 "efficiency-module-2",
                 "efficiency-module-3"
-            ],
-            "cost": {
-                "count": 75,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-engine",
@@ -481,6 +352,7 @@
             "description": "Provides the following in order: Automation, Automation 2, Automation 3.",
             "icon": "__base__/graphics/technology/automation-1.png",
             "icon_size": 256,
+            "cost_reference": "engine",
             "prerequisites": [
                 "randovania-steel-processing",
                 "randovania-logistic-science-pack"
@@ -489,15 +361,7 @@
                 "automation",
                 "automation-2",
                 "automation-3"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-physical-projectile-damage-b",
@@ -505,19 +369,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/flamethrower.png",
             "icon_size": 256,
+            "cost_reference": "physical-projectile-damage-1",
             "prerequisites": [
                 "randovania-military"
             ],
             "unlocks": [
                 "flamethrower"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-weapon-shooting-speed-b",
@@ -525,6 +383,7 @@
             "description": "Provides the following in order: Productivity module, Productivity module 2, Productivity module 3.",
             "icon": "__base__/graphics/technology/productivity-module-1.png",
             "icon_size": 256,
+            "cost_reference": "weapon-shooting-speed-1",
             "prerequisites": [
                 "randovania-military"
             ],
@@ -532,14 +391,7 @@
                 "productivity-module",
                 "productivity-module-2",
                 "productivity-module-3"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-military-c",
@@ -547,6 +399,7 @@
             "description": "Provides the following in order: Automation, Automation 2, Automation 3.",
             "icon": "__base__/graphics/technology/automation-1.png",
             "icon_size": 256,
+            "cost_reference": "military-2",
             "prerequisites": [
                 "randovania-military",
                 "randovania-steel-processing",
@@ -556,15 +409,7 @@
                 "automation",
                 "automation-2",
                 "automation-3"
-            ],
-            "cost": {
-                "count": 20,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-heavy-armor",
@@ -572,6 +417,7 @@
             "description": "Provides the following in order: Military, Military 2, Military 3, Military 4.",
             "icon": "__base__/graphics/technology/military.png",
             "icon_size": 256,
+            "cost_reference": "heavy-armor",
             "prerequisites": [
                 "randovania-military",
                 "randovania-steel-processing"
@@ -581,14 +427,7 @@
                 "military-2",
                 "military-3",
                 "military-4"
-            ],
-            "cost": {
-                "count": 30,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-logistics-c",
@@ -596,6 +435,7 @@
             "description": "Provides the following in order: Logistics, Logistics 2, Logistics 3.",
             "icon": "__base__/graphics/technology/logistics-1.png",
             "icon_size": 256,
+            "cost_reference": "logistics-2",
             "prerequisites": [
                 "randovania-logistics",
                 "randovania-logistic-science-pack"
@@ -604,15 +444,7 @@
                 "logistics",
                 "logistics-2",
                 "logistics-3"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-research-speed-b",
@@ -620,20 +452,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/oil-gathering.png",
             "icon_size": 256,
+            "cost_reference": "research-speed-1",
             "prerequisites": [
                 "randovania-automation-c"
             ],
             "unlocks": [
                 "oil-gathering"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-concrete",
@@ -641,6 +466,7 @@
             "description": "Provides the following in order: Personal roboport, Personal roboport MK2.",
             "icon": "__base__/graphics/technology/personal-roboport-equipment.png",
             "icon_size": 256,
+            "cost_reference": "concrete",
             "prerequisites": [
                 "randovania-advanced-material-processing",
                 "randovania-automation-c"
@@ -648,15 +474,7 @@
             "unlocks": [
                 "personal-roboport-equipment",
                 "personal-roboport-mk2-equipment"
-            ],
-            "cost": {
-                "count": 250,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-fluid-handling",
@@ -664,6 +482,7 @@
             "description": "Provides the following in order: Inserter, Fast inserter, Bulk inserter.",
             "icon": "__base__/graphics/technology/fast-inserter.png",
             "icon_size": 256,
+            "cost_reference": "fluid-handling",
             "prerequisites": [
                 "randovania-automation-c",
                 "randovania-engine"
@@ -672,15 +491,7 @@
                 "inserter",
                 "fast-inserter",
                 "bulk-inserter"
-            ],
-            "cost": {
-                "count": 50,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-physical-projectile-damage-c",
@@ -688,6 +499,7 @@
             "description": "Provides the following in order: Military, Military 2, Military 3, Military 4.",
             "icon": "__base__/graphics/technology/military.png",
             "icon_size": 256,
+            "cost_reference": "physical-projectile-damage-2",
             "prerequisites": [
                 "randovania-physical-projectile-damage-b",
                 "randovania-logistic-science-pack"
@@ -697,15 +509,7 @@
                 "military-2",
                 "military-3",
                 "military-4"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-weapon-shooting-speed-c",
@@ -713,6 +517,7 @@
             "description": "Provides the following in order: Defender, Distractor, Destroyer.",
             "icon": "__base__/graphics/technology/defender.png",
             "icon_size": 256,
+            "cost_reference": "weapon-shooting-speed-2",
             "prerequisites": [
                 "randovania-weapon-shooting-speed-b",
                 "randovania-logistic-science-pack"
@@ -721,15 +526,7 @@
                 "defender",
                 "distractor",
                 "destroyer"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-stronger-explosives-b",
@@ -737,6 +534,7 @@
             "description": "Provides the following in order: Efficiency module, Efficiency module 2, Efficiency module 3.",
             "icon": "__base__/graphics/technology/efficiency-module-1.png",
             "icon_size": 256,
+            "cost_reference": "stronger-explosives-1",
             "prerequisites": [
                 "randovania-military-c"
             ],
@@ -744,15 +542,7 @@
                 "efficiency-module",
                 "efficiency-module-2",
                 "efficiency-module-3"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-gate",
@@ -760,21 +550,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/worker-robots-storage.png",
             "icon_size": 256,
+            "cost_reference": "gate",
             "prerequisites": [
                 "randovania-stone-wall",
                 "randovania-military-c"
             ],
             "unlocks": [
                 "worker-robots-storage-3"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-military-science-pack",
@@ -782,6 +565,7 @@
             "description": "Provides the following in order: Inserter, Fast inserter, Bulk inserter.",
             "icon": "__base__/graphics/technology/fast-inserter.png",
             "icon_size": 256,
+            "cost_reference": "military-science-pack",
             "prerequisites": [
                 "randovania-military-c",
                 "randovania-stone-wall"
@@ -790,15 +574,7 @@
                 "inserter",
                 "fast-inserter",
                 "bulk-inserter"
-            ],
-            "cost": {
-                "count": 30,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-railway",
@@ -806,6 +582,7 @@
             "description": "Provides the following in order: Personal battery, Personal battery MK2.",
             "icon": "__base__/graphics/technology/battery-equipment.png",
             "icon_size": 256,
+            "cost_reference": "railway",
             "prerequisites": [
                 "randovania-logistics-c",
                 "randovania-engine"
@@ -813,15 +590,7 @@
             "unlocks": [
                 "battery-equipment",
                 "battery-mk2-equipment"
-            ],
-            "cost": {
-                "count": 75,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-automobilism",
@@ -829,21 +598,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/logistic-robotics.png",
             "icon_size": 256,
+            "cost_reference": "automobilism",
             "prerequisites": [
                 "randovania-logistics-c",
                 "randovania-engine"
             ],
             "unlocks": [
                 "logistic-robotics"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-research-speed-c",
@@ -851,20 +613,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/solar-panel-equipment.png",
             "icon_size": 256,
+            "cost_reference": "research-speed-2",
             "prerequisites": [
                 "randovania-research-speed-b"
             ],
             "unlocks": [
                 "solar-panel-equipment"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-oil-gathering",
@@ -872,43 +627,28 @@
             "description": "",
             "icon": "__base__/graphics/technology/robotics.png",
             "icon_size": 256,
+            "cost_reference": "oil-gathering",
             "prerequisites": [
                 "randovania-fluid-handling"
             ],
             "unlocks": [
                 "robotics"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-stronger-explosives-c",
             "locale_name": "Big Electric Pole",
             "description": "",
-            "icon": "__base__/graphics/technology/electric-energy-distribution-1.png",
+            "icon": "__randovania-assets__/graphics/technology/big-electric-pole.png",
             "icon_size": 256,
+            "cost_reference": "stronger-explosives-2",
             "prerequisites": [
                 "randovania-stronger-explosives-b",
                 "randovania-military-science-pack"
             ],
             "unlocks": [
                 "big-electric-pole"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-defender",
@@ -916,21 +656,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/braking-force.png",
             "icon_size": 256,
+            "cost_reference": "defender",
             "prerequisites": [
                 "randovania-military-science-pack"
             ],
             "unlocks": [
                 "braking-force-7"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-automated-rail-transportation",
@@ -938,21 +670,14 @@
             "description": "Provides the following in order: Engine, Electric engine.",
             "icon": "__base__/graphics/technology/engine.png",
             "icon_size": 256,
+            "cost_reference": "automated-rail-transportation",
             "prerequisites": [
                 "randovania-railway"
             ],
             "unlocks": [
                 "engine",
                 "electric-engine"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-fluid-wagon",
@@ -960,6 +685,7 @@
             "description": "Provides the following in order: Military, Military 2, Military 3, Military 4.",
             "icon": "__base__/graphics/technology/military.png",
             "icon_size": 256,
+            "cost_reference": "fluid-wagon",
             "prerequisites": [
                 "randovania-railway",
                 "randovania-fluid-handling"
@@ -969,15 +695,7 @@
                 "military-2",
                 "military-3",
                 "military-4"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-oil-processing",
@@ -985,16 +703,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/concrete.png",
             "icon_size": 256,
+            "cost_reference": "oil-processing",
             "prerequisites": [
                 "randovania-oil-gathering"
             ],
             "unlocks": [
                 "concrete"
-            ],
-            "research_trigger": {
-                "type": "mine-entity",
-                "entity": "crude-oil"
-            }
+            ]
         },
         {
             "tech_name": "randovania-follower-robot-count-b",
@@ -1002,21 +717,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/rocket-fuel.png",
             "icon_size": 256,
+            "cost_reference": "follower-robot-count-1",
             "prerequisites": [
                 "randovania-defender"
             ],
             "unlocks": [
                 "rocket-fuel"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-flammables",
@@ -1024,20 +731,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/inserter-capacity.png",
             "icon_size": 256,
+            "cost_reference": "flammables",
             "prerequisites": [
                 "randovania-oil-processing"
             ],
             "unlocks": [
                 "regular-inserter-capacity-bonus"
-            ],
-            "cost": {
-                "count": 50,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-sulfur-processing",
@@ -1045,20 +745,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/worker-robots-speed.png",
             "icon_size": 256,
+            "cost_reference": "sulfur-processing",
             "prerequisites": [
                 "randovania-oil-processing"
             ],
             "unlocks": [
                 "worker-robots-speed-6"
-            ],
-            "cost": {
-                "count": 150,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-plastics",
@@ -1066,21 +759,14 @@
             "description": "Provides the following in order: Engine, Electric engine.",
             "icon": "__base__/graphics/technology/engine.png",
             "icon_size": 256,
+            "cost_reference": "plastics",
             "prerequisites": [
                 "randovania-oil-processing"
             ],
             "unlocks": [
                 "engine",
                 "electric-engine"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-follower-robot-count-c",
@@ -1088,21 +774,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/logistic-system.png",
             "icon_size": 256,
+            "cost_reference": "follower-robot-count-2",
             "prerequisites": [
                 "randovania-follower-robot-count-b"
             ],
             "unlocks": [
                 "logistic-system"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-flamethrower",
@@ -1110,22 +788,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/exoskeleton-equipment.png",
             "icon_size": 256,
+            "cost_reference": "flamethrower",
             "prerequisites": [
                 "randovania-flammables",
                 "randovania-military-science-pack"
             ],
             "unlocks": [
                 "exoskeleton-equipment"
-            ],
-            "cost": {
-                "count": 50,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-explosives",
@@ -1133,6 +803,7 @@
             "description": "Provides the following in order: Defender, Distractor, Destroyer.",
             "icon": "__base__/graphics/technology/defender.png",
             "icon_size": 256,
+            "cost_reference": "explosives",
             "prerequisites": [
                 "randovania-sulfur-processing"
             ],
@@ -1140,15 +811,7 @@
                 "defender",
                 "distractor",
                 "destroyer"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-battery",
@@ -1156,6 +819,7 @@
             "description": "Provides the following in order: Speed module, Speed module 2, Speed module 3.",
             "icon": "__base__/graphics/technology/speed-module-1.png",
             "icon_size": 256,
+            "cost_reference": "battery",
             "prerequisites": [
                 "randovania-sulfur-processing"
             ],
@@ -1163,15 +827,7 @@
                 "speed-module",
                 "speed-module-2",
                 "speed-module-3"
-            ],
-            "cost": {
-                "count": 150,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-advanced-circuit",
@@ -1179,20 +835,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/tank.png",
             "icon_size": 256,
+            "cost_reference": "advanced-circuit",
             "prerequisites": [
                 "randovania-plastics"
             ],
             "unlocks": [
                 "tank"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-refined-flammables-b",
@@ -1200,21 +849,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/inserter-capacity.png",
             "icon_size": 256,
+            "cost_reference": "refined-flammables-1",
             "prerequisites": [
                 "randovania-flamethrower"
             ],
             "unlocks": [
                 "bulk-inserter-capacity-bonus"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-cliff-explosives",
@@ -1222,21 +863,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/coal-liquefaction.png",
             "icon_size": 256,
+            "cost_reference": "cliff-explosives",
             "prerequisites": [
                 "randovania-explosives",
                 "randovania-military-c"
             ],
             "unlocks": [
                 "coal-liquefaction"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-land-mine",
@@ -1244,22 +878,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/explosives.png",
             "icon_size": 256,
+            "cost_reference": "land-mine",
             "prerequisites": [
                 "randovania-explosives",
                 "randovania-military-science-pack"
             ],
             "unlocks": [
                 "explosives"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-rocketry",
@@ -1267,6 +893,7 @@
             "description": "",
             "icon": "__randovania-assets__/graphics/technology/longer-handed-inserter.png",
             "icon_size": 256,
+            "cost_reference": "rocketry",
             "prerequisites": [
                 "randovania-explosives",
                 "randovania-flammables",
@@ -1274,16 +901,7 @@
             ],
             "unlocks": [
                 "longer-handed-inserter"
-            ],
-            "cost": {
-                "count": 120,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-electric-energy-accumulators",
@@ -1291,21 +909,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/lubricant.png",
             "icon_size": 256,
+            "cost_reference": "electric-energy-accumulators",
             "prerequisites": [
                 "randovania-electric-energy-distribution-b",
                 "randovania-battery"
             ],
             "unlocks": [
                 "lubricant"
-            ],
-            "cost": {
-                "count": 150,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-bulk-inserter",
@@ -1313,6 +924,7 @@
             "description": "",
             "icon": "__base__/graphics/technology/research-speed.png",
             "icon_size": 256,
+            "cost_reference": "bulk-inserter",
             "prerequisites": [
                 "randovania-fast-inserter",
                 "randovania-logistics-c",
@@ -1320,15 +932,7 @@
             ],
             "unlocks": [
                 "research-speed-6"
-            ],
-            "cost": {
-                "count": 150,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-chemical-science-pack",
@@ -1336,6 +940,7 @@
             "description": "Provides the following in order: Uranium processing, Kovarex enrichment process.",
             "icon": "__base__/graphics/technology/uranium-processing.png",
             "icon_size": 256,
+            "cost_reference": "chemical-science-pack",
             "prerequisites": [
                 "randovania-advanced-circuit",
                 "randovania-sulfur-processing"
@@ -1343,15 +948,7 @@
             "unlocks": [
                 "uranium-processing",
                 "kovarex-enrichment-process"
-            ],
-            "cost": {
-                "count": 75,
-                "time": 10,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-modular-armor",
@@ -1359,6 +956,7 @@
             "description": "Provides the following in order: Military, Military 2, Military 3, Military 4.",
             "icon": "__base__/graphics/technology/military.png",
             "icon_size": 256,
+            "cost_reference": "modular-armor",
             "prerequisites": [
                 "randovania-heavy-armor",
                 "randovania-advanced-circuit"
@@ -1368,15 +966,7 @@
                 "military-2",
                 "military-3",
                 "military-4"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-modules",
@@ -1384,20 +974,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/uranium-ammo.png",
             "icon_size": 256,
+            "cost_reference": "modules",
             "prerequisites": [
                 "randovania-advanced-circuit"
             ],
             "unlocks": [
                 "uranium-ammo"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-mining-productivity-b",
@@ -1405,6 +988,7 @@
             "description": "Provides the following in order: Modular armor, Power armor, Power armor MK2.",
             "icon": "__base__/graphics/technology/armor-making.png",
             "icon_size": 256,
+            "cost_reference": "mining-productivity-1",
             "prerequisites": [
                 "randovania-advanced-circuit"
             ],
@@ -1412,15 +996,7 @@
                 "modular-armor",
                 "power-armor",
                 "power-armor-mk2"
-            ],
-            "cost": {
-                "count": 250,
-                "time": 60,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-refined-flammables-c",
@@ -1428,22 +1004,14 @@
             "description": "Provides the following in order: Rocketry, Explosive rocketry.",
             "icon": "__base__/graphics/technology/rocketry.png",
             "icon_size": 256,
+            "cost_reference": "refined-flammables-2",
             "prerequisites": [
                 "randovania-refined-flammables-b"
             ],
             "unlocks": [
                 "rocketry",
                 "explosive-rocketry"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-inserter-capacity-bonus-b",
@@ -1451,21 +1019,14 @@
             "description": "Provides the following in order: Oil processing, Advanced oil processing.",
             "icon": "__base__/graphics/technology/oil-processing.png",
             "icon_size": 256,
+            "cost_reference": "inserter-capacity-bonus-1",
             "prerequisites": [
                 "randovania-bulk-inserter"
             ],
             "unlocks": [
                 "oil-processing",
                 "advanced-oil-processing"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-military-d",
@@ -1473,23 +1034,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/battery.png",
             "icon_size": 256,
+            "cost_reference": "military-3",
             "prerequisites": [
                 "randovania-chemical-science-pack",
                 "randovania-military-science-pack"
             ],
             "unlocks": [
                 "battery"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-processing-unit",
@@ -1497,21 +1049,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/research-speed.png",
             "icon_size": 256,
+            "cost_reference": "processing-unit",
             "prerequisites": [
                 "randovania-chemical-science-pack"
             ],
             "unlocks": [
                 "research-speed-6"
-            ],
-            "cost": {
-                "count": 300,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-braking-force-b",
@@ -1519,22 +1063,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/research-speed.png",
             "icon_size": 256,
+            "cost_reference": "braking-force-1",
             "prerequisites": [
                 "randovania-railway",
                 "randovania-chemical-science-pack"
             ],
             "unlocks": [
                 "research-speed-6"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-laser",
@@ -1542,22 +1078,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/lamp.png",
             "icon_size": 256,
+            "cost_reference": "laser",
             "prerequisites": [
                 "randovania-battery",
                 "randovania-chemical-science-pack"
             ],
             "unlocks": [
                 "lamp"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-low-density-structure",
@@ -1565,6 +1093,7 @@
             "description": "Provides the following in order: Energy shield, Energy shield MK2.",
             "icon": "__base__/graphics/technology/energy-shield-equipment.png",
             "icon_size": 256,
+            "cost_reference": "low-density-structure",
             "prerequisites": [
                 "randovania-advanced-material-processing",
                 "randovania-chemical-science-pack"
@@ -1572,16 +1101,7 @@
             "unlocks": [
                 "energy-shield-equipment",
                 "energy-shield-mk2-equipment"
-            ],
-            "cost": {
-                "count": 300,
-                "time": 45,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-research-speed-d",
@@ -1589,22 +1109,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/worker-robots-speed.png",
             "icon_size": 256,
+            "cost_reference": "research-speed-3",
             "prerequisites": [
                 "randovania-research-speed-c",
                 "randovania-chemical-science-pack"
             ],
             "unlocks": [
                 "worker-robots-speed-6"
-            ],
-            "cost": {
-                "count": 250,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-electric-energy-distribution-c",
@@ -1612,22 +1124,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/worker-robots-speed.png",
             "icon_size": 256,
+            "cost_reference": "electric-energy-distribution-2",
             "prerequisites": [
                 "randovania-electric-energy-distribution-b",
                 "randovania-chemical-science-pack"
             ],
             "unlocks": [
                 "worker-robots-speed-6"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 45,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-advanced-material-processing-c",
@@ -1635,22 +1139,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/advanced-combinators.png",
             "icon_size": 256,
+            "cost_reference": "advanced-material-processing-2",
             "prerequisites": [
                 "randovania-advanced-material-processing",
                 "randovania-chemical-science-pack"
             ],
             "unlocks": [
                 "advanced-combinators"
-            ],
-            "cost": {
-                "count": 250,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-advanced-oil-processing",
@@ -1658,21 +1154,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/gate.png",
             "icon_size": 256,
+            "cost_reference": "advanced-oil-processing",
             "prerequisites": [
                 "randovania-chemical-science-pack"
             ],
             "unlocks": [
                 "gate"
-            ],
-            "cost": {
-                "count": 75,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-uranium-mining",
@@ -1680,22 +1168,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/worker-robots-storage.png",
             "icon_size": 256,
+            "cost_reference": "uranium-mining",
             "prerequisites": [
                 "randovania-chemical-science-pack",
                 "randovania-concrete"
             ],
             "unlocks": [
                 "worker-robots-storage-3"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-advanced-combinators",
@@ -1703,6 +1183,7 @@
             "description": "Provides the following in order: Personal battery, Personal battery MK2.",
             "icon": "__base__/graphics/technology/battery-equipment.png",
             "icon_size": 256,
+            "cost_reference": "advanced-combinators",
             "prerequisites": [
                 "randovania-circuit-network",
                 "randovania-chemical-science-pack"
@@ -1710,16 +1191,7 @@
             "unlocks": [
                 "battery-equipment",
                 "battery-mk2-equipment"
-            ],
-            "cost": {
-                "count": 50,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-solar-panel-equipment",
@@ -1727,21 +1199,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/spidertron.png",
             "icon_size": 256,
+            "cost_reference": "solar-panel-equipment",
             "prerequisites": [
                 "randovania-modular-armor",
                 "randovania-solar-energy"
             ],
             "unlocks": [
                 "spidertron"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-speed-module",
@@ -1749,20 +1214,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/mining-productivity.png",
             "icon_size": 256,
+            "cost_reference": "speed-module",
             "prerequisites": [
                 "randovania-modules"
             ],
             "unlocks": [
                 "mining-productivity-4"
-            ],
-            "cost": {
-                "count": 50,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-productivity-module",
@@ -1770,6 +1228,7 @@
             "description": "Provides the following in order: Speed module, Speed module 2, Speed module 3.",
             "icon": "__base__/graphics/technology/speed-module-1.png",
             "icon_size": 256,
+            "cost_reference": "productivity-module",
             "prerequisites": [
                 "randovania-modules"
             ],
@@ -1777,15 +1236,7 @@
                 "speed-module",
                 "speed-module-2",
                 "speed-module-3"
-            ],
-            "cost": {
-                "count": 50,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-efficiency-module",
@@ -1793,20 +1244,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/research-speed.png",
             "icon_size": 256,
+            "cost_reference": "efficiency-module",
             "prerequisites": [
                 "randovania-modules"
             ],
             "unlocks": [
                 "research-productivity"
-            ],
-            "cost": {
-                "count": 50,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-mining-productivity-c",
@@ -1814,22 +1258,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/landfill.png",
             "icon_size": 256,
+            "cost_reference": "mining-productivity-2",
             "prerequisites": [
                 "randovania-mining-productivity-b",
                 "randovania-chemical-science-pack"
             ],
             "unlocks": [
                 "landfill"
-            ],
-            "cost": {
-                "count": 500,
-                "time": 60,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-inserter-capacity-bonus-c",
@@ -1837,20 +1273,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/oil-processing.png",
             "icon_size": 256,
+            "cost_reference": "inserter-capacity-bonus-2",
             "prerequisites": [
                 "randovania-inserter-capacity-bonus-b"
             ],
             "unlocks": [
                 "oil-cracking"
-            ],
-            "cost": {
-                "count": 250,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-tank",
@@ -1858,6 +1287,7 @@
             "description": "Provides the following in order: Modular armor, Power armor, Power armor MK2.",
             "icon": "__base__/graphics/technology/armor-making.png",
             "icon_size": 256,
+            "cost_reference": "tank",
             "prerequisites": [
                 "randovania-automobilism",
                 "randovania-military-d",
@@ -1867,17 +1297,7 @@
                 "modular-armor",
                 "power-armor",
                 "power-armor-mk2"
-            ],
-            "cost": {
-                "count": 250,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-explosive-rocketry",
@@ -1885,23 +1305,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/automobilism.png",
             "icon_size": 256,
+            "cost_reference": "explosive-rocketry",
             "prerequisites": [
                 "randovania-rocketry",
                 "randovania-military-d"
             ],
             "unlocks": [
                 "automobilism"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-braking-force-c",
@@ -1909,21 +1320,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/circuit-network.png",
             "icon_size": 256,
+            "cost_reference": "braking-force-2",
             "prerequisites": [
                 "randovania-braking-force-b"
             ],
             "unlocks": [
                 "circuit-network"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-laser-weapons-damage-b",
@@ -1931,23 +1334,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/advanced-material-processing.png",
             "icon_size": 256,
+            "cost_reference": "laser-weapons-damage-1",
             "prerequisites": [
                 "randovania-laser",
                 "randovania-military-science-pack"
             ],
             "unlocks": [
                 "advanced-material-processing"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-laser-shooting-speed-b",
@@ -1955,23 +1349,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/mining-productivity.png",
             "icon_size": 256,
+            "cost_reference": "laser-shooting-speed-1",
             "prerequisites": [
                 "randovania-laser",
                 "randovania-military-science-pack"
             ],
             "unlocks": [
                 "mining-productivity-4"
-            ],
-            "cost": {
-                "count": 50,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-laser-turret",
@@ -1979,23 +1364,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/research-speed.png",
             "icon_size": 256,
+            "cost_reference": "laser-turret",
             "prerequisites": [
                 "randovania-laser",
                 "randovania-military-science-pack"
             ],
             "unlocks": [
                 "research-productivity"
-            ],
-            "cost": {
-                "count": 150,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-distractor",
@@ -2003,6 +1379,7 @@
             "description": "",
             "icon": "__base__/graphics/technology/worker-robots-storage.png",
             "icon_size": 256,
+            "cost_reference": "distractor",
             "prerequisites": [
                 "randovania-defender",
                 "randovania-military-d",
@@ -2010,17 +1387,7 @@
             ],
             "unlocks": [
                 "worker-robots-storage-3"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-research-speed-e",
@@ -2028,21 +1395,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/electric-energy-distribution-2.png",
             "icon_size": 256,
+            "cost_reference": "research-speed-4",
             "prerequisites": [
                 "randovania-research-speed-d"
             ],
             "unlocks": [
                 "electric-energy-distribution-2"
-            ],
-            "cost": {
-                "count": 500,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-rocket-fuel",
@@ -2050,22 +1409,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/fluid-handling.png",
             "icon_size": 256,
+            "cost_reference": "rocket-fuel",
             "prerequisites": [
                 "randovania-flammables",
                 "randovania-advanced-oil-processing"
             ],
             "unlocks": [
                 "fluid-storage"
-            ],
-            "cost": {
-                "count": 300,
-                "time": 45,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-lubricant",
@@ -2073,6 +1424,7 @@
             "description": "Provides the following in order: Inserter, Fast inserter, Bulk inserter.",
             "icon": "__base__/graphics/technology/fast-inserter.png",
             "icon_size": 256,
+            "cost_reference": "lubricant",
             "prerequisites": [
                 "randovania-advanced-oil-processing"
             ],
@@ -2080,16 +1432,7 @@
                 "inserter",
                 "fast-inserter",
                 "bulk-inserter"
-            ],
-            "cost": {
-                "count": 50,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-uranium-processing",
@@ -2097,16 +1440,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/plastics.png",
             "icon_size": 256,
+            "cost_reference": "uranium-processing",
             "prerequisites": [
                 "randovania-uranium-mining"
             ],
             "unlocks": [
                 "plastics"
-            ],
-            "research_trigger": {
-                "type": "mine-entity",
-                "entity": "uranium-ore"
-            }
+            ]
         },
         {
             "tech_name": "randovania-energy-shield-equipment",
@@ -2114,22 +1454,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/inserter-capacity.png",
             "icon_size": 256,
+            "cost_reference": "energy-shield-equipment",
             "prerequisites": [
                 "randovania-solar-panel-equipment",
                 "randovania-military-science-pack"
             ],
             "unlocks": [
                 "regular-inserter-capacity-bonus"
-            ],
-            "cost": {
-                "count": 150,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-night-vision-equipment",
@@ -2137,20 +1469,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/worker-robots-storage.png",
             "icon_size": 256,
+            "cost_reference": "night-vision-equipment",
             "prerequisites": [
                 "randovania-solar-panel-equipment"
             ],
             "unlocks": [
                 "worker-robots-storage-3"
-            ],
-            "cost": {
-                "count": 50,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-belt-immunity-equipment",
@@ -2158,6 +1483,7 @@
             "description": "Provides the following in order: Productivity module, Productivity module 2, Productivity module 3.",
             "icon": "__base__/graphics/technology/productivity-module-1.png",
             "icon_size": 256,
+            "cost_reference": "belt-immunity-equipment",
             "prerequisites": [
                 "randovania-solar-panel-equipment"
             ],
@@ -2165,15 +1491,7 @@
                 "productivity-module",
                 "productivity-module-2",
                 "productivity-module-3"
-            ],
-            "cost": {
-                "count": 50,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-battery-equipment",
@@ -2181,21 +1499,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/steam-power.png",
             "icon_size": 256,
+            "cost_reference": "battery-equipment",
             "prerequisites": [
                 "randovania-battery",
                 "randovania-solar-panel-equipment"
             ],
             "unlocks": [
                 "steam-power"
-            ],
-            "cost": {
-                "count": 50,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-speed-module-c",
@@ -2203,22 +1514,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/worker-robots-speed.png",
             "icon_size": 256,
+            "cost_reference": "speed-module-2",
             "prerequisites": [
                 "randovania-speed-module",
                 "randovania-processing-unit"
             ],
             "unlocks": [
                 "worker-robots-speed-6"
-            ],
-            "cost": {
-                "count": 75,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-production-science-pack",
@@ -2226,6 +1529,7 @@
             "description": "",
             "icon": "__base__/graphics/technology/personal-laser-defense-equipment.png",
             "icon_size": 256,
+            "cost_reference": "production-science-pack",
             "prerequisites": [
                 "randovania-productivity-module",
                 "randovania-advanced-material-processing-c",
@@ -2233,16 +1537,7 @@
             ],
             "unlocks": [
                 "personal-laser-defense-equipment"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-productivity-module-c",
@@ -2250,22 +1545,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/inserter-capacity.png",
             "icon_size": 256,
+            "cost_reference": "productivity-module-2",
             "prerequisites": [
                 "randovania-productivity-module",
                 "randovania-processing-unit"
             ],
             "unlocks": [
                 "bulk-inserter-capacity-bonus"
-            ],
-            "cost": {
-                "count": 75,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-efficiency-module-c",
@@ -2273,6 +1560,7 @@
             "description": "Provides the following in order: Light armor, Heavy armor.",
             "icon": "__base__/graphics/technology/heavy-armor.png",
             "icon_size": 256,
+            "cost_reference": "efficiency-module-2",
             "prerequisites": [
                 "randovania-efficiency-module",
                 "randovania-processing-unit"
@@ -2280,16 +1568,7 @@
             "unlocks": [
                 "light-armor",
                 "heavy-armor"
-            ],
-            "cost": {
-                "count": 75,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-laser-weapons-damage-c",
@@ -2297,6 +1576,7 @@
             "description": "Provides the following in order: Efficiency module, Efficiency module 2, Efficiency module 3.",
             "icon": "__base__/graphics/technology/efficiency-module-1.png",
             "icon_size": 256,
+            "cost_reference": "laser-weapons-damage-2",
             "prerequisites": [
                 "randovania-laser-weapons-damage-b"
             ],
@@ -2304,17 +1584,7 @@
                 "efficiency-module",
                 "efficiency-module-2",
                 "efficiency-module-3"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-laser-shooting-speed-c",
@@ -2322,22 +1592,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/land-mine.png",
             "icon_size": 256,
+            "cost_reference": "laser-shooting-speed-2",
             "prerequisites": [
                 "randovania-laser-shooting-speed-b"
             ],
             "unlocks": [
                 "land-mine"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-electric-engine",
@@ -2345,21 +1606,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/utility-science-pack.png",
             "icon_size": 256,
+            "cost_reference": "electric-engine",
             "prerequisites": [
                 "randovania-lubricant"
             ],
             "unlocks": [
                 "utility-science-pack"
-            ],
-            "cost": {
-                "count": 50,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-nuclear-power",
@@ -2367,21 +1620,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/oil-processing.png",
             "icon_size": 256,
+            "cost_reference": "nuclear-power",
             "prerequisites": [
                 "randovania-uranium-processing"
             ],
             "unlocks": [
                 "solid-fuel"
-            ],
-            "cost": {
-                "count": 800,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-logistics-d",
@@ -2389,23 +1634,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/artillery.png",
             "icon_size": 256,
+            "cost_reference": "logistics-3",
             "prerequisites": [
                 "randovania-production-science-pack",
                 "randovania-lubricant"
             ],
             "unlocks": [
                 "artillery"
-            ],
-            "cost": {
-                "count": 300,
-                "time": 15,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "production-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-research-speed-f",
@@ -2413,23 +1649,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/research-speed.png",
             "icon_size": 256,
+            "cost_reference": "research-speed-5",
             "prerequisites": [
                 "randovania-research-speed-e",
                 "randovania-production-science-pack"
             ],
             "unlocks": [
                 "research-speed-6"
-            ],
-            "cost": {
-                "count": 500,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "production-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-effect-transmission",
@@ -2437,23 +1664,14 @@
             "description": "",
             "icon": "__base__/graphics/icons/fluid/barreling/empty-barrel.png",
             "icon_size": 64,
+            "cost_reference": "effect-transmission",
             "prerequisites": [
                 "randovania-processing-unit",
                 "randovania-production-science-pack"
             ],
             "unlocks": [
                 "fluid-handling"
-            ],
-            "cost": {
-                "count": 75,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "production-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-coal-liquefaction",
@@ -2461,23 +1679,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/worker-robots-speed.png",
             "icon_size": 256,
+            "cost_reference": "coal-liquefaction",
             "prerequisites": [
                 "randovania-advanced-oil-processing",
                 "randovania-production-science-pack"
             ],
             "unlocks": [
                 "worker-robots-speed-6"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "production-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-speed-module-d",
@@ -2485,23 +1694,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/advanced-material-processing-2.png",
             "icon_size": 256,
+            "cost_reference": "speed-module-3",
             "prerequisites": [
                 "randovania-speed-module-c",
                 "randovania-production-science-pack"
             ],
             "unlocks": [
                 "advanced-material-processing-2"
-            ],
-            "cost": {
-                "count": 300,
-                "time": 60,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "production-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-kovarex-enrichment-process",
@@ -2509,6 +1709,7 @@
             "description": "",
             "icon": "__base__/graphics/technology/research-speed.png",
             "icon_size": 256,
+            "cost_reference": "kovarex-enrichment-process",
             "prerequisites": [
                 "randovania-production-science-pack",
                 "randovania-uranium-processing",
@@ -2516,17 +1717,7 @@
             ],
             "unlocks": [
                 "research-productivity"
-            ],
-            "cost": {
-                "count": 1500,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "production-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-productivity-module-d",
@@ -2534,23 +1725,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/research-speed.png",
             "icon_size": 256,
+            "cost_reference": "productivity-module-3",
             "prerequisites": [
                 "randovania-productivity-module-c",
                 "randovania-production-science-pack"
             ],
             "unlocks": [
                 "research-productivity"
-            ],
-            "cost": {
-                "count": 300,
-                "time": 60,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "production-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-efficiency-module-d",
@@ -2558,23 +1740,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/nuclear-power.png",
             "icon_size": 256,
+            "cost_reference": "efficiency-module-3",
             "prerequisites": [
                 "randovania-efficiency-module-c",
                 "randovania-production-science-pack"
             ],
             "unlocks": [
                 "nuclear-power"
-            ],
-            "cost": {
-                "count": 300,
-                "time": 60,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "production-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-automation-d",
@@ -2582,6 +1755,7 @@
             "description": "",
             "icon": "__base__/graphics/technology/research-speed.png",
             "icon_size": 256,
+            "cost_reference": "automation-3",
             "prerequisites": [
                 "randovania-speed-module",
                 "randovania-production-science-pack",
@@ -2589,17 +1763,7 @@
             ],
             "unlocks": [
                 "research-productivity"
-            ],
-            "cost": {
-                "count": 150,
-                "time": 60,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "production-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-power-armor",
@@ -2607,6 +1771,7 @@
             "description": "",
             "icon": "__base__/graphics/technology/worker-robots-storage.png",
             "icon_size": 256,
+            "cost_reference": "power-armor",
             "prerequisites": [
                 "randovania-modular-armor",
                 "randovania-electric-engine",
@@ -2614,16 +1779,7 @@
             ],
             "unlocks": [
                 "worker-robots-storage-3"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-robotics",
@@ -2631,22 +1787,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/toolbelt.png",
             "icon_size": 256,
+            "cost_reference": "robotics",
             "prerequisites": [
                 "randovania-electric-engine",
                 "randovania-battery"
             ],
             "unlocks": [
                 "toolbelt"
-            ],
-            "cost": {
-                "count": 75,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-exoskeleton-equipment",
@@ -2654,6 +1802,7 @@
             "description": "Provides the following in order: Defender, Distractor, Destroyer.",
             "icon": "__base__/graphics/technology/defender.png",
             "icon_size": 256,
+            "cost_reference": "exoskeleton-equipment",
             "prerequisites": [
                 "randovania-processing-unit",
                 "randovania-electric-engine",
@@ -2663,16 +1812,7 @@
                 "defender",
                 "distractor",
                 "destroyer"
-            ],
-            "cost": {
-                "count": 50,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-nuclear-fuel-reprocessing",
@@ -2680,23 +1820,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/fission-reactor-equipment.png",
             "icon_size": 256,
+            "cost_reference": "nuclear-fuel-reprocessing",
             "prerequisites": [
                 "randovania-nuclear-power",
                 "randovania-production-science-pack"
             ],
             "unlocks": [
                 "fission-reactor-equipment"
-            ],
-            "cost": {
-                "count": 50,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "production-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-energy-shield-mk2-equipment",
@@ -2704,6 +1835,7 @@
             "description": "",
             "icon": "__base__/graphics/technology/stone-wall.png",
             "icon_size": 256,
+            "cost_reference": "energy-shield-mk2-equipment",
             "prerequisites": [
                 "randovania-energy-shield-equipment",
                 "randovania-military-d",
@@ -2712,17 +1844,7 @@
             ],
             "unlocks": [
                 "stone-wall"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-battery-mk2-equipment",
@@ -2730,6 +1852,7 @@
             "description": "",
             "icon": "__base__/graphics/technology/fluid-wagon.png",
             "icon_size": 256,
+            "cost_reference": "battery-mk2-equipment",
             "prerequisites": [
                 "randovania-battery-equipment",
                 "randovania-low-density-structure",
@@ -2737,16 +1860,7 @@
             ],
             "unlocks": [
                 "fluid-wagon"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-personal-laser-defense-equipment",
@@ -2754,6 +1868,7 @@
             "description": "Provides the following in order: Electronics, Advanced circuit, Processing unit.",
             "icon": "__base__/graphics/technology/electronics.png",
             "icon_size": 256,
+            "cost_reference": "personal-laser-defense-equipment",
             "prerequisites": [
                 "randovania-laser-turret",
                 "randovania-military-d",
@@ -2765,17 +1880,7 @@
                 "electronics",
                 "advanced-circuit",
                 "processing-unit"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-discharge-defense-equipment",
@@ -2783,6 +1888,7 @@
             "description": "",
             "icon": "__base__/graphics/technology/night-vision-equipment.png",
             "icon_size": 256,
+            "cost_reference": "discharge-defense-equipment",
             "prerequisites": [
                 "randovania-laser-turret",
                 "randovania-military-d",
@@ -2791,17 +1897,7 @@
             ],
             "unlocks": [
                 "night-vision-equipment"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-utility-science-pack",
@@ -2809,6 +1905,7 @@
             "description": "",
             "icon": "__base__/graphics/technology/mining-productivity.png",
             "icon_size": 256,
+            "cost_reference": "utility-science-pack",
             "prerequisites": [
                 "randovania-robotics",
                 "randovania-processing-unit",
@@ -2816,16 +1913,7 @@
             ],
             "unlocks": [
                 "mining-productivity-4"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-construction-robotics",
@@ -2833,6 +1921,7 @@
             "description": "Provides the following in order: Electronics, Advanced circuit, Processing unit.",
             "icon": "__base__/graphics/technology/electronics.png",
             "icon_size": 256,
+            "cost_reference": "construction-robotics",
             "prerequisites": [
                 "randovania-robotics"
             ],
@@ -2840,16 +1929,7 @@
                 "electronics",
                 "advanced-circuit",
                 "processing-unit"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-logistic-robotics",
@@ -2857,22 +1937,14 @@
             "description": "Provides the following in order: Energy shield, Energy shield MK2.",
             "icon": "__base__/graphics/technology/energy-shield-equipment.png",
             "icon_size": 256,
+            "cost_reference": "logistic-robotics",
             "prerequisites": [
                 "randovania-robotics"
             ],
             "unlocks": [
                 "energy-shield-equipment",
                 "energy-shield-mk2-equipment"
-            ],
-            "cost": {
-                "count": 250,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-worker-robots-speed-b",
@@ -2880,21 +1952,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/mining-productivity.png",
             "icon_size": 256,
+            "cost_reference": "worker-robots-speed-1",
             "prerequisites": [
                 "randovania-robotics"
             ],
             "unlocks": [
                 "mining-productivity-4"
-            ],
-            "cost": {
-                "count": 50,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-worker-robots-storage-b",
@@ -2902,21 +1966,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/inserter-capacity.png",
             "icon_size": 256,
+            "cost_reference": "worker-robots-storage-1",
             "prerequisites": [
                 "randovania-robotics"
             ],
             "unlocks": [
                 "bulk-inserter-capacity-bonus"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-military-e",
@@ -2924,6 +1980,7 @@
             "description": "",
             "icon": "__base__/graphics/technology/inserter-capacity.png",
             "icon_size": 256,
+            "cost_reference": "military-4",
             "prerequisites": [
                 "randovania-military-d",
                 "randovania-utility-science-pack",
@@ -2931,18 +1988,7 @@
             ],
             "unlocks": [
                 "bulk-inserter-capacity-bonus"
-            ],
-            "cost": {
-                "count": 150,
-                "time": 45,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack",
-                    "utility-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-rocket-silo",
@@ -2950,6 +1996,7 @@
             "description": "",
             "icon": "__base__/graphics/technology/rocket-silo.png",
             "icon_size": 256,
+            "cost_reference": "rocket-silo",
             "prerequisites": [
                 "randovania-concrete",
                 "randovania-rocket-fuel",
@@ -2962,18 +2009,7 @@
             ],
             "unlocks": [
                 "rocket-silo"
-            ],
-            "cost": {
-                "count": 1000,
-                "time": 60,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "production-science-pack",
-                    "utility-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-research-speed-g",
@@ -2981,6 +2017,7 @@
             "description": "Provides the following in order: Personal roboport, Personal roboport MK2.",
             "icon": "__base__/graphics/technology/personal-roboport-equipment.png",
             "icon_size": 256,
+            "cost_reference": "research-speed-6",
             "prerequisites": [
                 "randovania-research-speed-f",
                 "randovania-utility-science-pack"
@@ -2988,18 +2025,7 @@
             "unlocks": [
                 "personal-roboport-equipment",
                 "personal-roboport-mk2-equipment"
-            ],
-            "cost": {
-                "count": 500,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "production-science-pack",
-                    "utility-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-fission-reactor-equipment",
@@ -3007,6 +2033,7 @@
             "description": "Provides the following in order: Rocketry, Explosive rocketry.",
             "icon": "__base__/graphics/technology/rocketry.png",
             "icon_size": 256,
+            "cost_reference": "fission-reactor-equipment",
             "prerequisites": [
                 "randovania-utility-science-pack",
                 "randovania-power-armor",
@@ -3016,18 +2043,7 @@
             "unlocks": [
                 "rocketry",
                 "explosive-rocketry"
-            ],
-            "cost": {
-                "count": 200,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack",
-                    "utility-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-mining-productivity-d",
@@ -3035,6 +2051,7 @@
             "description": "",
             "icon": "__base__/graphics/technology/discharge-defense-equipment.png",
             "icon_size": 256,
+            "cost_reference": "mining-productivity-3",
             "prerequisites": [
                 "randovania-mining-productivity-c",
                 "randovania-production-science-pack",
@@ -3042,18 +2059,7 @@
             ],
             "unlocks": [
                 "discharge-defense-equipment"
-            ],
-            "cost": {
-                "count": 1000,
-                "time": 60,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "production-science-pack",
-                    "utility-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-personal-roboport-equipment",
@@ -3061,6 +2067,7 @@
             "description": "Provides the following in order: Uranium processing, Kovarex enrichment process.",
             "icon": "__base__/graphics/technology/uranium-processing.png",
             "icon_size": 256,
+            "cost_reference": "personal-roboport-equipment",
             "prerequisites": [
                 "randovania-construction-robotics",
                 "randovania-solar-panel-equipment"
@@ -3068,16 +2075,7 @@
             "unlocks": [
                 "uranium-processing",
                 "kovarex-enrichment-process"
-            ],
-            "cost": {
-                "count": 50,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-logistic-system",
@@ -3085,6 +2083,7 @@
             "description": "Provides the following in order: Light armor, Heavy armor.",
             "icon": "__base__/graphics/technology/heavy-armor.png",
             "icon_size": 256,
+            "cost_reference": "logistic-system",
             "prerequisites": [
                 "randovania-utility-science-pack",
                 "randovania-logistic-robotics"
@@ -3092,17 +2091,7 @@
             "unlocks": [
                 "light-armor",
                 "heavy-armor"
-            ],
-            "cost": {
-                "count": 500,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "utility-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-worker-robots-speed-c",
@@ -3110,21 +2099,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/toolbelt.png",
             "icon_size": 256,
+            "cost_reference": "worker-robots-speed-2",
             "prerequisites": [
                 "randovania-worker-robots-speed-b"
             ],
             "unlocks": [
                 "toolbelt"
-            ],
-            "cost": {
-                "count": 100,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-worker-robots-storage-c",
@@ -3132,23 +2113,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/radar.png",
             "icon_size": 256,
+            "cost_reference": "worker-robots-storage-2",
             "prerequisites": [
                 "randovania-worker-robots-storage-b",
                 "randovania-production-science-pack"
             ],
             "unlocks": [
                 "radar"
-            ],
-            "cost": {
-                "count": 300,
-                "time": 60,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "production-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-uranium-ammo",
@@ -3156,6 +2128,7 @@
             "description": "",
             "icon": "__base__/graphics/technology/low-density-structure.png",
             "icon_size": 256,
+            "cost_reference": "uranium-ammo",
             "prerequisites": [
                 "randovania-uranium-processing",
                 "randovania-military-e",
@@ -3163,18 +2136,7 @@
             ],
             "unlocks": [
                 "low-density-structure"
-            ],
-            "cost": {
-                "count": 1000,
-                "time": 45,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack",
-                    "utility-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-atomic-bomb",
@@ -3182,6 +2144,7 @@
             "description": "",
             "icon": "__base__/graphics/technology/repair-pack.png",
             "icon_size": 256,
+            "cost_reference": "atomic-bomb",
             "prerequisites": [
                 "randovania-military-e",
                 "randovania-kovarex-enrichment-process",
@@ -3189,19 +2152,7 @@
             ],
             "unlocks": [
                 "repair-pack"
-            ],
-            "cost": {
-                "count": 5000,
-                "time": 45,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack",
-                    "production-science-pack",
-                    "utility-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-power-armor-mk2",
@@ -3209,6 +2160,7 @@
             "description": "",
             "icon": "__base__/graphics/technology/production-science-pack.png",
             "icon_size": 256,
+            "cost_reference": "power-armor-mk2",
             "prerequisites": [
                 "randovania-power-armor",
                 "randovania-military-e",
@@ -3217,18 +2169,7 @@
             ],
             "unlocks": [
                 "production-science-pack"
-            ],
-            "cost": {
-                "count": 400,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack",
-                    "utility-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-destroyer",
@@ -3236,6 +2177,7 @@
             "description": "",
             "icon": "__randovania-assets__/graphics/technology/long-handed-inserter.png",
             "icon_size": 256,
+            "cost_reference": "destroyer",
             "prerequisites": [
                 "randovania-military-e",
                 "randovania-distractor",
@@ -3243,18 +2185,7 @@
             ],
             "unlocks": [
                 "long-handed-inserter"
-            ],
-            "cost": {
-                "count": 300,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack",
-                    "utility-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-artillery",
@@ -3262,6 +2193,7 @@
             "description": "Provides the following in order: Productivity module, Productivity module 2, Productivity module 3.",
             "icon": "__base__/graphics/technology/productivity-module-1.png",
             "icon_size": 256,
+            "cost_reference": "artillery",
             "prerequisites": [
                 "randovania-military-e",
                 "randovania-tank",
@@ -3272,18 +2204,7 @@
                 "productivity-module",
                 "productivity-module-2",
                 "productivity-module-3"
-            ],
-            "cost": {
-                "count": 2000,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack",
-                    "utility-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-space-science-pack",
@@ -3291,16 +2212,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/steel-axe.png",
             "icon_size": 256,
+            "cost_reference": "space-science-pack",
             "prerequisites": [
                 "randovania-rocket-silo"
             ],
             "unlocks": [
                 "steel-axe"
-            ],
-            "research_trigger": {
-                "type": "send-item-to-orbit",
-                "item": "satellite"
-            }
+            ]
         },
         {
             "tech_name": "randovania-spidertron",
@@ -3308,6 +2226,7 @@
             "description": "",
             "icon": "__base__/graphics/technology/cliff-explosives.png",
             "icon_size": 256,
+            "cost_reference": "spidertron",
             "prerequisites": [
                 "randovania-military-e",
                 "randovania-exoskeleton-equipment",
@@ -3318,19 +2237,7 @@
             ],
             "unlocks": [
                 "cliff-explosives"
-            ],
-            "cost": {
-                "count": 2500,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "military-science-pack",
-                    "production-science-pack",
-                    "utility-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-personal-roboport-mk2-equipment",
@@ -3338,23 +2245,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/inserter-capacity.png",
             "icon_size": 256,
+            "cost_reference": "personal-roboport-mk2-equipment",
             "prerequisites": [
                 "randovania-personal-roboport-equipment",
                 "randovania-utility-science-pack"
             ],
             "unlocks": [
                 "regular-inserter-capacity-bonus"
-            ],
-            "cost": {
-                "count": 250,
-                "time": 30,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "utility-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-worker-robots-speed-d",
@@ -3362,6 +2260,7 @@
             "description": "Provides the following in order: Automation, Automation 2, Automation 3.",
             "icon": "__base__/graphics/technology/automation-1.png",
             "icon_size": 256,
+            "cost_reference": "worker-robots-speed-3",
             "prerequisites": [
                 "randovania-worker-robots-speed-c",
                 "randovania-utility-science-pack"
@@ -3370,17 +2269,7 @@
                 "automation",
                 "automation-2",
                 "automation-3"
-            ],
-            "cost": {
-                "count": 150,
-                "time": 60,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "utility-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-worker-robots-storage-d",
@@ -3388,24 +2277,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/gun-turret.png",
             "icon_size": 256,
+            "cost_reference": "worker-robots-storage-3",
             "prerequisites": [
                 "randovania-worker-robots-storage-c",
                 "randovania-utility-science-pack"
             ],
             "unlocks": [
                 "gun-turret"
-            ],
-            "cost": {
-                "count": 450,
-                "time": 60,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "production-science-pack",
-                    "utility-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-worker-robots-speed-e",
@@ -3413,22 +2292,13 @@
             "description": "",
             "icon": "__base__/graphics/technology/toolbelt.png",
             "icon_size": 256,
+            "cost_reference": "worker-robots-speed-4",
             "prerequisites": [
                 "randovania-worker-robots-speed-d"
             ],
             "unlocks": [
                 "toolbelt"
-            ],
-            "cost": {
-                "count": 250,
-                "time": 60,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "utility-science-pack"
-                ]
-            }
+            ]
         },
         {
             "tech_name": "randovania-worker-robots-speed-f",
@@ -3436,24 +2306,14 @@
             "description": "",
             "icon": "__base__/graphics/technology/research-speed.png",
             "icon_size": 256,
+            "cost_reference": "worker-robots-speed-5",
             "prerequisites": [
                 "randovania-worker-robots-speed-e",
                 "randovania-production-science-pack"
             ],
             "unlocks": [
                 "research-speed-6"
-            ],
-            "cost": {
-                "count": 500,
-                "time": 60,
-                "ingredients": [
-                    "automation-science-pack",
-                    "chemical-science-pack",
-                    "logistic-science-pack",
-                    "production-science-pack",
-                    "utility-science-pack"
-                ]
-            }
+            ]
         }
     ],
     "recipes": [

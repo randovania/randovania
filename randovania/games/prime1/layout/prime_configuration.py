@@ -10,7 +10,6 @@ from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters i
     PrimeTrilogyTeleporterConfiguration,
 )
 from randovania.games.prime1.layout.artifact_mode import LayoutArtifactMode
-from randovania.games.prime1.layout.hint_configuration import HintConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.lib import enum_lib
 
@@ -85,7 +84,6 @@ class EnemyAttributeRandomizer(BitPackDataclass, JsonDataclass):
 @dataclasses.dataclass(frozen=True)
 class PrimeConfiguration(BaseConfiguration):
     teleporters: PrimeTrilogyTeleporterConfiguration
-    hints: HintConfiguration
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     artifact_target: LayoutArtifactMode
     artifact_required: LayoutArtifactMode

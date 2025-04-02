@@ -25,20 +25,20 @@ _boss_indices = [138, 140, 141, 142, 145, 148]
     ],
 )
 def test_assign_pool_results(dread_game_description, dread_configuration, artifacts, expected):
-    patches = GamePatches.create_from_game(
-        dread_game_description, 0, dataclasses.replace(dread_configuration, artifacts=artifacts)
-    )
-    pool_results = pool_creator.calculate_pool_results(patches.configuration, patches.game)
+    dread_configuration = dataclasses.replace(dread_configuration, artifacts=artifacts)
+    patches = GamePatches.create_from_game(dread_game_description, 0, dread_configuration)
+    pool_results = pool_creator.calculate_pool_results(dread_configuration, patches.game)
 
     # Run
     result = DreadBootstrap().assign_pool_results(
         Random(8000),
+        dread_configuration,
         patches,
         pool_results,
     )
 
     # Assert
-    shuffled_dna = [pickup for pickup in pool_results.to_place if pickup.pickup_category.name == "dna"]
+    shuffled_dna = [pickup for pickup in pool_results.to_place if pickup.gui_category.name == "dna"]
 
     assert result.starting_equipment == pool_results.starting
     assert set(result.pickup_assignment.keys()) == {PickupIndex(i) for i in expected}

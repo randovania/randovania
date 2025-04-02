@@ -7,6 +7,7 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
 
 from randovania import monitoring
+from randovania.game_description import default_database
 from randovania.gui.lib import faq_lib, hints_text
 
 if TYPE_CHECKING:
@@ -14,6 +15,7 @@ if TYPE_CHECKING:
     from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.widgets.generate_game_widget import GenerateGameWidget
+    from randovania.gui.widgets.hint_feature_tab import LocationHintFeatureTab, PickupHintFeatureTab
     from randovania.interface_common.options import Options
 
 
@@ -24,7 +26,8 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
     game_cover_label: QtWidgets.QLabel | None = None
     intro_label: QtWidgets.QLabel | None = None
     faq_label: QtWidgets.QLabel | None = None
-    hint_item_names_tree_widget: QtWidgets.QTableWidget | None = None
+    pickup_hint_features_tab: PickupHintFeatureTab | None = None
+    location_hint_features_tab: LocationHintFeatureTab | None = None
     hint_locations_tree_widget: QtWidgets.QTreeWidget | None = None
 
     def __init__(self, window_manager: WindowManager, background_task: BackgroundTaskMixin, options: Options):
@@ -52,8 +55,13 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
         if self.faq_label is not None:
             faq_lib.format_game_faq(game, self.faq_label)
 
-        if self.hint_item_names_tree_widget is not None:
-            hints_text.update_hints_text(game, self.hint_item_names_tree_widget)
+        if self.location_hint_features_tab is not None:
+            game_description = default_database.game_description_for(game)
+            self.location_hint_features_tab.add_features(game_description, self._window_manager)
+
+        if self.pickup_hint_features_tab is not None:
+            pickup_db = default_database.pickup_database_for_game(game)
+            self.pickup_hint_features_tab.add_features(pickup_db)
 
         if self.hint_locations_tree_widget is not None:
             hints_text.update_hint_locations(game, self.hint_locations_tree_widget)

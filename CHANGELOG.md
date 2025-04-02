@@ -5,7 +5,183 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.9.x] - 2025-02-??
+## [9.1.x] - 2025-05-??
+
+- TODO
+
+## [9.0.0] - 2025-04-01
+
+- **Major** - Added: Factorio has been added. Shuffle the tech tree, recipes for science packs. The native multiplayer is fully supported, while Multiworld isnt'.
+- **Major** - Added: Featural Hints. Echoes and Cave Story now use a brand new hint system, where hints may refer to various Features of a pickup or of a location. Read the Hints section for more details.
+- **Major** - Added: Co-op as an additional Multiworld Mode. In Co-op, multiple people can share Worlds together, which means that they will share their inventory. This works for all games that support Multiworld.
+- **Major** - Changed: The trick level "Hypermode" has been renamed to "Ludicrous". This new name is game agnostic and more properly describes the difficulty of this category.
+- Added: Async Races can now be hosted and joined directly from Randovania.
+- Changed: Updated included Nintendont to a newer version that includes the latest changes from the official Nintendont. This also means that the Nintendont configuration was reset to what it is by default.
+- Changed: The "Spoiler: Playthrough" tab is significantly easier to read and follow along with.
+- Fixed: The "Spoiler: Playthrough" tab is much faster when calculating the playthrough.
+- Fixed: Typo in dialog about generated game hash being different from expected.
+- Fixed: The map tracker now correctly accounts for door locks that have been modified statically by settings such as unlocked Save Station doors.
+
+### Door Lock Randomizer
+
+- Added: Hint placement for seeds with individual door lock randomization now uses the resolver to help determine what to hint. This should result in significantly more useful hints in these seeds.
+- Changed: When checking doors that are completely unreachable (such as uncrashed Frigate in most Metroid Prime presets), the resolver is no longer run. This should improve generation time slightly.
+- Changed: The lists of weaknesses in the Door Locks preset settings tab are now sorted more naturally, and aligned with each other.
+- Fixed: Bug in the revised door solver that would result in permanently locked doors being placed when they shouldn't.
+- Fixed: Minor edge case where damage wasn't considered when placing permanently locked doors.
+
+### Generator
+
+- Added: Experimental option under Generation -> Logic Settings that improves the results of generation but increases generation time.
+- Fixed: Generator action weights were being incorrectly calculated.
+- Fixed: When calculating reach with unsafe resources, the generator no longer ignores some valid options.
+
+### Hints
+
+- **Major** - Changed: Hints are now placed after pickup placement, rather than during. This should result in more interesting hints in all games.
+- Added: Games with hints now share a unified Hints tab in the preset editor window. New settings have been added to disable various kinds of hints.
+- Added: Every game now has a "Pickup Hint Features" tab where you can view which Features apply to which pickups.
+- Added: Cave Story and Echoes now have a "Pickup Location Features" tab where you can view which Features apply to which locations.
+- Added: Location Features can be viewed in the Database Viewer.
+- Added: 3 more generic joke hints.
+- Added: The Hints Spoiler tab now indicates which location a hint is pointing to.
+- Changed: The Hints Spoiler tab sorts its entries in a more helpful manner.
+- Changed: Some joke hints are now shared between all games that use them.
+- Changed: Hints now prioritize non-progression major items rather than progression minor items.
+- Fixed: It is now properly impossible for multiple hints to point to the same location.
+
+### Resolver
+
+- Fixed: Some seeds being considered impossible when finding a progressive item in an area where a later item in the progressive chain is required to leave.
+- Fixed: Minor edge case where a seed might be considered impossible due to missing consideration of damage.
+- Fixed: Some seeds being considered impossible in cases where damage requirements are spread between multiple connections.
+- Fixed: A recent regression in the resolver that made it significantly slower has been fixed.
+
+### Metroid Dread
+
+- Fixed: GUI formatting on the game page.
+- Fixed: Starter Preset now has a proper description.
+
+#### Logic Database
+
+- Changed: The Silver Robot fight now have higher health requirements when doing the fights without Power Bomb or Screw Attack
+  - This list replaces `Flash Shift or Combat (Beginner)` from the previous set of requirements
+  - Without Combat tricks: Requires Flash Shift or Spin Boost, and 499HP
+  - On Combat Beginner: Either Flash Shift or Spin Boost, and 399HP; Or 299HP
+  - On Combat Intermediate: 199HP
+  - Or simply Combat Advanced
+- Changed: The Gold Robot fight have the same upgrade to the requirements as the Silver version, except all HP requirements are 100 higher.
+- Changed: The Twin Robot fights have the same upgrade to the requirements as the Gold version, except all HP requirements are 100 higher again.
+
+##### Artaria
+
+- Added: Accessing the top pickup in Screw Attack Room with a Shinespark by going down through the water basin. Requires either Screw Attack or Morph Ball and Gravity Suit.
+- Added: Logically flipping the Screw Attack Room Spinner and using Shinespark to immediately reach the left side platform. Requires Highly Dangerous Logic or Screw Attack.
+- Added: Accessing Start Point 2 in Screw Attack Room using a Shinespark. Requires either Screw Attack or Morph Ball and Slide.
+- Added: Damage Boost with Spin Boost to get Missile Tank 1 in Melee Tutorial Room, before X are released, using Highly Dangerous Logic.
+- Changed: Flipping the spinner in Screw Attack Room when by going from the door to the transport is now logically possible also after having flipped the spinner, unless Highly Dangerous Logic is enabled.
+- Changed: All other connections in Screw Attack Room that are only open before flipping the spinner are now only logical when Highly Dangerous Logic is enabled.
+- Changed: The conditions that depends on not having blown up the blob in Screw Attack Room are now only logical when Highly Dangerous Logic is enabled.
+- Changed: In White EMMI Arena: Reaching Door to EMMI Zone Spinner (Middle) from Door to Central Unit Access (Charge) with Spin Boost now requires Wall Jump (Beginner).
+- Changed: In EMMI First Chase End: Reaching Door to Teleport to Dairon (Top) with Spin Boost now requires Wall Jump (Beginner).
+- Changed: In Screw Attack Room: Reaching Next to Upper Tank from Total Recharge with Spin Boost no longer requires a Wall Jump trick.
+- Changed: It is now logical to access the Chain Reaction Device after ending the Chain Reaction sequence. This also means climbing the Chain Reaction Room later has slightly fewer requirements.
+- Changed: Using the Stand On Frozen Enemies trick to get Missile Tank 1 in Melee Tutorial Room now requires Highly Dangerous Logic.
+- Changed: Fighting Corpius without tricks now requires 198 damage, down from 199. This makes the fight logical on Strict Damage strictness with 1 Energy Tank.
+- Changed: The connection in Arbitrary Enky Room directly from Start Point to Dock to Teleport to Dairon is now always logical when having Morph Ball.
+- Changed: The two Blobs in Arbitrary Enky Room now use the same event for logical purposes.
+- Fixed: Using Speed Booster to Shinespark to the top pickup in Screw Attack Room now requires Door Lock Rando to be Disabled.
+
+##### Burenia
+
+- Added: In Main Hub Tower Bottom: Reach from Alcove Across Grapple Block to Ledge above Grapple Block using Spin Boost.
+- Added: In Main Hub Tower Bottom: Reach from Water Space Jump Platform to Door to Save Station South Access (Lower) using Gravity Suit, Spin Boost and Movement (Beginner).
+- Changed: In Main Hub Tower Bottom: Reaching Door to Save Station South Access (Lower) from Above Screw Attack Blocks with Spin Boost now requires Wall Jump (Beginner).
+- Changed: In Main Hub Tower Bottom: Reaching Ledge above Grapple Block from Water Space Jump Platform using Spin Boost now requires either the Grapple Block Event or Wall Jump (Beginner).
+
+##### Cataris
+
+- Added: The pillar in Moving Magnet Walls (Small) can now be crossed with Spin Boost and Wall Jump (Intermediate).
+- Changed: The Energy Part pickup in Thermal Device Room North no longer requires the Varia Suit if the "Cataris - Lower Lava Button" event has been triggered.
+- Changed: The blob in Z-57 Heat Room West (Right) now requires the Varia Suit to be destroyed.
+- Changed: Using Spin Boost in conjunction with the Slide Jump to reach the upper part of the Experiment-Z57 room now requires Wall Jump (Intermediate).
+- Changed: Using Spin Boost to do the First Blob event in Z-57 Heat Room West (Left) now requires Movement (Beginner).
+
+##### Dairon
+
+- Changed: Reaching the tunnel at the top of Central Unit Access with Spin Boost now requires Movement (Beginner), but remains trickless with Space Jump.
+
+##### Elun
+
+- Changed: Using Cross Bombs to get past the Fan in Fan Room left to right has been increased from Movement Beginner to Intermediate, and a video has been added to the database.
+
+##### Ferenia
+
+- Changed: Using Cross Bombs to get past the Fan in Fan Room right to left has been increased from Movement Beginner to Intermediate, and a video has been added to the database.
+
+##### Ghavoran
+
+- Fixed: The connections to fight the Golden Robot no longer require the X to not be released when doing the fight normally. This doesn't change what is logical, but makes it easier for the generator and resolver to release the X.
+
+### Metroid Prime
+
+- Fixed: A very precise situation that could lead to pickups not being sent properly.
+
+#### Logic Database
+
+##### Phazon Mines
+
+- Fixed: Metroid Quarantine A: Getting the Missile Expansion via using the Spider Ball Track now requires Morph Ball.
+- Fixed: Ore Processing: Getting from Door to Elevator Access A to Door to Storage Depot B via Power Bombs, Space Jump and L-Jumps now requires Morph Ball.
+
+### Metroid Prime 2: Echoes
+
+- Removed: Relative hints will no longer be placed.
+- Changed: Legacy multiworld sessions where an Echoes hint points to a Cave Story item may have very slightly altered wording.
+- Changed: A legacy relative hint pointing to a Nothing will now always refer to it by name.
+- Changed: Keybearer hints may refer to pickups using different categories than before.
+- Fixed: Seeds with individual Door Lock Randomizer enabled should see more door variety in the lategame.
+- Fixed: When using the new experimental generator setting to consider possible unsafe resources, the Starter Preset can once again see Missile Launcher placed in the GFMC Compound crate.
+- Fixed: Translators will no longer be hinted by hints of their own color.
+- Fixed: Cannon Ball and the multiplayer pickups can no longer be selected as starting pickups, since they did not work in-game when doing so.
+- Fixed: A very precise situation that could lead to pickups not being sent properly.
+
+#### Logic Database
+
+##### Agon Wastes
+
+- Changed: Mining Plaza: Climbing the room with Screw Attack and no Space Jump bumped up to intermediate movement.
+- Changed: Trial Grounds: Climbing the room with Screw Attack and no Space Jump bumped up to intermediate movement.
+
+##### Temple Grounds
+
+- Changed: Temple Assembly Site: Reaching the pickup location with Screw Attack and no Space Jump lowered to beginner movement.
+
+### Metroid: Samus Returns
+
+- Fixed: One Area 8 theme from not being included in music shuffle.
+- Removed: Enabling the automatic item tracker is no longer a cosmetic option, as it is now forced to always be enabled.
+
+#### Logic Database
+
+#### Area 4 Central Caves
+
+- Fixed: Starting in Spazer Beam Chamber now places Samus in the correct room.
+
+#### Area 4 Crystal Mines
+
+- Fixed: Renamed the room "Gamma Arena" to "Gamma+ Arena".
+- Fixed: The Gamma+ Metroid being classified as a Gamma Metroid, thus having the wrong requirements.
+
+#### Area 5 Tower Exterior
+
+- Fixed: Starting in Screw Attack Chamber or Zeta Arena Access now places Samus in the correct room.
+
+##### Area 5 Tower Interior
+
+- Fixed: Grapple Shuffler - Coming back up from the pickup if it was reached via a Melee Clip.
+
+## [8.9.0] - 2025-02-02
 
 - Added: It is now possible to focus the game images in the "Games" tab via a Keyboard.
 - Added: Experimental option under Generation -> Logic Settings that makes an early check if the game is unbeatable due to options such as starting location, transports etc.

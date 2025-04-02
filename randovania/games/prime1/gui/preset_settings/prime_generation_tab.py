@@ -25,7 +25,7 @@ class PresetPrimeGeneration(PresetGeneration):
 
         self.min_progression_spin.valueChanged.connect(self._on_spin_changed)
 
-    def setupUi(self, obj):
+    def setupUi(self, obj: QtWidgets.QWidget) -> None:
         super().setupUi(obj)
 
         self.min_progression_label = QtWidgets.QLabel(
@@ -44,12 +44,12 @@ class PresetPrimeGeneration(PresetGeneration):
         yield self.min_progression_label
         yield self.min_progression_spin
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         assert isinstance(preset.configuration, PrimeConfiguration)
         super().on_preset_changed(preset)
         self.min_progression_spin.setValue(preset.configuration.artifact_minimum_progression)
 
-    def _on_spin_changed(self):
+    def _on_spin_changed(self) -> None:
         with self._editor as editor:
             editor.set_configuration_field(
                 "artifact_minimum_progression",

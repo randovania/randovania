@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Self
 
 from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.lib import enum_lib
@@ -15,18 +14,18 @@ class LayoutTrickLevel(BitPackEnum, Enum):
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     EXPERT = "expert"
-    HYPERMODE = "hypermode"
+    LUDICROUS = "ludicrous"
 
     @classmethod
-    def default(cls) -> Self:
+    def default(cls) -> LayoutTrickLevel:
         return cls.DISABLED
 
     @classmethod
-    def maximum(cls) -> Self:
+    def maximum(cls) -> LayoutTrickLevel:
         return _TRICK_LEVEL_ORDER[-1]
 
     @classmethod
-    def from_number(cls, number: int) -> Self:
+    def from_number(cls, number: int) -> LayoutTrickLevel:
         return _TRICK_LEVEL_ORDER[number]
 
     @property
@@ -47,6 +46,6 @@ enum_lib.add_long_name(
         LayoutTrickLevel.INTERMEDIATE: "Intermediate",
         LayoutTrickLevel.ADVANCED: "Advanced",
         LayoutTrickLevel.EXPERT: "Expert",
-        LayoutTrickLevel.HYPERMODE: "Hypermode",
+        LayoutTrickLevel.LUDICROUS: "Ludicrous",
     },
 )

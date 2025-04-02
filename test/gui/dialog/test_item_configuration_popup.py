@@ -1,12 +1,20 @@
 from __future__ import annotations
 
+from randovania.game_description.pickup.pickup_entry import StartingPickupBehavior
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.standard_pickup_widget import StandardPickupWidget
-from randovania.layout.base.standard_pickup_state import StandardPickupState, StandardPickupStateCase
+from randovania.layout.base.standard_pickup_state import (
+    StandardPickupState,
+    StandardPickupStateCase,
+)
 
 
 def test_state_no_changes(skip_qtbot, echoes_pickup_database, echoes_resource_database):
-    item = [item for item in echoes_pickup_database.standard_pickups.values() if not item.must_be_starting][0]
+    item = [
+        item
+        for item in echoes_pickup_database.standard_pickups.values()
+        if item.starting_condition == StartingPickupBehavior.CAN_BE_STARTING
+    ][0]
     state = StandardPickupState(
         include_copy_in_original_location=False,
         num_shuffled_pickups=1,
@@ -23,7 +31,11 @@ def test_state_no_changes(skip_qtbot, echoes_pickup_database, echoes_resource_da
 
 
 def test_state_change_to_starting(skip_qtbot, echoes_pickup_database, echoes_resource_database):
-    item = [item for item in echoes_pickup_database.standard_pickups.values() if not item.must_be_starting][0]
+    item = [
+        item
+        for item in echoes_pickup_database.standard_pickups.values()
+        if item.starting_condition == StartingPickupBehavior.CAN_BE_STARTING
+    ][0]
     state = StandardPickupState(
         include_copy_in_original_location=False,
         num_shuffled_pickups=1,
@@ -76,7 +88,11 @@ def test_state_change_to_shuffled(skip_qtbot, echoes_pickup_database, echoes_res
 
 
 def test_state_must_be_starting(skip_qtbot, echoes_pickup_database, echoes_resource_database):
-    item = [item for item in echoes_pickup_database.standard_pickups.values() if item.must_be_starting][0]
+    item = [
+        item
+        for item in echoes_pickup_database.standard_pickups.values()
+        if item.starting_condition == StartingPickupBehavior.MUST_BE_STARTING
+    ][0]
     state = StandardPickupState(
         include_copy_in_original_location=False,
         num_shuffled_pickups=1,

@@ -106,7 +106,7 @@ prime1_assets = {
 
 @monitoring.trace_function
 def convert_prime1_pickups(
-    prime1_iso: Path,
+    prime1_iso: Path | None,
     echoes_files_path: Path,
     assets_path: Path,
     patch_data: dict,
@@ -121,6 +121,7 @@ def convert_prime1_pickups(
         converted_assets, randomizer_data_additions = _read_prime1_from_cache(assets_path, updaters)
 
     else:
+        assert prime1_iso is not None
         converted_assets, randomizer_data_additions = _convert_prime1_assets(
             prime1_iso,
             assets_path,

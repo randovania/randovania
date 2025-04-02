@@ -29,7 +29,7 @@ class GameExportParams:
         return {}
 
 
-class GameExporter:
+class GameExporter[ExportParams: GameExportParams]:
     """
     Class that handles exporting a randomized game, so that a user can play it.
     """
@@ -48,7 +48,7 @@ class GameExporter:
         """
         raise NotImplementedError
 
-    def export_params_type(self) -> type[GameExportParams]:
+    def export_params_type(self) -> type[ExportParams]:
         """
         Returns the type of the GameExportParams expected by this exporter.
         """
@@ -60,7 +60,7 @@ class GameExporter:
     def _do_export_game(
         self,
         patch_data: dict,
-        export_params: GameExportParams,
+        export_params: ExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
         """The main exporting process. Should be overwritten by individual games."""
@@ -72,7 +72,7 @@ class GameExporter:
     def export_game(
         self,
         patch_data: dict,
-        export_params: GameExportParams,
+        export_params: ExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
         """Starts exporting a game."""

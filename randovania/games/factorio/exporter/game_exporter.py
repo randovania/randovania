@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+import asyncio
 import dataclasses
 from pathlib import Path
 from typing import TYPE_CHECKING
+
+import aiohttp
 
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 
@@ -15,7 +18,16 @@ class FactorioGameExportParams(GameExportParams):
     output_path: Path
 
 
-class FactorioGameExporter(GameExporter):
+async def download_file(url: str, path: Path) -> None:
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as resp:
+            resp.raise_for_status()
+            with path.open("wb") as fd:
+                async for chunk in resp.content.iter_chunked(8192):
+                    fd.write(chunk)
+
+
+class FactorioGameExporter(GameExporter[FactorioGameExportParams]):
     _busy: bool = False
 
     @property
@@ -32,7 +44,7 @@ class FactorioGameExporter(GameExporter):
         """
         return False
 
-    def export_params_type(self) -> type[GameExportParams]:
+    def export_params_type(self) -> type[FactorioGameExportParams]:
         """
         Returns the type of the GameExportParams expected by this exporter.
         """
@@ -41,14 +53,17 @@ class FactorioGameExporter(GameExporter):
     def _do_export_game(
         self,
         patch_data: dict,
-        export_params: GameExportParams,
+        export_params: FactorioGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
-        assert isinstance(export_params, FactorioGameExportParams)
-
         import factorio_randovania_mod
 
-        factorio_randovania_mod.create(
-            patch_data=patch_data,
-            output_folder=export_params.output_path,
+        export_params.output_path.mkdir(parents=True, exist_ok=True)
+
+        assets_mod = factorio_randovania_mod.export_mod(
+            patch_data,
+            export_params.output_path,
         )
+        if assets_mod is not None:
+            assets_path, assets_url = assets_mod
+            asyncio.run(download_file(assets_url, assets_path))

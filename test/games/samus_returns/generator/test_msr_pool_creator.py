@@ -17,9 +17,15 @@ def test_msr_pool_creator(msr_game_description, required_dna, placed_dna):
 
     # Assert
     assert results == PoolResults(
-        [create_generated_pickup("Metroid DNA", db, i=i + 1) for i in range(required_dna)],
+        [
+            create_generated_pickup("Metroid DNA", db, msr_game_description.get_pickup_database(), i=i + 1)
+            for i in range(required_dna)
+        ],
         {},
-        [create_generated_pickup("Metroid DNA", db, i=i + 1) for i in range(placed_dna, 39)],
+        [
+            create_generated_pickup("Metroid DNA", db, msr_game_description.get_pickup_database(), i=i + 1)
+            for i in range(placed_dna, 39)
+        ],
     )
 
 
@@ -27,7 +33,7 @@ def test_msr_pool_creator(msr_game_description, required_dna, placed_dna):
     ("metroids", "stronger_metroids", "bosses", "anywhere", "required_dna", "placed_dna"),
     [
         (False, False, True, False, 5, 5),
-        (False, True, False, False, 15, 15),
+        (False, True, False, False, 16, 16),
         (True, False, True, False, 40, 40),
         (True, True, True, False, 40, 40),
         (False, False, False, True, 40, 40),

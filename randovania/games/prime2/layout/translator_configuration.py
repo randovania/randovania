@@ -29,7 +29,7 @@ class LayoutTranslatorRequirement(BitPackEnum, Enum):
     RANDOM_WITH_REMOVED = "random-removed"
 
     @classmethod
-    def from_item_short_name(cls, name: str) -> Self:
+    def from_item_short_name(cls, name: str) -> LayoutTranslatorRequirement:
         for key, value in ITEM_NAMES.items():
             if value == name:
                 return key
@@ -69,8 +69,7 @@ def _get_vanilla_translator_configuration(extra_field: str) -> dict[NodeIdentifi
     game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
     return {
         node.identifier: LayoutTranslatorRequirement.from_item_short_name(node.extra[extra_field])
-        for node in game.region_list.iterate_nodes()
-        if isinstance(node, ConfigurableNode)
+        for node in game.region_list.iterate_nodes_of_type(ConfigurableNode)
     }
 
 
@@ -91,7 +90,7 @@ class TranslatorConfiguration(BitPackValue):
     fixed_torvus_temple: bool = True
     fixed_great_temple: bool = True
 
-    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
+    def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
         templates = [
             _get_vanilla_actual_translator_configurations(),
             _get_vanilla_colors_translator_configurations(),
@@ -104,13 +103,13 @@ class TranslatorConfiguration(BitPackValue):
                 yield from translator.bit_pack_encode({})
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> Self:
-        templates = [
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata: dict) -> Self:
+        templates = (
             _get_vanilla_actual_translator_configurations(),
             _get_vanilla_colors_translator_configurations(),
             cls.default().with_full_random().translator_requirement,
             None,
-        ]
+        )
         translator_requirement = decoder.decode_element(templates)
         if translator_requirement is None:
             translator_requirement = {}
@@ -158,17 +157,17 @@ class TranslatorConfiguration(BitPackValue):
     def with_full_random(self) -> Self:
         return dataclasses.replace(
             self,
-            translator_requirement={
-                key: LayoutTranslatorRequirement.RANDOM for key in self.translator_requirement.keys()
-            },
+            translator_requirement=dict.fromkeys(
+                self.translator_requirement.keys(), LayoutTranslatorRequirement.RANDOM
+            ),
         )
 
     def with_full_random_with_unlocked(self) -> Self:
         return dataclasses.replace(
             self,
-            translator_requirement={
-                key: LayoutTranslatorRequirement.RANDOM_WITH_REMOVED for key in self.translator_requirement.keys()
-            },
+            translator_requirement=dict.fromkeys(
+                self.translator_requirement.keys(), LayoutTranslatorRequirement.RANDOM_WITH_REMOVED
+            ),
         )
 
     def replace_requirement_for_gate(

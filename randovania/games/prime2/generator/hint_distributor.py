@@ -1,51 +1,62 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
+from randovania.game.game_enum import RandovaniaGame
+from randovania.game_description import default_database
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.hint import (
     HintDarkTemple,
     HintItemPrecision,
-    HintLocationPrecision,
-    HintRelativeAreaName,
     PrecisionPair,
     RedTempleHint,
+    SpecificHintPrecision,
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.generator.hint_distributor import HintDistributor, HintTargetPrecision
 from randovania.lib import enum_lib
 
 if TYPE_CHECKING:
-    from random import Random
-
-    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.assignment import PickupTarget
+    from randovania.game_description.db.hint_node import HintNode
     from randovania.game_description.game_patches import GamePatches
-    from randovania.generator.filler.filler_configuration import PlayerPool
-    from randovania.generator.filler.player_state import PlayerState
-    from randovania.generator.hint_distributor import HintProvider
     from randovania.generator.pre_fill_params import PreFillParams
 
 
 class EchoesHintDistributor(HintDistributor):
     # Pre Filler
+    @override
     @property
     def num_joke_hints(self) -> int:
         return 2
 
+    @override
+    def is_pickup_interesting(self, target: PickupTarget, player_id: int, hint_node: HintNode) -> bool:
+        non_interesting_features = ["key", "energy_tank"]
+        for feature in non_interesting_features:
+            if target.pickup.has_hint_feature(feature):
+                return False
+        if target.player == player_id and ("Translator" in target.pickup.name):
+            # don't place a translator hint on its color of lore scan
+            return hint_node.extra["translator"] not in target.pickup.name
+        return True
+
+    @override
     async def get_guaranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
-        def g(index, loc):
+        def g(index: int, loc: str) -> tuple[PickupIndex, PrecisionPair]:
             return (
                 PickupIndex(index),
-                PrecisionPair(loc, HintItemPrecision.DETAILED, include_owner=False),
+                PrecisionPair(patches.game.hint_feature_database[loc], HintItemPrecision.DETAILED, include_owner=False),
             )
 
         return [
-            g(24, HintLocationPrecision.LIGHT_SUIT_LOCATION),  # Light Suit
-            g(43, HintLocationPrecision.GUARDIAN),  # Dark Suit (Amorbis)
-            g(79, HintLocationPrecision.GUARDIAN),  # Dark Visor (Chykka)
-            g(115, HintLocationPrecision.GUARDIAN),  # Annihilator Beam (Quadraxis)
+            g(24, "specific_hint_2mos"),  # Light Suit
+            g(43, "specific_hint_guardian"),  # Dark Suit (Amorbis)
+            g(79, "specific_hint_guardian"),  # Dark Visor (Chykka)
+            g(115, "specific_hint_guardian"),  # Annihilator Beam (Quadraxis)
         ]
 
+    @override
     async def assign_other_hints(
         self, patches: GamePatches, identifiers: list[NodeIdentifier], prefill: PreFillParams
     ) -> GamePatches:
@@ -62,35 +73,34 @@ class EchoesHintDistributor(HintDistributor):
         return patches
 
     # Post Filler
+    @override
+    @property
+    def default_precision_pair(self) -> PrecisionPair:
+        return PrecisionPair.featural()
 
-    def precision_pair_weighted_list(self) -> list[PrecisionPair]:
-        tiers = {
-            (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, False): 3,
-            (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, True): 2,
-            (HintLocationPrecision.DETAILED, HintItemPrecision.PRECISE_CATEGORY, True): 2,
-            (HintLocationPrecision.DETAILED, HintItemPrecision.GENERAL_CATEGORY, True): 1,
-            (HintLocationPrecision.REGION_ONLY, HintItemPrecision.DETAILED, False): 2,
-            (HintLocationPrecision.REGION_ONLY, HintItemPrecision.PRECISE_CATEGORY, True): 1,
-        }
+    @override
+    async def get_specific_pickup_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
+        game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
+        keybearer = game.hint_feature_database["specific_hint_keybearer"]
 
-        hints = []
-        for params, quantity in tiers.items():
-            hints.extend([PrecisionPair(*params)] * quantity)
+        precision = PrecisionPair(keybearer, SpecificHintPrecision(0.4), include_owner=True)
 
-        return hints
-
-    def _get_relative_hint_providers(self) -> list[HintProvider]:
-        return [
-            self._relative(HintLocationPrecision.RELATIVE_TO_AREA, True, HintRelativeAreaName.NAME, 4),
-            self._relative(HintLocationPrecision.RELATIVE_TO_AREA, False, HintRelativeAreaName.NAME, 3),
-            self._relative(HintLocationPrecision.RELATIVE_TO_INDEX, True, HintItemPrecision.DETAILED, 4),
+        c = NodeIdentifier.create
+        keybearers = [
+            c("Agon Wastes", "Central Mining Station", "Keybearer Corpse (J-Stl)"),
+            c("Agon Wastes", "Main Reactor", "Keybearer Corpse (B-Stl)"),
+            c("Sanctuary Fortress", "Sanctuary Entrance", "Keybearer Corpse (S-Jrs)"),
+            c("Sanctuary Fortress", "Dynamo Works", "Keybearer Corpse (C-Rch)"),
+            c("Temple Grounds", "Landing Site", "Keybearer Corpse (M-Dhe)"),
+            c("Temple Grounds", "Industrial Site", "Keybearer Corpse (J-Fme)"),
+            c("Temple Grounds", "Storage Cavern A", "Keybearer Corpse (D-Isl)"),
+            c("Torvus Bog", "Torvus Lagoon", "Keybearer Corpse (S-Dly)"),
+            c("Torvus Bog", "Catacombs", "Keybearer Corpse (G-Sch)"),
         ]
 
-    async def assign_precision_to_hints(
-        self, patches: GamePatches, rng: Random, player_pool: PlayerPool, player_state: PlayerState
-    ) -> GamePatches:
-        assert isinstance(player_pool.configuration, EchoesConfiguration)
-        if player_pool.configuration.hints.item_hints:
-            return self.add_hints_precision(player_state, patches, rng)
-        else:
-            return self.replace_hints_without_precision_with_jokes(patches)
+        return dict.fromkeys(keybearers, precision)
+
+    @override
+    @property
+    def use_region_location_precision(self) -> bool:
+        return False

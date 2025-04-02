@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import dataclasses
 import json
+import typing
 from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
+from frozendict import frozendict
 
 import randovania
 import randovania.games.prime2.exporter.patch_data_factory
@@ -17,12 +19,11 @@ from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.exporter import patch_data_factory
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
-from randovania.games.prime2.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator, pool_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.exceptions import InvalidConfiguration
@@ -33,6 +34,9 @@ from randovania.lib import json_lib
 if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
     from randovania.game_description.game_description import GameDescription
+    from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+    from randovania.layout.preset import Preset
+    from randovania.lib.json_lib import JsonObject
 
 
 @pytest.fixture
@@ -138,7 +142,7 @@ def test_add_header_data_to_result():
         "shareable_hash": "<shareable_hash>",
         "shareable_word_hash": "<shareable_word_hash>",
     }
-    result = {}
+    result: JsonObject = {}
 
     # Run
     patch_data_factory._add_header_data_to_result(description, result)
@@ -398,7 +402,7 @@ def test_create_translator_gates_field(echoes_game_description):
 @pytest.mark.parametrize("teleporters", [TeleporterShuffleMode.VANILLA, TeleporterShuffleMode.TWO_WAY_RANDOMIZED])
 def test_apply_translator_gate_patches(teleporters):
     # Setup
-    target = {}
+    target: JsonObject = {}
 
     # Run
     patch_data_factory._apply_translator_gate_patches(target, teleporters)
@@ -591,7 +595,7 @@ def test_run_validated_hud_text(multiworld_item):
             name="EnergyTransferModule",
         ),
         is_for_remote_player=False,
-        original_pickup=None,
+        original_pickup=MagicMock(),
     )
 
     # Run
@@ -601,9 +605,9 @@ def test_run_validated_hud_text(multiworld_item):
     assert data["hud_text"] == ["Run validated!"]
 
 
-@pytest.mark.parametrize("stk_mode", SkyTempleKeyHintMode)
+@pytest.mark.parametrize("stk_mode", SpecificPickupHintMode)
 def test_create_string_patches(
-    stk_mode: SkyTempleKeyHintMode,
+    stk_mode: SpecificPickupHintMode,
     mocker,
 ):
     # Setup
@@ -640,16 +644,19 @@ def test_create_string_patches(
     mock_akul_testament.return_values = []
     namer = MagicMock()
 
+    hint_config = MagicMock()
+    hint_config.specific_pickup_hints = frozendict({"sky_temple_keys": stk_mode})
+
     # Run
     result = patch_data_factory._create_string_patches(
-        HintConfiguration(sky_temple_keys=stk_mode),
+        hint_config,
         False,
         game,
         all_patches,
         namer,
         player_config,
         rng,
-        None,
+        MagicMock(),
     )
 
     # Assert
@@ -658,14 +665,14 @@ def test_create_string_patches(
     mock_logbook_title_string_patches.assert_called_once_with()
     mock_akul_testament.assert_called_once_with(namer)
 
-    if stk_mode == SkyTempleKeyHintMode.DISABLED:
+    if stk_mode == SpecificPickupHintMode.DISABLED:
         mock_stk_hide_hints.assert_called_once_with(namer)
         mock_stk_create_hints.assert_not_called()
         expected_result.extend(["hide", "hints"])
 
     else:
         mock_stk_create_hints.assert_called_once_with(
-            all_patches, player_config, game.resource_database, namer, stk_mode == SkyTempleKeyHintMode.HIDE_AREA
+            all_patches, player_config, game.resource_database, namer, stk_mode == SpecificPickupHintMode.HIDE_AREA
         )
         mock_stk_hide_hints.assert_not_called()
         expected_result.extend(["show", "hints"])
@@ -689,9 +696,8 @@ def test_generate_patcher_data(
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", rdvgame_filename))
     player_index = 0
-    preset = description.get_preset(player_index)
+    preset = typing.cast("Preset[EchoesConfiguration]", description.get_preset(player_index))
     cosmetic_patches = EchoesCosmeticPatches()
-    assert isinstance(preset.configuration, EchoesConfiguration)
     configuration = dataclasses.replace(preset.configuration, use_new_patcher=use_new_patcher)
     description.generator_parameters.presets[player_index] = dataclasses.replace(preset, configuration=configuration)
     monkeypatch.setattr(randovania, "VERSION", "Test Version")

@@ -91,7 +91,7 @@ def test_refresh_game_description_logic(check, mocker):
     else:
         mock_find_database_errors.assert_not_called()
         mock_write_game_descriptions.assert_called_once_with(
-            {g: mock_game_description_for.return_value for g in RandovaniaGame}
+            dict.fromkeys(RandovaniaGame, mock_game_description_for.return_value)
         )
 
 
@@ -131,3 +131,15 @@ def test_trick_usage_documentation_logic_blank(tmp_path: Path) -> None:
             "- (Documented) Combat (Beginner)",
         ]
     )
+
+
+def test_features_per_node_blank(tmp_path: Path) -> None:
+    # Setup
+    args = argparse.Namespace()
+    args.json_database = None
+    args.game = "blank"
+
+    # Run
+    database.features_per_node_command_logic(args)
+
+    # Don't assert anything, just run

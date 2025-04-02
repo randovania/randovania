@@ -9,6 +9,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.games.am2r.exporter.game_exporter import AM2RGameExportParams
 from randovania.games.am2r.exporter.options import AM2RPerGameOptions
 from randovania.games.am2r.gui.generated.am2r_game_export_dialog_ui import Ui_AM2RGameExportDialog
+from randovania.games.am2r.layout import AM2RConfiguration
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     add_field_validation,
@@ -43,15 +44,21 @@ def _is_valid_input_dir(path: Path) -> bool:
     return False
 
 
-class AM2RGameExportDialog(GameExportDialog, Ui_AM2RGameExportDialog):
+class AM2RGameExportDialog(GameExportDialog[AM2RConfiguration], Ui_AM2RGameExportDialog):
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.AM2R
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
-        super().__init__(options, patch_data, word_hash, spoiler, games)
-        per_game = options.options_for_game(self.game_enum())
-        assert isinstance(per_game, AM2RPerGameOptions)
+    def __init__(
+        self,
+        options: Options,
+        configuration: AM2RConfiguration,
+        word_hash: str,
+        spoiler: bool,
+        games: list[RandovaniaGame],
+    ):
+        super().__init__(options, configuration, word_hash, spoiler, games)
+        per_game = options.per_game_options(AM2RPerGameOptions)
 
         # Input
         self.input_file_button.clicked.connect(self._on_input_file_button)

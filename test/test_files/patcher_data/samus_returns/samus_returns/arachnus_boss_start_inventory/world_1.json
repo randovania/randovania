@@ -4156,21 +4156,21 @@
                 "scenario": "s010_area1",
                 "actor": "LE_RandoDNA"
             },
-            "text": "You checked in with the Chozo before wiping out the Metroids, right?\n"
+            "text": "Metroids are not pets.\nMetroids are not for target practice.\n"
         },
         {
             "accesspoint_actor": {
                 "scenario": "s020_area2",
                 "actor": "LE_RandoDNA"
             },
-            "text": "Samus, once we've gained control of the Metroid DNA, we can open a wormhole and warp to Ridley.\n"
+            "text": "A lone bounty hunter Zebes eradicated Mother Brain... for a time.\n"
         },
         {
             "accesspoint_actor": {
                 "scenario": "s033_area3b",
                 "actor": "LE_RandoDNA"
             },
-            "text": "So, you've accessed a Chozo Seal. Well done, Samus.\n"
+            "text": "If you see an Omega Metroid slowing down the flow of time, run.\n"
         },
         {
             "accesspoint_actor": {
@@ -4442,7 +4442,7 @@
                 "collision_camera_006": "Lava Reservoir",
                 "collision_camera_007": "Dual Pond Alcove",
                 "collision_camera_008": "Zeta Arena",
-                "collision_camera_015": "Gamma Arena",
+                "collision_camera_015": "Gamma+ Arena",
                 "collision_camera_009": "Gawron Groove",
                 "collision_camera_017": "Basalt Basin",
                 "collision_camera_010": "Mines Entrance",
@@ -4581,38 +4581,39 @@
             "m_boss_ridley01": "m_boss_ridley01",
             "m_boss_zeta06": "m_boss_ridley_third99",
             "boss_go": "m_area_indefinite01_99",
-            "boss_mae_32": "t_matad_ambi06",
+            "boss_mae_32": "m_select99",
             "ele": "m_area7_8_basic01",
-            "k_brinstra_0714": "t_matad_area01_damage",
-            "k_crateria99": "m_area2_add1_02",
+            "k_brinstra_0714": "ele",
+            "k_crateria99": "m_title99",
             "k_matad_result": "m_allarea_a99",
             "k_ravacaves2_0916": "boss_go",
-            "m_allarea_a99": "m_title99",
+            "m_allarea_a99": "m_area4_5_basic01",
             "m_allarea_b99": "k_crateria99",
-            "m_area_indefinite01_99": "m_area4_5_basic01",
-            "m_area_tension02": "m_met2_metroid_hatching99",
-            "m_area1_add1_03": "m_met2_ancient_chozo_ruins99",
-            "m_area2_add1_02": "k_brinstra_0714",
-            "m_area2_basic02": "boss_mae_32",
-            "m_area4_5_basic01": "m_met2_caverns1_99",
-            "m_area6_basic01": "t_m2_ancient_chozo_ruins_arr2_lp",
-            "m_area7_8_basic01": "m_area6_basic01",
-            "m_area10_basic02": "m_met2_caverns4_99",
-            "m_boss_before99": "m_prologue99",
-            "m_chozo_gallery_las": "m_met2_ancient_chozo_ruins_2_99",
-            "m_met2_ancient_chozo_ruins_2_99": "m_area_tension02",
-            "m_met2_ancient_chozo_ruins99": "m_met2_caverns3_99",
-            "m_met2_caverns1_99": "k_matad_result",
-            "m_met2_caverns3_99": "m_area1_add1_03",
-            "m_met2_caverns4_99": "m_chozo_gallery_las",
-            "m_met2_metroid_hatching99": "k_ravacaves2_0916",
+            "m_area_indefinite01_99": "m_met2_caverns3_99",
+            "m_area_tension02": "m_met2_metroidnest_10gentei99",
+            "m_area1_add1_03": "m_area2_add1_02",
+            "m_area2_add1_02": "m_met2_caverns1_99",
+            "m_area2_basic02": "k_brinstra_0714",
+            "m_area4_5_basic01": "boss_mae_32",
+            "m_area6_basic01": "m_met2_metroid_hatching99",
+            "m_area7_8_basic01": "t_matad_area01_damage",
+            "m_area10_basic02": "m_area6_basic01",
+            "m_boss_before99": "m_met2_ancient_chozo_ruins_2_99",
+            "m_chozo_gallery_las": "t_matad_ambi06",
+            "m_met2_ancient_chozo_ruins_2_99": "m_met2_ancient_chozo_ruins99",
+            "m_met2_ancient_chozo_ruins99": "m_area_tension02",
+            "m_met2_caverns1_99": "m_met2_caverns4_99",
+            "m_met2_caverns3_99": "t_m2_surface_arr1",
+            "m_met2_caverns4_99": "m_area1_add1_03",
+            "m_met2_metroid_hatching99": "m_chozo_gallery_las",
+            "m_met2_metroidnest_10gentei99": "k_ravacaves2_0916",
             "m_prologue99": "m_boss_before99",
             "m_select99": "m_area10_basic02",
             "m_title99": "m_area2_basic02",
             "t_m2_ancient_chozo_ruins_arr2_lp": "m_allarea_b99",
-            "t_m2_surface_arr1": "ele",
-            "t_matad_ambi06": "m_select99",
-            "t_matad_area01_damage": "t_m2_surface_arr1",
+            "t_m2_surface_arr1": "k_matad_result",
+            "t_matad_ambi06": "m_prologue99",
+            "t_matad_area01_damage": "t_m2_ancient_chozo_ruins_arr2_lp",
             "event_jingle_placeholder": "special_ability2_32",
             "k_matad_jinchozo": "sphere_jingle_placeholder",
             "matad_jintojo_32728k": "tank_jingle",
@@ -4637,7 +4638,7 @@
         "final_boss": "Arachnus"
     },
     "layout_uuid": "00000000-0000-1111-0000-000000000000",
-    "enable_remote_lua": false,
+    "enable_remote_lua": true,
     "_randovania_meta": {
         "layout_was_user_modified": false
     }

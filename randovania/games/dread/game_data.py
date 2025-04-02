@@ -1,17 +1,25 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import randovania.game.data
 import randovania.game.development_state
 import randovania.game.generator
 import randovania.game.gui
+import randovania.game.hints
 import randovania.game.layout
 import randovania.game.web_info
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.games.dread.layout.preset_describer import DreadPresetDescriber
 
+if TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExporter
+    from randovania.exporter.patch_data_factory import PatchDataFactory
+    from randovania.interface_common.options import PerGameOptions
 
-def _options():
+
+def _options() -> type[PerGameOptions]:
     from randovania.games.dread.exporter.options import DreadPerGameOptions
 
     return DreadPerGameOptions
@@ -20,24 +28,25 @@ def _options():
 def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.dread import gui
     from randovania.games.dread.layout import progressive_items
+    from randovania.gui.game_details.hint_details_tab import HintDetailsTab
 
     return randovania.game.gui.GameGui(
         tab_provider=gui.dread_preset_tabs,
         cosmetic_dialog=gui.DreadCosmeticPatchesDialog,
         export_dialog=gui.DreadGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(gui.DreadHintDetailsTab, gui.DreadTeleporterDetailsTab),
+        spoiler_visualizer=(HintDetailsTab, gui.DreadTeleporterDetailsTab),
         game_tab=gui.DreadGameTabWidget,
     )
 
 
-def _patch_data_factory():
+def _patch_data_factory() -> type[PatchDataFactory]:
     from randovania.games.dread.exporter.patch_data_factory import DreadPatchDataFactory
 
     return DreadPatchDataFactory
 
 
-def _exporter():
+def _exporter() -> GameExporter:
     from randovania.games.dread.exporter.game_exporter import DreadGameExporter
 
     return DreadGameExporter()
@@ -46,7 +55,6 @@ def _exporter():
 def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.dread.generator.base_patches_factory import DreadBasePatchesFactory
     from randovania.games.dread.generator.bootstrap import DreadBootstrap
-    from randovania.games.dread.generator.hint_distributor import DreadHintDistributor
     from randovania.games.dread.generator.pool_creator import pool_creator
     from randovania.generator.filler.weights import ActionWeights
 
@@ -54,8 +62,16 @@ def _generator() -> randovania.game.generator.GameGenerator:
         pickup_pool_creator=pool_creator,
         base_patches_factory=DreadBasePatchesFactory(),
         bootstrap=DreadBootstrap(),
-        hint_distributor=DreadHintDistributor(),
         action_weights=ActionWeights(),
+    )
+
+
+def _hints() -> randovania.game.hints.GameHints:
+    from randovania.games.dread.generator.hint_distributor import DreadHintDistributor
+
+    return randovania.game.hints.GameHints(
+        hint_distributor=DreadHintDistributor(),
+        specific_pickup_hints={},  # TODO: DNA
     )
 
 
@@ -145,6 +161,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     options=_options,
     gui=_gui,
     generator=_generator,
+    hints=_hints,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     multiple_start_nodes_per_area=True,

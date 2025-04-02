@@ -473,7 +473,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             response = await async_dialog.warning(
                 self,
                 "Unexpected hash",
-                f"Expected has to be {expected}. got {new_layout.shareable_hash}. Do you wish to continue?",
+                f"Expected hash to be {expected}. got {new_layout.shareable_hash}. Do you wish to continue?",
                 QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
             )
             if response != QtWidgets.QMessageBox.StandardButton.Yes:
@@ -504,7 +504,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             self.open_game_details(layout)
 
     @asyncSlot()
-    async def _browse_racetime(self):
+    async def _browse_racetime(self) -> None:
         monitoring.metrics.incr(key="gui_browse_racetime_opened")
         from randovania.gui.dialog.racetime_browser_dialog import RacetimeBrowserDialog
 

@@ -7,12 +7,14 @@ from typing import TYPE_CHECKING
 import json_delta
 
 from randovania.exporter import pickup_exporter
+from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout import filtered_database
 
 if TYPE_CHECKING:
+    from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
@@ -28,7 +30,7 @@ class PatcherDataMeta(typing.TypedDict):
     layout_was_user_modified: bool
 
 
-class PatchDataFactory:
+class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCosmeticPatches]:
     """
     Class with the purpose of creating a JSON-serializable dictionary from a randomized game.
     The resulting dictionary-data will later be passed to the patcher.
@@ -43,14 +45,14 @@ class PatchDataFactory:
     patches: GamePatches
     rng: Random
 
-    cosmetic_patches: BaseCosmeticPatches
-    configuration: BaseConfiguration
+    cosmetic_patches: CosmeticPatches
+    configuration: Configuration
 
     def __init__(
         self,
         description: LayoutDescription,
         players_config: PlayersConfiguration,
-        cosmetic_patches: BaseCosmeticPatches,
+        cosmetic_patches: CosmeticPatches,
     ):
         self.description = description
         self.players_config = players_config
@@ -59,8 +61,10 @@ class PatchDataFactory:
         self.pickup_db = default_database.pickup_database_for_game(self.game_enum())
 
         self.patches = description.all_patches[players_config.player_index]
-        self.configuration = description.get_preset(players_config.player_index).configuration
-        self.rng = Random(description.get_seed_for_player(players_config.player_index))
+        self.configuration = typing.cast(
+            "Configuration", description.get_preset(players_config.player_index).configuration
+        )
+        self.rng = Random(description.get_seed_for_world(players_config.player_index))
         self.game = filtered_database.game_description_for_layout(self.configuration)
         self.memo_data = self.create_memo_data()
 
@@ -108,4 +112,38 @@ class PatchDataFactory:
             self.configuration.pickup_model_data_source,
             pickup_exporter.create_pickup_exporter(self.memo_data, self.players_config, self.game_enum()),
             self.create_visual_nothing(),
+        )
+
+    @classmethod
+    def hint_namer_type(cls) -> type[HintNamer]:
+        """The type of HintNamer this game uses."""
+        raise NotImplementedError
+
+    @classmethod
+    def get_hint_namer(
+        cls,
+        all_patches: dict[int, GamePatches],
+        players_config: PlayersConfiguration,
+    ) -> HintNamer:
+        """Return an instance of this game's HintNamer."""
+        return cls.hint_namer_type()(all_patches, players_config)
+
+    @classmethod
+    def hint_exporter_type(cls) -> type[HintExporter]:
+        """The type of HintExporter this game uses."""
+        return HintExporter
+
+    @classmethod
+    def get_hint_exporter(
+        cls,
+        all_patches: dict[int, GamePatches],
+        players_config: PlayersConfiguration,
+        rng: Random,
+        base_joke_hints: list[str],
+    ) -> HintExporter:
+        """Return an instance of this game's HintExporter."""
+        return cls.hint_exporter_type()(
+            cls.get_hint_namer(all_patches, players_config),
+            rng,
+            base_joke_hints,
         )

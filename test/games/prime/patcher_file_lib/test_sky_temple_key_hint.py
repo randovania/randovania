@@ -5,8 +5,6 @@ import dataclasses
 import pytest
 
 import randovania.games.prime2.exporter.hints
-from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
@@ -51,19 +49,25 @@ def test_create_hints_all_placed(
     hide_area: bool,
     multiworld: bool,
     echoes_game_patches,
+    echoes_game_description,
     prime_game_patches,
     default_echoes_configuration,
     default_prime_configuration,
 ):
     # Setup
-    echoes_game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
+    echoes_game = echoes_game_description
     players_config = PlayersConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
 
     patches = echoes_game_patches.assign_new_pickups(
         [
             (
                 PickupIndex(17 + key),
-                PickupTarget(create_generated_pickup("Sky Temple Key", echoes_game.resource_database, i=key + 1), 0),
+                PickupTarget(
+                    create_generated_pickup(
+                        "Sky Temple Key", echoes_game.resource_database, echoes_game.get_pickup_database(), i=key + 1
+                    ),
+                    0,
+                ),
             )
             for key in range(5 if multiworld else 9)
         ]
@@ -74,7 +78,12 @@ def test_create_hints_all_placed(
         [
             (
                 PickupIndex(17 + key),
-                PickupTarget(create_generated_pickup("Sky Temple Key", echoes_game.resource_database, i=key + 1), 0),
+                PickupTarget(
+                    create_generated_pickup(
+                        "Sky Temple Key", echoes_game.resource_database, echoes_game.get_pickup_database(), i=key + 1
+                    ),
+                    0,
+                ),
             )
             for key in range(5, 9)
         ]
@@ -135,14 +144,21 @@ def test_create_hints_all_placed(
 @pytest.mark.parametrize("multiworld", [False, True])
 @pytest.mark.parametrize("hide_area", [False, True])
 def test_create_hints_all_starting(
-    hide_area: bool, multiworld: bool, empty_patches, echoes_game_description, default_echoes_configuration
+    hide_area: bool, multiworld: bool, echoes_game_patches, echoes_game_description, default_echoes_configuration
 ):
     # Setup
     players_config = PlayersConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
 
-    patches = empty_patches.assign_extra_starting_pickups(
+    patches = echoes_game_patches.assign_extra_starting_pickups(
         [
-            (create_generated_pickup("Sky Temple Key", echoes_game_description.resource_database, i=key + 1))
+            (
+                create_generated_pickup(
+                    "Sky Temple Key",
+                    echoes_game_description.resource_database,
+                    echoes_game_description.get_pickup_database(),
+                    i=key + 1,
+                )
+            )
             for key in range(9)
         ]
     )
@@ -170,7 +186,7 @@ def test_create_hints_all_starting(
     assert result == expected
 
 
-def test_hide_hints(empty_patches):
+def test_hide_hints(echoes_game_patches):
     # Setup
     expected = [
         {"asset_id": 0xD97685FE, "strings": make_useless_stk_hint(1)},
@@ -184,7 +200,7 @@ def test_hide_hints(empty_patches):
         {"asset_id": 0xCAA1C50A, "strings": make_useless_stk_hint(9)},
     ]
 
-    namer = EchoesHintNamer({0: empty_patches}, PlayersConfiguration(0, {}))
+    namer = EchoesHintNamer({0: echoes_game_patches}, PlayersConfiguration(0, {}))
 
     # Run
     result = randovania.games.prime2.exporter.hints.hide_stk_hints(namer)

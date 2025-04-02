@@ -37,7 +37,7 @@ Replace the values of the command with appropriate values for your game. The mea
 - short-name: Used to prefix all classes used by your game, and in user-facing elements that needs to be brief.
 - long-name: Used in user-facing elements to mention your game.
 
-The command check if the provided values fit the naming rules for each of these. 
+The command checks if the provided values fit the naming rules for each of these.
 
 ## Basic game structure
 
@@ -49,7 +49,7 @@ Feel free to reference how already existing games implement or deal with certain
 #### Logic Database
 
 Setup a logic database. It contains a logical representation on all places one can visit, how they connect to each other, and defines all collectable resources/tricks/events and more that exist in the game.
-It also defines a victory condition. This will normally be some requirement for a final boss event, but during development, this can be anything you want, which can help when the database is not complete. 
+It also defines a victory condition. This will normally be some requirement for a final boss event, but during development, this can be anything you want, which can help when the database is not complete.
 When first creating the database, it is *highly* recommended to try to automate the process as much as you can. This usually means having a separate program/script that can read the games internal structures, then building RDV's regions, areas, nodes from the read structures, and populating the `extra` field with any existing internal data that exists for them. Not automating it means having a very long and painful process to set them all up manually.
 
 Further documentation:
@@ -65,7 +65,7 @@ You also need to update `standard_pickup_configuration` and `ammo_pickup_configu
 
 Further Documentation:
 - [Glossary entry for Pickup](https://github.com/randovania/randovania/blob/main/docs/Glossary.md#pickup)
-- Python file for a [StandardPickupDefinition](https://github.com/randovania/randovania/blob/main/randovania/game_description/pickup/standard_pickup.py) and an [AmmoPickupDefinition](https://github.com/randovania/randovania/blob/main/randovania/game_description/pickup/ammo_pickup.py)
+- Python file for a [StandardPickupDefinition](https://github.com/randovania/randovania/blob/main/randovania/game_description/pickup/pickup_definition/standard_pickup.py) and an [AmmoPickupDefinition](https://github.com/randovania/randovania/blob/main/randovania/game_description/pickup/pickup_definition/ammo_pickup.py)
 
 #### Configuration & Generation Parameters
 
@@ -82,7 +82,7 @@ After all of the above is done, you are able to generate games.
 
 ### Exporting games
 
-Up to now, everything is just theoretical values inside Randovania. The next step is applying these modifications to the game. 
+Up to now, everything has just been theoretical values inside Randovania. The next step is applying these modifications to the game.
 
 In most cases, this involves reading the files from a user-provided copy of the game and creating either a new ROM/ISO
 file or a mod file.
@@ -146,6 +146,39 @@ This makes it easy to test the patcher without having to run it through Randovan
 Define a [JSON Schema](https://json-schema.org/understanding-json-schema/) that defines the structure of the patcher data.
 This makes for a good documentation of what is the input for the patcher, as well as a very good safety against
 misconfiguration in Randovania.
+
+# Expectations of a Development Game
+
+After a game has been merged and is available in development builds, the responsibility of maintaining it is now shared between you and the Randovania team:
+- Randovania: We make sure your game is included in all Randovania changes.
+- You: Work towards the game reaching stable.
+
+We're happy to support the addition of new games by sharing what we know, but too much investment pulls our time from core projects so we have some expectations regarding time frames:
+
+### Active Development
+
+Please don't go for too long without visible development of either patcher or non-logic Randovania changes.
+
+### Exportable from Dev Builds
+
+After roughly one year, we expect a game to be exportable directly from a regular dev build.
+How good the experience is when playing a seed is up to your discretion.
+We do however recommend integrating it as early as it is possible, for a better developer experience.
+
+### Becoming Stable
+
+After roughly two years, we expect a game to be close to being considered stable.
+
+## Remarks
+
+All of these only apply to games in development. After a game reaches stable, further development is not needed.
+
+Please keep us in the loop of what's going on - if you'll need to step away for some time, if you're having trouble with anything and so on.
+
+We may remove games from the codebase after they have been merged, if we feel that there no work done from your side towards making the game stable.
+This does not mean that we reject the game! It can always come back, but we don't want to maintain something with signs that it won't be finished.
+
+Feel free to ask for help even with game specific issues, we might be able to offer guidance or sometimes even direct help!
 
 # Multiworld
 

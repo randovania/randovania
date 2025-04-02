@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
-from unittest.mock import AsyncMock, MagicMock, call
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 from retro_data_structures.game_check import Game as RDSGame
@@ -10,7 +10,6 @@ from randovania.game_connection.connector.prime1_remote_connector import Prime1R
 from randovania.game_connection.executor.memory_operation import MemoryOperationException
 from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.network_common.remote_pickup import RemotePickup
 
 if TYPE_CHECKING:
@@ -57,7 +56,7 @@ async def test_patches_for_pickup(
         "Pickup",
         MagicMock(),
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=(),
         generator_params=default_generator_params,
         extra_resources=(extra,),
@@ -129,33 +128,24 @@ async def test_multiworld_interaction_missing_remote_pickups(has_cooldown: bool,
 @pytest.mark.parametrize("depth", [0, 1])
 async def test_multiworld_interaction(connector: Prime1RemoteConnector, depth: int):
     # Setup
-    # depth 0: non-empty known_collected_locations with patch
-    # depth 1: empty known_collected_locations and empty receive_remote_pickups
+    # depth 0: non-empty check_for_collected_location with patch
+    # depth 1: empty check_for_collected_location and empty receive_remote_pickups
 
-    location_collected = MagicMock()
-    connector.PickupIndexCollected.connect(location_collected)
-
-    connector.receive_remote_pickups = AsyncMock(return_value=([], False))
-    connector.known_collected_locations = AsyncMock(return_value=[PickupIndex(2), PickupIndex(5)] if depth == 0 else [])
+    connector.receive_remote_pickups = AsyncMock()
+    connector.check_for_collected_location = AsyncMock(return_value=True if depth == 0 else False)
 
     # Run
-    await connector._multiworld_interaction()
+    result = await connector._multiworld_interaction()
 
     # Assert
-    connector.known_collected_locations.assert_awaited_once_with()
+    connector.check_for_collected_location.assert_awaited_once_with()
 
     if depth == 0:
-        location_collected.assert_has_calls(
-            [
-                call(PickupIndex(2)),
-                call(PickupIndex(5)),
-            ]
-        )
-    else:
-        location_collected.assert_not_called()
+        assert result is True
 
     if depth == 1:
         connector.receive_remote_pickups.assert_awaited_once_with(connector.last_inventory, connector.remote_pickups)
+        assert result is connector.receive_remote_pickups.return_value
     else:
         connector.receive_remote_pickups.assert_not_awaited()
 

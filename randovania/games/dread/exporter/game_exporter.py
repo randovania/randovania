@@ -37,7 +37,7 @@ class DreadGameExportParams(GameExportParams):
         }
 
 
-class DreadGameExporter(GameExporter):
+class DreadGameExporter(GameExporter[DreadGameExportParams]):
     _busy: bool = False
 
     @property
@@ -54,7 +54,7 @@ class DreadGameExporter(GameExporter):
         """
         return True
 
-    def export_params_type(self) -> type[GameExportParams]:
+    def export_params_type(self) -> type[DreadGameExportParams]:
         """
         Returns the type of the GameExportParams expected by this exporter.
         """
@@ -70,10 +70,9 @@ class DreadGameExporter(GameExporter):
     def _do_export_game(
         self,
         patch_data: dict,
-        export_params: GameExportParams,
+        export_params: DreadGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ):
-        assert isinstance(export_params, DreadGameExportParams)
         export_params.output_path.mkdir(parents=True, exist_ok=True)
 
         patch_data["mod_compatibility"] = export_params.target_platform.value

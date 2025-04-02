@@ -6,6 +6,7 @@
     "areas": {
         "Entrance Lobby": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 40",
                 "room_id": [
@@ -51,7 +52,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Powamp Place": {
+                        "Door to Powamp Playhouse": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -100,7 +101,7 @@
                         }
                     }
                 },
-                "Door to Powamp Place": {
+                "Door to Powamp Playhouse": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -121,7 +122,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Powamp Place",
+                        "area": "Powamp Playhouse",
                         "node": "Door to Entrance Lobby"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -144,6 +145,7 @@
         },
         "Entrance Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 41",
                 "room_id": [
@@ -270,6 +272,7 @@
         },
         "Entrance Navigation Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 42",
                 "room_id": [
@@ -392,7 +395,7 @@
                                     "type": "resource",
                                     "data": {
                                         "type": "items",
-                                        "name": "L2Locks",
+                                        "name": "L3Locks",
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -412,8 +415,9 @@
                 }
             }
         },
-        "Powamp Place": {
+        "Powamp Playhouse": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 43",
                 "room_id": [
@@ -443,7 +447,7 @@
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
                         "area": "Entrance Lobby",
-                        "node": "Door to Powamp Place"
+                        "node": "Door to Powamp Playhouse"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -519,7 +523,7 @@
                                                                                                 {
                                                                                                     "type": "and",
                                                                                                     "data": {
-                                                                                                        "comment": "Freeze with Ice Beam: https://youtu.be/LtBms_eox-E&t=68",
+                                                                                                        "comment": "Freeze with Ice Beam: https://youtu.be/2diMnCfjMyY",
                                                                                                         "items": [
                                                                                                             {
                                                                                                                 "type": "template",
@@ -531,7 +535,7 @@
                                                                                                 {
                                                                                                     "type": "and",
                                                                                                     "data": {
-                                                                                                        "comment": "Freeze with Ice Missiles: https://youtu.be/LtBms_eox-E&t=6",
+                                                                                                        "comment": "Freeze with Ice Missiles: https://youtu.be/cOAbWNOXHQY",
                                                                                                         "items": [
                                                                                                             {
                                                                                                                 "type": "template",
@@ -745,7 +749,7 @@
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
                         "area": "Owtch Atrium",
-                        "node": "Door to Powamp Place"
+                        "node": "Door to Powamp Playhouse"
                     },
                     "default_dock_weakness": "L4 Hatch",
                     "exclude_from_dock_rando": false,
@@ -961,7 +965,7 @@
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
                         "area": "Data Room",
-                        "node": "Door to Powamp Place"
+                        "node": "Door to Powamp Playhouse"
                     },
                     "default_dock_weakness": "L4 Hatch",
                     "exclude_from_dock_rando": false,
@@ -1038,7 +1042,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Jump from ledge for extra height: https://youtu.be/J0va8ycax7A",
+                                                        "comment": "Jump from ledge for extra height: https://youtu.be/n0ODyyDD0tA",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -1151,22 +1155,34 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "and",
+                                                    "type": "or",
                                                     "data": {
-                                                        "comment": "Freeze Powamp by shooting through wall",
+                                                        "comment": "Freeze Powamp by hitting it through the wall.",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "WaveBeam",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Can Freeze Enemies With Diffusion"
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Can Freeze Enemies With Ice Beam"
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "WaveBeam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Freeze Enemies With Ice Beam"
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -1179,12 +1195,8 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "Freeze Powamp with Diffusion",
+                                                                    "comment": null,
                                                                     "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Can Freeze Enemies With Diffusion"
-                                                                        },
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
@@ -1198,7 +1210,7 @@
                                                                                                 {
                                                                                                     "type": "and",
                                                                                                     "data": {
-                                                                                                        "comment": "w/ Ice Missiles: https://youtu.be/zdGZBI3tKAw",
+                                                                                                        "comment": "w/ Ice Missiles: https://youtu.be/fnzcPxYVj8o",
                                                                                                         "items": [
                                                                                                             {
                                                                                                                 "type": "template",
@@ -1210,7 +1222,7 @@
                                                                                                 {
                                                                                                     "type": "and",
                                                                                                     "data": {
-                                                                                                        "comment": "w/ Ice Beam: https://youtu.be/LtBms_eox-E&t=88",
+                                                                                                        "comment": "w/ Ice Beam: https://youtu.be/tWYdlAqlw_A",
                                                                                                         "items": [
                                                                                                             {
                                                                                                                 "type": "template",
@@ -1265,7 +1277,7 @@
                                                                                                 {
                                                                                                     "type": "and",
                                                                                                     "data": {
-                                                                                                        "comment": "NHJ: https://youtu.be/DJHGcspkPhM",
+                                                                                                        "comment": "NHJ: https://youtu.be/sPYdDZGIVKo",
                                                                                                         "items": [
                                                                                                             {
                                                                                                                 "type": "resource",
@@ -1424,7 +1436,7 @@
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
                         "area": "Drain Pipe",
-                        "node": "Other to Powamp Place"
+                        "node": "Other to Powamp Playhouse"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1511,6 +1523,9 @@
         },
         "Data Room": {
             "default_node": null,
+            "hint_features": [
+                "data_room"
+            ],
             "extra": {
                 "map_name": "Sector 44",
                 "room_id": [
@@ -1518,7 +1533,7 @@
                 ]
             },
             "nodes": {
-                "Door to Powamp Place": {
+                "Door to Powamp Playhouse": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1539,7 +1554,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Powamp Place",
+                        "area": "Powamp Playhouse",
                         "node": "Door to Data Room"
                     },
                     "default_dock_weakness": "L4 Hatch",
@@ -1578,8 +1593,10 @@
                     "valid_starting_location": false,
                     "pickup_index": 103,
                     "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
-                        "Door to Powamp Place": {
+                        "Door to Powamp Playhouse": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1592,6 +1609,7 @@
         },
         "Sciser Stall": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 45",
                 "room_id": [
@@ -1683,6 +1701,9 @@
         },
         "Reservoir East": {
             "default_node": null,
+            "hint_features": [
+                "climbable"
+            ],
             "extra": {
                 "map_name": "Sector 46",
                 "room_id": [
@@ -1711,6 +1732,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 58,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Door to Sciser Stall": {
                             "type": "and",
@@ -1774,7 +1797,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": "Damage Run",
+                                                        "comment": null,
                                                         "items": [
                                                             {
                                                                 "type": "or",
@@ -1784,7 +1807,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "One Suit Damage Run: https://youtu.be/S05k8Y1aJTo",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
@@ -1817,7 +1840,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Suitless Damage Run: https://youtu.be/wKpeR_ap-E4",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -1833,7 +1856,7 @@
                                                                             "data": {
                                                                                 "type": "damage",
                                                                                 "name": "ElectricDamage",
-                                                                                "amount": 80,
+                                                                                "amount": 65,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -1914,7 +1937,7 @@
                         }
                     }
                 },
-                "Door to Skultera Sanctuary": {
+                "Door to Skultera Cisterns": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1935,7 +1958,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Skultera Sanctuary",
+                        "area": "Skultera Cisterns",
                         "node": "Door to Reservoir East"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -2065,7 +2088,7 @@
                         }
                     }
                 },
-                "Other to Serris Escape": {
+                "Other to Reservoir Vault": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2086,7 +2109,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Serris Escape",
+                        "area": "Reservoir Vault",
                         "node": "Other to Reservoir East"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -2184,7 +2207,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Reach blocks via PBs. Let crab crawl to top of bomb blocks, freeze there, lay PB, refreeze when its falling down. TODO: rerecord this with out standards: https://discord.com/channels/119665192110915584/859978611981287465/1297220448563761183",
+                                                                    "comment": "Reach blocks via PBs: https://youtu.be/97DOum62hkY",
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
@@ -2294,6 +2317,24 @@
                                                                                 "amount": 2,
                                                                                 "negate": false
                                                                             }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "StandOnFrozenEnemies",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "MidAirMorph",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
                                                                         }
                                                                     ]
                                                                 }
@@ -2385,7 +2426,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Gravity and Speedboost: https://youtu.be/OXwnxmYxbO8",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -2426,7 +2467,7 @@
                                 ]
                             }
                         },
-                        "Door to Skultera Sanctuary": {
+                        "Door to Skultera Cisterns": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2502,7 +2543,7 @@
                                 ]
                             }
                         },
-                        "Other to Serris Escape": {
+                        "Other to Reservoir Vault": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2513,8 +2554,9 @@
                 }
             }
         },
-        "Skultera Sanctuary": {
+        "Skultera Cisterns": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 47",
                 "room_id": [
@@ -2544,7 +2586,7 @@
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
                         "area": "Reservoir East",
-                        "node": "Door to Skultera Sanctuary"
+                        "node": "Door to Skultera Cisterns"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -2591,7 +2633,7 @@
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
                         "area": "Reservoir West",
-                        "node": "Door to Skultera Sanctuary"
+                        "node": "Door to Skultera Cisterns"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -2666,7 +2708,7 @@
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
                         "area": "Bridge Access",
-                        "node": "Door to Skultera Sanctuary"
+                        "node": "Door to Skultera Cisterns"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -2688,6 +2730,7 @@
         },
         "Bridge Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 48",
                 "room_id": [
@@ -2695,7 +2738,7 @@
                 ]
             },
             "nodes": {
-                "Door to Skultera Sanctuary": {
+                "Door to Skultera Cisterns": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2716,7 +2759,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Skultera Sanctuary",
+                        "area": "Skultera Cisterns",
                         "node": "Door to Bridge Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -2816,7 +2859,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Skultera Sanctuary": {
+                        "Door to Skultera Cisterns": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2846,6 +2889,7 @@
         },
         "Serris Speedway": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 49",
                 "room_id": [
@@ -2884,7 +2928,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Other to Serris Escape": {
+                        "Other to Reservoir Vault": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2932,7 +2976,7 @@
                         }
                     }
                 },
-                "Other to Serris Escape": {
+                "Other to Reservoir Vault": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2953,7 +2997,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Serris Escape",
+                        "area": "Reservoir Vault",
                         "node": "Other to Serris Speedway"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -2968,6 +3012,7 @@
         },
         "Broken Bridge": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 410",
                 "room_id": [
@@ -2996,6 +3041,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 59,
                     "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Door to Bridge Access": {
                             "type": "and",
@@ -3211,7 +3258,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Underwater Walljump out. Double speed at around water level: https://youtu.be/CWyXKT_3JBE",
+                                            "comment": "Underwater Walljump out. Double WJ speed at around water level: https://youtu.be/CWyXKT_3JBE",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3232,8 +3279,9 @@
                 }
             }
         },
-        "Escape Save Room": {
+        "Reservoir Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 411",
                 "room_id": [
@@ -3242,7 +3290,7 @@
                 "unlocked_save_recharge_station": true
             },
             "nodes": {
-                "Door to Serris Escape": {
+                "Door to Reservoir Vault": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3263,8 +3311,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Serris Escape",
-                        "node": "Door to Escape Save Room"
+                        "area": "Reservoir Vault",
+                        "node": "Door to Reservoir Save Room"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3300,7 +3348,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Serris Escape": {
+                        "Door to Reservoir Vault": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3313,6 +3361,7 @@
         },
         "Aquarium Speedway": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 412",
                 "room_id": [
@@ -3418,7 +3467,7 @@
                                 ]
                             }
                         },
-                        "Other to Aquarium Storage": {
+                        "Other to Aquarium Kago Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3544,7 +3593,7 @@
                                 ]
                             }
                         },
-                        "Other to Aquarium Storage": {
+                        "Other to Aquarium Kago Storage": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3670,7 +3719,7 @@
                         }
                     }
                 },
-                "Other to Aquarium Storage": {
+                "Other to Aquarium Kago Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3691,7 +3740,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Aquarium Storage",
+                        "area": "Aquarium Kago Storage",
                         "node": "Other to Aquarium Speedway"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -3712,8 +3761,9 @@
                 }
             }
         },
-        "Serris Escape": {
+        "Reservoir Vault": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 413",
                 "room_id": [
@@ -3742,6 +3792,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 60,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Beside Upper Pickup": {
                             "type": "and",
@@ -3773,6 +3825,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 61,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Beside Lower Pickup": {
                             "type": "and",
@@ -3805,7 +3859,7 @@
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
                         "area": "Serris Speedway",
-                        "node": "Other to Serris Escape"
+                        "node": "Other to Reservoir Vault"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3845,7 +3899,7 @@
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
                         "area": "Reservoir East",
-                        "node": "Other to Serris Escape"
+                        "node": "Other to Reservoir Vault"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3854,7 +3908,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Escape Save Room": {
+                        "Door to Reservoir Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3863,7 +3917,7 @@
                         }
                     }
                 },
-                "Door to Escape Save Room": {
+                "Door to Reservoir Save Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3884,8 +3938,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Escape Save Room",
-                        "node": "Door to Serris Escape"
+                        "area": "Reservoir Save Room",
+                        "node": "Door to Reservoir Vault"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3904,7 +3958,7 @@
                         "Next to Chain Blocks": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Wall Jump: https://youtu.be/c2ojj7S_-5c",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -3927,20 +3981,53 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Freeze the Owtch (Ice Beam or Ice Missiles): https://youtu.be/iztxJUZuEjA",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "StandOnFrozenEnemies",
-                                                        "amount": 1,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Freeze Enemies With Ice Beam"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Freeze Enemies With Ice Missiles"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Freeze the Owtch (Diffusion): https://youtu.be/ZsfwelK3eFs",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "StandOnFrozenEnemies",
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Freeze Enemies With Any Weapon"
+                                                    "data": "Can Freeze Enemies With Diffusion"
                                                 }
                                             ]
                                         }
@@ -4043,7 +4130,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Escape Save Room": {
+                        "Door to Reservoir Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4067,7 +4154,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Escape Save Room": {
+                        "Door to Reservoir Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4117,6 +4204,27 @@
                                                                         }
                                                                     ]
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Freeze the Owtch: https://youtu.be/U1LHQA0NoFM",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "StandOnFrozenEnemies",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Freeze Enemies With Any Weapon"
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -4131,8 +4239,9 @@
                 }
             }
         },
-        "Aquarium Shaft West": {
+        "Aquarium Shaft": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 414",
                 "room_id": [
@@ -4162,7 +4271,7 @@
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
                         "area": "Cargo Hold to Sector 5 (ARC)",
-                        "node": "Door to Aquarium Shaft West"
+                        "node": "Door to Aquarium Shaft"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4180,7 +4289,7 @@
                         }
                     }
                 },
-                "Door to Worst Room in the Game": {
+                "Door to Yard Firing Range": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4201,8 +4310,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Worst Room in the Game",
-                        "node": "Door to Aquarium Shaft West"
+                        "area": "Yard Firing Range",
+                        "node": "Door to Aquarium Shaft"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4258,7 +4367,7 @@
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
                         "area": "Cheddar Bay",
-                        "node": "Door to Aquarium Shaft West"
+                        "node": "Door to Aquarium Shaft"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4267,7 +4376,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Worst Room in the Game": {
+                        "Door to Yard Firing Range": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4367,7 +4476,7 @@
                                 ]
                             }
                         },
-                        "Door to Aquarium Tank": {
+                        "Door to Aquarium Pirate Tank": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4376,7 +4485,7 @@
                         }
                     }
                 },
-                "Door to Aquarium Tank": {
+                "Door to Aquarium Pirate Tank": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4397,8 +4506,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Aquarium Tank",
-                        "node": "Door to Aquarium Shaft West"
+                        "area": "Aquarium Pirate Tank",
+                        "node": "Door to Aquarium Shaft"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4438,7 +4547,7 @@
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
                         "area": "Cargo Hold to Sector 5 (ARC)",
-                        "node": "Other to Aquarium Shaft West"
+                        "node": "Other to Aquarium Shaft"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -4447,7 +4556,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Worst Room in the Game": {
+                        "Door to Yard Firing Range": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4478,7 +4587,7 @@
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
                         "area": "Aquarium Save Room West",
-                        "node": "Door to Aquarium Shaft West"
+                        "node": "Door to Aquarium Shaft"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4494,7 +4603,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Worst Room in the Game": {
+                        "Door to Yard Firing Range": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4505,8 +4614,9 @@
                 }
             }
         },
-        "Worst Room in the Game": {
+        "Yard Firing Range": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 415",
                 "room_id": [
@@ -4535,8 +4645,10 @@
                     "valid_starting_location": false,
                     "pickup_index": 62,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
-                        "Door to Aquarium Shaft West": {
+                        "Door to Aquarium Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4545,7 +4657,7 @@
                         }
                     }
                 },
-                "Door to Aquarium Shaft West": {
+                "Door to Aquarium Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4566,8 +4678,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Aquarium Shaft West",
-                        "node": "Door to Worst Room in the Game"
+                        "area": "Aquarium Shaft",
+                        "node": "Door to Yard Firing Range"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4619,6 +4731,10 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Freeze Enemies With Any Weapon"
                                     }
                                 ]
                             }
@@ -4627,8 +4743,9 @@
                 }
             }
         },
-        "Evir Shaft": {
+        "Evir Enclosure": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 416",
                 "room_id": [
@@ -4636,7 +4753,7 @@
                 ]
             },
             "nodes": {
-                "Door to Aquarium Tank": {
+                "Door to Aquarium Pirate Tank": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4657,8 +4774,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Aquarium Tank",
-                        "node": "Door to Evir Shaft"
+                        "area": "Aquarium Pirate Tank",
+                        "node": "Door to Evir Enclosure"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4675,7 +4792,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "With Gravity",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4796,12 +4913,46 @@
                                                     "data": "Can Freeze Enemies With Any Weapon"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "UnderwaterWallJump",
-                                                        "amount": 4,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "UnderwaterWallJump",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Hi-Jump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "UnderwaterWallJump",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -4843,7 +4994,7 @@
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
                         "area": "Aquarium Hub Access",
-                        "node": "Door to Evir Shaft"
+                        "node": "Door to Evir Enclosure"
                     },
                     "default_dock_weakness": "L4 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4852,19 +5003,68 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Aquarium Tank": {
-                            "type": "and",
+                        "Door to Aquarium Pirate Tank": {
+                            "type": "or",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Evir will be in the way",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Tough Underwater Beam-Resistant Enemy"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Damage boost through",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageBoosts",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "NormalDamage",
+                                                        "amount": 95,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Evirs move on a cycle, jump down when the Evir is out of the way",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
                 }
             }
         },
-        "Aquarium Tank": {
+        "Aquarium Pirate Tank": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 417",
                 "room_id": [
@@ -4893,8 +5093,10 @@
                     "valid_starting_location": false,
                     "pickup_index": 63,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
-                        "Door to Aquarium Shaft West": {
+                        "Door to Aquarium Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5065,7 +5267,7 @@
                         }
                     }
                 },
-                "Door to Evir Shaft": {
+                "Door to Evir Enclosure": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5086,8 +5288,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Evir Shaft",
-                        "node": "Door to Aquarium Tank"
+                        "area": "Evir Enclosure",
+                        "node": "Door to Aquarium Pirate Tank"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -5096,7 +5298,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Aquarium Shaft West": {
+                        "Door to Aquarium Shaft": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5196,7 +5398,7 @@
                         }
                     }
                 },
-                "Door to Aquarium Shaft West": {
+                "Door to Aquarium Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5217,8 +5419,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Aquarium Shaft West",
-                        "node": "Door to Aquarium Tank"
+                        "area": "Aquarium Shaft",
+                        "node": "Door to Aquarium Pirate Tank"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -5286,7 +5488,7 @@
                                 ]
                             }
                         },
-                        "Door to Evir Shaft": {
+                        "Door to Evir Enclosure": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5390,6 +5592,7 @@
         },
         "Aquarium Hub Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 418",
                 "room_id": [
@@ -5397,7 +5600,7 @@
                 ]
             },
             "nodes": {
-                "Door to Evir Shaft": {
+                "Door to Evir Enclosure": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5418,7 +5621,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Evir Shaft",
+                        "area": "Evir Enclosure",
                         "node": "Door to Aquarium Hub Access"
                     },
                     "default_dock_weakness": "L4 Hatch",
@@ -5468,7 +5671,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Evir Shaft": {
+                        "Door to Evir Enclosure": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5481,6 +5684,7 @@
         },
         "Aquarium Hub": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 419",
                 "room_id": [
@@ -5825,7 +6029,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "ElectricDamage",
-                                                                    "amount": 10,
+                                                                    "amount": 20,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -5867,12 +6071,73 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "ScrewAttack",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Shinespark Through Powamp: https://youtu.be/GLR5Vjuk_x0",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "SpeedBooster",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "L0Locks",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "misc",
+                                                                                "name": "DoorLockRando",
+                                                                                "amount": 1,
+                                                                                "negate": true
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "misc",
+                                                                                "name": "EntranceRando",
+                                                                                "amount": 1,
+                                                                                "negate": true
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "ShinesparkTrick",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -6147,6 +6412,7 @@
         },
         "Reservoir West": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 420",
                 "room_id": [
@@ -6154,7 +6420,7 @@
                 ]
             },
             "nodes": {
-                "Door to Skultera Sanctuary": {
+                "Door to Skultera Cisterns": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6175,7 +6441,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Skultera Sanctuary",
+                        "area": "Skultera Cisterns",
                         "node": "Door to Reservoir West"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -6330,7 +6596,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "ShinesparkTrick",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -6626,7 +6892,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Skultera Sanctuary": {
+                        "Door to Skultera Cisterns": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6667,7 +6933,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Skultera Sanctuary": {
+                        "Door to Skultera Cisterns": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6691,7 +6957,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "DamageRuns",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -7051,6 +7317,7 @@
         },
         "Pump Control Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 421",
                 "room_id": [
@@ -7368,6 +7635,7 @@
         },
         "Pump Control Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 422",
                 "room_id": [
@@ -7488,7 +7756,7 @@
                         "Door to Pump Control Access": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: test what happens with entrance rando",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
@@ -7530,6 +7798,7 @@
         },
         "Cargo Hold to Sector 5 (ARC)": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 423",
                 "room_id": [
@@ -7558,6 +7827,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 64,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Small Nook": {
                             "type": "and",
@@ -7608,7 +7879,7 @@
                         }
                     }
                 },
-                "Door to Aquarium Shaft West": {
+                "Door to Aquarium Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7629,7 +7900,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Aquarium Shaft West",
+                        "area": "Aquarium Shaft",
                         "node": "Door to Cargo Hold to Sector 5 (ARC)"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -7828,7 +8099,7 @@
                         }
                     }
                 },
-                "Other to Aquarium Shaft West": {
+                "Other to Aquarium Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7849,7 +8120,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Aquarium Shaft West",
+                        "area": "Aquarium Shaft",
                         "node": "Other to Cargo Hold to Sector 5 (ARC)"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -7949,7 +8220,7 @@
                                 ]
                             }
                         },
-                        "Door to Aquarium Shaft West": {
+                        "Door to Aquarium Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8067,7 +8338,7 @@
                                 "items": []
                             }
                         },
-                        "Other to Aquarium Shaft West": {
+                        "Other to Aquarium Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8203,6 +8474,7 @@
         },
         "Cheddar Bay": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 424",
                 "room_id": [
@@ -8231,6 +8503,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 65,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Other to Security Bypass": {
                             "type": "and",
@@ -8282,7 +8556,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Aquarium Shaft West": {
+                        "Door to Aquarium Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8478,7 +8752,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Knowledge",
-                                                                    "amount": 3,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -8487,13 +8761,22 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
                         }
                     }
                 },
-                "Door to Aquarium Shaft West": {
+                "Door to Aquarium Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8514,7 +8797,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Aquarium Shaft West",
+                        "area": "Aquarium Shaft",
                         "node": "Door to Cheddar Bay"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -8641,6 +8924,15 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -8651,6 +8943,7 @@
         },
         "Security Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 425",
                 "room_id": [
@@ -8697,46 +8990,10 @@
                             }
                         },
                         "Other to Security Bypass": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpaceJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
                         "By Hole": {
@@ -8848,14 +9105,14 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Long sequence (15-20) of Underwater Wall Jumps TODO: video",
+                                            "comment": "Long sequence (30+) of Underwater Wall Jumps: https://youtu.be/BYdBjECAoAM",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "UnderwaterWallJump",
-                                                        "amount": 4,
+                                                        "amount": 5,
                                                         "negate": false
                                                     }
                                                 },
@@ -8908,46 +9165,10 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Cheddar Bay": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpaceJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -9012,7 +9233,7 @@
                         "Door to Cheddar Bay": {
                             "type": "or",
                             "data": {
-                                "comment": "Long sequence (15-20) of Underwater Wall Jumps TODO: video",
+                                "comment": "Long sequence (30+) of Underwater Wall Jumps: https://youtu.be/n9Z_Ywet4WE",
                                 "items": [
                                     {
                                         "type": "and",
@@ -9024,7 +9245,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "UnderwaterWallJump",
-                                                        "amount": 4,
+                                                        "amount": 5,
                                                         "negate": false
                                                     }
                                                 }
@@ -9165,6 +9386,9 @@
         },
         "Level 4 Security Room": {
             "default_node": null,
+            "hint_features": [
+                "security_room"
+            ],
             "extra": {
                 "map_name": "Sector 426",
                 "room_id": [
@@ -9203,7 +9427,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Event - Level 4 Doors Unlocked": {
+                        "Pickup (L4 Locks)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9252,37 +9476,12 @@
                         }
                     }
                 },
-                "Event - Level 4 Doors Unlocked": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 135.41,
-                        "y": 61.83,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Level4Locks",
-                    "connections": {
-                        "Pickup (L4 Locks)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Pickup (L4 Locks)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 125.17,
-                        "y": 115.55,
+                        "x": 135.82978723404253,
+                        "y": 63.04018912529554,
                         "z": 0.0
                     },
                     "description": "",
@@ -9297,6 +9496,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 119,
                     "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Door to Security Access": {
                             "type": "and",
@@ -9311,6 +9512,7 @@
         },
         "Elevator to Main Deck": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 427",
                 "room_id": [
@@ -9402,6 +9604,7 @@
         },
         "Waterway": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 428",
                 "room_id": [
@@ -9430,6 +9633,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 66,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Other to Reservoir West": {
                             "type": "and",
@@ -9788,6 +9993,7 @@
         },
         "Entrance Recharge Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 429",
                 "room_id": [
@@ -9911,6 +10117,7 @@
         },
         "Breeding Tank Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 430",
                 "room_id": [
@@ -10102,6 +10309,7 @@
         },
         "Breeding Tank": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 431",
                 "room_id": [
@@ -10249,6 +10457,7 @@
         },
         "Bridge Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 432",
                 "room_id": [
@@ -10328,6 +10537,9 @@
         },
         "Pump Control Unit": {
             "default_node": null,
+            "hint_features": [
+                "climbable"
+            ],
             "extra": {
                 "map_name": "Sector 433",
                 "room_id": [
@@ -10356,6 +10568,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 67,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Next to Pickup": {
                             "type": "and",
@@ -10397,13 +10611,21 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Behind Speed Blocks": {
-                            "type": "resource",
+                        "Event - Pump Control Terminal": {
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "SpeedBooster",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Next to Pickup": {
@@ -10549,12 +10771,12 @@
                         }
                     }
                 },
-                "Behind Speed Blocks": {
-                    "node_type": "generic",
+                "Event - Pump Control Terminal": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 114.74816394219378,
-                        "y": 294.5981205085683,
+                        "x": 165.67292051456533,
+                        "y": 266.24257153041054,
                         "z": 0.0
                     },
                     "description": "",
@@ -10563,14 +10785,8 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
+                    "event_name": "LowerWaterLevel",
                     "connections": {
-                        "Event - Pump Control Terminal": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Next to Pickup": {
                             "type": "and",
                             "data": {
@@ -10600,15 +10816,6 @@
                                                                 "data": {
                                                                     "type": "events",
                                                                     "name": "LowerWaterLevel",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "misc",
-                                                                    "name": "GeneratorHack",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -10679,40 +10886,15 @@
                         }
                     }
                 },
-                "Event - Pump Control Terminal": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 165.67292051456533,
-                        "y": 266.24257153041054,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "LowerWaterLevel",
-                    "connections": {
-                        "Behind Speed Blocks": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Next to Pickup": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 167.1768061738182,
-                        "y": 214.895705022664,
+                        "x": 167.18,
+                        "y": 214.9,
                         "z": 0.0
                     },
-                    "description": "FIXME: Collecting the pump event is by the generator definition not considered\nsafe. The generator workaround is assuming here that if you reach this PonR,\nthat you were able to collect the event.",
+                    "description": "",
                     "layers": [
                         "default"
                     ],
@@ -10768,15 +10950,6 @@
                                                                             "data": {
                                                                                 "type": "events",
                                                                                 "name": "LowerWaterLevel",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "misc",
-                                                                                "name": "GeneratorHack",
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
@@ -10858,15 +11031,6 @@
                                                             }
                                                         ]
                                                     }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "GeneratorHack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
                                                 }
                                             ]
                                         }
@@ -10874,7 +11038,7 @@
                                 ]
                             }
                         },
-                        "Behind Speed Blocks": {
+                        "Event - Pump Control Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10916,15 +11080,6 @@
                                                                             "data": {
                                                                                 "type": "events",
                                                                                 "name": "LowerWaterLevel",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "misc",
-                                                                                "name": "GeneratorHack",
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
@@ -11006,15 +11161,6 @@
                                                             }
                                                         ]
                                                     }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "GeneratorHack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
                                                 }
                                             ]
                                         }
@@ -11028,6 +11174,7 @@
         },
         "Security Bypass": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 434",
                 "room_id": [
@@ -11493,6 +11640,7 @@
         },
         "Powamp Shaft": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 435",
                 "room_id": [
@@ -11831,6 +11979,36 @@
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Single walljump on the side and kill the powamps",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Screw Single Walljump"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "ScrewAttack",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "WallJump",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
                                                                         }
                                                                     ]
                                                                 }
@@ -11931,7 +12109,7 @@
                         }
                     }
                 },
-                "Other to Diffusion Connection Access": {
+                "Other to Hideout": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11952,7 +12130,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Diffusion Connection Access",
+                        "area": "Hideout",
                         "node": "Other to Powamp Shaft"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -12008,6 +12186,78 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpaceJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "StandOnFrozenEnemies",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Freeze Enemies With Any Weapon"
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Hi-Jump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "WallJump",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -12040,6 +12290,78 @@
                                             "name": "Missiles",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpaceJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "StandOnFrozenEnemies",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Freeze Enemies With Any Weapon"
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Hi-Jump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "WallJump",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -12148,7 +12470,7 @@
                                 ]
                             }
                         },
-                        "Other to Diffusion Connection Access": {
+                        "Other to Hideout": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12165,7 +12487,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "https://youtu.be/kxyotciTTXM",
+                                            "comment": "Get into tunnel: https://youtu.be/kxyotciTTXM",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -12327,6 +12649,9 @@
         },
         "Drain Pipe": {
             "default_node": null,
+            "hint_features": [
+                "shutter"
+            ],
             "extra": {
                 "map_name": "Sector 436",
                 "room_id": [
@@ -12355,17 +12680,85 @@
                     "valid_starting_location": false,
                     "pickup_index": 68,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
-                        "Other to Powamp Place": {
-                            "type": "and",
+                        "Other to Powamp Playhouse": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Have Any Suit Upgrade"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ElectricDamage",
+                                                        "amount": 18,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ElectricDamage",
+                                                        "amount": 50,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "LowerWaterLevel",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
                 },
-                "Other to Powamp Place": {
+                "Other to Powamp Playhouse": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12386,7 +12779,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Powamp Place",
+                        "area": "Powamp Playhouse",
                         "node": "Other to Drain Pipe"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -12557,17 +12950,43 @@
                                                     }
                                                 },
                                                 {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "WaveBeam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Gravity / no water methods",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "GravitySuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "GravitySuit",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "events",
+                                                                                "name": "LowerWaterLevel",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
@@ -12578,7 +12997,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "Destroy Geron with Screw",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -12623,15 +13042,6 @@
                                                             }
                                                         ]
                                                     }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "WaveBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
                                                 }
                                             ]
                                         }
@@ -12648,7 +13058,7 @@
                                 ]
                             }
                         },
-                        "Door to Aquarium Storage": {
+                        "Door to Aquarium Kago Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12812,7 +13222,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Aquarium Storage": {
+                        "Door to Aquarium Kago Storage": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -12886,7 +13296,7 @@
                         }
                     }
                 },
-                "Door to Aquarium Storage": {
+                "Door to Aquarium Kago Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12907,7 +13317,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Aquarium Storage",
+                        "area": "Aquarium Kago Storage",
                         "node": "Door to Drain Pipe"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -12917,7 +13327,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Other to Powamp Place": {
+                        "Other to Powamp Playhouse": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13126,6 +13536,7 @@
         },
         "Owtch Atrium": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 437",
                 "room_id": [
@@ -13133,7 +13544,7 @@
                 ]
             },
             "nodes": {
-                "Door to Powamp Place": {
+                "Door to Powamp Playhouse": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -13154,7 +13565,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Powamp Place",
+                        "area": "Powamp Playhouse",
                         "node": "Door to Owtch Atrium"
                     },
                     "default_dock_weakness": "L4 Hatch",
@@ -13201,7 +13612,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Powamp Place": {
+                        "Door to Powamp Playhouse": {
                             "type": "template",
                             "data": "Can Use Any Bombs"
                         }
@@ -13209,8 +13620,9 @@
                 }
             }
         },
-        "Aquarium Storage": {
+        "Aquarium Kago Storage": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 438",
                 "room_id": [
@@ -13239,6 +13651,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 69,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Other to Aquarium Speedway": {
                             "type": "and",
@@ -13270,6 +13684,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 70,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "After Kago": {
                             "type": "and",
@@ -13302,7 +13718,7 @@
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
                         "area": "Drain Pipe",
-                        "node": "Door to Aquarium Storage"
+                        "node": "Door to Aquarium Kago Storage"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -13482,7 +13898,7 @@
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
                         "area": "Aquarium Speedway",
-                        "node": "Other to Aquarium Storage"
+                        "node": "Other to Aquarium Kago Storage"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -13912,6 +14328,7 @@
         },
         "Aquarium Save Room West": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 439",
                 "room_id": [
@@ -13920,7 +14337,7 @@
                 "unlocked_save_recharge_station": true
             },
             "nodes": {
-                "Door to Aquarium Shaft West": {
+                "Door to Aquarium Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -13941,7 +14358,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Aquarium Shaft West",
+                        "area": "Aquarium Shaft",
                         "node": "Door to Aquarium Save Room West"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -13978,7 +14395,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Aquarium Shaft West": {
+                        "Door to Aquarium Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13991,6 +14408,7 @@
         },
         "Sciser Sanctuary": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 440",
                 "room_id": [
@@ -14076,66 +14494,6 @@
                                                                 }
                                                             }
                                                         ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Get to the Gloden Scisers",
-                                            "items": [
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": "Either move to the Scizers or precisely shoot from the outside",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "MorphBall",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Movement",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missiles",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "WaveBeam",
-                                                        "amount": 1,
-                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -14273,7 +14631,7 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
-                                                                                "name": "Movement",
+                                                                                "name": "Combat",
                                                                                 "amount": 2,
                                                                                 "negate": false
                                                                             }
@@ -14381,6 +14739,7 @@
         },
         "Sanctuary Cache": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 441",
                 "room_id": [
@@ -14409,6 +14768,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 71,
                     "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Door to Sciser Sanctuary": {
                             "type": "template",
@@ -14498,6 +14859,10 @@
         },
         "Serris Arena": {
             "default_node": null,
+            "hint_features": [
+                "boss",
+                "climbable"
+            ],
             "extra": {
                 "map_name": "Sector 442",
                 "room_id": [
@@ -14630,6 +14995,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 102,
                     "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Arena": {
                             "type": "and",
@@ -14695,20 +15062,66 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Kill with Missiles",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missiles",
-                                                                    "amount": 15,
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "10+ DMG Missiles"
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "10+ DMG Missiles"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Missiles",
+                                                                                            "amount": 15,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "20 DMG Missiles"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Missiles",
+                                                                                            "amount": 10,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -14716,28 +15129,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missiles",
-                                                                    "amount": 10,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "20 DMG Missiles"
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
+                                                        "comment": "Don't miss any Missiles",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -14937,6 +15329,7 @@
         },
         "Glass Tube to Sector 6 (NOC)": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 443",
                 "room_id": [
@@ -14944,7 +15337,7 @@
                 ]
             },
             "nodes": {
-                "Door to Diffusion Connection Access": {
+                "Door to Hideout": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14965,7 +15358,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Diffusion Connection Access",
+                        "area": "Hideout",
                         "node": "Door to Glass Tube to Sector 6 (NOC)"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -15015,7 +15408,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Diffusion Connection Access": {
+                        "Door to Hideout": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15028,6 +15421,7 @@
         },
         "Glass Tube to Sector 2 (TRO)": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 444",
                 "room_id": [
@@ -15117,8 +15511,9 @@
                 }
             }
         },
-        "Diffusion Connection Access": {
+        "Hideout": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 445",
                 "room_id": [
@@ -15148,7 +15543,7 @@
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
                         "area": "Glass Tube to Sector 6 (NOC)",
-                        "node": "Door to Diffusion Connection Access"
+                        "node": "Door to Hideout"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -15160,8 +15555,18 @@
                         "Other to Powamp Shaft": {
                             "type": "and",
                             "data": {
-                                "comment": "Trivial with PG",
-                                "items": []
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -15188,7 +15593,7 @@
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
                         "area": "Powamp Shaft",
-                        "node": "Other to Diffusion Connection Access"
+                        "node": "Other to Hideout"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -15212,6 +15617,7 @@
         },
         "C-Cache": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 446",
                 "room_id": [
@@ -15240,6 +15646,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 72,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Other to Breeding Tank Access": {
                             "type": "and",
@@ -15294,6 +15702,7 @@
         },
         "Aquarium Save Room East": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 447",
                 "room_id": [

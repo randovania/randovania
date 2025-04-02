@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 from dataclasses import dataclass
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Self
 
 from randovania.bitpacking import bitpacking
 from randovania.game_description import default_database
@@ -12,18 +12,18 @@ if TYPE_CHECKING:
     from collections.abc import Iterator
 
     from randovania.game.game_enum import RandovaniaGame
-    from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
+    from randovania.game_description.pickup.pickup_definition.ammo_pickup import AmmoPickupDefinition
 
 
 @dataclass(frozen=True)
 class AmmoPickupConfiguration(bitpacking.BitPackValue):
     pickups_state: dict[AmmoPickupDefinition, AmmoPickupState]
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         for ammo, state in self.pickups_state.items():
             state.check_consistency(ammo)
 
-    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
+    def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
         default: AmmoPickupConfiguration = metadata["reference"]
 
         assert list(self.pickups_state.keys()) == list(default.pickups_state.keys())
@@ -40,7 +40,7 @@ class AmmoPickupConfiguration(bitpacking.BitPackValue):
                 )
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: bitpacking.BitPackDecoder, metadata):
+    def bit_pack_unpack(cls, decoder: bitpacking.BitPackDecoder, metadata: dict) -> Self:
         default: AmmoPickupConfiguration = metadata["reference"]
 
         pickups_state = {}

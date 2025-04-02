@@ -14,12 +14,14 @@ def cs_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[
     from randovania.games.cave_story.gui.preset_settings.cs_hp_tab import PresetCSHP
     from randovania.games.cave_story.gui.preset_settings.cs_item_pool_tab import CSPresetItemPool
     from randovania.games.cave_story.gui.preset_settings.cs_starting_area_tab import PresetCSStartingArea
+    from randovania.gui.preset_settings.hints_tab import PresetHints
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
 
     return [
         PresetTrickLevel,
         PresetCSGeneration,
+        PresetHints,
         PresetCSObjective,
         PresetLocationPool,
         CSPresetItemPool,

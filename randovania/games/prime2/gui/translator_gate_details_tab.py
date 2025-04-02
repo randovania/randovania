@@ -32,7 +32,7 @@ class TranslatorGateDetailsTab(GameDetailsTab):
 
     def update_content(
         self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
-    ):
+    ) -> None:
         self.tree_widget.clear()
         self.tree_widget.setColumnCount(2)
         self.tree_widget.setHeaderLabels(["Gate", "Requirement"])

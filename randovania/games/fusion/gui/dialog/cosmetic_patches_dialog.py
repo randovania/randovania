@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import functools
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.games.fusion.gui.generated.fusion_cosmetic_patches_dialog_ui import Ui_FusionCosmeticPatchesDialog
 from randovania.games.fusion.layout.fusion_cosmetic_patches import ColorSpace, FusionCosmeticPatches
@@ -12,18 +12,11 @@ from randovania.gui.lib.signal_handling import set_combo_with_value
 if TYPE_CHECKING:
     from PySide6 import QtWidgets
 
-    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
-
-class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_FusionCosmeticPatchesDialog):
-    _cosmetic_patches: FusionCosmeticPatches
-
-    def __init__(self, parent: QtWidgets.QWidget | None, current: BaseCosmeticPatches):
+class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatches], Ui_FusionCosmeticPatchesDialog):
+    def __init__(self, parent: QtWidgets.QWidget | None, current: FusionCosmeticPatches):
         super().__init__(parent, current)
         self.setupUi(self)
-
-        assert isinstance(current, FusionCosmeticPatches)
-        self._cosmetic_patches = current
 
         for color_space in ColorSpace:
             self.color_space_combo.addItem(color_space.long_name, color_space)
@@ -36,11 +29,17 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_FusionCosmeticPa
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
 
+    @classmethod
+    @override
+    def cosmetic_patches_type(cls) -> type[FusionCosmeticPatches]:
+        return FusionCosmeticPatches
+
     def connect_signals(self) -> None:
         super().connect_signals()
 
         # Checkboxes for enabing Gameplay Options
         self._persist_check_field(self.map_check, "starting_map")
+        self._persist_check_field(self.reveal_blocks_check, "reveal_blocks")
         # Checkboxes for enabling Pallete Rando
         self._persist_check_field(self.suit_palette_check, "enable_suit_palette")
         self._persist_check_field(self.beam_palette_check, "enable_beam_palette")
@@ -66,6 +65,7 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_FusionCosmeticPa
 
     def on_new_cosmetic_patches(self, patches: FusionCosmeticPatches) -> None:
         self.map_check.setChecked(patches.starting_map)
+        self.reveal_blocks_check.setChecked(patches.reveal_blocks)
         self.suit_palette_check.setChecked(patches.enable_suit_palette)
         self.beam_palette_check.setChecked(patches.enable_beam_palette)
         self.enemy_palette_check.setChecked(patches.enable_enemy_palette)

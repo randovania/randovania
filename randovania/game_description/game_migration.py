@@ -81,15 +81,7 @@ def _migrate_v12(data: dict, game: RandovaniaGame) -> None:
                 if node["node_type"] == "player_ship":
                     node["node_type"] = "teleporter_network"
                     node["network"] = "default"
-
                     node["requirement_to_activate"] = {"type": "and", "data": {"comment": None, "items": []}}
-                    if game == RandovaniaGame.METROID_PRIME_CORRUPTION:
-                        node["requirement_to_activate"]["data"]["items"].append(
-                            {
-                                "type": "resource",
-                                "data": {"type": "items", "name": "CommandVisor", "amount": 1, "negate": False},
-                            }
-                        )
 
                 elif node["node_type"] == "logbook":
                     node["node_type"] = "hint"
@@ -297,6 +289,42 @@ def _migrate_v26(data: dict, game: RandovaniaGame) -> None:
     data.pop("initial_states")
 
 
+def _migrate_v27(data: dict, game: RandovaniaGame) -> None:
+    data["hint_feature_database"] = {}
+    for region in data["regions"]:
+        for area in region["areas"].values():
+            area["hint_features"] = []
+            for node in area["nodes"].values():
+                if node["node_type"] == "pickup":
+                    node["hint_features"] = []
+
+
+def _migrate_v28(data: dict, game: RandovaniaGame) -> None:
+    hint_types = {
+        "generic": "generic",
+        "specific-pickup": "specific-location",
+        "specific-item": "specific-pickup",
+    }
+    for region in data["regions"]:
+        for area in region["areas"].values():
+            for node in area["nodes"].values():
+                if node["node_type"] == "hint":
+                    node["kind"] = hint_types[node["kind"]]
+
+
+def _migrate_v29(data: dict, game: RandovaniaGame) -> None:
+    for region in data["regions"]:
+        for area in region["areas"].values():
+            for node in area["nodes"].values():
+                if node["node_type"] == "pickup":
+                    custom_index_group = None
+                    # while Cave Story uses this flag, it actually wants to consider it separate regions
+                    if game.value == "prime2":
+                        if area["extra"]["in_dark_aether"]:
+                            custom_index_group = region["name"]
+                    node["custom_index_group"] = custom_index_group
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -324,6 +352,9 @@ _MIGRATIONS = [
     _migrate_v24,
     _migrate_v25,  # flatten_to_set_on_patch
     _migrate_v26,  # remove initial_states
+    _migrate_v27,  # add hint features
+    _migrate_v28,  # rename HintNodeKind
+    _migrate_v29,  # add custom_index_group
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

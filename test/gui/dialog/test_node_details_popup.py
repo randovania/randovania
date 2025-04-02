@@ -42,9 +42,9 @@ def test_unchanged_create_new_node_echoes(skip_qtbot, echoes_game_description, n
         TeleporterNetworkNode,
     ],
 )
-def test_unchanged_create_new_node_corruption(skip_qtbot, corruption_game_description, node_type):
-    node = next(node for node in corruption_game_description.region_list.iterate_nodes() if isinstance(node, node_type))
-    dialog = NodeDetailsPopup(corruption_game_description, node)
+def test_unchanged_create_new_node_msr(skip_qtbot, msr_game_description, node_type):
+    node = next(node for node in msr_game_description.region_list.iterate_nodes() if isinstance(node, node_type))
+    dialog = NodeDetailsPopup(msr_game_description, node)
     skip_qtbot.addWidget(dialog)
 
     # Run

@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.games.fusion.layout.fusion_configuration import FusionArtifactConfig, FusionConfiguration
-from randovania.games.fusion.layout.hint_configuration import ItemHintMode
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
     fill_template_strings_from_tree,
@@ -41,20 +40,10 @@ def describe_artifacts(artifacts: FusionArtifactConfig) -> list[dict[str, bool]]
         ]
 
 
-_FUSION_HINT_TEXT = {
-    ItemHintMode.DISABLED: None,
-    ItemHintMode.HIDE_AREA: "Area only",
-    ItemHintMode.PRECISE: "Area and room",
-}
-
-
 class FusionPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, FusionConfiguration)
         template_strings = super().format_params(configuration)
-
-        metroid_hint = _FUSION_HINT_TEXT[configuration.hints.artifacts]
-        charge_beam_hint = _FUSION_HINT_TEXT[configuration.hints.charge_beam]
 
         extra_message_tree = {
             "Game Changes": [
@@ -62,12 +51,10 @@ class FusionPresetDescriber(GamePresetDescriber):
                 {
                     "Instant Hatch Transitions": configuration.instant_transitions,
                 },
+                {"Unlocked hatches in Sector Hub": configuration.unlock_sector_hub},
+                {"Unlocked Save and Recharge Station hatches": configuration.open_save_recharge_hatches},
             ],
             "Goal": describe_artifacts(configuration.artifacts),
-            "Hints": [
-                {f"Metroid Hint: {metroid_hint}": metroid_hint is not None},
-                {f"Charge Beam Hint: {charge_beam_hint}": charge_beam_hint is not None},
-            ],
         }
 
         fill_template_strings_from_tree(template_strings, extra_message_tree)

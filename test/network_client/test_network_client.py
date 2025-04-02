@@ -11,7 +11,7 @@ import pytest
 import socketio.exceptions
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel
+from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel, StartingPickupBehavior
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -246,12 +246,12 @@ def test_update_timeout_with_decrease_on_success(client: NetworkClient):
     assert client._current_timeout == 40
 
 
-async def test_refresh_received_pickups(client: NetworkClient, corruption_game_description, mocker):
-    db = corruption_game_description.resource_database
+async def test_refresh_received_pickups(client: NetworkClient, blank_game_description, mocker):
+    db = blank_game_description.resource_database
 
     data = {
         "world": "00000000-0000-1111-0000-000000000000",
-        "game": RandovaniaGame.METROID_PRIME_CORRUPTION.value,
+        "game": db.game_enum.value,
         "pickups": [
             {
                 "provider_name": "Message A",
@@ -283,7 +283,7 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
     client.on_world_pickups_update.assert_awaited_once_with(
         MultiplayerWorldPickups(
             world_id=uuid.UUID("00000000-0000-1111-0000-000000000000"),
-            game=RandovaniaGame.METROID_PRIME_CORRUPTION,
+            game=db.game_enum,
             pickups=(
                 RemotePickup("Message A", pickups[0], None),
                 RemotePickup("Message B", pickups[1], None),
@@ -299,7 +299,7 @@ def test_decode_pickup(
 ):
     data = (
         "h^WxYK%Bzb%2NU&w=%giys9}cw>h&ixhA)=I<_*yXJu|>a%p3j6&;nimC2=yfhEzEw1EwU(UqOO$>p%O5KI8-+"
-        "~(lQ#?s8v%E&;{=*rqdXJu|>a%p3j6&;nimC2=yfhEzEw1EwU(UqOO$>p%O5KI8-+~(lQ#?s8v%E&;{=*rpvSO"
+        "~(lQ#?s8v%E&;{=*rp#8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu3504zW"
     )
     expected_pickup = PickupEntry(
         name="The Name",
@@ -307,8 +307,9 @@ def test_decode_pickup(
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
-        pickup_category=generic_pickup_category,
-        broad_category=generic_pickup_category,
+        start_case=StartingPickupBehavior.CAN_BE_STARTING,
+        gui_category=generic_pickup_category,
+        hint_features=frozenset((generic_pickup_category,)),
         progression=(),
         generator_params=default_generator_params,
     )

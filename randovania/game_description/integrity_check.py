@@ -16,10 +16,9 @@ from randovania.game_description.requirements.requirement_template import Requir
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_collection import ResourceCollection
-from randovania.layout.base.base_configuration import BaseConfiguration
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Iterator, Mapping
 
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.area_identifier import AreaIdentifier
@@ -29,6 +28,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
 dock_node_suffix_re = re.compile(r" \([^()]+?\)$")
@@ -37,7 +37,7 @@ layer_name_re = re.compile(r"[a-zA-Z0-9 _-]+")
 
 def _create_node_context(game: GameDescription) -> NodeContext:
     return NodeContext(
-        patches=GamePatches.create_from_game(game, 0, typing.cast(BaseConfiguration, None)),
+        patches=GamePatches.create_from_game(game, 0, typing.cast("BaseConfiguration", None)),
         current_resources=ResourceCollection.with_database(game.resource_database),
         database=game.resource_database,
         node_provider=game.region_list,
@@ -117,6 +117,7 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
         yield f"{node.name} is not an Event Node, but naming suggests it is"
 
     if isinstance(node, PickupNode):
+        yield from check_for_redundant_hint_features(area, node)
         if pickup_node_re.match(node.name) is None:
             yield f"{node.name} is a Pickup Node, but naming doesn't match 'Pickup (...)'"
     elif pickup_node_re.match(node.name) is not None:
@@ -185,6 +186,8 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
 
         if node in nodes_with_paths_in:
             yield f"{area.name} - '{node.name}': Node has paths in, but no connections out."
+
+    yield from check_for_unnormalized_hint_features(area)
 
 
 def find_region_errors(game: GameDescription, region: Region) -> Iterator[str]:
@@ -354,7 +357,7 @@ def check_for_items_to_be_replaced_by_templates(
 
 
 def check_for_resources_to_use_together(
-    game: GameDescription, combined_resources: dict[str, tuple[str, ...]]
+    game: GameDescription, combined_resources: Mapping[str, tuple[str, ...]]
 ) -> Iterator[str]:
     """
     Checks the logic database for resources that should always be used together with other resources.
@@ -384,6 +387,55 @@ def check_for_resources_to_use_together(
             continue
 
 
+def find_incompatible_video_links(game: GameDescription) -> Iterator[str]:
+    for region in game.region_list.regions:
+        for area in region.areas:
+            for node in area.nodes:
+                for target, requirement in area.connections.get(node, {}).items():
+                    yield from get_videos(requirement, node, target)
+
+
+def get_videos(req: Requirement, node: Node, target: Node) -> Iterator[str]:
+    if isinstance(req, RequirementArrayBase):
+        if req.comment is not None:
+            for word in req.comment.split(" "):
+                if "youtu" not in word:
+                    continue
+                if "&list" in word:
+                    yield f"YouTube Playlist linked in {node.identifier.as_string} -> {target.name}."
+        for i in req.items:
+            yield from get_videos(i, node, target)
+
+
+def check_for_redundant_hint_features(area: Area, node: PickupNode) -> Iterator[str]:
+    """
+    If a hint feature is present on an Area, all of its child pickups
+    are treated as if they have that feature. Explicitly including
+    them on the pickup is redundant.
+    """
+    for feature in sorted(node.hint_features):
+        if feature in area.hint_features:
+            yield f"{node.name} shares the hint feature '{feature.long_name}' with the area it's in."
+
+
+def check_for_unnormalized_hint_features(area: Area) -> Iterator[str]:
+    """
+    If all pickups in an Area share the same hint feature, that feature
+    should be included on the Area instead of the pickups.
+    """
+    pickups = [node for node in area.nodes if isinstance(node, PickupNode)]
+    if not pickups:
+        return
+    features = pickups[0].hint_features
+    for pickup in pickups:
+        features &= pickup.hint_features
+    for feature in sorted(features):
+        yield (
+            f"{area.name}'s pickups all share the hint feature '{feature.long_name}'. "
+            "Add feature to the area and remove from the pickups."
+        )
+
+
 def find_database_errors(game: GameDescription) -> list[str]:
     result = []
 
@@ -397,5 +449,6 @@ def find_database_errors(game: GameDescription) -> list[str]:
     result.extend(find_recursive_templates(game))
     result.extend(find_duplicated_pickup_index(game.region_list))
     result.extend(game.game.data.logic_db_integrity(game))
+    result.extend(find_incompatible_video_links(game))
 
     return result

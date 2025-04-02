@@ -8,6 +8,7 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.hint_node import HintNode, HintNodeKind
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.requirements.resource_requirement import DamageResourceRequirement
@@ -22,6 +23,8 @@ if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.dock import DockWeaknessDatabase
     from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.hint_features import HintFeature
+    from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
     from randovania.game_description.requirements.requirement_set import RequirementSet
@@ -70,8 +73,9 @@ class MinimalLogicData:
 class GameDescription:
     game: RandovaniaGame
     dock_weakness_database: DockWeaknessDatabase
-
     resource_database: ResourceDatabase
+    hint_feature_database: dict[str, HintFeature]
+
     layers: tuple[str, ...]
     victory_condition: Requirement
     starting_location: NodeIdentifier
@@ -88,6 +92,7 @@ class GameDescription:
             resource_database=self.resource_database,
             layers=self.layers,
             dock_weakness_database=self.dock_weakness_database,
+            hint_feature_database=self.hint_feature_database,
             region_list=copy.deepcopy(self.region_list, memodict),
             victory_condition=self.victory_condition,
             starting_location=self.starting_location,
@@ -101,6 +106,7 @@ class GameDescription:
         game: RandovaniaGame,
         dock_weakness_database: DockWeaknessDatabase,
         resource_database: ResourceDatabase,
+        hint_feature_database: dict[str, HintFeature],
         layers: tuple[str, ...],
         victory_condition: Requirement,
         starting_location: NodeIdentifier,
@@ -110,8 +116,9 @@ class GameDescription:
     ):
         self.game = game
         self.dock_weakness_database = dock_weakness_database
-
         self.resource_database = resource_database
+        self.hint_feature_database = hint_feature_database
+
         self.layers = layers
         self.victory_condition = victory_condition
         self.starting_location = starting_location
@@ -150,8 +157,8 @@ class GameDescription:
         dock_connection = [None] * len(region_list.all_nodes)
         connections: list[int | None] = list(dock_connection)
         teleporter_dock_types = self.dock_weakness_database.all_teleporter_dock_types
-        for source in region_list.iterate_nodes():
-            if isinstance(source, DockNode) and source.dock_type in teleporter_dock_types:
+        for source in region_list.iterate_nodes_of_type(DockNode):
+            if source.dock_type in teleporter_dock_types:
                 target = region_list.node_by_identifier(source.default_connection)
                 connections[source.node_index] = target.node_index
         return connections
@@ -208,6 +215,7 @@ class GameDescription:
                 resource_database=self.resource_database,
                 layers=self.layers,
                 dock_weakness_database=self.dock_weakness_database,
+                hint_feature_database=self.hint_feature_database,
                 region_list=RegionList(
                     [region.duplicate() for region in self.region_list.regions],
                     self.region_list.flatten_to_set_on_patch,
@@ -224,6 +232,26 @@ class GameDescription:
             self._victory_condition_as_set = self.victory_condition.as_set(context)
         return self._victory_condition_as_set
         # return self.victory_condition.as_set(context)
+
+    def _has_hint_with_kind(self, kind: HintNodeKind) -> bool:
+        return any(node.kind == kind for node in self.region_list.iterate_nodes_of_type(HintNode))
+
+    @property
+    def has_random_hints(self) -> bool:
+        return self._has_hint_with_kind(HintNodeKind.GENERIC)
+
+    @property
+    def has_specific_location_hints(self) -> bool:
+        return self._has_hint_with_kind(HintNodeKind.SPECIFIC_LOCATION)
+
+    @property
+    def has_specific_pickup_hints(self) -> bool:
+        return bool(self.game.hints.specific_pickup_hints) or self._has_hint_with_kind(HintNodeKind.SPECIFIC_PICKUP)
+
+    def get_pickup_database(self) -> PickupDatabase:
+        from randovania.game_description import default_database
+
+        return default_database.pickup_database_for_game(self.game)
 
 
 def _resources_for_damage(

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, override
 
 import randovania
 from randovania.exporter import item_names, pickup_exporter
@@ -11,14 +11,15 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.prime1.exporter.hint_namer import PrimeHintNamer
 from randovania.games.prime1.exporter.vanilla_maze_seeds import VANILLA_MAZE_SEEDS
-from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode, PhazonSuitHintMode
 from randovania.games.prime1.layout.prime_configuration import (
     LayoutCutsceneMode,
     PrimeConfiguration,
     RoomRandoMode,
 )
+from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 
 if TYPE_CHECKING:
     from random import Random
@@ -31,8 +32,8 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
     from randovania.layout.layout_description import LayoutDescription
+    from randovania.lib.json_lib import JsonObject
 
 _EASTER_EGG_SHINY_MISSILE = 1024
 
@@ -86,10 +87,10 @@ _LOCATIONS_GROUPED_TOGETHER = [
 ]
 
 
-def _remove_empty(d):
+def _remove_empty(d: Any) -> Any:
     """recursively remove empty lists, empty dicts, or None elements from a dictionary"""
 
-    def empty(x):
+    def empty(x: Any) -> bool:
         return x is None or x == {} or x == []
 
     if not isinstance(d, dict | list):
@@ -212,7 +213,7 @@ def _create_results_screen_text(description: LayoutDescription) -> str:
     return f"{randovania.VERSION} | Seed Hash - {description.shareable_word_hash} ({description.shareable_hash})"
 
 
-def _random_factor(rng: Random, min: float, max: float, target: float):
+def _random_factor(rng: Random, min: float, max: float, target: float) -> float:
     # return a random float between (min, max) biased towards target (up to 1 re-roll to get closer)
     a = rng.uniform(min, max)
     b = rng.uniform(min, max)
@@ -223,10 +224,10 @@ def _random_factor(rng: Random, min: float, max: float, target: float):
     return b
 
 
-def _pick_random_point_in_aabb(rng: Random, aabb: list, room_name: str):
+def _pick_random_point_in_aabb(rng: Random, aabb: list, room_name: str) -> list[float]:
     if room_name == "Artifact Temple":
-        center = [-373, 47, -30]
-        scale = [65, 50, 16]
+        center = [-373.0, 47.0, -30.0]
+        scale = [65.0, 50.0, 16.0]
         return [rng.uniform(center[i] - scale[i] / 2, center[i] + scale[i] / 2) for i in range(3)]
 
     if room_name == "Burn Dome":
@@ -274,23 +275,23 @@ def _pick_random_point_in_aabb(rng: Random, aabb: list, room_name: str):
 
 
 def _serialize_dock_modifications(
-    region_data,
+    region_data: dict,
     regions: list[Region],
     room_rando_mode: RoomRandoMode,
     rng: Random,
     dock_types_to_ignore: list[DockType],
-):
+) -> None:
     if room_rando_mode == RoomRandoMode.NONE:
         return
 
     for region in regions:
-        area_dock_nums = {}
-        attached_areas = {}
-        size_indices = {}
-        candidates = []
-        default_connections_node_name = {}
-        dock_num_by_area_node = {}
-        is_nonstandard = {}
+        area_dock_nums: dict[str, list[int]] = {}
+        attached_areas: dict[str, list[str]] = {}
+        size_indices: dict[str, float] = {}
+        candidates: list[tuple[str, int]] = []
+        default_connections_node_name: dict[tuple[str, int], tuple[str, str]] = {}
+        dock_num_by_area_node: dict[tuple[str, str], int] = {}
+        is_nonstandard: dict[tuple[str, int], bool] = {}
         disabled_doors = set()
 
         # collect dock info for all areas
@@ -301,7 +302,7 @@ def _serialize_dock_modifications(
             for node in dock_nodes:
                 if node.dock_type in dock_types_to_ignore:
                     continue
-                index = node.extra["dock_index"]
+                index: int = node.extra["dock_index"]
                 dock_num_by_area_node[(area.name, node.name)] = index
                 is_nonstandard[(area.name, index)] = node.extra["nonstandard"]
                 default_connections_node_name[(area.name, index)] = (
@@ -320,19 +321,19 @@ def _serialize_dock_modifications(
             size_indices[area.name] = area.extra["size_index"]
 
         default_connections = {}
-        for (src_name, src_dock), (dst_name, dst_node_name) in default_connections_node_name.items():
+        for (src_name, src_dock), (dst_name_a, dst_node_name) in default_connections_node_name.items():
             try:
-                dst_dock = dock_num_by_area_node[(dst_name, dst_node_name)]
+                dst_dock_a = dock_num_by_area_node[(dst_name_a, dst_node_name)]
             except KeyError:
                 continue
-            default_connections[(src_name, src_dock)] = (dst_name, dst_dock)
+            default_connections[(src_name, src_dock)] = (dst_name_a, dst_dock_a)
 
         for area_name, dock_num in candidates:
             room = region_data[region.name]["rooms"][area_name]
             if "doors" not in room:
                 room["doors"] = {}
 
-            def helper(_dock_num):
+            def helper(_dock_num: int) -> None:
                 dock_num_key = str(_dock_num)
 
                 if dock_num_key not in room["doors"]:
@@ -351,7 +352,13 @@ def _serialize_dock_modifications(
 
         used_room_pairings = []
 
-        def are_rooms_compatible(src_name, src_dock, dst_name, dst_dock, mode: RoomRandoMode):
+        def are_rooms_compatible(
+            src_name: str,
+            src_dock: int | None,
+            dst_name: str,
+            dst_dock: int | None,
+            mode: RoomRandoMode,
+        ) -> bool:
             if src_name is None or dst_name is None:
                 # print("none name")
                 return False
@@ -381,6 +388,7 @@ def _serialize_dock_modifications(
                     return False
 
                 # Unless it's a vanilla 2-way connection
+                assert src_dock is not None
                 if default_connections[(src_name, src_dock)] != (dst_name, dst_dock):
                     # print("two-way non-neighbor")
                     return False
@@ -403,8 +411,8 @@ def _serialize_dock_modifications(
             for area in region.areas:
                 for dock_num in area_dock_nums[area.name]:
                     # First try each of the unused docks
-                    dst_name = None
-                    dst_dock = None
+                    dst_name: str | None = None
+                    dst_dock: int | None = None
                     for name, dock in candidates:
                         if are_rooms_compatible(area.name, None, name, None, room_rando_mode):
                             dst_name = name
@@ -447,27 +455,27 @@ def _serialize_dock_modifications(
             # List containing:
             #   - set of len=2, each containing
             #       - tuple of len=2 for (room_name, dock)
-            shuffled = []
+            shuffled: list[set[tuple[str, int]]] = []
 
-            def next_candidate(max_index):
+            def next_candidate(max_index: float) -> tuple[str, int] | tuple[None, None]:
                 for src_name, src_dock in candidates:
                     if size_indices[src_name] > max_index:
                         return (src_name, src_dock)
                 return (None, None)
 
-            def pick_random_dst(src_name, src_dock):
+            def pick_random_dst(src_name: str, src_dock: int) -> tuple[str, int] | tuple[None, None]:
                 for dst_name, dst_dock in candidates:
                     if are_rooms_compatible(src_name, src_dock, dst_name, dst_dock, room_rando_mode):
                         return (dst_name, dst_dock)
                 return (None, None)
 
-            def remove_pair(shuffled_pair: set):
+            def remove_pair(shuffled_pair: set[tuple[str, int]]) -> None:
                 shuffled.remove(shuffled_pair)
 
-                shuffled_pair = sorted(shuffled_pair)
-                assert len(shuffled_pair) == 2
-                a = shuffled_pair[0]
-                b = shuffled_pair[1]
+                sorted_pair = sorted(shuffled_pair)
+                assert len(sorted_pair) == 2
+                a = sorted_pair[0]
+                b = sorted_pair[1]
 
                 candidates.append(a)
                 candidates.append(b)
@@ -488,19 +496,21 @@ def _serialize_dock_modifications(
                 if max_index < -0.00001:
                     raise Exception(f"Failed to find pairings for {str(candidates)}")
 
-                (src_name, src_dock) = next_candidate(max_index)
-
-                if src_name is None:
+                new_result = next_candidate(max_index)
+                if new_result[0] is None:
                     # lower the room size criteria and try again
                     max_index -= 0.01
                     continue
 
-                (dst_name, dst_dock) = pick_random_dst(src_name, src_dock)
-                if dst_name is None:
+                (src_name, src_dock) = new_result
+
+                new_result = pick_random_dst(src_name, src_dock)
+                if new_result[0] is None:
                     # This room have no valid destinations in the pool, randomly unpair two rooms and try again
                     remove_pair(rng.choice(shuffled))
                     continue
 
+                (dst_name, dst_dock) = new_result
                 assert {(src_name, src_dock), (dst_name, dst_dock)} not in shuffled
 
                 candidates.remove((src_name, src_dock))
@@ -566,12 +576,13 @@ def _serialize_dock_modifications(
                         )
                         assert len(strongly_connected_components) > 1
 
-                        def component_number(name):
+                        def component_number(name: str) -> int:
                             i = 0
                             for component in strongly_connected_components:
                                 if name in list(component):
                                     return i
                                 i += 1
+                            raise KeyError("Name not found")
 
                         # randomly pick two room pairs which are not members of the same strongly connected
                         # component and # put back into pool for re-randomization (cross fingers that they
@@ -581,17 +592,17 @@ def _serialize_dock_modifications(
                         # pick one randomly
                         rng.shuffle(shuffled)
                         a = shuffled[-1]
-                        a = sorted(a)
-                        (src_name_a, src_dock_a) = a[0]
-                        (dst_name_a, dst_dock_a) = a[1]
+                        sorted_a = sorted(a)
+                        (src_name_a, src_dock_a) = sorted_a[0]
+                        (dst_name_a, dst_dock_a) = sorted_a[1]
                         a_component_num = component_number(src_name_a)
 
                         # pick a second which is not part of the same component
                         (src_name_b, src_dock_b, dst_name_b, dst_dock_b) = (None, None, None, None)
                         for b in shuffled:
-                            b = sorted(b)
-                            (src_name, src_dock) = b[0]
-                            (dst_name, dst_dock) = b[1]
+                            sorted_b = sorted(b)
+                            (src_name, src_dock) = sorted_b[0]
+                            (dst_name, dst_dock) = sorted_b[1]
                             if component_number(src_name) == a_component_num:
                                 continue
                             (src_name_b, src_dock_b, dst_name_b, dst_dock_b) = (src_name, src_dock, dst_name, dst_dock)
@@ -601,9 +612,13 @@ def _serialize_dock_modifications(
                         # remove a random room pairing (this can happen if rooms exempt from randomization
                         # are causing fractured connectivity)
                         if src_name_b is None:
-                            b = sorted(shuffled[0])
-                            (src_name_b, src_dock_b) = b[0]
-                            (dst_name_b, dst_dock_b) = b[1]
+                            sorted_b = sorted(shuffled[0])
+                            (src_name_b, src_dock_b) = sorted_b[0]
+                            (dst_name_b, dst_dock_b) = sorted_b[1]
+
+                        assert src_dock_b is not None
+                        assert dst_name_b is not None
+                        assert dst_dock_b is not None
 
                         # put back into pool
                         remove_pair({(src_name_a, src_dock_a), (dst_name_a, dst_dock_a)})
@@ -613,14 +628,16 @@ def _serialize_dock_modifications(
                         rng.shuffle(candidates)
 
 
-class PrimePatchDataFactory(PatchDataFactory):
-    cosmetic_patches: PrimeCosmeticPatches
-    configuration: PrimeConfiguration
-
+class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPatches]):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME
 
-    def get_default_game_options(self):
+    @override
+    @classmethod
+    def hint_namer_type(cls) -> type[PrimeHintNamer]:
+        return PrimeHintNamer
+
+    def get_default_game_options(self) -> dict:
         cosmetic_patches = self.cosmetic_patches
         return {
             "screenBrightness": cosmetic_patches.user_preferences.screen_brightness,
@@ -666,7 +683,8 @@ class PrimePatchDataFactory(PatchDataFactory):
         elevator_dock_types = self.game.dock_weakness_database.all_teleporter_dock_types
 
         # Initialize serialized db data
-        level_data = {}
+        level_data: dict = {}
+
         for region in regions:
             level_data[region.name] = {
                 "transports": {},
@@ -683,8 +701,9 @@ class PrimePatchDataFactory(PatchDataFactory):
         for region in regions:
             for area in region.areas:
                 for node in area.nodes:
-                    is_teleporter = isinstance(node, DockNode) and node.dock_type in elevator_dock_types
-                    if not is_teleporter:
+                    if not isinstance(node, DockNode):
+                        continue
+                    if node.dock_type not in elevator_dock_types:
                         continue
 
                     identifier = node.identifier.area_identifier
@@ -703,8 +722,8 @@ class PrimePatchDataFactory(PatchDataFactory):
         # serialize pickup modifications
         for region in regions:
             for area in region.areas:
-                pickup_nodes = (node for node in area.nodes if isinstance(node, PickupNode))
-                pickup_nodes = sorted(pickup_nodes, key=lambda n: n.pickup_index)
+                pickup_nodes_gen = (node for node in area.nodes if isinstance(node, PickupNode))
+                pickup_nodes = sorted(pickup_nodes_gen, key=lambda n: n.pickup_index)
                 for node in pickup_nodes:
                     pickup_index = node.pickup_index.index
                     pickup = prime1_pickup_details_to_patcher(
@@ -754,8 +773,8 @@ class PrimePatchDataFactory(PatchDataFactory):
 
         # Replace vanilla missile blast shields with the new ones
         if not self.configuration.legacy_mode:
-            for node in db.region_list.iterate_nodes():
-                if isinstance(node, DockNode) and node.dock_type not in elevator_dock_types:
+            for node in db.region_list.iterate_nodes_of_type(DockNode):
+                if node.dock_type not in elevator_dock_types:
                     if node.default_dock_weakness.name != "Missile Blast Shield (randomprime)":
                         continue
 
@@ -804,7 +823,7 @@ class PrimePatchDataFactory(PatchDataFactory):
         )
 
         # serialize text modifications
-        if self.configuration.hints.phazon_suit != PhazonSuitHintMode.DISABLED:
+        if self.configuration.hints.specific_pickup_hints["phazon_suit"] != SpecificPickupHintMode.DISABLED:
             try:
                 phazon_suit_resource_info = self.game.resource_database.get_item_by_name("Phazon Suit")
 
@@ -812,7 +831,7 @@ class PrimePatchDataFactory(PatchDataFactory):
                     self.description.all_patches,
                     self.players_config,
                     namer,
-                    self.configuration.hints.phazon_suit == PhazonSuitHintMode.HIDE_AREA,
+                    self.configuration.hints.specific_pickup_hints["phazon_suit"] == SpecificPickupHintMode.HIDE_AREA,
                     [phazon_suit_resource_info],
                     True,
                 )
@@ -870,20 +889,20 @@ class PrimePatchDataFactory(PatchDataFactory):
 
         artifacts = [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS]
         hint_config = self.configuration.hints
-        if hint_config.artifacts == ArtifactHintMode.DISABLED:
+        if hint_config.specific_pickup_hints["artifacts"] == SpecificPickupHintMode.DISABLED:
             resulting_hints = {art: f"{art.long_name} is lost somewhere on Tallon IV." for art in artifacts}
         else:
             resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
                 namer,
-                hint_config.artifacts == ArtifactHintMode.HIDE_AREA,
+                hint_config.specific_pickup_hints["artifacts"] == SpecificPickupHintMode.HIDE_AREA,
                 [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS],
                 True,
             )
 
         # Tweaks
-        ctwk_config = {}
+        ctwk_config: JsonObject = {}
         if self.configuration.small_samus:
             ctwk_config["playerSize"] = 0.3
             ctwk_config["morphBallSize"] = 0.3
@@ -951,7 +970,7 @@ class PrimePatchDataFactory(PatchDataFactory):
 
         if self.configuration.random_boss_sizes and not random_enemy_sizes:
 
-            def get_random_size(minimum, maximum):
+            def get_random_size(minimum: float, maximum: float) -> float:
                 if self.rng.choice([True, False]):
                     temp = [self.rng.uniform(minimum, 1.0), self.rng.uniform(minimum, 1.0)]
                     return min(temp)
@@ -981,7 +1000,7 @@ class PrimePatchDataFactory(PatchDataFactory):
 
         data: dict = {
             "$schema": "https://randovania.github.io/randomprime/randomprime.schema.json",
-            "seed": self.description.get_seed_for_player(self.players_config.player_index),
+            "seed": self.description.get_seed_for_world(self.players_config.player_index),
             "preferences": {
                 "defaultGameOptions": self.get_default_game_options(),
                 "qolGameBreaking": not self.configuration.legacy_mode,

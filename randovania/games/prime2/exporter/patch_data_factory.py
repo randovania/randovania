@@ -4,7 +4,7 @@ import dataclasses
 import functools
 import typing
 from random import Random
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 import randovania
 import randovania.games.prime2.exporter.hints
@@ -17,17 +17,16 @@ from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.pickup import pickup_category
-from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
-from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.common import elevators
 from randovania.games.prime2.exporter import hints
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
-from randovania.games.prime2.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.base.hint_configuration import HintConfiguration, SpecificPickupHintMode
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.lib import json_lib, string_lib
@@ -42,11 +41,10 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
-    from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-    from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
     from randovania.interface_common.players_configuration import PlayersConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.layout_description import LayoutDescription
@@ -180,8 +178,8 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription, elevato
 
 
 def _get_nodes_by_teleporter_id(region_list: RegionList, elevator_dock_type: DockType) -> Iterator[DockNode]:
-    for node in region_list.iterate_nodes():
-        if isinstance(node, DockNode) and node.dock_type == elevator_dock_type:
+    for node in region_list.iterate_nodes_of_type(DockNode):
+        if node.dock_type == elevator_dock_type:
             yield node
 
 
@@ -465,7 +463,7 @@ def _akul_testament_string_patch(namer: HintNamer) -> list[dict[str, typing.Any]
     ]
 
     title = "Metroid Prime 2: Echoes Randomizer Tournament"
-    champs = [f"{champ['title']}\n{namer.format_player(champ['name'], with_color=True)}" for champ in raw_champs]
+    champs = [f"{champ['title']}\n{namer.format_world(champ['name'], with_color=True)}" for champ in raw_champs]
 
     return [
         {
@@ -505,8 +503,8 @@ def _create_string_patches(
     string_patches.extend(hints.create_patches_hints(all_patches, players_config, game.region_list, namer, rng))
 
     # Sky Temple Keys
-    stk_mode = hint_config.sky_temple_keys
-    if stk_mode == SkyTempleKeyHintMode.DISABLED:
+    stk_mode = hint_config.specific_pickup_hints["sky_temple_keys"]
+    if stk_mode == SpecificPickupHintMode.DISABLED:
         string_patches.extend(randovania.games.prime2.exporter.hints.hide_stk_hints(namer))
     else:
         string_patches.extend(
@@ -515,7 +513,7 @@ def _create_string_patches(
                 players_config,
                 game.resource_database,
                 namer,
-                stk_mode == SkyTempleKeyHintMode.HIDE_AREA,
+                stk_mode == SpecificPickupHintMode.HIDE_AREA,
             )
         )
 
@@ -588,10 +586,7 @@ def should_keep_elevator_sounds(configuration: EchoesConfiguration) -> bool:
     )
 
 
-class EchoesPatchDataFactory(PatchDataFactory):
-    cosmetic_patches: EchoesCosmeticPatches
-    configuration: EchoesConfiguration
-
+class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeticPatches]):
     def __init__(
         self,
         description: LayoutDescription,
@@ -599,10 +594,15 @@ class EchoesPatchDataFactory(PatchDataFactory):
         cosmetic_patches: EchoesCosmeticPatches,
     ):
         super().__init__(description, players_config, cosmetic_patches)
-        self.namer = EchoesHintNamer(self.description.all_patches, self.players_config)
+        self.namer = self.get_hint_namer(description.all_patches, players_config)
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME_ECHOES
+
+    @override
+    @classmethod
+    def hint_namer_type(cls) -> type[EchoesHintNamer]:
+        return EchoesHintNamer
 
     def elevator_dock_type(self) -> DockType:
         return self.game.dock_weakness_database.find_type("elevator")
@@ -694,6 +694,7 @@ class EchoesPatchDataFactory(PatchDataFactory):
         )
 
         # Scan hints
+        assert isinstance(self.namer, EchoesHintNamer)
         result["string_patches"] = _create_string_patches(
             self.configuration.hints,
             self.configuration.use_new_patcher,
@@ -855,7 +856,7 @@ class EchoesPatchDataFactory(PatchDataFactory):
         }
 
     def add_new_patcher_cosmetics(self) -> dict:
-        cosmetic_rng = Random(self.description.get_seed_for_player(self.players_config.player_index))
+        cosmetic_rng = Random(self.description.get_seed_for_world(self.players_config.player_index))
 
         suits = self.cosmetic_patches.suit_colors.randomized(cosmetic_rng).as_json
         suits.pop("randomize_separately")
@@ -880,7 +881,7 @@ class EchoesPatchDataFactory(PatchDataFactory):
             "worlds": regions_patch_data,
             "area_patches": {"rebalance_world": True},
             "small_randomizations": {
-                "seed": self.description.get_seed_for_player(self.players_config.player_index),
+                "seed": self.description.get_seed_for_world(self.players_config.player_index),
                 "echo_locks": True,
                 "minigyro_chamber": True,
                 "rubiks": True,
@@ -1050,18 +1051,14 @@ def create_echoes_useless_pickup(resource_database: ResourceDatabase) -> PickupE
     :param resource_database:
     :return:
     """
-    return PickupEntry(
+    etm = pickup_creator.create_nothing_pickup(
+        resource_database,
+        echoes_items.USELESS_PICKUP_MODEL,
+    )
+    return dataclasses.replace(
+        etm,
         name="Energy Transfer Module",
         progression=((resource_database.get_item(echoes_items.USELESS_PICKUP_ITEM), 1),),
-        model=PickupModel(
-            game=resource_database.game_enum,
-            name=echoes_items.USELESS_PICKUP_MODEL,
-        ),
-        pickup_category=pickup_category.USELESS_PICKUP_CATEGORY,
-        broad_category=pickup_category.USELESS_PICKUP_CATEGORY,
-        generator_params=PickupGeneratorParams(
-            preferred_location_category=LocationCategory.MAJOR,  # TODO
-        ),
     )
 
 

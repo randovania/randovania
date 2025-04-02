@@ -8,6 +8,8 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from argparse import ArgumentParser, Namespace, _SubParsersAction
 
+    from randovania.layout.preset import Preset
+
 
 def patcher_data_command_logic(args: Namespace) -> None:
     return asyncio.run(patcher_data_command_logic_async(args))
@@ -22,7 +24,7 @@ async def patcher_data_command_logic_async(args: Namespace) -> None:
         args.player_index,
         {i: f"Player {i + 1}" for i in range(layout_description.world_count)},
     )
-    preset = layout_description.get_preset(players_config.player_index)
+    preset: Preset = layout_description.get_preset(players_config.player_index)
 
     cosmetic_patches = preset.game.data.layout.cosmetic_patches.default()
     data_factory = preset.game.patch_data_factory(layout_description, players_config, cosmetic_patches)

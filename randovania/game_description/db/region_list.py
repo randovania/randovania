@@ -20,6 +20,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region import Region
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.pickup_index import PickupIndex
 
@@ -43,6 +44,7 @@ class RegionList(NodeProvider):
     _patches_dock_lock_requirements: list[Requirement | None] | None
     _teleporter_network_cache: dict[str, list[TeleporterNetworkNode]]
     configurable_nodes: dict[NodeIdentifier, Requirement]
+    _feature_to_pickup_nodes: dict[HintFeature, tuple[PickupNode, ...]]
 
     def __deepcopy__(self, memodict: dict) -> RegionList:
         return RegionList(
@@ -83,6 +85,7 @@ class RegionList(NodeProvider):
         self._nodes = None
         self._identifier_to_node = {}
         self._teleporter_network_cache = {}
+        self._feature_to_pickup_nodes = {}
 
     def _iterate_over_nodes(self) -> Iterator[Node]:
         for region in self.regions:
@@ -116,7 +119,7 @@ class RegionList(NodeProvider):
 
     @property
     def num_pickup_nodes(self) -> int:
-        return sum(1 for node in self.iterate_nodes() if isinstance(node, PickupNode))
+        return sum(1 for node in self.iterate_nodes_of_type(PickupNode))
 
     @property
     def all_regions_areas_nodes(self) -> Iterable[tuple[Region, Area, Node]]:
@@ -227,12 +230,11 @@ class RegionList(NodeProvider):
         # Remove connections to event nodes that have a combo node
         from randovania.game_description.db.event_pickup import EventPickupNode
 
-        for node in self.iterate_nodes():
-            if isinstance(node, EventPickupNode):
-                area = self.nodes_to_area(node)
-                for source, connections in area.connections.items():
-                    if node.event_node in connections:
-                        self._patched_node_connections[source.node_index].pop(node.event_node.node_index, None)
+        for node in self.iterate_nodes_of_type(EventPickupNode):
+            area = self.nodes_to_area(node)
+            for source, connections in area.connections.items():
+                if node.event_node in connections:
+                    self._patched_node_connections[source.node_index].pop(node.event_node.node_index, None)
 
         # Dock Weaknesses
         self._patches_dock_open_requirements = []
@@ -308,15 +310,23 @@ class RegionList(NodeProvider):
         network = self._teleporter_network_cache.get(network_name)
         if network is None:
             network = [
-                node
-                for node in self.iterate_nodes()
-                if isinstance(node, TeleporterNetworkNode) and node.network == network_name
+                node for node in self.iterate_nodes_of_type(TeleporterNetworkNode) if node.network == network_name
             ]
             self._teleporter_network_cache[network_name] = network
         return network
 
     def get_configurable_node_requirement(self, identifier: NodeIdentifier) -> Requirement:
         return self.configurable_nodes[identifier]
+
+    def pickup_nodes_with_feature(self, feature: HintFeature) -> tuple[PickupNode, ...]:
+        """Returns an iterable tuple of PickupNodes with the given feature (either directly or in their area)"""
+        if feature not in self._feature_to_pickup_nodes:
+            self._feature_to_pickup_nodes[feature] = tuple(
+                node
+                for _, area, node in self.all_regions_areas_nodes
+                if isinstance(node, PickupNode) and ((feature in area.hint_features) or (feature in node.hint_features))
+            )
+        return self._feature_to_pickup_nodes[feature]
 
 
 def _calculate_nodes_to_area_region(regions: Iterable[Region]) -> tuple[dict[NodeIndex, Area], dict[NodeIndex, Region]]:

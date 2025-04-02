@@ -123,6 +123,10 @@ class PerGameOptions:
     def from_json(cls, value: JsonObject) -> Self:
         raise NotImplementedError
 
+    @classmethod
+    def game_enum(cls) -> RandovaniaGame:
+        raise NotImplementedError
+
 
 _SERIALIZER_FOR_FIELD = {
     "last_changelog_displayed": Serializer(str, version_lib.parse_string),
@@ -514,10 +518,14 @@ class Options:
 
     # Per Game
 
-    def options_for_game(self, game: RandovaniaGame) -> PerGameOptions:
+    def per_game_options[PerGame: PerGameOptions](self, per_game: type[PerGame]) -> PerGame:
+        return self.generic_per_game_options(per_game.game_enum())
+
+    def generic_per_game_options(self, game: RandovaniaGame) -> PerGameOptions:
         return getattr(self, f"game_{game.value}")
 
-    def set_options_for_game(self, game: RandovaniaGame, per_game: PerGameOptions):
+    def set_per_game_options(self, per_game: PerGameOptions):
+        game = per_game.game_enum()
         if type(per_game) is not game.options:
             raise ValueError(f"Expected {game.options}, got {type(per_game)}")
 

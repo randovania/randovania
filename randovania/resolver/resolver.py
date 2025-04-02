@@ -8,13 +8,17 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
+from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.layout import filtered_database
+from randovania.resolver.hint_state import ResolverHintState
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
 
@@ -24,10 +28,21 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node import Node, NodeContext
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.state import State
+
+
+AnyPickupNode = PickupNode | EventPickupNode
+AnyEventNode = EventNode | EventPickupNode
+
+
+def _pickup_index_for_node(node: AnyPickupNode) -> PickupIndex:
+    if isinstance(node, EventPickupNode):
+        node = node.pickup_node
+    return node.pickup_index
 
 
 def _is_later_progression_item(
@@ -125,8 +140,10 @@ def _is_major_or_key_pickup_node(action: ResourceNode, state: State) -> bool:
 
     if isinstance(pickup_node, PickupNode):
         target = state.patches.pickup_assignment.get(pickup_node.pickup_index)
-        return target is not None and (
-            target.pickup.pickup_category.hinted_as_major or target.pickup.pickup_category.is_key
+        return (
+            target is not None
+            and target.pickup.generator_params.preferred_location_category is LocationCategory.MAJOR
+            and not target.pickup.is_expansion
         )
     return False
 
@@ -142,7 +159,7 @@ def _should_check_if_action_is_safe(
     :return:
     """
     return not _is_action_dangerous(state, action, dangerous_resources) and (
-        isinstance(action, EventNode | EventPickupNode) or _is_major_or_key_pickup_node(action, state)
+        isinstance(action, AnyEventNode) or _is_major_or_key_pickup_node(action, state) or isinstance(action, HintNode)
     )
 
 
@@ -151,6 +168,9 @@ class ActionPriority(enum.IntEnum):
     Priority values for how important acting on any given ResourceNode should be.
     Lesser values are higher priority.
     """
+
+    PRIORITIZED_HINT = enum.auto()
+    """This node gives a hint. Only used when `Logic.prioritize_hints` is true."""
 
     MAJOR_PICKUP = enum.auto()
     """This node gives a pickup that is considered major or a key."""
@@ -171,9 +191,11 @@ class ActionPriority(enum.IntEnum):
 def _priority_for_resource_action(action: ResourceNode, state: State, logic: Logic) -> ActionPriority:
     if _is_dangerous_event(state, action, logic.game.dangerous_resources):
         return ActionPriority.DANGEROUS
+    elif logic.prioritize_hints and isinstance(action, HintNode):
+        return ActionPriority.PRIORITIZED_HINT
     elif _is_major_or_key_pickup_node(action, state):
         return ActionPriority.MAJOR_PICKUP
-    elif isinstance(action, DockLockNode | EventNode | EventPickupNode):
+    elif isinstance(action, DockLockNode | AnyEventNode):
         return ActionPriority.LOCK_ACTION
     else:
         return ActionPriority.EVERYTHING_ELSE
@@ -182,16 +204,26 @@ def _priority_for_resource_action(action: ResourceNode, state: State, logic: Log
 def _progressive_chain_info_from_pickup_node(
     node: PickupNode, context: NodeContext
 ) -> None | tuple[list[ItemResourceInfo], int]:
+    """
+
+    :param node:
+    :param context:
+    :return: When the node is a PickUp Node that has been assigned a Progressive item: Tuple containing the items in
+     that item chain, as well as an index pointing to last one of those items that has been obtained. If there is no
+      progressive item on that node or none of the progressive items have been obtained, then returns None.
+    """
     patches = context.patches
     assert patches is not None
     target = patches.pickup_assignment.get(node.pickup_index)
     if target is not None and target.player == patches.player_index and len(target.pickup.progression) > 1:
         progressives = [item for item, _ in target.pickup.progression if item is not None]
 
-        return next(
-            ((progressives, index) for index, item in enumerate(progressives) if context.current_resources[item] == 0),
-            None,
-        )
+        last_obtained_index = -1
+        for index, item in enumerate(progressives):
+            if context.current_resources[item] == 0:
+                break
+            last_obtained_index = index
+        return (progressives, last_obtained_index) if last_obtained_index > -1 else None
 
     return None
 
@@ -202,6 +234,12 @@ def _progressive_chain_info(node: Node, context: NodeContext) -> None | tuple[li
     if isinstance(node, PickupNode):
         return _progressive_chain_info_from_pickup_node(node, context)
     return None
+
+
+def _assign_hint_available_locations(state: State, action: ResourceNode, logic: Logic) -> None:
+    if state.hint_state is not None and isinstance(action, AnyPickupNode):
+        available = state.hint_state.valid_available_locations_for_hint(state, logic.game)
+        state.hint_state.assign_available_locations(_pickup_index_for_node(action), available)
 
 
 async def _inner_advance_depth(
@@ -224,6 +262,9 @@ async def _inner_advance_depth(
     logic.start_new_attempt(state, max_attempts)
     context = state.node_context()
 
+    if state.hint_state is not None:
+        state.hint_state.advance_hint_seen_count(state)
+
     if logic.victory_condition(state).satisfied(context, state.health_for_damage_requirements):
         return state, True
 
@@ -242,10 +283,13 @@ async def _inner_advance_depth(
     for action, damage_state in reach.possible_actions(state):
         if _should_check_if_action_is_safe(state, action, logic.game.dangerous_resources):
             potential_state = state.act_on_node(action, path=reach.path_to_node(action), new_damage_state=damage_state)
+            _assign_hint_available_locations(potential_state, action, logic)
             potential_reach = ResolverReach.calculate_reach(logic, potential_state)
 
-            # If we can go back to where we were, it's a simple safe node
-            if state.node in potential_reach.nodes:
+            # If we can go back to where we were without worsening the damage state, it's a simple safe node
+            if state.node in potential_reach.nodes and not state.damage_state.is_better_than(
+                potential_reach.game_state_at_node(state.node.node_index)
+            ):
                 new_result = await _inner_advance_depth(
                     state=potential_state,
                     logic=logic,
@@ -259,7 +303,7 @@ async def _inner_advance_depth(
 
                     resources = [x for x, _ in action.resource_gain_on_collect(state.node_context())]
 
-                    progressive_chain_info = _progressive_chain_info(action, state.node_context())
+                    progressive_chain_info = _progressive_chain_info(state.node, state.node_context())
 
                     logic.set_additional_requirements(
                         state.node,
@@ -281,10 +325,12 @@ async def _inner_advance_depth(
     for action, damage_state in actions:
         action_additional_requirements = logic.get_additional_requirements(action)
         if not action_additional_requirements.satisfied(context, damage_state.health_for_damage_requirements()):
-            logic.log_skip_action_missing_requirement(action, logic.game)
+            logic.log_skip_action_missing_requirement(action, state.patches, logic.game)
             continue
+        new_state = state.act_on_node(action, path=reach.path_to_node(action), new_damage_state=damage_state)
+        _assign_hint_available_locations(new_state, action, logic)
         new_result = await _inner_advance_depth(
-            state=state.act_on_node(action, path=reach.path_to_node(action), new_damage_state=damage_state),
+            state=new_state,
             logic=logic,
             status_update=status_update,
             max_attempts=max_attempts,
@@ -362,9 +408,22 @@ async def resolve(
     configuration: BaseConfiguration,
     patches: GamePatches,
     status_update: Callable[[str], None] | None = None,
+    *,
+    collect_hint_data: bool = False,
+    fully_indent_log: bool = True,
 ) -> State | None:
     if status_update is None:
         status_update = _quiet_print
 
     starting_state, logic = setup_resolver(configuration, patches)
+
+    if collect_hint_data:
+        logic.prioritize_hints = True
+        starting_state.hint_state = ResolverHintState(
+            FillerConfiguration.from_configuration(configuration),
+            patches.game,
+        )
+
+    logic.increment_indent = fully_indent_log
+
     return await advance_depth(starting_state, logic, status_update)

@@ -1,0 +1,71 @@
+name: Linting
+
+on:
+  pull_request:
+  merge_group:
+  push:
+    branches:
+      - main
+      - stable
+
+jobs:
+  mypy-required:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.6.8"
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+
+      - name: Install Python packages
+        run: uv sync --frozen --all-extras --group typing
+
+      - name: mypy
+        uses: liskin/gh-problem-matcher-wrap@v3
+        with:
+          linters: mypy
+          run: uv run mypy
+
+  mypy-modified:
+    runs-on: 'ubuntu-latest'
+    if: ${{ github.event_name == 'pull_request' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.6.8"
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+
+      - name: Install Python packages
+        run: uv sync --frozen --all-extras --group typing
+
+      - name: Mypy on modified files
+        uses: tsuyoshicho/action-mypy@v5
+        with:
+          github_token: ${{ secrets.github_token }}
+          # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
+          reporter: github-check
+          execute_command: uv run mypy
+          setup_method: nothing
+          level: warning
+          fail_on_error: false
+          install_types: false

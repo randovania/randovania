@@ -27,7 +27,11 @@ class PoolResults:
         self.assignment.update(extension.assignment)
         self.starting.extend(extension.starting)
 
-    def all_pickups(self) -> Iterator[PickupEntry]:
+    def pickups_in_world(self) -> Iterator[PickupEntry]:
+        """Pickups that are or will end up placed in a world."""
         yield from self.to_place
         yield from self.assignment.values()
+
+    def all_pickups(self) -> Iterator[PickupEntry]:
+        yield from self.pickups_in_world()
         yield from self.starting

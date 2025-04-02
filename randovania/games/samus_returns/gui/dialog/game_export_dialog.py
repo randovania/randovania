@@ -13,6 +13,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.games.samus_returns.exporter.game_exporter import MSRGameExportParams, MSRModPlatform
 from randovania.games.samus_returns.exporter.options import MSRPerGameOptions
 from randovania.games.samus_returns.gui.generated.msr_game_export_dialog_ui import Ui_MSRGameExportDialog
+from randovania.games.samus_returns.layout import MSRConfiguration
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     is_directory_validator,
@@ -70,18 +71,24 @@ def add_validation(
     edit.textChanged.connect(field_validation)
 
 
-class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
+class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDialog):
     title_id: str = ""
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_SAMUS_RETURNS
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
-        super().__init__(options, patch_data, word_hash, spoiler, games)
+    def __init__(
+        self,
+        options: Options,
+        configuration: MSRConfiguration,
+        word_hash: str,
+        spoiler: bool,
+        games: list[RandovaniaGame],
+    ):
+        super().__init__(options, configuration, word_hash, spoiler, games)
 
-        per_game = options.options_for_game(self.game_enum())
-        assert isinstance(per_game, MSRPerGameOptions)
+        per_game = options.per_game_options(MSRPerGameOptions)
 
         self._validate_input_file()
         self._validate_custom_path()

@@ -39,6 +39,9 @@ class NodeProvider:
     def iterate_nodes(self) -> Iterator[Node]:
         raise NotImplementedError
 
+    def iterate_nodes_of_type[NodeT: Node](self, node_type: type[NodeT]) -> Iterator[NodeT]:
+        yield from (node for node in self.iterate_nodes() if isinstance(node, node_type))
+
     def nodes_to_region(self, node: Node) -> Region:
         raise NotImplementedError
 

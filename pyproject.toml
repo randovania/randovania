@@ -6,6 +6,7 @@ requires = [
     "wheel>=0.37.0",
     "dulwich",
     "randovania-scm-version-schema",
+    "PySide6-Essentials>=6.5",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -23,10 +24,10 @@ classifiers = [
     "Intended Audience :: End Users/Desktop",
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Topic :: Games/Entertainment",
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dynamic = ["version"]
 
 dependencies = [
@@ -67,6 +68,9 @@ dependencies = [
 
     # For the Version class
     "packaging",
+
+    # For TypeVar default
+    "typing-extensions>=4.4.0",
 ]
 
 [project.optional-dependencies]
@@ -79,10 +83,16 @@ exporters = [
     "tsc-utils>=0.2.5",
 
     # Factorio
-    "factorio-randovania-mod>=0.5.0",
+    "factorio-randovania-mod>=0.8.0",
 
     # Metroid Dread
     "open-dread-rando>=2.16.0",
+
+    # Metroid fusion
+    "mars-patcher>=0.2.0",
+
+    # Metroid Planets
+    "planets-yapr>=1.0.0",
 
     # Metroid Prime 1
     "py_randomprime>=1.27.0",
@@ -98,9 +108,6 @@ exporters = [
 
     # Metroid: Samus Returns
     "open-samus-returns-rando>=3.1.1",
-
-    # Super Metroid
-    "SuperDuperMetroid>=1.2.0",
 ]
 
 gui = [
@@ -108,10 +115,13 @@ gui = [
     "pyqtdarktheme-fork>=2.3.0",
     "markdown",
     "qasync",
+    "natsort",
 
     "appdirs",
     # Minimum version compatible with PySide 6.4. 3.6 is also needed for Python 3.11
     "matplotlib>=3.6.2",
+
+    "humanize",  # formatting dates
 
     "nod>=1.9",
     "async-wiiload",
@@ -143,17 +153,24 @@ test = [
     "pytest-mock",
     "pytest-localftpserver",
     "pytest-xdist[psutil]",
+    "pytest-codspeed",
+]
+
+website = [
+    "htmlmin2",
+    "ruamel.yaml",
+]
+
+[dependency-groups]
+installer = [
+    "pyinstaller",
+    "pyinstaller-hooks-contrib",
 ]
 
 typing = [
     "mypy",
     "types-aiofiles",
     "types-peewee",
-]
-
-website = [
-    "htmlmin2",
-    "ruamel.yaml",
 ]
 
 [project.readme]
@@ -168,6 +185,9 @@ randovania = "randovania.__main__:main"
 
 [tool.setuptools.packages.find]
 include = ["randovania*"]
+
+[tool.setuptools.package-data]
+"randovania.data" = ["README.md"]
 
 [tool.setuptools_scm]
 local_scheme = "no-local-version"
@@ -229,6 +249,7 @@ runtime-evaluated-base-classes = [
     "randovania.bitpacking.json_dataclass.JsonDataclass",
     "randovania.layout.base.base_configuration.BaseConfiguration",
     "randovania.exporter.game_exporter.GameExportParams",
+    "randovania.game_description.pickup.pickup_definition.base_pickup.BasePickupDefinition",
 ]
 
 [tool.mypy]
@@ -244,28 +265,39 @@ files = [
     "randovania/games/am2r/layout/",
     "randovania/games/blank/",
     "randovania/games/cave_story/",
+    "randovania/games/dread/exporter/hint_namer.py",
     "randovania/games/dread/gui/",
-    "randovania/games/fusion/gui/",
-    "randovania/games/fusion/generator/",
-    "randovania/games/fusion/layout/",
-    "randovania/games/prime1/gui/dialog/prime_cosmetic_patches_dialog.py",
-    "randovania/games/prime2/exporter/patch_data_factory.py",
-    "randovania/games/prime2/gui/dialog/echoes_cosmetic_patches_dialog.py",
-    "randovania/games/prime2/layout/echoes_user_preferences.py",
-    "randovania/games/prime3/",
+    "randovania/games/fusion/",
+    "randovania/games/prime1/",
+    "randovania/games/prime2/",
     "randovania/games/samus_returns/",
-    "randovania/games/super_metroid/gui/dialog/super_cosmetic_patches_dialog.py",
     "randovania/generator/",
+    "randovania/gui/main_online_interaction.py",
     "randovania/gui/data_editor.py",
     "randovania/gui/game_specific_gui.py",
+    "randovania/gui/async_race_room_window.py",
     "randovania/gui/docks/resource_database_editor.py",
+    "randovania/gui/dialog/async_race_creation_dialog.py",
+    "randovania/gui/dialog/async_race_settings_dialog.py",
+    "randovania/gui/dialog/async_race_admin_dialog.py",
     "randovania/gui/dialog/base_cosmetic_patches_dialog.py",
     "randovania/gui/dialog/connections_editor.py",
     "randovania/gui/dialog/connector_prompt_dialog.py",
     "randovania/gui/preset_settings/trick_level_tab.py",
+    "randovania/gui/preset_settings/hints_tab.py",
+    "randovania/gui/lib/editable_table_model.py",
+    "randovania/gui/lib/pixmap_lib.py",
+    "randovania/gui/lib/faq_lib.py",
     "randovania/gui/lib/signal_handling.py",
+    "randovania/gui/lib/hints_text.py",
+    "randovania/gui/lib/tracker_item_image.py",
+    "randovania/gui/lib/data_editor_canvas.py",
+    "randovania/gui/lib/connections_visualizer.py",
+    "randovania/gui/widgets/async_race_room_settings_widget.py",
     "randovania/gui/widgets/game_connection_window.py",
+    "randovania/gui/widgets/game_validator_widget.py",
     "randovania/gui/widgets/node_selector_widget.py",
+    "randovania/layout/",
     "randovania/lib/",
     "test/bitpacking/",
     "test/game_connection",
@@ -275,10 +307,10 @@ files = [
     "test/games/test_prime_binary_decoder.py",
     "test/games/blank/",
     "test/games/cave_story/",
-    "test/games/dread/gui/test_dread_cosmetic_patches_dialog.py",
+    "test/games/dread/",
     "test/games/prime1/gui/dialog/test_prime_cosmetic_patches_dialog.py",
-    "test/games/prime2/gui/dialog/test_echoes_cosmetic_patches_dialog.py",
-    "test/games/prime3/gui/dialog/test_corruption_cosmetic_patches_dialog.py",
+    "test/games/prime2/",
+    "test/games/samus_returns/",
     "test/generator/",
     "test/lib/",
     "test/gui/dialog/test_connections_editor.py",
@@ -319,5 +351,23 @@ module = [
     "pytest_localftpserver.*",
     "pytestqt.*",
     "qasync.*",
+    "ruamel.*",
 ]
 ignore_missing_imports = true
+
+[tool.uv]
+cache-keys = [
+    { git = { commit = true, tags = true } },
+    { file = "pyproject.toml" },
+    { file = "setup.py" },
+    { file = "setup.cfg" },
+    { file = "README.md" },
+    { file = "pyuic.json" },
+    { file = "**/*.ui" },
+
+    # Listing these files forces uv to rebuild Randovania every time you run,
+    # but otherwise it's not rebuilt when these are deleted.
+    { file = "randovania/version.py" },
+    { file = "randovania/version_hash.py" },
+    { file = "randovania/data/README.md" },
+]

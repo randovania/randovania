@@ -22,20 +22,20 @@ from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import string_lib
 from randovania.lib.container_lib import zip2
+from randovania.network_common.audit import AuditEntry
 from randovania.network_common.game_connection_status import GameConnectionStatus
+from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import (
-    GameDetails,
     MultiplayerSessionAction,
     MultiplayerSessionActions,
-    MultiplayerSessionAuditEntry,
     MultiplayerSessionAuditLog,
     MultiplayerSessionEntry,
     MultiplayerUser,
     MultiplayerWorld,
-    User,
     UserWorldDetail,
 )
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
+from randovania.network_common.user import CurrentUser
 
 if TYPE_CHECKING:
     import pytest_mock
@@ -182,7 +182,7 @@ async def test_on_session_meta_update(
 ) -> None:
     # Setup
     network_client = MagicMock()
-    network_client.current_user = User(id=12, name="Player A")
+    network_client.current_user = CurrentUser(id=12, name="Player A")
     network_client.server_call = AsyncMock()
     game_connection = MagicMock(spec=GameConnection)
     game_connection.executor = AsyncMock()
@@ -987,7 +987,7 @@ async def test_game_export_listener(
 
     game.gui.export_dialog.assert_called_once_with(
         window._options,
-        patch_data,
+        mock_preset_from.return_value.get_preset.return_value.configuration,
         "Sessionx Name 51 - W1",
         False,
         [game],
@@ -1023,12 +1023,11 @@ async def test_on_close_event(window: MultiplayerSessionWindow, mocker, is_membe
 
 async def test_update_session_audit_log(window: MultiplayerSessionWindow):
     window._session = MagicMock()
+    now = datetime.datetime(2020, 1, 1, 5, 1)
+
     log = MultiplayerSessionAuditLog(
         session_id=window._session.id,
-        entries=[
-            MultiplayerSessionAuditEntry("You", f"Did something for the {i}-th time.", datetime.datetime.now())
-            for i in range(50)
-        ],
+        entries=[AuditEntry("You", f"Did something for the {i}-th time.", now) for i in range(50)],
     )
     scrollbar = window.tab_audit.verticalScrollBar()
 
@@ -1036,8 +1035,9 @@ async def test_update_session_audit_log(window: MultiplayerSessionWindow):
     window.update_session_audit_log(log)
     assert scrollbar.value() == scrollbar.maximum()
 
-    assert window.audit_item_model.item(0, 0).text() == "You"
-    assert window.audit_item_model.item(0, 1).text() == "Did something for the 0-th time."
+    assert model_lib.get_texts(window.audit_item_model, max_rows=1) == [
+        ["You", "Did something for the 0-th time.", QtCore.QDateTime(2020, 1, 1, 5, 1, 0, 0, 0)]
+    ]
 
     window.tab_audit.scrollToTop()
     window.update_session_audit_log(log)

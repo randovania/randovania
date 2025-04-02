@@ -15,7 +15,7 @@ from randovania import monitoring
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.gui import game_specific_gui
-from randovania.gui.dialog.multiplayer_select_preset_dialog import MultiplayerSelectPresetDialog
+from randovania.gui.dialog.select_preset_dialog import SelectPresetDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.interface_common.options import InfoAlert, Options
@@ -28,7 +28,6 @@ from randovania.network_common.multiplayer_session import (
     MultiplayerSessionEntry,
     MultiplayerUser,
     MultiplayerWorld,
-    UserID,
     UserWorldDetail,
 )
 
@@ -36,6 +35,7 @@ if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
     from randovania.gui.lib.window_manager import WindowManager
+    from randovania.network_common.user import UserID
 
 logger = logging.getLogger(__name__)
 
@@ -151,9 +151,10 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     #
 
     def _create_select_preset_dialog(self, include_world_name_prompt: bool, default_game: RandovaniaGame | None):
-        return MultiplayerSelectPresetDialog(
+        return SelectPresetDialog(
             self._window_manager,
             self._options,
+            for_multiworld=True,
             allowed_games=self._session.allowed_games,
             default_game=default_game,
             include_world_name_prompt=include_world_name_prompt,
@@ -286,7 +287,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
         game_enum = self._get_preset(world_uid).game
         patch_data = await self._session_api.create_patcher_file(
-            world_uid, options.options_for_game(game_enum).cosmetic_patches.as_json
+            world_uid, options.generic_per_game_options(game_enum).cosmetic_patches.as_json
         )
         self.GameExportRequested.emit(world_uid, patch_data)
 

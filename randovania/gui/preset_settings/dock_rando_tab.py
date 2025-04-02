@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import dataclasses
+import sys
 from collections import defaultdict
 from typing import TYPE_CHECKING
 
+import natsort
 from PySide6 import QtWidgets
 
 from randovania.gui.generated.preset_dock_rando_ui import Ui_PresetDockRando
@@ -110,16 +112,34 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
                 layout.addWidget(check)
                 self.type_checks[dock_type][weakness][name] = check
 
+            vertical_spacer = QtWidgets.QSpacerItem(
+                0, 0, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding
+            )
+            layout.addSpacerItem(vertical_spacer)
+
             type_layout.addWidget(group)
 
-        def keyfunc(weakness: DockWeakness):
-            if weakness == type_params.unlocked:
-                return 0
-            return len(weakness.long_name)
+        def names(weaknesses: set[DockWeakness]) -> set[str]:
+            return {weak.long_name for weak in weaknesses}
 
-        change_from = {weakness: True for weakness in sorted(type_params.change_from, key=keyfunc)}
+        change_from_and_to = names(type_params.change_from) & names(type_params.change_to)
+
+        def keyfunc(weakness: DockWeakness) -> tuple[bool, int, str]:
+            if weakness == type_params.unlocked:
+                # unlocked always first
+                return False, 0, ""
+
+            if weakness == type_params.locked:
+                # locked always last
+                return True, sys.maxsize, ""
+
+            # shared weaknesses first, then by length, then by name
+            return (weakness.long_name not in change_from_and_to), len(weakness.long_name), weakness.long_name
+
+        change_from = dict.fromkeys(natsort.natsorted(type_params.change_from, key=keyfunc), True)
         change_to = {
-            weakness: weakness != type_params.unlocked for weakness in sorted(type_params.change_to, key=keyfunc)
+            weakness: weakness != type_params.unlocked
+            for weakness in natsort.natsorted(type_params.change_to, key=keyfunc)
         }
         add_group("can_change_from", "Doors to Change", change_from)
         add_group("can_change_to", "Change Doors To", change_to)

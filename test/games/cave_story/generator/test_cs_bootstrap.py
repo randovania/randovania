@@ -36,11 +36,11 @@ def test_assign_pool_results(default_cs_configuration: CSConfiguration, puppies,
     default_cs_configuration = dataclasses.replace(default_cs_configuration, puppies_anywhere=puppies)
     tricks = default_cs_configuration.trick_level.set_level_for_trick(
         game_description.resource_database.get_trick("SNBubbler"),
-        LayoutTrickLevel.HYPERMODE,
+        LayoutTrickLevel.LUDICROUS,
     )
     tricks = tricks.set_level_for_trick(
         game_description.resource_database.get_trick("SNMissiles"),
-        LayoutTrickLevel.HYPERMODE,
+        LayoutTrickLevel.LUDICROUS,
     )
     default_cs_configuration = dataclasses.replace(default_cs_configuration, trick_level=tricks)
 
@@ -51,7 +51,7 @@ def test_assign_pool_results(default_cs_configuration: CSConfiguration, puppies,
     ).assign_starting_location(starting_area)
 
     pool_result = pool_creator.calculate_pool_results(default_cs_configuration, game_description)
-    result = CSBootstrap().assign_pool_results(Random(5000), patches, pool_result)
+    result = CSBootstrap().assign_pool_results(Random(5000), default_cs_configuration, patches, pool_result)
 
     # Puppies
     expected_puppies = {"Hajime", "Nene", "Mick", "Shinobu", "Kakeru"}
@@ -65,10 +65,13 @@ def test_assign_pool_results(default_cs_configuration: CSConfiguration, puppies,
     expected_first_cave_len = 1 if starting_area.area == "Start Point" else 0
 
     assert len(first_cave_assignment) == expected_first_cave_len
-    assert starting_area.area != "Start Point" or first_cave_assignment[0].broad_category.name in {
-        "weapon",
-        "missile_related",
-    }
+    assert starting_area.area != "Start Point" or any(
+        first_cave_assignment[0].has_hint_feature(feature)
+        for feature in (
+            "weapon",
+            "missile_related",
+        )
+    )
 
     # Camp weapon/life capsule
     camp_assignment = [target.pickup for index, target in result.pickup_assignment.items() if index in CAMP_INDICES]

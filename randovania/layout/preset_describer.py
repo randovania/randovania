@@ -63,6 +63,7 @@ class GamePresetDescriber:
                 expected_case_override.get(standard_pickup.name, standard_pickup.expected_case_for_describer),
                 pickup_state.included_ammo,
             )
+            assert expected_state is not None  # TODO: there's some better way for this
             expected_shuffled = expected_state.num_shuffled_pickups + int(
                 expected_state.include_copy_in_original_location
             )
@@ -108,6 +109,26 @@ class GamePresetDescriber:
 
         return result
 
+    def _hints_info(self, configuration: BaseConfiguration) -> list[str]:
+        strings: list[str] = []
+        game = default_database.game_description_for(configuration.game)
+
+        if game.has_random_hints:
+            if not configuration.hints.enable_random_hints:
+                strings.append("Random hints disabled")
+            elif configuration.hints.use_resolver_hints:
+                strings.append("Uses resolver-based hints")
+
+        if game.has_specific_location_hints:
+            if not configuration.hints.enable_specific_location_hints:
+                strings.append("Specific location hints disabled")
+
+        for hint, mode in configuration.hints.specific_pickup_hints.items():
+            details = configuration.game.hints.specific_pickup_hints[hint]
+            strings.append(f"{details.long_name} Hint: {mode.long_name}")
+
+        return strings
+
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         """Function providing any game-specific information to display in presets such as the goal."""
 
@@ -140,6 +161,9 @@ class GamePresetDescriber:
             template_strings["Logic Settings"].append(
                 f"{configuration.logical_resource_action.long_name} dangerous actions"
             )
+
+        if configuration.consider_possible_unsafe_resources:
+            template_strings["Logic Settings"].append("Considers possible unsafe resources")
 
         if randomization_mode != RandomizationMode.default():
             template_strings["Item Pool"].append(randomization_mode.description)
@@ -174,7 +198,7 @@ class GamePresetDescriber:
         # Gameplay
         starting_locations = configuration.starting_location.locations
         if len(starting_locations) == 1:
-            area = game_description.region_list.area_by_area_location(starting_locations[0])
+            area = game_description.region_list.area_by_area_location(starting_locations[0].area_identifier)
             starting_location = f"Starts at {game_description.region_list.area_name(area)}"
         else:
             starting_location = f"{len(starting_locations)} starting locations"
@@ -184,6 +208,11 @@ class GamePresetDescriber:
         dock_rando = configuration.dock_rando
         if dock_rando.is_enabled():
             template_strings["Gameplay"].append(dock_rando.mode.description)
+
+        # Hints
+        hint_strings = self._hints_info(configuration)
+        if hint_strings:
+            template_strings["Hints"].extend(hint_strings)
 
         return template_strings
 
@@ -203,7 +232,7 @@ def _require_majors_check(ammo_configuration: AmmoPickupConfiguration, ammo_name
     return result
 
 
-def message_for_required_mains(ammo_configuration: AmmoPickupConfiguration, message_to_item: dict[str, str]):
+def message_for_required_mains(ammo_configuration: AmmoPickupConfiguration, message_to_item: dict[str, str]) -> dict:
     item_names = list(message_to_item.values())
     main_required = _require_majors_check(ammo_configuration, item_names)
     return dict(zip(message_to_item.keys(), main_required))

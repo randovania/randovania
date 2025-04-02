@@ -9,6 +9,6 @@ need-to-play:
 - A Nintendo Virtual Boy
 - Your original Virtual Boy Game Cartridge
 multiworld: false
-development-state: experimental
+development-state: staging
 faq: []
 ---

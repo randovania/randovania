@@ -64,7 +64,7 @@
            <number>6</number>
           </property>
           <property name="sizeConstraint">
-           <enum>QLayout::SetMaximumSize</enum>
+           <enum>QLayout::SizeConstraint::SetMaximumSize</enum>
           </property>
           <item>
            <widget class="QLabel" name="games_supported_label">
@@ -78,7 +78,7 @@
              <string>Supported</string>
             </property>
             <property name="textFormat">
-             <enum>Qt::MarkdownText</enum>
+             <enum>Qt::TextFormat::MarkdownText</enum>
             </property>
            </widget>
           </item>
@@ -94,10 +94,10 @@
              <string>Experimental</string>
             </property>
             <property name="textFormat">
-             <enum>Qt::MarkdownText</enum>
+             <enum>Qt::TextFormat::MarkdownText</enum>
             </property>
             <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
            </widget>
           </item>
@@ -109,13 +109,13 @@
            <string>Welcome to Randovania {version}, a randomizer for a multitude of games.</string>
           </property>
           <property name="textFormat">
-           <enum>Qt::MarkdownText</enum>
+           <enum>Qt::TextFormat::MarkdownText</enum>
           </property>
           <property name="scaledContents">
            <bool>false</bool>
           </property>
           <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -160,7 +160,7 @@
         <item row="5" column="1">
          <spacer name="intro_top_spacer">
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Orientation::Vertical</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -173,7 +173,7 @@
         <item row="3" column="1">
          <spacer name="intro_vertical_spacer">
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Orientation::Vertical</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -205,7 +205,7 @@
            </sizepolicy>
           </property>
           <property name="textFormat">
-           <enum>Qt::MarkdownText</enum>
+           <enum>Qt::TextFormat::MarkdownText</enum>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -226,8 +226,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>664</width>
-          <height>411</height>
+          <width>682</width>
+          <height>451</height>
          </rect>
         </property>
        </widget>
@@ -262,10 +262,10 @@
         <item>
          <widget class="QLabel" name="browse_racetime_label">
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you joining a race hosted in &lt;a href=&quot;https://racetime.gg/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;racetime.gg&lt;/span&gt;&lt;/a&gt;?&lt;/p&gt;&lt;p&gt;Select the race from Randovania and automatically import the permalink!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you joining a live race hosted in &lt;a href=&quot;https://racetime.gg/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;racetime.gg&lt;/span&gt;&lt;/a&gt;?&lt;/p&gt;&lt;p&gt;Select the race from Randovania and automatically import the permalink!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="textFormat">
-           <enum>Qt::AutoText</enum>
+           <enum>Qt::TextFormat::AutoText</enum>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -279,6 +279,23 @@
          <widget class="QPushButton" name="browse_racetime_button">
           <property name="text">
            <string>Browse races in racetime.gg</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="browse_async_races_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you joining an asynchronous race?&lt;/p&gt;&lt;p&gt;Browse through a list of these to join one directly from Randovania.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::TextFormat::MarkdownText</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="browse_async_races_button">
+          <property name="text">
+           <string>Browse asynchronous races</string>
           </property>
          </widget>
         </item>
@@ -314,7 +331,7 @@
 For more information, check [Randovania Help](help://tab_multiworld)!</string>
           </property>
           <property name="textFormat">
-           <enum>Qt::MarkdownText</enum>
+           <enum>Qt::TextFormat::MarkdownText</enum>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -324,7 +341,7 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
         <item>
          <widget class="Line" name="multiworld_line">
           <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+           <enum>Qt::Orientation::Horizontal</enum>
           </property>
          </widget>
         </item>
@@ -365,7 +382,7 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
         <item>
          <widget class="Line" name="game_connection_line">
           <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+           <enum>Qt::Orientation::Horizontal</enum>
           </property>
          </widget>
         </item>
@@ -457,7 +474,7 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
        <string/>
       </property>
       <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
       </property>
       <property name="wordWrap">
        <bool>true</bool>
@@ -473,7 +490,7 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
      <x>0</x>
      <y>0</y>
      <width>688</width>
-     <height>21</height>
+     <height>17</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_open">
@@ -548,8 +565,15 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
     <addaction name="menu_action_dependencies"/>
     <addaction name="menu_action_about"/>
    </widget>
+   <widget class="QMenu" name="menu_create">
+    <property name="title">
+     <string>Create</string>
+    </property>
+    <addaction name="menu_action_async_race"/>
+   </widget>
    <addaction name="menu_open"/>
    <addaction name="menu_edit"/>
+   <addaction name="menu_create"/>
    <addaction name="menu_preferences"/>
    <addaction name="menu_help"/>
   </widget>
@@ -609,11 +633,6 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
   <action name="menu_action_previously_generated_games">
    <property name="text">
     <string>Previously generated games</string>
-   </property>
-  </action>
-  <action name="menu_action_layout_editor">
-   <property name="text">
-    <string>Corruption Layout Editor</string>
    </property>
   </action>
   <action name="menu_action_log_files_directory">
@@ -690,6 +709,11 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
    </property>
    <property name="text">
     <string>Visual Taskbar Alert</string>
+   </property>
+  </action>
+  <action name="menu_action_async_race">
+   <property name="text">
+    <string>Async Race</string>
    </property>
   </action>
  </widget>

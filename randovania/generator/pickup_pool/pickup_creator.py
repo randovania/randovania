@@ -4,8 +4,7 @@ from typing import TYPE_CHECKING
 
 from frozendict import frozendict
 
-from randovania.game_description import default_database
-from randovania.game_description.pickup import pickup_category
+from randovania.game_description import hint_features
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
 
@@ -14,8 +13,9 @@ if TYPE_CHECKING:
     from typing import Any
 
     from randovania.game.game_enum import RandovaniaGame
-    from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
-    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.game_description.pickup.pickup_database import PickupDatabase
+    from randovania.game_description.pickup.pickup_definition.ammo_pickup import AmmoPickupDefinition
+    from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.layout.base.standard_pickup_state import StandardPickupState
@@ -52,14 +52,12 @@ def create_standard_pickup(
     return PickupEntry(
         name=pickup.name,
         progression=tuple(_create_resources(progression) for progression in pickup.progression),
+        start_case=pickup.starting_condition,
         extra_resources=tuple(extra_resources),
-        model=PickupModel(
-            game=resource_database.game_enum,
-            name=pickup.model_name,
-        ),
+        model=resource_database.get_pickup_model(pickup.model_name),
         offworld_models=pickup.offworld_models,
-        pickup_category=pickup.pickup_category,
-        broad_category=pickup.broad_category,
+        gui_category=pickup.gui_category,
+        hint_features=pickup.hint_features,
         unlocks_resource=pickup.unlocks_ammo,
         respects_lock=ammo_requires_main_item,
         resource_lock=ammo.create_resource_lock(resource_database) if ammo is not None else None,
@@ -69,6 +67,7 @@ def create_standard_pickup(
             probability_multiplier=pickup.probability_multiplier * state.priority,
             index_age_impact=pickup.index_age_impact,
         ),
+        show_in_credits_spoiler=pickup.show_in_credits_spoiler,
     )
 
 
@@ -93,13 +92,10 @@ def create_ammo_pickup(
         name=ammo.name,
         progression=(),
         extra_resources=tuple(resources),
-        model=PickupModel(
-            game=resource_database.game_enum,
-            name=ammo.model_name,
-        ),
+        model=resource_database.get_pickup_model(ammo.model_name),
         offworld_models=ammo.offworld_models,
-        pickup_category=ammo.pickup_category,
-        broad_category=ammo.broad_category,
+        gui_category=ammo.gui_category,
+        hint_features=ammo.hint_features,
         respects_lock=requires_main_item,
         resource_lock=ammo.create_resource_lock(resource_database),
         generator_params=PickupGeneratorParams(
@@ -108,12 +104,15 @@ def create_ammo_pickup(
             probability_multiplier=ammo.probability_multiplier,
             index_age_impact=ammo.index_age_impact,
         ),
+        show_in_credits_spoiler=False,
+        is_expansion=True,
     )
 
 
 def create_generated_pickup(
     pickup_group: str,
     resource_database: ResourceDatabase,
+    pickup_database: PickupDatabase,
     *,
     minimum_progression: int = 0,
     **format_kwargs: Any,
@@ -122,13 +121,12 @@ def create_generated_pickup(
     Creates a concrete PickupEntry given a generated pickup group and an identifier
     :param pickup_group:
     :param resource_database:
+    :param pickup_database:
     :param minimum_progression:
     :return:
     """
 
-    pickup_database = default_database.pickup_database_for_game(resource_database.game_enum)
     pickup = pickup_database.generated_pickups[pickup_group]
-
     assert not pickup.ammo
     assert not pickup.unlocks_ammo
 
@@ -139,15 +137,12 @@ def create_generated_pickup(
         name=pickup.name.format(**format_kwargs),
         progression=tuple(_create_resources(progression) for progression in pickup.progression),
         extra_resources=tuple(_create_resources(item, count) for item, count in pickup.additional_resources.items()),
-        model=PickupModel(
-            game=resource_database.game_enum,
-            name=pickup.model_name.format(**format_kwargs),
-        ),
+        model=resource_database.get_pickup_model(pickup.model_name.format(**format_kwargs)),
         offworld_models=frozendict(
             {game: model_name.format(**format_kwargs) for game, model_name in pickup.offworld_models.items()}
         ),
-        pickup_category=pickup.pickup_category,
-        broad_category=pickup.broad_category,
+        gui_category=pickup.gui_category,
+        hint_features=pickup.hint_features,
         generator_params=PickupGeneratorParams(
             preferred_location_category=pickup.preferred_location_category,
             probability_offset=pickup.probability_offset,
@@ -156,6 +151,13 @@ def create_generated_pickup(
             required_progression=minimum_progression,
         ),
     )
+
+
+USELESS_PICKUP_CATEGORY = hint_features.HintFeature(
+    name="useless",
+    long_name="Useless",
+    hint_details=hint_features.HintDetails("an ", "Energy Transfer Module"),
+)
 
 
 def create_nothing_pickup(resource_database: ResourceDatabase, model_name: str = "Nothing") -> PickupEntry:
@@ -168,15 +170,13 @@ def create_nothing_pickup(resource_database: ResourceDatabase, model_name: str =
     return PickupEntry(
         name="Nothing",
         progression=(),
-        model=PickupModel(
-            game=resource_database.game_enum,
-            name=model_name,
-        ),
-        pickup_category=pickup_category.USELESS_PICKUP_CATEGORY,
-        broad_category=pickup_category.USELESS_PICKUP_CATEGORY,
+        model=resource_database.get_pickup_model(model_name),
+        gui_category=USELESS_PICKUP_CATEGORY,
+        hint_features=frozenset((USELESS_PICKUP_CATEGORY,)),
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,  # TODO
         ),
+        show_in_credits_spoiler=False,
     )
 
 
@@ -195,9 +195,10 @@ def create_visual_nothing(game: RandovaniaGame, model_name: str, pickup_name: st
             game=game,
             name=model_name,
         ),
-        pickup_category=pickup_category.USELESS_PICKUP_CATEGORY,
-        broad_category=pickup_category.USELESS_PICKUP_CATEGORY,
+        gui_category=USELESS_PICKUP_CATEGORY,
+        hint_features=frozenset((USELESS_PICKUP_CATEGORY,)),
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,  # TODO
         ),
+        show_in_credits_spoiler=False,
     )

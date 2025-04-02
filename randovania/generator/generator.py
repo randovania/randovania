@@ -12,7 +12,7 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_collection import ResourceCollection
-from randovania.generator import dock_weakness_distributor
+from randovania.generator import dock_weakness_distributor, hint_distributor
 from randovania.generator.filler.filler_configuration import FillerResults, PlayerPool
 from randovania.generator.filler.filler_library import UnableToGenerate, filter_unassigned_pickup_nodes
 from randovania.generator.filler.runner import run_filler
@@ -94,7 +94,7 @@ async def create_player_pool(
             configuration, rng, game, num_players > 1, player_index=player_index, rng_required=True
         )
         patches = dock_weakness_distributor.distribute_pre_fill_weaknesses(patches, rng)
-        patches = await game_generator.hint_distributor.assign_pre_filler_hints(
+        patches = await game.game.hints.hint_distributor.assign_pre_filler_hints(
             patches,
             PreFillParams(
                 rng,
@@ -106,8 +106,7 @@ async def create_player_pool(
         )
 
         pool_results = pool_creator.calculate_pool_results(configuration, game)
-
-        patches = game_generator.bootstrap.assign_pool_results(rng, patches, pool_results)
+        patches = game_generator.bootstrap.assign_pool_results(rng, configuration, patches, pool_results)
 
         if configuration.check_if_beatable_after_base_patches and not await check_if_beatable(patches, pool_results):
             continue
@@ -118,6 +117,7 @@ async def create_player_pool(
             configuration=configuration,
             patches=patches,
             pickups=pool_results.to_place,
+            pickups_in_world=list(pool_results.pickups_in_world()),
         )
 
     raise InvalidConfiguration(
@@ -131,7 +131,7 @@ async def _create_pools_and_fill(
     presets: list[Preset],
     status_update: Callable[[str], None],
     world_names: list[str],
-) -> FillerResults:
+) -> tuple[list[PlayerPool], FillerResults]:
     """
     Runs the rng-dependant parts of the generation, with retries
     :param rng:
@@ -168,7 +168,8 @@ async def _create_pools_and_fill(
                 raise config
             raise
 
-    return await run_filler(rng, player_pools, world_names, status_update)
+    results = await run_filler(rng, player_pools, world_names, status_update)
+    return player_pools, results
 
 
 def _distribute_remaining_items(rng: Random, filler_results: FillerResults, presets: list[Preset]) -> FillerResults:
@@ -270,11 +271,15 @@ async def _create_description(
         retry=tenacity.retry_if_exception_type(UnableToGenerate),
         reraise=True,
     )
-
-    filler_results: FillerResults = await retrying(_create_pools_and_fill, rng, presets, status_update, world_names)
+    pools_results: tuple[list[PlayerPool], FillerResults] = await retrying(
+        _create_pools_and_fill, rng, presets, status_update, world_names
+    )
+    player_pools, filler_results = pools_results
 
     filler_results = _distribute_remaining_items(rng, filler_results, presets)
     filler_results = await dock_weakness_distributor.distribute_post_fill_weaknesses(rng, filler_results, status_update)
+    filler_results = await hint_distributor.distribute_generic_hints(rng, filler_results)
+    filler_results = await hint_distributor.distribute_specific_location_hints(rng, filler_results)
 
     return LayoutDescription.create_new(
         generator_parameters=generator_params,

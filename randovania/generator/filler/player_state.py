@@ -5,6 +5,7 @@ import re
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.common import elevators
 from randovania.generator import reach_lib
@@ -16,13 +17,13 @@ from randovania.generator.filler.pickup_list import (
     get_pickups_that_solves_unreachable,
     interesting_resources_for_reach,
 )
+from randovania.generator.hint_state import HintState
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
     from randovania.game_description.assignment import PickupTarget
-    from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.game_description import GameDescription
@@ -35,18 +36,40 @@ if TYPE_CHECKING:
     from randovania.resolver.state import State
 
 
+class GeneratorHintState(HintState):
+    def advance_hint_seen_count(self, state: State) -> None:
+        super().advance_hint_seen_count(state)
+        filler_logging.print_new_node_identifiers(self.game, self.hint_seen_count, "Hints")
+
+    def valid_available_locations_for_hint(
+        self, state: PlayerState, current_uncollected: UncollectedState, all_locations: WeightedLocations
+    ) -> list[PickupIndex]:
+        """
+        Which PickupIndexes are valid targets for a hint
+        considering the given UncollectedState and WeightedLocations?
+        """
+        return [
+            index
+            for owner, index, weight in all_locations.all_items()
+            if (
+                owner == state
+                and weight >= self.configuration.minimum_location_weight_for_hint_placement
+                and index in current_uncollected.pickup_indices
+            )
+        ]
+
+
 class PlayerState:
     index: int
     game: GameDescription
     pickups_left: list[PickupEntry]
     configuration: FillerConfiguration
     pickup_index_ages: collections.defaultdict[PickupIndex, float]
-    hint_seen_count: collections.defaultdict[NodeIdentifier, int]
-    hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]]
     event_seen_count: dict[ResourceInfo, int]
     _unfiltered_potential_actions: tuple[PickupCombinations, tuple[ResourceNode, ...]]
     num_starting_pickups_placed: int
     num_assigned_pickups: int
+    hint_state: GeneratorHintState
 
     def __init__(
         self,
@@ -62,19 +85,19 @@ class PlayerState:
         self.game = game
 
         self.reach = reach_lib.advance_reach_with_possible_unsafe_resources(
-            reach_lib.reach_with_all_safe_resources(game, initial_state)
+            reach_lib.reach_with_all_safe_resources(game, initial_state, configuration)
         )
         self.pickups_left = pickups_left
         self.configuration = configuration
 
         self.pickup_index_ages = collections.defaultdict(float)
-        self.hint_seen_count = collections.defaultdict(int)
         self.event_seen_count = collections.defaultdict(int)
-        self.hint_initial_pickups = {}
         self.num_starting_pickups_placed = 0
         self.num_assigned_pickups = 0
         self.num_actions = 0
         self.indices_groups, self.all_indices = build_available_indices(game.region_list, configuration)
+
+        self.hint_state = GeneratorHintState(configuration, game)
 
     def __repr__(self) -> str:
         return f"PlayerState {self.name}"
@@ -82,18 +105,10 @@ class PlayerState:
     def update_for_new_state(self) -> None:
         debug.debug_print(f"\n>>> Updating state of {self.name}")
 
-        self.advance_scan_asset_seen_count()
+        self.hint_state.advance_hint_seen_count(self.reach.state)
         self._advance_event_seen_count()
         self._log_new_pickup_index()
         self._calculate_potential_actions()
-
-    def advance_scan_asset_seen_count(self) -> None:
-        for hint_identifier in self.reach.state.collected_hints:
-            self.hint_seen_count[hint_identifier] += 1
-            if self.hint_seen_count[hint_identifier] == 1:
-                self.hint_initial_pickups[hint_identifier] = frozenset(self.reach.state.collected_pickup_indices)
-
-        filler_logging.print_new_node_identifiers(self.game, self.hint_seen_count, "Scan Asset")
 
     def _advance_event_seen_count(self) -> None:
         for resource, quantity in self.reach.state.resources.as_resource_gain():
@@ -145,13 +160,21 @@ class PlayerState:
             context, self.reach.state.health_for_damage_requirements
         )
 
-    def assign_pickup(self, pickup_index: PickupIndex, target: PickupTarget) -> None:
+    def assign_pickup(
+        self,
+        pickup_index: PickupIndex,
+        target: PickupTarget,
+        current_uncollected: UncollectedState,
+        all_locations: WeightedLocations,
+    ) -> None:
         self.num_assigned_pickups += 1
         self.reach.state.patches = self.reach.state.patches.assign_new_pickups(
             [
                 (pickup_index, target),
             ]
         )
+        available = self.hint_state.valid_available_locations_for_hint(self, current_uncollected, all_locations)
+        self.hint_state.assign_available_locations(pickup_index, available)
 
     def current_state_report(self) -> str:
         state = UncollectedState.from_reach(self.reach)
@@ -199,12 +222,8 @@ class PlayerState:
 
         teleporters = []
         teleporter_dock_types = self.reach.game.dock_weakness_database.all_teleporter_dock_types
-        for node in wl.iterate_nodes():
-            if (
-                isinstance(node, DockNode)
-                and node.dock_type in teleporter_dock_types
-                and self.reach.is_reachable_node(node)
-            ):
+        for node in wl.iterate_nodes_of_type(DockNode):
+            if node.dock_type in teleporter_dock_types and self.reach.is_reachable_node(node):
                 other = wl.resolve_dock_node(node, s.patches)
                 teleporters.append(
                     "* {} to {}".format(
@@ -232,8 +251,8 @@ class PlayerState:
             self.game.region_list.node_name(self.reach.state.node, with_region=True, distinguish_dark_aether=True),
             self.num_actions,
             self.num_assigned_pickups,
-            len(state.indices),
-            sum(1 for n in self.reach.iterate_nodes if self.reach.is_safe_node(n)),
+            len(state.pickup_indices),
+            sum(1 for n in self.reach.safe_nodes),
             ", ".join(
                 name if quantity == 1 else f"{name} x{quantity}"
                 for name, quantity in sorted(pickups_by_name_and_quantity.items())
@@ -257,29 +276,6 @@ class PlayerState:
 
         return weighted
 
-    def should_have_hint(
-        self, pickup: PickupEntry, current_uncollected: UncollectedState, all_locations: WeightedLocations
-    ) -> bool:
-        if not pickup.pickup_category.hinted_as_major:
-            return False
-
-        config = self.configuration
-
-        valid_locations = [
-            index
-            for owner, index, weight in all_locations.all_items()
-            if (
-                owner == self
-                and weight >= config.minimum_location_weight_for_hint_placement
-                and index in current_uncollected.indices
-            )
-        ]
-        can_hint = len(valid_locations) >= config.minimum_available_locations_for_hint_placement
-        if not can_hint:
-            debug.debug_print(f"+ Only {len(valid_locations)} qualifying open locations, hint refused.")
-
-        return can_hint
-
     def count_self_locations(self, locations: WeightedLocations) -> int:
         return locations.count_for_player(self)
 
@@ -300,7 +296,14 @@ def build_available_indices(
     """
     Groups indices into separated groups, so each group can be weighted separately.
     """
-    indices_groups = [set(region.pickup_indices) - configuration.indices_to_exclude for region in region_list.regions]
+    named_index_group = collections.defaultdict(set)
+
+    for region, area, node in region_list.all_regions_areas_nodes:
+        if isinstance(node, PickupNode) and node.pickup_index not in configuration.indices_to_exclude:
+            group_name = node.custom_index_group or region.name
+            named_index_group[group_name].add(node.pickup_index)
+
+    indices_groups = list(named_index_group.values())
     all_indices = set().union(*indices_groups)
 
     return indices_groups, all_indices

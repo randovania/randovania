@@ -6,15 +6,16 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug, resolver
 
 
+@pytest.mark.benchmark
 @pytest.mark.skip_resolver_tests
 @pytest.mark.parametrize(
     "seed_name",
     [
         "seed_a.rdvgame",
-        "corruption_seed_a.rdvgame",
         "prime1-vanilla.rdvgame",
         "prime2_seed_b.rdvgame",
         "blank/issue-3717.rdvgame",
+        "dread/vanilla.rdvgame",
     ],
 )
 async def test_resolver_with_log_file(test_files_dir, seed_name: str):

@@ -1,20 +1,28 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import randovania.game.data
 import randovania.game.development_state
 import randovania.game.generator
 import randovania.game.gui
+import randovania.game.hints
 import randovania.game.layout
 import randovania.game.web_info
-from randovania.games.prime1.hint_distributor import PrimeHintDistributor
+from randovania.games.prime1.db_integrity import find_prime_db_errors
 from randovania.games.prime1.layout.preset_describer import (
     PrimePresetDescriber,
 )
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 
+if TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExporter
+    from randovania.exporter.patch_data_factory import PatchDataFactory
+    from randovania.interface_common.options import PerGameOptions
 
-def _options():
+
+def _options() -> type[PerGameOptions]:
     from randovania.games.prime1.exporter.options import PrimePerGameOptions
 
     return PrimePerGameOptions
@@ -49,12 +57,35 @@ def _generator() -> randovania.game.generator.GameGenerator:
         pickup_pool_creator=prime1_specific_pool,
         bootstrap=PrimeBootstrap(),
         base_patches_factory=PrimeBasePatchesFactory(),
-        hint_distributor=PrimeHintDistributor(),
         action_weights=ActionWeights(),
     )
 
 
-def _patch_data_factory():
+def _hints() -> randovania.game.hints.GameHints:
+    from randovania.games.prime1.hint_distributor import PrimeHintDistributor
+
+    return randovania.game.hints.GameHints(
+        hint_distributor=PrimeHintDistributor(),
+        specific_pickup_hints={
+            "artifacts": randovania.game.hints.SpecificHintDetails(
+                long_name="Chozo Artifacts",
+                description="This controls how precise the hints for Chozo Artifacts in Artifact Temple are.",
+            ),
+            "phazon_suit": randovania.game.hints.SpecificHintDetails(
+                long_name="Phazon Suit",
+                description="This controls how precise the hint for Phazon Suit in Impact Crater is.",
+                disabled_details="No hint is added.",
+                hide_area_details=(
+                    "A scan post will be placed in Crater Entry Point "
+                    "revealing Phazon Suit's region (e.g. Player 2's Phazon Mines)."
+                ),
+                precise_details="Same as above, but shows the exact area name as well.",
+            ),
+        },
+    )
+
+
+def _patch_data_factory() -> type[PatchDataFactory]:
     from randovania.games.prime1.exporter.patch_data_factory import (
         PrimePatchDataFactory,
     )
@@ -62,7 +93,7 @@ def _patch_data_factory():
     return PrimePatchDataFactory
 
 
-def _exporter():
+def _exporter() -> GameExporter:
     from randovania.games.prime1.exporter.game_exporter import PrimeGameExporter
 
     return PrimeGameExporter()
@@ -138,7 +169,9 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     options=_options,
     gui=_gui,
     generator=_generator,
+    hints=_hints,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     defaults_available_in_game_sessions=True,
+    logic_db_integrity=find_prime_db_errors,
 )

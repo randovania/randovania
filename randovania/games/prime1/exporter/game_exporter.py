@@ -15,7 +15,7 @@ from randovania.game_description import default_database
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.games.common.prime_family.exporter import good_hashes
 from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
-from randovania.lib.status_update_lib import DynamicSplitProgressUpdate
+from randovania.lib.status_update_lib import DynamicSplitProgressUpdate, ProgressUpdateCallable
 from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
@@ -28,7 +28,7 @@ if TYPE_CHECKING:
 class PrimeGameExportParams(GameExportParams):
     input_path: Path
     output_path: Path
-    echoes_input_path: Path
+    echoes_input_path: Path | None
     asset_cache_path: Path
     use_echoes_models: bool
     cache_path: Path
@@ -40,7 +40,7 @@ class PrimeGameExportParams(GameExportParams):
         }
 
 
-def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets: bool):
+def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets: bool) -> None:
     model_list = []
     if use_external_assets:
         bad_models = {
@@ -63,7 +63,7 @@ def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets:
                 pickup["model"] = converted_model_name
 
 
-def create_map_using_matplotlib(room_connections: list[tuple[str, str]], filepath: Path):
+def create_map_using_matplotlib(room_connections: list[tuple[str, str]], filepath: Path) -> None:
     import logging
 
     import networkx
@@ -76,7 +76,7 @@ def create_map_using_matplotlib(room_connections: list[tuple[str, str]], filepat
 
     import matplotlib
 
-    matplotlib._log.disabled = True
+    matplotlib._log.disabled = True  # type: ignore[attr-defined]
     from matplotlib import pyplot
 
     # model this world's connections as a graph
@@ -94,10 +94,10 @@ def create_map_using_matplotlib(room_connections: list[tuple[str, str]], filepat
     pyplot.clf()
 
 
-def make_one_map(filepath: Path, level_data: dict, region: Region, dock_types_to_ignore: list[DockType]):
+def make_one_map(filepath: Path, level_data: dict, region: Region, dock_types_to_ignore: list[DockType]) -> None:
     from randovania.game_description.db.dock_node import DockNode
 
-    def wrap_text(text):
+    def wrap_text(text: str) -> str:
         return "\n".join(wrap(text, 18))
 
     # make list of all edges between rooms
@@ -141,7 +141,7 @@ def make_one_map(filepath: Path, level_data: dict, region: Region, dock_types_to
     create_map_using_matplotlib(room_connections, filepath)
 
 
-class PrimeGameExporter(GameExporter):
+class PrimeGameExporter(GameExporter[PrimeGameExportParams]):
     @property
     def can_start_new_export(self) -> bool:
         """
@@ -156,14 +156,14 @@ class PrimeGameExporter(GameExporter):
         """
         return False
 
-    def export_params_type(self) -> type[GameExportParams]:
+    def export_params_type(self) -> type[PrimeGameExportParams]:
         """
         Returns the type of the GameExportParams expected by this exporter.
         """
         return PrimeGameExportParams
 
     @monitoring.trace_function
-    def make_room_rando_maps(self, directory: Path, base_filename: str, level_data: dict):
+    def make_room_rando_maps(self, directory: Path, base_filename: str, level_data: dict) -> None:
         game_description = default_database.game_description_for(RandovaniaGame.METROID_PRIME)
         rl = game_description.region_list
         dock_types_to_ignore = game_description.dock_weakness_database.all_teleporter_dock_types
@@ -181,11 +181,9 @@ class PrimeGameExporter(GameExporter):
     def _do_export_game(
         self,
         patch_data: dict,
-        export_params: GameExportParams,
+        export_params: PrimeGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
-        assert isinstance(export_params, PrimeGameExportParams)
-
         input_file = export_params.input_path
         output_file = export_params.output_path
 
@@ -194,10 +192,12 @@ class PrimeGameExporter(GameExporter):
 
         monitoring.set_tag("prime_output_format", output_file.suffix)
 
-        import py_randomprime
+        import py_randomprime  # type: ignore[import-untyped]
         from open_prime_rando.dol_patching import all_prime_dol_patches
         from ppc_asm import assembler
-        from Random_Enemy_Attributes.Random_Enemy_Attributes import PyRandom_Enemy_Attributes
+        from Random_Enemy_Attributes.Random_Enemy_Attributes import (  # type: ignore[import-untyped]
+            PyRandom_Enemy_Attributes,
+        )
         from retro_data_structures.game_check import Game as RDSGame
 
         symbols = py_randomprime.symbols_for_file(input_file)
@@ -228,8 +228,8 @@ class PrimeGameExporter(GameExporter):
         monitoring.set_tag("prime_random_enemy_attributes", random_enemy_attributes is not None)
 
         split_updater = DynamicSplitProgressUpdate(progress_update)
-        asset_updater = None
-        enemy_updater = None
+        asset_updater: ProgressUpdateCallable | None = None
+        enemy_updater: ProgressUpdateCallable | None = None
 
         if export_params.use_echoes_models:
             asset_updater = split_updater.create_split()
@@ -241,6 +241,9 @@ class PrimeGameExporter(GameExporter):
 
         assets_meta = {}
         if export_params.use_echoes_models:
+            assert export_params.echoes_input_path is not None
+            assert asset_updater is not None
+
             assets_path = export_params.asset_cache_path
             assets_meta = asset_conversion.convert_prime2_pickups(
                 export_params.echoes_input_path, assets_path, asset_updater
@@ -273,6 +276,8 @@ class PrimeGameExporter(GameExporter):
                 raise RuntimeError(f"randomprime panic: {e}") from e
 
         if random_enemy_attributes is not None:
+            assert enemy_updater is not None
+
             enemy_updater("Randomizing enemy attributes", 0)
             with monitoring.trace_block("PyRandom_Enemy_Attributes"):
                 PyRandom_Enemy_Attributes(

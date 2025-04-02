@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 from random import Random
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
-from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.dock_node import DockNode
@@ -13,11 +12,11 @@ from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.samus_returns.exporter.hint_namer import MSRHintNamer
-from randovania.games.samus_returns.exporter.joke_hints import JOKE_HINTS
-from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
-from randovania.games.samus_returns.layout.msr_configuration import FinalBossConfiguration
-from randovania.games.samus_returns.layout.msr_cosmetic_patches import MusicMode
+from randovania.games.samus_returns.exporter.joke_hints import MSR_JOKE_HINTS
+from randovania.games.samus_returns.layout.msr_configuration import FinalBossConfiguration, MSRConfiguration
+from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches, MusicMode
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.lib import random_lib
 
@@ -31,8 +30,6 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupEntry
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
-    from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
-    from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches
 
 _ALTERNATIVE_MODELS = {
     PickupModel(RandovaniaGame.METROID_SAMUS_RETURNS, "Nothing"): ["itemsphere"],
@@ -149,6 +146,7 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
         "m_met2_caverns3_99",
         "m_met2_caverns4_99",
         "m_met2_metroid_hatching99",
+        "m_met2_metroidnest_10gentei99",
         "m_prologue99",
         "m_select99",
         "m_title99",
@@ -196,12 +194,14 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
     return {f"{orig}": f"{new}" for orig, new in zip(original_list, new_list, strict=True)}
 
 
-class MSRPatchDataFactory(PatchDataFactory):
-    cosmetic_patches: MSRCosmeticPatches
-    configuration: MSRConfiguration
-
+class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_SAMUS_RETURNS
+
+    @override
+    @classmethod
+    def hint_namer_type(cls) -> type[MSRHintNamer]:
+        return MSRHintNamer
 
     def _calculate_starting_inventory(self, resources: ResourceCollection) -> dict[str, int]:
         result = {}
@@ -298,32 +298,28 @@ class MSRPatchDataFactory(PatchDataFactory):
         return details
 
     def _encode_hints(self, rng: Random) -> list[dict]:
-        hint_namer = MSRHintNamer(self.description.all_patches, self.players_config)
-        exporter = HintExporter(hint_namer, self.rng, ["A joke hint."])
+        exporter = self.get_hint_exporter(self.description.all_patches, self.players_config, rng, MSR_JOKE_HINTS)
 
         hints = [
             {
                 "accesspoint_actor": self._teleporter_ref_for(logbook_node),
                 "text": exporter.create_message_for_hint(
                     self.patches.hints[logbook_node.identifier],
-                    self.description.all_patches,
-                    self.players_config,
                     True,
                 ),
             }
-            for logbook_node in self.game.region_list.iterate_nodes()
-            if isinstance(logbook_node, HintNode)
+            for logbook_node in self.game.region_list.iterate_nodes_of_type(HintNode)
         ]
 
         artifacts = [self.game.resource_database.get_item(f"Metroid DNA {i + 1}") for i in range(39)]
         dna_hint_mapping: dict = {}
         hint_config = self.configuration.hints
-        if hint_config.artifacts != ItemHintMode.DISABLED:
+        if hint_config.specific_pickup_hints["artifacts"] != SpecificPickupHintMode.DISABLED:
             dna_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
-                hint_namer,
-                hint_config.artifacts == ItemHintMode.HIDE_AREA,
+                exporter.namer,
+                hint_config.specific_pickup_hints["artifacts"] == SpecificPickupHintMode.HIDE_AREA,
                 artifacts,
                 False,
             )
@@ -353,7 +349,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             shuffled_hints = list(dna_hint_mapping.values())[start:end]
             shuffled_hints = [hint for hint in shuffled_hints if "Hunter already started with" not in hint]
             if not shuffled_hints:
-                shuffled_hints = [rng.choice(JOKE_HINTS + [dud_hint])]
+                shuffled_hints = [rng.choice(MSR_JOKE_HINTS + [dud_hint])]
             hints.append(
                 {"accesspoint_actor": {"scenario": scenario, "actor": actor}, "text": "\n".join(shuffled_hints) + "\n"}
             )
@@ -380,12 +376,12 @@ class MSRPatchDataFactory(PatchDataFactory):
         final_boss_resource = [(self.game.resource_database.get_item(final_boss_item))]
         final_boss_hint: str = ""
 
-        if hint_config.final_boss_item != ItemHintMode.DISABLED:
+        if hint_config.specific_pickup_hints["final_boss_item"] != SpecificPickupHintMode.DISABLED:
             temp_final_boss_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
                 hint_namer,
-                hint_config.final_boss_item == ItemHintMode.HIDE_AREA,
+                hint_config.specific_pickup_hints["final_boss_item"] == SpecificPickupHintMode.HIDE_AREA,
                 final_boss_resource,
                 False,
             )
@@ -715,7 +711,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             "hints": self._encode_hints(self.rng),
             "final_boss_hint": self._create_final_boss_hint(),
             "cosmetic_patches": self._create_cosmetics(
-                self.description.get_seed_for_player(self.players_config.player_index)
+                self.description.get_seed_for_world(self.players_config.player_index)
             ),
             "configuration_identifier": self.description.shareable_hash,
             "custom_doors": self._add_custom_doors(),
@@ -726,7 +722,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             },
             "objective": self._objective(self.configuration),
             "layout_uuid": str(self.players_config.get_own_uuid()),
-            "enable_remote_lua": self.cosmetic_patches.enable_remote_lua or self.players_config.is_multiworld,
+            "enable_remote_lua": True,
         }
 
 

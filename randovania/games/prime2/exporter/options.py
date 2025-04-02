@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from pathlib import Path
+from typing import override
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.interface_common.options import PerGameOptions, decode_if_not_none
@@ -14,7 +15,7 @@ class EchoesPerGameOptions(PerGameOptions):
     use_external_models: set[RandovaniaGame] = dataclasses.field(default_factory=set)
 
     @property
-    def as_json(self):
+    def as_json(self) -> dict:
         return {
             **super().as_json,
             "input_path": str(self.input_path) if self.input_path is not None else None,
@@ -32,3 +33,8 @@ class EchoesPerGameOptions(PerGameOptions):
             output_directory=decode_if_not_none(value["output_directory"], Path),
             use_external_models={RandovaniaGame(g) for g in value["use_external_models"]},
         )
+
+    @classmethod
+    @override
+    def game_enum(cls) -> RandovaniaGame:
+        return RandovaniaGame.METROID_PRIME_ECHOES

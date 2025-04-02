@@ -15,7 +15,6 @@ from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -46,6 +45,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.region import Region
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.preset import Preset
@@ -136,7 +136,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.game_configuration = preset.configuration
         self.persistence_path = persistence_path
 
-    async def configure(self):
+    async def configure(self) -> None:
         game = filtered_database.game_description_for_layout(self.game_configuration).get_mutable()
         game_generator = game.game.generator
         game.resource_database = game_generator.bootstrap.patch_resource_database(
@@ -146,7 +146,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         pool_results = pool_creator.calculate_pool_results(self.game_configuration, game)
         patches = (
-            GamePatches.create_from_game(game, 0, self.game_configuration)
+            game.game.generator.base_patches_factory.create_static_base_patches(self.game_configuration, game, 0)
             .assign_new_pickups((index, PickupTarget(pickup, 0)) for index, pickup in pool_results.assignment.items())
             .assign_extra_starting_pickups(pool_results.starting)
         )
@@ -283,7 +283,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         return True
 
     def reset(self):
-        self.bulk_change_quantity({pickup: 0 for pickup in self._collected_pickups.keys()})
+        self.bulk_change_quantity(dict.fromkeys(self._collected_pickups.keys(), 0))
 
         while len(self._actions) > 1:
             self._actions.pop()
@@ -434,7 +434,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
                     node_item = self._node_to_item[node]
                     if node.is_resource_node:
-                        resource_node = typing.cast(ResourceNode, node)
+                        resource_node = typing.cast("ResourceNode", node)
 
                         if self._show_only_resource_nodes:
                             is_visible = is_visible and not isinstance(node, ConfigurableNode)
@@ -599,10 +599,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         scan_visor = search.find_resource_info_with_long_name(game.resource_database.item, "Scan Visor")
         scan_visor_req = ResourceRequirement.simple(scan_visor)
 
-        for node in game.region_list.iterate_nodes():
-            if not isinstance(node, ConfigurableNode):
-                continue
-
+        for node in game.region_list.iterate_nodes_of_type(ConfigurableNode):
             combo = self._translator_gate_to_combo[node.identifier]
             requirement: LayoutTranslatorRequirement | None = combo.currentData()
 
@@ -682,7 +679,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         node = region_list.node_by_identifier(node_location)
         self._initial_state.node = node
 
-        def is_resource_node_present(node: Node, state: State):
+        def is_resource_node_present(node: Node, state: State) -> typing.TypeGuard[ResourceNode]:
             if node.is_resource_node:
                 assert isinstance(node, ResourceNode)
                 is_resource_set = self._initial_state.resources.is_resource_set
@@ -773,7 +770,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         for pickup, quantity in pickup_with_quantity.items():
             self._collected_pickups[pickup] = 0
-            parent_widget, parent_layout = parent_widgets.get(pickup.pickup_category.name, major_pickup_parent_widgets)
+            parent_widget, parent_layout = parent_widgets.get(pickup.gui_category.name, major_pickup_parent_widgets)
 
             row = row_for_parent[parent_widget]
 
@@ -875,8 +872,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             {
                 "translator_gates": {
                     node.identifier.as_string: LayoutTranslatorRequirement.VIOLET
-                    for node in game.region_list.iterate_nodes()
-                    if isinstance(node, ConfigurableNode)
+                    for node in game.region_list.iterate_nodes_of_type(ConfigurableNode)
                 }
             }
         )

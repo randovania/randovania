@@ -37,6 +37,7 @@ from randovania.resolver.state import State
 
 if TYPE_CHECKING:
     from randovania.game_description.db.resource_node import ResourceNode
+    from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.generator_reach import GeneratorReach
     from randovania.layout.preset import Preset
 
@@ -72,13 +73,19 @@ def run_bootstrap(
     return game, state, parameters
 
 
-def _create_reach_with_unsafe(game: GameDescription, state: State) -> GeneratorReach:
-    return reach_lib.advance_reach_with_possible_unsafe_resources(reach_lib.reach_with_all_safe_resources(game, state))
+def _create_reach_with_unsafe(
+    game: GameDescription, state: State, filler_config: FillerConfiguration
+) -> GeneratorReach:
+    return reach_lib.advance_reach_with_possible_unsafe_resources(
+        reach_lib.reach_with_all_safe_resources(game, state, filler_config)
+    )
 
 
-def _create_reaches_and_compare(game: GameDescription, state: State) -> tuple[GeneratorReach, GeneratorReach]:
-    first_reach = _create_reach_with_unsafe(game, state)
-    second_reach = _create_reach_with_unsafe(game, first_reach.state)
+def _create_reaches_and_compare(
+    game: GameDescription, state: State, filler_config: FillerConfiguration
+) -> tuple[GeneratorReach, GeneratorReach]:
+    first_reach = _create_reach_with_unsafe(game, state, filler_config)
+    second_reach = _create_reach_with_unsafe(game, first_reach.state, filler_config)
 
     assert first_reach.is_safe_node(first_reach.state.node)
     assert second_reach.is_safe_node(first_reach.state.node)
@@ -105,8 +112,6 @@ def _compare_actions(
 _ignore_events_for_game = {
     RandovaniaGame.METROID_PRIME: {"Event33"},
     RandovaniaGame.METROID_PRIME_ECHOES: {"Event91", "Event92", "Event97"},
-    RandovaniaGame.METROID_PRIME_CORRUPTION: {"Event1", "Event146", "Event147", "Event148", "Event154"},
-    RandovaniaGame.SUPER_METROID: {"Event6"},
     RandovaniaGame.METROID_DREAD: {},
     RandovaniaGame.CAVE_STORY: {
         "camp",
@@ -122,8 +127,6 @@ _ignore_events_for_game = {
 }
 
 _ignore_pickups_for_game = {
-    # These 3 indices are in Olympus and are unreachable given the default preset
-    RandovaniaGame.METROID_PRIME_CORRUPTION: {0, 1, 2},
     # Unknown reason why
     RandovaniaGame.CAVE_STORY: {30, 31, 41, 45},
 }
@@ -133,14 +136,13 @@ _include_tricks_for_game = {
     RandovaniaGame.AM2R: {("Shinesparking", LayoutTrickLevel.ADVANCED)},
     # Same reasons as above, with some still trickless
     RandovaniaGame.METROID_DREAD: {("Speedbooster", LayoutTrickLevel.BEGINNER)},
-    # Same reasons as above
-    RandovaniaGame.SUPER_METROID: {("Shinespark", LayoutTrickLevel.BEGINNER)},
     # Some items require Spider Boosting to reach in vanilla, but since it is never explained there,
     # it has been made into a trick.
     RandovaniaGame.METROID_SAMUS_RETURNS: {("Spider Boost", LayoutTrickLevel.BEGINNER)},
 }
 
 
+@pytest.mark.benchmark
 @pytest.mark.skip_resolver_tests
 @pytest.mark.parametrize(
     ("game_enum", "ignore_events", "ignore_pickups", "include_tricks"),
@@ -162,11 +164,9 @@ def test_database_collectable(
     ignore_events: set[str],
     ignore_pickups: set[int],
     include_tricks: set[tuple[str, LayoutTrickLevel]],
+    default_filler_config,
 ):
-    mocker.patch(
-        "randovania.generator.base_patches_factory.BasePatchesFactory.check_item_pool",
-        autospec=True,
-    )
+    mocker.patch("randovania.generator.base_patches_factory.BasePatchesFactory.check_item_pool")
     game, state, permalink = run_bootstrap(
         preset_manager.default_preset_for_game(game_enum).get_preset(), include_tricks
     )
@@ -187,7 +187,7 @@ def test_database_collectable(
     )
     expected_pickups = sorted(it.pickup_index for it in all_pickups if it.pickup_index.index not in ignore_pickups)
 
-    reach = _create_reach_with_unsafe(game, state)
+    reach = _create_reach_with_unsafe(game, state, default_filler_config)
     while list(reach_lib.collectable_resource_nodes(reach.nodes, reach)):
         reach.act_on(next(iter(reach_lib.collectable_resource_nodes(reach.nodes, reach))))
         reach = advance_reach_with_possible_unsafe_resources(reach)
@@ -215,7 +215,9 @@ def test_database_collectable(
 
 
 @pytest.mark.parametrize("has_translator", [False, True])
-def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource_database, echoes_game_patches):
+def test_basic_search_with_translator_gate(
+    has_translator: bool, echoes_resource_database, echoes_game_patches, default_filler_config
+):
     # Setup
     scan_visor = echoes_resource_database.get_item("DarkVisor")
     nc = functools.partial(NodeIdentifier.create, "Test World", "Test Area A")
@@ -262,6 +264,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
         RandovaniaGame.METROID_PRIME_ECHOES,
         DockWeaknessDatabase([], {}, {}, (MagicMock(), MagicMock()), MagicMock()),
         echoes_resource_database,
+        {},
         ("default",),
         Requirement.impossible(),
         MagicMock(),
@@ -286,7 +289,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     )
 
     # Run
-    reach = reach_lib.reach_with_all_safe_resources(game, initial_state)
+    reach = reach_lib.reach_with_all_safe_resources(game, initial_state, default_filler_config)
 
     # Assert
     if has_translator:
@@ -295,17 +298,17 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
         assert set(reach.safe_nodes) == {node_a, node_b}
 
 
-def test_reach_size_from_start_echoes(small_echoes_game_description, default_echoes_configuration, mocker):
+@pytest.mark.benchmark
+def test_reach_size_from_start_echoes(
+    small_echoes_game_description, default_echoes_configuration, mocker, default_filler_config
+):
     # Setup
     game = derived_nodes.remove_inactive_layers(
         small_echoes_game_description, default_echoes_configuration.active_layers()
     ).get_mutable()
 
     mocker.patch("randovania.game_description.default_database.game_description_for", return_value=game)
-    mocker.patch(
-        "randovania.generator.base_patches_factory.BasePatchesFactory.check_item_pool",
-        autospec=True,
-    )
+    mocker.patch("randovania.generator.base_patches_factory.BasePatchesFactory.check_item_pool")
     generator = game.game.generator
 
     specific_levels = {trick.short_name: LayoutTrickLevel.maximum() for trick in game.resource_database.trick}
@@ -354,7 +357,7 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_ech
     generator.bootstrap.apply_game_specific_patches(layout_configuration, game, patches)
 
     # Run
-    reach = OldGeneratorReach.reach_from_state(game, state)
+    reach = OldGeneratorReach.reach_from_state(game, state, default_filler_config)
     reach_lib.collect_all_safe_resources_in_reach(reach)
 
     # Assert

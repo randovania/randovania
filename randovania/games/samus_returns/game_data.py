@@ -6,8 +6,10 @@ import randovania.game.data
 import randovania.game.development_state
 import randovania.game.generator
 import randovania.game.gui
+import randovania.game.hints
 import randovania.game.layout
 import randovania.game.web_info
+import randovania.game_connection
 from randovania.games.samus_returns import layout
 from randovania.games.samus_returns.db_integrity import find_msr_db_errors
 from randovania.games.samus_returns.layout import progressive_items
@@ -27,6 +29,7 @@ def _options() -> type[PerGameOptions]:
 
 def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.samus_returns import gui
+    from randovania.gui.game_details.hint_details_tab import HintDetailsTab
 
     return randovania.game.gui.GameGui(
         game_tab=gui.MSRGameTabWidget,
@@ -34,7 +37,7 @@ def _gui() -> randovania.game.gui.GameGui:
         cosmetic_dialog=gui.MSRCosmeticPatchesDialog,
         export_dialog=gui.MSRGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(gui.MSRHintDetailsTab, gui.MSRTeleporterDetailsTab),
+        spoiler_visualizer=(HintDetailsTab, gui.MSRTeleporterDetailsTab),
     )
 
 
@@ -53,15 +56,40 @@ def _exporter() -> GameExporter:
 def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.samus_returns import generator
     from randovania.games.samus_returns.generator.bootstrap import MSRBootstrap
-    from randovania.games.samus_returns.generator.hint_distributor import MSRHintDistributor
     from randovania.generator.filler.weights import ActionWeights
 
     return randovania.game.generator.GameGenerator(
         pickup_pool_creator=generator.pool_creator,
         bootstrap=MSRBootstrap(),
         base_patches_factory=generator.MSRBasePatchesFactory(),
-        hint_distributor=MSRHintDistributor(),
         action_weights=ActionWeights(),
+    )
+
+
+def _hints() -> randovania.game.hints.GameHints:
+    from randovania.games.samus_returns.generator.hint_distributor import MSRHintDistributor
+
+    return randovania.game.hints.GameHints(
+        hint_distributor=MSRHintDistributor(),
+        specific_pickup_hints={
+            "artifacts": randovania.game.hints.SpecificHintDetails(
+                long_name="Metroid DNA",
+                description="This controls how precise the Metroid DNA hints for the DNA Chozo Seals are.",
+            ),
+            "final_boss_item": randovania.game.hints.SpecificHintDetails(
+                long_name="Final Boss Item",
+                description=(
+                    "After collecting all Metroid DNA, a message appears that says that "
+                    "the final boss can be fought and where to find them. "
+                    "Most of the final bosses require some item to either access or beat them, "
+                    "so an additional hint is provided that says where to find the item. "
+                    "This controls how precise that hint will be.\n"
+                    " - Proteus Ridley needs the Baby Metroid\n"
+                    " - Diggernaut needs Bomb\n"
+                    " - Metroid Queen needs Ice Beam\n"
+                ),
+            ),
+        },
     )
 
 
@@ -158,7 +186,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
         ],
         need_to_play=[
             "A modded 3DS with Luma3DS, or Citra",
-            "A dumped RomFS of your original game. Any region works.",
+            "A decrypted copy of your original game. Currently, only the NA and EU versions are supported.",
         ],
     ),
     hash_words=_hash_words(),
@@ -170,6 +198,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     options=_options,
     gui=_gui,
     generator=_generator,
+    hints=_hints,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     defaults_available_in_game_sessions=True,

@@ -46,9 +46,7 @@ def get_file_path() -> Path:
 
 
 def get_readme() -> Path:
-    if is_frozen():
-        return get_data_path().joinpath("README.md")
-    return get_file_path().parent.joinpath("README.md")
+    return get_data_path().joinpath("README.md")
 
 
 def get_readme_section(section: str) -> str:
@@ -142,9 +140,6 @@ def setup_logging(default_level: str, log_to_file: Path | None, quiet: bool = Fa
                     "level": "DEBUG",
                 },
                 "EchoesRemoteConnector": {
-                    "level": "DEBUG",
-                },
-                "CorruptionRemoteConnector": {
                     "level": "DEBUG",
                 },
                 "randovania.gui.qt": {

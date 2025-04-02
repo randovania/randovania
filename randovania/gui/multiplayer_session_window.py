@@ -10,7 +10,6 @@ from typing import TYPE_CHECKING, Self
 from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncClose, asyncSlot
 
-import randovania
 from randovania import monitoring
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
@@ -19,12 +18,13 @@ from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.multiplayer_session_ui import Ui_MultiplayerSessionWindow
-from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, layout_loader, model_lib
+from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, layout_loader
 from randovania.gui.lib.async_dialog import StandardButton
 from randovania.gui.lib.background_task_mixin import BackgroundTaskInProgressError, BackgroundTaskMixin
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
 from randovania.gui.lib.qt_network_client import AnyNetworkError, QtNetworkClient, handle_network_errors
+from randovania.gui.widgets.audit_log_model import AuditEntryListDatabaseModel
 from randovania.gui.widgets.item_tracker_popup_window import ItemTrackerPopupWindow
 from randovania.gui.widgets.multiplayer_session_users_widget import MultiplayerSessionUsersWidget, connect_to
 from randovania.interface_common import generator_frontend
@@ -191,8 +191,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self._all_pickups = set()
         self._last_actions = MultiplayerSessionActions(game_session_api.current_session_id, [])
 
-        self.audit_item_model = QtGui.QStandardItemModel(0, 3, self)
-        self.audit_item_model.setHorizontalHeaderLabels(["User", "Message", "Time"])
+        self.audit_item_model = AuditEntryListDatabaseModel([])
         self.tab_audit.setModel(self.audit_item_model)
         self.tab_audit.sortByColumn(2, QtCore.Qt.SortOrder.AscendingOrder)
 
@@ -376,7 +375,6 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.allow_coop_check.setText(
             "Enable Co-Op" + ("" if not_genned_yet else " (can only be changed before generation)")
         )
-        self.allow_coop_check.setVisible(randovania.is_dev_version())
 
     @asyncSlot(MultiplayerSessionActions)
     async def on_actions_update(self, actions: MultiplayerSessionActions):
@@ -543,13 +541,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     def update_session_audit_log(self, audit_log: MultiplayerSessionAuditLog):
         scrollbar = self.tab_audit.verticalScrollBar()
         autoscroll = scrollbar.value() == scrollbar.maximum()
-        # self.tab_audit.horizontalHeader().setVisible(True)
-        self.audit_item_model.setRowCount(len(audit_log.entries))
 
-        for i, entry in enumerate(audit_log.entries):
-            self.audit_item_model.setItem(i, 0, QtGui.QStandardItem(entry.user))
-            self.audit_item_model.setItem(i, 1, QtGui.QStandardItem(entry.message))
-            self.audit_item_model.setItem(i, 2, model_lib.create_date_item(entry.time))
+        self.audit_item_model = AuditEntryListDatabaseModel(audit_log.entries)
+        self.tab_audit.setModel(self.audit_item_model)
 
         if autoscroll:
             self.tab_audit.scrollToBottom()
@@ -926,9 +920,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 QtWidgets.QMessageBox.Icon.Information,
                 "Information",
                 (
-                    "Co-op is still in the testing period and may have issues.\nFor Prime 1 and Echoes in particular, "
-                    "please ensure that Randovania is always connected to the game before you collect items, as "
-                    "otherwise they will be lost permanently!"
+                    "For Prime 1 and Echoes, please ensure that Randovania is always connected to the game"
+                    " before you collect items, as otherwise they will be lost permanently!"
                 ),
             )
         else:
@@ -962,13 +955,13 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     @asyncSlot()
     async def game_export_listener(self, world_id: uuid.UUID, patch_data: dict):
         world = self._session.get_world(world_id)
-        games_by_world: dict[uuid.UUID, RandovaniaGame] = {
-            w.id: VersionedPreset.from_str(w.preset_raw).game for w in self._session.worlds
-        }
+        games_by_world: dict[uuid.UUID, RandovaniaGame] = {w.id: w.preset.game for w in self._session.worlds}
         game = games_by_world[world_id]
 
         export_suffix = string_lib.sanitize_for_path(f"{self._session.name} - {world.name}")
-        dialog = game.gui.export_dialog(self._options, patch_data, export_suffix, False, list(games_by_world.values()))
+        dialog = game.gui.export_dialog(
+            self._options, world.preset.get_preset().configuration, export_suffix, False, list(games_by_world.values())
+        )
         result = await async_dialog.execute_dialog(dialog)
 
         if result != QtWidgets.QDialog.DialogCode.Accepted:
@@ -983,7 +976,6 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             patch_data=patch_data,
             layout_for_spoiler=None,
             background=self,
-            progress_update_signal=self.progress_update_signal,
         )
 
     @asyncSlot()

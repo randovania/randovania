@@ -4,14 +4,14 @@ import copy
 import shutil
 from typing import TYPE_CHECKING
 
-import mp2hudcolor
+import mp2hudcolor  # type: ignore[import-untyped]
 from open_prime_rando.dol_patching.echoes import dol_patcher
 from ppc_asm import dol_file
 from retro_data_structures.asset_manager import AssetManager, PathFileProvider
 from retro_data_structures.game_check import Game as RDSGame
 
 from randovania import monitoring
-from randovania.exporter.game_exporter import GameExporter, GameExportParams
+from randovania.exporter.game_exporter import GameExporter
 from randovania.games.common.prime_family.exporter import good_hashes
 from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
 from randovania.games.prime2.exporter.export_params import EchoesGameExportParams
@@ -25,7 +25,7 @@ if TYPE_CHECKING:
     from pathlib import Path
 
 
-class EchoesGameExporter(GameExporter):
+class EchoesGameExporter(GameExporter[EchoesGameExportParams]):
     _busy: bool = False
 
     @property
@@ -42,17 +42,17 @@ class EchoesGameExporter(GameExporter):
         """
         return True
 
-    def export_params_type(self) -> type[GameExportParams]:
+    def export_params_type(self) -> type[EchoesGameExportParams]:
         """
         Returns the type of the GameExportParams expected by this exporter.
         """
         return EchoesGameExportParams
 
-    def _before_export(self):
+    def _before_export(self) -> None:
         assert not self._busy
         self._busy = True
 
-    def _after_export(self):
+    def _after_export(self) -> None:
         self._busy = False
 
     def known_good_hashes(self) -> dict[str, tuple[str, ...]]:
@@ -64,10 +64,9 @@ class EchoesGameExporter(GameExporter):
     def _do_export_game(
         self,
         patch_data: dict,
-        export_params: GameExportParams,
+        export_params: EchoesGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
-    ):
-        assert isinstance(export_params, EchoesGameExportParams)
+    ) -> None:
         new_patcher = patch_data.pop("new_patcher", None)
         monitoring.set_tag("echoes_new_patcher", new_patcher is not None)
 
@@ -184,7 +183,7 @@ class EchoesGameExporter(GameExporter):
         )
 
 
-def copy_coin_chest(contents_path: Path):
+def copy_coin_chest(contents_path: Path) -> None:
     """
     Claris patcher doesn't read from Metroid6.pak, where these assets are found.
     Copy them into the main paks so that we can actually use the Coin Chest model

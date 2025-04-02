@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import dataclasses
+import functools
 import uuid
 from importlib.util import find_spec
 from pathlib import Path
@@ -14,7 +15,7 @@ from frozendict import frozendict
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.pickup.pickup_category import PickupCategory
+from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
@@ -198,16 +199,6 @@ def prime_game_description() -> GameDescription:
 
 
 @pytest.fixture(scope="session")
-def corruption_game_data() -> dict:
-    return default_data.read_json_then_binary(RandovaniaGame.METROID_PRIME_CORRUPTION)[1]
-
-
-@pytest.fixture(scope="session")
-def corruption_game_description(corruption_game_data: dict) -> GameDescription:
-    return default_database.game_description_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
-
-
-@pytest.fixture(scope="session")
 def dread_game_description() -> GameDescription:
     return default_database.game_description_for(RandovaniaGame.METROID_DREAD)
 
@@ -282,12 +273,29 @@ def is_frozen(request: pytest.FixtureRequest, mocker: pytest_mock.MockerFixture)
 
 
 @pytest.fixture
-def generic_pickup_category() -> PickupCategory:
-    return PickupCategory(
+def generic_pickup_category() -> HintFeature:
+    return HintFeature(
         name="generic",
         long_name="Generic Item Category",
         hint_details=("an ", "unspecified item"),
-        hinted_as_major=False,
+    )
+
+
+@pytest.fixture
+def useless_pickup_category() -> HintFeature:
+    return HintFeature(
+        name="useless",
+        long_name="Useless",
+        hint_details=("", "nothing"),
+    )
+
+
+@pytest.fixture
+def ammo_pickup_category() -> HintFeature:
+    return HintFeature(
+        name="expansion",
+        long_name="Expansion",
+        hint_details=("an ", "expansion"),
     )
 
 
@@ -315,8 +323,14 @@ def blank_pickup(
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
-        pickup_category=echoes_pickup_database.pickup_categories["suit"],
-        broad_category=echoes_pickup_database.pickup_categories["life_support"],
+        gui_category=echoes_pickup_database.pickup_categories["suit"],
+        hint_features=frozenset(
+            (
+                echoes_pickup_database.pickup_categories["suit"],
+                echoes_pickup_database.pickup_categories["life_support"],
+                echoes_pickup_database.pickup_categories["major"],
+            )
+        ),
         progression=(),
         generator_params=default_generator_params,
         resource_lock=None,
@@ -333,8 +347,13 @@ def dread_spider_pickup(default_generator_params: PickupGeneratorParams) -> Pick
             game=RandovaniaGame.METROID_DREAD,
             name="powerup_spidermagnet",
         ),
-        pickup_category=dread_pickup_database.pickup_categories["misc"],
-        broad_category=dread_pickup_database.pickup_categories["misc"],
+        gui_category=dread_pickup_database.pickup_categories["misc"],
+        hint_features=frozenset(
+            (
+                dread_pickup_database.pickup_categories["misc"],
+                dread_pickup_database.pickup_categories["major"],
+            )
+        ),
         progression=(
             (
                 ItemResourceInfo(
@@ -362,8 +381,13 @@ def msr_ice_beam_pickup(default_generator_params: PickupGeneratorParams) -> Pick
             game=RandovaniaGame.METROID_SAMUS_RETURNS,
             name="powerup_icebeam",
         ),
-        pickup_category=msr_pickup_database.pickup_categories["misc"],
-        broad_category=msr_pickup_database.pickup_categories["misc"],
+        gui_category=msr_pickup_database.pickup_categories["misc"],
+        hint_features=frozenset(
+            (
+                msr_pickup_database.pickup_categories["misc"],
+                msr_pickup_database.pickup_categories["major"],
+            )
+        ),
         progression=(
             (
                 ItemResourceInfo(
@@ -391,8 +415,14 @@ def am2r_varia_pickup(default_generator_params: PickupGeneratorParams) -> Pickup
             game=RandovaniaGame.AM2R,
             name="sItemVariaSuit",
         ),
-        pickup_category=am2r_pickup_database.pickup_categories["suit"],
-        broad_category=am2r_pickup_database.pickup_categories["life_support"],
+        gui_category=am2r_pickup_database.pickup_categories["suit"],
+        hint_features=frozenset(
+            (
+                am2r_pickup_database.pickup_categories["suit"],
+                am2r_pickup_database.pickup_categories["life_support"],
+                am2r_pickup_database.pickup_categories["major"],
+            )
+        ),
         progression=(
             (
                 ItemResourceInfo(
@@ -419,8 +449,8 @@ def cs_panties_pickup(default_generator_params: PickupGeneratorParams) -> Pickup
             game=RandovaniaGame.CAVE_STORY,
             name="",
         ),
-        pickup_category=cs_pickup_database.pickup_categories["useless"],
-        broad_category=cs_pickup_database.pickup_categories["useless"],
+        gui_category=cs_pickup_database.pickup_categories["useless"],
+        hint_features=frozenset((cs_pickup_database.pickup_categories["useless"],)),
         progression=(
             (
                 ItemResourceInfo(
@@ -506,6 +536,13 @@ def obfuscator_no_secret(monkeypatch: pytest.MonkeyPatch):
     obfuscator._encrypt = None
 
 
+@pytest.fixture
+def options(tmp_path):
+    from randovania.interface_common.options import Options
+
+    return Options(tmp_path)
+
+
 def pytest_addoption(parser: pytest.Parser) -> None:
     parser.addoption(
         "--skip-generation-tests",
@@ -534,18 +571,23 @@ def pytest_addoption(parser: pytest.Parser) -> None:
 
 
 if all(find_spec(n) is not None for n in ("pytestqt", "qasync")):
-    import asyncio.events
 
-    import qasync
+    @functools.cache
+    def get_event_loop_class() -> type[asyncio.EventLoop]:
+        import asyncio.events
 
-    class EventLoopWithRunningFlag(qasync.QEventLoop):
-        def _before_run_forever(self):
-            super()._before_run_forever()
-            asyncio.events._set_running_loop(self)
+        import qasync
 
-        def _after_run_forever(self):
-            asyncio.events._set_running_loop(None)
-            super()._after_run_forever()
+        class EventLoopWithRunningFlag(qasync.QEventLoop):
+            def _before_run_forever(self):
+                super()._before_run_forever()
+                asyncio.events._set_running_loop(self)
+
+            def _after_run_forever(self):
+                asyncio.events._set_running_loop(None)
+                super()._after_run_forever()
+
+        return EventLoopWithRunningFlag
 
     @pytest.fixture
     def skip_qtbot(request: pytest.FixtureRequest, qtbot: QtBot) -> QtBot:
@@ -557,11 +599,22 @@ if all(find_spec(n) is not None for n in ("pytestqt", "qasync")):
     @pytest.fixture
     def event_loop(request: pytest.FixtureRequest) -> asyncio.EventLoop:
         if "skip_qtbot" in request.fixturenames:
-            loop = EventLoopWithRunningFlag(request.getfixturevalue("qapp"), set_running_loop=False)
+            loop = get_event_loop_class()(request.getfixturevalue("qapp"), set_running_loop=False)
         else:
             loop = asyncio.get_event_loop_policy().new_event_loop()
         yield loop
         loop.close()
+
+    @pytest.fixture(scope="session")
+    def qapp_cls(request: pytest.FixtureRequest):
+        if request.config.option.skip_gui_tests:
+            import PySide6.QtCore
+
+            return PySide6.QtCore.QCoreApplication
+        else:
+            import PySide6.QtWidgets
+
+            return PySide6.QtWidgets.QApplication
 
 else:
 
@@ -569,6 +622,10 @@ else:
     def skip_qtbot(request: pytest.FixtureRequest) -> QtBot:
         pytest.skip()
         return "no qtbot"  # noqa
+
+    @pytest.fixture(scope="session")
+    def qapp_cls(request: pytest.FixtureRequest) -> None:
+        pytest.skip()
 
 
 def pytest_configure(config: pytest.Config) -> None:

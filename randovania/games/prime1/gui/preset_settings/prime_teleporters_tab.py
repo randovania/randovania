@@ -8,6 +8,7 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.games.prime1.gui.generated.preset_teleporters_prime1_ui import (
     Ui_PresetTeleportersPrime1,
 )
+from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.node_list_helper import NodeListHelper
 from randovania.gui.preset_settings.preset_teleporter_tab import PresetTeleporterTab
@@ -22,16 +23,12 @@ if TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_description import GameDescription
-    from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters import (
-        PrimeTrilogyTeleporterConfiguration,
-    )
-    from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
 
 
-class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, NodeListHelper):
+class PresetTeleportersPrime1(PresetTeleporterTab[PrimeConfiguration], Ui_PresetTeleportersPrime1, NodeListHelper):
     teleporter_mode_to_description = {
         TeleporterShuffleMode.VANILLA: "All elevators are connected to where they do in the original game.",
         TeleporterShuffleMode.TWO_WAY_RANDOMIZED: (
@@ -56,21 +53,21 @@ class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, N
 
     def __init__(
         self,
-        editor: PresetEditor,
+        editor: PresetEditor[PrimeConfiguration],
         game_description: GameDescription,
         window_manager: WindowManager,
     ):
         super().__init__(editor, game_description, window_manager)
         signal_handling.on_checked(self.skip_final_bosses_check, self._update_require_final_bosses)
 
-    def setup_ui(self):
+    def setup_ui(self) -> None:
         self.setupUi(self)
 
     @classmethod
     def tab_title(cls) -> str:
         return "Elevators"
 
-    def _create_source_teleporters(self):
+    def _create_source_teleporters(self) -> None:
         row = 0
         region_list = self.game_description.region_list
 
@@ -82,7 +79,7 @@ class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, N
             loc: self._create_check_for_source_teleporters(loc) for loc in locations
         }
         self._teleporters_source_for_location = copy.copy(checks)
-        self._teleporters_source_destination = {}
+        self._teleporters_source_destination: dict[NodeIdentifier, NodeIdentifier | None] = {}
 
         for location in sorted(locations):
             if location not in checks:
@@ -115,16 +112,16 @@ class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, N
 
             row += 1
 
-    def _update_require_final_bosses(self, checked: bool):
+    def _update_require_final_bosses(self, checked: bool) -> None:
         with self._editor as editor:
             editor.layout_configuration_teleporters = dataclasses.replace(
-                editor.layout_configuration_teleporters,
+                editor.configuration.teleporters,
                 skip_final_bosses=checked,
             )
 
-    def on_preset_changed(self, preset: Preset):
-        config: PrimeConfiguration = preset.configuration
-        config_teleporters: PrimeTrilogyTeleporterConfiguration = config.teleporters
+    def on_preset_changed(self, preset: Preset[PrimeConfiguration]) -> None:
+        config = preset.configuration
+        config_teleporters = config.teleporters
 
         descriptions = [
             "<p>Controls where each elevator connects to.</p>",
@@ -147,13 +144,13 @@ class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, N
 
         for origin, destination in self._teleporters_source_destination.items():
             origin_check = self._teleporters_source_for_location[origin]
-            dest_check = self._teleporters_source_for_location.get(destination)
+            dest_check = self._teleporters_source_for_location.get(destination)  # type: ignore[arg-type]
 
             assert origin_check or dest_check
 
             is_locked = origin in static_nodes
             if not is_locked and not can_shuffle_target:
-                is_locked = (destination in static_nodes) or (origin_check and not dest_check)
+                is_locked = (destination in static_nodes) or (bool(origin_check) and not dest_check)
 
             origin_check.setEnabled(can_shuffle_source and not is_locked)
             origin_check.setChecked(origin not in config_teleporters.excluded_teleporters.locations and not is_locked)

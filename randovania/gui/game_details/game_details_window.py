@@ -19,6 +19,7 @@ from randovania.gui.lib.common_qt_lib import (
     prompt_user_for_output_game_log,
     set_default_window_icon,
 )
+from randovania.gui.lib.qt_network_client import handle_network_errors
 from randovania.gui.widgets.game_validator_widget import GameValidatorWidget
 from randovania.interface_common import generator_frontend
 from randovania.interface_common.options import InfoAlert, Options
@@ -128,8 +129,17 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         )
 
     # Operations
-    def _copy_permalink(self):
+    def _copy_permalink(self) -> None:
         common_qt_lib.set_clipboard(self.layout_description.permalink.as_base64_str)
+
+    @asyncSlot()
+    @handle_network_errors
+    async def _create_async(self) -> None:
+        assert self._window_manager is not None
+        network_client = common_qt_lib.get_network_client()
+
+        if not await network_client.ensure_logged_in(self):
+            return
 
     def _export_log(self):
         all_games = self.layout_description.all_games
@@ -183,13 +193,9 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
         monitoring.metrics.incr("gui_export_window_export_clicked", tags={"game": game.short_name})
 
-        cosmetic_patches = options.options_for_game(game).cosmetic_patches
-        data_factory = game.patch_data_factory(layout, self.players_configuration, cosmetic_patches)
-        patch_data = data_factory.create_data()
-
         dialog = game.gui.export_dialog(
             options,
-            patch_data,
+            layout.get_preset(self.players_configuration.player_index).configuration,
             layout.shareable_word_hash,
             has_spoiler,
             list(layout.all_games),
@@ -197,8 +203,12 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         result = await async_dialog.execute_dialog(dialog)
         if result != QtWidgets.QDialog.DialogCode.Accepted:
             return
-
         dialog.save_options()
+
+        cosmetic_patches = options.generic_per_game_options(game).cosmetic_patches
+        data_factory = game.patch_data_factory(layout, self.players_configuration, cosmetic_patches)
+        patch_data = data_factory.create_data()
+
         self._can_stop_background_process = game.exporter.export_can_be_aborted
         await game_exporter.export_game(
             exporter=game.exporter,
@@ -206,7 +216,6 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
             patch_data=patch_data,
             layout_for_spoiler=layout,
             background=self,
-            progress_update_signal=self.progress_update_signal,
         )
         self._can_stop_background_process = True
 
@@ -255,7 +264,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
                 if self.validator_widget is not None:
                     self.validator_widget.stop_validator()
 
-                self.validator_widget = GameValidatorWidget(self.layout_description)
+                self.validator_widget = GameValidatorWidget(self.layout_description, self.players_configuration)
                 self.layout_info_tab.addTab(self.validator_widget, "Spoiler: Playthrough")
 
             if not any(preset.configuration.should_hide_generation_log() for preset in description.all_presets):

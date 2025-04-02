@@ -12,7 +12,7 @@ import bitstruct
 from randovania.lib import type_lib
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterator
+    from collections.abc import Callable, Iterator, Sequence
 
     from _typeshed import DataclassInstance, SupportsRichComparisonT
 
@@ -51,7 +51,7 @@ class BitPackDecoder:
     def decode_single(self, value: int) -> int:
         return self.decode(value)[0]
 
-    def decode_element(self, array: list[T]) -> T:
+    def decode_element(self, array: Sequence[T]) -> T:
         if len(array) == 1:
             return array[0]
         return array[self.decode_single(len(array))]
@@ -204,6 +204,9 @@ class BitPackDataclass(BitPackValue):
             if not field.init:
                 continue
 
+            if field.metadata.get("manual_bitpacking"):
+                continue
+
             item = getattr(self, field.name)
             field_type = resolved_types[field.name]
 
@@ -252,6 +255,10 @@ class BitPackDataclass(BitPackValue):
 
         for field in dataclasses.fields(dc):
             if not field.init:
+                continue
+
+            if field.metadata.get("manual_bitpacking"):
+                args[field.name] = metadata["extra_args"][field.name]
                 continue
 
             resolved_type, optional = type_lib.resolve_optional(resolved_types[field.name])

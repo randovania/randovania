@@ -9,6 +9,7 @@ from randovania.games.common.prime_family.gui.export_validator import is_prime1_
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExportParams
 from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime1.gui.generated.prime_game_export_dialog_ui import Ui_PrimeGameExportDialog
+from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
@@ -23,24 +24,30 @@ from randovania.gui.lib.multi_format_output_mixin import MultiFormatOutputMixin
 
 if TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExportParams
-    from randovania.interface_common.options import Options
+    from randovania.interface_common.options import Options, PerGameOptions
 
 
-class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGameExportDialog):
+class PrimeGameExportDialog(GameExportDialog[PrimeConfiguration], MultiFormatOutputMixin, Ui_PrimeGameExportDialog):
     _use_echoes_models: bool
 
     @classmethod
-    def game_enum(cls):
+    def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
-        super().__init__(options, patch_data, word_hash, spoiler, games)
+    def __init__(
+        self,
+        options: Options,
+        configuration: PrimeConfiguration,
+        word_hash: str,
+        spoiler: bool,
+        games: list[RandovaniaGame],
+    ):
+        super().__init__(options, configuration, word_hash, spoiler, games)
 
-        self.has_enemy_attribute_rando = patch_data["randEnemyAttributes"] is not None
+        self.has_enemy_attribute_rando = configuration.enemy_attributes is not None
 
         self._base_output_name = f"Prime Randomizer - {word_hash}"
-        per_game = options.options_for_game(self.game_enum())
-        assert isinstance(per_game, PrimePerGameOptions)
+        per_game = options.per_game_options(PrimePerGameOptions)
 
         # Input
         self.input_file_button.clicked.connect(self._on_input_file_button)
@@ -65,8 +72,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
             self._on_echoes_models_check()
             self.echoes_models_check.clicked.connect(self._on_echoes_models_check)
 
-            echoes_options = options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
-            assert isinstance(echoes_options, EchoesPerGameOptions)
+            echoes_options = options.per_game_options(EchoesPerGameOptions)
             if echoes_options.input_path is not None:
                 self.echoes_file_edit.setText(str(echoes_options.input_path))
 
@@ -108,7 +114,9 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
         else:
             return self.valid_output_file_types
 
-    def update_per_game_options(self, per_game: PrimePerGameOptions) -> PrimePerGameOptions:
+    def update_per_game_options(self, per_game: PerGameOptions) -> PerGameOptions:
+        assert isinstance(per_game, PrimePerGameOptions)
+
         use_external_models = per_game.use_external_models.copy()
         if not self.echoes_models_check.isHidden():
             if self._use_echoes_models:
@@ -124,7 +132,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
             use_external_models=use_external_models,
         )
 
-    def save_options(self):
+    def save_options(self) -> None:
         super().save_options()
         if not self._use_echoes_models:
             return
@@ -132,12 +140,9 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
         with self._options as options:
             from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 
-            echoes_options = options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
-            assert isinstance(echoes_options, EchoesPerGameOptions)
-            options.set_options_for_game(
-                RandovaniaGame.METROID_PRIME_ECHOES,
+            options.set_per_game_options(
                 dataclasses.replace(
-                    echoes_options,
+                    options.per_game_options(EchoesPerGameOptions),
                     input_path=self.echoes_file,
                 ),
             )
@@ -155,19 +160,20 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
     def echoes_file(self) -> Path | None:
         if self._use_echoes_models:
             return Path(self.echoes_file_edit.text())
+        return None
 
     @property
     def auto_save_spoiler(self) -> bool:
         return self.auto_save_spoiler_check.isChecked()
 
     # Input file
-    def _on_input_file_button(self):
+    def _on_input_file_button(self) -> None:
         input_file = prompt_for_input_file(self, self.input_file_edit, self.valid_input_file_types)
         if input_file is not None:
             self.input_file_edit.setText(str(input_file.absolute()))
 
     # Output File
-    def _on_output_file_button(self):
+    def _on_output_file_button(self) -> None:
         output_file = prompt_for_output_file(
             self, self.available_output_file_types, self.default_output_name, self.output_file_edit
         )
@@ -175,7 +181,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
             self.output_file_edit.setText(str(output_file))
 
     # Echoes input
-    def _on_echoes_models_check(self):
+    def _on_echoes_models_check(self) -> None:
         use_echoes_models = self.echoes_models_check.isChecked()
         self._use_echoes_models = use_echoes_models
         self.echoes_file_edit.setEnabled(use_echoes_models)
@@ -183,7 +189,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
         self.echoes_file_button.setEnabled(use_echoes_models)
         update_validation(self.echoes_file_edit)
 
-    def _on_echoes_file_button(self):
+    def _on_echoes_file_button(self) -> None:
         input_file = prompt_for_input_file(self, self.input_file_edit, ["iso"])
         if input_file is not None:
             self.echoes_file_edit.setText(str(input_file.absolute()))

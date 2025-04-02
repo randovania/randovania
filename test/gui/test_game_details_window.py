@@ -17,7 +17,7 @@ async def test_export_iso(skip_qtbot, mocker):
     mock_execute_dialog = mocker.patch(
         "randovania.gui.lib.async_dialog.execute_dialog",
         new_callable=AsyncMock,
-        return_value=QtWidgets.QDialog.Accepted,
+        return_value=QtWidgets.QDialog.DialogCode.Accepted,
     )
 
     options = MagicMock()
@@ -32,6 +32,7 @@ async def test_export_iso(skip_qtbot, mocker):
     game = window.layout_description.get_preset.return_value.game
     game.exporter.can_start_new_export = False
     window.layout_description.all_games = [game]
+    configuration = window.layout_description.get_preset.return_value.configuration
     patch_data = game.patch_data_factory.return_value.create_data.return_value
 
     players_config = PlayersConfiguration(
@@ -44,11 +45,11 @@ async def test_export_iso(skip_qtbot, mocker):
 
     # Assert
     game.patch_data_factory.assert_called_once_with(
-        window.layout_description, players_config, options.options_for_game.return_value.cosmetic_patches
+        window.layout_description, players_config, options.generic_per_game_options.return_value.cosmetic_patches
     )
     game.gui.export_dialog.assert_called_once_with(
         options,
-        patch_data,
+        configuration,
         window.layout_description.shareable_word_hash,
         window.layout_description.has_spoiler,
         [game],

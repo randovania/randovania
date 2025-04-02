@@ -6,6 +6,7 @@
     "areas": {
         "Entrance Lobby": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 10",
                 "room_id": [
@@ -191,6 +192,7 @@
         },
         "Entrance Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 11",
                 "room_id": [
@@ -317,6 +319,7 @@
         },
         "Entrance Navigation Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 12",
                 "room_id": [
@@ -439,7 +442,7 @@
                                     "type": "resource",
                                     "data": {
                                         "type": "items",
-                                        "name": "L1Locks",
+                                        "name": "L2Locks",
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -461,6 +464,7 @@
         },
         "Yameba Corridor": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 13",
                 "room_id": [
@@ -630,6 +634,7 @@
         },
         "Atmospheric Stabilizer Northwest": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 14",
                 "room_id": [
@@ -668,6 +673,77 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Event - Stabilizer 1 Online": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Kill with Shinespark from Yameba Corridor - https://youtu.be/DpeSE126r3M",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "L0Locks",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "ShinesparkTrick",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLockRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "S1MissileGeron",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Room Center": {
                             "type": "and",
                             "data": {
@@ -791,68 +867,6 @@
                                     {
                                         "type": "template",
                                         "data": "Can Kill Stabilizer Geron"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Kill with Shinespark from Yameba Corridor - https://youtu.be/DpeSE126r3M",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpeedBooster",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "ShinesparkTrick",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "EntranceRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "L0Locks",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -863,6 +877,7 @@
         },
         "Hornoad Hole": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 15",
                 "room_id": [
@@ -891,6 +906,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 13,
                     "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Door to Atmospheric Stabilizer Northwest": {
                             "type": "or",
@@ -959,7 +976,7 @@
                                 ]
                             }
                         },
-                        "Door to Northwestern Intersection": {
+                        "Door to Twin Junctions West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -968,7 +985,7 @@
                         }
                     }
                 },
-                "Door to Northwestern Intersection": {
+                "Door to Twin Junctions West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -989,7 +1006,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Northwestern Intersection",
+                        "area": "Twin Junctions West",
                         "node": "Door to Hornoad Hole"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -1010,8 +1027,9 @@
                 }
             }
         },
-        "Northwestern Intersection": {
+        "Twin Junctions West": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 16",
                 "room_id": [
@@ -1041,7 +1059,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Hornoad Hole",
-                        "node": "Door to Northwestern Intersection"
+                        "node": "Door to Twin Junctions West"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -1064,7 +1082,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Checkpoint Intersection": {
+                        "Door to Twin Junctions East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1095,7 +1113,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Atmospheric Stabilizer Northeast",
-                        "node": "Door to Northwestern Intersection"
+                        "node": "Door to Twin Junctions West"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -1135,7 +1153,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Moto Motorway",
-                        "node": "Door to Northwestern Intersection"
+                        "node": "Door to Twin Junctions West"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -1153,7 +1171,7 @@
                         }
                     }
                 },
-                "Door to Checkpoint Intersection": {
+                "Door to Twin Junctions East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1174,8 +1192,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Checkpoint Intersection",
-                        "node": "Door to Northwestern Intersection"
+                        "area": "Twin Junctions East",
+                        "node": "Door to Twin Junctions West"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -1197,6 +1215,7 @@
         },
         "Moto Motorway": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 17",
                 "room_id": [
@@ -1204,7 +1223,7 @@
                 ]
             },
             "nodes": {
-                "Door to Northwestern Intersection": {
+                "Door to Twin Junctions West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1225,7 +1244,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Northwestern Intersection",
+                        "area": "Twin Junctions West",
                         "node": "Door to Moto Motorway"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -1275,7 +1294,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Northwestern Intersection": {
+                        "Door to Twin Junctions West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1288,6 +1307,7 @@
         },
         "Zebesian Zig": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 18",
                 "room_id": [
@@ -1550,6 +1570,7 @@
         },
         "Atmospheric Stabilizer Central": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 19",
                 "room_id": [
@@ -1557,7 +1578,7 @@
                 ]
             },
             "nodes": {
-                "Door to Charge Core Escape": {
+                "Door to Charge Core Upper Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1578,7 +1599,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Charge Core Escape",
+                        "area": "Charge Core Upper Access",
                         "node": "Door to Atmospheric Stabilizer Central"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -1597,7 +1618,7 @@
                         }
                     }
                 },
-                "Door to Checkpoint": {
+                "Door to Stabilizer Checkpoint": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1618,7 +1639,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Checkpoint",
+                        "area": "Stabilizer Checkpoint",
                         "node": "Door to Atmospheric Stabilizer Central"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -1690,6 +1711,15 @@
                                         "data": {
                                             "type": "tricks",
                                             "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "L0Locks",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1714,7 +1744,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Charge Core Escape": {
+                        "Door to Charge Core Upper Access": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -1723,7 +1753,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Checkpoint": {
+                        "Door to Stabilizer Checkpoint": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -1932,8 +1962,9 @@
                 }
             }
         },
-        "Charge Core Escape": {
+        "Charge Core Upper Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 110",
                 "room_id": [
@@ -1963,7 +1994,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Atmospheric Stabilizer Central",
-                        "node": "Door to Charge Core Escape"
+                        "node": "Door to Charge Core Upper Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -2038,7 +2069,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Charge Core Arena",
-                        "node": "Door to Charge Core Escape"
+                        "node": "Door to Charge Core Upper Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -2078,7 +2109,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Crab Rave",
-                        "node": "Other to Charge Core Escape"
+                        "node": "Other to Charge Core Upper Access"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2144,6 +2175,7 @@
         },
         "Entrance Recharge Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 111",
                 "room_id": [
@@ -2267,6 +2299,7 @@
         },
         "Moto Manor": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 112",
                 "room_id": [
@@ -2305,7 +2338,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Screw Shaft": {
+                        "Door to Tourian Trapdoor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2314,7 +2347,7 @@
                         }
                     }
                 },
-                "Door to Screw Shaft": {
+                "Door to Tourian Trapdoor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2335,7 +2368,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Screw Shaft",
+                        "area": "Tourian Trapdoor",
                         "node": "Door to Moto Manor"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -2358,6 +2391,7 @@
         },
         "Atmospheric Stabilizer Southwest": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 113",
                 "room_id": [
@@ -2459,6 +2493,15 @@
                                             "type": "events",
                                             "name": "Stabilizer4",
                                             "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
                                             "negate": false
                                         }
                                     }
@@ -2581,8 +2624,9 @@
                 }
             }
         },
-        "Checkpoint": {
+        "Stabilizer Checkpoint": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 114",
                 "room_id": [
@@ -2590,7 +2634,7 @@
                 ]
             },
             "nodes": {
-                "Door to Checkpoint Intersection": {
+                "Door to Twin Junctions East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2611,8 +2655,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Checkpoint Intersection",
-                        "node": "Door to Checkpoint"
+                        "area": "Twin Junctions East",
+                        "node": "Door to Stabilizer Checkpoint"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -2662,7 +2706,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Atmospheric Stabilizer Central",
-                        "node": "Door to Checkpoint"
+                        "node": "Door to Stabilizer Checkpoint"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -2671,7 +2715,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Checkpoint Intersection": {
+                        "Door to Twin Junctions East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2684,6 +2728,7 @@
         },
         "Atmospheric Stabilizer Southeast": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 115",
                 "room_id": [
@@ -2691,7 +2736,7 @@
                 ]
             },
             "nodes": {
-                "Door to Sciser Storage": {
+                "Door to Stabilizer Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2712,7 +2757,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Sciser Storage",
+                        "area": "Stabilizer Storage",
                         "node": "Door to Atmospheric Stabilizer Southeast"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -2731,7 +2776,7 @@
                         }
                     }
                 },
-                "Door to Screw Shaft": {
+                "Door to Tourian Trapdoor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2752,7 +2797,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Screw Shaft",
+                        "area": "Tourian Trapdoor",
                         "node": "Door to Atmospheric Stabilizer Southeast"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -2763,6 +2808,13 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Shinespark from Below": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2808,6 +2860,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Shinespark from Below": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2826,7 +2885,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Sciser Storage": {
+                        "Door to Stabilizer Storage": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -2835,7 +2894,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Screw Shaft": {
+                        "Door to Tourian Trapdoor": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -2865,102 +2924,6 @@
                                             "name": "ChargeBeam",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Shinespark from Screw Shaft - https://youtu.be/SrshBBv-MCw",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpeedBooster",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "ShinesparkTrick",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Hi-Jump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "WallJump",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "Possible without wall jumps or jump upgrades - https://youtu.be/WsY4pSmBAyo",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "ShinesparkTrick",
-                                                                                "amount": 4,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
                                         }
                                     },
                                     {
@@ -3046,13 +3009,177 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Shinespark from Below": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Shinespark from Below": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 277.9137201052752,
+                        "y": 23.92584963954681,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Tourian Trapdoor": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Stabilizer4",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Zebesian Zag": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Stabilizer4",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Stabilizer 4 Online": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Shinespark from Screw Shaft or Zebesian Zag: https://youtu.be/SrshBBv-MCw",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "L0Locks",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "ShinesparkTrick",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLockRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Possible without wall jumps or jump upgrades: https://youtu.be/WsY4pSmBAyo",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
             }
         },
-        "Screw Shaft": {
+        "Tourian Trapdoor": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 116",
                 "room_id": [
@@ -3082,7 +3209,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Atmospheric Stabilizer Southeast",
-                        "node": "Door to Screw Shaft"
+                        "node": "Door to Tourian Trapdoor"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3100,7 +3227,7 @@
                         }
                     }
                 },
-                "Door to Tourian Entrance": {
+                "Door to Ripper Sauna": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3121,8 +3248,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Tourian Entrance",
-                        "node": "Door to Screw Shaft"
+                        "area": "Ripper Sauna",
+                        "node": "Door to Tourian Trapdoor"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3446,7 +3573,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Moto Manor",
-                        "node": "Door to Screw Shaft"
+                        "node": "Door to Tourian Trapdoor"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3462,7 +3589,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Tourian Entrance": {
+                        "Door to Ripper Sauna": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3485,6 +3612,9 @@
         },
         "Lava Lake": {
             "default_node": null,
+            "hint_features": [
+                "climbable"
+            ],
             "extra": {
                 "map_name": "Sector 117",
                 "room_id": [
@@ -3513,11 +3643,13 @@
                     "valid_starting_location": false,
                     "pickup_index": 14,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Door to Lava Lake Annex": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Deal with Lava",
                                 "items": [
                                     {
                                         "type": "and",
@@ -3548,7 +3680,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Suitless Damage Run: https://youtu.be/TC4s0dx6lg4",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3577,48 +3709,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "VariaSuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "DamageRuns",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "LavaDamage",
-                                                        "amount": 21,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Have Any Suit Upgrade"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -3687,7 +3779,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Ledge Grab jump (disable Screw Attack): https://youtu.be/MCiLT2kbrJQ",
+                                            "comment": "Damge run via Ledge Grab jump (disable Screw Attack): https://youtu.be/MCiLT2kbrJQ",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3701,12 +3793,12 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Damage reqs",
                                                         "items": [
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Suitless",
+                                                                    "comment": null,
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -3732,33 +3824,11 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "With any suit.",
+                                                                    "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "or",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "VariaSuit",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "GravitySuit",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Have Any Suit Upgrade"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -3790,7 +3860,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Going to the bottom of the lava and climbing up due to missing the platform",
+                                            "comment": "Damage run via jumping into bottom of lava",
                                             "items": [
                                                 {
                                                     "type": "and",
@@ -3837,53 +3907,13 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "LavaDamage",
-                                                                    "amount": 35,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "VariaSuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageRuns",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "LavaDamage",
                                                                     "amount": 50,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "GravitySuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Have Any Suit Upgrade"
                                                             }
                                                         ]
                                                     }
@@ -3917,6 +3947,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 16,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Door to Lava Lake Annex": {
                             "type": "and",
@@ -3935,7 +3967,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Damage run",
                                             "items": [
                                                 {
                                                     "type": "and",
@@ -3969,48 +4001,8 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "VariaSuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageRuns",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "LavaDamage",
-                                                                    "amount": 70,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "GravitySuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Have Any Suit Upgrade"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -4056,7 +4048,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Deal with Lava",
                                             "items": [
                                                 {
                                                     "type": "and",
@@ -4087,7 +4079,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Suitless Damage Run: https://youtu.be/GUfsbWoRpzA?t=18",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -4253,7 +4245,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Damage run suitless",
+                                            "comment": "Damage run suitless: https://youtu.be/RF2_8Y0PaVQ",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4282,30 +4274,8 @@
                                             "comment": "Damage run and one suit",
                                             "items": [
                                                 {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "VariaSuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "GravitySuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Have Any Suit Upgrade"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -4451,7 +4421,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Deal with Lava",
                                             "items": [
                                                 {
                                                     "type": "and",
@@ -4482,7 +4452,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Suitless Damage Run: https://youtu.be/GUfsbWoRpzA",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -4615,7 +4585,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Damage run suitless",
+                                            "comment": "Damage run suitless: https://youtu.be/VFbTQoMI0uA",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4641,33 +4611,11 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Damage run with any suit",
+                                            "comment": "Damage run and one suit",
                                             "items": [
                                                 {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "VariaSuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "GravitySuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Have Any Suit Upgrade"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -4723,6 +4671,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 101,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Door to Zebesian Zig": {
                             "type": "and",
@@ -4735,8 +4685,9 @@
                 }
             }
         },
-        "Tourian Shaft East": {
+        "Tourian Tower": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 118",
                 "room_id": [
@@ -4744,7 +4695,7 @@
                 ]
             },
             "nodes": {
-                "Door to Tourian Central Checkpoint": {
+                "Door to Tourian Checkpoint": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4765,8 +4716,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Tourian Central Checkpoint",
-                        "node": "Door to Tourian Shaft East"
+                        "area": "Tourian Checkpoint",
+                        "node": "Door to Tourian Tower"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4775,7 +4726,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Tourian Entrance": {
+                        "Door to Ripper Sauna": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4803,7 +4754,7 @@
                         }
                     }
                 },
-                "Door to Tourian Entrance": {
+                "Door to Ripper Sauna": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4824,8 +4775,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Tourian Entrance",
-                        "node": "Door to Tourian Shaft East"
+                        "area": "Ripper Sauna",
+                        "node": "Door to Tourian Tower"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4834,7 +4785,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Tourian Central Checkpoint": {
+                        "Door to Tourian Checkpoint": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4892,6 +4843,7 @@
         },
         "Tourian Save Room East": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 119",
                 "room_id": [
@@ -4900,7 +4852,7 @@
                 "unlocked_save_recharge_station": true
             },
             "nodes": {
-                "Door to Tourian Central Hub": {
+                "Door to Tourian Eastern Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4921,7 +4873,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Tourian Central Hub",
+                        "area": "Tourian Eastern Hub",
                         "node": "Door to Tourian Save Room East"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -4958,7 +4910,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Tourian Central Hub": {
+                        "Door to Tourian Eastern Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4971,6 +4923,7 @@
         },
         "Lava Lake Annex": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 120",
                 "room_id": [
@@ -5012,7 +4965,7 @@
                         "Door to Lava Lake": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Deal with Lava",
                                 "items": [
                                     {
                                         "type": "and",
@@ -5043,7 +4996,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Suitless Damage Run: https://youtu.be/jfuH3Epvxh8",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5072,48 +5025,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "VariaSuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "DamageRuns",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "LavaDamage",
-                                                        "amount": 20,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Have Any Suit Upgrade"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -5201,7 +5114,7 @@
                         "Door to Entrance Lobby": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Deal with Lava",
                                 "items": [
                                     {
                                         "type": "and",
@@ -5232,7 +5145,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Suitless Damage Run: https://youtu.be/pu2I2jaMrjI",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5261,48 +5174,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "VariaSuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "DamageRuns",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "LavaDamage",
-                                                        "amount": 40,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Have Any Suit Upgrade"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -5391,8 +5264,9 @@
                 }
             }
         },
-        "Tourian Central Hub": {
+        "Tourian Eastern Hub": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 121",
                 "room_id": [
@@ -5422,7 +5296,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Gold Pirate Crossing",
-                        "node": "Door to Tourian Central Hub"
+                        "node": "Door to Tourian Eastern Hub"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -5445,7 +5319,7 @@
                         }
                     }
                 },
-                "Door to Tourian Central Checkpoint": {
+                "Door to Tourian Checkpoint": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5466,8 +5340,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Tourian Central Checkpoint",
-                        "node": "Door to Tourian Central Hub"
+                        "area": "Tourian Checkpoint",
+                        "node": "Door to Tourian Eastern Hub"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -5538,7 +5412,7 @@
                         }
                     }
                 },
-                "Door to Ripper Maze Access": {
+                "Door to Yameba Pool": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5559,8 +5433,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Ripper Maze Access",
-                        "node": "Door to Tourian Central Hub"
+                        "area": "Yameba Pool",
+                        "node": "Door to Tourian Eastern Hub"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -5688,7 +5562,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Tourian Save Room East",
-                        "node": "Door to Tourian Central Hub"
+                        "node": "Door to Tourian Eastern Hub"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -5697,7 +5571,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Ripper Maze Access": {
+                        "Door to Yameba Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5728,7 +5602,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Animorphs",
-                        "node": "Other to Tourian Central Hub"
+                        "node": "Other to Tourian Eastern Hub"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -5737,7 +5611,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Ripper Maze Access": {
+                        "Door to Yameba Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5783,7 +5657,7 @@
                                 ]
                             }
                         },
-                        "Door to Tourian Central Checkpoint": {
+                        "Door to Tourian Checkpoint": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5843,7 +5717,7 @@
                                 ]
                             }
                         },
-                        "Door to Ripper Maze Access": {
+                        "Door to Yameba Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5868,7 +5742,7 @@
                     "valid_starting_location": false,
                     "event_name": "AnimorphsOpen",
                     "connections": {
-                        "Door to Ripper Maze Access": {
+                        "Door to Yameba Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5881,6 +5755,7 @@
         },
         "Gold Pirate Crossing": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 122",
                 "room_id": [
@@ -5888,7 +5763,7 @@
                 ]
             },
             "nodes": {
-                "Door to Tourian Central Hub": {
+                "Door to Tourian Eastern Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5909,7 +5784,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Tourian Central Hub",
+                        "area": "Tourian Eastern Hub",
                         "node": "Door to Gold Pirate Crossing"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -5919,7 +5794,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Tourian Hub West": {
+                        "Door to Tourian Western Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5995,7 +5870,7 @@
                                                                 "data": {
                                                                     "type": "items",
                                                                     "name": "Missiles",
-                                                                    "amount": 30,
+                                                                    "amount": 20,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -6047,7 +5922,7 @@
                         }
                     }
                 },
-                "Door to Tourian Hub West": {
+                "Door to Tourian Western Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6068,7 +5943,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Tourian Hub West",
+                        "area": "Tourian Western Hub",
                         "node": "Door to Gold Pirate Crossing"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -6078,7 +5953,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Tourian Central Hub": {
+                        "Door to Tourian Eastern Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6154,7 +6029,7 @@
                                                                 "data": {
                                                                     "type": "items",
                                                                     "name": "Missiles",
-                                                                    "amount": 30,
+                                                                    "amount": 20,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -6208,8 +6083,9 @@
                 }
             }
         },
-        "Tourian Hub West": {
+        "Tourian Western Hub": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 123",
                 "room_id": [
@@ -6239,7 +6115,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Gold Pirate Crossing",
-                        "node": "Door to Tourian Hub West"
+                        "node": "Door to Tourian Western Hub"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -6286,7 +6162,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Tourian Save Room West",
-                        "node": "Door to Tourian Hub West"
+                        "node": "Door to Tourian Western Hub"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -6326,7 +6202,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Genesis Habitation",
-                        "node": "Door to Tourian Hub West"
+                        "node": "Door to Tourian Western Hub"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -6366,7 +6242,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Ridley Arena Access",
-                        "node": "Door to Tourian Hub West"
+                        "node": "Door to Tourian Western Hub"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -6414,6 +6290,7 @@
         },
         "Tourian Save Room West": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 124",
                 "room_id": [
@@ -6422,7 +6299,7 @@
                 "unlocked_save_recharge_station": true
             },
             "nodes": {
-                "Door to Tourian Hub West": {
+                "Door to Tourian Western Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6443,7 +6320,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Tourian Hub West",
+                        "area": "Tourian Western Hub",
                         "node": "Door to Tourian Save Room West"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -6480,7 +6357,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Tourian Hub West": {
+                        "Door to Tourian Western Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6493,6 +6370,7 @@
         },
         "Genesis Habitation": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 125",
                 "room_id": [
@@ -6500,7 +6378,7 @@
                 ]
             },
             "nodes": {
-                "Door to Tourian Hub West": {
+                "Door to Tourian Western Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6521,7 +6399,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Tourian Hub West",
+                        "area": "Tourian Western Hub",
                         "node": "Door to Genesis Habitation"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -6536,6 +6414,7 @@
         },
         "Ridley Arena Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 126",
                 "room_id": [
@@ -6543,7 +6422,7 @@
                 ]
             },
             "nodes": {
-                "Door to Tourian Hub West": {
+                "Door to Tourian Western Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6564,7 +6443,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Tourian Hub West",
+                        "area": "Tourian Western Hub",
                         "node": "Door to Ridley Arena Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -6604,14 +6483,23 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "DMG boost - TODO: this damage value is wrong, get proper values",
+                                                        "comment": "DMG boost",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "NormalDamage",
-                                                                    "amount": 50,
+                                                                    "amount": 150,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoosts",
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -6674,7 +6562,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Tourian Hub West": {
+                        "Door to Tourian Western Hub": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6695,14 +6583,40 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "DMG Boost - TODO: this damage value is wrong, get proper values",
+                                            "comment": "DMG Boost",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "NormalDamage",
-                                                        "amount": 50,
+                                                        "amount": 150,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageBoosts",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Hitless: https://youtu.be/eM3p0T3B9KE",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -6718,6 +6632,9 @@
         },
         "Ridley Arena": {
             "default_node": null,
+            "hint_features": [
+                "boss"
+            ],
             "extra": {
                 "map_name": "Sector 127",
                 "room_id": [
@@ -6810,6 +6727,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 104,
                     "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Arena": {
                             "type": "and",
@@ -7427,8 +7346,9 @@
                 }
             }
         },
-        "Tourian Central Checkpoint": {
+        "Tourian Checkpoint": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 128",
                 "room_id": [
@@ -7436,7 +7356,7 @@
                 ]
             },
             "nodes": {
-                "Door to Tourian Shaft East": {
+                "Door to Tourian Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7457,8 +7377,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Tourian Shaft East",
-                        "node": "Door to Tourian Central Checkpoint"
+                        "area": "Tourian Tower",
+                        "node": "Door to Tourian Checkpoint"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -7467,7 +7387,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Tourian Central Hub": {
+                        "Door to Tourian Eastern Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7476,7 +7396,7 @@
                         }
                     }
                 },
-                "Door to Tourian Central Hub": {
+                "Door to Tourian Eastern Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7497,8 +7417,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Tourian Central Hub",
-                        "node": "Door to Tourian Central Checkpoint"
+                        "area": "Tourian Eastern Hub",
+                        "node": "Door to Tourian Checkpoint"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -7507,7 +7427,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Tourian Shaft East": {
+                        "Door to Tourian Tower": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -7520,8 +7440,9 @@
                 }
             }
         },
-        "Ripper Maze Access": {
+        "Yameba Pool": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 129",
                 "room_id": [
@@ -7529,7 +7450,7 @@
                 ]
             },
             "nodes": {
-                "Door to Tourian Central Hub": {
+                "Door to Tourian Eastern Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7550,8 +7471,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Tourian Central Hub",
-                        "node": "Door to Ripper Maze Access"
+                        "area": "Tourian Eastern Hub",
+                        "node": "Door to Yameba Pool"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -7591,7 +7512,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Ripper Maze",
-                        "node": "Door to Ripper Maze Access"
+                        "node": "Door to Yameba Pool"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -7600,7 +7521,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Tourian Central Hub": {
+                        "Door to Tourian Eastern Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7613,6 +7534,9 @@
         },
         "Ripper Maze": {
             "default_node": null,
+            "hint_features": [
+                "climbable"
+            ],
             "extra": {
                 "map_name": "Sector 130",
                 "room_id": [
@@ -7641,6 +7565,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 17,
                     "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Top of Shaft": {
                             "type": "template",
@@ -7648,7 +7574,7 @@
                         }
                     }
                 },
-                "Door to Ripper Maze Access": {
+                "Door to Yameba Pool": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7669,7 +7595,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Ripper Maze Access",
+                        "area": "Yameba Pool",
                         "node": "Door to Ripper Maze"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -7875,7 +7801,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "NormalDamage",
-                                                                    "amount": 200,
+                                                                    "amount": 100,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -7936,7 +7862,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "With freezing",
+                                                        "comment": "With freezing: https://youtu.be/1-vVlBiw0og",
                                                         "items": [
                                                             {
                                                                 "type": "or",
@@ -7962,7 +7888,7 @@
                                                                                         "data": {
                                                                                             "type": "tricks",
                                                                                             "name": "WallJump",
-                                                                                            "amount": 1,
+                                                                                            "amount": 2,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
@@ -8335,7 +8261,7 @@
                                 ]
                             }
                         },
-                        "Door to Ripper Maze Access": {
+                        "Door to Yameba Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8357,14 +8283,14 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Move to off the pillar, right as the top most Ripper turns to the right: https://youtu.be/66mAKLiF8z4",
+                                                        "comment": "Move off the pillar, right as the top most Ripper turns to the right: https://youtu.be/66mAKLiF8z4",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Combat",
-                                                                    "amount": 2,
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -8505,7 +8431,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "NormalDamage",
-                                                                    "amount": 200,
+                                                                    "amount": 100,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -8621,6 +8547,7 @@
         },
         "Elevator to Restricted Zone": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 131",
                 "room_id": [
@@ -8659,7 +8586,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Elevator to Elevator to Sector 1 (TRN)": {
+                        "Elevator to Elevator to Tourian (SRX)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8668,7 +8595,7 @@
                         }
                     }
                 },
-                "Elevator to Elevator to Sector 1 (TRN)": {
+                "Elevator to Elevator to Tourian (SRX)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8689,7 +8616,7 @@
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Sector 1 (TRN)",
+                        "area": "Elevator to Tourian (SRX)",
                         "node": "Elevator to Elevator to Restricted Zone"
                     },
                     "default_dock_weakness": "Elevator",
@@ -8712,6 +8639,7 @@
         },
         "Atmospheric Stabilizer Northeast": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 132",
                 "room_id": [
@@ -8719,7 +8647,7 @@
                 ]
             },
             "nodes": {
-                "Door to Northwestern Intersection": {
+                "Door to Twin Junctions West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8740,7 +8668,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Northwestern Intersection",
+                        "area": "Twin Junctions West",
                         "node": "Door to Atmospheric Stabilizer Northeast"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -8774,7 +8702,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Northwestern Intersection": {
+                        "Door to Twin Junctions West": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -8838,7 +8766,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Knowledge",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -8886,8 +8814,9 @@
                 }
             }
         },
-        "Checkpoint Intersection": {
+        "Twin Junctions East": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 133",
                 "room_id": [
@@ -8895,7 +8824,7 @@
                 ]
             },
             "nodes": {
-                "Door to Northwestern Intersection": {
+                "Door to Twin Junctions West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8916,8 +8845,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Northwestern Intersection",
-                        "node": "Door to Checkpoint Intersection"
+                        "area": "Twin Junctions West",
+                        "node": "Door to Twin Junctions East"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -8926,14 +8855,14 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Save Room East": {
+                        "Door to Twin Junctions Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Checkpoint": {
+                        "Door to Stabilizer Checkpoint": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8942,7 +8871,7 @@
                         }
                     }
                 },
-                "Door to Save Room East": {
+                "Door to Twin Junctions Save Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8963,8 +8892,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Save Room East",
-                        "node": "Door to Checkpoint Intersection"
+                        "area": "Twin Junctions Save Room",
+                        "node": "Door to Twin Junctions East"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -8973,7 +8902,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Northwestern Intersection": {
+                        "Door to Twin Junctions West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8982,7 +8911,7 @@
                         }
                     }
                 },
-                "Door to Checkpoint": {
+                "Door to Stabilizer Checkpoint": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9003,8 +8932,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Checkpoint",
-                        "node": "Door to Checkpoint Intersection"
+                        "area": "Stabilizer Checkpoint",
+                        "node": "Door to Twin Junctions East"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -9013,7 +8942,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Northwestern Intersection": {
+                        "Door to Twin Junctions West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9044,7 +8973,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Sciser Playground",
-                        "node": "Door to Checkpoint Intersection"
+                        "node": "Door to Twin Junctions East"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -9094,7 +9023,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Zebesian Zag",
-                        "node": "Door to Checkpoint Intersection"
+                        "node": "Door to Twin Junctions East"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -9114,8 +9043,9 @@
                 }
             }
         },
-        "Save Room East": {
+        "Twin Junctions Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 134",
                 "room_id": [
@@ -9124,7 +9054,7 @@
                 "unlocked_save_recharge_station": true
             },
             "nodes": {
-                "Door to Checkpoint Intersection": {
+                "Door to Twin Junctions East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9145,8 +9075,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Checkpoint Intersection",
-                        "node": "Door to Save Room East"
+                        "area": "Twin Junctions East",
+                        "node": "Door to Twin Junctions Save Room"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -9240,7 +9170,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Wall Jump Tutorial",
-                        "node": "Other to Save Room East"
+                        "node": "Other to Twin Junctions Save Room"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -9249,7 +9179,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Checkpoint Intersection": {
+                        "Door to Twin Junctions East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9286,7 +9216,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Checkpoint Intersection": {
+                        "Door to Twin Junctions East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9311,7 +9241,7 @@
                     "valid_starting_location": false,
                     "event_name": "S1SaveShotBlock",
                     "connections": {
-                        "Door to Checkpoint Intersection": {
+                        "Door to Twin Junctions East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9324,6 +9254,7 @@
         },
         "Zebesian Zag": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 135",
                 "room_id": [
@@ -9331,7 +9262,7 @@
                 ]
             },
             "nodes": {
-                "Door to Checkpoint Intersection": {
+                "Door to Twin Junctions East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9352,7 +9283,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Checkpoint Intersection",
+                        "area": "Twin Junctions East",
                         "node": "Door to Zebesian Zag"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -9464,7 +9395,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Checkpoint Intersection": {
+                        "Door to Twin Junctions East": {
                             "type": "or",
                             "data": {
                                 "comment": "Deal with the Pirates",
@@ -9650,8 +9581,9 @@
                 }
             }
         },
-        "Tourian Entrance": {
+        "Ripper Sauna": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 136",
                 "room_id": [
@@ -9659,7 +9591,7 @@
                 ]
             },
             "nodes": {
-                "Door to Screw Shaft": {
+                "Door to Tourian Trapdoor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9680,8 +9612,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Screw Shaft",
-                        "node": "Door to Tourian Entrance"
+                        "area": "Tourian Trapdoor",
+                        "node": "Door to Ripper Sauna"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -9690,7 +9622,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Tourian Shaft East": {
+                        "Door to Tourian Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9803,7 +9735,7 @@
                         }
                     }
                 },
-                "Door to Tourian Shaft East": {
+                "Door to Tourian Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9824,8 +9756,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Tourian Shaft East",
-                        "node": "Door to Tourian Entrance"
+                        "area": "Tourian Tower",
+                        "node": "Door to Ripper Sauna"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -9834,7 +9766,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Screw Shaft": {
+                        "Door to Tourian Trapdoor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9869,7 +9801,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Get past Rippers - TODO: health for damage runs",
+                                            "comment": "Get past Rippers",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -9881,12 +9813,29 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "DamageRuns",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": "Run and jump through the acid: https://youtu.be/BPF8pppB7po",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "NormalDamage",
+                                                                    "amount": 130,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -9920,8 +9869,9 @@
                 }
             }
         },
-        "Charge Core Arena Access": {
+        "Charge Core Lower Access": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 137",
                 "room_id": [
@@ -9951,7 +9901,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Sciser Playground",
-                        "node": "Door to Charge Core Arena Access"
+                        "node": "Door to Charge Core Lower Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -10013,7 +9963,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Hornoad Housing",
-                        "node": "Door to Charge Core Arena Access"
+                        "node": "Door to Charge Core Lower Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -10132,7 +10082,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Charge Core Arena",
-                        "node": "Door to Charge Core Arena Access"
+                        "node": "Door to Charge Core Lower Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -10172,7 +10122,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Watering Hole",
-                        "node": "Other to Charge Core Arena Access"
+                        "node": "Other to Charge Core Lower Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -10241,6 +10191,7 @@
         },
         "Sciser Playground": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 138",
                 "room_id": [
@@ -10248,7 +10199,7 @@
                 ]
             },
             "nodes": {
-                "Door to Charge Core Arena Access": {
+                "Door to Charge Core Lower Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10269,7 +10220,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Charge Core Arena Access",
+                        "area": "Charge Core Lower Access",
                         "node": "Door to Sciser Playground"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -10279,7 +10230,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Checkpoint Intersection": {
+                        "Door to Twin Junctions East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10298,7 +10249,7 @@
                         }
                     }
                 },
-                "Door to Checkpoint Intersection": {
+                "Door to Twin Junctions East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10319,7 +10270,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Checkpoint Intersection",
+                        "area": "Twin Junctions East",
                         "node": "Door to Sciser Playground"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -10329,7 +10280,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Charge Core Arena Access": {
+                        "Door to Charge Core Lower Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10352,6 +10303,7 @@
         },
         "Antechamber": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 139",
                 "room_id": [
@@ -10380,6 +10332,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 18,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Top of Room": {
                             "type": "and",
@@ -10574,6 +10528,9 @@
         },
         "Charge Core Arena": {
             "default_node": null,
+            "hint_features": [
+                "boss"
+            ],
             "extra": {
                 "map_name": "Sector 140",
                 "room_id": [
@@ -10602,6 +10559,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 19,
                     "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Arena": {
                             "type": "and",
@@ -10612,7 +10571,7 @@
                         }
                     }
                 },
-                "Door to Charge Core Arena Access": {
+                "Door to Charge Core Lower Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10633,7 +10592,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Charge Core Arena Access",
+                        "area": "Charge Core Lower Access",
                         "node": "Door to Charge Core Arena"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -10643,6 +10602,131 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Shinespark from Hornoad Housing -> Access",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "L0Locks",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLockRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Gadora"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "After Fight, Trickless: https://youtu.be/Z6_miH4qoQY",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "ChargeCore-X",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Pre-Fight, with Hi-Jump: https://youtu.be/q7HKdMt4v3g",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Pre-fight, No Hi-Jump: https://youtu.be/Fo8-jjuPdik",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Arena": {
                             "type": "and",
                             "data": {
@@ -10652,7 +10736,7 @@
                         }
                     }
                 },
-                "Door to Charge Core Escape": {
+                "Door to Charge Core Upper Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10673,7 +10757,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Charge Core Escape",
+                        "area": "Charge Core Upper Access",
                         "node": "Door to Charge Core Arena"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -10683,6 +10767,68 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Shinespark from Central Stabilizer -> Escape: https://youtu.be/BsW39UKOYVw",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "L0Locks",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLockRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "ShinesparkTrick",
+                                            "amount": 5,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Stabilizer5",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Arena": {
                             "type": "and",
                             "data": {
@@ -10737,6 +10883,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 114,
                     "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Arena": {
                             "type": "and",
@@ -10762,202 +10910,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Pickup (Energy Tank)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Vanilla Method - Shinespark from Hornoad Housing -> Access",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpeedBooster",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Kill Gadora"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "EntranceRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "After Fight, Trickless: https://youtu.be/Z6_miH4qoQY",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Hi-Jump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "events",
-                                                                                "name": "ChargeCore-X",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "Pre-Fight, with Hi-Jump: https://youtu.be/q7HKdMt4v3g",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Hi-Jump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "ShinesparkTrick",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "Pre-fight, No Hi-Jump: https://youtu.be/Fo8-jjuPdik",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "ShinesparkTrick",
-                                                                                "amount": 3,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "L0Locks",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Alternate - Shinespark from Central Stabilizer -> Escape: https://youtu.be/BsW39UKOYVw",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "EntranceRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpeedBooster",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "ShinesparkTrick",
-                                                        "amount": 5,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "L0Locks",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Stabilizer5",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Door to Charge Core Arena Access": {
+                        "Door to Charge Core Lower Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10974,7 +10927,7 @@
                                 ]
                             }
                         },
-                        "Door to Charge Core Escape": {
+                        "Door to Charge Core Upper Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -11074,6 +11027,7 @@
         },
         "Elevator to Main Deck": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 141",
                 "room_id": [
@@ -11165,6 +11119,7 @@
         },
         "Central Save Room": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 142",
                 "room_id": [
@@ -11244,6 +11199,7 @@
         },
         "Crab Rave": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 143",
                 "room_id": [
@@ -11272,8 +11228,10 @@
                     "valid_starting_location": false,
                     "pickup_index": 20,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
-                        "Other to Charge Core Escape": {
+                        "Other to Charge Core Upper Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11282,7 +11240,7 @@
                         }
                     }
                 },
-                "Other to Charge Core Escape": {
+                "Other to Charge Core Upper Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11303,7 +11261,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Charge Core Escape",
+                        "area": "Charge Core Upper Access",
                         "node": "Other to Crab Rave"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -11324,8 +11282,9 @@
                 }
             }
         },
-        "Sciser Storage": {
+        "Stabilizer Storage": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 144",
                 "room_id": [
@@ -11354,6 +11313,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 21,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Door to Atmospheric Stabilizer Southeast": {
                             "type": "and",
@@ -11386,7 +11347,7 @@
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
                         "area": "Atmospheric Stabilizer Southeast",
-                        "node": "Door to Sciser Storage"
+                        "node": "Door to Stabilizer Storage"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -11408,6 +11369,7 @@
         },
         "Sciser Puddle": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 145",
                 "room_id": [
@@ -11499,6 +11461,7 @@
         },
         "Hornoad Housing": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 146",
                 "room_id": [
@@ -11537,7 +11500,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Charge Core Arena Access": {
+                        "Door to Charge Core Lower Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11546,7 +11509,7 @@
                         }
                     }
                 },
-                "Door to Charge Core Arena Access": {
+                "Door to Charge Core Lower Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11567,7 +11530,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Charge Core Arena Access",
+                        "area": "Charge Core Lower Access",
                         "node": "Door to Hornoad Housing"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -11590,6 +11553,9 @@
         },
         "Watering Hole": {
             "default_node": null,
+            "hint_features": [
+                "climbable"
+            ],
             "extra": {
                 "map_name": "Sector 147",
                 "room_id": [
@@ -11618,8 +11584,10 @@
                     "valid_starting_location": false,
                     "pickup_index": 22,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
-                        "Other to Charge Core Arena Access": {
+                        "Other to Charge Core Lower Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11628,7 +11596,7 @@
                         }
                     }
                 },
-                "Other to Charge Core Arena Access": {
+                "Other to Charge Core Lower Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11649,7 +11617,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Charge Core Arena Access",
+                        "area": "Charge Core Lower Access",
                         "node": "Other to Watering Hole"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -11715,7 +11683,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Deal with water",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -11737,6 +11705,15 @@
                                                                     "type": "tricks",
                                                                     "name": "ShinesparkTrick",
                                                                     "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "ChargeBeam",
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -11836,37 +11813,29 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "or",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "ScrewAttack",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": "Keep storing spark, until you can shoot the Scizer: https://youtu.be/QnQD7K9hcB8",
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "ShinesparkTrick",
-                                                                                            "amount": 3,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "items",
+                                                                    "name": "ScrewAttack",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Keep storing spark, until you can shoot the Scizer: https://youtu.be/QnQD7K9hcB8",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 3,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -11883,6 +11852,15 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "S1ChargeAccessBombs",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -11893,6 +11871,7 @@
         },
         "Glass Tube to Sector 2 (TRO)": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 148",
                 "room_id": [
@@ -11984,6 +11963,7 @@
         },
         "Glass Tube to Sector 3 (PYR)": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 149",
                 "room_id": [
@@ -12075,6 +12055,7 @@
         },
         "Wall Jump Tutorial": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 150",
                 "room_id": [
@@ -12103,8 +12084,10 @@
                     "valid_starting_location": false,
                     "pickup_index": 23,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
-                        "Other to Save Room East": {
+                        "Other to Twin Junctions Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12113,7 +12096,7 @@
                         }
                     }
                 },
-                "Other to Save Room East": {
+                "Other to Twin Junctions Save Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12134,7 +12117,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Save Room East",
+                        "area": "Twin Junctions Save Room",
                         "node": "Other to Wall Jump Tutorial"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -12157,6 +12140,7 @@
         },
         "Animorphs": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 151",
                 "room_id": [
@@ -12164,7 +12148,7 @@
                 ]
             },
             "nodes": {
-                "Other to Tourian Central Hub": {
+                "Other to Tourian Eastern Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12185,7 +12169,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Tourian Central Hub",
+                        "area": "Tourian Eastern Hub",
                         "node": "Other to Animorphs"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -12259,7 +12243,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Other to Tourian Central Hub": {
+                        "Other to Tourian Eastern Hub": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -12329,7 +12313,7 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "Charge Beam Flare can hit through the corner",
+                                                                    "comment": "Charge Beam Flare can hit through the corner: https://youtu.be/6Stz6EU-Zrc",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -12515,6 +12499,7 @@
         },
         "Animorphs Cache": {
             "default_node": null,
+            "hint_features": [],
             "extra": {
                 "map_name": "Sector 152",
                 "room_id": [
@@ -12543,6 +12528,8 @@
                     "valid_starting_location": false,
                     "pickup_index": 24,
                     "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Door to Animorphs": {
                             "type": "and",

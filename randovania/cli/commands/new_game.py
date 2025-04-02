@@ -22,9 +22,9 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.pickup.pickup_category import GENERIC_KEY_CATEGORY, PickupCategory
+from randovania.game_description.hint_features import HintDetails, HintFeature
 from randovania.game_description.pickup.pickup_database import PickupDatabase
-from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -130,8 +130,8 @@ def copy_files_code(
             code = code.replace('long_name="Blank Development Game"', f'long_name="{long_name}"')
             code = code.replace("defaults_available_in_game_sessions=randovania.is_dev_version(),", "")
             code = code.replace(
-                "development_state=game.DevelopmentState.EXPERIMENTAL",
-                "development_state=game.DevelopmentState.DEVELOPMENT",
+                "development_state=game.DevelopmentState.STAGING",
+                "development_state=game.DevelopmentState.SOURCE_ONLY",
             )
 
         if file.name == "progressive_items.py":
@@ -222,6 +222,7 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
         game=game_enum,
         dock_weakness_database=dock_weakness_database,
         resource_database=resource_database,
+        hint_feature_database={},
         layers=("default",),
         victory_condition=ResourceRequirement.simple(items[1]),
         starting_location=intro_node.identifier,
@@ -254,17 +255,20 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
 
 def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
     pickup_categories = {
-        "weapon": PickupCategory(
+        "weapon": HintFeature(
             name="weapon",
             long_name="Weapon",
-            hint_details=("a ", "weapon"),
-            hinted_as_major=True,
+            hint_details=HintDetails("a ", "weapon"),
         ),
-        "ammo-based": PickupCategory(
+        "ammo-based": HintFeature(
             name="ammo-based",
             long_name="Ammo-Based",
-            hint_details=("an ", "ammo-based item"),
-            hinted_as_major=False,
+            hint_details=HintDetails("an ", "ammo-based item"),
+        ),
+        "key": HintFeature(
+            name="key",
+            long_name="Key",
+            hint_details=HintDetails("a ", "key"),
         ),
     }
     pickup_db = PickupDatabase(
@@ -273,8 +277,8 @@ def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
             "Victory Key": StandardPickupDefinition(
                 game=game_enum,
                 name="Victory Key",
-                pickup_category=GENERIC_KEY_CATEGORY,
-                broad_category=GENERIC_KEY_CATEGORY,
+                gui_category=pickup_categories["key"],
+                hint_features=frozenset((pickup_categories["key"],)),
                 model_name="VictoryKey",
                 offworld_models=frozendict(),
                 progression=("VictoryKey",),
@@ -286,12 +290,18 @@ def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
             "Powerful Weapon": StandardPickupDefinition(
                 game=game_enum,
                 name="Powerful Weapon",
-                pickup_category=pickup_categories["weapon"],
-                broad_category=pickup_categories["ammo-based"],
+                gui_category=pickup_categories["weapon"],
+                hint_features=frozenset(
+                    (
+                        pickup_categories["weapon"],
+                        pickup_categories["ammo-based"],
+                    )
+                ),
                 model_name="Powerful",
                 offworld_models=frozendict(),
                 progression=("Weapon",),
                 preferred_location_category=LocationCategory.MAJOR,
+                show_in_credits_spoiler=True,
             ),
         },
         ammo_pickups={},
@@ -356,7 +366,7 @@ def update_pyuic(enum_value: str) -> None:
     new_entry = [f"randovania/games/{enum_value}/gui/ui_files/*.ui", f"randovania/games/{enum_value}/gui/generated"]
 
     pyuic_path = _ROOT_PATH.parent.joinpath("pyuic.json")
-    pyuic = typing.cast(dict[str, list[list[str]]], json_lib.read_path(pyuic_path))
+    pyuic = typing.cast("dict[str, list[list[str]]]", json_lib.read_path(pyuic_path))
 
     if not any(it == new_entry for it in pyuic["files"]):
         pyuic["files"].append(new_entry)

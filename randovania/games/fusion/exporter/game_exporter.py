@@ -1,23 +1,25 @@
 from __future__ import annotations
 
 import dataclasses
+import os
+import typing
 from pathlib import Path
 from typing import TYPE_CHECKING
 
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
+from randovania.lib import json_lib
 
 if TYPE_CHECKING:
     from randovania.lib import status_update_lib
 
 
-# TODO
 @dataclasses.dataclass(frozen=True)
 class FusionGameExportParams(GameExportParams):
     input_path: Path
     output_path: Path
 
 
-class FusionGameExporter(GameExporter):
+class FusionGameExporter(GameExporter[FusionGameExportParams]):
     _busy: bool = False
 
     @property
@@ -34,7 +36,7 @@ class FusionGameExporter(GameExporter):
         """
         return False
 
-    def export_params_type(self) -> type[GameExportParams]:
+    def export_params_type(self) -> type[FusionGameExportParams]:
         """
         Returns the type of the GameExportParams expected by this exporter.
         """
@@ -43,8 +45,21 @@ class FusionGameExporter(GameExporter):
     def _do_export_game(
         self,
         patch_data: dict,
-        export_params: GameExportParams,
+        export_params: FusionGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
-        assert isinstance(export_params, FusionGameExportParams)
-        raise RuntimeError("Needs to be implemented")
+        from mars_patcher import patcher
+
+        patcher.validate_patch_data(patch_data)
+
+        try:
+            patcher.patch(
+                os.fspath(export_params.input_path),
+                os.fspath(export_params.output_path),
+                typing.cast("patcher.MarsSchema", patch_data),
+                progress_update,
+            )
+        finally:
+            json_lib.write_path(
+                export_params.output_path.parent.joinpath(f"{export_params.output_path.stem}_mars.json"), patch_data
+            )

@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import re
 from typing import TYPE_CHECKING
 
 from PySide6.QtWidgets import QDialog, QWidget
@@ -10,6 +9,7 @@ from randovania.game_description.db.node import NodeContext
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.gui.generated.trick_details_popup_ui import Ui_TrickDetailsPopup
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
+from randovania.gui.lib.data_editor_links import data_editor_href, on_click_data_editor_link
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterable
@@ -95,7 +95,9 @@ class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
         self._trick_levels = trick_levels
 
         # setup
-        self.area_list_label.linkActivated.connect(self._on_click_link_to_data_editor)
+        self.area_list_label.linkActivated.connect(
+            on_click_data_editor_link(self._window_manager, self._game_description.game, self._trick_levels)
+        )
 
         # connect
         self.button_box.accepted.connect(self.button_box_close)
@@ -104,12 +106,7 @@ class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
         # Update
         if areas_to_show:
             lines = [
-                (
-                    f'<a href="data-editor://{region.correct_name(area.in_dark_aether)}/{area.name}">'
-                    f"{region.correct_name(area.in_dark_aether)} - {area.name}</a>"
-                )
-                + "".join(f"\n<br />{usage}" for usage in usages)
-                + "<br />"
+                data_editor_href(region, area) + "".join(f"\n<br />{usage}" for usage in usages) + "<br />"
                 for (region, area, usages) in areas_to_show
             ]
             self.area_list_label.setText("<br />".join(sorted(lines)))
@@ -118,17 +115,6 @@ class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
 
     def button_box_close(self):
         self.reject()
-
-    def _on_click_link_to_data_editor(self, link: str):
-        info = re.match(r"^data-editor://([^)]+)/([^)]+)$", link)
-        if info:
-            region_name, area_name = info.group(1, 2)
-            self._window_manager.open_data_visualizer_at(
-                region_name,
-                area_name,
-                game=self._game_description.game,
-                trick_levels=self._trick_levels,
-            )
 
 
 class TrickDetailsPopup(BaseResourceDetailsPopup):

@@ -11,13 +11,13 @@ if TYPE_CHECKING:
 def msr_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
     from randovania.games.samus_returns.gui.preset_settings.msr_aeion_energy_tab import PresetMSRAeionAndEnergy
     from randovania.games.samus_returns.gui.preset_settings.msr_goal_tab import PresetMSRGoal
-    from randovania.games.samus_returns.gui.preset_settings.msr_hints_tab import PresetMSRHints
     from randovania.games.samus_returns.gui.preset_settings.msr_patches_tab import PresetMSRPatches
     from randovania.games.samus_returns.gui.preset_settings.msr_reserves_tab import PresetMSRReserves
     from randovania.games.samus_returns.gui.preset_settings.msr_starting_area import PresetMSRStartingArea
     from randovania.games.samus_returns.gui.preset_settings.msr_teleporters_tab import PresetTeleportersMSR
     from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
+    from randovania.gui.preset_settings.hints_tab import PresetHints
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
@@ -26,7 +26,7 @@ def msr_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list
         PresetTrickLevel,
         PresetGeneration,
         PresetMSRGoal,
-        PresetMSRHints,
+        PresetHints,
         PresetLocationPool,
         MetroidPresetItemPool,
         PresetMSRStartingArea,

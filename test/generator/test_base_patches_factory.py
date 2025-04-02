@@ -10,7 +10,7 @@ import pytest
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.dock_node import DockNode, Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.generator import base_patches_factory
+from randovania.games.blank.generator import BlankBasePatchesFactory
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
@@ -356,7 +356,7 @@ def test_create_base_patches(mocker):
     patches.append(patches[-1].assign_game_specific.return_value)
     patches.append(patches[-1].check_item_pool.return_value)
 
-    factory = base_patches_factory.BasePatchesFactory()
+    factory = BlankBasePatchesFactory()
 
     # Run
     result = factory.create_base_patches(layout_configuration, rng, game, is_multiworld, player_index=0)
@@ -395,7 +395,7 @@ def test_check_item_pool_ok(mocker, items, max_items, fail):
     mocker.patch(
         "randovania.generator.pickup_pool.pool_creator.get_total_pickup_count", return_value=(items, max_items)
     )
-    base_patches = base_patches_factory.BasePatchesFactory()
+    base_patches = BlankBasePatchesFactory()
 
     if fail:
         with pytest.raises(InvalidConfiguration):

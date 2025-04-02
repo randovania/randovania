@@ -99,4 +99,4 @@ def test_general_blank_layout(default_blank_preset):
 
     # Assert
     assert result.generator_parameters == parameters
-    assert result.get_seed_for_player(0) == 1000
+    assert result.get_seed_for_world(0) == 1000

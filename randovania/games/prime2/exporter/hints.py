@@ -4,9 +4,8 @@ from typing import TYPE_CHECKING
 
 from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
-from randovania.exporter.hints.joke_hints import JOKE_HINTS
 from randovania.game_description.db.hint_node import HintNode
-from randovania.games.common.prime_family.exporter.hint_namer import colorize_text
+from randovania.games.prime2.exporter.joke_hints import ECHOES_JOKE_HINTS
 from randovania.games.prime2.patcher import echoes_items
 
 if TYPE_CHECKING:
@@ -35,19 +34,18 @@ def create_patches_hints(
     namer: HintNamer,
     rng: Random,
 ) -> list:
-    exporter = HintExporter(namer, rng, JOKE_HINTS)
+    exporter = HintExporter(namer, rng, ECHOES_JOKE_HINTS)
 
     hints_for_asset: dict[NodeIdentifier, str] = {}
     for identifier, hint in all_patches[players_config.player_index].hints.items():
-        hints_for_asset[identifier] = exporter.create_message_for_hint(hint, all_patches, players_config, True)
+        hints_for_asset[identifier] = exporter.create_message_for_hint(hint, True)
 
     return [
         create_simple_logbook_hint(
             logbook_node.extra["string_asset_id"],
             hints_for_asset.get(logbook_node.identifier, "Someone forgot to leave a message."),
         )
-        for logbook_node in region_list.iterate_nodes()
-        if isinstance(logbook_node, HintNode)
+        for logbook_node in region_list.iterate_nodes_of_type(HintNode)
     ]
 
 
@@ -60,8 +58,7 @@ def hide_patches_hints(region_list: RegionList) -> list:
 
     return [
         create_simple_logbook_hint(logbook_node.extra["string_asset_id"], "Some item was placed somewhere.")
-        for logbook_node in region_list.iterate_nodes()
-        if isinstance(logbook_node, HintNode)
+        for logbook_node in region_list.iterate_nodes_of_type(HintNode)
     ]
 
 
@@ -123,7 +120,7 @@ def hide_stk_hints(namer: EchoesHintNamer) -> list:
         create_simple_logbook_hint(
             _SKY_TEMPLE_KEY_SCAN_ASSETS[key_number],
             "{} is lost somewhere in Aether.".format(
-                colorize_text(namer.color_item, f"Sky Temple Key {key_number + 1}", True)
+                namer.colorize_text(namer.color_item, f"Sky Temple Key {key_number + 1}", True)
             ),
         )
         for key_number in range(9)

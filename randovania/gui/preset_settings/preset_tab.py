@@ -2,8 +2,11 @@ from __future__ import annotations
 
 import dataclasses
 import typing
+from typing import Generic
 
 from PySide6 import QtWidgets
+
+from randovania.layout.base.base_configuration import ConfigurationT_co
 
 if typing.TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
@@ -12,19 +15,26 @@ if typing.TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-class PresetTab(QtWidgets.QMainWindow):
+class PresetTab(QtWidgets.QMainWindow, Generic[ConfigurationT_co]):
     RANDOMIZER_LOGIC_HEADER = "Randomizer Logic"
     GAME_MODIFICATIONS_HEADER = "Game Modifications"
 
-    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+    def __init__(
+        self, editor: PresetEditor[ConfigurationT_co], game_description: GameDescription, window_manager: WindowManager
+    ):
         super().__init__()
         self._editor = editor
         self.game_description = game_description
         self._window_manager = window_manager
 
-    def update_experimental_visibility(self):
+    def update_experimental_visibility(self) -> None:
+        show_experimental = self._editor._options.experimental_settings
+        show_development = show_experimental and self._window_manager.is_preview_mode
+
         for w in self.experimental_settings:
-            w.setVisible(self._editor._options.experimental_settings)
+            w.setVisible(show_experimental)
+        for w in self.development_settings:
+            w.setVisible(show_development)
 
     @classmethod
     def is_experimental(cls) -> bool:
@@ -32,6 +42,15 @@ class PresetTab(QtWidgets.QMainWindow):
 
     @property
     def experimental_settings(self) -> typing.Iterable[QtWidgets.QWidget]:
+        """Widgets to be hidden unless experimental settings are enabled."""
+        yield from []
+
+    @property
+    def development_settings(self) -> typing.Iterable[QtWidgets.QWidget]:
+        """
+        Widgets to be hidden unless experimental settings are enabled
+        and RDV is running in preview mode.
+        """
         yield from []
 
     @classmethod
@@ -43,7 +62,7 @@ class PresetTab(QtWidgets.QMainWindow):
         """If this tab starts a new header, returns the name of the header. If it doesn't, returns None."""
         raise NotImplementedError
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset[ConfigurationT_co]) -> None:
         raise NotImplementedError
 
     # Persistence helpers

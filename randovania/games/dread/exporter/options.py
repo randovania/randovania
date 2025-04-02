@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from pathlib import Path
+from typing import override
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.games.dread.exporter.game_exporter import DreadModPlatform, LinuxRyujinxPath
@@ -36,3 +37,8 @@ class DreadPerGameOptions(PerGameOptions):
             linux_ryujinx_path=LinuxRyujinxPath(value["linux_ryujinx_path"]),
             output_preference=value["output_preference"],
         )
+
+    @classmethod
+    @override
+    def game_enum(cls) -> RandovaniaGame:
+        return RandovaniaGame.METROID_DREAD

@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import dataclasses
+import enum
 import typing
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 from frozendict import frozendict
 
+from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -14,7 +16,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from randovania.game_description.pickup.pickup_category import PickupCategory
+    from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.resources.location_category import LocationCategory
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import (
@@ -22,6 +24,12 @@ if TYPE_CHECKING:
         ResourceGainTuple,
         ResourceQuantity,
     )
+
+
+class StartingPickupBehavior(BitPackEnum, enum.StrEnum):
+    CAN_BE_STARTING = "can_start"
+    MUST_BE_STARTING = "must_start"
+    CAN_NEVER_BE_STARTING = "never_start"
 
 
 @dataclass(frozen=True)
@@ -74,17 +82,20 @@ class PickupGeneratorParams:
 class PickupEntry:
     name: str
     model: PickupModel
-    pickup_category: PickupCategory
-    broad_category: PickupCategory
+    gui_category: HintFeature
+    hint_features: frozenset[HintFeature]
     progression: tuple[tuple[ItemResourceInfo, int], ...]
     generator_params: PickupGeneratorParams
+    start_case: StartingPickupBehavior = StartingPickupBehavior.CAN_BE_STARTING
     extra_resources: ResourceGainTuple = ()
     unlocks_resource: bool = False
     resource_lock: ResourceLock | None = None
     respects_lock: bool = True
     offworld_models: frozendict[RandovaniaGame, str] = dataclasses.field(
-        default_factory=typing.cast(typing.Callable[[], frozendict[RandovaniaGame, str]], frozendict),
+        default_factory=typing.cast("typing.Callable[[], frozendict[RandovaniaGame, str]]", frozendict),
     )
+    show_in_credits_spoiler: bool = True  # TODO: rename. this is effectively an "is important item" flag
+    is_expansion: bool = False
 
     def __post_init__(self) -> None:
         if not isinstance(self.progression, tuple):
@@ -181,3 +192,7 @@ class PickupEntry:
     def all_resources(self) -> Iterator[ResourceQuantity]:
         yield from self.progression
         yield from self.extra_resources
+
+    def has_hint_feature(self, feature_name: str) -> bool:
+        """Whether this PickupEntry has a hint feature with the given name"""
+        return feature_name in {f.name for f in self.hint_features}

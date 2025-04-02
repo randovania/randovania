@@ -1,17 +1,18 @@
 from __future__ import annotations
 
 from copy import deepcopy
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
-from randovania.exporter.hints.hint_exporter import HintExporter
+from randovania.exporter.hints.joke_hints import GENERIC_JOKE_HINTS
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
+from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
@@ -25,7 +26,6 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
-    from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 
 _ALTERNATIVE_MODELS = {
     PickupModel(RandovaniaGame.METROID_DREAD, "Nothing"): ["itemsphere"],
@@ -94,9 +94,7 @@ def _get_destination_room_for_teleportal(connection: Node):
     return connection.extra.get("transporter_name", f"{connection.identifier.region} - {connection.identifier.area}")
 
 
-class DreadPatchDataFactory(PatchDataFactory):
-    cosmetic_patches: DreadCosmeticPatches
-    configuration: DreadConfiguration
+class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPatches]):
     spawnpoint_name_prefix = "SP_RDV_"
 
     def __init__(self, *args, **kwargs):
@@ -105,6 +103,11 @@ class DreadPatchDataFactory(PatchDataFactory):
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_DREAD
+
+    @override
+    @classmethod
+    def hint_namer_type(cls) -> type[DreadHintNamer]:
+        return DreadHintNamer
 
     def _calculate_starting_inventory(self, resources: ResourceCollection):
         result = {}
@@ -259,8 +262,12 @@ class DreadPatchDataFactory(PatchDataFactory):
         return details
 
     def _encode_hints(self) -> list[dict]:
-        namer = DreadHintNamer(self.description.all_patches, self.players_config)
-        exporter = HintExporter(namer, self.rng, ["A joke hint."])
+        exporter = self.get_hint_exporter(
+            self.description.all_patches,
+            self.players_config,
+            self.rng,
+            GENERIC_JOKE_HINTS,
+        )
 
         return [
             {
@@ -268,13 +275,10 @@ class DreadPatchDataFactory(PatchDataFactory):
                 "hint_id": hint_node.extra["hint_id"],
                 "text": exporter.create_message_for_hint(
                     self.patches.hints[hint_node.identifier],
-                    self.description.all_patches,
-                    self.players_config,
                     True,
                 ),
             }
-            for hint_node in self.game.region_list.iterate_nodes()
-            if isinstance(hint_node, HintNode)
+            for hint_node in self.game.region_list.iterate_nodes_of_type(HintNode)
         ]
 
     def _static_text_changes(self) -> dict[str, str]:

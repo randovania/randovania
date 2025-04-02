@@ -10,6 +10,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.games.cave_story.exporter.game_exporter import CSGameExportParams
 from randovania.games.cave_story.exporter.options import CSPerGameOptions
 from randovania.games.cave_story.gui.generated.cs_game_export_dialog_ui import Ui_CSGameExportDialog
+from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     add_field_validation,
@@ -23,16 +24,22 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options, PerGameOptions
 
 
-class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
+class CSGameExportDialog(GameExportDialog[CSConfiguration], Ui_CSGameExportDialog):
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.CAVE_STORY
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
-        super().__init__(options, patch_data, word_hash, spoiler, games)
+    def __init__(
+        self,
+        options: Options,
+        configuration: CSConfiguration,
+        word_hash: str,
+        spoiler: bool,
+        games: list[RandovaniaGame],
+    ):
+        super().__init__(options, configuration, word_hash, spoiler, games)
 
-        per_game = options.options_for_game(self.game_enum())
-        assert isinstance(per_game, CSPerGameOptions)
+        per_game = options.per_game_options(CSPerGameOptions)
 
         # Output
         self.output_file_button.clicked.connect(self._on_output_file_button)

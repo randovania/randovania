@@ -1,5 +1,5 @@
 {
-    "schema_version": 27,
+    "schema_version": 30,
     "game": "factorio",
     "resource_database": {
         "items": {
@@ -1211,7 +1211,7 @@
                 }
             },
             "bulk-inserter-capacity-bonus": {
-                "long_name": "bulk inserter capacity bonus",
+                "long_name": "Bulk inserter capacity bonus",
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": []
@@ -10423,8 +10423,20 @@
     },
     "minimal_logic": null,
     "victory_condition": {
-        "type": "template",
-        "data": "craft-rocket-part"
+        "type": "and",
+        "data": {
+            "comment": null,
+            "items": [
+                {
+                    "type": "template",
+                    "data": "craft-rocket-part"
+                },
+                {
+                    "type": "template",
+                    "data": "craft-satellite"
+                }
+            ]
+        }
     },
     "dock_weakness_database": {
         "types": {
@@ -10457,6 +10469,7 @@
             "to_shuffle_proportion": 1.0
         }
     },
+    "hint_feature_database": {},
     "used_trick_levels": {},
     "flatten_to_set_on_patch": true,
     "regions": [

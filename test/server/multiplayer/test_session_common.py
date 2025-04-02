@@ -9,7 +9,8 @@ import pytest
 
 from randovania.bitpacking import construct_pack
 from randovania.network_common import multiplayer_session
-from randovania.network_common.multiplayer_session import MultiplayerSessionAuditEntry, MultiplayerSessionAuditLog
+from randovania.network_common.audit import AuditEntry
+from randovania.network_common.multiplayer_session import MultiplayerSessionAuditLog
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.server import database
 from randovania.server.multiplayer import session_common
@@ -117,12 +118,12 @@ def test_emit_session_audit_update(session_update, flask_app, mocker):
     audit_log = MultiplayerSessionAuditLog(
         session_id=session_update.id,
         entries=[
-            MultiplayerSessionAuditEntry(
+            AuditEntry(
                 user="The Name",
                 message="Did something",
                 time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.UTC),
             ),
-            MultiplayerSessionAuditEntry(
+            AuditEntry(
                 user="Other",
                 message="Did something else",
                 time=datetime.datetime(2020, 5, 3, 10, 20, tzinfo=datetime.UTC),

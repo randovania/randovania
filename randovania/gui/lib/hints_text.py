@@ -1,130 +1,18 @@
 from __future__ import annotations
 
 import collections
+from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
 
-from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
-from randovania.game_description.db.hint_node import HintNode
-from randovania.generator.pickup_pool.pickup_creator import create_generated_pickup
+from randovania.game_description.db.hint_node import HintNode, HintNodeKind
+
+if TYPE_CHECKING:
+    from randovania.game.game_enum import RandovaniaGame
 
 
-def prime1_hint_text():
-    db = default_database.resource_database_for(RandovaniaGame.METROID_PRIME)
-
-    artifact = create_generated_pickup("Chozo Artifact", db, name="Truth")
-
-    result = [
-        (
-            "Artifact",
-            artifact.pickup_category,
-            artifact.broad_category,
-        )
-    ]
-    return result
-
-
-def prime2_hint_text():
-    db = default_database.resource_database_for(RandovaniaGame.METROID_PRIME_ECHOES)
-
-    result = []
-
-    for temple_key in ("Dark Agon Key", "Dark Torvus Key", "Ing Hive Key"):
-        key = create_generated_pickup(temple_key, db, i=1)
-        result.append(
-            (
-                key.name.replace(" 1", "").strip(),
-                key.pickup_category,
-                key.broad_category,
-            )
-        )
-
-    key = create_generated_pickup("Sky Temple Key", db, i=1)
-    result.append(
-        (
-            "Sky Temple Key",
-            key.pickup_category,
-            key.broad_category,
-        )
-    )
-
-    return result
-
-
-def prime3_hint_text():
-    db = default_database.resource_database_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
-
-    cell = create_generated_pickup("Energy Cell", db, i=1)
-
-    result = [
-        (
-            "Energy Cell",
-            cell.pickup_category,
-            cell.broad_category,
-        )
-    ]
-    return result
-
-
-_GAME_SPECIFIC = {
-    RandovaniaGame.METROID_PRIME: prime1_hint_text,
-    RandovaniaGame.METROID_PRIME_ECHOES: prime2_hint_text,
-    RandovaniaGame.METROID_PRIME_CORRUPTION: prime3_hint_text,
-}
-
-
-def update_hints_text(
-    game: RandovaniaGame,
-    hint_item_names_tree_widget: QtWidgets.QTableWidget,
-):
-    pickup_database = default_database.pickup_database_for_game(game)
-
-    rows = []
-
-    for item in pickup_database.standard_pickups.values():
-        rows.append(
-            (
-                item.name,
-                item.pickup_category.hint_details[1],
-                item.pickup_category.general_details[1],
-                item.broad_category.hint_details[1],
-            )
-        )
-
-    for name, pickup_category, broad_category in _GAME_SPECIFIC.get(game, list)():
-        rows.append(
-            (
-                name,
-                pickup_category.hint_details[1],
-                pickup_category.general_details[1],
-                broad_category.hint_details[1],
-            )
-        )
-
-    for ammo in pickup_database.ammo_pickups.values():
-        rows.append(
-            (
-                ammo.name,
-                ammo.pickup_category.hint_details[1],
-                ammo.pickup_category.general_details[1],
-                ammo.broad_category.hint_details[1],
-            )
-        )
-
-    hint_item_names_tree_widget.setSortingEnabled(False)
-    hint_item_names_tree_widget.setRowCount(len(rows))
-    for i, elements in enumerate(rows):
-        for j, element in enumerate(elements):
-            hint_item_names_tree_widget.setItem(i, j, QtWidgets.QTableWidgetItem(element))
-
-    for i in range(4):
-        hint_item_names_tree_widget.resizeColumnToContents(i)
-
-    hint_item_names_tree_widget.setSortingEnabled(True)
-
-
-def update_hint_locations(game: RandovaniaGame, hint_tree_widget: QtWidgets.QTreeWidget):
+def update_hint_locations(game: RandovaniaGame, hint_tree_widget: QtWidgets.QTreeWidget) -> None:
     game_description = default_database.game_description_for(game)
 
     used_hint_kind = set()
@@ -132,7 +20,7 @@ def update_hint_locations(game: RandovaniaGame, hint_tree_widget: QtWidgets.QTre
     hint_tree_widget.clear()
     hint_tree_widget.setSortingEnabled(False)
 
-    hint_type_tree = collections.defaultdict(dict)
+    hint_type_tree: collections.defaultdict[str, dict[str, dict[HintNodeKind, str]]] = collections.defaultdict(dict)
 
     # First figure out which areas uses what hints.
     # This lets us use detect which hint types are used
@@ -170,7 +58,7 @@ def update_hint_locations(game: RandovaniaGame, hint_tree_widget: QtWidgets.QTre
 
     hint_tree_widget.resizeColumnToContents(0)
     hint_tree_widget.setSortingEnabled(True)
-    hint_tree_widget.sortByColumn(0, QtCore.Qt.AscendingOrder)
+    hint_tree_widget.sortByColumn(0, QtCore.Qt.SortOrder.AscendingOrder)
 
     for hint_kind in used_hint_kind:
         hint_tree_widget.headerItem().setText(number_for_hint_type[hint_kind], hint_kind.long_name)

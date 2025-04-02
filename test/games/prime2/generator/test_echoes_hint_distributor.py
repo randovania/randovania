@@ -1,52 +1,69 @@
 from __future__ import annotations
 
+import copy
+import dataclasses
+from random import Random
+from typing import TYPE_CHECKING
 from unittest.mock import ANY, MagicMock, call
 
 import pytest
 
 from randovania.game.game_enum import RandovaniaGame
+from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.hint import (
     HintDarkTemple,
     HintItemPrecision,
-    HintLocationPrecision,
     JokeHint,
     LocationHint,
     PrecisionPair,
     RedTempleHint,
+    SpecificHintPrecision,
 )
+from randovania.game_description.hint_features import HintFeature
+from randovania.game_description.pickup.pickup_entry import StartingPickupBehavior
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
+from randovania.generator.generator import create_player_pool
 from randovania.generator.pre_fill_params import PreFillParams
+from randovania.layout.base.standard_pickup_state import StandardPickupState
+from randovania.resolver import debug
+
+if TYPE_CHECKING:
+    from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 
 
 @pytest.mark.parametrize("is_multiworld", [False, True])
-async def test_add_default_hints_to_patches(echoes_game_description, empty_patches, is_multiworld):
+async def test_add_default_hints_to_patches(echoes_game_description, echoes_game_patches, is_multiworld):
     # Setup
     layout_configuration = MagicMock()
     layout_configuration.game = RandovaniaGame.METROID_PRIME_ECHOES
     rng = MagicMock()
     hint_distributor = EchoesHintDistributor()
 
+    def precision(loc: str) -> HintFeature:
+        return echoes_game_description.hint_feature_database[loc]
+
     def _light_suit_location_hint(number: int):
         return LocationHint(
-            PrecisionPair(HintLocationPrecision.LIGHT_SUIT_LOCATION, HintItemPrecision.DETAILED, include_owner=False),
+            PrecisionPair(precision("specific_hint_2mos"), HintItemPrecision.DETAILED, include_owner=False),
             PickupIndex(number),
         )
 
     def _guardian_hint(number: int):
         return LocationHint(
-            PrecisionPair(HintLocationPrecision.GUARDIAN, HintItemPrecision.DETAILED, include_owner=False),
+            PrecisionPair(precision("specific_hint_guardian"), HintItemPrecision.DETAILED, include_owner=False),
             PickupIndex(number),
         )
 
     def _keybearer_hint(number: int):
         return LocationHint(
-            PrecisionPair(HintLocationPrecision.KEYBEARER, HintItemPrecision.BROAD_CATEGORY, include_owner=True),
+            PrecisionPair(precision("specific_hint_keybearer"), SpecificHintPrecision(0.4), include_owner=True),
             PickupIndex(number),
         )
 
-    expected = {
+    base_expected = {
         # Keybearer
         "Temple Grounds/Landing Site/Keybearer Corpse (M-Dhe)": _keybearer_hint(11),
         "Temple Grounds/Industrial Site/Keybearer Corpse (J-Fme)": _keybearer_hint(15),
@@ -73,11 +90,12 @@ async def test_add_default_hints_to_patches(echoes_game_description, empty_patch
         "Torvus Bog/Gathering Hall/Lore Scan": JokeHint(),
         "Torvus Bog/Training Chamber/Lore Scan": JokeHint(),
     }
-    expected = {NodeIdentifier.from_string(ident_s): hint for ident_s, hint in expected.items()}
+
+    expected = {NodeIdentifier.from_string(ident_s): hint for ident_s, hint in base_expected.items()}
 
     # Run
     result = await hint_distributor.assign_pre_filler_hints(
-        empty_patches,
+        echoes_game_patches,
         prefill=PreFillParams(
             rng=rng,
             configuration=layout_configuration,
@@ -89,3 +107,102 @@ async def test_add_default_hints_to_patches(echoes_game_description, empty_patch
     # Assert
     rng.shuffle.assert_has_calls([call(ANY), call(ANY)])
     assert result.hints == expected
+
+
+@pytest.fixture
+def echoes_configuration_everything_shuffled(default_echoes_configuration) -> EchoesConfiguration:
+    old_pickups_config = default_echoes_configuration.standard_pickup_configuration
+    pickups_state = copy.copy(old_pickups_config.pickups_state)
+
+    for pickup in old_pickups_config.pickups_state:
+        if pickup.starting_condition == StartingPickupBehavior.MUST_BE_STARTING:
+            continue
+        pickups_state[pickup] = StandardPickupState(
+            num_shuffled_pickups=1, included_ammo=tuple(1 for ammo in pickup.ammo)
+        )
+
+    return dataclasses.replace(
+        default_echoes_configuration,
+        standard_pickup_configuration=dataclasses.replace(
+            old_pickups_config,
+            pickups_state=pickups_state,
+        ),
+        ammo_pickup_configuration=dataclasses.replace(
+            default_echoes_configuration.ammo_pickup_configuration,
+            pickups_state={
+                ammo: dataclasses.replace(ammo_state, pickup_count=1)
+                for ammo, ammo_state in default_echoes_configuration.ammo_pickup_configuration.pickups_state.items()
+            },
+        ),
+    )
+
+
+async def test_keybearer_hint_precisions(
+    echoes_configuration_everything_shuffled, echoes_game_patches, echoes_pickup_database
+):
+    # Setup
+    rng = Random(0)
+
+    player_pools = [
+        await create_player_pool(rng, echoes_configuration_everything_shuffled, 0, 1, "World 1", MagicMock()),
+    ]
+    pool = player_pools[0]
+
+    hint_distributor = EchoesHintDistributor()
+
+    hint_node = NodeIdentifier.create("Agon Wastes", "Central Mining Station", "Keybearer Corpse (J-Stl)")
+    keybearer_precision = (await hint_distributor.get_specific_pickup_precision_pairs())[hint_node]
+    hint = LocationHint(keybearer_precision, PickupIndex(0))
+
+    categories = echoes_pickup_database.pickup_categories
+    broad_categories = {categories["chozo"], categories["luminoth"], categories["key"], categories["cheat"]}
+
+    pickup_results: dict[str, HintFeature] = {}
+    expected_results: dict[str, HintFeature] = {}
+
+    # Run
+    for pickup in pool.pickups_in_world:
+        expected_results[pickup.name] = next(ft for ft in pickup.hint_features if ft in broad_categories)
+
+        patches = echoes_game_patches.assign_own_pickups([(PickupIndex(0), pickup)])
+
+        with debug.with_level(1):
+            precision = hint_distributor.get_hint_precision(hint_node, hint, rng, patches, player_pools)
+
+        assert isinstance(precision.item, HintFeature)
+        pickup_results[pickup.name] = precision.item
+
+    # Assert
+    assert pickup_results == expected_results
+
+
+@pytest.mark.parametrize(
+    ("target_pickup", "target_player", "features", "expected"),
+    [
+        ("Violet Translator", 0, set(), False),
+        ("Amber Translator", 0, set(), True),
+        ("Violet Translator", 1, set(), True),
+        ("Sky Temple Key 1", 0, {"key"}, False),
+        ("Energy Tank", 0, {"energy_tank"}, False),
+    ],
+)
+def test_echoes_interesting_pickups(
+    target_pickup: str, target_player: int, features: set[str], expected: bool, echoes_game_description
+):
+    # Setup
+    hint_node = echoes_game_description.region_list.typed_node_by_identifier(
+        NodeIdentifier.create("Great Temple", "Main Energy Controller", "Lore Scan"),
+        HintNode,
+    )
+    hint_distributor = EchoesHintDistributor()
+
+    target = MagicMock(spec=PickupTarget)
+    target.pickup.name = target_pickup
+    target.pickup.has_hint_feature = lambda feat: feat in features
+    target.player = target_player
+
+    # Run
+    result = hint_distributor.is_pickup_interesting(target, 0, hint_node)
+
+    # Assert
+    assert result == expected

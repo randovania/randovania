@@ -3,46 +3,45 @@ from __future__ import annotations
 import typing
 from collections import defaultdict
 from random import Random
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from caver.patcher import wrap_msg_text
-from caver.schema import EventNumber, MapName
 from tsc_utils.flags import set_flag
 from tsc_utils.numbers import num_to_tsc_value
 
-from randovania.exporter.hints.hint_exporter import HintExporter
-from randovania.exporter.hints.joke_hints import JOKE_HINTS
+from randovania.exporter.hints.joke_hints import GENERIC_JOKE_HINTS
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY
-from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
-from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.games.cave_story.exporter.hint_exporter import CSHintExporter
 from randovania.games.cave_story.exporter.hint_namer import CSHintNamer
+from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
+from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
 from randovania.games.cave_story.layout.preset_describer import get_ingame_hash
 from randovania.games.cave_story.patcher.caver_music_shuffle import CaverMusic
+from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
-    from caver.schema import CaverData, CaverdataMaps, CaverdataMapsHints, CaverdataOtherTsc, TscScript
+    from caver.schema import (
+        CaverData,
+        CaverdataMaps,
+        CaverdataMapsHints,
+        CaverdataOtherTsc,
+        EventNumber,
+        MapName,
+        TscScript,
+    )
 
-    from randovania.game_description.db.node_identifier import NodeIdentifier
-    from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
-    from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
-    from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
-    from randovania.interface_common.players_configuration import PlayersConfiguration
 
 NOTHING_ITEM_SCRIPT = "<PRI<MSG<TUR<IT+0000\r\nGot =Nothing=!<WAI0025<NOD<EVE0015"
 
 
-class CSPatchDataFactory(PatchDataFactory):
-    cosmetic_patches: CSCosmeticPatches
-    configuration: CSConfiguration
-
+class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
     # Variables shared between multiple functions
     _seed_number: int
     _maps: dict[MapName, CaverdataMaps]
@@ -56,8 +55,18 @@ class CSPatchDataFactory(PatchDataFactory):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.CAVE_STORY
 
+    @override
+    @classmethod
+    def hint_namer_type(cls) -> type[CSHintNamer]:
+        return CSHintNamer
+
+    @override
+    @classmethod
+    def hint_exporter_type(cls) -> type[CSHintExporter]:
+        return CSHintExporter
+
     def create_game_specific_data(self) -> dict:
-        self._seed_number = self.description.get_seed_for_player(self.players_config.player_index)
+        self._seed_number = self.description.get_seed_for_world(self.players_config.player_index)
 
         self._maps = self._create_maps_data()
         self._maps["Start"]["pickups"]["0201"] = self._create_starting_script()
@@ -69,7 +78,7 @@ class CSPatchDataFactory(PatchDataFactory):
             "hash": get_ingame_hash(self.description.shareable_hash_bytes),
             "uuid": f"{{{self.players_config.get_own_uuid()}}}",
         }
-        return typing.cast(dict, data)
+        return typing.cast("dict", data)
 
     def _create_maps_data(self) -> dict[MapName, CaverdataMaps]:
         pickups = self._create_pickups_data()
@@ -102,30 +111,19 @@ class CSPatchDataFactory(PatchDataFactory):
 
     def _create_pickups_data(self) -> dict[MapName, dict[EventNumber, TscScript]]:
         nothing_item = PickupTarget(
-            PickupEntry(
-                "Nothing",
-                PickupModel(RandovaniaGame.CAVE_STORY, "Nothing"),
-                USELESS_PICKUP_CATEGORY,
-                USELESS_PICKUP_CATEGORY,
-                (),
-                generator_params=PickupGeneratorParams(
-                    preferred_location_category=LocationCategory.MAJOR,  # TODO
-                ),
-            ),
+            pickup_creator.create_visual_nothing(RandovaniaGame.CAVE_STORY, "Nothing", "Nothing"),
             self.players_config.player_index,
         )
 
         pickups: dict[MapName, dict[EventNumber, TscScript]] = defaultdict(dict)
-        for index in sorted(
-            node.pickup_index for node in self.game.region_list.iterate_nodes() if isinstance(node, PickupNode)
-        ):
+        for index in sorted(node.pickup_index for node in self.game.region_list.iterate_nodes_of_type(PickupNode)):
             target = self.patches.pickup_assignment.get(index, nothing_item)
 
             node = self.game.region_list.node_from_pickup_index(index)
             area = self.game.region_list.nodes_to_area(node)
 
-            mapname = typing.cast(MapName, node.extra.get("event_map", area.extra["map_name"]))
-            event = typing.cast(EventNumber, node.extra["event"])
+            mapname = typing.cast("MapName", node.extra.get("event_map", area.extra["map_name"]))
+            event = typing.cast("EventNumber", node.extra["event"])
 
             if not self.players_config.should_target_local_player(target.player):
                 message = f"Sent ={target.pickup.name}= to ={self.players_config.player_names[target.player]}=!"
@@ -147,19 +145,26 @@ class CSPatchDataFactory(PatchDataFactory):
 
     def _create_hints_data(self) -> dict[MapName, dict[EventNumber, CaverdataMapsHints]]:
         hint_rng = Random(self._seed_number)
-        hints_for_identifier = get_hints(self.description.all_patches, self.players_config, hint_rng)
+
+        exporter = self.get_hint_exporter(
+            self.description.all_patches,
+            self.players_config,
+            hint_rng,
+            GENERIC_JOKE_HINTS,
+        )
+        patches = self.description.all_patches[self.players_config.player_index]
+        hints_for_identifier = {
+            identifier: exporter.create_message_for_hint(hint, False) for identifier, hint in patches.hints.items()
+        }
 
         hints: dict[MapName, dict[EventNumber, CaverdataMapsHints]] = defaultdict(dict)
 
-        for hint_node in self.game.region_list.iterate_nodes():
-            if not isinstance(hint_node, HintNode):
-                continue
-
+        for hint_node in self.game.region_list.iterate_nodes_of_type(HintNode):
             mapname = typing.cast(
-                MapName,
+                "MapName",
                 hint_node.extra.get("event_map", self.game.region_list.nodes_to_area(hint_node).extra["map_name"]),
             )
-            event = typing.cast(EventNumber, hint_node.extra["event"])
+            event = typing.cast("EventNumber", hint_node.extra["event"])
 
             hints[mapname][event] = {
                 "text": hints_for_identifier[hint_node.identifier],
@@ -370,7 +375,7 @@ class CSPatchDataFactory(PatchDataFactory):
 
     def _tra_for_warp_to_start(self) -> str:
         return typing.cast(
-            str,
+            "str",
             self.game.region_list.area_by_area_location(self.patches.starting_location.area_identifier).extra[
                 "starting_script"
             ],
@@ -418,24 +423,3 @@ class CSPatchDataFactory(PatchDataFactory):
             }
 
         return head
-
-
-def get_hints(
-    all_patches: dict[int, GamePatches],
-    players_config: PlayersConfiguration,
-    hint_rng: Random,
-) -> dict[NodeIdentifier, str]:
-    namer = CSHintNamer(all_patches, players_config)
-    exporter = HintExporter(namer, hint_rng, JOKE_HINTS)
-
-    hints_for_asset: dict[NodeIdentifier, str] = {}
-    for asset, hint in all_patches[players_config.player_index].hints.items():
-        hints_for_asset[asset] = exporter.create_message_for_hint(hint, all_patches, players_config, True)
-
-    starts = ["I hear that", "Rumour has it,", "They say"]
-    mids = ["can be found", "is", "is hidden"]
-
-    return {
-        identifier: hint.format(start=hint_rng.choice(starts), mid=hint_rng.choice(mids))
-        for identifier, hint in hints_for_asset.items()
-    }

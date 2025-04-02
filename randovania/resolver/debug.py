@@ -1,12 +1,20 @@
 from __future__ import annotations
 
 import contextlib
+from typing import Protocol
 
 _DEBUG_LEVEL = 0
 
 
-def print_function(s: str):
+class DebugPrintFunction(Protocol):
+    def __call__(self, __s: str) -> None: ...
+
+
+def _print_function(s: str):
     print(s)
+
+
+print_function: DebugPrintFunction = _print_function
 
 
 def set_level(level: int):

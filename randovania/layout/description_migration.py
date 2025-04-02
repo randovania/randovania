@@ -33,7 +33,7 @@ def _migrate_v3(json_dict: dict) -> None:
     if len(json_dict["game_modifications"]) > 1:
         for game in json_dict["game_modifications"]:
             for area in game["locations"].values():
-                for location_name, contents in typing.cast(dict[str, str], area).items():
+                for location_name, contents in typing.cast("dict[str, str]", area).items():
                     m = target_name_re.match(contents)
                     if m is not None:
                         part_one, part_two = m.group(1, 2)
@@ -123,8 +123,6 @@ def _migrate_v6(json_dict: dict) -> None:
     area_name_heuristic = {
         "Tallon Overworld": "prime1",
         "Agon Wastes": "prime2",
-        "Bryyo - Fire": "prime3",
-        "Norfair": "super_metroid",
         "Artaria": "dread",
     }
 
@@ -302,7 +300,7 @@ def _migrate_v19(data: dict) -> None:
     game_mod = data["game_modifications"]
     for game in game_mod:
         game_name = game["game"]
-        if game_name in {"prime1", "prime2", "prime3"}:
+        if game_name in {"prime1", "prime2"}:
             mapping = migration_data.get_raw_data(RandovaniaGame(game_name))["rename_teleporter_nodes"]
 
             # starting location migration
@@ -537,6 +535,99 @@ def _migrate_v29(data: dict) -> None:
                 hint.pop("target", None)
 
 
+def _migrate_hint_precision(data: dict, item_precisions_to_migrate: set[str]) -> None:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        game_enum = RandovaniaGame(game["game"])
+        location_precision = migration_data.get_hint_location_precision_data(game_enum)
+
+        for hint in game["hints"].values():
+            if hint["hint_type"] != "location":
+                continue
+
+            precision = hint["precision"]
+            if precision.get("location") in location_precision:
+                precision["location_feature"] = location_precision[precision.pop("location")]
+
+            def migrate_precision(_precision: dict, target: int, old_key: str, new_key: str) -> None:
+                correct_name, area_and_node = migration_data.get_node_keys_for_pickup_index(game_enum, target)
+
+                target_name = game["locations"][correct_name][area_and_node]
+                target_name_re = re.compile(r"(.*) for Player (\d+)")
+
+                if target_name == "Energy Transfer Module":
+                    # who cares, honestly
+                    _precision[old_key] = "detailed"
+                    return
+
+                pickup_name_match = target_name_re.match(target_name)
+                if pickup_name_match is not None:
+                    pickup_name = pickup_name_match.group(1)
+                    target_player = int(pickup_name_match.group(2)) - 1
+                else:
+                    pickup_name = target_name
+                    target_player = 0
+
+                target_game = RandovaniaGame(game_modifications[target_player]["game"])
+                old_categories = migration_data.get_old_hint_categories(target_game)
+
+                if pickup_name in old_categories:
+                    item_data = old_categories[pickup_name]
+                else:
+                    # generated pickups
+                    item_data = next(data for name, data in old_categories.items() if pickup_name.startswith(name))
+
+                _precision[new_key] = item_data[_precision.pop(old_key)]
+
+            if precision.get("item") in item_precisions_to_migrate:
+                migrate_precision(precision, hint["target"], "item", "item_feature")
+
+            if (
+                (relative := precision.get("relative")) is not None
+                and ("area_location" not in relative)
+                and (relative.get("precision") in item_precisions_to_migrate)
+            ):
+                migrate_precision(relative, relative["other_index"], "precision", "precision_feature")
+
+
+def _migrate_v30(data: dict) -> None:
+    _migrate_hint_precision(data, {"precise-category", "general-category"})
+
+
+def _migrate_v31(data: dict) -> None:
+    _migrate_hint_precision(data, {"broad-category"})
+
+
+def _migrate_v32(data: dict) -> None:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        game_name = game["game"]
+        if game_name != "samus_returns":
+            continue
+
+        migration = migration_data.get_raw_data(RandovaniaGame(game_name))["a4_crystal_mines_typo"]
+        for region, area_data in migration["area"].items():
+            for old_area_name, new_area_name in area_data.items():
+                region_location = game["locations"][region]
+                if old_area_name in region_location:
+                    region_location[new_area_name] = region_location.pop(old_area_name)
+
+
+def _migrate_v33(data: dict) -> None:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        if game["game"] == "prime2":
+            banned_pickups = ["Cannon Ball", "Unlimited Beam Ammo", "Unlimited Missiles", "Double Damage"]
+            if "pickups" in game["starting_equipment"]:
+                starting_pickups = game["starting_equipment"]["pickups"]
+                for pickup in banned_pickups:
+                    if pickup in starting_pickups:
+                        starting_pickups.remove(pickup)
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -567,6 +658,10 @@ _MIGRATIONS = [
     _migrate_v27,
     _migrate_v28,
     _migrate_v29,  # hint type refactor
+    _migrate_v30,  # migrate some HintLocationPrecision and HintItemPrecision to HintFeature
+    _migrate_v31,  # remove HintLocationPrecision.BROAD_CATEGORY
+    _migrate_v32,  # MSR Rename Area 4 Crystal Mines - Gamma Arena to Gamma+ Arena
+    _migrate_v33,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -26,7 +26,7 @@ if TYPE_CHECKING:
 
 
 def read_file(path: Path) -> dict[str, float | None]:
-    return typing.cast(dict[str, float | None], json_lib.read_dict(path)["permalinks"])
+    return typing.cast("dict[str, float | None]", json_lib.read_dict(path)["permalinks"])
 
 
 def write_file(path: Path, permalinks: dict[str, float | None]) -> None:

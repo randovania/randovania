@@ -39,7 +39,7 @@ def read_path(path: Path, *, raise_on_duplicate_keys: bool = False) -> JsonType:
 
 def read_dict(path: Path) -> JsonObject:
     result = read_path(path)
-    return cast(JsonObject, result)
+    return cast("JsonObject", result)
 
 
 def write_path(path: Path, data: _JsonType_RO) -> None:

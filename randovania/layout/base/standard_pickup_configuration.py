@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import dataclasses
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING, Self, TypeVar
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
@@ -13,13 +13,13 @@ if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
     from randovania.game.game_enum import RandovaniaGame
-    from randovania.game_description.pickup.pickup_category import PickupCategory
-    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.game_description.hint_features import HintFeature
+    from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
 
 T = TypeVar("T")
 
 
-def _check_matching_pickups(actual: Iterable[T], reference: Iterable[T]):
+def _check_matching_pickups(actual: Iterable[T], reference: Iterable[T]) -> None:
     actual_pickups = set(actual)
     reference_pickups = set(reference)
     if actual_pickups != reference_pickups:
@@ -30,11 +30,11 @@ def _check_matching_pickups(actual: Iterable[T], reference: Iterable[T]):
 class StandardPickupConfiguration(BitPackValue):
     game: RandovaniaGame
     pickups_state: dict[StandardPickupDefinition, StandardPickupState]
-    default_pickups: dict[PickupCategory, StandardPickupDefinition]
+    default_pickups: dict[HintFeature, StandardPickupDefinition]
     minimum_random_starting_pickups: int
     maximum_random_starting_pickups: int
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         pickup_database = default_database.pickup_database_for_game(self.game)
 
         _check_matching_pickups(self.pickups_state.keys(), pickup_database.standard_pickups.values())
@@ -87,7 +87,7 @@ class StandardPickupConfiguration(BitPackValue):
             maximum_random_starting_pickups=value["maximum_random_starting_pickups"],
         )
 
-    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
+    def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
         reference: StandardPickupConfiguration = metadata["reference"]
 
         name_to_pickup: dict[str, StandardPickupDefinition] = {
@@ -104,7 +104,7 @@ class StandardPickupConfiguration(BitPackValue):
 
         # default_items
         for category, default in self.default_pickups.items():
-            all_standard = [pickup for pickup in reference.pickups_state.keys() if pickup.pickup_category == category]
+            all_standard = [pickup for pickup in reference.pickups_state.keys() if pickup.gui_category == category]
             yield from bitpacking.pack_array_element(default, all_standard)
 
         # random starting items
@@ -112,7 +112,7 @@ class StandardPickupConfiguration(BitPackValue):
         yield from bitpacking.encode_big_int(self.maximum_random_starting_pickups)
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> StandardPickupConfiguration:
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata: dict) -> Self:
         reference: StandardPickupConfiguration = metadata["reference"]
 
         name_to_pickup: dict[str, StandardPickupDefinition] = {
@@ -130,7 +130,7 @@ class StandardPickupConfiguration(BitPackValue):
         # default_pickups
         default_pickups = {}
         for category in reference.default_pickups.keys():
-            all_standard = [pickup for pickup in reference.pickups_state.keys() if pickup.pickup_category == category]
+            all_standard = [pickup for pickup in reference.pickups_state.keys() if pickup.gui_category == category]
             default_pickups[category] = decoder.decode_element(all_standard)
 
         # random starting items
@@ -177,7 +177,7 @@ class StandardPickupConfiguration(BitPackValue):
 
     def replace_default_pickup(
         self,
-        category: PickupCategory,
+        category: HintFeature,
         pickup: StandardPickupDefinition,
     ) -> StandardPickupConfiguration:
         """

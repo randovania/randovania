@@ -10,7 +10,7 @@ from frozendict import frozendict
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel
+from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel, StartingPickupBehavior
 from randovania.game_description.resources.inventory import Inventory
 from randovania.network_common import error, remote_inventory, signals
 from randovania.network_common.game_connection_status import GameConnectionStatus
@@ -29,27 +29,30 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.parametrize(
-    ("progression", "result"),
+    ("progression", "start_case", "result"),
     [
         (  # normal
             [("Power", 1)],
+            StartingPickupBehavior.MUST_BE_STARTING,
             (
                 "C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr"
-                "mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35fPr8"
+                "mqu35FxlB#nOvG!<^@M(Ze?<5V<1U%Wo;lsVRU6@Z*qBTEyNQ5I=4BvGO@I?G_tY~G`cdjfdL?~00"
             ),
         ),
         (  # negative
             [("Missile", -5)],
+            StartingPickupBehavior.CAN_BE_STARTING,
             (
                 "C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr"
-                "mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35sC@#!"
+                "mqu35FxlB#nOvG!<^@M(Ze?<5V<1U%Wo;lsVRU6@Z*qBTEyNQ5I=4BvGO@I?G_tY~G`cdjfl&GZVg"
             ),
         ),
         (  # progressive
             [("DarkSuit", 1), ("LightSuit", 1)],
+            StartingPickupBehavior.CAN_NEVER_BE_STARTING,
             (
                 "C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr"
-                "mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu364TnIm"
+                "mqu35FxlB#nOvG!<^@M(Ze?<5V<1U%Wo;lsVRU6@Z*qBTEyNQ5I=4BvGO@I?G_tY~G`cdjf*TH?Sbz"
             ),
         ),
     ],
@@ -62,6 +65,7 @@ def test_emit_world_pickups_update_one_action(
     echoes_resource_database,
     mocker,
     progression,
+    start_case,
     result,
 ):
     # Setup
@@ -87,8 +91,9 @@ def test_emit_world_pickups_update_one_action(
         "A",
         PickupModel(echoes_resource_database.game_enum, "AmmoModel"),
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=progression,
+        start_case=start_case,
         generator_params=default_generator_params,
     )
     mock_get_pickup_target.return_value = PickupTarget(pickup=pickup, player=0)
@@ -97,7 +102,7 @@ def test_emit_world_pickups_update_one_action(
     # Run
     world_api.emit_world_pickups_update(sa, w1)
 
-    # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason
+    # # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason
     # from randovania.server.multiplayer.world_api import _base64_encode_pickup
     # new_data = _base64_encode_pickup(pickup, echoes_resource_database)
     # assert new_data == b""
@@ -162,7 +167,7 @@ def test_game_session_collect_pickup_for_self(
         "A",
         1,
         generic_pickup_category,
-        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
         progression=((echoes_resource_database.item[0], 1),),
         generator_params=default_generator_params,
     )

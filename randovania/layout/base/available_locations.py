@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from enum import Enum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Self
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackEnum, BitPackValue
@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 
 
 def _all_indices(db: GameDescription) -> list[int]:
-    return sorted(node.pickup_index.index for node in db.region_list.iterate_nodes() if isinstance(node, PickupNode))
+    return sorted(node.pickup_index.index for node in db.region_list.iterate_nodes_of_type(PickupNode))
 
 
 class RandomizationMode(BitPackEnum, Enum):
@@ -64,7 +64,7 @@ class AvailableLocationsConfiguration(BitPackValue):
             game=game,
         )
 
-    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
+    def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
         db = default_database.game_description_for(self.game)
 
         yield from self.randomization_mode.bit_pack_encode(metadata)
@@ -75,7 +75,7 @@ class AvailableLocationsConfiguration(BitPackValue):
             yield from bitpacking.encode_bool(False)
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata: dict) -> Self:
         game = metadata["reference"].game
         db = default_database.game_description_for(game)
 
@@ -86,13 +86,13 @@ class AvailableLocationsConfiguration(BitPackValue):
         else:
             indices = []
 
-        return AvailableLocationsConfiguration(
+        return cls(
             randomization_mode=randomization_mode,
             excluded_indices=frozenset(PickupIndex(item) for item in indices),
             game=game,
         )
 
-    def ensure_index(self, index: PickupIndex, present: bool):
+    def ensure_index(self, index: PickupIndex, present: bool) -> Self:
         excluded_indices = set(self.excluded_indices)
         if present:
             excluded_indices.add(index)

@@ -40,6 +40,15 @@ class Requirement:
         """
         raise NotImplementedError
 
+    def isolate_damage_requirements(self, context: NodeContext) -> Requirement:
+        """
+        Strips away requirements not related to damage. For requirements that aren't damage related: unsatisfied
+        requirements are replaced with impossible, satisfied ones are replaced with trivial.
+        :param context:
+        :return:
+        """
+        raise NotImplementedError
+
     def as_set(self, context: NodeContext) -> RequirementSet:
         raise NotImplementedError
 
