@@ -584,19 +584,19 @@ jobs:
       - name: start deployment
         uses: bobheadxi/deployments@v1.5.0
         id: deployment
-        if: ${{ steps.decide_env.outputs.should_deploy }}
+        if: ${{ steps.decide_env.outputs.should_deploy == 'true' }}
         with:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
           env: ${{ steps.decide_env.outputs.env }}
 
       - name: deploy server
-        if: ${{ steps.decide_env.outputs.should_deploy }}
+        if: ${{ steps.decide_env.outputs.should_deploy == 'true' }}
         run: uv run tools/deploy_server.py
 
       - name: update deployment status
         uses: bobheadxi/deployments@v1.5.0
-        if: always() && steps.decide_env.outputs.should_deploy
+        if: always() && steps.decide_env.outputs.should_deploy == 'true'
         with:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
