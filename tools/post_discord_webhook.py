@@ -65,7 +65,7 @@ async def post_to_discord():
         "embeds": [
             {
                 "color": 0x2ECC71,
-                "title": f"{current_branch} - Randovania {version}",
+                "title": f"Branch {current_branch} - Randovania {version}",
                 "url": f"https://github.com/randovania/randovania/commit/{commit_hash}",
                 "description": message.strip(),
                 "fields": fields,
