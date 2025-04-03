@@ -19,7 +19,7 @@ from randovania.network_common.remote_pickup import RemotePickup
 def am2r_remote_connector():
     executor_mock = MagicMock(AM2RExecutor)
     executor_mock.layout_uuid_str = "00000000-0000-1111-0000-000000000000"
-    executor_mock.signals = MagicMock(ExecutorToConnectorSignals)
+    executor_mock.signals = ExecutorToConnectorSignals()
     connector = AM2RRemoteConnector(executor_mock)
     return connector
 

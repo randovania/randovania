@@ -18,7 +18,7 @@ from randovania.network_common.remote_pickup import RemotePickup
 def dread_remote_connector():
     executor_mock = MagicMock(DreadExecutor)
     executor_mock.layout_uuid_str = "00000000-0000-1111-0000-000000000000"
-    executor_mock.signals = MagicMock(ExecutorToConnectorSignals)
+    executor_mock.signals = ExecutorToConnectorSignals()
     executor_mock.version = "2.1.0"
     connector = DreadRemoteConnector(executor_mock)
     return connector
