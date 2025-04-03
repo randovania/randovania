@@ -51,15 +51,17 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
         # Initial update
         self.on_user_changed(network_client.current_user)
 
-    def on_user_changed(self, user: CurrentUser):
+    def on_user_changed(self, user: CurrentUser | None) -> None:
         self.activateWindow()
         self.on_server_connection_state_updated(self.network_client.connection_state)
         self.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Reset).setEnabled(user is not None)
 
-    def on_server_connection_state_updated(self, state: ConnectionState):
+    def on_server_connection_state_updated(self, state: ConnectionState) -> None:
         message = f"{state.value}"
         if state == ConnectionState.Connected:
-            message += f", logged as {self.network_client.current_user.name}"
+            user = self.network_client.current_user
+            assert user is not None
+            message += f", logged as {user.name}"
         elif self.network_client.has_previous_session():
             message += " (with saved session)"
 
@@ -67,7 +69,7 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
 
     @asyncSlot()
     @handle_network_errors
-    async def on_login_as_guest_button(self):
+    async def on_login_as_guest_button(self) -> None:
         name = await TextPromptDialog.prompt(
             parent=self,
             title="Enter guest name",
@@ -79,13 +81,14 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
 
     @asyncSlot()
     @handle_network_errors
-    async def on_login_with_discord_button(self):
+    async def on_login_with_discord_button(self) -> None:
         url = await self.network_client.login_with_discord()
 
         with tempfile.TemporaryDirectory() as tmpdirname:
             qr_path = Path(tmpdirname).joinpath("qr.png")
             img = qrcode.make(url, box_size=7)
-            img.save(qr_path)
+            with qr_path.open("wb") as qr_file:
+                img.save(qr_file)
             pixmap = QtGui.QPixmap(os.fspath(qr_path))
 
         self.discord_label.setText(
@@ -98,10 +101,10 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
         self.discord_qr_label.setVisible(True)
         self.discord_qr_label.setPixmap(pixmap)
 
-    def on_ok_button(self):
+    def on_ok_button(self) -> None:
         self.accept()
 
     @asyncSlot()
     @handle_network_errors
-    async def on_logout_button(self):
+    async def on_logout_button(self) -> None:
         await self.network_client.logout()
