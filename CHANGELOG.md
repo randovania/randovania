@@ -10,6 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: After clicking the "Login with Discord" button, a link and a QR Code are displayed instead of opening the default browser directly.
 - Changed: The relative time to start/finish in Async Race rooms now update as time passes, and the window reacts appropriately when the race starts and finishes.
 
+### Cave Story
+
+- Changed: Outer Wall is now a separate region.
+
+### Metroid Prime 2: Echoes
+
+- Changed: The Light and Dark regions are now properly different regions for Randovania.
+
 ## [9.0.0] - 2025-04-01
 
 - **Major** - Added: Factorio has been added. Shuffle the tech tree, recipes for science packs. The native multiplayer is fully supported, while Multiworld isnt'.

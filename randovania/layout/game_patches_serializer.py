@@ -51,7 +51,7 @@ def _pickup_assignment_to_item_locations(
         else:
             item_name = _ETM_NAME
 
-        items_locations[region.correct_name(area.in_dark_aether)][region_list.node_name(node)] = item_name
+        items_locations[region.name][region_list.node_name(node)] = item_name
 
     return {region: dict(sorted(items_locations[region].items())) for region in sorted(items_locations.keys())}
 
