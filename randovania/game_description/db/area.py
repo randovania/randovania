@@ -36,10 +36,6 @@ class Area:
             if not node.is_derived_node:
                 yield node
 
-    @property
-    def in_dark_aether(self) -> bool:
-        return self.extra.get("in_dark_aether", False)
-
     def node_with_name(self, node_name: str) -> Node | None:
         """
         Searches this area for a node with the given name.

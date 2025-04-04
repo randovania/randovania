@@ -4,6 +4,7 @@ import collections
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
+from randovania.games.prime2 import dark_aether_helper
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.gui.game_details.base_connection_details_tab import BaseConnectionDetailsTab
 
@@ -43,12 +44,12 @@ class PortalDetailsTab(BaseConnectionDetailsTab):
             if isinstance(node, DockNode) and node.dock_type.short_name == "portal":
                 portal_count_in_area[region.name][area.name] += 1
                 destination = patches.get_dock_connection_for(node)
-                if area.in_dark_aether:
+                if dark_aether_helper.is_region_light(region):
+                    per_area[region.name][area.name].add(node)
+                else:
                     # All docks are two-way between light and dark aether right now
                     assert isinstance(destination, DockNode)
                     assert patches.get_dock_connection_for(destination) == node
-                else:
-                    per_area[region.name][area.name].add(node)
 
         def name_for(target: Node) -> str:
             target_region, target_area = region_list.region_and_area_by_area_identifier(

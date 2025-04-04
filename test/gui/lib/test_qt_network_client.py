@@ -3,7 +3,6 @@ from __future__ import annotations
 import asyncio
 import datetime
 from pathlib import Path
-from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
@@ -14,9 +13,6 @@ from randovania.network_client.network_client import ConnectionState
 from randovania.network_common import error
 from randovania.network_common.multiplayer_session import MultiplayerSessionListEntry
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
-
-if TYPE_CHECKING:
-    import pytest_mock
 
 
 @pytest.fixture(name="client")
@@ -77,23 +73,22 @@ async def test_handle_network_errors_exception(skip_qtbot, qapp, mocker, excepti
     mock_dialog.assert_awaited_once_with(qapp, title, message)
 
 
-async def test_login_to_discord(client, mocker: pytest_mock.MockerFixture):
-    mock_browser_open = mocker.patch("PySide6.QtGui.QDesktopServices.openUrl")
+async def test_login_to_discord(client):
     client.server_call = AsyncMock(return_value="THE_SID")
 
     # Run
-    await client.login_with_discord()
+    result = await client.login_with_discord()
 
     # Assert
-    mock_browser_open.assert_called_once_with("http://localhost:5000/login?sid=THE_SID")
+    assert result == "http://localhost:5000/login?sid=THE_SID"
     client.server_call.assert_awaited_once_with("start_discord_login_flow")
 
 
-async def test_login_to_discord_raise(client, mocker: pytest_mock.MockerFixture):
-    mocker.patch("PySide6.QtGui.QDesktopServices.openUrl", return_value=False)
+async def test_login_to_discord_raise(client):
+    del client.configuration["discord_client_id"]
     client.server_call = AsyncMock(return_value="THE_SID")
 
-    with pytest.raises(RuntimeError, match="Unable to open a web-browser to login into Discord"):
+    with pytest.raises(RuntimeError, match="Missing Discord configuration for Randovania"):
         await client.login_with_discord()
 
 

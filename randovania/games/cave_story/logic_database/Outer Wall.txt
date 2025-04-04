@@ -1,0 +1,137 @@
+----------------
+Outer Wall
+Extra - map_name: Oside
+Extra - starting_script: <TRA0053:0092:0165:0004
+> Door to Egg No. 00; Heals? False
+  * Layers: default
+  * Door to Egg No. 00/Door to Outer Wall
+  > Room Bottom
+      Trivial
+
+> Door to Little House; Heals? False
+  * Layers: default
+  * Door to Little House/Door to Outer Wall
+  > Room Bottom
+      Has Flight
+
+> Outside Clock Room; Heals? False
+  * Layers: default
+  > Room Bottom
+      Trivial
+  > Room Top
+      Any of the following:
+          # https://youtu.be/-hZwtVL18l0
+          # Kill enemies
+          Has Weapon
+          # Fly over problematic Hoppies
+          Pacifist Strats (Intermediate) and Has Flight
+          # Tank a hit on a Hoppy
+          Pacifist Strats (Advanced) and Normal Damage ≥ 5
+          # Damageless
+          Pacifist Strats (Expert)
+  > Door to Clock Room
+      Trivial
+  > Event - Level MG
+      Machine Gun
+
+> Door to Storehouse; Heals? False
+  * Layers: default
+  * Door to Storehouse/Door to Outer Wall
+  > Event - Entered Outer Wall from Storehouse
+      Trivial
+
+> Room Bottom; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  > Door to Egg No. 00
+      After Saved Kazuma
+  > Door to Little House
+      Has Flight
+  > Outside Clock Room
+      Any of the following:
+          Has Flight
+          After Entered Outer Wall from above and Remove Points of No Return
+  > Event - Bad Ending
+      After Defeated Core and After Saved Kazuma and Enabled Bad Ending
+
+> Room Top; Heals? False
+  * Layers: default
+  > Outside Clock Room
+      Trivial
+  > Door to Storehouse
+      Trivial
+
+> Door to Clock Room; Heals? False
+  * Layers: default
+  * Door to Clock Room/Door to Outer Wall
+  > Event - Entered Outer Wall from Clock Room
+      Trivial
+
+> Event - Bad Ending; Heals? False
+  * Layers: default
+  * Event Bad Ending
+  * Extra - different_strongly_connected_component: True
+
+> Event - Entered Outer Wall from Storehouse; Heals? False
+  * Layers: default
+  * Event Entered Outer Wall from above
+  > Room Top
+      Trivial
+
+> Event - Entered Outer Wall from Clock Room; Heals? False
+  * Layers: default
+  * Event Entered Outer Wall from above
+  > Outside Clock Room
+      Trivial
+
+> Event - Level MG; Heals? False
+  * Layers: default
+  * Event Level Up Machine Gun
+  > Outside Clock Room
+      Trivial
+
+----------------
+Little House
+Extra - map_name: Little
+Extra - starting_script: <TRA0069:0090:0015:0008
+Hint Features - Someone's House
+> Door to Outer Wall; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Door to Outer Wall/Door to Little House
+  > Pickup (Little House)
+      Blade and Little Man
+  > Hint - Mrs. Little
+      Trivial
+
+> Pickup (Little House); Heals? False
+  * Layers: default
+  * Pickup 55; Category? Minor
+  * Extra - event: 0204
+  > Door to Outer Wall
+      Trivial
+
+> Hint - Mrs. Little; Heals? False
+  * Layers: default
+  * Hint
+  * Extra - event: 0212
+  * Extra - hint_index: 55
+  * Extra - string_asset_id: 11
+  > Door to Outer Wall
+      Trivial
+
+----------------
+Clock Room
+Extra - map_name: Clock
+Extra - starting_script: <TRA0094:0090:0014:0007
+> Door to Outer Wall; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Door to Outer Wall/Door to Clock Room
+  > Pickup (Clock Room)
+      Trivial
+
+> Pickup (Clock Room); Heals? False
+  * Layers: default
+  * Pickup 56; Category? Minor
+  * Extra - event: 0300
+  > Door to Outer Wall
+      Trivial
+

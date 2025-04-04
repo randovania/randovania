@@ -1,8 +1,13 @@
 from __future__ import annotations
 
+import os
+import tempfile
+import textwrap
+from pathlib import Path
 from typing import TYPE_CHECKING
 
-from PySide6 import QtWidgets
+import qrcode
+from PySide6 import QtGui, QtWidgets
 from PySide6.QtWidgets import QDialog
 from qasync import asyncSlot
 
@@ -29,6 +34,7 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
         self.discord_button.setToolTip(
             "" if self.discord_button.isEnabled() else "This Randovania build is not configured to login with Discord."
         )
+        self.discord_qr_label.setVisible(False)
         self.privacy_policy_label.setText(self.privacy_policy_label.text().replace("color:#0000ff;", ""))
 
         self.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Reset).setText("Logout")
@@ -45,15 +51,17 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
         # Initial update
         self.on_user_changed(network_client.current_user)
 
-    def on_user_changed(self, user: CurrentUser):
+    def on_user_changed(self, user: CurrentUser | None) -> None:
         self.activateWindow()
         self.on_server_connection_state_updated(self.network_client.connection_state)
         self.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Reset).setEnabled(user is not None)
 
-    def on_server_connection_state_updated(self, state: ConnectionState):
+    def on_server_connection_state_updated(self, state: ConnectionState) -> None:
         message = f"{state.value}"
         if state == ConnectionState.Connected:
-            message += f", logged as {self.network_client.current_user.name}"
+            user = self.network_client.current_user
+            assert user is not None
+            message += f", logged as {user.name}"
         elif self.network_client.has_previous_session():
             message += " (with saved session)"
 
@@ -61,7 +69,7 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
 
     @asyncSlot()
     @handle_network_errors
-    async def on_login_as_guest_button(self):
+    async def on_login_as_guest_button(self) -> None:
         name = await TextPromptDialog.prompt(
             parent=self,
             title="Enter guest name",
@@ -73,13 +81,30 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
 
     @asyncSlot()
     @handle_network_errors
-    async def on_login_with_discord_button(self):
-        await self.network_client.login_with_discord()
+    async def on_login_with_discord_button(self) -> None:
+        url = await self.network_client.login_with_discord()
 
-    def on_ok_button(self):
+        with tempfile.TemporaryDirectory() as tmpdirname:
+            qr_path = Path(tmpdirname).joinpath("qr.png")
+            img = qrcode.make(url, box_size=7)
+            with qr_path.open("wb") as qr_file:
+                img.save(qr_file)
+            pixmap = QtGui.QPixmap(os.fspath(qr_path))
+
+        self.discord_label.setText(
+            textwrap.dedent(f"""
+            Open the following link in your browser:
+
+            [{url}]({url})
+        """)
+        )
+        self.discord_qr_label.setVisible(True)
+        self.discord_qr_label.setPixmap(pixmap)
+
+    def on_ok_button(self) -> None:
         self.accept()
 
     @asyncSlot()
     @handle_network_errors
-    async def on_logout_button(self):
+    async def on_logout_button(self) -> None:
         await self.network_client.logout()

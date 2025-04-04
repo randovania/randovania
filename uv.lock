@@ -1865,6 +1865,23 @@ wheels = [
 ]
 
 [[package]]
+name = "qrcode"
+version = "8.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "colorama", marker = "sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d7/db/6fc9631cac1327f609d2c8ae3680ecd987a2e97472437f2de7ead1235156/qrcode-8.0.tar.gz", hash = "sha256:025ce2b150f7fe4296d116ee9bad455a6643ab4f6e7dce541613a4758cbce347", size = 42743 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/74/ab/df8d889fd01139db68ae9e5cb5c8f0ea016823559a6ecb427582d52b07dc/qrcode-8.0-py3-none-any.whl", hash = "sha256:9fc05f03305ad27a709eb742cf3097fa19e6f6f93bb9e2f039c0979190f6f1b1", size = 45710 },
+]
+
+[package.optional-dependencies]
+pil = [
+    { name = "pillow" },
+]
+
+[[package]]
 name = "random-enemy-attributes"
 version = "1.0.4.3"
 source = { registry = "https://pypi.org/simple" }
@@ -1926,6 +1943,7 @@ gui = [
     { name = "pyqtdarktheme-fork" },
     { name = "pyside6-essentials" },
     { name = "qasync" },
+    { name = "qrcode", extra = ["pil"] },
 ]
 server = [
     { name = "audioop-lts", marker = "python_full_version >= '3.13'" },
@@ -1965,6 +1983,7 @@ typing = [
     { name = "mypy" },
     { name = "types-aiofiles" },
     { name = "types-peewee" },
+    { name = "types-qrcode" },
 ]
 
 [package.metadata]
@@ -2023,6 +2042,7 @@ requires-dist = [
     { name = "python-slugify" },
     { name = "python-socketio", extras = ["asyncio-client"] },
     { name = "qasync", marker = "extra == 'gui'" },
+    { name = "qrcode", extras = ["pil"], marker = "extra == 'gui'", specifier = ">=8.0" },
     { name = "random-enemy-attributes", marker = "extra == 'exporters'", specifier = ">=1.0.3" },
     { name = "requests-oauthlib", marker = "extra == 'server'" },
     { name = "retro-data-structures", marker = "extra == 'exporters'", specifier = ">=0.24.0" },
@@ -2044,6 +2064,7 @@ typing = [
     { name = "mypy" },
     { name = "types-aiofiles" },
     { name = "types-peewee" },
+    { name = "types-qrcode", specifier = ">=8.0.0.20241004" },
 ]
 
 [[package]]
@@ -2323,6 +2344,18 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/24/7b/6c575254a5fb2698c66e1ac8a7a214a4e1ec90e97593010a4b8b7cb89964/types_peewee-3.17.9.20250401.tar.gz", hash = "sha256:e0e59b14d55c7e21835a12edbd4c14d304bb287390d7577e6be7402bfc95f600", size = 20453 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/cd/80/c150c067d615eade076dc915b051b592f135d0766db169558a112d9afd83/types_peewee-3.17.9.20250401-py3-none-any.whl", hash = "sha256:adbf4bb2f4975a0928c1de62293185400cd83a982e108ef7e0ed99a157e0aa9d", size = 19097 },
+]
+
+[[package]]
+name = "types-qrcode"
+version = "8.0.0.20241004"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pillow" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/0c/e0/9267106c43b29608789dfd8af7dc5c0c9a0f3b9af089ca4afff9b440f5c6/types-qrcode-8.0.0.20241004.tar.gz", hash = "sha256:a64761d332025df0a6009e39a2f3f8fd6a3c08bbe98e13420708b918486f0600", size = 10224 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/4a/66/b3f0e392a644d6f086ba9c1227730c433c23bbff3543cddda15e2d03376b/types_qrcode-8.0.0.20241004-py3-none-any.whl", hash = "sha256:24455a0fbffaaac5be473b4ffcfdfa7149b0474f0aa39ba983fe86bdbd978101", size = 15080 },
 ]
 
 [[package]]

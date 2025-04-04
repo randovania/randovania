@@ -159,8 +159,5 @@ async def test_on_area_node_selection(echoes_game_description, mocker):
     ctx.original_response.assert_awaited_once_with()
     original_response.edit.assert_awaited_once_with(embeds=[mock_embed.return_value, mock_embed.return_value])
     mock_embed.assert_has_calls(
-        [
-            call(title=area.nodes[0].name, description=ANY),
-            call(title=area.nodes[2].name, description=ANY),
-        ]
+        [call(title=name, description=ANY) for name in sorted([area.nodes[0].name, area.nodes[2].name])]
     )

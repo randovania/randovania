@@ -275,16 +275,16 @@ async def test_apply_previous_state(
                 "data": None,
                 "teleporter": {
                     "area": "Sky Temple Energy Controller",
-                    "node": "Elevator to Temple Grounds",
-                    "region": "Great Temple",
+                    "node": "Elevator to Sky Temple Grounds",
+                    "region": "Sky Temple",
                 },
             },
             {
                 "data": None,
                 "teleporter": {
                     "area": "Sky Temple Gateway",
-                    "node": "Elevator to Great Temple",
-                    "region": "Temple Grounds",
+                    "node": "Elevator to Sky Temple",
+                    "region": "Sky Temple Grounds",
                 },
             },
             {
