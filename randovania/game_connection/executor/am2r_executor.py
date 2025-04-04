@@ -168,7 +168,7 @@ class AM2RExecutor:
                 if packet_type == PacketType.PACKET_NEW_INVENTORY:
                     self.signals.new_inventory.emit(response.decode("utf-8"))
                 elif packet_type == PacketType.PACKET_COLLECTED_INDICES:
-                    self.signals.new_collected_locations.emit(response.decode("utf-8"))
+                    self.signals.new_collected_locations.emit(response)
                 elif packet_type == PacketType.PACKET_RECEIVED_PICKUPS:
                     self.signals.new_received_pickups.emit(response.decode("utf-8"))
                 elif packet_type == PacketType.PACKET_GAME_STATE:
