@@ -11,9 +11,9 @@ FUSION_JOKE_HINTS = GENERIC_JOKE_HINTS + [
     "Did you know Red X are strawberry flavoured?",
     "Did you know Blue X are blueberry flavoured?",
     "I would tell you a hint, but Aran out of them.",
-    "WARNING: No hint without authorization",
-    "If you do not know where you are going, you are playing Metroid conFUSION",
-    "Someone who looked just like you already claimed this hint",
-    "The electrified water is quite shocking",
+    "WARNING: No hint without authorization.",
+    "If you do not know where you are going, you are playing METROID conFUSION.",
+    "Someone who looked just like you already claimed this hint.",
+    "The electrified water is quite shocking.",
     "Did Gary touch the thermostat again?",
 ]
