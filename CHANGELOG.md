@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [9.1.x] - 2025-05-??
 
+### Metroid Dread
+
+- Changed: The maximum number of Speed Booster Upgrade items that will have an effect is now 4 instead of 5 (any further upgrades have no effect). This is to prevent a quirk with inconsistent Speed Booster activation with very short charge times.
+- Fixed: Speed Booster Upgrade items will no longer be hinted or included in the credits.
+
 - TODO
 
 ## [9.0.0] - 2025-04-01
