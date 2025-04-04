@@ -49,6 +49,13 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
         self.ui = Ui_AsyncRaceRoomWindow()
         self.ui.setupUi(self)
 
+        self._refresh_timer = QtCore.QTimer(self)
+        self._refresh_timer.setSingleShot(True)
+        self._refresh_timer.timeout.connect(self.refresh_data)
+
+        self._update_time_labels_timer = QtCore.QTimer(self)
+        self._update_time_labels_timer.timeout.connect(self._update_time_labels)
+
         self.ui.background_task_widget.progress_label.setVisible(False)
 
         self._administration_menu = QtWidgets.QMenu(self.ui.administration_button)
@@ -75,17 +82,10 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
 
     def on_room_details(self, room: AsyncRaceRoomEntry) -> None:
         self.room = room
-        now = datetime.datetime.now()
 
         self.ui.name_label.setText(f"Room: {room.name}")
+        self._update_time_labels()
 
-        self.ui.start_end_date_label.setText(
-            f"Race Start: {humanize.naturaltime(room.start_date, when=now)},"
-            f" at {room.start_date.astimezone(None).strftime('%c')}"
-            "<br />"
-            f"Race End: {humanize.naturaltime(room.end_date, when=now)},"
-            f" at {room.end_date.astimezone(None).strftime('%c')}"
-        )
         presets = room.presets
         if len(presets) > 1:
             raise RuntimeError("Only single world games supported")
@@ -129,32 +129,53 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
         self._change_options_action.setEnabled(room.is_admin)
         self._view_user_entries_action.setEnabled(room.is_admin)
 
-        participation_text = None
+        if room.race_status == AsyncRaceRoomRaceStatus.FINISHED:
+            match self.room.self_status:
+                case AsyncRaceRoomUserStatus.NOT_MEMBER:
+                    extra = "You didn't join."
+                case AsyncRaceRoomUserStatus.JOINED:
+                    extra = "You never started."
+                case AsyncRaceRoomUserStatus.STARTED:
+                    extra = "You didn't finish."
+                case AsyncRaceRoomUserStatus.PAUSED:
+                    extra = "You were paused."
+                case AsyncRaceRoomUserStatus.FINISHED:
+                    extra = "You finished."
+                case AsyncRaceRoomUserStatus.FORFEITED:
+                    extra = "You forfeited."
+                case _:
+                    extra = f" (Unknown status {self.room.self_status.name})"
+            participation_text = f"Race has finished. {extra}"
+            self.ui.participation_label.setText(participation_text)
+
+        self.ui.participation_label.setVisible(room.race_status == AsyncRaceRoomRaceStatus.FINISHED)
+        self.ui.results_group.setEnabled(room.race_status == AsyncRaceRoomRaceStatus.FINISHED)
+
+        refresh_delta = None
+        now = datetime.datetime.now(datetime.UTC)
         match room.race_status:
             case AsyncRaceRoomRaceStatus.SCHEDULED:
-                participation_text = f"Race starts in {humanize.naturaltime(room.start_date, when=now)}"
+                refresh_delta = room.start_date - now
 
-            case AsyncRaceRoomRaceStatus.FINISHED:
-                match self.room.self_status:
-                    case AsyncRaceRoomUserStatus.NOT_MEMBER:
-                        extra = "You didn't join."
-                    case AsyncRaceRoomUserStatus.JOINED:
-                        extra = "You never started."
-                    case AsyncRaceRoomUserStatus.STARTED:
-                        extra = "You didn't finish."
-                    case AsyncRaceRoomUserStatus.PAUSED:
-                        extra = "You were paused."
-                    case AsyncRaceRoomUserStatus.FINISHED:
-                        extra = "You finished."
-                    case AsyncRaceRoomUserStatus.FORFEITED:
-                        extra = "You forfeited."
-                    case _:
-                        extra = f" (Unknown status {self.room.self_status.name})"
-                participation_text = f"Race has finished. {extra}"
+            case AsyncRaceRoomRaceStatus.ACTIVE:
+                refresh_delta = room.end_date - now
 
-        self.ui.participation_label.setText(participation_text or "")
-        self.ui.participation_label.setVisible(participation_text is not None)
-        self.ui.results_group.setEnabled(room.race_status == AsyncRaceRoomRaceStatus.FINISHED)
+        self._refresh_timer.stop()
+        if refresh_delta is not None:
+            timer_range = min(int(refresh_delta.total_seconds() * 1000), 15 * 60_000)
+            self._refresh_timer.start(max(1000, timer_range))
+            self._update_time_labels_timer.start(max(1000, timer_range // 15))
+
+    def _update_time_labels(self) -> None:
+        now = datetime.datetime.now()
+
+        self.ui.start_end_date_label.setText(
+            f"Race Start: {humanize.naturaltime(self.room.start_date, when=now)},"
+            f" at {self.room.start_date.astimezone(None).strftime('%c')}"
+            "<br />"
+            f"Race End: {humanize.naturaltime(self.room.end_date, when=now)},"
+            f" at {self.room.end_date.astimezone(None).strftime('%c')}"
+        )
 
     @asyncSlot()
     async def _preset_view_summary(self) -> None:
