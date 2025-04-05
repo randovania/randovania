@@ -37,7 +37,7 @@ def update_hint_locations(game: RandovaniaGame, hint_tree_widget: QtWidgets.QTre
                         hint_types[node.kind] = "✓"
 
             if hint_types:
-                hint_type_tree[region.correct_name(area.in_dark_aether)][area.name] = hint_types
+                hint_type_tree[region.name][area.name] = hint_types
 
     number_for_hint_type = {
         hint_type: i + 1 for i, hint_type in enumerate(sorted(used_hint_kind, key=lambda it: it.long_name))

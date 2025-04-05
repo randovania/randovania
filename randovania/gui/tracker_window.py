@@ -243,6 +243,13 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 )
                 for item in previous_state["teleporters"]
             }
+            for teleporter, node_location in teleporters.items():
+                if teleporter not in self._teleporter_id_to_combo:
+                    return False
+                if node_location is not None:
+                    # check if destination exists
+                    self.game_description.region_list.node_by_identifier(node_location)
+
             if self.game_configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:
                 configurable_nodes = {
                     NodeIdentifier.from_string(identifier): (
@@ -534,8 +541,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         teleporter_dock_types = self.game_description.dock_weakness_database.all_teleporter_dock_types
         for region, area, node in region_list.all_regions_areas_nodes:
             if isinstance(node, DockNode) and node.dock_type in teleporter_dock_types:
-                name = region.correct_name(area.in_dark_aether)
-                nodes_by_region[name].append(node)
+                nodes_by_region[region.name].append(node)
 
                 location = node.identifier
                 targets[elevators.get_elevator_or_area_name(self.game_description, region_list, location, True)] = (
@@ -547,8 +553,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             for region in region_list.regions:
                 for area in region.areas:
                     if area.has_start_node():
-                        name = region.correct_name(area.in_dark_aether)
-                        targets[f"{name} - {area.name}"] = area.get_start_nodes()[0].identifier
+                        targets[f"{region.name} - {area.name}"] = area.get_start_nodes()[0].identifier
 
         combo_targets = sorted(targets.items(), key=lambda it: it[0])
 
