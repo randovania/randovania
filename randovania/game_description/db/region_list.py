@@ -93,7 +93,7 @@ class RegionList(NodeProvider):
 
     def region_with_name(self, name: str) -> Region:
         for region in self.regions:
-            if region.name == name or region.dark_name == name:
+            if region.name == name:
                 return region
         raise KeyError(f"Unknown name: {name}")
 
@@ -134,10 +134,7 @@ class RegionList(NodeProvider):
         if region is None:
             region = self.region_with_area(area)
 
-        if distinguish_dark_aether:
-            return region.correct_name(area.in_dark_aether)
-        else:
-            return region.name
+        return region.name
 
     def region_name_from_node(self, node: Node, distinguish_dark_aether: bool = False) -> str:
         region = self.nodes_to_region(node)
@@ -259,7 +256,7 @@ class RegionList(NodeProvider):
             self._identifier_to_node[identifier] = node
             return node
 
-        raise ValueError(f"No node with name {identifier.node} found in {area}")
+        raise KeyError(f"No node with name {identifier.node} found in {area}")
 
     def typed_node_by_identifier(self, i: NodeIdentifier, t: type[NodeType]) -> NodeType:
         result = self.node_by_identifier(i)
@@ -282,7 +279,7 @@ class RegionList(NodeProvider):
 
     def correct_area_identifier_name(self, identifier: AreaIdentifier) -> str:
         region, area = self.region_and_area_by_area_identifier(identifier)
-        return f"{region.correct_name(area.in_dark_aether)} - {area.name}"
+        return f"{region.name} - {area.name}"
 
     def node_from_pickup_index(self, index: PickupIndex) -> PickupNode:
         self.ensure_has_node_cache()
