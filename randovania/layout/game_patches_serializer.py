@@ -51,7 +51,7 @@ def _pickup_assignment_to_item_locations(
         else:
             item_name = _ETM_NAME
 
-        items_locations[region.name][region_list.node_name(node)] = item_name
+        items_locations[region.name][f"{node.identifier.area}/{node.identifier.node}"] = item_name
 
     return {region: dict(sorted(items_locations[region].items())) for region in sorted(items_locations.keys())}
 
@@ -121,10 +121,6 @@ def _area_name_to_area_location(region_list: RegionList, area_name: str) -> Area
     name_match = re.match("([^/]+)/([^/]+)", area_name)
     assert name_match is not None
     region_name, area_name = name_match.group(1, 2)
-
-    # Filter out dark db names
-    region_name = region_list.region_with_name(region_name).name
-
     return AreaIdentifier(region_name, area_name)
 
 

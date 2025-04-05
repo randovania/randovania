@@ -64,6 +64,10 @@ class Node:
     def name(self) -> str:
         return self.identifier.node
 
+    def full_name(self, with_region: bool = True, separator: str = "/") -> str:
+        """The name of this node, including the area and optionally region."""
+        return self.identifier.display_name(with_region, separator)
+
     def __post_init__(self) -> None:
         if not self.layers:
             raise ValueError("Expected at least one layer")
