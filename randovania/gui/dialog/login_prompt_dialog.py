@@ -82,7 +82,16 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
     @asyncSlot()
     @handle_network_errors
     async def on_login_with_discord_button(self) -> None:
-        url = await self.network_client.login_with_discord()
+        previous = self.discord_button.isEnabled()
+        try:
+            self.discord_button.setEnabled(False)
+            self.discord_label.setText("Starting login with Randovania server...")
+            url = await self.network_client.login_with_discord()
+        except Exception:
+            self.discord_label.setText("")
+            raise
+        finally:
+            self.discord_button.setEnabled(previous)
 
         with tempfile.TemporaryDirectory() as tmpdirname:
             qr_path = Path(tmpdirname).joinpath("qr.png")
