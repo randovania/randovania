@@ -1,0 +1,4385 @@
+{
+    "name": "Vesper Defense Outpost",
+    "extra": {},
+    "areas": {
+        "Biodefense Chamber A": {
+            "default_node": "Player Spawn",
+            "hint_features": [],
+            "extra": {
+                "room_id": 71,
+                "entity_file": "Unit3_b1_Ent.bin"
+            },
+            "nodes": {
+                "Door to Stronghold Void A": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": -0.89990234375,
+                        "z": 10.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 1,
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.89990234375,
+                            "z": 10.0
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.999755859375
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 2,
+                            "connector_id": 20,
+                            "target_layer_id": 0,
+                            "locked": false,
+                            "out_connector_id": 0,
+                            "out_loader_id": 85,
+                            "entity_filename": "Unit3_TP1_Ent.b",
+                            "room_name": "Unit3_TP1_Ent.b"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Stronghold Void A",
+                        "node": "Door to Biodefense Chamber A"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Octolith)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.30180833575089444,
+                        "y": -0.2708152016246011,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 8,
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0009765625,
+                            "z": 0.0
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "model_id": 8,
+                            "artifact_id": 4,
+                            "active": false,
+                            "has_base": false,
+                            "message1_target": 1,
+                            "message1": 16,
+                            "message2_target": -1,
+                            "message2": 9,
+                            "message3_target": -1,
+                            "message3": 0
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 33,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Cretaphid v2": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.04825452083937733,
+                        "y": -0.28435354414466685,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Cretaphid2",
+                    "connections": {
+                        "Pickup (Octolith)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.04,
+                        "y": -0.57,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 0,
+                        "position": {
+                            "x": 0.06787109375,
+                            "y": -0.898681640625,
+                            "z": 7.6806640625
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": -0.03466796875,
+                            "y": 0.0,
+                            "z": -0.999267578125
+                        },
+                        "entity_type_data": {
+                            "availabilty": 0,
+                            "active": true
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Stronghold Void A": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Cretaphid2",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Cretaphid v2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Biodefense Chamber B": {
+            "default_node": "Player Spawn",
+            "hint_features": [],
+            "extra": {
+                "room_id": 76,
+                "entity_file": "Unit3_b2_Ent.bin"
+            },
+            "nodes": {
+                "Door to Stronghold Void B": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": 2.479248046875,
+                        "z": 17.3896484375
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 4,
+                        "position": {
+                            "x": 0.0,
+                            "y": 2.479248046875,
+                            "z": 17.3896484375
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.999755859375
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 2,
+                            "connector_id": 21,
+                            "target_layer_id": 0,
+                            "locked": false,
+                            "out_connector_id": 0,
+                            "out_loader_id": 85,
+                            "entity_filename": "Unit3_TP2_Ent.b",
+                            "room_name": "Unit3_TP2_Ent.b"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Stronghold Void B",
+                        "node": "Door to Biodefense Chamber B"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Octolith)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": -0.21,
+                        "z": -6.82
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 2,
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.2119140625,
+                            "z": -6.82373046875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "model_id": 8,
+                            "artifact_id": 5,
+                            "active": false,
+                            "has_base": false,
+                            "message1_target": 4,
+                            "message1": 16,
+                            "message2_target": -1,
+                            "message2": 0,
+                            "message3_target": -1,
+                            "message3": 0
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 34,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Slench 4": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.3,
+                        "y": 1.25,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Slench4",
+                    "connections": {
+                        "Pickup (Octolith)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.00409508494675421,
+                        "y": 1.795504587560607,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Stronghold Void B": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Slench4",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Slench 4": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Magmaul",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Bioweaponry Lab": {
+            "default_node": "Player Spawn",
+            "hint_features": [],
+            "extra": {
+                "room_id": 66,
+                "entity_file": "unit3_C0_Ent.bin"
+            },
+            "nodes": {
+                "Player Spawn": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11.328772030080167,
+                        "y": 2.307349209208462,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 0,
+                        "position": {
+                            "x": 10.09033203125,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": -0.999755859375,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entity_type_data": {
+                            "availabilty": 0,
+                            "active": true
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to VDO Gateway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to VDO Gateway": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11.2490234375,
+                        "y": 0.0,
+                        "z": -0.00537109375
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 1,
+                        "position": {
+                            "x": 11.2490234375,
+                            "y": 0.0,
+                            "z": -0.00537109375
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": -0.999755859375,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 0,
+                            "connector_id": 12,
+                            "target_layer_id": 0,
+                            "locked": false,
+                            "out_connector_id": 0,
+                            "out_loader_id": 117,
+                            "entity_filename": "unit3_Land_Ent.",
+                            "room_name": "unit3_Land_Ent."
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "VDO Gateway",
+                        "node": "Door to Bioweaponry Lab"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Weapons Complex": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Weapons Complex": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11.2490234375,
+                        "y": 0.0,
+                        "z": -0.00537109375
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 2,
+                        "position": {
+                            "x": -11.2490234375,
+                            "y": 0.0,
+                            "z": -0.00537109375
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.999755859375,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 0,
+                            "connector_id": 13,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 1,
+                            "out_loader_id": 117,
+                            "entity_filename": "unit3_RM1_Ent.b",
+                            "room_name": "unit3_RM1_Ent.b"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Weapons Complex",
+                        "node": "Door to Bioweaponry Lab"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to VDO Gateway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Ascension": {
+            "default_node": "Player Spawn",
+            "hint_features": [],
+            "extra": {
+                "room_id": 72,
+                "entity_file": "unit3_C1_Ent.bin"
+            },
+            "nodes": {
+                "Player Spawn": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4.512263681202992,
+                        "y": 0.38849277997620035,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 0,
+                        "position": {
+                            "x": 0.182373046875,
+                            "y": 0.048583984375,
+                            "z": -6.83984375
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": -0.078369140625,
+                            "y": 0.0,
+                            "z": 0.996826171875
+                        },
+                        "entity_type_data": {
+                            "availabilty": 0,
+                            "active": true
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Stasis Bunker": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Stasis Bunker": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.00537109375,
+                        "y": 0.0,
+                        "z": -11.248779296875
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 2,
+                        "position": {
+                            "x": -0.00537109375,
+                            "y": 0.0,
+                            "z": -11.248779296875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 0,
+                            "connector_id": 14,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 4,
+                            "out_loader_id": 117,
+                            "entity_filename": "unit3_RM3_Ent.b",
+                            "room_name": "unit3_RM3_Ent.b"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Stasis Bunker",
+                        "node": "Door to Ascension"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Fuel Stack": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Fuel Stack": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.024912741797840532,
+                        "y": 26.38852162995597,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 3,
+                        "position": {
+                            "x": 0.00537109375,
+                            "y": 26.535400390625,
+                            "z": 11.248779296875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.999755859375
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 0,
+                            "connector_id": 15,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 3,
+                            "out_loader_id": 117,
+                            "entity_filename": "unit3_RM2_Ent.b",
+                            "room_name": "unit3_RM2_Ent.b"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Fuel Stack",
+                        "node": "Door to Ascension"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Stasis Bunker": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Portal to VDO Gateway": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VDOAscensionPortal",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Ship Deck Portal Unlocked": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Portal to VDO Gateway": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5.6,
+                        "y": 26.35,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 35,
+                        "position": {
+                            "x": 1.443115234375,
+                            "y": 26.5390625,
+                            "z": 8.108154296875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": -0.999755859375,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entity_type_data": {
+                            "load_index": 15,
+                            "target_index": 15,
+                            "artifact_id": 8,
+                            "active": false,
+                            "invisible": false,
+                            "entity_filename": "unit3_Land_Ent",
+                            "target_position": {
+                                "x": 0.062255859375,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "node_name": ""
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Portal",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "VDO Gateway",
+                        "node": "Portal to Ascension"
+                    },
+                    "default_dock_weakness": "Portal",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Fuel Stack": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VDOAscensionPortal",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Ship Deck Portal Unlocked": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5.83,
+                        "y": 24.14,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "VDOAscensionPortal",
+                    "connections": {
+                        "Door to Fuel Stack": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Cortex CPU": {
+            "default_node": "Player Spawn",
+            "hint_features": [],
+            "extra": {
+                "room_id": 67,
+                "entity_file": "Unit3_C2_Ent.bin"
+            },
+            "nodes": {
+                "Morph Ball Door to Weapons Complex": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 22.68,
+                        "y": 3.47,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 6,
+                        "position": {
+                            "x": 8.717041015625,
+                            "y": 0.709716796875,
+                            "z": -19.755615234375
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 1,
+                            "connector_id": 26,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 3,
+                            "out_loader_id": 117,
+                            "entity_filename": "unit3_RM1_Ent.b",
+                            "room_name": "unit3_RM1_Ent.b"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Morph Ball",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Weapons Complex",
+                        "node": "Morph Ball Door to Cortex CPU"
+                    },
+                    "default_dock_weakness": "Morph Ball Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Morph Ball Door to Compression Chamber (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Morph Ball Door to Compression Chamber (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Missile Expansion)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Morph Ball Door to Compression Chamber (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7.28,
+                        "y": 4.78,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 7,
+                        "position": {
+                            "x": 8.393310546875,
+                            "y": 0.51708984375,
+                            "z": 42.215576171875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.999755859375
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 1,
+                            "connector_id": 25,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 4,
+                            "out_loader_id": 117,
+                            "entity_filename": "unit3_RM4_Ent.b",
+                            "room_name": "unit3_RM4_Ent.b"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Morph Ball",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Compression Chamber",
+                        "node": "Morph Ball Door to Cortex CPU (Lower)"
+                    },
+                    "default_dock_weakness": "Morph Ball Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Morph Ball Door to Weapons Complex": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Morph Ball Door to Compression Chamber (Upper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6.94,
+                        "y": 9.69,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 8,
+                        "position": {
+                            "x": -10.742919921875,
+                            "y": 5.51708984375,
+                            "z": 41.471923828125
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.999755859375
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 1,
+                            "connector_id": 25,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 5,
+                            "out_loader_id": 117,
+                            "entity_filename": "unit3_RM4_Ent.b",
+                            "room_name": "unit3_RM4_Ent.b"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Morph Ball",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Compression Chamber",
+                        "node": "Morph Ball Door to Cortex CPU (Upper)"
+                    },
+                    "default_dock_weakness": "Morph Ball Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Morph Ball Door to Weapons Complex": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Battlehammer)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 22.07,
+                        "y": 21.41,
+                        "z": 30.19
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 9,
+                        "position": {
+                            "x": 22.0712890625,
+                            "y": 21.40869140625,
+                            "z": 30.19287109375
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.999755859375,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entity_type_data": {
+                            "item_type": 7,
+                            "enabled": true,
+                            "has_base": true,
+                            "always_active": false,
+                            "max_spawn_count": 1,
+                            "spawn_interval": 0,
+                            "spawn_delay": 0,
+                            "notify_entity_id": 19,
+                            "collected_message": 9,
+                            "collected_message_param1": 0,
+                            "collected_message_param2": 0
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 35,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Battlehammer Force Field": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 16.75,
+                        "y": 12.8,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 18,
+                        "position": {
+                            "x": 8.505126953125,
+                            "y": 8.406982421875,
+                            "z": -0.034423828125
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "item_type": 6,
+                            "enabled": true,
+                            "has_base": false,
+                            "always_active": false,
+                            "max_spawn_count": 1,
+                            "spawn_interval": 0,
+                            "spawn_delay": 0,
+                            "notify_entity_id": -1,
+                            "collected_message": 0,
+                            "collected_message_param1": 0,
+                            "collected_message_param2": 0
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 36,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Morph Ball Door to Weapons Complex": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Battlehammer Force Field": {
+                    "node_type": "configurable_node",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 21.99,
+                        "y": 25.46,
+                        "z": 33.18
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 27,
+                        "position": {
+                            "x": 21.991943359375,
+                            "y": 25.456787109375,
+                            "z": 33.178466796875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.999755859375
+                        },
+                        "entity_type_data": {
+                            "type": 3,
+                            "weapon": "Battlehammer",
+                            "width": 0.974365234375,
+                            "height": 0.96826171875,
+                            "active": false
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Morph Ball Door to Compression Chamber (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Battlehammer)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Player Spawn": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 16.519619440526704,
+                        "y": 26.088576967803053,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 0,
+                        "position": {
+                            "x": 640.01123046875,
+                            "y": 0.010009765625,
+                            "z": 0.0
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 398550.84033203125
+                        },
+                        "entity_type_data": {
+                            "availabilty": 105,
+                            "active": true
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Battlehammer)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Battlehammer Force Field": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "VDO Gateway": {
+            "default_node": "Ship",
+            "hint_features": [],
+            "extra": {
+                "room_id": 65,
+                "entity_file": "unit3_Land_Ent.bin"
+            },
+            "nodes": {
+                "Ship": {
+                    "node_type": "teleporter_network",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 19.96,
+                        "y": 36.02,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 0,
+                        "position": {
+                            "x": 208.00390625,
+                            "y": 80.003662109375,
+                            "z": 80.001220703125
+                        },
+                        "up_vector": {
+                            "x": 80.001220703125,
+                            "y": 80.001220703125,
+                            "z": 80.001220703125
+                        },
+                        "facing_vector": {
+                            "x": 80.001220703125,
+                            "y": 80.001220703125,
+                            "z": 398534.84033203125
+                        },
+                        "entity_type_data": {
+                            "availabilty": 110,
+                            "active": true
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "is_unlocked": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "network": "Ship",
+                    "requirement_to_activate": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "connections": {
+                        "Door to Bioweaponry Lab": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Portal to Ascension": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VDOAscensionPortal",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Portal to Weapons Complex": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VDOWeaponsComplexPortal",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Bioweaponry Lab": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -41.703369140625,
+                        "y": 6.925537109375,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 2,
+                        "position": {
+                            "x": -41.703369140625,
+                            "y": 6.925537109375,
+                            "z": 0.0
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.999755859375,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 0,
+                            "connector_id": 13,
+                            "target_layer_id": 0,
+                            "locked": false,
+                            "out_connector_id": 0,
+                            "out_loader_id": 117,
+                            "entity_filename": "unit3_C0_Ent.bi",
+                            "room_name": "unit3_C0_Ent.bi"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Bioweaponry Lab",
+                        "node": "Door to VDO Gateway"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Ship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Portal to Ascension": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.08,
+                        "y": 4.69,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 5,
+                        "position": {
+                            "x": -11.09375,
+                            "y": 18.499755859375,
+                            "z": -11.02587890625
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.58740234375,
+                            "y": 0.0,
+                            "z": 0.80908203125
+                        },
+                        "entity_type_data": {
+                            "load_index": 15,
+                            "target_index": 15,
+                            "artifact_id": 8,
+                            "active": false,
+                            "invisible": false,
+                            "entity_filename": "unit3_C1_Ent.b",
+                            "target_position": {
+                                "x": 0.062255859375,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "node_name": ""
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Portal",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Ascension",
+                        "node": "Portal to VDO Gateway"
+                    },
+                    "default_dock_weakness": "Portal",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Ship": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VDOAscensionPortal",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Portal to Weapons Complex": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -26.65,
+                        "y": 27.94,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 8,
+                        "position": {
+                            "x": -12.19384765625,
+                            "y": 18.499755859375,
+                            "z": 8.642578125
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.77685546875,
+                            "y": 0.0,
+                            "z": -0.62939453125
+                        },
+                        "entity_type_data": {
+                            "load_index": 40,
+                            "target_index": 40,
+                            "artifact_id": 8,
+                            "active": false,
+                            "invisible": false,
+                            "entity_filename": "unit3_RM1_Ent.",
+                            "target_position": {
+                                "x": 0.062255859375,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "node_name": ""
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Portal",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Weapons Complex",
+                        "node": "Portal to VDO Gateway"
+                    },
+                    "default_dock_weakness": "Portal",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Ship": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VDOWeaponsComplexPortal",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Weapons Complex": {
+            "default_node": "Player Spawn",
+            "hint_features": [],
+            "extra": {
+                "room_id": 68,
+                "entity_file": "Unit3_RM1_Ent.bin"
+            },
+            "nodes": {
+                "Door to Bioweaponry Lab": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 42.680908203125,
+                        "y": 5.2216796875,
+                        "z": -0.00537109375
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 6,
+                        "position": {
+                            "x": 42.680908203125,
+                            "y": 5.2216796875,
+                            "z": -0.00537109375
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": -0.999755859375,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 0,
+                            "connector_id": 12,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 1,
+                            "out_loader_id": 117,
+                            "entity_filename": "unit3_C0_Ent.bi",
+                            "room_name": "unit3_C0_Ent.bi"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Bioweaponry Lab",
+                        "node": "Door to Weapons Complex"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Morph Ball Door to Cortex CPU": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (VDO Cartograph Artifact 1)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2.48,
+                        "y": 33.7,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 23,
+                        "position": {
+                            "x": 33.734619140625,
+                            "y": 12.6865234375,
+                            "z": -0.0458984375
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "model_id": 4,
+                            "artifact_id": 0,
+                            "active": true,
+                            "has_base": false,
+                            "message1_target": -1,
+                            "message1": 0,
+                            "message2_target": -1,
+                            "message2": 0,
+                            "message3_target": -1,
+                            "message3": 0
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 37,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Sylux Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VDOWeaponsComplexSylux",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Morph Ball Door to Cortex CPU": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 16.396429072575536,
+                        "y": 1.8534741650792235,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 24,
+                        "position": {
+                            "x": 0.0,
+                            "y": 4.0166015625,
+                            "z": 24.68798828125
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.999755859375
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 1,
+                            "connector_id": 25,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 3,
+                            "out_loader_id": 117,
+                            "entity_filename": "unit3_c2_Ent.bi",
+                            "room_name": "unit3_c2_Ent.bi"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Morph Ball",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Cortex CPU",
+                        "node": "Morph Ball Door to Weapons Complex"
+                    },
+                    "default_dock_weakness": "Morph Ball Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Bioweaponry Lab": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (VDO Attameter Artifact 1)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10.07,
+                        "y": 4.02,
+                        "z": 10.97
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 61,
+                        "position": {
+                            "x": -10.069091796875,
+                            "y": 4.015380859375,
+                            "z": 10.971923828125
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "model_id": 4,
+                            "artifact_id": 1,
+                            "active": true,
+                            "has_base": false,
+                            "message1_target": -1,
+                            "message1": 0,
+                            "message2_target": -1,
+                            "message2": 0,
+                            "message3_target": -1,
+                            "message3": 0
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 38,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Battlehammer Force Field": {
+                    "node_type": "configurable_node",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -15.83,
+                        "y": 6.21,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 9,
+                        "position": {
+                            "x": -15.8330078125,
+                            "y": 6.212646484375,
+                            "z": -0.00146484375
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": -0.999755859375,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entity_type_data": {
+                            "type": 3,
+                            "weapon": "Battlehammer",
+                            "width": 2.06884765625,
+                            "height": 2.23193359375,
+                            "active": true
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Stasis Bunker": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Crash Pillar": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Sylux Arena": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VDOWeaponsComplexPillar",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Stasis Bunker": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -42.68,
+                        "y": 5.22,
+                        "z": 0.01
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 7,
+                        "position": {
+                            "x": -42.680908203125,
+                            "y": 5.2216796875,
+                            "z": 0.00537109375
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.999755859375,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 4,
+                            "door_type": 0,
+                            "connector_id": 13,
+                            "target_layer_id": 1,
+                            "locked": true,
+                            "out_connector_id": 2,
+                            "out_loader_id": 117,
+                            "entity_filename": "unit3_RM3_Ent.b",
+                            "room_name": "unit3_RM3_Ent.b"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Stasis Bunker",
+                        "node": "Door to Weapons Complex"
+                    },
+                    "default_dock_weakness": "Imperialist Blast Shield",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Battlehammer Force Field": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Portal to VDO Gateway": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -37.5,
+                        "y": 13.34,
+                        "z": -3.65
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 47,
+                        "position": {
+                            "x": -37.49658203125,
+                            "y": 13.3359375,
+                            "z": -3.648193359375
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.735107421875,
+                            "y": 0.0,
+                            "z": 0.677490234375
+                        },
+                        "entity_type_data": {
+                            "load_index": 40,
+                            "target_index": 40,
+                            "artifact_id": 8,
+                            "active": false,
+                            "invisible": false,
+                            "entity_filename": "unit3_Land_Ent",
+                            "target_position": {
+                                "x": 0.062255859375,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "node_name": ""
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Portal",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "VDO Gateway",
+                        "node": "Portal to Weapons Complex"
+                    },
+                    "default_dock_weakness": "Portal",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Sylux Arena": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VDOWeaponsComplexPortal",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Player Spawn": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6.680908203125,
+                        "y": 11.741943359375,
+                        "z": -20.679443359375
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 8,
+                        "position": {
+                            "x": 6.680908203125,
+                            "y": 11.741943359375,
+                            "z": -20.679443359375
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.998046875,
+                            "y": 0.0,
+                            "z": 0.060546875
+                        },
+                        "entity_type_data": {
+                            "availabilty": 1,
+                            "active": true
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Morph Ball Door to Cortex CPU": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (VDO Attameter Artifact 1)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VDOWeaponsComplexShieldKey",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Battlehammer Force Field": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Psycho Bits": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Shield Key": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VDOWeaponsComplexPyschoBits",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Psycho Bits": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7.67,
+                        "y": 20.57,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "VDOWeaponsComplexPyschoBits",
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Crash Pillar": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -29.82869993729622,
+                        "y": 2.2557603849459866,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "VDOWeaponsComplexPillar",
+                    "connections": {
+                        "Battlehammer Force Field": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Shield Key": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20.55,
+                        "y": 10.35,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "VDOWeaponsComplexShieldKey",
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VDOWeaponsComplexShieldKey",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Sylux Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -17.07,
+                        "y": 15.32,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Battlehammer Force Field": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VDOWeaponsComplexPillar",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Portal to VDO Gateway": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VDOWeaponsComplexPortal",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Ship Deck Portal Unlocked": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Sylux": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Ship Deck Portal Unlocked": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -29.72,
+                        "y": 22.22,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "VDOWeaponsComplexPortal",
+                    "connections": {
+                        "Sylux Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Sylux": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -16.55,
+                        "y": 31.96,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "VDOWeaponsComplexSylux",
+                    "connections": {
+                        "Pickup (VDO Cartograph Artifact 1)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Fuel Stack": {
+            "default_node": "Player Spawn",
+            "hint_features": [],
+            "extra": {
+                "room_id": 73,
+                "entity_file": "Unit3_RM2_Ent.bin"
+            },
+            "nodes": {
+                "Player Spawn": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 31.864984108510175,
+                        "y": -13.525986586049097,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 0,
+                        "position": {
+                            "x": 864.0234375,
+                            "y": 16.012451171875,
+                            "z": 16.000244140625
+                        },
+                        "up_vector": {
+                            "x": 16.000244140625,
+                            "y": 16.000244140625,
+                            "z": 16.000244140625
+                        },
+                        "facing_vector": {
+                            "x": 16.000244140625,
+                            "y": 16.000244140625,
+                            "z": 455878.84033203125
+                        },
+                        "entity_type_data": {
+                            "availabilty": 119,
+                            "active": true
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Ascension": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Ascension": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2.203857421875,
+                        "y": -13.0,
+                        "z": -22.397705078125
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 15,
+                        "position": {
+                            "x": 2.203857421875,
+                            "y": -13.0,
+                            "z": -22.397705078125
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 0,
+                            "connector_id": 14,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 3,
+                            "out_loader_id": 117,
+                            "entity_filename": "unit3_C1_Ent.bi",
+                            "room_name": "unit3_C1_Ent.bi"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Ascension",
+                        "node": "Door to Fuel Stack"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (VDO Binary Subscripture Artifact 2)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Missile Expansion)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (VDO Binary Subscripture Artifact 2)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 29.42,
+                        "y": 13.0,
+                        "z": 29.42
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 12,
+                        "position": {
+                            "x": 29.42333984375,
+                            "y": 13.0,
+                            "z": 29.42333984375
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": -0.70703125,
+                            "y": 0.0,
+                            "z": 0.70703125
+                        },
+                        "entity_type_data": {
+                            "model_id": 5,
+                            "artifact_id": 2,
+                            "active": true,
+                            "has_base": false,
+                            "message1_target": -1,
+                            "message1": 0,
+                            "message2_target": -1,
+                            "message2": 0,
+                            "message3_target": -1,
+                            "message3": 0
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 39,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Door to Ascension": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Missile Expansion)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.39,
+                        "y": 0.0,
+                        "z": 4.21
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 72,
+                        "position": {
+                            "x": 1.385498046875,
+                            "y": 0.0,
+                            "z": 4.207763671875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "item_type": 6,
+                            "enabled": true,
+                            "has_base": true,
+                            "always_active": false,
+                            "max_spawn_count": 1,
+                            "spawn_interval": 0,
+                            "spawn_delay": 0,
+                            "notify_entity_id": -1,
+                            "collected_message": 0,
+                            "collected_message_param1": 0,
+                            "collected_message_param2": 0
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 40,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Door to Ascension": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Stasis Bunker": {
+            "default_node": "Player Spawn",
+            "hint_features": [],
+            "extra": {
+                "room_id": 74,
+                "entity_file": "Unit3_RM3_Ent.bin"
+            },
+            "nodes": {
+                "Portal to Stronghold Void B": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11.589570420523128,
+                        "y": 10.417188177978165,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 3,
+                        "position": {
+                            "x": 16.009033203125,
+                            "y": 8.124755859375,
+                            "z": -4.98388671875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "load_index": 5,
+                            "target_index": 5,
+                            "artifact_id": 5,
+                            "active": false,
+                            "invisible": false,
+                            "entity_filename": "Unit3_TP2_Ent.",
+                            "target_position": {
+                                "x": 0.062255859375,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "node_name": ""
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Portal",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Stronghold Void B",
+                        "node": "Portal to Stasis Bunker"
+                    },
+                    "default_dock_weakness": "Portal",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (VDO Cartograph Artifact 2)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11.0,
+                        "y": 0.0,
+                        "z": 13.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 5,
+                        "position": {
+                            "x": -11.0,
+                            "y": 0.0,
+                            "z": 13.0
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "model_id": 5,
+                            "artifact_id": 0,
+                            "active": true,
+                            "has_base": false,
+                            "message1_target": 17,
+                            "message1": 18,
+                            "message2_target": -1,
+                            "message2": 0,
+                            "message3_target": -1,
+                            "message3": 0
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 41,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Weapons Complex": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 35.2490234375,
+                        "y": 0.0,
+                        "z": -4.999755859375
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 1,
+                        "position": {
+                            "x": 35.2490234375,
+                            "y": 0.0,
+                            "z": -4.999755859375
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": -0.999755859375,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 0,
+                            "connector_id": 12,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 2,
+                            "out_loader_id": 117,
+                            "entity_filename": "unit3_RM1_Ent.b",
+                            "room_name": "unit3_RM1_Ent.b"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Weapons Complex",
+                        "node": "Door to Stasis Bunker"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Ascension": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20.48974609375,
+                        "y": 8.125,
+                        "z": 8.082763671875
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 2,
+                        "position": {
+                            "x": 20.48974609375,
+                            "y": 8.125,
+                            "z": 8.082763671875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.999755859375
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 0,
+                            "connector_id": 15,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 4,
+                            "out_loader_id": 117,
+                            "entity_filename": "unit3_C1_Ent.bi",
+                            "room_name": "unit3_C1_Ent.bi"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Ascension",
+                        "node": "Door to Stasis Bunker"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Player Spawn": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 35.55985480089873,
+                        "y": -3.495845383364763,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 0,
+                        "position": {
+                            "x": 30.771484375,
+                            "y": 0.0,
+                            "z": -5.318603515625
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": -0.999755859375,
+                            "y": 0.0,
+                            "z": 0.002685546875
+                        },
+                        "entity_type_data": {
+                            "availabilty": 0,
+                            "active": true
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (VDO Attameter Artifact 2)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 25.31,
+                        "y": 4.37,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 4,
+                        "position": {
+                            "x": 11.0,
+                            "y": 0.0,
+                            "z": -13.0
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "model_id": 5,
+                            "artifact_id": 1,
+                            "active": true,
+                            "has_base": false,
+                            "message1_target": 36,
+                            "message1": 18,
+                            "message2_target": -1,
+                            "message2": 0,
+                            "message3_target": -1,
+                            "message3": 0
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 42,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (UA Expansion)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.14,
+                        "y": 4.1,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 90,
+                        "position": {
+                            "x": -12.033447265625,
+                            "y": 11.685302734375,
+                            "z": -15.122314453125
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": -0.70361328125,
+                            "y": 0.0,
+                            "z": 0.710205078125
+                        },
+                        "entity_type_data": {
+                            "item_type": 18,
+                            "enabled": true,
+                            "has_base": true,
+                            "always_active": false,
+                            "max_spawn_count": 1,
+                            "spawn_interval": 0,
+                            "spawn_delay": 0,
+                            "notify_entity_id": -1,
+                            "collected_message": 0,
+                            "collected_message_param1": 0,
+                            "collected_message_param2": 0
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 65,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 17.08,
+                        "y": -7.05,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Portal to Stronghold Void B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VDOAArtifact2",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VDOBSArtifact2",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VDOCArtifact2",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Weapons Complex": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "VDOStasisBunkerDoors",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Ascension": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "VDOStasisBunkerDoors",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (UA Expansion)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Guardians Defeated": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Unlock Doors": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VDOStasisBunkerGuardians",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallClip",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Guardians Defeated": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.23,
+                        "y": -8.27,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "VDOStasisBunkerGuardians",
+                    "connections": {
+                        "Pickup (VDO Cartograph Artifact 2)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Unlock Doors": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 33.759486421085754,
+                        "y": 6.894841427653308,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "VDOStasisBunkerDoors",
+                    "connections": {
+                        "Pickup (VDO Attameter Artifact 2)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Compression Chamber": {
+            "default_node": "Player Spawn",
+            "hint_features": [],
+            "extra": {
+                "room_id": 69,
+                "entity_file": "unit3_rm4_Ent.bin"
+            },
+            "nodes": {
+                "Portal to Stronghold Void A": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11.18,
+                        "y": 7.17,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 36,
+                        "position": {
+                            "x": -17.21142578125,
+                            "y": 5.0009765625,
+                            "z": 0.0
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.999755859375,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entity_type_data": {
+                            "load_index": 4,
+                            "target_index": 4,
+                            "artifact_id": 4,
+                            "active": false,
+                            "invisible": false,
+                            "entity_filename": "Unit3_TP1_Ent.",
+                            "target_position": {
+                                "x": 0.062255859375,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "node_name": ""
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Portal",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Stronghold Void A",
+                        "node": "Portal to Compression Chamber"
+                    },
+                    "default_dock_weakness": "Portal",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Morph Ball Door to Cortex CPU (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11.21,
+                        "y": 0.0,
+                        "z": -10.65
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 1,
+                        "position": {
+                            "x": 11.210693359375,
+                            "y": 0.0,
+                            "z": -10.64892578125
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 1,
+                            "connector_id": 26,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 4,
+                            "out_loader_id": 117,
+                            "entity_filename": "unit3_c2_Ent.bi",
+                            "room_name": "unit3_c2_Ent.bi"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Morph Ball",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Cortex CPU",
+                        "node": "Morph Ball Door to Compression Chamber (Lower)"
+                    },
+                    "default_dock_weakness": "Morph Ball Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (UA Expansion)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VDOCompressionChamberForceFields",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Shield Key": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VDOCompressionChamberForceFields",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Morph Ball Door to Cortex CPU (Upper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6.46,
+                        "y": 4.6,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 16,
+                        "position": {
+                            "x": -7.92529296875,
+                            "y": 5.0,
+                            "z": -11.39990234375
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 1,
+                            "connector_id": 26,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 5,
+                            "out_loader_id": 117,
+                            "entity_filename": "unit3_c2_Ent.bi",
+                            "room_name": "unit3_c2_Ent.bi"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Morph Ball",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Cortex CPU",
+                        "node": "Morph Ball Door to Compression Chamber (Upper)"
+                    },
+                    "default_dock_weakness": "Morph Ball Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (VDO Binary Subscripture Artifact 1)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12.93,
+                        "y": 11.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 17,
+                        "position": {
+                            "x": -7.259765625,
+                            "y": 10.465576171875,
+                            "z": 0.0
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "model_id": 4,
+                            "artifact_id": 2,
+                            "active": true,
+                            "has_base": true,
+                            "message1_target": 55,
+                            "message1": 18,
+                            "message2_target": -1,
+                            "message2": 18,
+                            "message3_target": -1,
+                            "message3": 0
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 43,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Shield Key": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (UA Expansion)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10.741992529251217,
+                        "y": 3.6111750715007087,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 9,
+                        "position": {
+                            "x": 11.539306640625,
+                            "y": 0.75,
+                            "z": 0.0
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "item_type": 18,
+                            "enabled": true,
+                            "has_base": false,
+                            "always_active": false,
+                            "max_spawn_count": 1,
+                            "spawn_interval": 0,
+                            "spawn_delay": 0,
+                            "notify_entity_id": -1,
+                            "collected_message": 0,
+                            "collected_message_param1": 0,
+                            "collected_message_param2": 0
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 44,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Morph Ball Door to Cortex CPU (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Battlehammer Force Field (Left)": {
+                    "node_type": "configurable_node",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.29,
+                        "y": 8.08,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 53,
+                        "position": {
+                            "x": -0.00146484375,
+                            "y": 6.7705078125,
+                            "z": 3.504638671875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": -0.999755859375,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entity_type_data": {
+                            "type": 3,
+                            "weapon": "Battlehammer",
+                            "width": 1.362060546875,
+                            "height": 2.393310546875,
+                            "active": true
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Scan Panels": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Battlehammer Force Field (Right)": {
+                    "node_type": "configurable_node",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.0,
+                        "y": 6.77,
+                        "z": -3.44
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 54,
+                        "position": {
+                            "x": -0.00146484375,
+                            "y": 6.7705078125,
+                            "z": -3.444091796875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": -0.999755859375,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entity_type_data": {
+                            "type": 3,
+                            "weapon": "Battlehammer",
+                            "width": 1.362060546875,
+                            "height": 2.393310546875,
+                            "active": true
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Scan Panels": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Player Spawn": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5.875311624649488,
+                        "y": 6.992153621719892,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 45,
+                        "position": {
+                            "x": -6.0439453125,
+                            "y": 5.73486328125,
+                            "z": -0.27978515625
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": -0.99853515625,
+                            "y": 0.0,
+                            "z": 0.050048828125
+                        },
+                        "entity_type_data": {
+                            "availabilty": 0,
+                            "active": true
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Portal to Stronghold Void A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VDOAArtifact1",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VDOBSArtifact1",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VDOCArtifact1",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Morph Ball Door to Cortex CPU (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Battlehammer Force Field (Left)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Battlehammer Force Field (Right)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Scan Panels": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10.840925059523478,
+                        "y": 7.231237980094708,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "VDOCompressionChamberForceFields",
+                    "connections": {
+                        "Battlehammer Force Field (Left)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Battlehammer Force Field (Right)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Shield Key": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -14.076661737604322,
+                        "y": 1.1707804038728842,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Morph Ball Door to Cortex CPU (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "VDOCompressionChamberForceFields",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (VDO Binary Subscripture Artifact 1)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Stronghold Void A": {
+            "default_node": "Player Spawn",
+            "hint_features": [],
+            "extra": {
+                "room_id": 70,
+                "entity_file": "Unit3_TP1_Ent.bin"
+            },
+            "nodes": {
+                "Player Spawn": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.563216467420806,
+                        "y": 0.2856822633259697,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 0,
+                        "position": {
+                            "x": 0.358642578125,
+                            "y": 0.2236328125,
+                            "z": 62.451416015625
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.999755859375
+                        },
+                        "entity_type_data": {
+                            "availabilty": 0,
+                            "active": true
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Portal to Compression Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Portal to Compression Chamber": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.37,
+                        "y": 0.22,
+                        "z": 65.7
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 1,
+                        "position": {
+                            "x": 0.37109375,
+                            "y": 0.222412109375,
+                            "z": 65.701904296875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.015625,
+                            "y": 0.0,
+                            "z": -0.999755859375
+                        },
+                        "entity_type_data": {
+                            "load_index": 4,
+                            "target_index": 4,
+                            "artifact_id": 255,
+                            "active": true,
+                            "invisible": false,
+                            "entity_filename": "unit3_RM4_Ent.",
+                            "target_position": {
+                                "x": 0.062255859375,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "node_name": ""
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Portal",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Compression Chamber",
+                        "node": "Portal to Stronghold Void A"
+                    },
+                    "default_dock_weakness": "Portal",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Biodefense Chamber A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Biodefense Chamber A": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.12158203125,
+                        "y": 1.657470703125,
+                        "z": 6.73046875
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 2,
+                        "position": {
+                            "x": 0.12158203125,
+                            "y": 1.657470703125,
+                            "z": 6.73046875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 2,
+                            "connector_id": 20,
+                            "target_layer_id": 0,
+                            "locked": false,
+                            "out_connector_id": 0,
+                            "out_loader_id": 117,
+                            "entity_filename": "unit3_b1_Ent.bi",
+                            "room_name": "unit3_b1_Ent.bi"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Biodefense Chamber A",
+                        "node": "Door to Stronghold Void A"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Portal to Compression Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Stronghold Void B": {
+            "default_node": "Player Spawn",
+            "hint_features": [],
+            "extra": {
+                "room_id": 75,
+                "entity_file": "Unit3_TP2_Ent.bin"
+            },
+            "nodes": {
+                "Player Spawn": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.6116144776548815,
+                        "y": 0.24719643138926228,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 0,
+                        "position": {
+                            "x": 0.358642578125,
+                            "y": 0.2236328125,
+                            "z": 62.451171875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.999755859375
+                        },
+                        "entity_type_data": {
+                            "availabilty": 0,
+                            "active": true
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Portal to Stasis Bunker": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Portal to Stasis Bunker": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.37,
+                        "y": 0.22,
+                        "z": 65.7
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 1,
+                        "position": {
+                            "x": 0.37109375,
+                            "y": 0.222412109375,
+                            "z": 65.701904296875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.015625,
+                            "y": 0.0,
+                            "z": -0.999755859375
+                        },
+                        "entity_type_data": {
+                            "load_index": 5,
+                            "target_index": 5,
+                            "artifact_id": 255,
+                            "active": true,
+                            "invisible": false,
+                            "entity_filename": "unit3_RM3_Ent.",
+                            "target_position": {
+                                "x": 0.062255859375,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "node_name": ""
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Portal",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Stasis Bunker",
+                        "node": "Portal to Stronghold Void B"
+                    },
+                    "default_dock_weakness": "Portal",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Biodefense Chamber B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Biodefense Chamber B": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.12158203125,
+                        "y": 1.657470703125,
+                        "z": 6.73046875
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 2,
+                        "position": {
+                            "x": 0.12158203125,
+                            "y": 1.657470703125,
+                            "z": 6.73046875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 2,
+                            "connector_id": 21,
+                            "target_layer_id": 0,
+                            "locked": false,
+                            "out_connector_id": 0,
+                            "out_loader_id": 117,
+                            "entity_filename": "unit3_b2_Ent.bi",
+                            "room_name": "unit3_b2_Ent.bi"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Biodefense Chamber B",
+                        "node": "Door to Stronghold Void B"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Portal to Stasis Bunker": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
