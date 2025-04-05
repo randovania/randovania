@@ -445,7 +445,7 @@ class HintDistributor(ABC):
             hinted_locations.add(target)
             debug.debug_print(
                 f"  * Placing hint for {patches.pickup_assignment.get(target, target)}"
-                f" at {region_list.node_name(region_list.node_from_pickup_index(target))}\n"
+                f" at {region_list.node_from_pickup_index(target).full_name()}\n"
             )
 
             patches = patches.assign_hint(hint_node, LocationHint.unassigned(target))

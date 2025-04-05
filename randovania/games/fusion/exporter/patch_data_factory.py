@@ -304,8 +304,8 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 elements[pickup.name].append(
                     {
                         "World": location.world_name,
-                        "Region": region_list.region_name_from_node(pickup_node),
-                        "Area": region_list.nodes_to_area(pickup_node).name,
+                        "Region": pickup_node.identifier.region,
+                        "Area": pickup_node.identifier.area,
                     }
                 )
         return elements

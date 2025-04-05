@@ -248,7 +248,7 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
             if not graph.in_edges(node) and not graph.edges(node):
                 continue
 
-        names = sorted(game.region_list.node_name(node, with_region=True) for node in strong_comp)
+        names = sorted(node.full_name(with_region=True) for node in strong_comp)
         yield f"Unknown strongly connected component detected containing {len(names)} nodes:\n{names}"
 
 
@@ -280,13 +280,12 @@ def find_recursive_templates(game: GameDescription) -> Iterator[str]:
 def find_duplicated_pickup_index(region_list: RegionList) -> Iterator[str]:
     known_indices: dict[PickupIndex, str] = {}
 
-    for node in region_list.all_nodes:
-        if isinstance(node, PickupNode):
-            name = region_list.node_name(node, with_region=True, distinguish_dark_aether=True)
-            if node.pickup_index in known_indices:
-                yield (f"{name} has {node.pickup_index}, but it was already used in {known_indices[node.pickup_index]}")
-            else:
-                known_indices[node.pickup_index] = name
+    for node in region_list.iterate_nodes_of_type(PickupNode):
+        name = node.full_name(with_region=True)
+        if node.pickup_index in known_indices:
+            yield f"{name} has {node.pickup_index}, but it was already used in {known_indices[node.pickup_index]}"
+        else:
+            known_indices[node.pickup_index] = name
 
 
 def _needed_resources_partly_satisfied(

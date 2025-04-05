@@ -241,7 +241,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
             return {}
 
     def _key_error_for_node(self, node: Node, err: KeyError) -> KeyError:
-        return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has no extra {err}")
+        return KeyError(f"{node.full_name()} has no extra {err}")
 
     def _level_name_for(self, node: Node) -> str:
         region = self.game.region_list.nodes_to_region(node)
@@ -616,15 +616,13 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         return custom_doors
 
     def _door_patches(self) -> list[dict[str, str]]:
-        wl = self.game.region_list
-
         result: list = []
         used_actors: dict[str, str] = {}
 
         for node, weakness in self.patches.all_dock_weaknesses():
             if "type" not in weakness.extra:
                 raise ValueError(
-                    f"Unable to change door {wl.node_name(node)} into {weakness.name}: incompatible door weakness"
+                    f"Unable to change door {node.full_name()} into {weakness.name}: incompatible door weakness"
                 )
 
             if "actor_name" not in node.extra:
@@ -643,7 +641,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
             actor_idef = str(actor)
             if used_actors.get(actor_idef, door_type) != door_type:
                 raise ValueError(
-                    f"Door for {wl.node_name(node)} ({actor}) previously "
+                    f"Door for {node.full_name()} ({actor}) previously "
                     f"patched to use {used_actors[actor_idef]}, tried to change to {door_type}."
                 )
             used_actors[actor_idef] = door_type

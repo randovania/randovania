@@ -129,7 +129,7 @@ class HintNamer(Generic[ColorT]):
     def format_region(self, location: PickupLocation, with_color: bool) -> str:
         """Formats the name of a region"""
         region_list = default_database.game_description_for(location.game).region_list
-        result = region_list.region_name_from_node(region_list.node_from_pickup_index(location.location), True)
+        result = region_list.node_from_pickup_index(location.location).identifier.region
         return self.colorize_text(self.color_location, result, with_color)
 
     def format_area(self, location: PickupLocation, with_region: bool, with_color: bool) -> str:

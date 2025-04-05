@@ -7,7 +7,6 @@ import typing
 
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
-from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
@@ -51,7 +50,8 @@ def _pickup_assignment_to_item_locations(
         else:
             item_name = _ETM_NAME
 
-        items_locations[region.name][region_list.node_name(node)] = item_name
+        # Not using `node.full_name` as this is not a user-facing string and needs to be consistent
+        items_locations[region.name][f"{node.identifier.area}/{node.identifier.node}"] = item_name
 
     return {region: dict(sorted(items_locations[region].items())) for region in sorted(items_locations.keys())}
 
@@ -115,17 +115,6 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
         result["custom_patcher_data"] = patches.custom_patcher_data
 
     return result
-
-
-def _area_name_to_area_location(region_list: RegionList, area_name: str) -> AreaIdentifier:
-    name_match = re.match("([^/]+)/([^/]+)", area_name)
-    assert name_match is not None
-    region_name, area_name = name_match.group(1, 2)
-
-    # Filter out dark db names
-    region_name = region_list.region_with_name(region_name).name
-
-    return AreaIdentifier(region_name, area_name)
 
 
 def _find_pickup_with_name(item_pool: list[PickupEntry], pickup_name: str) -> PickupEntry:
