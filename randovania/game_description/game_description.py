@@ -20,7 +20,7 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Iterator
+    from collections.abc import Iterator
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
@@ -255,7 +255,7 @@ class GameDescription(GameDatabaseView):
 
     # Game Database View
 
-    def node_iterator(self) -> Iterable[tuple[Region, Area, Node]]:
+    def node_iterator(self) -> Iterator[tuple[Region, Area, Node]]:
         return self.region_list.all_regions_areas_nodes
 
     @override
