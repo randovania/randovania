@@ -4,23 +4,7 @@
 
 Welcome to Randovania, a randomizer platform for a multitude of games.
 
-New here or looking to install? Check [our website](https://randovania.org/).
-
-<!-- Begin SUPPORTED -->
-
-### Supported Games
- - Another Metroid 2 Remake
- - Cave Story
- - Metroid Dread
- - Metroid Prime
- - Metroid Prime 2: Echoes
- - Metroid: Samus Returns
-
-<!-- End SUPPORTED -->
-
-<!-- Begin EXPERIMENTAL -->
-
-<!-- End EXPERIMENTAL -->
+New here or looking to install? Check [our website](https://randovania.org/). It also contains the list of supported games.
 
 <!-- Begin WELCOME -->
 
