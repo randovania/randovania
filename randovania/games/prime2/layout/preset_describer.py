@@ -49,7 +49,7 @@ def create_beam_configuration_description(
             f"{b.combo_ammo_cost} (Combo)",
         ]
 
-    def format_different_ammo_cost(actual: BeamAmmoConfiguration, default: BeamAmmoConfiguration):
+    def format_different_ammo_cost(actual: BeamAmmoConfiguration, default: BeamAmmoConfiguration) -> str:
         a1 = format_ammo_cost(actual)
         d1 = format_ammo_cost(default)
 

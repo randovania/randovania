@@ -4,23 +4,7 @@
 
 Welcome to Randovania, a randomizer platform for a multitude of games.
 
-New here or looking to install? Check [our website](https://randovania.org/).
-
-<!-- Begin SUPPORTED -->
-
-### Supported Games
- - Another Metroid 2 Remake
- - Cave Story
- - Metroid Dread
- - Metroid Prime
- - Metroid Prime 2: Echoes
- - Metroid: Samus Returns
-
-<!-- End SUPPORTED -->
-
-<!-- Begin EXPERIMENTAL -->
-
-<!-- End EXPERIMENTAL -->
+New here or looking to install? Check [our website](https://randovania.org/). It also contains the list of supported games.
 
 <!-- Begin WELCOME -->
 
@@ -186,8 +170,9 @@ Integration written by [Thanatos](https://github.com/ThanatosGit).
 
 ## Dependencies
 
-* [Python 3.12 64-bit](https://www.python.org/ftp/python/3.12.1/python-3.12.1-amd64.exe)
 * [Git](https://git-scm.com/downloads)
+* [UV](https://docs.astral.sh/uv/getting-started/installation/)
+  * This is installed automatically during step 3 of `Getting started`.
 
 ## Setup
 
@@ -195,10 +180,10 @@ Getting started:
    1. Clone this repository. If you want to clone your fork, make sure that during the forking process you **uncheck** the `Copy main branch only` checkbox. Because the git history is needed, downloading the zip is *not* supported and will not work.
    2. Open a terminal in the repository root
    3. Run the following file:
-      1. Windows: `tools/prepare_virtual_env.bat`
-      2. Linux/macOS: `tools/prepare_virtual_env.sh`
+      1. Windows: `tools/prepare_virtual_env.bat --thin`
+      2. Linux/macOS: `tools/prepare_virtual_env.sh --thin`
    4. You should see "Setup finished successfully." visible when the command finishes.
-   5. For certain use cases, such as exporting games or running tests, additional setup is needed.
+   5. For certain use cases, such as exporting games or running tests, replace `--thin` with `--full`.
 
 In order to start Randovania, open:
    1. Windows: `tools/start_client.bat`
@@ -208,28 +193,23 @@ In order to update your repository:
    1. Update the git repository. (With `git pull` or anything else)
    2. Make sure that Randovania is closed.
    3. Re-run the steps from "Getting Started", starting at step 2.
-      1. In case of unexpected errors, delete the `venv` in the root of the repository and start again.
+      1. In case of unexpected errors, delete the `.venv` in the root of the repository and start again.
    4. Open Randovania normally.
 
 In order to be able to export games:
-   1. Run both "Getting started" and "Start Randovania" steps.
-   2. Activate the virtual env. Check start_client.bat/sh for details.
-   3. Run `python -m pip install -r requirements.txt`.
+   1. Run the "Getting started" step with `--full` instead of `--thin`.
+   2. Start Randovania normally.
 
 In order to run the tests:
-   1. Run both "Getting started" and "Start Randovania" steps.
-   2. Activate the virtual env. Check start_client.bat/sh for details.
-   3. Run `python -m pip install -r requirements.txt`.
-   4. Run `python -m pytest test`.
+   1. Run the "Getting started" step with `--full` instead of `--thin`.
+   2. Run `uv run pytest`.
 
 In order to run the server:
-   1. Run both "Getting started" and "Start Randovania" steps.
-   2. Activate the virtual env. Check start_client.bat/sh for details.
-   3. Run `python -m pip install -r requirements.txt`.
-   4. Run `python tools/prepare_dev_server_config.py` once.
-   5. If you wish to use any Discord functionality, you'll need to create an app in Discord
+   1. Run the "Getting started" step.
+   2. Run `uv run tools/prepare_dev_server_config.py` once.
+   3. If you wish to use any Discord functionality, you'll need to create an app in Discord
    and fill both ids in `tools/dev-server-configuration.json`.
-   6. Run the server and client. You can this on
+   4. Run the server and client. You can this on
       1. Windows with `tools/start_dev_server.bat` for the server and `tools/start_debug_client.bat` for the client
       2. Linux/macOS with `tools/start_dev_server.sh` for the server and `tools_start_debug_client.sh` for client
 
@@ -249,6 +229,18 @@ Then make sure that the Python extension is installed and select the Python inst
 There is also a task defined to run all tests. To run individual tests you can utilise the `Testing` section of Visual Studio Code. You can simply run or debug a test there.
 
 To start Randovania you can press CTRL+F5. If you only press F5, Randovania will start with a debugger. Be aware that starting with a debugger makes the application much slower.
+
+## UV Commands
+
+Updating a single package:
+```
+uv lock --upgrade-package my-dependency
+```
+
+Installing your patcher as editable:
+```
+uv pip install -e ..\factorio-randovania-mod\
+```
 
 # Documentation
 

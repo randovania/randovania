@@ -11,9 +11,9 @@ from randovania.gui.dialog.async_race_proof_popup import AsyncRaceProofPopup
 from randovania.gui.dialog.async_race_settings_dialog import AsyncRaceSettingsDialog
 from randovania.gui.generated.async_race_room_window_ui import Ui_AsyncRaceRoomWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
-from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
+from randovania.gui.widgets.audit_log_model import AuditEntryListDatabaseModel
 from randovania.interface_common.options import Options
 from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
@@ -24,13 +24,14 @@ from randovania.network_common.async_race_room import (
 )
 
 
-class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
+class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
     CloseEvent = QtCore.Signal()
 
     ui: Ui_AsyncRaceRoomWindow
     room: AsyncRaceRoomEntry
     preset: VersionedPreset
     _leaderboard_dialog: AsyncRaceLeaderboardDialog | None = None
+    _audit_log_dialog: QtWidgets.QDialog | None = None
 
     def __init__(
         self,
@@ -48,16 +49,27 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         self.ui = Ui_AsyncRaceRoomWindow()
         self.ui.setupUi(self)
 
+        self._refresh_timer = QtCore.QTimer(self)
+        self._refresh_timer.setSingleShot(True)
+        self._refresh_timer.timeout.connect(self.refresh_data)
+
+        self._update_time_labels_timer = QtCore.QTimer(self)
+        self._update_time_labels_timer.timeout.connect(self._update_time_labels)
+
+        self.ui.background_task_widget.progress_label.setVisible(False)
+
         self._administration_menu = QtWidgets.QMenu(self.ui.administration_button)
         self.ui.administration_button.setMenu(self._administration_menu)
-        self._administration_menu.addAction("Change options").triggered.connect(self._on_change_options)
-        self._administration_menu.addAction("View user entries").triggered.connect(self._on_view_user_entries)
-        self.ui.view_preset_description_button.clicked.connect(self._preset_view_summary)
+        self._view_audit_log_action = self._administration_menu.addAction("View audit log")
+        self._change_options_action = self._administration_menu.addAction("Change options")
+        self._view_user_entries_action = self._administration_menu.addAction("View user entries")
 
+        self.ui.view_preset_description_button.clicked.connect(self._preset_view_summary)
         self.ui.view_spoiler_button.clicked.connect(self._view_spoiler)
         self.ui.view_leaderboard_button.clicked.connect(self._view_leaderboard)
-
-        # TODO: background task things
+        self._view_audit_log_action.triggered.connect(self._on_view_audit_log)
+        self._change_options_action.triggered.connect(self._on_change_options)
+        self._view_user_entries_action.triggered.connect(self._on_view_user_entries)
 
         self.ui.customize_cosmetic_button.clicked.connect(self._open_user_preferences_dialog)
         self.ui.join_and_export_button.clicked.connect(self._on_join_and_export)
@@ -70,17 +82,10 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
 
     def on_room_details(self, room: AsyncRaceRoomEntry) -> None:
         self.room = room
-        now = datetime.datetime.now()
 
         self.ui.name_label.setText(f"Room: {room.name}")
+        self._update_time_labels()
 
-        self.ui.start_end_date_label.setText(
-            f"Race Start: {humanize.naturaltime(room.start_date, when=now)},"
-            f" at {room.start_date.strftime('%c')}"
-            "<br />"
-            f"Race End: {humanize.naturaltime(room.end_date, when=now)},"
-            f" at {room.end_date.strftime('%c')}"
-        )
         presets = room.presets
         if len(presets) > 1:
             raise RuntimeError("Only single world games supported")
@@ -121,34 +126,56 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
             "Forfeit" if room.self_status != AsyncRaceRoomUserStatus.FORFEITED else "Undo Forfeit"
         )
         self.ui.submit_proof_button.setEnabled(room.self_status == AsyncRaceRoomUserStatus.FINISHED)
-        self.ui.administration_button.setEnabled(room.is_admin)
+        self._change_options_action.setEnabled(room.is_admin)
+        self._view_user_entries_action.setEnabled(room.is_admin)
 
-        participation_text = None
+        if room.race_status == AsyncRaceRoomRaceStatus.FINISHED:
+            match self.room.self_status:
+                case AsyncRaceRoomUserStatus.NOT_MEMBER:
+                    extra = "You didn't join."
+                case AsyncRaceRoomUserStatus.JOINED:
+                    extra = "You never started."
+                case AsyncRaceRoomUserStatus.STARTED:
+                    extra = "You didn't finish."
+                case AsyncRaceRoomUserStatus.PAUSED:
+                    extra = "You were paused."
+                case AsyncRaceRoomUserStatus.FINISHED:
+                    extra = "You finished."
+                case AsyncRaceRoomUserStatus.FORFEITED:
+                    extra = "You forfeited."
+                case _:
+                    extra = f" (Unknown status {self.room.self_status.name})"
+            participation_text = f"Race has finished. {extra}"
+            self.ui.participation_label.setText(participation_text)
+
+        self.ui.participation_label.setVisible(room.race_status == AsyncRaceRoomRaceStatus.FINISHED)
+        self.ui.results_group.setEnabled(room.race_status == AsyncRaceRoomRaceStatus.FINISHED)
+
+        refresh_delta = None
+        now = datetime.datetime.now(datetime.UTC)
         match room.race_status:
             case AsyncRaceRoomRaceStatus.SCHEDULED:
-                participation_text = f"Race starts in {humanize.naturaltime(room.start_date, when=now)}"
+                refresh_delta = room.start_date - now
 
-            case AsyncRaceRoomRaceStatus.FINISHED:
-                match self.room.self_status:
-                    case AsyncRaceRoomUserStatus.NOT_MEMBER:
-                        extra = "You didn't join."
-                    case AsyncRaceRoomUserStatus.JOINED:
-                        extra = "You never started."
-                    case AsyncRaceRoomUserStatus.STARTED:
-                        extra = "You didn't finish."
-                    case AsyncRaceRoomUserStatus.PAUSED:
-                        extra = "You were paused."
-                    case AsyncRaceRoomUserStatus.FINISHED:
-                        extra = "You finished."
-                    case AsyncRaceRoomUserStatus.FORFEITED:
-                        extra = "You forfeited."
-                    case _:
-                        extra = f" (Unknown status {self.room.self_status.name})"
-                participation_text = f"Race has finished. {extra}"
+            case AsyncRaceRoomRaceStatus.ACTIVE:
+                refresh_delta = room.end_date - now
 
-        self.ui.participation_label.setText(participation_text or "")
-        self.ui.participation_label.setVisible(participation_text is not None)
-        self.ui.results_group.setEnabled(room.race_status == AsyncRaceRoomRaceStatus.FINISHED)
+        self._refresh_timer.stop()
+        if refresh_delta is not None:
+            timer_range = min(int(refresh_delta.total_seconds() * 1000), 15 * 60_000)
+            self._refresh_timer.start(max(1000, timer_range))
+            self._update_time_labels_timer.start(max(1000, timer_range // 15))
+
+    def _update_time_labels(self) -> None:
+        now = datetime.datetime.now()
+
+        self.ui.start_end_date_label.setText(
+            f"Race Start: {humanize.naturaltime(self.room.start_date, when=now)},"
+            f" at {self.room.start_date.astimezone(None).strftime('%c')}"
+            "<br />"
+            f"Race End: {humanize.naturaltime(self.room.end_date, when=now)},"
+            f" at {self.room.end_date.astimezone(None).strftime('%c')}"
+        )
 
     @asyncSlot()
     async def _preset_view_summary(self) -> None:
@@ -156,9 +183,24 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         description = preset_describer.merge_categories(preset_describer.describe(preset))
 
         message_box = QtWidgets.QMessageBox(self)
+
+        def on_button(button: QtWidgets.QPushButton) -> None:
+            if button is message_box.button(QtWidgets.QMessageBox.StandardButton.Save):
+                path = common_qt_lib.prompt_user_for_preset_file(self, new_file=True)
+                if path is None:
+                    return
+
+                self.preset.save_to_file(path)
+                if not self._window_manager.preset_manager.is_included_preset_uuid(self.preset.uuid):
+                    self._window_manager.preset_manager.add_new_preset(self.preset)
+
         message_box.setWindowTitle(preset.name)
         message_box.setText(description)
         message_box.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
+        message_box.setStandardButtons(
+            QtWidgets.QMessageBox.StandardButton.Close | QtWidgets.QMessageBox.StandardButton.Save
+        )
+        message_box.buttonClicked.connect(on_button)
         await async_dialog.execute_dialog(message_box)
 
     async def _status_transition(self, new_status: AsyncRaceRoomUserStatus) -> None:
@@ -228,16 +270,19 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
         )
 
         dialog.save_options()
-        self._can_stop_background_process = game.exporter.export_can_be_aborted
-        await game_exporter.export_game(
-            exporter=game.exporter,
-            export_dialog=dialog,
-            patch_data=patch_data,
-            layout_for_spoiler=None,
-            background=self,
-        )
-        self._can_stop_background_process = True
-        await self.refresh_data()
+        self.ui.join_and_export_button.setEnabled(False)
+        try:
+            self.ui.background_task_widget.can_stop_background_process = game.exporter.export_can_be_aborted
+            await game_exporter.export_game(
+                exporter=game.exporter,
+                export_dialog=dialog,
+                patch_data=patch_data,
+                layout_for_spoiler=None,
+                background=self.ui.background_task_widget,
+            )
+            self.ui.background_task_widget.can_stop_background_process = True
+        finally:
+            await self.refresh_data()
 
     @asyncSlot()
     async def _open_user_preferences_dialog(self) -> None:
@@ -251,7 +296,17 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
     @asyncSlot()
     async def _on_submit_proof(self) -> None:
         """Called when the `Submit Proof` button is pressed."""
+
+        try:
+            self.setEnabled(False)
+            submission_notes, proof_url = await self._network_client.async_race_get_own_proof(self.room.id)
+        finally:
+            self.setEnabled(True)
+
         dialog = AsyncRaceProofPopup(self)
+        dialog.ui.notes_edit.setPlainText(submission_notes)
+        dialog.ui.proof_edit.setText(proof_url)
+
         result = await async_dialog.execute_dialog(dialog)
         if result != QtWidgets.QDialog.DialogCode.Accepted:
             return
@@ -292,6 +347,41 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow, BackgroundTaskMixin):
             await async_dialog.execute_dialog(self._leaderboard_dialog)
         finally:
             self._leaderboard_dialog = None
+
+    @asyncSlot()
+    async def _on_view_audit_log(self) -> None:
+        """Opens a widget with the audit log."""
+        if self._audit_log_dialog is not None:
+            self._audit_log_dialog.raise_()
+            return
+
+        try:
+            self.setEnabled(False)
+            audit_log = await self._network_client.async_race_get_audit_log(self.room)
+        finally:
+            self.setEnabled(True)
+
+        self._audit_log_dialog = QtWidgets.QDialog(self)
+        self._audit_log_dialog.resize(625, 250)
+        self._audit_log_dialog.setWindowTitle("Audit Log")
+        root_layout = QtWidgets.QVBoxLayout(self._audit_log_dialog)
+
+        table_view = QtWidgets.QTableView(self._audit_log_dialog)
+        table_view.setAlternatingRowColors(True)
+        audit_item_model = AuditEntryListDatabaseModel(audit_log)
+        table_view.setModel(audit_item_model)
+        root_layout.addWidget(table_view)
+        table_view.resizeColumnsToContents()
+
+        button_box = QtWidgets.QDialogButtonBox(self._audit_log_dialog)
+        button_box.setStandardButtons(QtWidgets.QDialogButtonBox.StandardButton.Ok)
+        button_box.accepted.connect(self._audit_log_dialog.accept)
+        root_layout.addWidget(button_box)
+
+        try:
+            await async_dialog.execute_dialog(self._audit_log_dialog)
+        finally:
+            self._audit_log_dialog = None
 
     @asyncSlot()
     async def _on_change_options(self) -> None:

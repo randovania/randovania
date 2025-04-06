@@ -6,13 +6,12 @@ import typing
 from typing import TYPE_CHECKING
 
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.db.node import Node
+from randovania.game_description.pickup.pickup_entry import StartingPickupBehavior
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
 from randovania.generator.filler.filler_library import UnableToGenerate, UncollectedState
 from randovania.generator.filler.filler_logging import debug_print_collect_event
 from randovania.generator.filler.weighted_locations import WeightedLocations
-from randovania.layout.base.standard_pickup_state import StartingPickupBehavior
 from randovania.lib import random_lib
 from randovania.resolver import debug
 
@@ -20,6 +19,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable, Mapping, Set
     from random import Random
 
+    from randovania.game_description.db.node import Node
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.pickup_index import PickupIndex
@@ -163,7 +163,7 @@ def weighted_potential_actions(
     if len(actions) == 1:
         debug.debug_print(f"{actions[0]}")
         debug.debug_print("Only one action, weighting skipped")
-        return {action: 1.0 for action in actions}
+        return dict.fromkeys(actions, 1.0)
 
     current_uncollected = UncollectedState.from_reach(player_state.reach)
     current_unsafe_uncollected = UncollectedState.from_reach_only_unsafe(player_state.reach)
@@ -237,10 +237,7 @@ def increment_index_age(locations_weighted: WeightedLocations, increment: float)
 
 def _print_header(player_states: list[PlayerState]) -> None:
     def _name_for_index(state: PlayerState, index: PickupIndex) -> str:
-        return state.game.region_list.node_name(
-            state.game.region_list.node_from_pickup_index(index),
-            with_region=True,
-        )
+        return state.game.region_list.node_from_pickup_index(index).full_name()
 
     debug.debug_print(
         "{}\nRetcon filler started with standard pickups:\n{}".format(
@@ -327,7 +324,7 @@ def retcon_playthrough_filler(
         rng.shuffle(new_pickups)
 
         for new_resource in new_resources:
-            debug_print_collect_event(new_resource, current_player.game)
+            debug_print_collect_event(new_resource)
             # This action is potentially dangerous. Use `act_on` to remove invalid paths
             current_player.reach.act_on(new_resource)
 
@@ -365,7 +362,7 @@ def retcon_playthrough_filler(
 def debug_print_weighted_locations(all_locations_weighted: WeightedLocations, player_states: list[PlayerState]) -> None:
     print("==> Weighted Locations")
     for owner, index, weight in all_locations_weighted.all_items():
-        node_name = owner.game.region_list.node_name(owner.game.region_list.node_from_pickup_index(index))
+        node_name = owner.game.region_list.node_from_pickup_index(index).full_name()
         print(f"[{player_states[owner.index].name}] {node_name} - {weight}")
 
 
@@ -495,7 +492,7 @@ def _calculate_weights_for(
     potential_unsafe_uncollected = UncollectedState.from_reach_only_unsafe(potential_reach) - current_unsafe_uncollected
 
     if debug.debug_level() > 2:
-        nodes = typing.cast(tuple[Node, ...], potential_reach.game.region_list.all_nodes)
+        nodes = typing.cast("tuple[Node, ...]", potential_reach.game.region_list.all_nodes)
 
         def print_weight_factors(uncollected: UncollectedState) -> None:
             print(f"  indices: {uncollected.pickup_indices}")
@@ -554,5 +551,5 @@ def pickup_placement_spoiler_entry(
         f"{location_owner.name}'s " if add_indices else "",
         action.name,
         f"{index_owner.name}'s " if add_indices else "",
-        region_list.node_name(pickup_node, with_region=True, distinguish_dark_aether=True),
+        pickup_node.full_name(),
     )

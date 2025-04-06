@@ -32,7 +32,7 @@ class AsyncRaceRoomBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
         common_qt_lib.set_default_window_icon(self)
         self.network_client = network_client
 
-        headers = ["Name", "Start Date", "End Date", "Password?", "Creator", "Creation Date"]
+        headers = ["Name", "Game", "Start Date", "End Date", "Password?", "Creator", "Creation Date"]
         self.item_model = QtGui.QStandardItemModel(0, len(headers), self)
         self.item_model.setHorizontalHeaderLabels(headers)
 
@@ -169,6 +169,7 @@ class AsyncRaceRoomBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
         self.item_model.setRowCount(len(visible_sessions))
         for i, session in enumerate(visible_sessions):
             name = QtGui.QStandardItem(session.name)
+            game_name = QtGui.QStandardItem(session.game_summary())
             has_password = QtGui.QStandardItem("Yes" if session.has_password else "No")
             start_date = model_lib.create_date_item(session.start_date)
             end_date = model_lib.create_date_item(session.end_date)
@@ -179,6 +180,7 @@ class AsyncRaceRoomBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
             for col, item in enumerate(
                 (
                     name,
+                    game_name,
                     start_date,
                     end_date,
                     has_password,

@@ -312,6 +312,64 @@ def _migrate_v28(data: dict, game: RandovaniaGame) -> None:
                     node["kind"] = hint_types[node["kind"]]
 
 
+def _migrate_v29(data: dict, game: RandovaniaGame) -> None:
+    for region in data["regions"]:
+        for area in region["areas"].values():
+            for node in area["nodes"].values():
+                if node["node_type"] == "pickup":
+                    custom_index_group = None
+                    # while Cave Story uses this flag, it actually wants to consider it separate regions
+                    if game.value == "prime2":
+                        if area["extra"]["in_dark_aether"]:
+                            custom_index_group = region["name"]
+                    node["custom_index_group"] = custom_index_group
+
+
+def _migrate_v30(data: dict, game: RandovaniaGame) -> None:
+    if game.value not in {"cave_story", "prime2"}:
+        return
+
+    # (old region, area name) -> new region
+    area_renames: dict[tuple[str, str], str] = {}
+
+    region_list: list[dict] = data["regions"]
+    for i, region in reversed(list(enumerate(region_list))):
+        extra = {}
+        if game.value == "prime2":
+            extra["associated_region"] = region["name"]
+
+        if "dark_name" not in region["extra"]:
+            continue
+
+        dark_region = {
+            "name": region["extra"].pop("dark_name"),
+            "extra": extra,
+            "areas": {},
+        }
+        if game.value == "prime2":
+            region["extra"]["associated_region"] = dark_region["name"]
+        region_list.insert(i + 1, dark_region)
+
+        for area_name, area in list(region["areas"].items()):
+            if area["extra"].pop("in_dark_aether"):
+                region["areas"].pop(area_name)
+                dark_region["areas"][area_name] = area
+                area_renames[(region["name"], area_name)] = dark_region["name"]
+
+    for region in region_list:
+        for area in region["areas"].values():
+            for node in area["nodes"].values():
+                if "default_connection" in node:
+                    rename = area_renames.get(
+                        (
+                            node["default_connection"]["region"],
+                            node["default_connection"]["area"],
+                        )
+                    )
+                    if rename is not None:
+                        node["default_connection"]["region"] = rename
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -341,6 +399,8 @@ _MIGRATIONS = [
     _migrate_v26,  # remove initial_states
     _migrate_v27,  # add hint features
     _migrate_v28,  # rename HintNodeKind
+    _migrate_v29,  # add custom_index_group
+    _migrate_v30,  # split Echoes light/dark
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

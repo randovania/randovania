@@ -5,6 +5,7 @@ import re
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.common import elevators
 from randovania.generator import reach_lib
@@ -38,7 +39,7 @@ if TYPE_CHECKING:
 class GeneratorHintState(HintState):
     def advance_hint_seen_count(self, state: State) -> None:
         super().advance_hint_seen_count(state)
-        filler_logging.print_new_node_identifiers(self.game, self.hint_seen_count, "Hints")
+        filler_logging.print_new_node_identifiers(self.hint_seen_count, "Hints")
 
     def valid_available_locations_for_hint(
         self, state: PlayerState, current_uncollected: UncollectedState, all_locations: WeightedLocations
@@ -208,7 +209,7 @@ class PlayerState:
 
                 paths_to_be_opened.add(
                     "* {}: {}".format(
-                        wl.node_name(node, with_region=True),
+                        node.full_name(),
                         " and ".join(
                             sorted(
                                 r.pretty_text
@@ -235,9 +236,7 @@ class PlayerState:
                     )
                 )
 
-        accessible_nodes = [
-            wl.node_name(n, with_region=True) for n in self.reach.iterate_nodes if self.reach.is_reachable_node(n)
-        ]
+        accessible_nodes = [n.full_name() for n in self.reach.iterate_nodes if self.reach.is_reachable_node(n)]
 
         return (
             "At {} after {} actions and {} pickups, with {} collected locations, {} safe nodes.\n\n"
@@ -247,7 +246,7 @@ class PlayerState:
             "Accessible teleporters:\n{}\n\n"
             "Reachable nodes:\n{}"
         ).format(
-            self.game.region_list.node_name(self.reach.state.node, with_region=True, distinguish_dark_aether=True),
+            self.reach.state.node.full_name(),
             self.num_actions,
             self.num_assigned_pickups,
             len(state.pickup_indices),
@@ -295,7 +294,14 @@ def build_available_indices(
     """
     Groups indices into separated groups, so each group can be weighted separately.
     """
-    indices_groups = [set(region.pickup_indices) - configuration.indices_to_exclude for region in region_list.regions]
+    named_index_group = collections.defaultdict(set)
+
+    for region, area, node in region_list.all_regions_areas_nodes:
+        if isinstance(node, PickupNode) and node.pickup_index not in configuration.indices_to_exclude:
+            group_name = node.custom_index_group or region.name
+            named_index_group[group_name].add(node.pickup_index)
+
+    indices_groups = list(named_index_group.values())
     all_indices = set().union(*indices_groups)
 
     return indices_groups, all_indices

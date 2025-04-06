@@ -1128,13 +1128,39 @@ def _migrate_v100(preset: dict, game: RandovaniaGame) -> None:
 
 
 def _migrate_v101(preset: dict, game: RandovaniaGame) -> None:
-    banned_pickups = ["Cannon Ball", "Unlimited Beam Ammo", "Unlimited Missiles", "Double Damage"]
-    pickup_config = preset["configuration"]["standard_pickup_configuration"]["pickups_state"]
     if game == RandovaniaGame.METROID_PRIME_ECHOES:
+        banned_pickups = ["Cannon Ball", "Unlimited Beam Ammo", "Unlimited Missiles", "Double Damage"]
+        pickup_config = preset["configuration"]["standard_pickup_configuration"]["pickups_state"]
         for pickup in banned_pickups:
             if pickup in pickup_config:
                 if "num_included_in_starting_pickups" in pickup_config[pickup]:
-                    pickup_config[pickup]["num_included_in_starting_pickups"] = 0
+                    pickup_config[pickup].pop("num_included_in_starting_pickups")
+
+
+def _migrate_v102(preset: dict, game: RandovaniaGame) -> None:
+    if game not in {RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.CAVE_STORY}:
+        return
+
+    rename = migration_data.get_raw_data(game)["in_dark_world_rename"]
+
+    def fix(identifier: dict) -> None:
+        region_rename = rename.get(f"{identifier['region']}/{identifier['area']}")
+        if region_rename:
+            identifier["region"] = region_rename
+            if region_rename in {"Sky Temple", "Sky Temple Grounds"}:
+                if identifier["node"] == "Elevator to Great Temple":
+                    identifier["node"] = "Elevator to Sky Temple"
+                elif identifier["node"] == "Elevator to Temple Grounds":
+                    identifier["node"] = "Elevator to Sky Temple Grounds"
+
+    for starting_location in preset["configuration"]["starting_location"]:
+        fix(starting_location)
+
+    if game == RandovaniaGame.METROID_PRIME_ECHOES:
+        for it in preset["configuration"]["teleporters"]["excluded_teleporters"]:
+            fix(it)
+        for it in preset["configuration"]["teleporters"]["excluded_targets"]:
+            fix(it)
 
 
 _MIGRATIONS = [
@@ -1239,6 +1265,7 @@ _MIGRATIONS = [
     _migrate_v99,  # replace trick level hypermode with ludicrous
     _migrate_v100,  # hints configuration
     _migrate_v101,
+    _migrate_v102,  # removal of in_dark_aether
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

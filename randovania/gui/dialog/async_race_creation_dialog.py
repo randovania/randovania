@@ -1,105 +1,136 @@
-import datetime
+from __future__ import annotations
 
-from PySide6 import QtCore, QtWidgets
+from typing import TYPE_CHECKING
 
-from randovania.gui.generated.async_race_settings_ui import Ui_AsyncRaceRoomSettingsWidget
-from randovania.gui.lib import common_qt_lib, signal_handling
-from randovania.network_common.async_race_room import AsyncRaceSettings
-from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGTH
-from randovania.network_common.session_visibility import MultiplayerSessionVisibility
+from PySide6 import QtWidgets
+from qasync import asyncSlot
+
+from randovania.game.game_enum import RandovaniaGame
+from randovania.gui.dialog.select_preset_dialog import SelectPresetDialog
+from randovania.gui.generated.async_race_creation_dialog_ui import Ui_AsyncRaceCreationDialog
+from randovania.gui.lib import async_dialog
+from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
+from randovania.gui.widgets.generate_game_mixin import GenerateGameMixin
+
+if TYPE_CHECKING:
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.options import Options
+    from randovania.layout.layout_description import LayoutDescription
+    from randovania.layout.versioned_preset import VersionedPreset
+    from randovania.network_common.async_race_room import AsyncRaceSettings
 
 
-def _from_date(date: datetime.datetime) -> QtCore.QDateTime:
-    return QtCore.QDateTime.fromSecsSinceEpoch(int(date.timestamp()))
+class AsyncRaceCreationDialog(QtWidgets.QDialog, GenerateGameMixin, BackgroundTaskMixin):
+    ui: Ui_AsyncRaceCreationDialog
+    selected_preset: VersionedPreset | None = None
+    _preset_selection_dialog: SelectPresetDialog | None = None
+    layout_description: LayoutDescription | None = None
 
+    _background_task: BackgroundTaskMixin
+    _window_manager: WindowManager
+    _options: Options
 
-class AsyncRaceCreationDialog(QtWidgets.QDialog):
-    ui: Ui_AsyncRaceRoomSettingsWidget
-
-    def __init__(self, parent: QtWidgets.QWidget):
+    def __init__(
+        self,
+        parent: QtWidgets.QWidget,
+        window_manager: WindowManager,
+        options: Options,
+    ):
         super().__init__(parent)
-        self.ui = Ui_AsyncRaceRoomSettingsWidget()
+        self.ui = Ui_AsyncRaceCreationDialog()
         self.ui.setupUi(self)
 
-        self.ui.visibility_combo_box.setItemData(0, MultiplayerSessionVisibility.VISIBLE)
-        self.ui.visibility_combo_box.setItemData(1, MultiplayerSessionVisibility.HIDDEN)
+        self._window_manager = window_manager
+        self._options = options
+        self.failure_handler = GenerationFailureHandler(self)
+        self._background_task = self
 
-        self.ui.name_edit.setMaxLength(MAX_SESSION_NAME_LENGTH)
-        signal_handling.on_checked(self.ui.password_check, self._on_password_check)
+        self.progress_update_signal.connect(self.update_progress)
 
-        self.ui.password_edit.setEnabled(False)
-        self.ui.start_time_edit.setDateTime(_from_date(datetime.datetime.now()))
-        self.ui.end_time_edit.setDateTime(_from_date(datetime.datetime.now() + datetime.timedelta(days=1)))
+        self.ui.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).setText("Generate then create")
+        self.ui.button_box.accepted.connect(self._generate_and_accept)
+        self.ui.button_box.rejected.connect(self._on_rejected_button)
 
-        self.ui.name_edit.textChanged.connect(self.validate)
-        self.ui.password_edit.textChanged.connect(self.validate)
-        self.ui.start_time_edit.dateTimeChanged.connect(self.validate)
-        self.ui.end_time_edit.dateTimeChanged.connect(self.validate)
+        self.ui.preset_button.clicked.connect(self._on_select_preset_slot)
 
-        self.button_group = QtWidgets.QDialogButtonBox(self)
-        self.button_group.setStandardButtons(
-            QtWidgets.QDialogButtonBox.StandardButton.Cancel | QtWidgets.QDialogButtonBox.StandardButton.Ok
-        )
-        self.ui.root_layout.addWidget(self.button_group, self.ui.root_layout.rowCount(), 1, 1, -1)
-
-        self.button_group.accepted.connect(self.accept)
-        self.button_group.rejected.connect(self.reject)
-
-        self.validate()
+        self.ui.settings_widget.Changed.connect(self._post_validate)
+        self.ui.settings_widget.validate()
 
     def create_settings_object(self) -> AsyncRaceSettings:
-        """
-        Prepares a settings object out of the configuration filled to the dialog.
-        :return:
-        """
-        return AsyncRaceSettings(
-            name=self.ui.name_edit.text(),
-            password=self.ui.password_edit.text() if self.ui.password_edit.isEnabled() else None,
-            start_date=self.ui.start_time_edit.dateTime().toPython(),
-            end_date=self.ui.end_time_edit.dateTime().toPython(),
-            visibility=self.ui.visibility_combo_box.currentData(),
-            allow_pause=self.ui.allow_pause_check.isChecked(),
+        return self.ui.settings_widget.create_settings_object()
+
+    def _on_rejected_button(self) -> None:
+        if self.has_background_process:
+            self.stop_background_process()
+        else:
+            reply = QtWidgets.QMessageBox.question(
+                self,
+                "Close?",
+                "Do you want to close the window?",
+                QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
+                QtWidgets.QMessageBox.StandardButton.No,
+            )
+            if reply == QtWidgets.QMessageBox.StandardButton.Yes:
+                self.reject()
+
+    def update_progress(self, message: str, percentage: int) -> None:
+        self.ui.progress_label.setText(message)
+        if "Aborted" in message:
+            percentage = 0
+        if percentage >= 0:
+            self.ui.progress_bar.setRange(0, 100)
+            self.ui.progress_bar.setValue(percentage)
+        else:
+            self.ui.progress_bar.setRange(0, 0)
+
+    @asyncSlot()
+    async def _on_select_preset_slot(self) -> None:
+        await self._on_select_preset()
+
+    async def _on_select_preset(self) -> None:
+        if self._preset_selection_dialog is not None:
+            self._preset_selection_dialog.raise_()
+            return
+
+        dialog = SelectPresetDialog(
+            self._window_manager,
+            self._options,
+            for_multiworld=False,
+            allowed_games=[
+                game for game in RandovaniaGame.sorted_all_games() if game.data.development_state.can_view()
+            ],
+        )
+        try:
+            self._preset_selection_dialog = dialog
+            if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.DialogCode.Accepted:
+                self.selected_preset = dialog.selected_preset
+                assert self.selected_preset is not None
+                self.ui.preset_label.setText(f"{self.selected_preset.game.long_name}<br />{self.selected_preset.name}")
+                self.ui.settings_widget.validate()
+        finally:
+            self._preset_selection_dialog = None
+
+    def _post_validate(self, valid: bool) -> None:
+        self.ui.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).setEnabled(
+            valid and self.selected_preset is not None and not self._background_task.has_background_process
         )
 
-    def _on_password_check(self, active: bool) -> None:
-        """
-        Called when password_check is toggled.
-        """
-        self.ui.password_edit.setEnabled(active)
-        self.validate()
+    @property
+    def generate_parent_widget(self) -> QtWidgets.QWidget:
+        return self
 
-    def _validate_name(self) -> bool:
-        """
-        :return: True if name_edit is not empty
-        """
-        return bool(self.ui.name_edit.text())
+    @asyncSlot()
+    async def _generate_and_accept(self) -> None:
+        selected_preset = self.selected_preset
+        if selected_preset is None:
+            return
 
-    def _validate_password(self) -> bool:
-        """
-        :return: True if password_check is unchecked or password_edit is not empty
-        """
-        return not self.ui.password_edit.isEnabled() or bool(self.ui.password_edit.text())
+        try:
+            self._post_validate(False)
+            self.layout_description = await self.generate_layout_from_preset(preset=selected_preset, spoiler=True)
+        finally:
+            self.ui.settings_widget.validate()
 
-    def _validate_end_time(self) -> bool:
-        """
-        :return: True is end_time_edit is after start_time_edit
-        """
-        return self.ui.end_time_edit.dateTime() > self.ui.start_time_edit.dateTime()
-
-    def validate(self) -> None:
-        """
-        Validates all fields and enabled the confirm button.
-        :return:
-        """
-        valid = True
-
-        for widget, validator in [
-            (self.ui.name_edit, self._validate_name),
-            (self.ui.end_time_edit, self._validate_end_time),
-            (self.ui.password_edit, self._validate_password),
-        ]:
-            widget_valid = validator()
-            common_qt_lib.set_error_border_stylesheet(widget, not widget_valid)
-            valid = valid and widget_valid
-
-        self.button_group.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).setEnabled(valid)
+        if self.layout_description is not None:
+            self.accept()

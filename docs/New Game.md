@@ -65,7 +65,7 @@ You also need to update `standard_pickup_configuration` and `ammo_pickup_configu
 
 Further Documentation:
 - [Glossary entry for Pickup](https://github.com/randovania/randovania/blob/main/docs/Glossary.md#pickup)
-- Python file for a [StandardPickupDefinition](https://github.com/randovania/randovania/blob/main/randovania/game_description/pickup/standard_pickup.py) and an [AmmoPickupDefinition](https://github.com/randovania/randovania/blob/main/randovania/game_description/pickup/ammo_pickup.py)
+- Python file for a [StandardPickupDefinition](https://github.com/randovania/randovania/blob/main/randovania/game_description/pickup/pickup_definition/standard_pickup.py) and an [AmmoPickupDefinition](https://github.com/randovania/randovania/blob/main/randovania/game_description/pickup/pickup_definition/ammo_pickup.py)
 
 #### Configuration & Generation Parameters
 

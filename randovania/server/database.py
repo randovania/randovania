@@ -591,7 +591,6 @@ class AsyncRaceRoom(BaseModel):
             id=self.id,
             name=self.name,
             visibility=self.visibility,
-            has_password=self.password is not None,
             creator=self.creator.name,
             creation_date=self.creation_datetime,
             start_date=self.start_datetime,
@@ -639,7 +638,7 @@ class AsyncRaceEntry(BaseModel):
     paused: bool = peewee.BooleanField(default=False)
     forfeit: bool = peewee.BooleanField(default=False)
     submission_notes: str = peewee.CharField(max_length=200, default="")
-    proof_url: str | None = peewee.CharField(null=True)
+    proof_url: str = peewee.CharField(default="")
     pauses: Sequence[AsyncRaceEntryPause]
 
     @classmethod

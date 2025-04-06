@@ -155,7 +155,7 @@ class DreadExecutor:
             await asyncio.wait_for(writer.drain(), timeout=30)
 
             self.logger.debug("Waiting for API details response.")
-            response = typing.cast(bytes, await self._read_response())
+            response = typing.cast("bytes", await self._read_response())
             (api_version, buffer_size, bootstrap, self.layout_uuid_str, self.version) = response.decode("ascii").split(
                 ","
             )

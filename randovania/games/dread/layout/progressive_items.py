@@ -1,7 +1,12 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
 
-def tuples():
+if TYPE_CHECKING:
+    from randovania.game.gui import ProgressiveItemTuples
+
+
+def tuples() -> ProgressiveItemTuples:
     return [
         ("Progressive Beam", ("Wide Beam", "Plasma Beam", "Wave Beam")),
         ("Progressive Charge Beam", ("Charge Beam", "Diffusion Beam")),

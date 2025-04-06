@@ -5,12 +5,12 @@ import enum
 from typing import TYPE_CHECKING
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.game_description import default_database
+from randovania.game_description.pickup.pickup_entry import StartingPickupBehavior
 from randovania.lib import enum_lib
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Iterator, Sequence
 
     from randovania.bitpacking.bitpacking import BitPackDecoder
     from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
@@ -25,12 +25,6 @@ PRIORITY_LIMITS = {
 }
 
 
-class StartingPickupBehavior(BitPackEnum, enum.StrEnum):
-    CAN_BE_STARTING = "can_start"
-    MUST_BE_STARTING = "must_start"
-    CAN_NEVER_BE_STARTING = "never_start"
-
-
 class StandardPickupStateCase(enum.Enum):
     MISSING = "missing"
     VANILLA = "vanilla"
@@ -39,7 +33,7 @@ class StandardPickupStateCase(enum.Enum):
     CUSTOM = "custom"
 
     @property
-    def pretty_text(self):
+    def pretty_text(self) -> str:
         return _CASE_PRETTY_TEXT[self]
 
 
@@ -60,12 +54,12 @@ class StandardPickupState:
     priority: float = 1.0
     included_ammo: tuple[int, ...] = ()
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         for ammo in self.included_ammo:
             if not isinstance(ammo, int):
                 raise ValueError(f"Expected int for ammo, got {ammo}")
 
-    def check_consistency(self, pickup: StandardPickupDefinition):
+    def check_consistency(self, pickup: StandardPickupDefinition) -> None:
         db = default_database.resource_database_for(pickup.game)
 
         if self.num_shuffled_pickups < 0 or self.num_shuffled_pickups > DEFAULT_MAXIMUM_SHUFFLED[-1]:
@@ -215,6 +209,7 @@ class StandardPickupState:
         priority = bitpacking.BitPackFloat.bit_pack_unpack(decoder, PRIORITY_LIMITS)
 
         # ammo index
+        included_ammo: Sequence[int]
         if pickup.ammo:
             custom_ammo = bitpacking.decode_bool(decoder)
             if custom_ammo:

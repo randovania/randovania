@@ -1,3 +1,8 @@
+# /// script
+# dependencies = [
+#   "aiohttp"
+# ]
+# ///
 from __future__ import annotations
 
 import argparse
@@ -6,6 +11,7 @@ import datetime
 import os
 import pprint
 import subprocess
+from pathlib import Path
 
 import aiohttp
 
@@ -46,7 +52,7 @@ async def post_to_discord():
             f"actions/runs/{run_id}/{artifact.replace(' ', '%20')}.zip)",
             "inline": True,
         }
-        for artifact in os.listdir("packages")
+        for artifact in [artifact.name for artifact in Path("packages").iterdir()]
         if artifact != "Python Package"
     ]
 
@@ -59,7 +65,7 @@ async def post_to_discord():
         "embeds": [
             {
                 "color": 0x2ECC71,
-                "title": f"{current_branch} - Randovania {version}",
+                "title": f"Branch {current_branch} - Randovania {version}",
                 "url": f"https://github.com/randovania/randovania/commit/{commit_hash}",
                 "description": message.strip(),
                 "fields": fields,

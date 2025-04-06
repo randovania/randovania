@@ -15,7 +15,6 @@ from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -46,6 +45,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.region import Region
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.preset import Preset
@@ -136,7 +136,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.game_configuration = preset.configuration
         self.persistence_path = persistence_path
 
-    async def configure(self):
+    async def configure(self) -> None:
         game = filtered_database.game_description_for_layout(self.game_configuration).get_mutable()
         game_generator = game.game.generator
         game.resource_database = game_generator.bootstrap.patch_resource_database(
@@ -146,7 +146,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         pool_results = pool_creator.calculate_pool_results(self.game_configuration, game)
         patches = (
-            GamePatches.create_from_game(game, 0, self.game_configuration)
+            game.game.generator.base_patches_factory.create_static_base_patches(self.game_configuration, game, 0)
             .assign_new_pickups((index, PickupTarget(pickup, 0)) for index, pickup in pool_results.assignment.items())
             .assign_extra_starting_pickups(pool_results.starting)
         )
@@ -243,6 +243,13 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 )
                 for item in previous_state["teleporters"]
             }
+            for teleporter, node_location in teleporters.items():
+                if teleporter not in self._teleporter_id_to_combo:
+                    return False
+                if node_location is not None:
+                    # check if destination exists
+                    self.game_description.region_list.node_by_identifier(node_location)
+
             if self.game_configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:
                 configurable_nodes = {
                     NodeIdentifier.from_string(identifier): (
@@ -283,7 +290,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         return True
 
     def reset(self):
-        self.bulk_change_quantity({pickup: 0 for pickup in self._collected_pickups.keys()})
+        self.bulk_change_quantity(dict.fromkeys(self._collected_pickups.keys(), 0))
 
         while len(self._actions) > 1:
             self._actions.pop()
@@ -362,10 +369,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             except KeyError:
                 path = []
 
-            wl = self.logic.game.region_list
             text = [f"<p><span style='font-weight:600;'>Path to {node.name}</span></p><ul>"]
             for p in path:
-                text.append(f"<li>{wl.node_name(p, with_region=True, distinguish_dark_aether=True)}</li>")
+                text.append(f"<li>{p.full_name()}</li>")
             text.append("</ul>")
 
             dialog = ScrollLabelDialog(self, "".join(text), "Path to node")
@@ -434,7 +440,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
                     node_item = self._node_to_item[node]
                     if node.is_resource_node:
-                        resource_node = typing.cast(ResourceNode, node)
+                        resource_node = typing.cast("ResourceNode", node)
 
                         if self._show_only_resource_nodes:
                             is_visible = is_visible and not isinstance(node, ConfigurableNode)
@@ -534,8 +540,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         teleporter_dock_types = self.game_description.dock_weakness_database.all_teleporter_dock_types
         for region, area, node in region_list.all_regions_areas_nodes:
             if isinstance(node, DockNode) and node.dock_type in teleporter_dock_types:
-                name = region.correct_name(area.in_dark_aether)
-                nodes_by_region[name].append(node)
+                nodes_by_region[region.name].append(node)
 
                 location = node.identifier
                 targets[elevators.get_elevator_or_area_name(self.game_description, region_list, location, True)] = (
@@ -547,8 +552,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             for region in region_list.regions:
                 for area in region.areas:
                     if area.has_start_node():
-                        name = region.correct_name(area.in_dark_aether)
-                        targets[f"{name} - {area.name}"] = area.get_start_nodes()[0].identifier
+                        targets[f"{region.name} - {area.name}"] = area.get_start_nodes()[0].identifier
 
         combo_targets = sorted(targets.items(), key=lambda it: it[0])
 
@@ -661,12 +665,10 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             if locations_len > 1:
                 node_locations = sorted(
                     self.game_configuration.starting_location.locations,
-                    key=lambda it: region_list.node_name(region_list.node_by_identifier(it), with_region=True),
+                    key=lambda it: it.display_name(),
                 )
 
-                location_names = [
-                    region_list.node_name(region_list.node_by_identifier(it), with_region=True) for it in node_locations
-                ]
+                location_names = [it.display_name() for it in node_locations]
                 selected_name, self.confirm_open = QtWidgets.QInputDialog.getItem(
                     self, "Starting Location", "Select starting location", location_names, 0, False
                 )

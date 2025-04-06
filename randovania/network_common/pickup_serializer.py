@@ -12,9 +12,9 @@ from randovania.game_description.pickup.pickup_entry import (
     PickupModel,
     ResourceConversion,
     ResourceLock,
+    StartingPickupBehavior,
 )
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.layout.base.standard_pickup_state import StartingPickupBehavior
 
 if TYPE_CHECKING:
     from collections.abc import Iterator

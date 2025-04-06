@@ -1,11 +1,11 @@
 from __future__ import annotations
 
+from randovania.game_description.pickup.pickup_entry import StartingPickupBehavior
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.standard_pickup_widget import StandardPickupWidget
 from randovania.layout.base.standard_pickup_state import (
     StandardPickupState,
     StandardPickupStateCase,
-    StartingPickupBehavior,
 )
 
 

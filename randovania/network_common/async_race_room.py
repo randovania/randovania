@@ -4,6 +4,7 @@ import enum
 import typing
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
@@ -48,6 +49,7 @@ class AsyncRaceRoomListEntry(JsonDataclass):
 
     id: int
     name: str
+    games: list[RandovaniaGame] | None
     has_password: bool
     creator: str
     creation_date: datetime.datetime
@@ -55,6 +57,12 @@ class AsyncRaceRoomListEntry(JsonDataclass):
     end_date: datetime.datetime
     visibility: "MultiplayerSessionVisibility"
     race_status: AsyncRaceRoomRaceStatus
+
+    def game_summary(self) -> str:
+        """Gets an human-presentable description of what games are involved in this room."""
+        if self.games is None:
+            return "Unknown"
+        return self.games[0].long_name if len(self.games) == 1 else "Multiworld"
 
 
 @dataclasses.dataclass
@@ -95,7 +103,7 @@ class AsyncRaceEntryData(JsonDataclass):
     forfeit: bool
     pauses: list[AsyncRacePauseEntry]
     submission_notes: str
-    proof_url: str | None
+    proof_url: str
 
     def is_valid(self) -> bool:
         """Returns True if all three dates are consistent, False otherwise."""
@@ -123,11 +131,19 @@ class AsyncRaceRoomUserStatus(enum.Enum):
 
 
 @dataclasses.dataclass
-class AsyncRaceRoomEntry(AsyncRaceRoomListEntry):
+class AsyncRaceRoomEntry(JsonDataclass):
     """
     Contains all data a client can receive about a AsyncRaceRoom.
     """
 
+    id: int
+    name: str
+    creator: str
+    creation_date: datetime.datetime
+    start_date: datetime.datetime
+    end_date: datetime.datetime
+    visibility: "MultiplayerSessionVisibility"
+    race_status: AsyncRaceRoomRaceStatus
     auth_token: str
     game_details: GameDetails
     presets_raw: list[bytes]

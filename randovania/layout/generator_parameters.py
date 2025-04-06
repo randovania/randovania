@@ -37,7 +37,7 @@ def _get_unique_games(presets: list[Preset]) -> Iterator[RandovaniaGame]:
             yield preset.game
 
 
-def encode_game_list(games: tuple[RandovaniaGame, ...]):
+def encode_game_list(games: tuple[RandovaniaGame, ...]) -> Iterator[tuple[int, int]]:
     yield from bitpacking.encode_tuple(games, functools.partial(RandovaniaGame.bit_pack_encode, metadata={}))
 
 
@@ -59,7 +59,7 @@ class GeneratorParameters(BitPackValue):
     presets: list[Preset]
     development: bool = False
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.seed_number is None:
             raise ValueError("Missing seed number")
         if not (0 <= self.seed_number < _PERMALINK_MAX_SEED):
@@ -73,7 +73,7 @@ class GeneratorParameters(BitPackValue):
 
         object.__setattr__(self, "__cached_as_bytes", None)
 
-    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
+    def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
         yield from encode_game_list(tuple(preset.game for preset in self.presets))
         yield self.seed_number, _PERMALINK_MAX_SEED
         yield from bitpacking.encode_bool(self.spoiler)
@@ -89,7 +89,7 @@ class GeneratorParameters(BitPackValue):
                 yield game_db_hash(game), 256
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> GeneratorParameters:
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata: dict) -> GeneratorParameters:
         games = decode_game_list(decoder)
         seed_number = decoder.decode_single(_PERMALINK_MAX_SEED)
         spoiler = bitpacking.decode_bool(decoder)
@@ -122,7 +122,7 @@ class GeneratorParameters(BitPackValue):
 
         return result
 
-    def create_rng(self):
+    def create_rng(self) -> Random:
         return Random(self.seed_number if self.development else self.as_bytes)
 
     @classmethod

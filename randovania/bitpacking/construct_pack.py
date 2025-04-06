@@ -188,7 +188,7 @@ def construct_for_type(type_: type) -> construct.Construct:
         )
 
     elif type_lib.is_named_tuple(type_):
-        return _construct_for_named_tuple(typing.cast(type[typing.NamedTuple], type_))
+        return _construct_for_named_tuple(typing.cast("type[typing.NamedTuple]", type_))
 
     elif type_origin is list:
         if type_args := typing.get_args(type_):

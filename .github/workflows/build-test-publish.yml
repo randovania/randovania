@@ -34,23 +34,17 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.6.8"
+          enable-cache: true
+
       - name: Set up Python
         uses: actions/setup-python@v5
-        with:
-          cache: "pip"
-
-      - name: Install core Python packages
-        run: python -m pip install --upgrade -r requirements-setuptools.txt
-
-      # FIXME: PySide6 should be in the build-system requires
-      - name: Install PySide6
-        run: python -m pip install PySide6 -c requirements.txt
-
-      - name: build ui files
-        run: python setup.py build_ui
 
       - name: build sdist and wheel
-        run: python -m build --no-isolation
+        run: uv build
 
       - name: Upload wheel
         uses: actions/upload-artifact@v4.0.0
@@ -73,25 +67,23 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.6.8"
+          enable-cache: true
+
       - name: Set up Python
         uses: actions/setup-python@v5
-        with:
-          cache: "pip"
 
       - name: Apt
         run: sudo apt-get -q update && sudo apt-get -y install $(cat .github/linux_apt_dependencies.txt)
 
-      - name: Install core Python packages
-        run: python -m pip install --upgrade -r requirements-setuptools.txt
-
       - name: Install Python packages
-        run: python -m pip install -r requirements.txt -e ".[exporters,test]"
-
-      - name: build ui files
-        run: python setup.py build_ui
+        run: uv sync --frozen --extra gui --extra exporters --extra test
 
       - name: run pytest
-        run: python -m pytest --cov randovania --cov-append --cov-report=xml --durations=100 -n auto --skip-gui-tests test/resolver/test_resolver.py test/generator/test_generator_reach.py
+        run: uv run pytest --cov randovania --cov-append --cov-report=xml --durations=100 -n auto --skip-gui-tests test/resolver/test_resolver.py test/generator/test_generator_reach.py
 
       - name: codecov
         uses: Wandalen/wretry.action@master
@@ -142,34 +134,28 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.6.8"
+          enable-cache: true
+
       - name: Set up Python
         uses: actions/setup-python@v5
-        with:
-          cache: "pip"
 
       - name: Apt
         run: sudo apt-get -q update && sudo apt-get -y install xvfb xserver-xephyr tigervnc-standalone-server $(cat .github/linux_apt_dependencies.txt)
         if: matrix.os.image == 'ubuntu-latest'
 
-      - name: Install core Python packages
-        run: python -m pip install --upgrade -r requirements-setuptools.txt
-
       - name: Install Python packages
-        run: python -m pip install -r requirements.txt -e ".[gui,exporters,server,test,typing,website]"
-
-      - name: build ui files
-        run: python setup.py build_ui
+        run: uv sync --frozen --all-extras
 
       - name: create test game
-        run: coverage run -m randovania development add-new-game --enum-name TEST_GAME --enum-value test_game --short-name TG --long-name "Test Game"
-        if: ${{ !matrix.is_stable }}
-
-      - name: build ui files for test game too
-        run: python setup.py build_ui
+        run: uv run coverage run -m randovania development add-new-game --enum-name TEST_GAME --enum-value test_game --short-name TG --long-name "Test Game"
         if: ${{ !matrix.is_stable }}
 
       - name: run pytest
-        run: $PREFIX python -m pytest --cov randovania --cov-append --cov-report=xml --skip-resolver-tests -n auto --durations=100
+        run: $PREFIX uv run pytest --cov randovania --cov-append --cov-report=xml --skip-resolver-tests -n auto --durations=100
         shell: bash
         env:
           QT_QPA_PLATFORM: "${{ matrix.os.image == 'ubuntu-latest' && 'xcb' || '' }}"
@@ -225,26 +211,24 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.6.8"
+          enable-cache: true
+
       - name: Set up Python
         uses: actions/setup-python@v5
-        with:
-          cache: "pip"
 
       - name: Apt
         run: sudo apt-get -q update && sudo apt-get -y install xvfb xserver-xephyr tigervnc-standalone-server x11-utils gnumeric libxcb-cursor0 libxkbcommon-x11-0
         if: matrix.os.image == 'ubuntu-latest'
 
-      - name: Install core Python packages
-        run: python -m pip install --upgrade -r requirements-setuptools.txt
-
       - name: Install Python packages
-        run: python -m pip install -e . -e ".[gui,exporters,test]" -c requirements.txt
-
-      - name: build ui files
-        run: python setup.py build_ui
+        run: uv sync --frozen --extra gui --extra exporters --extra test --group installer
 
       - name: create executable
-        run: python -u tools/create_release.py
+        run: uv run tools/create_release.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OBFUSCATOR_SECRET: ${{ secrets.OBFUSCATOR_SECRET }}
@@ -383,10 +367,14 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.6.8"
+          enable-cache: true
+
       - name: Set up Python
         uses: actions/setup-python@v5
-        with:
-          cache: 'pip'
 
       - name: Download the executable
         uses: actions/download-artifact@v4
@@ -404,7 +392,7 @@ jobs:
 
       - name: Build the flatpak
         shell: bash
-        run: python ./tools/build_flatpak.py --repository ./flatpak-repo packages/*.tar.gz
+        run: uv run ./tools/build_flatpak.py --repository ./flatpak-repo packages/*.tar.gz
 
   docker:
     runs-on: ubuntu-latest
@@ -462,7 +450,7 @@ jobs:
       -
         name: Login to DockerHub
         if: ${{ fromJSON(steps.decide_push.outputs.should) }}
-        uses: docker/login-action@v3.3.0
+        uses: docker/login-action@v3.4.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -507,6 +495,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.6.8"
+          enable-cache: true
+
       - name: Set up Python
         uses: actions/setup-python@v5
 
@@ -515,10 +509,6 @@ jobs:
         with:
           pattern: '* *'
           path: packages/
-
-      - name: Install Python packages
-        run: |
-          python -m pip install aiohttp twine
 
       - name: Decide environment
         id: decide_env
@@ -538,7 +528,7 @@ jobs:
       - name: Find Randovania version
         id: randovania_version
         run: |
-          echo version=$(python tools/get_version_from_artifacts.py "packages/Randovania Linux Executable/") >> $GITHUB_OUTPUT
+          echo version=$(uv run tools/get_version_from_artifacts.py "packages/Randovania Linux Executable/") >> $GITHUB_OUTPUT
 
       - name: Create Sentry release
         uses: getsentry/action-release@v3
@@ -566,7 +556,7 @@ jobs:
       - name: Publish 📦 to TestPyPI
         if: ${{ startsWith(github.ref, 'refs/heads/stable') }}
         run: |
-          python -m twine upload --repository testpypi packages/Python\ Package/*
+          uvx twine upload --repository testpypi packages/Python\ Package/*
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.testpypi_password }}
@@ -574,13 +564,13 @@ jobs:
       - name: Publish 📦 to PyPI
         if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         run: |
-          python -m twine upload packages/Python\ Package/*
+          uvx twine upload packages/Python\ Package/*
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.pypi_password }}
 
       - name: Discord Notifications
-        run: python tools/post_discord_webhook.py --version "${{ steps.randovania_version.outputs.version }}"
+        run: uv run tools/post_discord_webhook.py --version "${{ steps.randovania_version.outputs.version }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
@@ -594,19 +584,19 @@ jobs:
       - name: start deployment
         uses: bobheadxi/deployments@v1.5.0
         id: deployment
-        if: ${{ steps.decide_env.outputs.should_deploy }}
+        if: ${{ steps.decide_env.outputs.should_deploy == 'true' }}
         with:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
           env: ${{ steps.decide_env.outputs.env }}
 
       - name: deploy server
-        if: ${{ steps.decide_env.outputs.should_deploy }}
-        run: python tools/deploy_server.py
+        if: ${{ steps.decide_env.outputs.should_deploy == 'true' }}
+        run: uv run tools/deploy_server.py
 
       - name: update deployment status
         uses: bobheadxi/deployments@v1.5.0
-        if: always() && steps.decide_env.outputs.should_deploy
+        if: always() && steps.decide_env.outputs.should_deploy == 'true'
         with:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -625,19 +615,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with: 
+        with:
           token: ${{ secrets.WEBSITE_VERSION_UPDATER_PAT }}
           repository: randovania/randovania.github.io
           path: ./website
-        
-      - name: Find line
-        id: line
-        run: |
-          echo "LINE_TO_REPLACE=$(grep "^randovania_version=[[:digit:]]\.[[:digit:]]\.[[:digit:]]$" ./website/ci.sh)" >> $GITHUB_OUTPUT
 
       - name: Find new version
         id: new_version
-        env: 
+        env:
           TAG_NAME: ${{ github.ref }}
         run: |
           # Tag is of format refs/tags/vX.Y.Z, cut everything before X.Y.Z off.
@@ -646,10 +631,10 @@ jobs:
       - name: Replace version, commit and push
         run: |
           cd website
-          sed -i s/${{ steps.line.outputs.LINE_TO_REPLACE }}/randovania_version=${{ steps.new_version.outputs.NEW_VERSION }}/g ./ci.sh
+          echo "${{ steps.new_version.outputs.NEW_VERSION }}" > ./randovania-version.txt
           git config user.name Website-Version-Updater
           git config user.email invalid@example.com
-          git add ./ci.sh
+          git add ./randovania-version.txt
           git commit -m "Update version to ${{ steps.new_version.outputs.NEW_VERSION }}"
           git push
 

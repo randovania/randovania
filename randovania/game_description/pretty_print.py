@@ -121,7 +121,7 @@ def pretty_print_node_type(node: Node, region_list: RegionList, db: ResourceData
     if isinstance(node, DockNode):
         try:
             other = region_list.node_by_identifier(node.default_connection)
-            other_name = region_list.node_name(other)
+            other_name = other.full_name(with_region=False)
         except IndexError as e:
             other_name = f"(Area {node.default_connection.area}, index {node.default_connection.node}) [{e}]"
 
@@ -139,7 +139,10 @@ def pretty_print_node_type(node: Node, region_list: RegionList, db: ResourceData
         return message
 
     elif isinstance(node, PickupNode):
-        return f"Pickup {node.pickup_index.index}; Category? {node.location_category.long_name}"
+        message = f"Pickup {node.pickup_index.index}; Category? {node.location_category.long_name}"
+        if node.custom_index_group is not None:
+            message += f"; Index Group: {node.custom_index_group}"
+        return message
 
     elif isinstance(node, EventNode):
         return f"Event {node.event.long_name}"

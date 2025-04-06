@@ -91,7 +91,7 @@ def test_refresh_game_description_logic(check, mocker):
     else:
         mock_find_database_errors.assert_not_called()
         mock_write_game_descriptions.assert_called_once_with(
-            {g: mock_game_description_for.return_value for g in RandovaniaGame}
+            dict.fromkeys(RandovaniaGame, mock_game_description_for.return_value)
         )
 
 

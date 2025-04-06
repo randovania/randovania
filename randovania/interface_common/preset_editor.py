@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Self
 
 from randovania.layout.preset import Preset
 
@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 
-class PresetEditor:
+class PresetEditor[Configuration: BaseConfiguration]:
     _on_changed: Callable[[], None] | None = None
     _nested_autosave_level: int = 0
     _is_dirty: bool = False
@@ -31,9 +31,9 @@ class PresetEditor:
     _uuid: uuid.UUID
     _game: RandovaniaGame
     _description: str
-    _configuration: BaseConfiguration
+    _configuration: Configuration
 
-    def __init__(self, initial_preset: Preset, options: Options):
+    def __init__(self, initial_preset: Preset[Configuration], options: Options):
         self._name = initial_preset.name
         self._uuid = initial_preset.uuid
         self._game = initial_preset.game
@@ -41,10 +41,10 @@ class PresetEditor:
         self._configuration = initial_preset.configuration
         self._options = options
 
-    def _set_field(self, field_name: str, value):
+    def _set_field(self, field_name: str, value) -> None:
         setattr(self, "_" + field_name, value)
 
-    def __enter__(self):
+    def __enter__(self) -> Self:
         self._nested_autosave_level += 1
         return self
 
@@ -57,14 +57,14 @@ class PresetEditor:
         self._nested_autosave_level -= 1
 
     # Events
-    def _set_on_changed(self, value):
+    def _set_on_changed(self, value) -> None:
         self._on_changed = value
 
     on_changed = property(fset=_set_on_changed)
 
     # Preset
 
-    def create_custom_preset_with(self) -> Preset:
+    def create_custom_preset_with(self) -> Preset[Configuration]:
         return Preset(
             name=self.name,
             description=self._description,
@@ -79,23 +79,23 @@ class PresetEditor:
         return self._name
 
     @name.setter
-    def name(self, value):
+    def name(self, value: str) -> None:
         self._set_field("name", value)
 
     @property
-    def game(self):
+    def game(self) -> RandovaniaGame:
         return self._game
 
     @property
-    def description(self):
+    def description(self) -> str:
         return self._description
 
     @description.setter
-    def description(self, value):
+    def description(self, value: str) -> None:
         self._set_field("description", value)
 
     @property
-    def configuration(self) -> BaseConfiguration:
+    def configuration(self) -> Configuration:
         return self._configuration
 
     @property

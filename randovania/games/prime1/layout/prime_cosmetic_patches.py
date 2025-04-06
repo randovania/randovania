@@ -24,10 +24,10 @@ class PrimeCosmeticPatches(BaseCosmeticPatches):
         return cls()
 
     @classmethod
-    def game(cls):
+    def game(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if len(self.suit_color_rotations) != 4:
             raise ValueError("Suit color rotations must be a tuple of 4 ints.")
         if len(self.hud_color) != 3:

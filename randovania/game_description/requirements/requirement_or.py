@@ -80,6 +80,16 @@ class RequirementOr(RequirementArrayBase):
 
         return RequirementOr(final_items, comment=self.comment)
 
+    def isolate_damage_requirements(self, context: NodeContext) -> Requirement:
+        isolated_items = []
+        for item in self.items:
+            potential_item = item.isolate_damage_requirements(context)
+            if potential_item == Requirement.trivial():
+                return Requirement.trivial()
+            if potential_item != Requirement.impossible():
+                isolated_items.append(potential_item)
+        return isolated_items[0] if len(isolated_items) == 1 else RequirementOr(isolated_items)
+
     def as_set(self, context: NodeContext) -> RequirementSet:
         alternatives: set[RequirementList] = set()
         for item in self.items:

@@ -82,6 +82,9 @@ class ResourceRequirement(Requirement):
     def simplify(self, keep_comments: bool = False) -> Requirement:
         return self
 
+    def isolate_damage_requirements(self, context: NodeContext) -> Requirement:
+        return Requirement.trivial() if self.satisfied(context, 0) else Requirement.impossible()
+
     def __repr__(self) -> str:
         return "{} {} {}".format(self.resource, "<" if self.negate else "≥", self.amount)
 
@@ -151,6 +154,9 @@ class DamageResourceRequirement(ResourceRequirement):
 
     def satisfied(self, context: NodeContext, current_energy: int) -> bool:
         return current_energy > self.damage(context)
+
+    def isolate_damage_requirements(self, context: NodeContext) -> Requirement:
+        return self
 
     def multiply_amount(self, multiplier: float) -> ResourceRequirement:
         return DamageResourceRequirement(

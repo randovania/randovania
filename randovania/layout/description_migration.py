@@ -33,7 +33,7 @@ def _migrate_v3(json_dict: dict) -> None:
     if len(json_dict["game_modifications"]) > 1:
         for game in json_dict["game_modifications"]:
             for area in game["locations"].values():
-                for location_name, contents in typing.cast(dict[str, str], area).items():
+                for location_name, contents in typing.cast("dict[str, str]", area).items():
                     m = target_name_re.match(contents)
                     if m is not None:
                         part_one, part_two = m.group(1, 2)
@@ -615,6 +615,86 @@ def _migrate_v32(data: dict) -> None:
                     region_location[new_area_name] = region_location.pop(old_area_name)
 
 
+def _migrate_v33(data: dict) -> None:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        if game["game"] == "prime2":
+            banned_pickups = ["Cannon Ball", "Unlimited Beam Ammo", "Unlimited Missiles", "Double Damage"]
+            if "pickups" in game["starting_equipment"]:
+                starting_pickups = game["starting_equipment"]["pickups"]
+                for pickup in banned_pickups:
+                    if pickup in starting_pickups:
+                        starting_pickups.remove(pickup)
+
+
+def _migrate_v34(data: dict) -> None:
+    game_modifications = data["game_modifications"]
+
+    def replace(identifier: str, mapping: dict[str, str]) -> str:
+        region, area, node = identifier.split("/", 2)
+        new_region = mapping.get(f"{region}/{area}")
+        if new_region is not None:
+            return f"{new_region}/{area}/{node}"
+        return identifier
+
+    def fix_elevator(conn: dict[str, str], old_name: str, new_name: str) -> None:
+        conn[new_name] = conn.pop(old_name)
+        for key, target in conn.items():
+            if target == old_name:
+                conn[key] = new_name
+
+    for game in game_modifications:
+        if game["game"] in {"prime2", "cave_story"}:
+            rename = migration_data.get_raw_data(RandovaniaGame(game["game"]))["in_dark_world_rename"]
+
+            game["starting_location"] = replace(game["starting_location"], rename)
+
+            # For some time we've split dark world in the layout files
+            # but never migrated very old ones
+            for region_name, data in list(game["locations"].items()):
+                for pickup_node, pickup_entry in list(data.items()):
+                    combo = f"{region_name}/{pickup_node.split('/', 1)[0]}"
+                    if combo in rename:
+                        new_region = rename[combo]
+                        if new_region not in game["locations"]:
+                            game["locations"][new_region] = {}
+                        game["locations"][new_region][pickup_node] = data.pop(pickup_node)
+
+            for source_name, target_name in list(game["dock_connections"].items()):
+                new_source = replace(source_name, rename)
+                new_target = replace(target_name, rename)
+
+                if new_source != source_name:
+                    game["dock_connections"].pop(source_name)
+
+                game["dock_connections"][new_source] = new_target
+
+            for source_name, hint in list(game["hints"].items()):
+                if hint["hint_type"] == "location":
+                    if hint["precision"].get("location") == "relative-to-area":
+                        area_location = hint["precision"]["relative"]["area_location"]
+                        region_rename = rename.get(f"{area_location['region']}/{area_location['area']}")
+                        if region_rename:
+                            area_location["region"] = region_rename
+
+                new_source = replace(source_name, rename)
+                if new_source != source_name:
+                    game["hints"][new_source] = game["hints"].pop(source_name)
+
+        if game["game"] == "prime2":
+            fix_elevator(
+                game["dock_connections"],
+                "Sky Temple Grounds/Sky Temple Gateway/Elevator to Great Temple",
+                "Sky Temple Grounds/Sky Temple Gateway/Elevator to Sky Temple",
+            )
+            fix_elevator(
+                game["dock_connections"],
+                "Sky Temple/Sky Temple Energy Controller/Elevator to Temple Grounds",
+                "Sky Temple/Sky Temple Energy Controller/Elevator to Sky Temple Grounds",
+            )
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -648,6 +728,8 @@ _MIGRATIONS = [
     _migrate_v30,  # migrate some HintLocationPrecision and HintItemPrecision to HintFeature
     _migrate_v31,  # remove HintLocationPrecision.BROAD_CATEGORY
     _migrate_v32,  # MSR Rename Area 4 Crystal Mines - Gamma Arena to Gamma+ Arena
+    _migrate_v33,
+    _migrate_v34,  # removal of in_dark_aether
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -431,7 +431,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
 
     def _get_text_data(self) -> dict:
         text_data: dict = typing.cast(
-            dict, json_lib.read_path(RandovaniaGame.AM2R.data_path.joinpath("pickup_database", "text_data.json"))
+            "dict", json_lib.read_path(RandovaniaGame.AM2R.data_path.joinpath("pickup_database", "text_data.json"))
         )
 
         for i in range(1, 47):
@@ -445,7 +445,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
 
     def _get_model_data(self) -> dict[str, int]:
         return typing.cast(
-            dict[str, int],
+            "dict[str, int]",
             json_lib.read_path(RandovaniaGame.AM2R.data_path.joinpath("pickup_database", "model_data.json")),
         )
 

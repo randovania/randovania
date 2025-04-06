@@ -1,15 +1,17 @@
 from __future__ import annotations
 
+import collections
 import copy
 import dataclasses
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Self
 
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
+from randovania.games.prime2 import dark_aether_helper
 from randovania.games.prime2.generator.teleporter_distributor import get_teleporter_connections_echoes
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
-from randovania.generator.base_patches_factory import BasePatchesFactory, MissingRng
+from randovania.generator.base_patches_factory import BasePatchesFactory, MissingRng, weaknesses_for_unlocked_saves
 from randovania.generator.teleporter_distributor import get_dock_connections_assignment_for_teleporter
 
 if TYPE_CHECKING:
@@ -29,7 +31,7 @@ class WorldEntrances:
     right: AreaIdentifier
 
     @classmethod
-    def create(cls, world, front, left, right):
+    def create(cls, world: str, front: str, left: str, right: str) -> Self:
         return cls(
             front=AreaIdentifier(world, front),
             left=AreaIdentifier(world, left),
@@ -66,17 +68,24 @@ WORLDS = [
 
 
 class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
-    def create_base_patches(
-        self,
-        configuration: EchoesConfiguration,
-        rng: Random,
-        game: GameDescription,
-        is_multiworld: bool,
-        player_index: int,
-        rng_required: bool = True,
+    def assign_static_dock_weakness(
+        self, configuration: EchoesConfiguration, game: GameDescription, initial_patches: GamePatches
     ) -> GamePatches:
-        parent = super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
-        return self.assign_save_door_weaknesses(parent, configuration, game)
+        parent = super().assign_static_dock_weakness(configuration, game, initial_patches)
+
+        dock_weakness: list[tuple[DockNode, DockWeakness]] = []
+
+        if configuration.blue_save_doors:
+            dock_weakness.extend(
+                weaknesses_for_unlocked_saves(
+                    game,
+                    unlocked_weakness=game.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)"),
+                    target_dock_type=game.dock_weakness_database.find_type("door"),
+                    area_filter=lambda area: area.extra.get("unlocked_save_station") is True,
+                )
+            )
+
+        return parent.assign_dock_weakness(dock_weakness)
 
     def dock_connections_assignment(
         self, configuration: EchoesConfiguration, game: GameDescription, rng: Random
@@ -86,27 +95,25 @@ class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
             configuration.teleporters, game, teleporter_connection
         )
 
-        if not configuration.portal_rando:
-            yield from dock_assignment
-            return
+        if configuration.portal_rando:
+            light_portals_by_region: dict[str, list[DockNode]] = collections.defaultdict(list)
+            dark_portals_by_region: dict[str, list[DockNode]] = collections.defaultdict(list)
 
-        for world in game.region_list.regions:
-            light_portals = []
-            dark_portals = []
+            for region, area, node in game.region_list.all_regions_areas_nodes:
+                if isinstance(node, DockNode) and node.dock_type.short_name == "portal":
+                    if dark_aether_helper.is_region_light(region):
+                        portal_list = light_portals_by_region[region.name]
+                    else:
+                        portal_list = dark_portals_by_region[dark_aether_helper.get_counterpart_name(region)]
+                    portal_list.append(node)
 
-            for area in world.areas:
-                for node in area.nodes:
-                    if isinstance(node, DockNode) and node.dock_type.short_name == "portal":
-                        if area.in_dark_aether:
-                            dark_portals.append(node)
-                        else:
-                            light_portals.append(node)
-
-            assert len(light_portals) == len(dark_portals)
-            rng.shuffle(light_portals)
-            rng.shuffle(dark_portals)
-            dock_assignment.extend(zip(light_portals, dark_portals))
-            dock_assignment.extend(zip(dark_portals, light_portals))
+            for region_name, light_portals in light_portals_by_region.items():
+                dark_portals = dark_portals_by_region[region_name]
+                assert len(light_portals) == len(dark_portals)
+                rng.shuffle(light_portals)
+                rng.shuffle(dark_portals)
+                dock_assignment.extend(zip(light_portals, dark_portals))
+                dock_assignment.extend(zip(dark_portals, light_portals))
 
         yield from dock_assignment
 
@@ -134,24 +141,3 @@ class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
         return {
             "translator_gates": translator_gates,
         }
-
-    def assign_save_door_weaknesses(
-        self, patches: GamePatches, configuration: EchoesConfiguration, game: GameDescription
-    ) -> GamePatches:
-        if not configuration.blue_save_doors:
-            return patches
-
-        get_node = game.region_list.typed_node_by_identifier
-        power_weak = game.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)")
-        dock_weakness: list[tuple[DockNode, DockWeakness]] = []
-
-        if configuration.blue_save_doors:
-            for area in game.region_list.all_areas:
-                if area.extra.get("unlocked_save_station"):
-                    for node in area.nodes:
-                        if isinstance(node, DockNode) and node.dock_type.short_name == "door":
-                            dock_weakness.append((node, power_weak))
-                            # TODO: This is not correct in entrance rando
-                            dock_weakness.append((get_node(node.default_connection, DockNode), power_weak))
-
-        return patches.assign_dock_weakness(dock_weakness)
