@@ -7,32 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [9.1.x] - 2025-05-??
 
-- TODO
+- Added: After clicking the "Login with Discord" button, a link and a QR Code are displayed instead of opening the default browser directly.
+- Changed: The relative time to start/finish in Async Race rooms now update as time passes, and the window reacts appropriately when the race starts and finishes.
+
+### Cave Story
+
+- Changed: Outer Wall is now a separate region.
+
+### Metroid Prime 2: Echoes
+
+- Changed: The Light and Dark regions are now properly different regions for Randovania.
 
 ## [9.0.0] - 2025-04-01
 
 - **Major** - Added: Factorio has been added. Shuffle the tech tree, recipes for science packs. The native multiplayer is fully supported, while Multiworld isnt'.
-- **Major** - Added: Featural Hints. Echoes and Cave Story now use a brand new hint system, where hints may refer to various Features of a pickup or of a location. Read the complete changelog for more details.
-- **Major** - Changed: Hints are now placed after pickup placement, rather than during. This should result in more interesting hints in all games.
+- **Major** - Added: Featural Hints. Echoes and Cave Story now use a brand new hint system, where hints may refer to various Features of a pickup or of a location. Read the Hints section for more details.
 - **Major** - Added: Co-op as an additional Multiworld Mode. In Co-op, multiple people can share Worlds together, which means that they will share their inventory. This works for all games that support Multiworld.
 - **Major** - Changed: The trick level "Hypermode" has been renamed to "Ludicrous". This new name is game agnostic and more properly describes the difficulty of this category.
 - Added: Async Races can now be hosted and joined directly from Randovania.
-- Added: Games with hints now share a unified Hints tab in the preset editor window. New settings have been added to disable various kinds of hints.
-- Added: Every game now has a "Pickup Hint Features" tab where you can view which Features apply to which pickups.
-- Added: Cave Story and Echoes now have a "Pickup Location Features" tab where you can view which Features apply to which locations.
-- Added: Location Features can be viewed in the Database Viewer.
-- Added: 3 more joke hints.
-- Added: The Hints Spoiler tab now indicates which location a hint is pointing to.
-- Added: Experimental option under Generation -> Logic Settings that improves the results of generation but increases generation time.
-- Changed: The Hints Spoiler tab sorts its entries in a more helpful manner.
-- Changed: Some joke hints are now shared between all games that use them.
-- Changed: Hints now prioritize non-progression major items rather than progression minor items.
+- Changed: Updated included Nintendont to a newer version that includes the latest changes from the official Nintendont. This also means that the Nintendont configuration was reset to what it is by default.
 - Changed: The "Spoiler: Playthrough" tab is significantly easier to read and follow along with.
 - Fixed: The "Spoiler: Playthrough" tab is much faster when calculating the playthrough.
-- Fixed: It is now properly impossible for multiple hints to point to the same location.
-- Fixed: A recent regression in the resolver that made it significantly slower has been fixed.
-- Fixed: Generator action weights were being incorrectly calculated.
-- Fixed: When calculating reach with unsafe resources, the generator no longer ignores some valid options.
 - Fixed: Typo in dialog about generated game hash being different from expected.
 - Fixed: The map tracker now correctly accounts for door locks that have been modified statically by settings such as unlocked Save Station doors.
 
@@ -44,15 +39,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Bug in the revised door solver that would result in permanently locked doors being placed when they shouldn't.
 - Fixed: Minor edge case where damage wasn't considered when placing permanently locked doors.
 
+### Generator
+
+- Added: Experimental option under Generation -> Logic Settings that improves the results of generation but increases generation time.
+- Fixed: Generator action weights were being incorrectly calculated.
+- Fixed: When calculating reach with unsafe resources, the generator no longer ignores some valid options.
+
+### Hints
+
+- **Major** - Changed: Hints are now placed after pickup placement, rather than during. This should result in more interesting hints in all games.
+- Added: Games with hints now share a unified Hints tab in the preset editor window. New settings have been added to disable various kinds of hints.
+- Added: Every game now has a "Pickup Hint Features" tab where you can view which Features apply to which pickups.
+- Added: Cave Story and Echoes now have a "Pickup Location Features" tab where you can view which Features apply to which locations.
+- Added: Location Features can be viewed in the Database Viewer.
+- Added: 3 more generic joke hints.
+- Added: The Hints Spoiler tab now indicates which location a hint is pointing to.
+- Changed: The Hints Spoiler tab sorts its entries in a more helpful manner.
+- Changed: Some joke hints are now shared between all games that use them.
+- Changed: Hints now prioritize non-progression major items rather than progression minor items.
+- Fixed: It is now properly impossible for multiple hints to point to the same location.
+
 ### Resolver
 
 - Fixed: Some seeds being considered impossible when finding a progressive item in an area where a later item in the progressive chain is required to leave.
 - Fixed: Minor edge case where a seed might be considered impossible due to missing consideration of damage.
 - Fixed: Some seeds being considered impossible in cases where damage requirements are spread between multiple connections.
-
-### Metroid Prime 2: Echoes
-
-- Fixed: Cannon Ball and the multiplayer pickups can no longer be selected as starting pickups, since they did not work in-game when doing so.
+- Fixed: A recent regression in the resolver that made it significantly slower has been fixed.
 
 ### Metroid Dread
 
@@ -61,17 +73,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Changed: The Silver Robot fight now have higher health requirements when doing the fights without Power Bomb or Screw Attack
+  - This list replaces `Flash Shift or Combat (Beginner)` from the previous set of requirements
+  - Without Combat tricks: Requires Flash Shift or Spin Boost, and 499HP
+  - On Combat Beginner: Either Flash Shift or Spin Boost, and 399HP; Or 299HP
+  - On Combat Intermediate: 199HP
+  - Or simply Combat Advanced
+- Changed: The Gold Robot fight have the same upgrade to the requirements as the Silver version, except all HP requirements are 100 higher.
+- Changed: The Twin Robot fights have the same upgrade to the requirements as the Gold version, except all HP requirements are 100 higher again.
+
 ##### Artaria
 
 - Added: Accessing the top pickup in Screw Attack Room with a Shinespark by going down through the water basin. Requires either Screw Attack or Morph Ball and Gravity Suit.
 - Added: Logically flipping the Screw Attack Room Spinner and using Shinespark to immediately reach the left side platform. Requires Highly Dangerous Logic or Screw Attack.
-- Added: Accessing Start Point 2 in Screw Attack Room using a Shinespark. Requires either Screw Attack or Morph Ball and Slide
+- Added: Accessing Start Point 2 in Screw Attack Room using a Shinespark. Requires either Screw Attack or Morph Ball and Slide.
+- Added: Damage Boost with Spin Boost to get Missile Tank 1 in Melee Tutorial Room, before X are released, using Highly Dangerous Logic.
 - Changed: Flipping the spinner in Screw Attack Room when by going from the door to the transport is now logically possible also after having flipped the spinner, unless Highly Dangerous Logic is enabled.
 - Changed: All other connections in Screw Attack Room that are only open before flipping the spinner are now only logical when Highly Dangerous Logic is enabled.
 - Changed: The conditions that depends on not having blown up the blob in Screw Attack Room are now only logical when Highly Dangerous Logic is enabled.
 - Changed: In White EMMI Arena: Reaching Door to EMMI Zone Spinner (Middle) from Door to Central Unit Access (Charge) with Spin Boost now requires Wall Jump (Beginner).
 - Changed: In EMMI First Chase End: Reaching Door to Teleport to Dairon (Top) with Spin Boost now requires Wall Jump (Beginner).
 - Changed: In Screw Attack Room: Reaching Next to Upper Tank from Total Recharge with Spin Boost no longer requires a Wall Jump trick.
+- Changed: It is now logical to access the Chain Reaction Device after ending the Chain Reaction sequence. This also means climbing the Chain Reaction Room later has slightly fewer requirements.
+- Changed: Using the Stand On Frozen Enemies trick to get Missile Tank 1 in Melee Tutorial Room now requires Highly Dangerous Logic.
+- Changed: Fighting Corpius without tricks now requires 198 damage, down from 199. This makes the fight logical on Strict Damage strictness with 1 Energy Tank.
+- Changed: The connection in Arbitrary Enky Room directly from Start Point to Dock to Teleport to Dairon is now always logical when having Morph Ball.
+- Changed: The two Blobs in Arbitrary Enky Room now use the same event for logical purposes.
 - Fixed: Using Speed Booster to Shinespark to the top pickup in Screw Attack Room now requires Door Lock Rando to be Disabled.
 
 ##### Burenia
@@ -101,7 +128,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Using Cross Bombs to get past the Fan in Fan Room right to left has been increased from Movement Beginner to Intermediate, and a video has been added to the database.
 
+##### Ghavoran
+
+- Fixed: The connections to fight the Golden Robot no longer require the X to not be released when doing the fight normally. This doesn't change what is logical, but makes it easier for the generator and resolver to release the X.
+
 ### Metroid Prime
+
+- Fixed: A very precise situation that could lead to pickups not being sent properly.
 
 #### Logic Database
 
@@ -111,6 +144,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Ore Processing: Getting from Door to Elevator Access A to Door to Storage Depot B via Power Bombs, Space Jump and L-Jumps now requires Morph Ball.
 
 ### Metroid Prime 2: Echoes
+
 - Removed: Relative hints will no longer be placed.
 - Changed: Legacy multiworld sessions where an Echoes hint points to a Cave Story item may have very slightly altered wording.
 - Changed: A legacy relative hint pointing to a Nothing will now always refer to it by name.
@@ -118,6 +152,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Seeds with individual Door Lock Randomizer enabled should see more door variety in the lategame.
 - Fixed: When using the new experimental generator setting to consider possible unsafe resources, the Starter Preset can once again see Missile Launcher placed in the GFMC Compound crate.
 - Fixed: Translators will no longer be hinted by hints of their own color.
+- Fixed: Cannon Ball and the multiplayer pickups can no longer be selected as starting pickups, since they did not work in-game when doing so.
+- Fixed: A very precise situation that could lead to pickups not being sent properly.
 
 #### Logic Database
 

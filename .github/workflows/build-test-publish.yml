@@ -584,19 +584,19 @@ jobs:
       - name: start deployment
         uses: bobheadxi/deployments@v1.5.0
         id: deployment
-        if: ${{ steps.decide_env.outputs.should_deploy }}
+        if: ${{ steps.decide_env.outputs.should_deploy == 'true' }}
         with:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
           env: ${{ steps.decide_env.outputs.env }}
 
       - name: deploy server
-        if: ${{ steps.decide_env.outputs.should_deploy }}
+        if: ${{ steps.decide_env.outputs.should_deploy == 'true' }}
         run: uv run tools/deploy_server.py
 
       - name: update deployment status
         uses: bobheadxi/deployments@v1.5.0
-        if: always() && steps.decide_env.outputs.should_deploy
+        if: always() && steps.decide_env.outputs.should_deploy == 'true'
         with:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -620,11 +620,6 @@ jobs:
           repository: randovania/randovania.github.io
           path: ./website
 
-      - name: Find line
-        id: line
-        run: |
-          echo "LINE_TO_REPLACE=$(grep "^randovania_version=[[:digit:]]\.[[:digit:]]\.[[:digit:]]$" ./website/ci.sh)" >> $GITHUB_OUTPUT
-
       - name: Find new version
         id: new_version
         env:
@@ -636,10 +631,10 @@ jobs:
       - name: Replace version, commit and push
         run: |
           cd website
-          sed -i s/${{ steps.line.outputs.LINE_TO_REPLACE }}/randovania_version=${{ steps.new_version.outputs.NEW_VERSION }}/g ./ci.sh
+          echo "${{ steps.new_version.outputs.NEW_VERSION }}" > ./randovania-version.txt
           git config user.name Website-Version-Updater
           git config user.email invalid@example.com
-          git add ./ci.sh
+          git add ./randovania-version.txt
           git commit -m "Update version to ${{ steps.new_version.outputs.NEW_VERSION }}"
           git push
 

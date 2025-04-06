@@ -27,7 +27,7 @@ def test_add_elevator_connections_to_patches_vanilla(
     expected = echoes_game_patches
 
     if skip_final_bosses:
-        node_ident = NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway", "Elevator to Great Temple")
+        node_ident = NodeIdentifier.create("Sky Temple Grounds", "Sky Temple Gateway", "Elevator to Sky Temple")
         expected = expected.assign_dock_connections(
             [
                 (
@@ -119,27 +119,27 @@ def test_add_elevator_connections_to_dock_connections_random(
 
     if skip_final_bosses:
         ni(
-            "Temple Grounds",
+            "Sky Temple Grounds",
             "Sky Temple Gateway",
-            "Elevator to Great Temple",
+            "Elevator to Sky Temple",
             "Temple Grounds",
             "Credits",
             "Event - Dark Samus 3 and 4",
         )
     else:
         ni(
-            "Temple Grounds",
+            "Sky Temple Grounds",
             "Sky Temple Gateway",
-            "Elevator to Great Temple",
-            "Great Temple",
+            "Elevator to Sky Temple",
+            "Sky Temple",
             "Sky Temple Energy Controller",
             "Save Station",
         )
     ni(
-        "Great Temple",
+        "Sky Temple",
         "Sky Temple Energy Controller",
-        "Elevator to Temple Grounds",
-        "Temple Grounds",
+        "Elevator to Sky Temple Grounds",
+        "Sky Temple Grounds",
         "Sky Temple Gateway",
         "Spawn Point/Front of Teleporter",
     )

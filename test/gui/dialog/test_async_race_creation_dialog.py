@@ -29,6 +29,8 @@ if TYPE_CHECKING:
 
 
 async def test_validate(skip_qtbot, preset_manager, options, mocker: pytest_mock.MockFixture):
+    mocker.patch("randovania.is_dev_version", return_value=True)
+
     parent = QtWidgets.QMainWindow()
     skip_qtbot.add_widget(parent)
 
@@ -122,7 +124,6 @@ def test_settings_dialog(skip_qtbot) -> None:
         AsyncRaceRoomEntry(
             id=1000,
             name="Async Room",
-            has_password=False,
             creator="TheCreator",
             creation_date=datetime.datetime(2020, 1, 1),
             start_date=datetime.datetime(2020, 2, 1),

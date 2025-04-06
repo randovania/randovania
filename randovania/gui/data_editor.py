@@ -237,8 +237,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.region_selector_box.clear()
         for region in sorted(self.region_list.regions, key=lambda x: x.name):
-            name = f"{region.name} ({region.dark_name})" if region.dark_name else region.name
-            self.region_selector_box.addItem(name, userData=region)
+            self.region_selector_box.addItem(region.name, userData=region)
 
         if current_region:
             self.focus_on_region_by_name(current_region.name)

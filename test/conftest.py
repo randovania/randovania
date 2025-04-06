@@ -478,6 +478,7 @@ def cs_panties_pickup(default_generator_params: PickupGeneratorParams) -> Pickup
         generator_params=default_generator_params,
         resource_lock=None,
         unlocks_resource=False,
+        extra=frozendict({"script": "<EVE0085"}),
     )
 
 

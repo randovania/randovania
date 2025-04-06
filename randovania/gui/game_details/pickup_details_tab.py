@@ -119,8 +119,7 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
 
         for region, area, node in game_description.region_list.all_regions_areas_nodes:
             if isinstance(node, PickupNode):
-                region_name = region.correct_name(area.in_dark_aether)
-                nodes_in_region[region_name].append((f"{area.name} - {node.name}", node.pickup_index))
+                nodes_in_region[region.name].append((f"{area.name} - {node.name}", node.pickup_index))
                 continue
 
         for region_name in sorted(nodes_in_region.keys()):
