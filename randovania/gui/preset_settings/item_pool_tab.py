@@ -388,10 +388,8 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 require_main_item_check.stateChanged.connect(partial(self._on_update_ammo_require_main_item, ammo))
                 if self.game == RandovaniaGame.METROID_PRIME:
                     require_main_item_check.setVisible(False)
-                for extra, value in ammo.extra.items():
-                    if "hide_requires_main" in extra:
-                        if value:
-                            require_main_item_check.setVisible(False)
+                if ammo.hide_requires_main:
+                    require_main_item_check.setVisible(False)
                 layout.addWidget(require_main_item_check, current_row, 0, 1, -1)
                 current_row += 1
             else:
