@@ -192,8 +192,9 @@ class GameDatabaseView(ABC):
         Wrapper for calling node_by_identifier, followed by an isinstance.
         """
         result = self.node_by_identifier(i)
-        assert isinstance(result, t)
-        return result
+        if isinstance(result, t):
+            return result
+        raise KeyError(f"Node at {i} is an {type(result)}, not {t}")
 
     @abc.abstractmethod
     def assert_pickup_index_exists(self, index: PickupIndex) -> None:
