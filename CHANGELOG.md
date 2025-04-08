@@ -9,10 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: After clicking the "Login with Discord" button, a link and a QR Code are displayed instead of opening the default browser directly.
 - Changed: The relative time to start/finish in Async Race rooms now update as time passes, and the window reacts appropriately when the race starts and finishes.
+- Removed: The initial Randovania screen no longer contains the list of supported games.
 
 ### Cave Story
 
 - Changed: Outer Wall is now a separate region.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Added: In EMMI Zone Hub, it's now logical to climb to the Dock to EMMI Zone Exit South by using Flash Shift.
 
 ### Metroid Prime 2: Echoes
 

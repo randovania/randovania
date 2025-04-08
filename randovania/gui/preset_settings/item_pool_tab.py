@@ -381,12 +381,11 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             add_column(pickup_spinbox)
             current_row += 1
 
-            # FIXME: hardcoded check to hide required mains for Prime 1
             if ammo.temporary:
                 require_main_item_check = QtWidgets.QCheckBox(pickup_box)
                 require_main_item_check.setText("Requires the main item to work?")
                 require_main_item_check.stateChanged.connect(partial(self._on_update_ammo_require_main_item, ammo))
-                if self.game == RandovaniaGame.METROID_PRIME:
+                if ammo.hide_requires_main:
                     require_main_item_check.setVisible(False)
                 layout.addWidget(require_main_item_check, current_row, 0, 1, -1)
                 current_row += 1
