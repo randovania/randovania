@@ -512,19 +512,19 @@ def _calculate_weights_for(
 
     # this used to weigh actions according to *how many* resources were unlocked, but we've determined
     # that the results are more fun if we only care about something being unlocked at all
-    pickups_weight = potential_uncollected.pickups_weight(action_weights)
-    events_weight = potential_uncollected.events_weight(action_weights)
-    hints_weight = potential_uncollected.hints_weight(action_weights)
+    pickups_weight, amount_pickups = potential_uncollected.pickups_weight_and_amount(action_weights)
+    events_weight, amount_events = potential_uncollected.events_weight_and_amount(action_weights)
+    hints_weight, _ = potential_uncollected.hints_weight_and_amount(action_weights)
 
     # if there were no safe resources of that type, check again for unsafe resources but weigh them as dangerous
     if not pickups_weight:
-        pickups_weight = potential_unsafe_uncollected.pickups_weight(action_weights)
+        pickups_weight, amount_pickups = potential_unsafe_uncollected.pickups_weight_and_amount(action_weights)
         pickups_weight *= action_weights.DANGEROUS_ACTION_MULTIPLIER
     if not events_weight:
-        events_weight = potential_unsafe_uncollected.events_weight(action_weights)
+        events_weight, amount_events = potential_unsafe_uncollected.events_weight_and_amount(action_weights)
         events_weight *= action_weights.DANGEROUS_ACTION_MULTIPLIER
     if not hints_weight:
-        hints_weight = potential_unsafe_uncollected.hints_weight(action_weights)
+        hints_weight, _ = potential_unsafe_uncollected.hints_weight_and_amount(action_weights)
         hints_weight *= action_weights.DANGEROUS_ACTION_MULTIPLIER
 
     # we're only concerned about *something* being unlocked by this action
@@ -533,6 +533,11 @@ def _calculate_weights_for(
 
     # hints are actually an added bonus, so they get *added* to the total weight
     total_weight += hints_weight
+
+    # If by the end we only unlock 1 non-hint thing, reduce the weighting as it is less interesting
+    # Hints are excluded, because some pickups' purpose is to only unlock hints.
+    if (amount_pickups + amount_events) == 1:
+        total_weight *= action_weights.UNLOCKS_ONE_ACTION_MULTIPLIER
 
     return total_weight
 

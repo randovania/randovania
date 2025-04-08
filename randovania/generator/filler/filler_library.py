@@ -110,14 +110,14 @@ class UncollectedState(NamedTuple):
 
         return unsafe_state - safe_state
 
-    def pickups_weight(self, weights: ActionWeights) -> float:
-        return weights.pickup_indices_weight if self.pickup_indices else 0.0
+    def pickups_weight_and_amount(self, weights: ActionWeights) -> tuple[float, int]:
+        return weights.pickup_indices_weight if self.pickup_indices else 0.0, len(self.pickup_indices)
 
-    def events_weight(self, weights: ActionWeights) -> float:
-        return weights.events_weight if self.events else 0.0
+    def events_weight_and_amount(self, weights: ActionWeights) -> tuple[float, int]:
+        return weights.events_weight if self.events else 0.0, len(self.events)
 
-    def hints_weight(self, weights: ActionWeights) -> float:
-        return weights.hints_weight if self.hints else 0.0
+    def hints_weight_and_amount(self, weights: ActionWeights) -> tuple[float, int]:
+        return weights.hints_weight if self.hints else 0.0, len(self.hints)
 
     def __sub__(self, other: UncollectedState) -> UncollectedState:
         return UncollectedState(
