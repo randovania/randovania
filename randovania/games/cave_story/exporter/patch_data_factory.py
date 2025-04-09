@@ -133,9 +133,7 @@ class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
             elif target == nothing_item:
                 pickup_script = NOTHING_ITEM_SCRIPT
             else:
-                pickup_script = self.pickup_db.get_pickup_with_name(target.pickup.name).extra.get(
-                    "script", NOTHING_ITEM_SCRIPT
-                )
+                pickup_script = target.pickup.extra.get("script", NOTHING_ITEM_SCRIPT)
             pickups[mapname][event] = pickup_script
 
         return pickups

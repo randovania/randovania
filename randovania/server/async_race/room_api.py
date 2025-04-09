@@ -371,7 +371,11 @@ def join_and_export(sa: ServerApp, room_id: int, auth_token: str, cosmetic_json:
 
     data_factory = preset.game.patch_data_factory(layout_description, players_config, cosmetic_patches)
     try:
-        return data_factory.create_data()
+        result = data_factory.create_data()
+        # FIXME: hack to not include a patcher.json for prime1
+        if preset.game == RandovaniaGame.METROID_PRIME:
+            result["hasSpoiler"] = False
+        return result
     except Exception as e:
         raise error.InvalidActionError(f"Unable to export game: {e}")
 

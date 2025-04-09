@@ -369,10 +369,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             except KeyError:
                 path = []
 
-            wl = self.logic.game.region_list
             text = [f"<p><span style='font-weight:600;'>Path to {node.name}</span></p><ul>"]
             for p in path:
-                text.append(f"<li>{wl.node_name(p, with_region=True, distinguish_dark_aether=True)}</li>")
+                text.append(f"<li>{p.full_name()}</li>")
             text.append("</ul>")
 
             dialog = ScrollLabelDialog(self, "".join(text), "Path to node")
@@ -666,12 +665,10 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             if locations_len > 1:
                 node_locations = sorted(
                     self.game_configuration.starting_location.locations,
-                    key=lambda it: region_list.node_name(region_list.node_by_identifier(it), with_region=True),
+                    key=lambda it: it.display_name(),
                 )
 
-                location_names = [
-                    region_list.node_name(region_list.node_by_identifier(it), with_region=True) for it in node_locations
-                ]
+                location_names = [it.display_name() for it in node_locations]
                 selected_name, self.confirm_open = QtWidgets.QInputDialog.getItem(
                     self, "Starting Location", "Select starting location", location_names, 0, False
                 )
