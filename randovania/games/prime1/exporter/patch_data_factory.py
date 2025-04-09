@@ -112,7 +112,7 @@ def prime1_pickup_details_to_patcher(
     original_model = detail.original_model.as_json
 
     name = detail.name
-    collection_text = detail.collection_text[0]
+    collection_text = detail.collection_text[-1]
     pickup_type = "Nothing"
     count = 0
     max_count = 0
@@ -122,7 +122,7 @@ def prime1_pickup_details_to_patcher(
         count = detail.index.index + 1
         max_count = count
     else:
-        for resource, quantity in detail.conditional_resources[0].resources:
+        for resource, quantity in detail.conditional_resources[-1].resources:
             # Refill items
             if resource.extra.get("is_refill"):
                 pickup_type = resource.extra.get("pickup_type", resource.long_name)
