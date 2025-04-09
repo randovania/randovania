@@ -20,6 +20,11 @@ class NodeIdentifier:
     def with_area(cls, area_identifier: AreaIdentifier, node_name: str) -> Self:
         return cls(area_identifier.region, area_identifier.area, node_name)
 
+    def display_name(self, with_region: bool = True, separator: str = "/") -> str:
+        """Formats this identifier in a user-friendly manner."""
+        prefix = f"{self.region}{separator}" if with_region else ""
+        return f"{prefix}{self.area}{separator}{self.node}"
+
     @property
     def as_json(self) -> dict:
         return {

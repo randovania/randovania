@@ -13,7 +13,6 @@ from randovania.resolver.exceptions import ResolverTimeoutError
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
-    from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.requirements.base import Requirement
@@ -22,8 +21,8 @@ if TYPE_CHECKING:
     from randovania.resolver.state import State
 
 
-def n(node: Node, region_list: RegionList, with_region: bool = True) -> str:
-    return region_list.node_name(node, with_region, True) if node is not None else "None"
+def n(node: Node, with_region: bool = True) -> str:
+    return node.full_name(with_region=with_region) if node is not None else "None"
 
 
 def energy_string(state: State) -> str:
@@ -109,8 +108,6 @@ class Logic:
             self._current_indent += 1
 
         if debug.debug_level() > 0:
-            region_list = state.region_list
-
             resources = []
             if isinstance(state.node, ResourceNode):
                 context_state = state.previous_state or state
@@ -122,9 +119,9 @@ class Logic:
 
             if debug.debug_level() >= 3:
                 for node in state.path_from_previous_state[1:]:
-                    debug.print_function(f"{self._indent(1)}: {n(node, region_list=region_list)}")
+                    debug.print_function(f"{self._indent(1)}: {n(node)}")
 
-            node_str = n(state.node, region_list=region_list)
+            node_str = n(state.node)
             action_text = action_string(state.node, state.patches)
             debug.print_function(f"{self._indent(1)}> {node_str}{energy_string(state)} for {action_text}{resources}")
 
@@ -133,7 +130,7 @@ class Logic:
             if actions:
                 debug.print_function(f"{self._indent()}# Satisfiable Actions")
                 for action, _ in actions:
-                    debug.print_function(f"{self._indent(-1)}= {n(action, region_list=state.region_list)}")
+                    debug.print_function(f"{self._indent(-1)}= {n(action)}")
             else:
                 debug.print_function(f"{self._indent()}# No Satisfiable Actions")
 
@@ -143,9 +140,7 @@ class Logic:
         if debug.debug_level() > 0:
             show_reqs = debug.debug_level() > 1 and additional_requirements is not None
             action_text = action_string(state.node, state.patches)
-            debug.print_function(
-                f"{self._indent()}* Rollback {n(state.node, region_list=state.region_list)} {action_text}"
-            )
+            debug.print_function(f"{self._indent()}* Rollback {n(state.node)} {action_text}")
             debug.print_function(
                 "{}Had action? {}; Possible Action? {}{}".format(
                     self._indent(-1),
@@ -162,7 +157,7 @@ class Logic:
     def log_skip_action_missing_requirement(self, node: Node, patches: GamePatches, game: GameDescription):
         if debug.debug_level() > 1:
             requirement_set = self.get_additional_requirements(node)
-            base_log = f"{self._indent()}* Skip {n(node, region_list=game.region_list)} {action_string(node, patches)}"
+            base_log = f"{self._indent()}* Skip {n(node)} {action_string(node, patches)}"
             if node in self._last_printed_additional and self._last_printed_additional[node] == requirement_set:
                 debug.print_function(f"{base_log}, same additional")
             else:

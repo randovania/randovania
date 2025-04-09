@@ -237,10 +237,7 @@ def increment_index_age(locations_weighted: WeightedLocations, increment: float)
 
 def _print_header(player_states: list[PlayerState]) -> None:
     def _name_for_index(state: PlayerState, index: PickupIndex) -> str:
-        return state.game.region_list.node_name(
-            state.game.region_list.node_from_pickup_index(index),
-            with_region=True,
-        )
+        return state.game.region_list.node_from_pickup_index(index).full_name()
 
     debug.debug_print(
         "{}\nRetcon filler started with standard pickups:\n{}".format(
@@ -327,7 +324,7 @@ def retcon_playthrough_filler(
         rng.shuffle(new_pickups)
 
         for new_resource in new_resources:
-            debug_print_collect_event(new_resource, current_player.game)
+            debug_print_collect_event(new_resource)
             # This action is potentially dangerous. Use `act_on` to remove invalid paths
             current_player.reach.act_on(new_resource)
 
@@ -365,7 +362,7 @@ def retcon_playthrough_filler(
 def debug_print_weighted_locations(all_locations_weighted: WeightedLocations, player_states: list[PlayerState]) -> None:
     print("==> Weighted Locations")
     for owner, index, weight in all_locations_weighted.all_items():
-        node_name = owner.game.region_list.node_name(owner.game.region_list.node_from_pickup_index(index))
+        node_name = owner.game.region_list.node_from_pickup_index(index).full_name()
         print(f"[{player_states[owner.index].name}] {node_name} - {weight}")
 
 
@@ -554,5 +551,5 @@ def pickup_placement_spoiler_entry(
         f"{location_owner.name}'s " if add_indices else "",
         action.name,
         f"{index_owner.name}'s " if add_indices else "",
-        region_list.node_name(pickup_node, with_region=True, distinguish_dark_aether=True),
+        pickup_node.full_name(),
     )

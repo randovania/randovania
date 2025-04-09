@@ -96,6 +96,7 @@ class PickupEntry:
     )
     show_in_credits_spoiler: bool = True  # TODO: rename. this is effectively an "is important item" flag
     is_expansion: bool = False
+    extra: frozendict = dataclasses.field(default_factory=frozendict)
 
     def __post_init__(self) -> None:
         if not isinstance(self.progression, tuple):
