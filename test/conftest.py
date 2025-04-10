@@ -247,11 +247,6 @@ def planets_zebeth_game_description() -> GameDescription:
 
 
 @pytest.fixture(scope="session")
-def prime_hunters_game_description() -> GameDescription:
-    return default_database.game_description_for(RandovaniaGame.METROID_PRIME_HUNTERS)
-
-
-@pytest.fixture(scope="session")
 def randomizer_data() -> dict:
     return decode_randomizer_data()
 

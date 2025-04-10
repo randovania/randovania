@@ -45,4 +45,4 @@ class HuntersGameExporter(GameExporter[HuntersGameExportParams]):
         export_params: HuntersGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
-        raise RuntimeError("Needs to be implemented")
+        raise NotImplementedError("This method hasn't been implemented yet")

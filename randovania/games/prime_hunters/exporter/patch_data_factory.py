@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, override
+from typing import TYPE_CHECKING, Final, override
 
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
@@ -25,6 +25,10 @@ def item_id_for_item_resource(resource: ItemResourceInfo) -> int:
 def force_field_index_for_requirement(game: GameDescription, requirement: LayoutForceFieldRequirement) -> int:
     return item_id_for_item_resource(game.resource_database.get_item(requirement.item_name))
 
+
+ITEM_SPAWN_ENTITY_TYPE: Final = 4
+ARTIFACT_ENTITY_TYPE: Final = 17
+OCTOLITH_MODEL_ID: Final = 8
 
 _ARTIFACT_TO_MODEL_ID = {
     "AlinosArtifact1": 0,
@@ -55,6 +59,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
 
     def _calculate_starting_inventory(self, resources: ResourceCollection) -> dict[str, str]:
         result = {
+            # TODO: Take starting weapons into account
             "weapons_string": "00000101",
         }
         return result
@@ -67,19 +72,20 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
         for node in pickup_nodes:
             target = self.patches.pickup_assignment.get(node.pickup_index, None)
 
+            # TODO: Add handling for nothing items
             assert target is not None
             pickup: dict = {}
 
             pickup["entity_id"] = node.extra["entity_id"]
             entity_type = target.pickup.extra["entity_type"]
 
-            if entity_type == 4:
-                pickup["entity_type"] = 4
+            if entity_type == ITEM_SPAWN_ENTITY_TYPE:
+                pickup["entity_type"] = ITEM_SPAWN_ENTITY_TYPE
                 pickup["item_type"] = target.pickup.extra["item_type"]
             else:
-                pickup["entity_type"] = 17
+                pickup["entity_type"] = ARTIFACT_ENTITY_TYPE
                 model_id = target.pickup.extra.get("model_id", None)
-                if model_id == 8:
+                if model_id == OCTOLITH_MODEL_ID:
                     pickup["model_id"] = model_id
                     pickup["artifact_id"] = _OCTOLITH_TO_ARTIFACT_ID[target.pickup.model.name]
                 else:

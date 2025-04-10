@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 
 def is_boss_location(node: PickupNode, config: HuntersConfiguration) -> bool:
     octolith = node.extra.get("entity_type_data", {}).get("model_id")
-    if octolith is not None and octolith == 8 and config.octoliths:
+    if octolith is not None and octolith == 8 and config.octoliths.prefer_bosses:
         return True
 
     return False

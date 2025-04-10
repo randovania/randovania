@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import dataclasses
-from enum import StrEnum
+from enum import Enum
 from typing import TYPE_CHECKING, Self
 
 from randovania.bitpacking import bitpacking
@@ -16,7 +16,7 @@ if TYPE_CHECKING:
     from collections.abc import Iterator
 
 
-class LayoutForceFieldRequirement(BitPackEnum, StrEnum):
+class LayoutForceFieldRequirement(BitPackEnum, Enum):
     POWER_BEAM = "power-beam"
     VOLT_DRIVER = "volt-driver"
     MISSILE = "missile"
