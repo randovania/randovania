@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The relative time to start/finish in Async Race rooms now update as time passes, and the window reacts appropriately when the race starts and finishes.
 - Removed: The initial Randovania screen no longer contains the list of supported games.
 
+### AM2R
+
+- Fixed: Long Beam, Infinite Bomb Propulsion and Walljump Boots now show up in the credits spoiler log.
+
 ### Cave Story
 
 - Changed: Outer Wall is now a separate region.
