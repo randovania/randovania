@@ -122,7 +122,7 @@ class RegionList(NodeProvider):
         return sum(1 for node in self.iterate_nodes_of_type(PickupNode))
 
     @property
-    def all_regions_areas_nodes(self) -> Iterable[tuple[Region, Area, Node]]:
+    def all_regions_areas_nodes(self) -> Iterator[tuple[Region, Area, Node]]:
         for region in self.regions:
             for area in region.areas:
                 for node in area.nodes:
