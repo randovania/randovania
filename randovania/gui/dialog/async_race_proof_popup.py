@@ -26,15 +26,25 @@ class AsyncRaceProofPopup(QtWidgets.QDialog):
         self.ui.button_box.accepted.connect(self.accept)
         self.ui.button_box.rejected.connect(self.reject)
         self.ui.proof_edit.textChanged.connect(self._on_proof_updated)
+        self.ui.notes_edit.textChanged.connect(self._on_proof_updated)
 
     def _on_proof_updated(self) -> None:
-        """Validate that the proof URL at least looks like a URL"""
+        """Validate that either a proof URL which looks like a URL was given, or that submission notes were given."""
+
+        # Mark proof url as error only if one was given that does not look like a url
         common_qt_lib.set_error_border_stylesheet(
             self.ui.proof_edit,
             self.proof_url and self._proof_re.match(self.proof_url) is None,
         )
+
+        # Mark submission notes as error only if none were given and no proof url was given
+        common_qt_lib.set_error_border_stylesheet(
+            self.ui.notes_edit, not bool(self.submission_notes) and not bool(self.proof_url)
+        )
+
+        # Only let user submit if either proof url or submission notes were given
         self.ui.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Save).setEnabled(
-            not self.ui.proof_edit.has_error
+            not (self.ui.proof_edit.has_error or self.ui.notes_edit.has_error)
         )
 
     @property
