@@ -33,6 +33,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
     _lang_list = ["JapaneseKanji", "JapaneseHiragana", "English", "German", "French", "Italian", "Spanish"]
     _easter_egg_bob = 64
     _easter_egg_shiny = 1024
+    _trap_sprites = ["MissileTank", "EnergyTank", "PowerBombTank"]
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.FUSION
@@ -58,6 +59,10 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
 
             text = pickup.collection_text[0]
             sprite = pickup.model.name
+
+            # Shuffles Ice Trap sprite TODO: update when RDV supports randomized models for certain pickups
+            if resource == "IceTrap":
+                sprite = self._trap_sprites[self.rng.randint(0, len(self._trap_sprites) - 1)]
 
             custom_message = {}
             # Special case where we ignore metroid dna right now, because that needs more patcher work.
