@@ -104,7 +104,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
                 continue
 
             field = {
-                "entity_id": self.game.region_list.node_by_identifier(NodeIdentifier.from_string(identifier)).extra[
+                "entity_id": self.game.region_list.node_by_identifier(node_identifier).extra[
                     "entity_id"
                 ],
                 "type": force_field_index_for_requirement(self.game, LayoutForceFieldRequirement(requirement)),
