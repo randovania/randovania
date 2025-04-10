@@ -1,3 +1,4 @@
+import dataclasses
 import datetime
 import json
 import math
@@ -369,12 +370,15 @@ def join_and_export(sa: ServerApp, room_id: int, auth_token: str, cosmetic_json:
     preset = layout_description.get_preset(players_config.player_index)
     cosmetic_patches = preset.game.data.layout.cosmetic_patches.from_json(cosmetic_json)
 
+    # Overwrite spoiler property, as some games rely on this to provide another alternative to show spoilers.
+    layout_description = dataclasses.replace(
+        layout_description,
+        generator_parameters=dataclasses.replace(layout_description.generator_parameters, spoiler=False),
+    )
+
     data_factory = preset.game.patch_data_factory(layout_description, players_config, cosmetic_patches)
     try:
         result = data_factory.create_data()
-        # FIXME: hack to not include a patcher.json for prime1
-        if preset.game == RandovaniaGame.METROID_PRIME:
-            result["hasSpoiler"] = False
         return result
     except Exception as e:
         raise error.InvalidActionError(f"Unable to export game: {e}")
