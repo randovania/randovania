@@ -9,13 +9,13 @@ from randovania.generator.base_patches_factory import BasePatchesFactory, weakne
 
 if TYPE_CHECKING:
     from randovania.game_description.db.dock import DockWeakness
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
 
 
 class FusionBasePatchesFactory(BasePatchesFactory[FusionConfiguration]):
     def assign_static_dock_weakness(
-        self, configuration: FusionConfiguration, game: GameDescription, initial_patches: GamePatches
+        self, configuration: FusionConfiguration, game: GameDatabaseView, initial_patches: GamePatches
     ) -> GamePatches:
         parent = super().assign_static_dock_weakness(configuration, game, initial_patches)
 
@@ -23,10 +23,10 @@ class FusionBasePatchesFactory(BasePatchesFactory[FusionConfiguration]):
         get_node = game.region_list.typed_node_by_identifier
 
         dock_weakness: list[tuple[DockNode, DockWeakness]] = []
-        open_transition_door = game.dock_weakness_database.get_by_weakness("Door", "Open Hatch")
+        open_transition_door = game.get_dock_weakness("Door", "Open Hatch")
 
         if configuration.unlock_sector_hub:
-            for dock_node in game.region_list.iterate_nodes_of_type(DockNode):
+            for _, _, dock_node in game.iterate_nodes_of_type(DockNode):
                 if dock_node.extra.get("sector_hub_elevator_door"):
                     dock_weakness.append((dock_node, open_transition_door))
 
@@ -35,7 +35,7 @@ class FusionBasePatchesFactory(BasePatchesFactory[FusionConfiguration]):
                 weaknesses_for_unlocked_saves(
                     game,
                     unlocked_weakness=open_transition_door,
-                    target_dock_type=game.dock_weakness_database.find_type("Door"),
+                    target_dock_type=game.find_dock_type_by_short_name("Door"),
                     area_filter=lambda area: area.extra.get("unlocked_save_recharge_station") is True,
                     dock_filter=lambda node: node.default_dock_weakness != open_transition_door,
                 )
