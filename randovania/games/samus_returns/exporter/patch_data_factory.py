@@ -677,6 +677,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         energy_per_tank = self.configuration.energy_per_tank
 
         return {
+            "_export_spoiler_json": self.description.has_spoiler,
             "starting_location": starting_location,
             "starting_items": starting_items,
             "starting_text": starting_text,

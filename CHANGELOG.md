@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Fixed: The patching data being exported on race seeds.
+
 #### Logic Database
 
 ##### Artaria
@@ -36,6 +38,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Changed: The Light and Dark regions are now properly different regions for Randovania.
+
+### Metroid: Samus Returns
+
+- Fixed: The patching data being exported on race seeds.
 
 ## [9.0.0] - 2025-04-01
 

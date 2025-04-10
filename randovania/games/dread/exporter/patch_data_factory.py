@@ -545,6 +545,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             teleporters.append(other_train)
 
         return {
+            "_export_spoiler_json": self.description.has_spoiler,
             "configuration_identifier": self.description.shareable_hash,
             "starting_location": starting_location,
             "starting_items": starting_items,

@@ -60,6 +60,7 @@ class FusionGameExporter(GameExporter[FusionGameExportParams]):
                 progress_update,
             )
         finally:
-            json_lib.write_path(
-                export_params.output_path.parent.joinpath(f"{export_params.output_path.stem}_mars.json"), patch_data
-            )
+            if patch_data.pop("_export_spoiler_json"):
+                json_lib.write_path(
+                    export_params.output_path.parent.joinpath(f"{export_params.output_path.stem}_mars.json"), patch_data
+                )
