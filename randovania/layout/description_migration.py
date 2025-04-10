@@ -700,9 +700,9 @@ def _migrate_v35(data: dict) -> None:
 
     for game in game_modifications:
         for region in game["locations"].values():
-            for location in region.values():
-                if location == "Energy Transfer Module":
-                    location = "Nothing"
+            for pickup in region.values():
+                if pickup == "Energy Transfer Module":
+                    pickup = "Nothing"
 
 
 _MIGRATIONS = [
