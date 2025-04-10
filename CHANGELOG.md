@@ -27,6 +27,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: In EMMI Zone Hub, it's now logical to climb to the Dock to EMMI Zone Exit South by using Flash Shift.
 
+### Metroid Prime
+
+#### Logic Database
+
+- Fixed: Fix the Door Lock Rando misc resource being called Dock Rando.
+
 ### Metroid Prime 2: Echoes
 
 - Changed: The Light and Dark regions are now properly different regions for Randovania.
