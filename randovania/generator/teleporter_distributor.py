@@ -5,7 +5,6 @@ from collections import defaultdict
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.game_database_view import GameDatabaseView, typed_node_by_identifier
 from randovania.generator.base_patches_factory import MissingRng
 from randovania.layout.lib.teleporters import TeleporterConfiguration, TeleporterShuffleMode
 
@@ -16,6 +15,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.dock import DockType
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import TeleporterConnection
 
 
@@ -177,7 +177,7 @@ def get_dock_connections_assignment_for_teleporter(
         teleporter_connection[teleporter] = destination
 
     assignment = [
-        (typed_node_by_identifier(game, identifier, DockNode), game.node_by_identifier(target))
+        (game.typed_node_by_identifier(identifier, DockNode), game.node_by_identifier(target))
         for identifier, target in teleporter_connection.items()
     ]
 
