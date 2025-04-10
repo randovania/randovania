@@ -220,6 +220,16 @@ class GameDatabaseView(ABC):
         List all available DockTypes
         """
 
+    @final
+    def find_dock_type_by_short_name(self, name: str) -> DockType:
+        """
+        Returns a DockType with the given short name, or raises KeyError if not found.
+        """
+        for dock_type in self.get_dock_types():
+            if dock_type.short_name == name:
+                return dock_type
+        raise KeyError(name)
+
     @abc.abstractmethod
     def get_dock_weakness(self, dock_type_name: str, weakness_name: str) -> DockWeakness:
         """
