@@ -700,9 +700,9 @@ def _migrate_v35(data: dict) -> None:
 
     for index, game in enumerate(game_modifications):
         for region in game["locations"].keys():
-            for pickup in game["locations"][region].keys():
-                if "Energy Transfer Module" in game["locations"][region][pickup]:
-                    game_modifications[index]["locations"][region][pickup] = "Nothing"
+            for location, pickup in game["locations"][region].items():
+                if "Energy Transfer Module" in pickup:
+                    game_modifications[index]["locations"][region].update({location: "Nothing"})
 
 
 _MIGRATIONS = [
@@ -740,7 +740,7 @@ _MIGRATIONS = [
     _migrate_v32,  # MSR Rename Area 4 Crystal Mines - Gamma Arena to Gamma+ Arena
     _migrate_v33,
     _migrate_v34,  # removal of in_dark_aether
-    _migrate_v35,
+    _migrate_v35,  # rename ETMs to Nothing
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
