@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
-    from randovania.game_description.game_database_view import GameDatabaseView
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -62,7 +62,7 @@ class MSRBootstrap(Bootstrap[MSRConfiguration]):
         )
 
     def _get_enabled_misc_resources(
-        self, configuration: MSRConfiguration, resource_database: ResourceDatabase
+        self, configuration: MSRConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         enabled_resources = set()
 
@@ -102,7 +102,7 @@ class MSRBootstrap(Bootstrap[MSRConfiguration]):
     def event_resources_for_configuration(
         self,
         configuration: MSRConfiguration,
-        resource_database: ResourceDatabase,
+        resource_database: ResourceDatabaseView,
     ) -> ResourceGain:
         if configuration.elevator_grapple_blocks:
             for name in [
@@ -129,7 +129,7 @@ class MSRBootstrap(Bootstrap[MSRConfiguration]):
             ]:
                 yield resource_database.get_event(name), 1
 
-    def _damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection) -> float:
+    def _damage_reduction(self, db: ResourceDatabaseView, current_resources: ResourceCollection) -> float:
         num_suits = sum(
             (1 if current_resources[db.get_item_by_display_name(suit)] else 0)
             for suit in ("Varia Suit", "Gravity Suit")
