@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -29,7 +29,7 @@ def is_puppy_node(node: PickupNode, config: CSConfiguration) -> bool:
 
 class CSBootstrap(Bootstrap[CSConfiguration]):
     def _get_enabled_misc_resources(
-        self, configuration: CSConfiguration, resource_database: ResourceDatabase
+        self, configuration: CSConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         enabled_resources = set()
 
@@ -52,7 +52,7 @@ class CSBootstrap(Bootstrap[CSConfiguration]):
         for resource in resource_database.version:
             yield resource, 1 if resource.long_name == "Freeware" else 0
 
-    def create_damage_state(self, game: GameDescription, configuration: CSConfiguration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: CSConfiguration) -> DamageState:
         return EnergyTankDamageState(
             configuration.starting_hp,
             1,
