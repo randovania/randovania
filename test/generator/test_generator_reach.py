@@ -286,6 +286,8 @@ def test_basic_search_with_translator_gate(
         node_a,
         echoes_game_patches,
         None,
+        game.resource_database,
+        game.region_list,
     )
 
     # Run
