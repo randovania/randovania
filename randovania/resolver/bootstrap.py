@@ -19,7 +19,6 @@ if TYPE_CHECKING:
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
-    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.resource_collection import ResourceCollection
@@ -181,7 +180,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
         raise NotImplementedError
 
     def calculate_initial_resources(
-        self, game: GameDescription, patches: GamePatches, configuration: Configuration
+        self, game: GameDatabaseView, patches: GamePatches, configuration: Configuration
     ) -> ResourceCollection:
         """Determines what should be the ResourceCollection for a starting State"""
         resources = patches.starting_resources()
@@ -254,7 +253,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
     def logic_bootstrap(
         self,
         configuration: Configuration,
-        game: GameDescription,
+        game: GameDatabaseView,
         patches: GamePatches,
     ) -> tuple[WorldGraph, State]:
         """
@@ -264,13 +263,11 @@ class Bootstrap[Configuration: BaseConfiguration]:
         :param patches:
         :return:
         """
-        if not game.mutable:
-            raise ValueError("Running logic_bootstrap with non-mutable game")
-
-        game.region_list.ensure_has_node_cache()
         # starting_state = self.calculate_starting_state(game, patches, configuration)
 
-        starting_node = game.region_list.node_by_identifier(patches.starting_location)
+        game.get_resource_database_view()
+
+        starting_node = game.node_by_identifier(patches.starting_location)
         initial_resources = self.calculate_initial_resources(game, patches, configuration)
 
         if starting_node.is_resource_node:
@@ -290,7 +287,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
         for resource, quantity in static_resources.as_resource_gain():
             initial_resources.set_resource(resource, quantity)
 
-        self.apply_game_specific_patches(configuration, game, patches)
+        game = self.apply_game_specific_patches(game, configuration, patches)
 
         # All majors/pickups required
         # game.victory_condition = victory_condition_for_pickup_placement(
@@ -314,9 +311,16 @@ class Bootstrap[Configuration: BaseConfiguration]:
         return graph, starting_state
 
     def apply_game_specific_patches(
-        self, configuration: Configuration, game: GameDescription, patches: GamePatches
-    ) -> None:
-        pass
+        self, game: GameDatabaseView, configuration: Configuration, patches: GamePatches
+    ) -> GameDatabaseView:
+        """
+        Wraps the given GameDatabaseView into a new one that respects whatever game-specific changes are present.
+        :param game:
+        :param configuration:
+        :param patches:
+        :return:
+        """
+        return game
 
     def assign_pool_results(
         self, rng: Random, configuration: Configuration, patches: GamePatches, pool_results: PoolResults
