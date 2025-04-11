@@ -96,12 +96,13 @@ class ResourceDatabase(ResourceDatabaseView):
             typing.cast("list[ResourceInfo]", self.get_by_type(resource_type)), name, resource_type
         )
 
-    def get_item_by_display_name(self, name: str) -> ItemResourceInfo:
-        return search.find_resource_info_with_long_name(self.item, name)
-
     @override
     def get_item(self, short_name: str) -> ItemResourceInfo:
         return search.find_resource_info_with_id(self.item, short_name, ResourceType.ITEM)
+
+    @override
+    def get_item_by_display_name(self, name: str) -> ItemResourceInfo:
+        return search.find_resource_info_with_long_name(self.item, name)
 
     @override
     def get_event(self, short_name: str) -> SimpleResourceInfo:

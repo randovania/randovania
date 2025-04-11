@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
-    from randovania.game_description.game_database_view import GameDatabaseView
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -48,7 +48,7 @@ class EchoesBootstrap(Bootstrap[EchoesConfiguration]):
     def event_resources_for_configuration(
         self,
         configuration: EchoesConfiguration,
-        resource_database: ResourceDatabase,
+        resource_database: ResourceDatabaseView,
     ) -> ResourceGain:
         yield resource_database.get_event("Event2"), 1  # Hive Tunnel Web
         yield resource_database.get_event("Event4"), 1  # Command Chamber Gate
@@ -61,7 +61,7 @@ class EchoesBootstrap(Bootstrap[EchoesConfiguration]):
             yield resource_database.get_event("Event20"), 1  # Security Station B DS Appearance
 
     def _get_enabled_misc_resources(
-        self, configuration: EchoesConfiguration, resource_database: ResourceDatabase
+        self, configuration: EchoesConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         enabled_resources = set()
         allow_vanilla = {
