@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, Self
 
 if TYPE_CHECKING:
     from randovania.game.generator import GameGenerator
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.pickup_index import PickupIndex
@@ -50,7 +50,7 @@ class FillerConfiguration:
 
 @dataclasses.dataclass(frozen=True)
 class PlayerPool:
-    game: GameDescription
+    game: GameDatabaseView
     game_generator: GameGenerator
     configuration: BaseConfiguration
     patches: GamePatches
