@@ -49,32 +49,17 @@ class BasePatchesFactory[Configuration: BaseConfiguration]:
         game: GameDescription,
         is_multiworld: bool,
         player_index: int,
-        rng_required: bool = True,
     ) -> GamePatches:
         """ """
         patches = self.create_static_base_patches(configuration, game, player_index)
 
         # Teleporters
-        try:
-            patches = patches.assign_dock_connections(self.dock_connections_assignment(configuration, game, rng))
-        except MissingRng as e:
-            if rng_required:
-                raise e
+        patches = patches.assign_dock_connections(self.dock_connections_assignment(configuration, game, rng))
 
         # Starting Location
-        try:
-            patches = patches.assign_starting_location(
-                self.starting_location_for_configuration(configuration, game, rng)
-            )
-        except MissingRng as e:
-            if rng_required:
-                raise e
+        patches = patches.assign_starting_location(self.starting_location_for_configuration(configuration, game, rng))
 
-        try:
-            patches = patches.assign_game_specific(self.create_game_specific(configuration, game, rng))
-        except MissingRng as e:
-            if rng_required:
-                raise e
+        patches = patches.assign_game_specific(self.create_game_specific(configuration, game, rng))
 
         # Check Item Pool
         self.check_item_pool(configuration)
@@ -115,7 +100,7 @@ class BasePatchesFactory[Configuration: BaseConfiguration]:
     def starting_location_for_configuration(
         self,
         configuration: Configuration,
-        game: GameDescription,
+        game: GameDatabaseView,
         rng: Random,
     ) -> NodeIdentifier:
         locations = list(configuration.starting_location.locations)
@@ -130,7 +115,7 @@ class BasePatchesFactory[Configuration: BaseConfiguration]:
 
         return location
 
-    def create_game_specific(self, configuration: Configuration, game: GameDescription, rng: Random) -> dict:
+    def create_game_specific(self, configuration: Configuration, game: GameDatabaseView, rng: Random) -> dict:
         return {}
 
 
