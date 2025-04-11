@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -33,7 +33,7 @@ def is_dna_node(node: PickupNode, config: AM2RConfiguration) -> bool:
 
 
 class AM2RBootstrap(Bootstrap[AM2RConfiguration]):
-    def create_damage_state(self, game: GameDescription, configuration: AM2RConfiguration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: AM2RConfiguration) -> DamageState:
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
@@ -41,7 +41,7 @@ class AM2RBootstrap(Bootstrap[AM2RConfiguration]):
         )
 
     def _get_enabled_misc_resources(
-        self, configuration: AM2RConfiguration, resource_database: ResourceDatabase
+        self, configuration: AM2RConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         enabled_resources = set()
 
@@ -79,7 +79,8 @@ class AM2RBootstrap(Bootstrap[AM2RConfiguration]):
         self, configuration: AM2RConfiguration, db: ResourceDatabase, current_resources: ResourceCollection
     ) -> float:
         num_suits = sum(
-            (1 if current_resources[db.get_item_by_name(suit)] else 0) for suit in ("Varia Suit", "Gravity Suit")
+            (1 if current_resources[db.get_item_by_display_name(suit)] else 0)
+            for suit in ("Varia Suit", "Gravity Suit")
         )
         dr = 0.0
         if num_suits == 1:
