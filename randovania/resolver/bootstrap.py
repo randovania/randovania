@@ -285,7 +285,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
                 starting_state.resources, game, configuration.standard_pickup_configuration
             )
 
-        static_resources = ResourceCollection.with_database(game.resource_database)
+        static_resources = game.create_resource_collection()
         static_resources.add_resource_gain(
             self.trick_resources_for_configuration(configuration.trick_level, game.resource_database)
         )
