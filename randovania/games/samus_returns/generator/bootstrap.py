@@ -131,7 +131,8 @@ class MSRBootstrap(Bootstrap[MSRConfiguration]):
 
     def _damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection) -> float:
         num_suits = sum(
-            (1 if current_resources[db.get_item_by_name(suit)] else 0) for suit in ("Varia Suit", "Gravity Suit")
+            (1 if current_resources[db.get_item_by_display_name(suit)] else 0)
+            for suit in ("Varia Suit", "Gravity Suit")
         )
         dr = 1.0
         if num_suits == 1:

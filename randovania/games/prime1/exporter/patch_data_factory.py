@@ -677,7 +677,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                 )
             )
 
-        scan_visor = self.game.resource_database.get_item_by_name("Scan Visor")
+        scan_visor = self.game.resource_database.get_item_by_display_name("Scan Visor")
         pickup_list = self.export_pickup_list()
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
         regions = [region for region in db.region_list.regions if region.name != "End of Game"]
@@ -823,7 +823,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         # serialize text modifications
         if self.configuration.hints.specific_pickup_hints["phazon_suit"] != SpecificPickupHintMode.DISABLED:
             try:
-                phazon_suit_resource_info = self.game.resource_database.get_item_by_name("Phazon Suit")
+                phazon_suit_resource_info = self.game.resource_database.get_item_by_display_name("Phazon Suit")
 
                 hint_texts: dict[ItemResourceInfo, str] = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                     self.description.all_patches,
