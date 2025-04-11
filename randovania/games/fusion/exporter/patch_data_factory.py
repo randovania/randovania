@@ -393,7 +393,6 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         pickup_list = self.export_pickup_list()
 
         mars_data = {
-            "_export_spoiler_json": self.description.has_spoiler,
             "SeedHash": self.description.shareable_hash,
             "StartingLocation": self._create_starting_location(),
             "StartingItems": self._create_starting_items(),
