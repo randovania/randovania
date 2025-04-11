@@ -10,6 +10,7 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_collection import ResourceCollection
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.pickup_pool.pickup_creator import create_ammo_pickup, create_standard_pickup
 from randovania.generator.pickup_pool.standard_pickup import find_ammo_for
 from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
@@ -23,7 +24,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game.game_enum import RandovaniaGame
-    from randovania.game_description.game_database_view import GameDatabaseView
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -112,7 +113,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
     def trick_resources_for_configuration(
         self,
         configuration: TrickLevelConfiguration,
-        resource_database: ResourceDatabase,
+        resource_database: ResourceDatabaseView,
     ) -> ResourceGain:
         """
         :param configuration:
@@ -122,7 +123,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
 
         static_resources = {}
 
-        for trick in resource_database.trick:
+        for trick in resource_database.get_all_tricks():
             if configuration.minimal_logic:
                 level = LayoutTrickLevel.maximum()
             else:
@@ -135,14 +136,14 @@ class Bootstrap[Configuration: BaseConfiguration]:
     def event_resources_for_configuration(
         self,
         configuration: Configuration,
-        resource_database: ResourceDatabase,
+        resource_database: ResourceDatabaseView,
     ) -> ResourceGain:
         yield from []
 
     def _add_minimal_logic_initial_resources(
         self,
         resources: ResourceCollection,
-        game: GameDescription,
+        game: GameDatabaseView,
         standard_pickups: StandardPickupConfiguration,
     ) -> None:
         resource_database = game.resource_database
@@ -173,7 +174,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
             ]
         )
 
-    def create_damage_state(self, game: GameDescription, configuration: Configuration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: Configuration) -> DamageState:
         """
         Creates a DamageState for the given configuration.
         :param game:
@@ -223,18 +224,18 @@ class Bootstrap[Configuration: BaseConfiguration]:
         return starting_state
 
     def version_resources_for_game(
-        self, configuration: Configuration, resource_database: ResourceDatabase
+        self, configuration: Configuration, resource_database: ResourceDatabaseView
     ) -> ResourceGain:
         """
         Determines which Version resources should be enabled, according to the configuration.
         Override as needed.
         """
         # Only enable one specific version
-        for resource in resource_database.version:
+        for resource in resource_database.get_all_resources_of_type(ResourceType.VERSION):
             yield resource, 1 if resource.long_name == "NTSC" else 0
 
     def _get_enabled_misc_resources(
-        self, configuration: Configuration, resource_database: ResourceDatabase
+        self, configuration: Configuration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         """
         Returns a set of strings corresponding to Misc resource short names which should be enabled.
@@ -243,13 +244,13 @@ class Bootstrap[Configuration: BaseConfiguration]:
         return set()
 
     def misc_resources_for_configuration(
-        self, configuration: Configuration, resource_database: ResourceDatabase
+        self, configuration: Configuration, resource_database: ResourceDatabaseView
     ) -> ResourceGain:
         """
         Determines which Misc resources should be enabled, according to the configuration.
         """
         enabled_resources = self._get_enabled_misc_resources(configuration, resource_database)
-        for resource in resource_database.misc:
+        for resource in resource_database.get_all_resources_of_type(ResourceType.MISC):
             yield resource, 1 if resource.short_name in enabled_resources else 0
 
     def patch_resource_database(self, db: ResourceDatabase, configuration: Configuration) -> ResourceDatabase:
