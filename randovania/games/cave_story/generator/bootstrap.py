@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
 from randovania.resolver.bootstrap import Bootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
@@ -15,7 +16,6 @@ if TYPE_CHECKING:
     from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
     from randovania.resolver.damage_state import DamageState
@@ -47,9 +47,9 @@ class CSBootstrap(Bootstrap[CSConfiguration]):
         return enabled_resources
 
     def version_resources_for_game(
-        self, configuration: CSConfiguration, resource_database: ResourceDatabase
+        self, configuration: CSConfiguration, resource_database: ResourceDatabaseView
     ) -> ResourceGain:
-        for resource in resource_database.version:
+        for resource in resource_database.get_all_resources_of_type(ResourceType.VERSION):
             yield resource, 1 if resource.long_name == "Freeware" else 0
 
     def create_damage_state(self, game: GameDatabaseView, configuration: CSConfiguration) -> DamageState:
@@ -62,7 +62,7 @@ class CSBootstrap(Bootstrap[CSConfiguration]):
     def assign_pool_results(
         self, rng: Random, configuration: CSConfiguration, patches: GamePatches, results: PoolResults
     ) -> GamePatches:
-        db = patches.game.resource_database
+        db = patches.game.get_resource_database_view()
 
         def get_valid_indices(indices: list[PickupIndex]) -> list[PickupIndex]:
             return [p for p in indices if p not in results.assignment.keys()]
