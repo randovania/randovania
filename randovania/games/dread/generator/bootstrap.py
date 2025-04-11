@@ -10,7 +10,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
@@ -36,7 +36,7 @@ def is_dna_node(node: PickupNode, config: DreadConfiguration) -> bool:
 
 
 class DreadBootstrap(Bootstrap[DreadConfiguration]):
-    def create_damage_state(self, game: GameDescription, configuration: DreadConfiguration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: DreadConfiguration) -> DamageState:
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
@@ -44,7 +44,7 @@ class DreadBootstrap(Bootstrap[DreadConfiguration]):
         )
 
     def _get_enabled_misc_resources(
-        self, configuration: DreadConfiguration, resource_database: ResourceDatabase
+        self, configuration: DreadConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         enabled_resources = {"SeparateBeams", "SeparateMissiles"}
 

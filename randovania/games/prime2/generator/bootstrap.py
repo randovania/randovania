@@ -18,6 +18,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -37,7 +38,7 @@ def is_boss_location(node: PickupNode, config: EchoesConfiguration) -> bool:
 
 
 class EchoesBootstrap(Bootstrap[EchoesConfiguration]):
-    def create_damage_state(self, game: GameDescription, configuration: EchoesConfiguration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: EchoesConfiguration) -> DamageState:
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
@@ -93,8 +94,8 @@ class EchoesBootstrap(Bootstrap[EchoesConfiguration]):
         damage_reductions = copy.copy(db.damage_reductions)
         damage_reductions[db.get_damage("DarkWorld1")] = [
             DamageReduction(None, configuration.varia_suit_damage / 6.0),
-            DamageReduction(db.get_item_by_name("Dark Suit"), configuration.dark_suit_damage / 6.0),
-            DamageReduction(db.get_item_by_name("Light Suit"), 0.0),
+            DamageReduction(db.get_item_by_display_name("Dark Suit"), configuration.dark_suit_damage / 6.0),
+            DamageReduction(db.get_item_by_display_name("Light Suit"), 0.0),
         ]
         return dataclasses.replace(db, damage_reductions=damage_reductions)
 
@@ -120,7 +121,7 @@ class EchoesBootstrap(Bootstrap[EchoesConfiguration]):
 
         translator_gates = patches.game_specific["translator_gates"]
 
-        for node in game.region_list.iterate_nodes_of_type(ConfigurableNode):
+        for _, _, node in game.iterate_nodes_of_type(ConfigurableNode):
             requirement = LayoutTranslatorRequirement(translator_gates[node.identifier.as_string])
             translator = game.resource_database.get_item(requirement.item_name)
             game.region_list.configurable_nodes[node.identifier] = RequirementAnd(

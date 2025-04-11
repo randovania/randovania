@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -54,7 +54,7 @@ def is_dna_node(node: PickupNode, config: MSRConfiguration) -> bool:
 
 
 class MSRBootstrap(Bootstrap[MSRConfiguration]):
-    def create_damage_state(self, game: GameDescription, configuration: MSRConfiguration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: MSRConfiguration) -> DamageState:
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
