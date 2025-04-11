@@ -46,7 +46,7 @@ class BasePatchesFactory[Configuration: BaseConfiguration]:
         self,
         configuration: Configuration,
         rng: Random,
-        game: GameDescription,
+        game: GameDatabaseView,
         is_multiworld: bool,
         player_index: int,
     ) -> GamePatches:

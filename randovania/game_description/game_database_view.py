@@ -286,6 +286,12 @@ class GameDatabaseView(ABC):
         :raises: KeyError if it doesn't exist
         """
 
+    @abc.abstractmethod
+    def interesting_resources_for_damage(
+        self, resource: SimpleResourceInfo, collection: ResourceCollection
+    ) -> Iterator[ResourceInfo]:
+        raise NotImplementedError
+
 
 class GameDatabaseViewProxy(GameDatabaseView):
     """
@@ -347,3 +353,9 @@ class GameDatabaseViewProxy(GameDatabaseView):
     @override
     def area_from_node(self, node: Node) -> Area:
         return self._original.area_from_node(node)
+
+    @override
+    def interesting_resources_for_damage(
+        self, resource: SimpleResourceInfo, collection: ResourceCollection
+    ) -> Iterator[ResourceInfo]:
+        return self._original.interesting_resources_for_damage(resource, collection)
