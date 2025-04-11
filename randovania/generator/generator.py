@@ -7,8 +7,10 @@ from typing import TYPE_CHECKING
 
 import tenacity
 
+from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget, PickupTargetAssociation
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.filtered_game_database_view import LayerFilteredGameDatabaseView
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.generator import dock_weakness_distributor, hint_distributor
 from randovania.generator.filler.filler_configuration import FillerResults, PlayerPool
@@ -16,7 +18,6 @@ from randovania.generator.filler.filler_library import UnableToGenerate, filter_
 from randovania.generator.filler.runner import run_filler
 from randovania.generator.pickup_pool import PoolResults, pool_creator
 from randovania.generator.pre_fill_params import PreFillParams
-from randovania.layout import filtered_database
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
@@ -91,6 +92,12 @@ async def check_if_beatable(patches: GamePatches, pool: PoolResults) -> bool:
             patches.reset_cached_dock_connections_from()
 
 
+def get_filtered_database_view(configuration: BaseConfiguration) -> GameDatabaseView:
+    return LayerFilteredGameDatabaseView(
+        default_database.game_description_for(configuration.game_enum()), configuration.active_layers()
+    )
+
+
 async def create_player_pool(
     rng: Random,
     configuration: BaseConfiguration,
@@ -99,10 +106,18 @@ async def create_player_pool(
     world_name: str,
     status_update: Callable[[str], None],
 ) -> PlayerPool:
-    game = filtered_database.game_description_for_layout(configuration).get_mutable()
+    """
 
-    game_generator = game.game.generator
-    game.resource_database = game_generator.bootstrap.patch_resource_database(game.resource_database, configuration)
+    :param rng:
+    :param configuration:
+    :param player_index:
+    :param num_players:
+    :param world_name:
+    :param status_update:
+    :return:
+    """
+    game_generator = configuration.game.generator
+    game = get_filtered_database_view(configuration)
 
     for i in range(10):
         status_update(f"Attempt {i + 1} for initial state for world '{world_name}'")
