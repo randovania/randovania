@@ -44,9 +44,8 @@ def test_all_tricks_should_have_proper_requirements():
         database_dict[resource_list[i]] = []
         expected_dict[resource_list[i]] = []
 
-    for node in rl.all_nodes:
-        assert node is not None
-        for dest_node, requirements in rl.area_connections_from(node):
+    for _, area, node in rl.all_regions_areas_nodes:
+        for dest_node, requirements in area.connections[node].items():
             for required_resources in resource_list:
                 size = len(required_resources)
                 required_resource_collection = {}
