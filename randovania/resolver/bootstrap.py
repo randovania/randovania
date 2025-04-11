@@ -210,6 +210,8 @@ class Bootstrap[Configuration: BaseConfiguration]:
             starting_node,
             patches,
             None,
+            game.resource_database,
+            game.region_list,
         )
 
         # Being present with value 0 is troublesome since this dict is used for a simplify_requirements later on
