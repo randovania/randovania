@@ -126,7 +126,7 @@ async def create_player_pool(
             configuration, rng, game, num_players > 1, player_index=player_index
         )
         patches = dock_weakness_distributor.distribute_pre_fill_weaknesses(patches, rng)
-        patches = await game.game.hints.hint_distributor.assign_pre_filler_hints(
+        patches = await configuration.game.hints.hint_distributor.assign_pre_filler_hints(
             patches,
             PreFillParams(
                 rng,
@@ -213,7 +213,7 @@ def _distribute_remaining_items(rng: Random, filler_results: FillerResults, pres
         for pickup_node in filter_unassigned_pickup_nodes(
             filler_result.graph.nodes, filler_result.patches.pickup_assignment
         ):
-            location_category = filler_result.patches.game.region_list.node_from_pickup_index(
+            location_category = filler_result.patches.game.node_from_pickup_index(
                 pickup_node.pickup_index
             ).location_category
             if split_major and location_category == LocationCategory.MAJOR:
