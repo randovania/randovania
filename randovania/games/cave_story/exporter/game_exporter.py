@@ -16,6 +16,8 @@ from randovania.lib import json_lib, status_update_lib
 if typing.TYPE_CHECKING:
     from caver.schema import CaverData
 
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
+
 
 @dataclasses.dataclass(frozen=True)
 class CSGameExportParams(GameExportParams):
@@ -58,6 +60,7 @@ class CSGameExporter(GameExporter[CSGameExportParams]):
         patch_data: dict,
         export_params: CSGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
+        randovania_meta: PatcherDataMeta,
     ) -> None:
         new_patch = typing.cast("CaverData", copy.copy(patch_data))
         if new_patch["mychar"] is not None:

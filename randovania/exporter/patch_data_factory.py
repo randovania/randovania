@@ -28,6 +28,7 @@ if TYPE_CHECKING:
 
 class PatcherDataMeta(typing.TypedDict):
     layout_was_user_modified: bool
+    has_spoiler: bool
 
 
 class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCosmeticPatches]:
@@ -83,6 +84,7 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
         json_delta.patch(game_data, self.patches.custom_patcher_data)
         game_data["_randovania_meta"] = {
             "layout_was_user_modified": self.description.user_modified,
+            "has_spoiler": self.description.has_spoiler,
         }
         return game_data
 
