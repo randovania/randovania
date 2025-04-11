@@ -5,11 +5,15 @@ import shutil
 from collections.abc import Callable
 from enum import Enum
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import randovania
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams, input_hash_for_directory
 from randovania.lib import json_lib, status_update_lib
+
+if TYPE_CHECKING:
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
 
 
 class DreadModPlatform(Enum):
@@ -72,6 +76,7 @@ class DreadGameExporter(GameExporter[DreadGameExportParams]):
         patch_data: dict,
         export_params: DreadGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
+        randovania_meta: PatcherDataMeta,
     ):
         export_params.output_path.mkdir(parents=True, exist_ok=True)
 
@@ -88,7 +93,8 @@ class DreadGameExporter(GameExporter[DreadGameExportParams]):
             f"Randovania {randovania.VERSION} - open-dread-rando {open_dread_rando_version}",
         )
 
-        json_lib.write_path(export_params.output_path.joinpath("patcher.json"), patch_data)
+        if randovania_meta["has_spoiler"]:
+            json_lib.write_path(export_params.output_path.joinpath("patcher.json"), patch_data)
 
         patcher_update: status_update_lib.ProgressUpdateCallable
         if export_params.post_export is not None:

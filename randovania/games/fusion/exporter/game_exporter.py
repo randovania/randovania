@@ -10,6 +10,7 @@ from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.lib import json_lib
 
 if TYPE_CHECKING:
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.lib import status_update_lib
 
 
@@ -47,6 +48,7 @@ class FusionGameExporter(GameExporter[FusionGameExportParams]):
         patch_data: dict,
         export_params: FusionGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
+        randovania_meta: PatcherDataMeta,
     ) -> None:
         from mars_patcher import patcher
 
@@ -60,6 +62,7 @@ class FusionGameExporter(GameExporter[FusionGameExportParams]):
                 progress_update,
             )
         finally:
-            json_lib.write_path(
-                export_params.output_path.parent.joinpath(f"{export_params.output_path.stem}_mars.json"), patch_data
-            )
+            if randovania_meta["has_spoiler"]:
+                json_lib.write_path(
+                    export_params.output_path.parent.joinpath(f"{export_params.output_path.stem}_mars.json"), patch_data
+                )

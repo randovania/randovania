@@ -14,6 +14,7 @@ from randovania.games.common.dotnet import is_dotnet_set_up
 if TYPE_CHECKING:
     from multiprocessing.connection import Connection
 
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.lib import status_update_lib
 
 
@@ -51,6 +52,7 @@ class AM2RGameExporter(GameExporter[AM2RGameExportParams]):
         patch_data: dict,
         export_params: AM2RGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
+        randovania_meta: PatcherDataMeta,
     ) -> None:
         # Check if dotnet is available
         # Raises error in case it's not set up
