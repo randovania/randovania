@@ -11,9 +11,9 @@ from randovania.lib import frozen_lib
 if typing.TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.node_provider import NodeProvider
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_collection import ResourceCollection
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
 
 NodeIndex = int
@@ -35,7 +35,7 @@ class NodeLocation:
 class NodeContext:
     patches: GamePatches | None  # this shouldn't be None, but certain places can't provide one
     current_resources: ResourceCollection
-    database: ResourceDatabase
+    database: ResourceDatabaseView
     node_provider: NodeProvider
 
     def has_resource(self, resource: ResourceInfo) -> bool:
