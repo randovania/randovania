@@ -32,7 +32,7 @@ def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_re
     db = data.game
 
     useless_target = PickupTarget(
-        pickup_creator.create_nothing_pickup(db.resource_database, "Empty"), data.players_config.player_index
+        pickup_creator.create_nothing_pickup(db.get_resource_database_view(), "Empty"), data.players_config.player_index
     )
 
     memo_data = data.create_memo_data()
