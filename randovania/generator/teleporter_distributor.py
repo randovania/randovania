@@ -5,7 +5,6 @@ from collections import defaultdict
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.generator.base_patches_factory import MissingRng
 from randovania.layout.lib.teleporters import TeleporterConfiguration, TeleporterShuffleMode
 
 if TYPE_CHECKING:
@@ -190,9 +189,6 @@ def get_teleporter_connections(
     teleporter_connection: TeleporterConnection = {}
 
     if not teleporters.is_vanilla:
-        if rng is None:
-            raise MissingRng("Teleporter")
-
         teleporter_dock_types = [
             dock_type for dock_type in game.get_dock_types() if dock_type.extra.get("is_teleporter", False)
         ]
