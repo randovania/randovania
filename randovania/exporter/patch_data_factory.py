@@ -103,7 +103,7 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
 
     def create_useless_pickup(self) -> PickupEntry:
         """Used for any location with no PickupEntry assigned to it."""
-        return pickup_creator.create_nothing_pickup(self.game.resource_database)
+        return pickup_creator.create_nothing_pickup(self.game.get_resource_database_view())
 
     def create_visual_nothing(self) -> PickupEntry:
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
