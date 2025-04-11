@@ -130,7 +130,10 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
         next_reach.act_on(action)
         collect_all_safe_resources_in_reach(next_reach)
 
-        if previous_safe_nodes <= set(next_reach.safe_nodes):
+        if previous_safe_nodes <= set(next_reach.safe_nodes) and all(
+            resource not in game.dangerous_resources
+            for resource, _ in action.resource_gain_on_collect(previous_reach.node_context())
+        ):
             # print("Non-safe {} was good".format(logic.game.node_name(action)))
             return advance_reach_with_possible_unsafe_resources(next_reach)
 
