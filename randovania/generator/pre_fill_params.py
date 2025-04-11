@@ -1,7 +1,7 @@
 import dataclasses
 from random import Random
 
-from randovania.game_description.game_description import GameDescription
+from randovania.game_description.game_database_view import GameDatabaseView
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 
@@ -9,5 +9,5 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 class PreFillParams:
     rng: Random
     configuration: BaseConfiguration
-    game: GameDescription
+    game: GameDatabaseView
     is_multiworld: bool
