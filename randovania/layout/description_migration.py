@@ -701,7 +701,7 @@ def _migrate_v35(data: dict) -> None:
     for index, game in enumerate(game_modifications):
         for region in game["locations"].keys():
             for pickup in game["locations"][region].keys():
-                if game["locations"][region][pickup] == "Energy Transfer Module":
+                if "Energy Transfer Module" in game["locations"][region][pickup]:
                     game_modifications[index]["locations"][region][pickup] = "Nothing"
 
 
