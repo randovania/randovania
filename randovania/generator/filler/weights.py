@@ -22,6 +22,11 @@ class ActionWeights:
     """
     DANGEROUS_ACTION_MULTIPLIER: ClassVar[float] = 0.75
     """When weighting an action, indicates by how much the weight will be multiplied if the action is unsafe."""
+    UNLOCKS_ONE_ACTION_MULTIPLIER: ClassVar[float] = 0.5
+    """
+    When weighting an action, indicates by how much the weight will be multiplied if
+    the action only one other new action.
+    """
 
     ADDITIONAL_NODES_WEIGHT_MULTIPLIER: ClassVar[float] = 0.01
     """
