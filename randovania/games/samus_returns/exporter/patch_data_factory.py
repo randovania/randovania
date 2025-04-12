@@ -706,7 +706,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
                 "reverse_area8": self.configuration.reverse_area8,
             },
             "text_patches": dict(sorted(self._static_text_changes().items())),
-            "spoiler_log": self._credits_spoiler() if self.description.has_spoiler else {},
+            "spoiler_log": self._credits_spoiler() if randovania_meta["in_race_setting"] else {},
             "hints": self._encode_hints(self.rng),
             "final_boss_hint": self._create_final_boss_hint(),
             "cosmetic_patches": self._create_cosmetics(

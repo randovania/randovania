@@ -62,7 +62,7 @@ class FusionGameExporter(GameExporter[FusionGameExportParams]):
                 progress_update,
             )
         finally:
-            if randovania_meta["has_spoiler"]:
+            if randovania_meta["in_race_setting"]:
                 json_lib.write_path(
                     export_params.output_path.parent.joinpath(f"{export_params.output_path.stem}_mars.json"), patch_data
                 )

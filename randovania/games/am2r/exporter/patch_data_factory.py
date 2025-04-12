@@ -257,9 +257,9 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
             "save_room": self.game.region_list.node_by_identifier(self.patches.starting_location).extra["save_room"]
         }
 
-    def _create_hash_dict(self) -> dict:
+    def _create_hash_dict(self, rdv_meta: PatcherDataMeta) -> dict:
         return_dict: dict = {
-            "contains_spoiler": self.description.has_spoiler,
+            "contains_spoiler": rdv_meta["in_race_setting"],
             "word_hash": self.description.shareable_word_hash,
             "hash": self.description.shareable_hash,
             "session_uuid": str(self.players_config.get_own_uuid()),
@@ -523,7 +523,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
         }
 
         return {
-            "configuration_identifier": self._create_hash_dict(),
+            "configuration_identifier": self._create_hash_dict(randovania_meta),
             "starting_items": self._create_starting_items_dict(),
             "starting_location": self._create_starting_location(),
             "pickups": self._create_pickups_dict(pickup_list, text_data, model_data, self.rng),

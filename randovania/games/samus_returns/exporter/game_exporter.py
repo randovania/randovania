@@ -79,7 +79,7 @@ class MSRGameExporter(GameExporter[MSRGameExportParams]):
             f"OSRR v{open_samus_returns_rando_version}",
         )
 
-        if randovania_meta["has_spoiler"]:
+        if randovania_meta["in_race_setting"]:
             json_lib.write_path(export_params.output_path.joinpath("patcher.json"), patch_data)
 
         patcher_update: status_update_lib.ProgressUpdateCallable

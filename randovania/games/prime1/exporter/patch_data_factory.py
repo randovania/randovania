@@ -1066,7 +1066,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
             },
             "tweaks": ctwk_config,
             "levelData": level_data,
-            "hasSpoiler": self.description.has_spoiler,
+            "hasSpoiler": randovania_meta["in_race_setting"],
             "roomRandoMode": self.configuration.room_rando.value,
             "randEnemyAttributes": (
                 self.configuration.enemy_attributes.as_json if self.configuration.enemy_attributes is not None else None
