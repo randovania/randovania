@@ -93,7 +93,7 @@ class DreadGameExporter(GameExporter[DreadGameExportParams]):
             f"Randovania {randovania.VERSION} - open-dread-rando {open_dread_rando_version}",
         )
 
-        if randovania_meta["in_race_setting"]:
+        if not randovania_meta["in_race_setting"]:
             json_lib.write_path(export_params.output_path.joinpath("patcher.json"), patch_data)
 
         patcher_update: status_update_lib.ProgressUpdateCallable

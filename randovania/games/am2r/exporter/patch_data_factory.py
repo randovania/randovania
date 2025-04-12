@@ -259,7 +259,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
 
     def _create_hash_dict(self, rdv_meta: PatcherDataMeta) -> dict:
         return_dict: dict = {
-            "contains_spoiler": rdv_meta["in_race_setting"],
+            "contains_spoiler": not rdv_meta["in_race_setting"],
             "word_hash": self.description.shareable_word_hash,
             "hash": self.description.shareable_hash,
             "session_uuid": str(self.players_config.get_own_uuid()),

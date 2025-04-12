@@ -92,7 +92,7 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
 
         randovania_meta: PatcherDataMeta = {
             "layout_was_user_modified": self.description.user_modified,
-            "in_race_setting": self.description.has_spoiler,
+            "in_race_setting": not self.description.has_spoiler,
         }
 
         randovania_meta = randovania_meta | meta_overwrite
