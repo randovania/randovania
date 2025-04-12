@@ -24,6 +24,7 @@ from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 if TYPE_CHECKING:
     from random import Random
 
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.db.dock import DockType
     from randovania.game_description.db.node_identifier import NodeIdentifier
@@ -659,7 +660,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
         return pickup_creator.create_visual_nothing(self.game_enum(), "Nothing")
 
-    def create_game_specific_data(self) -> dict:
+    def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         # Setup
         db = self.game
         namer = PrimeHintNamer(self.description.all_patches, self.players_config)

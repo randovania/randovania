@@ -28,7 +28,7 @@ if TYPE_CHECKING:
 
 class PatcherDataMeta(typing.TypedDict):
     layout_was_user_modified: bool
-    has_spoiler: bool
+    in_race_setting: bool
 
 
 class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCosmeticPatches]:
@@ -73,19 +73,33 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
         """Returns the game for which this PatchDataFactory is for."""
         raise NotImplementedError
 
-    def create_game_specific_data(self) -> dict:
+    def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         """Creates the game specific data. Should be overwritten by individual games."""
         raise NotImplementedError
 
-    def create_data(self) -> dict:
-        """Creates the patcher specific data. Applies custom patcher data on top if they exist."""
+    def create_data(self, custom_metadata: dict | None = None) -> dict:
+        """
+        Creates the patcher specific data. Applies custom patcher data on top if they exist.
+        :param custom_metadata: If provided, will be applied on top of randovania metadata.
+        :return: The patcher data, with the randovania metadata included, as a dict.
+        """
 
-        game_data = self.create_game_specific_data()
-        json_delta.patch(game_data, self.patches.custom_patcher_data)
-        game_data["_randovania_meta"] = {
+        # Getting around a mutable default argument.
+        if custom_metadata is None:
+            meta_overwrite = {}
+        else:
+            meta_overwrite = custom_metadata
+
+        randovania_meta: PatcherDataMeta = {
             "layout_was_user_modified": self.description.user_modified,
-            "has_spoiler": self.description.has_spoiler,
+            "in_race_setting": self.description.has_spoiler,
         }
+
+        randovania_meta = randovania_meta | meta_overwrite
+
+        game_data = self.create_game_specific_data(randovania_meta)
+        json_delta.patch(game_data, self.patches.custom_patcher_data)
+        game_data["_randovania_meta"] = randovania_meta
         return game_data
 
     def create_memo_data(self) -> dict[str, str]:

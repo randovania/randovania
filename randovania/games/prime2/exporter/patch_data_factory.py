@@ -35,6 +35,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable, Iterator
 
     from randovania.exporter.hints.hint_namer import HintNamer
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.dock import DockType
     from randovania.game_description.db.region import Region
@@ -631,7 +632,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
             "hud_color": self.cosmetic_patches.hud_color if self.cosmetic_patches.use_hud_color else None,
         }
 
-    def create_game_specific_data(self) -> dict[str, typing.Any]:
+    def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict[str, typing.Any]:
         result: dict[str, typing.Any] = {}
         _add_header_data_to_result(self.description, result)
 
