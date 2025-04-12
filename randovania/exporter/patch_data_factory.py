@@ -84,7 +84,7 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
         :return: The patcher data, with the randovania metadata included, as a dict.
         """
 
-        meta_overwrite = custom_metadata or {}
+        meta_overwrite: PatcherDataMeta = custom_metadata or {}
 
         randovania_meta: PatcherDataMeta = {
             "layout_was_user_modified": self.description.user_modified,
