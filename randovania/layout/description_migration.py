@@ -702,6 +702,8 @@ def _migrate_v35(data: dict) -> None:
         for region in game["locations"].keys():
             for location, pickup in game["locations"][region].items():
                 if "Energy Transfer Module" in pickup:
+                    # Formatted so because some older rdvgames append "for player X" to ETMs
+                    # Bad migration perhaps? idk
                     game_modifications[index]["locations"][region].update({location: "Nothing"})
 
 
