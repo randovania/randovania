@@ -28,7 +28,7 @@ if TYPE_CHECKING:
 
 class PatcherDataMeta(typing.TypedDict):
     layout_was_user_modified: bool
-    has_spoiler: bool
+    in_race_setting: bool
 
 
 class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCosmeticPatches]:
@@ -73,19 +73,28 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
         """Returns the game for which this PatchDataFactory is for."""
         raise NotImplementedError
 
-    def create_game_specific_data(self) -> dict:
+    def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         """Creates the game specific data. Should be overwritten by individual games."""
         raise NotImplementedError
 
-    def create_data(self) -> dict:
-        """Creates the patcher specific data. Applies custom patcher data on top if they exist."""
-
-        game_data = self.create_game_specific_data()
-        json_delta.patch(game_data, self.patches.custom_patcher_data)
-        game_data["_randovania_meta"] = {
+    def create_default_patcher_data_meta(self) -> PatcherDataMeta:
+        return {
             "layout_was_user_modified": self.description.user_modified,
-            "has_spoiler": self.description.has_spoiler,
+            "in_race_setting": not self.description.has_spoiler,
         }
+
+    def create_data(self, custom_metadata: PatcherDataMeta | None = None) -> dict:
+        """
+        Creates the patcher specific data. Applies custom patcher data on top if they exist.
+        :param custom_metadata: If provided, will be used over the default randovania metadata.
+        :return: The patcher data, with the randovania metadata included, as a dict.
+        """
+
+        randovania_meta = custom_metadata or self.create_default_patcher_data_meta()
+
+        game_data = self.create_game_specific_data(randovania_meta)
+        json_delta.patch(game_data, self.patches.custom_patcher_data)
+        game_data["_randovania_meta"] = randovania_meta
         return game_data
 
     def create_memo_data(self) -> dict[str, str]:

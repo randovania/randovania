@@ -16,6 +16,7 @@ from randovania.lib import json_lib
 if TYPE_CHECKING:
     from random import Random
 
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.game_description.pickup.pickup_entry import PickupEntry
 
@@ -166,7 +167,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
         return pickup_creator.create_visual_nothing(self.game_enum(), "spr_ITEM_Nothing")
 
-    def create_game_specific_data(self) -> dict:
+    def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         pickup_list = self.export_pickup_list()
 
         return {

@@ -23,6 +23,7 @@ from randovania.lib import random_lib
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
@@ -667,7 +668,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
         return pickup_creator.create_visual_nothing(self.game_enum(), "Nothing")
 
-    def create_game_specific_data(self) -> dict:
+    def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
         starting_text = self._starting_inventory_text()
@@ -705,7 +706,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
                 "reverse_area8": self.configuration.reverse_area8,
             },
             "text_patches": dict(sorted(self._static_text_changes().items())),
-            "spoiler_log": self._credits_spoiler() if self.description.has_spoiler else {},
+            "spoiler_log": self._credits_spoiler() if not randovania_meta["in_race_setting"] else {},
             "hints": self._encode_hints(self.rng),
             "final_boss_hint": self._create_final_boss_hint(),
             "cosmetic_patches": self._create_cosmetics(
