@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: When submitting proof for an async race, it is now clearer that it's only providing a proof URL is not required if submission notes were given.
 - Removed: The initial Randovania screen no longer contains the list of supported games.
 
+### Generator
+
+- Fixed: Bug where the generator would collect dangerous resources too early, leading to generation failure in some cases.
+
 ### AM2R
 
 - Fixed: Long Beam, Infinite Bomb Propulsion and Walljump Boots now show up in the credits spoiler log.
