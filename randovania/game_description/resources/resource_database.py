@@ -22,7 +22,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
 
-def default_base_damage_reduction(db: ResourceDatabase, current_resources: ResourceCollection) -> float:
+def default_base_damage_reduction(db: ResourceDatabaseView, current_resources: ResourceCollection) -> float:
     return 1.0
 
 
@@ -54,7 +54,7 @@ class ResourceDatabase(ResourceDatabaseView):
     requirement_template: dict[str, NamedRequirementTemplate]
     damage_reductions: dict[SimpleResourceInfo, list[DamageReduction]]
     energy_tank_item: ItemResourceInfo
-    base_damage_reduction: Callable[[ResourceDatabase, ResourceCollection], float] = default_base_damage_reduction
+    base_damage_reduction: Callable[[ResourceDatabaseView, ResourceCollection], float] = default_base_damage_reduction
     resource_by_index: list[ResourceInfo | None] = dataclasses.field(default_factory=list)
 
     def __post_init__(self) -> None:

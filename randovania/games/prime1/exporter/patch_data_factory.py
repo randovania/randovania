@@ -29,10 +29,10 @@ if TYPE_CHECKING:
     from randovania.game_description.db.dock import DockType
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import Region, RegionList
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.layout.layout_description import LayoutDescription
     from randovania.lib.json_lib import JsonObject
 
@@ -186,7 +186,7 @@ def _create_locations_with_modal_hud_memo(pickups: list[pickup_exporter.Exported
 
 
 def _starting_items_value_for(
-    resource_database: ResourceDatabase, starting_items: ResourceCollection, index: str
+    resource_database: ResourceDatabaseView, starting_items: ResourceCollection, index: str
 ) -> bool | int:
     item = resource_database.get_item(index)
     value = starting_items[item]
