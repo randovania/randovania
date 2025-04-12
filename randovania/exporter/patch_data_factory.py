@@ -84,14 +84,13 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
         :return: The patcher data, with the randovania metadata included, as a dict.
         """
 
-        meta_overwrite: PatcherDataMeta = custom_metadata or {}
-
         randovania_meta: PatcherDataMeta = {
             "layout_was_user_modified": self.description.user_modified,
             "in_race_setting": not self.description.has_spoiler,
         }
 
-        randovania_meta = randovania_meta | meta_overwrite
+        if custom_metadata is not None:
+            randovania_meta = randovania_meta | custom_metadata
 
         game_data = self.create_game_specific_data(randovania_meta)
         json_delta.patch(game_data, self.patches.custom_patcher_data)
