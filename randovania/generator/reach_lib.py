@@ -152,15 +152,12 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
     return previous_reach
 
 
-def advance_to_with_reach_copy(base_reach: GeneratorReach, state: State) -> GeneratorReach:
+def advance_after_action(potential_reach: GeneratorReach) -> GeneratorReach:
     """
-    Copies the given Reach, advances to the given State and collect all possible resources.
-    :param base_reach:
-    :param state:
+    Collect all possible resources.
+    :param potential_reach:
     :return:
     """
-    potential_reach = copy.deepcopy(base_reach)
-    potential_reach.advance_to(state)
 
     if potential_reach.filler_config.consider_possible_unsafe_resources:
         return advance_reach_with_possible_unsafe_resources(potential_reach)
