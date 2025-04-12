@@ -154,9 +154,9 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
 
 def advance_after_action(potential_reach: GeneratorReach) -> GeneratorReach:
     """
-    Collect all possible resources.
-    :param potential_reach:
-    :return:
+    Advances the reach after performing an action, collecting unlocked resources.
+    :param potential_reach: Reach after collecting action
+    :return: Reach after collecting resources
     """
 
     if potential_reach.filler_config.consider_possible_unsafe_resources:
