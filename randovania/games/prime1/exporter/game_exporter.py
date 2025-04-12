@@ -19,6 +19,7 @@ from randovania.lib.status_update_lib import DynamicSplitProgressUpdate, Progres
 from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.game_description.db.dock import DockType
     from randovania.game_description.db.region import Region
     from randovania.lib import status_update_lib
@@ -183,6 +184,7 @@ class PrimeGameExporter(GameExporter[PrimeGameExportParams]):
         patch_data: dict,
         export_params: PrimeGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
+        randovania_meta: PatcherDataMeta,
     ) -> None:
         input_file = export_params.input_path
         output_file = export_params.output_path

@@ -6812,7 +6812,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Damage Reqs",
+                                                        "comment": "Damage Run",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -6953,15 +6953,6 @@
                                             "comment": "Damage Run",
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "DamageRuns",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
                                                     "type": "or",
                                                     "data": {
                                                         "comment": null,
@@ -6972,15 +6963,20 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Have Any Suit Upgrade"
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "DamageRuns",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
                                                                         },
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
-                                                                                "type": "damage",
-                                                                                "name": "ElectricDamage",
-                                                                                "amount": 8,
+                                                                                "type": "items",
+                                                                                "name": "GravitySuit",
+                                                                                "amount": 1,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -6990,10 +6986,48 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
                                                                     "type": "damage",
                                                                     "name": "ElectricDamage",
                                                                     "amount": 31,
                                                                     "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "ElectricDamage",
+                                                                                "amount": 8,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Have Any Suit Upgrade"
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -7022,17 +7056,17 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Water Lowered allows the tricks without Gravity Suit",
                                             "items": [
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Lower the Water",
                                                         "items": [
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Damage Run",
+                                                                    "comment": "Damage Run in the Water",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -7044,15 +7078,20 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Have Any Suit Upgrade"
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "GravitySuit",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
                                                                         },
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "damage",
                                                                                 "name": "ElectricDamage",
-                                                                                "amount": 9,
+                                                                                "amount": 30,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -7074,12 +7113,12 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Jump Extends: https://youtu.be/Uml2Ho_DIqE",
                                                         "items": [
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Shinespark: https://youtu.be/YHSP9j7wIeE",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -7095,15 +7134,6 @@
                                                                             "data": {
                                                                                 "type": "tricks",
                                                                                 "name": "ShinesparkTrick",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "GravitySuit",
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
@@ -7280,7 +7310,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "DamageRuns",
-                                                                    "amount": 2,
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -7288,7 +7318,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "NormalDamage",
+                                                                    "name": "ElectricDamage",
                                                                     "amount": 30,
                                                                     "negate": false
                                                                 }
