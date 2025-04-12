@@ -77,7 +77,7 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
         """Creates the game specific data. Should be overwritten by individual games."""
         raise NotImplementedError
 
-    def create_data(self, custom_metadata: dict | None = None) -> dict:
+    def create_data(self, custom_metadata: PatcherDataMeta) -> dict:
         """
         Creates the patcher specific data. Applies custom patcher data on top if they exist.
         :param custom_metadata: If provided, will be applied on top of randovania metadata.
