@@ -12,7 +12,6 @@ if TYPE_CHECKING:
     from randovania.game_description.db.pickup_node import PickupNode
     from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
     from randovania.resolver.damage_state import DamageState
@@ -67,7 +66,7 @@ class DreadBootstrap(Bootstrap[DreadConfiguration]):
     def event_resources_for_configuration(
         self,
         configuration: DreadConfiguration,
-        resource_database: ResourceDatabase,
+        resource_database: ResourceDatabaseView,
     ) -> ResourceGain:
         if configuration.hanubia_shortcut_no_grapple:
             for name in ["s080_shipyard:default:grapplepulloff1x2_000", "s080_shipyard:default:grapplepulloff1x2"]:

@@ -76,7 +76,7 @@ class AM2RBootstrap(Bootstrap[AM2RConfiguration]):
         return enabled_resources
 
     def _damage_reduction(
-        self, configuration: AM2RConfiguration, db: ResourceDatabase, current_resources: ResourceCollection
+        self, configuration: AM2RConfiguration, db: ResourceDatabaseView, current_resources: ResourceCollection
     ) -> float:
         num_suits = sum(
             (1 if current_resources[db.get_item_by_display_name(suit)] else 0)
