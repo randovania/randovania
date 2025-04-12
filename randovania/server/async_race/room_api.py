@@ -370,8 +370,10 @@ def join_and_export(sa: ServerApp, room_id: int, auth_token: str, cosmetic_json:
     cosmetic_patches = preset.game.data.layout.cosmetic_patches.from_json(cosmetic_json)
 
     data_factory = preset.game.patch_data_factory(layout_description, players_config, cosmetic_patches)
+    rdv_meta = data_factory.create_default_patcher_data_meta()
+    rdv_meta["in_race_setting"] = True
     try:
-        result = data_factory.create_data({"in_race_setting": True})
+        result = data_factory.create_data(rdv_meta)
         return result
     except Exception as e:
         raise error.InvalidActionError(f"Unable to export game: {e}")
