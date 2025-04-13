@@ -42,6 +42,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Fix the Door Lock Rando misc resource being called Dock Rando.
 
+##### Phendrana Drifts
+
+- Fixed: Observatory: Logic will now properly reflect the fact that you can activate the Observatory even after collecting the item in Research Core.
+
 ### Metroid Prime 2: Echoes
 
 - Changed: The Light and Dark regions are now properly different regions for Randovania.
