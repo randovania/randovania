@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Generator
 
 - Fixed: Bugs where the generator would collect dangerous resources too early, leading to generation failure in some cases.
+- Fixed: Bug where the requirements that apply beyond a point of no return weren't considered correctly.
 - Improved: Try a little harder to check if seemingly unsafe options are actually safe.
 
 ### AM2R
