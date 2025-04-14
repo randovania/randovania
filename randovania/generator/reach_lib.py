@@ -137,14 +137,12 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
             # print("Non-safe {} was good".format(logic.game.node_name(action)))
             return advance_reach_with_possible_unsafe_resources(next_reach)
 
-        if next_reach.is_reachable_node(initial_state.node):
-            next_next_state = next_reach.state.copy()
-            next_next_state.node = initial_state.node
+        next_next_state = next_reach.state.copy()
 
-            next_reach = reach_with_all_safe_resources(game, next_next_state, previous_reach.filler_config)
-            if previous_safe_nodes <= set(next_reach.safe_nodes):
-                # print("Non-safe {} could reach back to where we were".format(logic.game.node_name(action)))
-                return advance_reach_with_possible_unsafe_resources(next_reach)
+        next_reach = reach_with_all_safe_resources(game, next_next_state, previous_reach.filler_config)
+        if next_reach.is_reachable_node(initial_state.node) and previous_safe_nodes <= set(next_reach.safe_nodes):
+            # print("Non-safe {} could reach back to where we were".format(logic.game.node_name(action)))
+            return advance_reach_with_possible_unsafe_resources(next_reach)
         else:
             pass
 
