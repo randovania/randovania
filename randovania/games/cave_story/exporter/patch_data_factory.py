@@ -35,6 +35,7 @@ if TYPE_CHECKING:
         TscScript,
     )
 
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
 
@@ -65,7 +66,7 @@ class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
     def hint_exporter_type(cls) -> type[CSHintExporter]:
         return CSHintExporter
 
-    def create_game_specific_data(self) -> dict:
+    def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         self._seed_number = self.description.get_seed_for_world(self.players_config.player_index)
 
         self._maps = self._create_maps_data()

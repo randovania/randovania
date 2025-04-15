@@ -9,13 +9,14 @@ from randovania.games.blank.layout import BlankConfiguration, BlankCosmeticPatch
 
 if TYPE_CHECKING:
     from randovania.exporter.hints.hint_namer import HintNamer
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
 
 
 class BlankPatchDataFactory(PatchDataFactory[BlankConfiguration, BlankCosmeticPatches]):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.BLANK
 
-    def create_game_specific_data(self) -> dict:
+    def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         return {}
 
     @override
