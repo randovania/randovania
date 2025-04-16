@@ -1,0 +1,284 @@
+----------------
+Gorea 1 Arena
+Extra - room_id: 91
+Extra - entity_file: Gorea_b1_Ent.bin
+> Room Center; Heals? False; Default Node
+  * Layers: default
+  * Extra - entity_id: 0
+  * Extra - position: frozendict.frozendict({'x': 752.011474609375, 'y': 80.011474609375, 'z': 80.001220703125})
+  * Extra - up_vector: frozendict.frozendict({'x': 80.001220703125, 'y': 80.001220703125, 'z': 80.001220703125})
+  * Extra - facing_vector: frozendict.frozendict({'x': 80.001220703125, 'y': 80.001220703125, 'z': 398550.84033203125})
+  * Extra - entity_type_data: frozendict.frozendict({'availabilty': 105, 'active': True})
+  > Dock to Gorea 2 Arena
+      Battlehammer and Imperialist and Judicator and Magmaul and Shock Coil and Volt Driver and After Defeat Gorea 1
+  > Event - Gorea 1
+      Trivial
+  > Dock to Oubliette Gateway
+      Trivial
+  > Event - Credits
+      After Defeat Gorea 1
+
+> Dock to Gorea 2 Arena; Heals? False
+  * Layers: default
+  * Dock to Gorea 2 Arena/Dock to Gorea 1 Arena
+  > Room Center
+      Trivial
+
+> Event - Gorea 1; Heals? False
+  * Layers: default
+  * Event Defeat Gorea 1
+  > Room Center
+      Trivial
+
+> Dock to Oubliette Gateway; Heals? False
+  * Layers: default
+  * Dock to Oubliette Gateway/Dock to Gorea 1 Arena
+  > Room Center
+      Trivial
+
+> Event - Credits; Heals? False
+  * Layers: default
+  * Event Credits
+  > Room Center
+      Trivial
+
+----------------
+Gorea 2 Arena
+Extra - room_id: 92
+Extra - entity_file: gorea_b2_Ent.bin
+> Player Spawn; Heals? False; Default Node
+  * Layers: default
+  * Extra - entity_id: 0
+  * Extra - position: frozendict.frozendict({'x': 848.01318359375, 'y': 16.012939453125, 'z': 0.0})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 398550.84033203125})
+  * Extra - entity_type_data: frozendict.frozendict({'availabilty': 105, 'active': True})
+  > Dock to Gorea 1 Arena
+      Trivial
+
+> Dock to Gorea 1 Arena; Heals? False
+  * Layers: default
+  * Dock to Gorea 1 Arena/Dock to Gorea 2 Arena
+  > Player Spawn
+      Trivial
+  > Event - Credits
+      After Defeat Gorea 2
+  > Event - Gorea 2 Defeated
+      Trivial
+
+> Event - Credits; Heals? False
+  * Layers: default
+  * Event Credits
+  > Dock to Gorea 1 Arena
+      Trivial
+
+> Event - Gorea 2 Defeated; Heals? False
+  * Layers: default
+  * Event Defeat Gorea 2
+  > Dock to Gorea 1 Arena
+      Trivial
+
+----------------
+Oubliette Gateway
+Extra - room_id: 89
+Extra - entity_file: Gorea_Land_Ent.bin
+> Ship; Heals? False; Default Node
+  * Layers: default
+  * Teleporter Network (Unlocked by After Oubliette Unlocked)
+  * Extra - entity_id: 0
+  * Extra - position: frozendict.frozendict({'x': 352.00537109375, 'y': 192.00537109375, 'z': 192.0029296875})
+  * Extra - up_vector: frozendict.frozendict({'x': 192.0029296875, 'y': 192.0029296875, 'z': 192.0029296875})
+  * Extra - facing_vector: frozendict.frozendict({'x': 192.0029296875, 'y': 192.0029296875, 'z': 398550.84033203125})
+  * Extra - entity_type_data: frozendict.frozendict({'availabilty': 105, 'active': True})
+  > Door to Oubliette Gateway (Ship Room Door South)
+      Trivial
+
+> Portal to Oubliette Storage; Heals? False
+  * Layers: default
+  * Portal to Oubliette Storage/Portal to Oubliette Gateway
+  * Extra - entity_id: 3
+  * Extra - position: frozendict.frozendict({'x': 0.0, 'y': 4.44921875, 'z': -74.98583984375})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
+  * Extra - entity_type_data: frozendict.frozendict({'load_index': 11, 'target_index': 11, 'artifact_id': 11, 'active': True, 'invisible': False, 'entity_filename': 'Gorea_Peek_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
+  > Door to Oubliette Gateway (Arena Access Door South)
+      Trivial
+
+> Door to Oubliette Gateway (Arena Access Door South); Heals? False
+  * Layers: default
+  * Normal Door to Oubliette Gateway/Door to Oubliette Gateway (Arena Access Door North)
+  * Extra - entity_id: 4
+  * Extra - position: frozendict.frozendict({'x': 0.0, 'y': -8.99609375, 'z': -116.2548828125})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
+  * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 2, 'connector_id': 255, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 255, 'out_loader_id': 32, 'entity_filename': ' ', 'room_name': ' '})
+  > Portal to Oubliette Storage
+      Trivial
+  > Door to Oubliette Gateway (Storage Portal Room Door North)
+      Trivial
+
+> Portal to Oubliette Gateway (Elevator Room); Heals? False
+  * Layers: default
+  * Portal to Oubliette Gateway/Portal to Oubliette Gateway (Lookout Room)
+  * Extra - entity_id: 6
+  * Extra - position: frozendict.frozendict({'x': 0.064697265625, 'y': 1.116943359375, 'z': 28.40869140625})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
+  * Extra - entity_type_data: frozendict.frozendict({'load_index': 12, 'target_index': 13, 'artifact_id': 8, 'active': True, 'invisible': False, 'entity_filename': 'Gorea_Land_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
+  > Door to Oubliette Gateway (Elevator Room Door North)
+      Trivial
+
+> Portal to Oubliette Gateway (Lookout Room); Heals? False
+  * Layers: default
+  * Portal to Oubliette Gateway/Portal to Oubliette Gateway (Elevator Room)
+  * Extra - entity_id: 7
+  * Extra - position: frozendict.frozendict({'x': -7.100341796875, 'y': -1.0, 'z': -22.5107421875})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.726318359375, 'y': 0.0, 'z': 0.68701171875})
+  * Extra - entity_type_data: frozendict.frozendict({'load_index': 13, 'target_index': 12, 'artifact_id': 8, 'active': True, 'invisible': False, 'entity_filename': 'Gorea_Land_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
+  > Door to Oubliette Gateway (Lookout Room Door South)
+      Trivial
+
+> Door to Oubliette Gateway (Elevator Room Door South); Heals? False
+  * Layers: default
+  * Normal Door to Oubliette Gateway/Door to Oubliette Gateway (Elevator Room Door North)
+  * Extra - entity_id: 10
+  * Extra - position: frozendict.frozendict({'x': 0.0, 'y': -14.0, 'z': 27.748779296875})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
+  * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 255, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 255, 'out_loader_id': 32, 'entity_filename': ' ', 'room_name': ' '})
+  > Door to Oubliette Gateway (Ship Room Door North)
+      Trivial
+
+> Door to Oubliette Gateway (Storage Portal Room Door South); Heals? False
+  * Layers: default
+  * Normal Door to Oubliette Gateway/Door to Oubliette Gateway (Storage Portal Room Door North)
+  * Extra - entity_id: 11
+  * Extra - position: frozendict.frozendict({'x': 0.0, 'y': -1.0, 'z': -36.7509765625})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
+  * Extra - entity_type_data: frozendict.frozendict({'node_name': 'port_rmShaft', 'palette_id': 9, 'door_type': 0, 'connector_id': 255, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 255, 'out_loader_id': 32, 'entity_filename': ' ', 'room_name': ' '})
+  > Door to Oubliette Gateway (Lookout Room Door North)
+      Trivial
+
+> Door to Oubliette Gateway (Lookout Room Door South); Heals? False
+  * Layers: default
+  * Normal Door to Oubliette Gateway/Door to Oubliette Gateway (Lookout Room Door North)
+  * Extra - entity_id: 9
+  * Extra - position: frozendict.frozendict({'x': 0.0, 'y': -1.0, 'z': -31.2490234375})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
+  * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 255, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 255, 'out_loader_id': 32, 'entity_filename': ' ', 'room_name': ' '})
+  > Portal to Oubliette Gateway (Lookout Room)
+      Trivial
+
+> Door to Oubliette Gateway (Ship Room Door South); Heals? False
+  * Layers: default
+  * Normal Door to Oubliette Gateway/Door to Oubliette Gateway (Ship Room Door North)
+  * Extra - entity_id: 8
+  * Extra - position: frozendict.frozendict({'x': 0.0, 'y': -14.0, 'z': 33.2509765625})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
+  * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 255, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 255, 'out_loader_id': 32, 'entity_filename': ' ', 'room_name': ' '})
+  > Ship
+      Trivial
+
+> Door to Oubliette Gateway (Ship Room Door North); Heals? False
+  * Layers: default
+  * Normal Door to Oubliette Gateway/Door to Oubliette Gateway (Ship Room Door South)
+  * Extra - entity_id: 8
+  * Extra - position: frozendict.frozendict({'x': 0.0, 'y': -14.0, 'z': 33.2509765625})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
+  * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 255, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 255, 'out_loader_id': 32, 'entity_filename': ' ', 'room_name': ' '})
+  > Door to Oubliette Gateway (Elevator Room Door South)
+      Trivial
+
+> Door to Oubliette Gateway (Elevator Room Door North); Heals? False
+  * Layers: default
+  * Normal Door to Oubliette Gateway/Door to Oubliette Gateway (Elevator Room Door South)
+  * Extra - entity_id: 10
+  * Extra - position: frozendict.frozendict({'x': 0.0, 'y': -14.0, 'z': 27.748779296875})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
+  * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 255, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 255, 'out_loader_id': 32, 'entity_filename': ' ', 'room_name': ' '})
+  > Portal to Oubliette Gateway (Elevator Room)
+      Trivial
+
+> Door to Oubliette Gateway (Lookout Room Door North); Heals? False
+  * Layers: default
+  * Normal Door to Oubliette Gateway/Door to Oubliette Gateway (Lookout Room Door South)
+  * Extra - entity_id: 9
+  * Extra - position: frozendict.frozendict({'x': 0.0, 'y': -1.0, 'z': -31.2490234375})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
+  * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 255, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 255, 'out_loader_id': 32, 'entity_filename': ' ', 'room_name': ' '})
+  > Door to Oubliette Gateway (Storage Portal Room Door South)
+      Trivial
+
+> Door to Oubliette Gateway (Storage Portal Room Door North); Heals? False
+  * Layers: default
+  * Normal Door to Oubliette Gateway/Door to Oubliette Gateway (Storage Portal Room Door South)
+  * Extra - entity_id: 11
+  * Extra - position: frozendict.frozendict({'x': 0.0, 'y': -1.0, 'z': -36.7509765625})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
+  * Extra - entity_type_data: frozendict.frozendict({'node_name': 'port_rmShaft', 'palette_id': 9, 'door_type': 0, 'connector_id': 255, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 255, 'out_loader_id': 32, 'entity_filename': ' ', 'room_name': ' '})
+  > Door to Oubliette Gateway (Arena Access Door South)
+      Trivial
+
+> Door to Oubliette Gateway (Arena Access Door North); Heals? False
+  * Layers: default
+  * Normal Door to Oubliette Gateway/Door to Oubliette Gateway (Arena Access Door South)
+  * Extra - entity_id: 4
+  * Extra - position: frozendict.frozendict({'x': 0.0, 'y': -8.99609375, 'z': -116.2548828125})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
+  * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 2, 'connector_id': 255, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 255, 'out_loader_id': 32, 'entity_filename': ' ', 'room_name': ' '})
+  > Dock to Gorea 1 Arena
+      Trivial
+
+> Dock to Gorea 1 Arena; Heals? False
+  * Layers: default
+  * Dock to Gorea 1 Arena/Dock to Oubliette Gateway
+  > Door to Oubliette Gateway (Arena Access Door North)
+      Trivial
+
+----------------
+Oubliette Storage
+Extra - room_id: 90
+Extra - entity_file: Gorea_Peek_Ent.bin
+> Portal to Oubliette Gateway; Heals? False
+  * Layers: default
+  * Portal to Oubliette Gateway/Portal to Oubliette Storage
+  * Extra - entity_id: 12
+  * Extra - position: frozendict.frozendict({'x': 0.30078125, 'y': 14.27490234375, 'z': 38.311767578125})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
+  * Extra - entity_type_data: frozendict.frozendict({'load_index': 11, 'target_index': 11, 'artifact_id': 11, 'active': True, 'invisible': False, 'entity_filename': 'Gorea_Land_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
+  > Player Spawn
+      Trivial
+  > Pickup (Energy Tank)
+      Trivial
+
+> Player Spawn; Heals? False; Default Node
+  * Layers: default
+  * Extra - entity_id: 0
+  * Extra - position: frozendict.frozendict({'x': 32.000732421875, 'y': 0.00048828125, 'z': 0.0})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 398550.84033203125})
+  * Extra - entity_type_data: frozendict.frozendict({'availabilty': 105, 'active': True})
+  > Portal to Oubliette Gateway
+      Trivial
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 64; Category? Minor
+  * Extra - entity_id: 1
+  * Extra - position: frozendict.frozendict({'x': -1.1923828125, 'y': 14.371826171875, 'z': 32.14697265625})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
+  * Extra - entity_type_data: frozendict.frozendict({'item_type': 4, 'enabled': True, 'has_base': True, 'always_active': False, 'max_spawn_count': 1, 'spawn_interval': 0, 'spawn_delay': 0, 'notify_entity_id': -1, 'collected_message': 0, 'collected_message_param1': 0, 'collected_message_param2': 0})
+  > Portal to Oubliette Gateway
+      Trivial
+
