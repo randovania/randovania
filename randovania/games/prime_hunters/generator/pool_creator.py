@@ -10,29 +10,29 @@ from randovania.generator.pickup_pool import PoolResults
 from randovania.generator.pickup_pool.pickup_creator import create_generated_pickup
 
 if TYPE_CHECKING:
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDescription) -> None:
+def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDatabaseView) -> None:
     assert isinstance(configuration, HuntersConfiguration)
 
     # Add Alimbic Artifacts to the item pool
-    results.extend_with(add_alimbic_artifacts(game.resource_database, game.get_pickup_database()))
+    results.extend_with(add_alimbic_artifacts(game.get_resource_database_view(), game.get_pickup_database()))
 
     # Add Octoliths to the item pool
     results.extend_with(add_octoliths(game, configuration.octoliths))
 
 
 def add_alimbic_artifacts(
-    resource_database: ResourceDatabase,
+    resource_database: ResourceDatabaseView,
     pickup_database: PickupDatabase,
 ) -> PoolResults:
     """
     :param resource_database:
+    :param pickup_database:
     :return:
     """
     item_pool: list[PickupEntry] = []
@@ -49,7 +49,7 @@ def add_alimbic_artifacts(
 
 
 def add_octoliths(
-    game: GameDescription,
+    game: GameDatabaseView,
     config: HuntersOctolithConfig,
 ) -> PoolResults:
     """
@@ -57,7 +57,7 @@ def add_octoliths(
     :return:
     """
     octoliths: list[PickupEntry] = [
-        create_generated_pickup("Octolith", game.resource_database, game.get_pickup_database(), i=i + 1)
+        create_generated_pickup("Octolith", game.get_resource_database_view(), game.get_pickup_database(), i=i + 1)
         for i in range(8)
     ]
 

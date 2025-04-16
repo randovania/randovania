@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 
 if TYPE_CHECKING:
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.lib import status_update_lib
 
 
@@ -44,5 +45,6 @@ class HuntersGameExporter(GameExporter[HuntersGameExportParams]):
         patch_data: dict,
         export_params: HuntersGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
+        randovania_meta: PatcherDataMeta,
     ) -> None:
         raise NotImplementedError("This method hasn't been implemented yet")

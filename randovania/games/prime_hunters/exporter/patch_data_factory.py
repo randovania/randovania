@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Final, override
 
-from randovania.exporter.patch_data_factory import PatchDataFactory
+from randovania.exporter.patch_data_factory import PatchDataFactory, PatcherDataMeta
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
@@ -129,7 +129,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
 
         return level_data
 
-    def create_game_specific_data(self) -> dict:
+    def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
         return {
             "starting_items": starting_items,
