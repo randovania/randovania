@@ -931,12 +931,10 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
 
         # Check if mains are required. If not, force the respective main to be a starting item.
         for ammo, state in self.configuration.ammo_pickup_configuration.pickups_state.items():
-            if ammo.name == "Missile Expansion":
-                if not state.requires_main_item:
-                    starting_items["missileLauncher"] = True
-            elif ammo.name == "Power Bomb Expansion":
-                if not state.requires_main_item:
-                    starting_items["powerBombLauncher"] = True
+            if ammo.name == "Missile Expansion" and not state.requires_main_item:
+                starting_items["missileLauncher"] = True
+            elif ammo.name == "Power Bomb Expansion" and not state.requires_main_item:
+                starting_items["powerBombLauncher"] = True
 
         if not self.configuration.legacy_mode:
             idrone_config = {
