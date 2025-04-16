@@ -36,10 +36,11 @@ def test_do_export_broken_internal_copy(tmp_path: Path):
     )
     progress_update = MagicMock()
     exporter = EchoesGameExporter()
+    randovania_meta = MagicMock()
 
     # Run
     with pytest.raises(UnableToExportError):
-        exporter._do_export_game(patch_data, export_params, progress_update)
+        exporter._do_export_game(patch_data, export_params, progress_update, randovania_meta)
 
 
 @pytest.mark.parametrize("has_input_iso", [False, True])
@@ -108,8 +109,10 @@ def test_do_export_game(
     )
     progress_update = MagicMock()
 
+    randovania_meta = MagicMock()
+
     # Run
-    exporter._do_export_game(patch_data, export_params, progress_update)
+    exporter._do_export_game(patch_data, export_params, progress_update, randovania_meta)
 
     # Assert
     if input_path is not None:

@@ -8,10 +8,11 @@ on:
         default: false
         type: boolean
       server_environment:
-        description: 'Which server to deploy to. Only staging is supported.'
+        description: 'Which server to deploy to. Only used for the `stable` branch.'
         type: choice
         options:
           - staging
+          - production
 
   pull_request:
   merge_group:
@@ -445,7 +446,11 @@ jobs:
         env:
             SHOULD_PUSH: ${{ github.event_name != 'pull_request' && github.event_name != 'merge_group' && !startsWith(github.ref, 'refs/heads/stable') }}
         run: |
-          echo should=${SHOULD_PUSH} >> $GITHUB_OUTPUT
+          if [[ "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
+            echo should=${{ inputs.deploy_server }} >> $GITHUB_OUTPUT
+          else
+            echo should=${SHOULD_PUSH} >> $GITHUB_OUTPUT
+          fi
 
       -
         name: Login to DockerHub
@@ -518,7 +523,9 @@ jobs:
             ENV=production
           fi
           if [[ "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
-            ENV="${{ inputs.server_environment }}"
+            if [[ $GITHUB_REF == refs/heads/stable ]]; then
+              ENV="${{ inputs.server_environment }}"
+            fi
             echo should_deploy=${{ inputs.deploy_server }} >> $GITHUB_OUTPUT
           else
             echo should_deploy=${{ !startsWith(github.ref, 'refs/heads/stable') }} >> $GITHUB_OUTPUT

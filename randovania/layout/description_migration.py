@@ -695,6 +695,18 @@ def _migrate_v34(data: dict) -> None:
             )
 
 
+def _migrate_v35(data: dict) -> None:
+    game_modifications = data["game_modifications"]
+
+    for index, game in enumerate(game_modifications):
+        for region in game["locations"].keys():
+            for location, pickup in game["locations"][region].items():
+                if "Energy Transfer Module" in pickup:
+                    # Formatted so because some older rdvgames append "for player X" to ETMs
+                    # Bad migration perhaps? idk
+                    game_modifications[index]["locations"][region].update({location: "Nothing"})
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -730,6 +742,7 @@ _MIGRATIONS = [
     _migrate_v32,  # MSR Rename Area 4 Crystal Mines - Gamma Arena to Gamma+ Arena
     _migrate_v33,
     _migrate_v34,  # removal of in_dark_aether
+    _migrate_v35,  # rename ETMs to Nothing
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

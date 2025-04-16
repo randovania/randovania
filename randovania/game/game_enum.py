@@ -20,6 +20,7 @@ if typing.TYPE_CHECKING:
     from randovania.game.generator import GameGenerator
     from randovania.game.gui import GameGui
     from randovania.game.hints import GameHints
+    from randovania.game_description.game_description import GameDescription
     from randovania.interface_common.options import PerGameOptions
 
 
@@ -111,3 +112,9 @@ class RandovaniaGame(BitPackEnum, Enum):
     @cached_property
     def exporter(self) -> GameExporter:
         return self.data.exporter()
+
+    @cached_property
+    def game_description(self) -> GameDescription:
+        from randovania.game_description import default_database
+
+        return default_database.game_description_for(self)
