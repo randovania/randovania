@@ -126,6 +126,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "prime1_refills.rdvgame",  # Refill items + custom artifact count
         # Prime 2
         "prime2/starts_with_cannon_ball.rdvgame",
+        "prime2/door_lock_rando.rdvgame",
         # Samus Returns
         "samus_returns/arachnus_boss_start_inventory.rdvgame",  # arachnus final boss + starting inventory + export ids
         "samus_returns/diggernaut_boss_free_placement_dna.rdvgame",  # diggernaut final boss + 7/15 dna anywhere
