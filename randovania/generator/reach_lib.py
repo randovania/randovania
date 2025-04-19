@@ -137,14 +137,12 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
             # print("Non-safe {} was good".format(logic.game.node_name(action)))
             return advance_reach_with_possible_unsafe_resources(next_reach)
 
-        if next_reach.is_reachable_node(initial_state.node):
-            next_next_state = next_reach.state.copy()
-            next_next_state.node = initial_state.node
+        next_next_state = next_reach.state.copy()
 
-            next_reach = reach_with_all_safe_resources(game, next_next_state, previous_reach.filler_config)
-            if previous_safe_nodes <= set(next_reach.safe_nodes):
-                # print("Non-safe {} could reach back to where we were".format(logic.game.node_name(action)))
-                return advance_reach_with_possible_unsafe_resources(next_reach)
+        next_reach = reach_with_all_safe_resources(game, next_next_state, previous_reach.filler_config)
+        if next_reach.is_reachable_node(initial_state.node) and previous_safe_nodes <= set(next_reach.safe_nodes):
+            # print("Non-safe {} could reach back to where we were".format(logic.game.node_name(action)))
+            return advance_reach_with_possible_unsafe_resources(next_reach)
         else:
             pass
 
@@ -152,15 +150,12 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
     return previous_reach
 
 
-def advance_to_with_reach_copy(base_reach: GeneratorReach, state: State) -> GeneratorReach:
+def advance_after_action(potential_reach: GeneratorReach) -> GeneratorReach:
     """
-    Copies the given Reach, advances to the given State and collect all possible resources.
-    :param base_reach:
-    :param state:
-    :return:
+    Advances the reach after performing an action, collecting unlocked resources.
+    :param potential_reach: Reach after collecting action
+    :return: Reach after collecting resources
     """
-    potential_reach = copy.deepcopy(base_reach)
-    potential_reach.advance_to(state)
 
     if potential_reach.filler_config.consider_possible_unsafe_resources:
         return advance_reach_with_possible_unsafe_resources(potential_reach)
