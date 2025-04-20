@@ -52,6 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Changed: The Light and Dark regions are now properly different regions for Randovania.
+- Fixed: Booting the game using the included Nintendont should no longer hang with a black screen.
 
 ### Metroid: Samus Returns
 
