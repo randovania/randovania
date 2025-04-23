@@ -6,6 +6,7 @@ from randovania.exporter.patch_data_factory import PatchDataFactory, PatcherData
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.prime_hunters.exporter.hint_namer import HuntersHintNamer
 from randovania.games.prime_hunters.layout import HuntersConfiguration, HuntersCosmeticPatches
 from randovania.games.prime_hunters.layout.force_field_configuration import LayoutForceFieldRequirement
@@ -16,11 +17,12 @@ if TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 
-def item_type_for_item_resource(resource: ItemResourceInfo) -> int:
+def item_type_for_item_resource(resource: ResourceInfo) -> int:
+    assert isinstance(resource, ItemResourceInfo)
     return resource.extra["item_type"]
 
 
@@ -75,8 +77,8 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME_HUNTERS
 
-    def _calculate_starting_inventory(self, resources: ResourceCollection) -> dict[str, str]:
-        result = {}
+    def _calculate_starting_inventory(self, resources: ResourceCollection) -> dict[str, str | int]:
+        result: dict[str, str | int] = {}
         starting_items = {}
         resource_gain = [(resource, quantity) for resource, quantity in resources.as_resource_gain()]
 
@@ -87,7 +89,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
                 print(f"Skipping {resource} for starting inventory: no item id")
                 continue
 
-        starting_weapons = str(
+        weapons = str(
             [
                 starting_items.get(_ITEM_TO_ITEM_TYPE["Shock Coil"], 0),
                 starting_items.get(_ITEM_TO_ITEM_TYPE["Magmaul"], 0),
@@ -99,17 +101,15 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
                 1,  # Power Beam
             ]
         )
-        weapons_string = "".join(filter(str.isdigit, starting_weapons))
-        result["weapons_string"] = weapons_string
+        starting_weapons = "".join(filter(str.isdigit, weapons))
+        result["weapons"] = starting_weapons
 
         # The value of missiles ends up being starting + 1, so subtract 1
         starting_missiles = starting_items.get(_ITEM_TO_ITEM_TYPE["Missile"], 1) - 1
         starting_energy = 100 + (starting_items.get(_ITEM_TO_ITEM_TYPE["Energy Tank"], 0) * 100)
-        result["starting_ammo"] = {
-            "missiles": starting_missiles,
-            "ammo": 40,
-            "energy": starting_energy,
-        }
+        result["missiles"] = starting_missiles
+        result["ammo"] = 40
+        result["energy"] = starting_energy
 
         return result
 
