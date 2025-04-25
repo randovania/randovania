@@ -19,6 +19,7 @@ class HuntersOctolithConfig(BitPackDataclass, JsonDataclass):
 class HuntersConfiguration(BaseConfiguration):
     octoliths: HuntersOctolithConfig
     force_field_configuration: ForceFieldConfiguration
+    shuffled_force_fields: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
