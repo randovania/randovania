@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: After clicking the "Login with Discord" button, a link and a QR Code are displayed instead of opening the default browser directly.
 - Changed: The relative time to start/finish in Async Race rooms now update as time passes, and the window reacts appropriately when the race starts and finishes.
+- Changed: The default and minimum size for the area view in the data visualizer has been increased.
 - Fixed: A server issue that caused async race exporting of AM2R and MSR to let you easily view the spoiler.
 - Fixed: When submitting proof for an async race, it is now clearer that it's only providing a proof URL is not required if submission notes were given.
 - Fixed: Clicking links to the Data Visualizer should now open all links succesfully.
@@ -16,7 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Generator
 
-- Fixed: Bug where the generator would collect dangerous resources too early, leading to generation failure in some cases.
+- Fixed: Bugs where the generator would collect dangerous resources too early, leading to generation failure in some cases.
+- Fixed: Bug where the requirements that apply beyond a point of no return weren't considered correctly.
+- Improved: Try a little harder to check if seemingly unsafe options are actually safe.
 
 ### AM2R
 
@@ -28,7 +31,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Changed: The maximum number of Speed Booster Upgrade items that will have an effect is now 4 instead of 5 (any further upgrades have no effect). This is to prevent a quirk with inconsistent Speed Booster activation with very short charge times.
 - Fixed: The patching data being exported on race seeds.
+- Fixed: Speed Booster Upgrade items will no longer be hinted or included in the credits.
 
 #### Logic Database
 
@@ -57,6 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Changed: The Light and Dark regions are now properly different regions for Randovania.
+- Fixed: Booting the game using the included Nintendont should no longer hang with a black screen.
 
 ### Metroid: Samus Returns
 

@@ -120,12 +120,15 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         # Planets (Zebeth)
         "planets_zebeth/starter_preset.rdvgame",  # starter preset (vanilla keys)
         "planets_zebeth/starter_preset_shuffle_keys.rdvgame",  # starter preset (shuffled keys)
+        # Prime Hunters
+        "prime_hunters/starter_preset.rdvgame",  # starter preset
         # Prime 1
         "prime1_crazy_seed.rdvgame",  # chaos features
         "prime1_crazy_seed_one_way_door.rdvgame",  # same as above but 1-way doors
         "prime1_refills.rdvgame",  # Refill items + custom artifact count
         # Prime 2
         "prime2/starts_with_cannon_ball.rdvgame",
+        "prime2/door_lock_rando.rdvgame",
         # Samus Returns
         "samus_returns/arachnus_boss_start_inventory.rdvgame",  # arachnus final boss + starting inventory + export ids
         "samus_returns/diggernaut_boss_free_placement_dna.rdvgame",  # diggernaut final boss + 7/15 dna anywhere

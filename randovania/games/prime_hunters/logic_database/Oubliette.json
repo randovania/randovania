@@ -1,0 +1,1580 @@
+{
+    "name": "Oubliette",
+    "extra": {},
+    "areas": {
+        "Gorea 1 Arena": {
+            "default_node": "Room Center",
+            "hint_features": [],
+            "extra": {
+                "room_id": 91,
+                "entity_file": "Gorea_b1_Ent.bin"
+            },
+            "nodes": {
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 752.446140251189,
+                        "y": 79.62634351363668,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 0,
+                        "position": {
+                            "x": 752.011474609375,
+                            "y": 80.011474609375,
+                            "z": 80.001220703125
+                        },
+                        "up_vector": {
+                            "x": 80.001220703125,
+                            "y": 80.001220703125,
+                            "z": 80.001220703125
+                        },
+                        "facing_vector": {
+                            "x": 80.001220703125,
+                            "y": 80.001220703125,
+                            "z": 398550.84033203125
+                        },
+                        "entity_type_data": {
+                            "availabilty": 105,
+                            "active": true
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Dock to Gorea 2 Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Gorea1",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Battlehammer",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Imperialist",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Judicator",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Magmaul",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ShockCoil",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VoltDriver",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Gorea 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Oubliette Gateway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Credits": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Gorea1",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Dock to Gorea 2 Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 752.63,
+                        "y": 79.98,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Dock",
+                    "default_connection": {
+                        "region": "Oubliette",
+                        "area": "Gorea 2 Arena",
+                        "node": "Dock to Gorea 1 Arena"
+                    },
+                    "default_dock_weakness": "Dock",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Gorea 1": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 752.29,
+                        "y": 80.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Gorea1",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Oubliette Gateway": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 752.13,
+                        "y": 79.8,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Dock",
+                    "default_connection": {
+                        "region": "Oubliette",
+                        "area": "Oubliette Gateway",
+                        "node": "Dock to Gorea 1 Arena"
+                    },
+                    "default_dock_weakness": "Dock",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Credits": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 752.78,
+                        "y": 79.68,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Credits",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Gorea 2 Arena": {
+            "default_node": "Player Spawn",
+            "hint_features": [],
+            "extra": {
+                "room_id": 92,
+                "entity_file": "gorea_b2_Ent.bin"
+            },
+            "nodes": {
+                "Player Spawn": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 377.49,
+                        "y": 79.1,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 0,
+                        "position": {
+                            "x": 848.01318359375,
+                            "y": 16.012939453125,
+                            "z": 0.0
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 398550.84033203125
+                        },
+                        "entity_type_data": {
+                            "availabilty": 105,
+                            "active": true
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Dock to Gorea 1 Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Gorea 1 Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 734.46,
+                        "y": 158.36,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Dock",
+                    "default_connection": {
+                        "region": "Oubliette",
+                        "area": "Gorea 1 Arena",
+                        "node": "Dock to Gorea 2 Arena"
+                    },
+                    "default_dock_weakness": "Dock",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Credits": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Gorea2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Gorea 2 Defeated": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Credits": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 509.79,
+                        "y": 259.07,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Credits",
+                    "connections": {
+                        "Dock to Gorea 1 Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Gorea 2 Defeated": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 534.05,
+                        "y": 143.72,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Gorea2",
+                    "connections": {
+                        "Dock to Gorea 1 Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Oubliette Gateway": {
+            "default_node": "Ship",
+            "hint_features": [],
+            "extra": {
+                "room_id": 89,
+                "entity_file": "Gorea_Land_Ent.bin"
+            },
+            "nodes": {
+                "Ship": {
+                    "node_type": "teleporter_network",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.99,
+                        "y": -7.72,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 0,
+                        "position": {
+                            "x": 352.00537109375,
+                            "y": 192.00537109375,
+                            "z": 192.0029296875
+                        },
+                        "up_vector": {
+                            "x": 192.0029296875,
+                            "y": 192.0029296875,
+                            "z": 192.0029296875
+                        },
+                        "facing_vector": {
+                            "x": 192.0029296875,
+                            "y": 192.0029296875,
+                            "z": 398550.84033203125
+                        },
+                        "entity_type_data": {
+                            "availabilty": 105,
+                            "active": true
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": "events",
+                            "name": "OublietteUnlocked",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "network": "Ship",
+                    "requirement_to_activate": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "connections": {
+                        "Door to Oubliette Gateway (Ship Room Door South)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Portal to Oubliette Storage": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12.384395859738065,
+                        "y": 4.513680794455509,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 3,
+                        "position": {
+                            "x": 0.0,
+                            "y": 4.44921875,
+                            "z": -74.98583984375
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "load_index": 11,
+                            "target_index": 11,
+                            "artifact_id": 11,
+                            "active": true,
+                            "invisible": false,
+                            "entity_filename": "Gorea_Peek_Ent",
+                            "target_position": {
+                                "x": 0.062255859375,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "node_name": ""
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Portal",
+                    "default_connection": {
+                        "region": "Oubliette",
+                        "area": "Oubliette Storage",
+                        "node": "Portal to Oubliette Gateway"
+                    },
+                    "default_dock_weakness": "Portal",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Oubliette Gateway (Arena Access Door South)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Oubliette Gateway (Arena Access Door South)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7.48,
+                        "y": 3.58,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 4,
+                        "position": {
+                            "x": 0.0,
+                            "y": -8.99609375,
+                            "z": -116.2548828125
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 2,
+                            "connector_id": 255,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 255,
+                            "out_loader_id": 32,
+                            "entity_filename": " ",
+                            "room_name": " "
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Oubliette",
+                        "area": "Oubliette Gateway",
+                        "node": "Door to Oubliette Gateway (Arena Access Door North)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Portal to Oubliette Storage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Oubliette Gateway (Storage Portal Room Door North)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Portal to Oubliette Gateway (Elevator Room)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7.28,
+                        "y": -8.09,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 6,
+                        "position": {
+                            "x": 0.064697265625,
+                            "y": 1.116943359375,
+                            "z": 28.40869140625
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.999755859375
+                        },
+                        "entity_type_data": {
+                            "load_index": 12,
+                            "target_index": 13,
+                            "artifact_id": 8,
+                            "active": true,
+                            "invisible": false,
+                            "entity_filename": "Gorea_Land_Ent",
+                            "target_position": {
+                                "x": 0.062255859375,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "node_name": ""
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Portal",
+                    "default_connection": {
+                        "region": "Oubliette",
+                        "area": "Oubliette Gateway",
+                        "node": "Portal to Oubliette Gateway (Lookout Room)"
+                    },
+                    "default_dock_weakness": "Portal",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Oubliette Gateway (Elevator Room Door North)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Portal to Oubliette Gateway (Lookout Room)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7.33,
+                        "y": -6.25,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 7,
+                        "position": {
+                            "x": -7.100341796875,
+                            "y": -1.0,
+                            "z": -22.5107421875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.726318359375,
+                            "y": 0.0,
+                            "z": 0.68701171875
+                        },
+                        "entity_type_data": {
+                            "load_index": 13,
+                            "target_index": 12,
+                            "artifact_id": 8,
+                            "active": true,
+                            "invisible": false,
+                            "entity_filename": "Gorea_Land_Ent",
+                            "target_position": {
+                                "x": 0.062255859375,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "node_name": ""
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Portal",
+                    "default_connection": {
+                        "region": "Oubliette",
+                        "area": "Oubliette Gateway",
+                        "node": "Portal to Oubliette Gateway (Elevator Room)"
+                    },
+                    "default_dock_weakness": "Portal",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Oubliette Gateway (Lookout Room Door South)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Oubliette Gateway (Elevator Room Door South)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7.294440521455731,
+                        "y": -11.812161013539338,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 10,
+                        "position": {
+                            "x": 0.0,
+                            "y": -14.0,
+                            "z": 27.748779296875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 0,
+                            "connector_id": 255,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 255,
+                            "out_loader_id": 32,
+                            "entity_filename": " ",
+                            "room_name": " "
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Oubliette",
+                        "area": "Oubliette Gateway",
+                        "node": "Door to Oubliette Gateway (Elevator Room Door North)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Oubliette Gateway (Ship Room Door North)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Oubliette Gateway (Storage Portal Room Door South)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7.54,
+                        "y": -0.31,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 11,
+                        "position": {
+                            "x": 0.0,
+                            "y": -1.0,
+                            "z": -36.7509765625
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "port_rmShaft",
+                            "palette_id": 9,
+                            "door_type": 0,
+                            "connector_id": 255,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 255,
+                            "out_loader_id": 32,
+                            "entity_filename": " ",
+                            "room_name": " "
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Oubliette",
+                        "area": "Oubliette Gateway",
+                        "node": "Door to Oubliette Gateway (Storage Portal Room Door North)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Oubliette Gateway (Lookout Room Door North)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Oubliette Gateway (Lookout Room Door South)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7.35,
+                        "y": -4.7,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 9,
+                        "position": {
+                            "x": 0.0,
+                            "y": -1.0,
+                            "z": -31.2490234375
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 0,
+                            "connector_id": 255,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 255,
+                            "out_loader_id": 32,
+                            "entity_filename": " ",
+                            "room_name": " "
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Oubliette",
+                        "area": "Oubliette Gateway",
+                        "node": "Door to Oubliette Gateway (Lookout Room Door North)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Portal to Oubliette Gateway (Lookout Room)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Oubliette Gateway (Ship Room Door South)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 14.54,
+                        "y": -10.43,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 8,
+                        "position": {
+                            "x": 0.0,
+                            "y": -14.0,
+                            "z": 33.2509765625
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 0,
+                            "connector_id": 255,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 255,
+                            "out_loader_id": 32,
+                            "entity_filename": " ",
+                            "room_name": " "
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Oubliette",
+                        "area": "Oubliette Gateway",
+                        "node": "Door to Oubliette Gateway (Ship Room Door North)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Ship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Oubliette Gateway (Ship Room Door North)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 14.52,
+                        "y": -8.65,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 8,
+                        "position": {
+                            "x": 0.0,
+                            "y": -14.0,
+                            "z": 33.2509765625
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 0,
+                            "connector_id": 255,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 255,
+                            "out_loader_id": 32,
+                            "entity_filename": " ",
+                            "room_name": " "
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Oubliette",
+                        "area": "Oubliette Gateway",
+                        "node": "Door to Oubliette Gateway (Ship Room Door South)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Oubliette Gateway (Elevator Room Door South)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Oubliette Gateway (Elevator Room Door North)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7.294440521455731,
+                        "y": -10.038245870802903,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 10,
+                        "position": {
+                            "x": 0.0,
+                            "y": -14.0,
+                            "z": 27.748779296875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 0,
+                            "connector_id": 255,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 255,
+                            "out_loader_id": 32,
+                            "entity_filename": " ",
+                            "room_name": " "
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Oubliette",
+                        "area": "Oubliette Gateway",
+                        "node": "Door to Oubliette Gateway (Elevator Room Door South)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Portal to Oubliette Gateway (Elevator Room)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Oubliette Gateway (Lookout Room Door North)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7.4775940008449515,
+                        "y": -2.5649841823083257,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 9,
+                        "position": {
+                            "x": 0.0,
+                            "y": -1.0,
+                            "z": -31.2490234375
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 0,
+                            "connector_id": 255,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 255,
+                            "out_loader_id": 32,
+                            "entity_filename": " ",
+                            "room_name": " "
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Oubliette",
+                        "area": "Oubliette Gateway",
+                        "node": "Door to Oubliette Gateway (Lookout Room Door South)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Oubliette Gateway (Storage Portal Room Door South)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Oubliette Gateway (Storage Portal Room Door North)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7.52,
+                        "y": 2.1,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 11,
+                        "position": {
+                            "x": 0.0,
+                            "y": -1.0,
+                            "z": -36.7509765625
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "port_rmShaft",
+                            "palette_id": 9,
+                            "door_type": 0,
+                            "connector_id": 255,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 255,
+                            "out_loader_id": 32,
+                            "entity_filename": " ",
+                            "room_name": " "
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Oubliette",
+                        "area": "Oubliette Gateway",
+                        "node": "Door to Oubliette Gateway (Storage Portal Room Door South)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Oubliette Gateway (Arena Access Door South)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Oubliette Gateway (Arena Access Door North)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8.06,
+                        "y": 5.75,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 4,
+                        "position": {
+                            "x": 0.0,
+                            "y": -8.99609375,
+                            "z": -116.2548828125
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 2,
+                            "connector_id": 255,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 255,
+                            "out_loader_id": 32,
+                            "entity_filename": " ",
+                            "room_name": " "
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Oubliette",
+                        "area": "Oubliette Gateway",
+                        "node": "Door to Oubliette Gateway (Arena Access Door South)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Dock to Gorea 1 Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Gorea 1 Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 17.35,
+                        "y": 4.16,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Dock",
+                    "default_connection": {
+                        "region": "Oubliette",
+                        "area": "Gorea 1 Arena",
+                        "node": "Dock to Oubliette Gateway"
+                    },
+                    "default_dock_weakness": "Dock",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Oubliette Gateway (Arena Access Door North)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Oubliette Storage": {
+            "default_node": "Player Spawn",
+            "hint_features": [],
+            "extra": {
+                "room_id": 90,
+                "entity_file": "Gorea_Peek_Ent.bin"
+            },
+            "nodes": {
+                "Portal to Oubliette Gateway": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 18.16028184580889,
+                        "y": 10.022151428296104,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 12,
+                        "position": {
+                            "x": 0.30078125,
+                            "y": 14.27490234375,
+                            "z": 38.311767578125
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.999755859375
+                        },
+                        "entity_type_data": {
+                            "load_index": 11,
+                            "target_index": 11,
+                            "artifact_id": 11,
+                            "active": true,
+                            "invisible": false,
+                            "entity_filename": "Gorea_Land_Ent",
+                            "target_position": {
+                                "x": 0.062255859375,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "node_name": ""
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Portal",
+                    "default_connection": {
+                        "region": "Oubliette",
+                        "area": "Oubliette Gateway",
+                        "node": "Portal to Oubliette Storage"
+                    },
+                    "default_dock_weakness": "Portal",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Player Spawn": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 32.000732421875,
+                        "y": 0.00048828125,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 0,
+                        "position": {
+                            "x": 32.000732421875,
+                            "y": 0.00048828125,
+                            "z": 0.0
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 398550.84033203125
+                        },
+                        "entity_type_data": {
+                            "availabilty": 105,
+                            "active": true
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Portal to Oubliette Gateway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1.19,
+                        "y": 14.37,
+                        "z": 32.15
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 1,
+                        "position": {
+                            "x": -1.1923828125,
+                            "y": 14.371826171875,
+                            "z": 32.14697265625
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "item_type": 4,
+                            "enabled": true,
+                            "has_base": true,
+                            "always_active": false,
+                            "max_spawn_count": 1,
+                            "spawn_interval": 0,
+                            "spawn_delay": 0,
+                            "notify_entity_id": -1,
+                            "collected_message": 0,
+                            "collected_message_param1": 0,
+                            "collected_message_param2": 0
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 64,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Portal to Oubliette Gateway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

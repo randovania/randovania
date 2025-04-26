@@ -670,6 +670,11 @@ def _migrate_v34(data: dict) -> None:
 
                 game["dock_connections"][new_source] = new_target
 
+            for source_name, target in list(game["dock_weakness"].items()):
+                new_source = replace(source_name, rename)
+                if new_source != source_name:
+                    game["dock_weakness"][new_source] = game["dock_weakness"].pop(source_name)
+
             for source_name, hint in list(game["hints"].items()):
                 if hint["hint_type"] == "location":
                     if hint["precision"].get("location") == "relative-to-area":

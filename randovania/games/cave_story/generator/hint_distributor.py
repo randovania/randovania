@@ -35,7 +35,7 @@ class CSHintDistributor(HintDistributor):
 
         return {
             c("Grasstown", "Power Room", "Hint - MALCO"): p("specific_hint_malco"),
-            c("Ruined Egg Corridor", "Little House", "Hint - Mrs. Little"): p("specific_hint_little"),
+            c("Outer Wall", "Little House", "Hint - Mrs. Little"): p("specific_hint_little"),
             c("Sand Zone", "Jenka's House", "Hint - Jenka 1"): p("specific_hint_jenka"),
             c("Sand Zone", "Jenka's House", "Hint - Jenka 2"): p("specific_hint_jenka"),
             c("Plantation", "Statue Chamber", "Hint - Numahachi 1"): p("specific_hint_numahachi"),

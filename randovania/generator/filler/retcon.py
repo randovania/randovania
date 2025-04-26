@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import math
 import pprint
 import typing
@@ -123,25 +124,26 @@ def _evaluate_action(base_reach: GeneratorReach, action_weights: ActionWeights, 
     :param action:
     :return:
     """
-    state = base_reach.state
     multiplier = 1.0
     offset = 0.0
+
+    potential_reach = copy.deepcopy(base_reach)
 
     resources, pickups = action.split_pickups()
 
     if resources:
         for resource in resources:
-            state = state.act_on_node(resource)
+            potential_reach.act_on(resource)
         multiplier *= action_weights.DANGEROUS_ACTION_MULTIPLIER
 
     if pickups:
-        state = state.assign_pickups_resources(pickups)
+        potential_reach.advance_to(potential_reach.state.assign_pickups_resources(pickups), is_safe=True)
         multiplier *= sum(pickup.generator_params.probability_multiplier for pickup in pickups) / len(pickups)
         offset += sum(pickup.generator_params.probability_offset for pickup in pickups) / len(pickups)
 
     return EvaluatedAction(
         action,
-        reach_lib.advance_to_with_reach_copy(base_reach, state),
+        reach_lib.advance_after_action(potential_reach),
         multiplier,
         offset,
     )

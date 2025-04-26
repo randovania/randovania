@@ -364,10 +364,11 @@ class OldGeneratorReach(GeneratorReach):
             (all_nodes[node_index], requirement) for node_index, requirement in self._uncollectable_nodes.items()
         ]
 
-        for (_, node_index), requirement in self._unreachable_paths.items():
-            node = all_nodes[node_index]
-            if not self.is_reachable_node(node):
-                to_check.append((node, requirement))
+        for (source_node_index, target_node_index), requirement in self._unreachable_paths.items():
+            source_node = all_nodes[source_node_index]
+            target_node = all_nodes[target_node_index]
+            if self.is_reachable_node(source_node) and not self.is_reachable_node(target_node):
+                to_check.append((target_node, requirement))
 
         for node, requirement in to_check:
             requirements = requirement.patch_requirements(context)
