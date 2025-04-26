@@ -1037,6 +1037,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                 "multiworldDolPatches": True,
                 "doorOpenMode": "PrimaryBlastShield",
                 "difficultyBehavior": self.configuration.ingame_difficulty.randomprime_value,
+                "blastShieldLockon": self.configuration.blast_shield_lockon,
                 "disableItemLoss": True,  # Item Loss in Frigate
                 "startingItems": starting_items,
                 "etankCapacity": self.configuration.energy_per_tank,

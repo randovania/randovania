@@ -170,6 +170,9 @@ class PrimePresetDescriber(GamePresetDescriber):
                     ingame_difficulty: ingame_difficulty is not None,
                 },
                 {
+                    "Blast Shield Lock-On": configuration.blast_shield_lockon,
+                },
+                {
                     enemy_rando_range_scale: enemy_rando_range_scale is not None,
                     enemy_rando_range_health: enemy_rando_range_health is not None,
                     enemy_rando_range_speed: enemy_rando_range_speed is not None,

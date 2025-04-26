@@ -16,7 +16,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
 
-_CHECKBOX_FIELDS = ["blue_save_doors"]
+_CHECKBOX_FIELDS = ["blue_save_doors", "blast_shield_lockon"]
 
 
 class PresetPrimeDockRando(PresetDockRando):
@@ -33,6 +33,12 @@ class PresetPrimeDockRando(PresetDockRando):
                 QtWidgets.QLabel,
                 "blue_save_doors_label",
                 "Sets all Save Station doors to blue regardless of door randomization mode",
+            ),
+            (QtWidgets.QCheckBox, "blast_shield_lockon_check", "Enable Blast Shield Lock-On"),
+            (
+                QtWidgets.QLabel,
+                "blast_shield_lockon_label",
+                "Makes all Blast Shield locks targetable in Combat Visor",
             ),
         ]
 
@@ -58,8 +64,11 @@ class PresetPrimeDockRando(PresetDockRando):
         super()._on_mode_changed(value)
         with self._editor as editor:
             assert isinstance(editor.configuration, PrimeConfiguration)
-            if value != DockRandoMode.VANILLA:
+            if value == DockRandoMode.VANILLA:
+                editor.set_configuration_field("blast_shield_lockon", False)
+            else:
                 editor.set_configuration_field("blue_save_doors", True)
+                editor.set_configuration_field("blast_shield_lockon", True)
 
     def _add_checkbox_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str) -> None:
         def persist(value: bool) -> None:
