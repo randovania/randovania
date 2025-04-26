@@ -802,9 +802,6 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                     key=lambda n: n.extra["dock_index"],
                 )
                 for node in dock_nodes:
-                    if node.extra.get("exclude_dock_rando", False):
-                        continue
-
                     if self.patches.has_default_weakness(node):
                         continue
 
