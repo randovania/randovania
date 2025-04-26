@@ -138,7 +138,6 @@ class PrimePresetDescriber(GamePresetDescriber):
                     "Warp to start": configuration.warp_to_start,
                     "Final bosses removed": configuration.teleporters.skip_final_bosses,
                     "Unlocked Vault door": configuration.main_plaza_door,
-                    "Unlocked Save Station doors": configuration.blue_save_doors,
                     "Phazon Elite without Dynamo": configuration.phazon_elite_without_dynamo,
                 },
                 {
@@ -170,6 +169,7 @@ class PrimePresetDescriber(GamePresetDescriber):
                     ingame_difficulty: ingame_difficulty is not None,
                 },
                 {
+                    "Unlocked Save Station doors": configuration.blue_save_doors,
                     "Blast Shield Lock-On": configuration.blast_shield_lockon,
                 },
                 {
