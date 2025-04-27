@@ -6,18 +6,26 @@ from randovania.game_description import default_database
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_collection import ResourceCollection
+from randovania.generator.pickup_pool.pickup_creator import create_ammo_pickup, create_standard_pickup
+from randovania.generator.pickup_pool.standard_pickup import find_ammo_for
+from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.resolver.state import State
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Generator, Iterable
     from random import Random
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
@@ -25,6 +33,72 @@ if TYPE_CHECKING:
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
     from randovania.resolver.damage_state import DamageState
+
+
+def enabled_standard_pickups(game: GameDescription, configuration: BaseConfiguration) -> Generator[PickupEntry]:
+    for pickup, state in configuration.standard_pickup_configuration.pickups_state.items():
+        if len(pickup.ammo) != len(state.included_ammo):
+            raise InvalidConfiguration(
+                f"Item {pickup.name} uses {pickup.ammo} as ammo, "
+                f"but there's only {len(state.included_ammo)} values in included_ammo"
+            )
+
+        ammo, locked_ammo = find_ammo_for(pickup.ammo, configuration.ammo_pickup_configuration)
+
+        if state.include_copy_in_original_location:
+            if not pickup.original_locations:
+                raise InvalidConfiguration(
+                    f"Item {pickup.name} does not exist in the original game, cannot use state {state}",
+                )
+            for _ in pickup.original_locations:
+                yield create_standard_pickup(pickup, state, game.get_resource_database_view(), ammo, locked_ammo)
+
+        for _ in range(state.num_shuffled_pickups):
+            yield create_standard_pickup(pickup, state, game.get_resource_database_view(), ammo, locked_ammo)
+
+        for _ in range(state.num_included_in_starting_pickups):
+            yield create_standard_pickup(pickup, state, game.get_resource_database_view(), ammo, locked_ammo)
+
+
+def enabled_ammo_pickups(game: GameDescription, configuration: BaseConfiguration) -> Generator[PickupEntry]:
+    for ammo, state in configuration.ammo_pickup_configuration.pickups_state.items():
+        pickup = create_ammo_pickup(ammo, state.ammo_count, state.requires_main_item, game.get_resource_database_view())
+        for _ in range(state.pickup_count):
+            yield pickup
+
+
+def enabled_pickups(game: GameDescription, configuration: BaseConfiguration) -> Generator[PickupEntry]:
+    yield from enabled_standard_pickups(game, configuration)
+    yield from enabled_ammo_pickups(game, configuration)
+
+
+def victory_condition_for_pickup_placement(
+    pickups: Iterable[PickupEntry], game: GameDescription, placement_config: LogicalPickupPlacementConfiguration
+) -> Requirement:
+    """
+    Creates a Requirement with the game's victory condition adjusted to a specified pickup set.
+    :param pickups:
+    :param game:
+    :param placement_config: The configuration for adjusting the victory condition.
+    :return:
+    """
+    if placement_config is LogicalPickupPlacementConfiguration.MINIMAL:
+        return game.victory_condition
+
+    add_all_pickups = placement_config is LogicalPickupPlacementConfiguration.ALL
+    resources = ResourceCollection.with_database(game.resource_database)
+
+    for pickup in pickups:
+        if pickup.generator_params.preferred_location_category is LocationCategory.MAJOR or add_all_pickups:
+            resources.add_resource_gain(pickup.resource_gain(resources, force_lock=True))
+
+    # Create a requirement with the victory condition and the pickups
+    return RequirementAnd(
+        [
+            game.victory_condition,
+            *(ResourceRequirement.create(resource[0], resource[1], False) for resource in resources.as_resource_gain()),
+        ]
+    ).simplify()
 
 
 class EnergyConfig(NamedTuple):
@@ -221,6 +295,11 @@ class Bootstrap[Configuration: BaseConfiguration]:
 
         self.apply_game_specific_patches(configuration, game, patches)
         game.patch_requirements(starting_state.resources, configuration.damage_strictness.value)
+
+        # All majors/pickups required
+        game.victory_condition = victory_condition_for_pickup_placement(
+            enabled_pickups(game, configuration), game, configuration.logical_pickup_placement
+        )
 
         return game, starting_state
 
