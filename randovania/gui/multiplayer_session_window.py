@@ -370,10 +370,15 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.update_multiworld_client_status()
         self.everyone_can_claim_check.setChecked(session.allow_everyone_claim_world)
         self.everyone_can_claim_check.setEnabled(self.users_widget.is_admin())
+        self.everyone_can_claim_check.setToolTip("By default, only admins can assign unclaimed worlds.")
         self.allow_coop_check.setChecked(session.allow_coop)
         self.allow_coop_check.setEnabled(self.users_widget.is_admin() and not_genned_yet)
         self.allow_coop_check.setText(
-            "Enable Co-Op" + ("" if not_genned_yet else " (can only be changed before generation)")
+            "Enable Co-Op Worlds" + ("" if not_genned_yet else " (can only be changed before generation)")
+        )
+        self.allow_coop_check.setToolTip(
+            ("" if not_genned_yet else "(Can only be changed before generation.)\n")
+            + "By default, worlds can only be assigned to a single player.\n"
         )
 
     @asyncSlot(MultiplayerSessionActions)
