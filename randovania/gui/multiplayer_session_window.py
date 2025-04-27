@@ -373,7 +373,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.allow_coop_check.setChecked(session.allow_coop)
         self.allow_coop_check.setEnabled(self.users_widget.is_admin() and not_genned_yet)
         self.allow_coop_check.setText(
-            "Enable Co-Op Worlds" + ("" if not_genned_yet else " (can only be changed before generation)")
+            "Co-Op Worlds" + ("" if not_genned_yet else " (can only be changed before generation)")
         )
         self.allow_coop_check.setToolTip(
             ("" if not_genned_yet else "(Can only be changed before generation.)\n")
