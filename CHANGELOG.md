@@ -29,6 +29,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Outer Wall is now a separate region.
 
+### Factorio
+
+- Fixed: Random recipes can no longer have multiples of Modular Armor, Power Armor and Power Armor Mk2 as ingredients, as the game doesn't allow these to stack even on the assembler input.
+
 ### Metroid Dread
 
 - Changed: The maximum number of Speed Booster Upgrade items that will have an effect is now 4 instead of 5 (any further upgrades have no effect). This is to prevent a quirk with inconsistent Speed Booster activation with very short charge times.
