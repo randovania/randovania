@@ -11,7 +11,7 @@ from randovania.game_description.pickup.pickup_definition.base_pickup import (
 from randovania.game_description.pickup.pickup_entry import ResourceLock
 
 if TYPE_CHECKING:
-    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.game_database_view import ResourceDatabaseView
 
 
 @dataclass(frozen=True, kw_only=True, order=True)
@@ -40,6 +40,9 @@ class AmmoPickupDefinition(BasePickupDefinition):
     allows_negative: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
     """Determines whether the user can configure this expansion to remove maximum ammo rather than provide it."""
 
+    hide_requires_main: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
+    """Determines whether to hide the option of requiring mains for the ammo pickup."""
+
     include_expected_counts: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
     """Whether to indicate the maximum ammo from this source in the item pool tab."""
     explain_other_sources: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
@@ -67,7 +70,7 @@ class AmmoPickupDefinition(BasePickupDefinition):
         elif self.unlocked_by is not None:
             raise ValueError("If temporary is not set, unlocked_by must not be set.")
 
-    def create_resource_lock(self, resource_database: ResourceDatabase) -> ResourceLock | None:
+    def create_resource_lock(self, resource_database: ResourceDatabaseView) -> ResourceLock | None:
         if self.unlocked_by is not None:
             assert self.temporary is not None
             return ResourceLock(
@@ -90,6 +93,7 @@ class AmmoPickupDefinition(BasePickupDefinition):
             "unlocked_by",
             "temporary",
             "allows_negative",
+            "hide_requires_main",
             "include_expected_counts",
             "explain_other_sources",
             "mention_limit",

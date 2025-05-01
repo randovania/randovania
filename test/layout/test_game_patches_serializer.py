@@ -61,6 +61,7 @@ def patches_with_data(request, echoes_game_description, echoes_game_patches, ech
 
     gt = "Great Temple"
     tg = "Temple Grounds"
+    sg = "Sky Temple Grounds"
     sf = "Sanctuary Fortress"
     aw = "Agon Wastes"
     st = "Sky Temple"
@@ -79,8 +80,8 @@ def patches_with_data(request, echoes_game_description, echoes_game_patches, ech
             f"{gt}/Temple Transport A/Elevator to {tg}": f"{tg}/Temple Transport A/Elevator to {gt}",
             f"{gt}/Temple Transport C/Elevator to {tg}": f"{tg}/Temple Transport C/Elevator to {gt}",
             f"{gt}/Temple Transport B/Elevator to {tg}": f"{tg}/Temple Transport B/Elevator to {gt}",
-            f"{tg}/{st} Gateway/Elevator to {gt}": f"{gt}/{st} Energy Controller/Save Station",
-            f"{gt}/{st} Energy Controller/Elevator to {tg}": f"{tg}/{st} Gateway/Spawn Point/Front of Teleporter",
+            f"{sg}/{st} Gateway/Elevator to {st}": f"{st}/{st} Energy Controller/Save Station",
+            f"{st}/{st} Energy Controller/Elevator to {sg}": f"{sg}/{st} Gateway/Spawn Point/Front of Teleporter",
             f"{aw}/Transport to {tg}/Elevator to {tg}": f"{tg}/Transport to {aw}/Elevator to {aw}",
             f"{aw}/Transport to Torvus Bog/Elevator to Torvus Bog": f"Torvus Bog/Transport to {aw}/Elevator to {aw}",
             f"{aw}/Transport to {sf}/Elevator to {sf}": f"{sf}/Transport to {aw}/Elevator to {aw}",
@@ -103,8 +104,9 @@ def patches_with_data(request, echoes_game_description, echoes_game_patches, ech
     locations = collections.defaultdict(dict)
     for region, area, node in game.region_list.all_regions_areas_nodes:
         if node.is_resource_node and isinstance(node, PickupNode):
-            world_name = region.dark_name if area.in_dark_aether else region.name
-            locations[world_name][game.region_list.node_name(node)] = game_patches_serializer._ETM_NAME
+            locations[region.name][f"{node.identifier.area}/{node.identifier.node}"] = (
+                game_patches_serializer._NOTHING_PICKUP_NAME
+            )
 
     data["locations"] = {region: dict(sorted(locations[region].items())) for region in sorted(locations.keys())}
 

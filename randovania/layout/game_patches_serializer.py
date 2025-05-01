@@ -7,7 +7,6 @@ import typing
 
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
-from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
@@ -28,7 +27,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.layout.base.base_configuration import BaseConfiguration
 
-_ETM_NAME = "Energy Transfer Module"
+_NOTHING_PICKUP_NAME = "Nothing"
 
 
 def _pickup_assignment_to_item_locations(
@@ -49,9 +48,10 @@ def _pickup_assignment_to_item_locations(
             else:
                 item_name = f"{target.pickup.name}"
         else:
-            item_name = _ETM_NAME
+            item_name = _NOTHING_PICKUP_NAME
 
-        items_locations[region.correct_name(area.in_dark_aether)][region_list.node_name(node)] = item_name
+        # Not using `node.full_name` as this is not a user-facing string and needs to be consistent
+        items_locations[region.name][f"{node.identifier.area}/{node.identifier.node}"] = item_name
 
     return {region: dict(sorted(items_locations[region].items())) for region in sorted(items_locations.keys())}
 
@@ -117,17 +117,6 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
     return result
 
 
-def _area_name_to_area_location(region_list: RegionList, area_name: str) -> AreaIdentifier:
-    name_match = re.match("([^/]+)/([^/]+)", area_name)
-    assert name_match is not None
-    region_name, area_name = name_match.group(1, 2)
-
-    # Filter out dark db names
-    region_name = region_list.region_with_name(region_name).name
-
-    return AreaIdentifier(region_name, area_name)
-
-
 def _find_pickup_with_name(item_pool: list[PickupEntry], pickup_name: str) -> PickupEntry:
     for pickup in item_pool:
         if pickup.name == pickup_name:
@@ -158,7 +147,7 @@ def _decode_pickup_assignment(
 
     for world_name, world_data in locations.items():
         for area_node_name, target_name in typing.cast("dict[str, str]", world_data).items():
-            if target_name == _ETM_NAME:
+            if target_name == _NOTHING_PICKUP_NAME:
                 continue
 
             pickup_name_match = target_name_re.match(target_name)
@@ -178,7 +167,7 @@ def _decode_pickup_assignment(
                 if (pickup_name, target_player) != (pickup.name, player_index):
                     raise ValueError(f"{area_node_name} should be vanilla based on configuration")
 
-            elif pickup_name != _ETM_NAME:
+            elif pickup_name != _NOTHING_PICKUP_NAME:
                 pickup = _get_pickup_from_pool(all_pools[target_player].to_place, pickup_name)
             else:
                 pickup = None

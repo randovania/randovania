@@ -1,0 +1,396 @@
+{
+    "schema_version": 14,
+    "pickup_categories": {
+        "missile": {
+            "long_name": "Missile",
+            "hint_details": [
+                "a ",
+                "missile system"
+            ]
+        },
+        "beam": {
+            "long_name": "Beams",
+            "hint_details": [
+                "a ",
+                "beam"
+            ]
+        },
+        "beam_related": {
+            "long_name": "Beam Related",
+            "hint_details": [
+                "a ",
+                "beam-related upgrade"
+            ],
+            "hidden": true
+        },
+        "missile_related": {
+            "long_name": "Missile Related",
+            "hint_details": [
+                "a ",
+                "missile-related upgrade"
+            ],
+            "hidden": true
+        },
+        "sub_weapon": {
+            "long_name": "Sub-Weapons",
+            "hint_details": [
+                "a ",
+                "Sub-Weapon"
+            ]
+        },
+        "affinity_weapon": {
+            "long_name": "Affinity Weapons",
+            "hint_details": [
+                "an ",
+                "Affinity Weapon"
+            ]
+        },
+        "artifact": {
+            "long_name": "Alimbic Artifact",
+            "hint_details": [
+                "an ",
+                "Alimbic Artifact"
+            ]
+        },
+        "octolith": {
+            "long_name": "Octolith",
+            "hint_details": [
+                "an ",
+                "Octolith"
+            ]
+        },
+        "key": {
+            "long_name": "Key",
+            "hint_details": [
+                "a ",
+                "Key"
+            ]
+        },
+        "major": {
+            "long_name": "Major Item",
+            "hint_details": [
+                "a ",
+                "major item"
+            ],
+            "hidden": true
+        },
+        "energy_tank": {
+            "long_name": "Energy Tanks",
+            "hint_details": [
+                "an ",
+                "Energy Tank"
+            ],
+            "hidden": true
+        },
+        "expansion": {
+            "long_name": "Expansion",
+            "hint_details": [
+                "an ",
+                "expansion"
+            ],
+            "hidden": true
+        }
+    },
+    "generated_pickups": {
+        "Cartograph Artifact": {
+            "name_template": "{region} Cartograph Artifact {i}",
+            "gui_category": "artifact",
+            "hint_features": [
+                "artifact",
+                "key"
+            ],
+            "model_name": "{region}Artifact{i}",
+            "offworld_models": {},
+            "preferred_location_category": "major",
+            "probability_offset": 0.25,
+            "progression": [
+                "{region}CArtifact{i}"
+            ],
+            "expected_case_for_describer": "shuffled",
+            "extra": {
+                "entity_type": 17,
+                "artifact_id": 0
+            }
+        },
+        "Attameter Artifact": {
+            "name_template": "{region} Attameter Artifact {i}",
+            "gui_category": "artifact",
+            "hint_features": [
+                "artifact",
+                "key"
+            ],
+            "model_name": "{region}Artifact{i}",
+            "offworld_models": {},
+            "preferred_location_category": "major",
+            "probability_offset": 0.25,
+            "progression": [
+                "{region}AArtifact{i}"
+            ],
+            "expected_case_for_describer": "shuffled",
+            "extra": {
+                "entity_type": 17,
+                "artifact_id": 1
+            }
+        },
+        "Binary Subscripture Artifact": {
+            "name_template": "{region} Binary Subscripture Artifact {i}",
+            "gui_category": "artifact",
+            "hint_features": [
+                "artifact",
+                "key"
+            ],
+            "model_name": "{region}Artifact{i}",
+            "offworld_models": {},
+            "preferred_location_category": "major",
+            "probability_offset": 0.25,
+            "progression": [
+                "{region}BSArtifact{i}"
+            ],
+            "expected_case_for_describer": "shuffled",
+            "extra": {
+                "entity_type": 17,
+                "artifact_id": 2
+            }
+        },
+        "Octolith": {
+            "name_template": "Octolith {i}",
+            "gui_category": "octolith",
+            "hint_features": [
+                "octolith",
+                "key"
+            ],
+            "model_name": "Octolith{i}",
+            "offworld_models": {},
+            "preferred_location_category": "major",
+            "probability_offset": 0.25,
+            "progression": [
+                "Octolith{i}"
+            ],
+            "expected_case_for_describer": "shuffled",
+            "extra": {
+                "entity_type": 17,
+                "model_id": 8
+            }
+        }
+    },
+    "standard_pickups": {
+        "Power Beam": {
+            "gui_category": "beam",
+            "hint_features": [
+                "beam",
+                "beam_related"
+            ],
+            "model_name": "ArtifactKey",
+            "offworld_models": {},
+            "preferred_location_category": "major",
+            "progression": [
+                "PowerBeam"
+            ],
+            "expected_case_for_describer": "starting_item",
+            "hide_from_gui": true
+        },
+        "Missile": {
+            "gui_category": "missile",
+            "hint_features": [
+                "missile"
+            ],
+            "model_name": "MissileExpansion",
+            "offworld_models": {},
+            "preferred_location_category": "minor",
+            "progression": [
+                "Missile"
+            ],
+            "ammo": [
+                "Missile"
+            ],
+            "expected_case_for_describer": "shuffled",
+            "extra": {
+                "entity_type": 4,
+                "item_type": 6
+            }
+        },
+        "Volt Driver": {
+            "gui_category": "beam",
+            "hint_features": [
+                "beam",
+                "beam_related",
+                "sub_weapon",
+                "affinity_weapon"
+            ],
+            "model_name": "VoltDriver",
+            "offworld_models": {},
+            "preferred_location_category": "major",
+            "progression": [
+                "VoltDriver"
+            ],
+            "expected_case_for_describer": "shuffled",
+            "extra": {
+                "entity_type": 4,
+                "item_type": 5
+            }
+        },
+        "Battlehammer": {
+            "gui_category": "beam",
+            "hint_features": [
+                "beam",
+                "beam_related",
+                "sub_weapon",
+                "affinity_weapon"
+            ],
+            "model_name": "Battlehammer",
+            "offworld_models": {},
+            "preferred_location_category": "major",
+            "progression": [
+                "Battlehammer"
+            ],
+            "expected_case_for_describer": "shuffled",
+            "extra": {
+                "entity_type": 4,
+                "item_type": 7
+            }
+        },
+        "Imperialist": {
+            "gui_category": "beam",
+            "hint_features": [
+                "beam",
+                "beam_related",
+                "sub_weapon",
+                "affinity_weapon"
+            ],
+            "model_name": "Imperialist",
+            "offworld_models": {},
+            "preferred_location_category": "major",
+            "progression": [
+                "Imperialist"
+            ],
+            "expected_case_for_describer": "shuffled",
+            "extra": {
+                "entity_type": 4,
+                "item_type": 8
+            }
+        },
+        "Judicator": {
+            "gui_category": "beam",
+            "hint_features": [
+                "beam",
+                "beam_related",
+                "sub_weapon",
+                "affinity_weapon"
+            ],
+            "model_name": "Judicator",
+            "offworld_models": {},
+            "preferred_location_category": "major",
+            "progression": [
+                "Judicator"
+            ],
+            "expected_case_for_describer": "shuffled",
+            "extra": {
+                "entity_type": 4,
+                "item_type": 9
+            }
+        },
+        "Magmaul": {
+            "gui_category": "beam",
+            "hint_features": [
+                "beam",
+                "beam_related",
+                "sub_weapon",
+                "affinity_weapon"
+            ],
+            "model_name": "Magmaul",
+            "offworld_models": {},
+            "preferred_location_category": "major",
+            "progression": [
+                "Magmaul"
+            ],
+            "expected_case_for_describer": "shuffled",
+            "extra": {
+                "entity_type": 4,
+                "item_type": 10
+            }
+        },
+        "Shock Coil": {
+            "gui_category": "beam",
+            "hint_features": [
+                "beam",
+                "beam_related",
+                "sub_weapon",
+                "affinity_weapon"
+            ],
+            "model_name": "Shock Coil",
+            "offworld_models": {},
+            "preferred_location_category": "major",
+            "progression": [
+                "ShockCoil"
+            ],
+            "expected_case_for_describer": "shuffled",
+            "extra": {
+                "entity_type": 4,
+                "item_type": 11
+            }
+        },
+        "Energy Tank": {
+            "gui_category": "energy_tank",
+            "hint_features": [
+                "energy_tank"
+            ],
+            "model_name": "EnergyTank",
+            "offworld_models": {},
+            "preferred_location_category": "minor",
+            "progression": [
+                "EnergyTank"
+            ],
+            "show_in_credits_spoiler": false,
+            "expected_case_for_describer": "shuffled",
+            "custom_count_for_shuffled_case": 7,
+            "extra": {
+                "entity_type": 4,
+                "item_type": 4
+            }
+        }
+    },
+    "ammo_pickups": {
+        "Missile Expansion": {
+            "gui_category": "missile",
+            "hint_features": [
+                "expansion",
+                "missile_related"
+            ],
+            "model_name": "MissileExpansion",
+            "offworld_models": {},
+            "preferred_location_category": "minor",
+            "items": [
+                "Missile"
+            ],
+            "unlocked_by": "Missile",
+            "temporary": "Missile",
+            "allows_negative": false,
+            "extra": {
+                "entity_type": 4,
+                "item_type": 6
+            }
+        },
+        "UA Expansion": {
+            "gui_category": "beam",
+            "hint_features": [
+                "expansion",
+                "beam_related",
+                "sub_weapon",
+                "affinity_weapon"
+            ],
+            "model_name": "UAExpansion",
+            "offworld_models": {},
+            "preferred_location_category": "minor",
+            "items": [
+                "UAExpansion"
+            ],
+            "allows_negative": false,
+            "extra": {
+                "entity_type": 4,
+                "item_type": 18
+            }
+        }
+    },
+    "default_pickups": {},
+    "default_offworld_model": ""
+}

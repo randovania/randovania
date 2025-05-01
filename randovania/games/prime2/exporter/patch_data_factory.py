@@ -35,6 +35,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable, Iterator
 
     from randovania.exporter.hints.hint_namer import HintNamer
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.dock import DockType
     from randovania.game_description.db.region import Region
@@ -93,12 +94,20 @@ def item_id_for_item_resource(resource: ItemResourceInfo) -> int:
     return resource.extra["item_id"]
 
 
+def _asset_id_for_region(region_list: RegionList, region: Region) -> int:
+    if "asset_id" in region.extra:
+        return region.extra["asset_id"]
+    else:
+        light_region = region_list.region_with_name(region.extra["associated_region"])
+        return light_region.extra["asset_id"]
+
+
 def _area_identifier_to_json(region_list: RegionList, identifier: AreaIdentifier) -> dict:
     region = region_list.region_by_area_location(identifier)
     area = region.area_by_identifier(identifier)
 
     return {
-        "world_asset_id": region.extra["asset_id"],
+        "world_asset_id": _asset_id_for_region(region_list, region),
         "area_asset_id": area.extra["asset_id"],
     }
 
@@ -579,8 +588,8 @@ def should_keep_elevator_sounds(configuration: EchoesConfiguration) -> bool:
     return not (
         set(elev.editable_teleporters)
         & {
-            NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway", "Elevator to Great Temple"),
-            NodeIdentifier.create("Great Temple", "Sky Temple Energy Controller", "Elevator to Temple Grounds"),
+            NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway", "Elevator to Sky Temple"),
+            NodeIdentifier.create("Great Temple", "Sky Temple Energy Controller", "Elevator to Sky Temple Grounds"),
             NodeIdentifier.create("Sanctuary Fortress", "Aerie", "Elevator to Aerie Transport Station"),
         }
     )
@@ -623,7 +632,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
             "hud_color": self.cosmetic_patches.hud_color if self.cosmetic_patches.use_hud_color else None,
         }
 
-    def create_game_specific_data(self) -> dict[str, typing.Any]:
+    def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict[str, typing.Any]:
         result: dict[str, typing.Any] = {}
         _add_header_data_to_result(self.description, result)
 
@@ -732,7 +741,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
         self,
         regions_patch_data: dict,
         area_or_node: Area | Node | AreaIdentifier | NodeIdentifier,
-    ) -> tuple[Region, Area]:
+    ) -> tuple[dict, Area]:
         if isinstance(area_or_node, NodeIdentifier):
             area_or_node = self.game.region_list.node_by_identifier(area_or_node)
         if isinstance(area_or_node, Node):
@@ -742,23 +751,24 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
         area = area_or_node
 
         region = self.game.region_list.region_with_area(area)
-        if region.name not in regions_patch_data:
-            regions_patch_data[region.name] = {"areas": {}}
+        region_name = region.name
+        if "asset_id" not in region.extra:
+            region_name = region.extra["associated_region"]
 
-        if area.name not in regions_patch_data[region.name]["areas"]:
-            regions_patch_data[region.name]["areas"][area.name] = {
+        if region_name not in regions_patch_data:
+            regions_patch_data[region_name] = {"areas": {}}
+
+        if area.name not in regions_patch_data[region_name]["areas"]:
+            regions_patch_data[region_name]["areas"][area.name] = {
                 "elevators": [],
                 "docks": {},
                 "layers": {},
             }
 
-        return region, area
+        return regions_patch_data[region_name]["areas"][area.name], area
 
     def _get_dock_patch_data(self, regions_patch_data: dict, node: DockNode) -> dict:
-        region, area = self._add_area_to_regions_patch(regions_patch_data, node)
-
-        area_patch_data = regions_patch_data[region.name]["areas"][area.name]
-
+        area_patch_data, area = self._add_area_to_regions_patch(regions_patch_data, node)
         area_patch_data["low_memory_mode"] = area.extra.get("low_memory_mode", False)
         area_patch_data["docks"][node.extra["dock_name"]] = area_patch_data["docks"].get(node.extra["dock_name"], {})
         return area_patch_data["docks"][node.extra["dock_name"]]
@@ -807,8 +817,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
         all_teleporters = [pair for pair in self.patches.all_dock_connections() if pair[0].dock_type == elevator_type]
         for node, connection in all_teleporters:
             node_identifier = connection.identifier
-            region, area = self._add_area_to_regions_patch(regions_patch_data, node)
-            area_patches = regions_patch_data[region.name]["areas"][area.name]
+            area_patches, area = self._add_area_to_regions_patch(regions_patch_data, node)
             area_patches["elevators"].append(
                 {
                     "instance_id": node.extra["teleporter_instance_id"],
@@ -845,10 +854,10 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
         }
 
     def add_credits_skip(self, regions_patch_data: dict) -> None:
-        region, area = self._add_area_to_regions_patch(
+        area_data, area = self._add_area_to_regions_patch(
             regions_patch_data, AreaIdentifier("Temple Grounds", "Sky Temple Gateway")
         )
-        regions_patch_data[region.name]["areas"][area.name]["docks"]["Cinema_Dock"] = {
+        area_data["docks"]["Cinema_Dock"] = {
             "connect_to": {
                 "area": "game_end_part3",
                 "dock": "cinema_dock",

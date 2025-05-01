@@ -89,7 +89,7 @@ exporters = [
     "open-dread-rando>=2.16.0",
 
     # Metroid fusion
-    "mars-patcher>=0.2.0",
+    "mars-patcher>=0.3.2",
 
     # Metroid Planets
     "planets-yapr>=1.0.0",
@@ -116,17 +116,15 @@ gui = [
     "markdown",
     "qasync",
     "natsort",
-
     "appdirs",
     # Minimum version compatible with PySide 6.4. 3.6 is also needed for Python 3.11
     "matplotlib>=3.6.2",
-
-    "humanize",  # formatting dates
-
+    "humanize", # formatting dates
     "nod>=1.9",
     "async-wiiload",
     "dolphin-memory-engine>=1.0.2",
     "pid>=3.0.0",
+    "qrcode[pil]>=8.0",
 ]
 
 server = [
@@ -171,6 +169,7 @@ typing = [
     "mypy",
     "types-aiofiles",
     "types-peewee",
+    "types-qrcode>=8.0.0.20241004",
 ]
 
 [project.readme]
@@ -270,6 +269,7 @@ files = [
     "randovania/games/fusion/",
     "randovania/games/prime1/",
     "randovania/games/prime2/",
+    "randovania/games/prime_hunters/",
     "randovania/games/samus_returns/",
     "randovania/generator/",
     "randovania/gui/main_online_interaction.py",
@@ -283,6 +283,7 @@ files = [
     "randovania/gui/dialog/base_cosmetic_patches_dialog.py",
     "randovania/gui/dialog/connections_editor.py",
     "randovania/gui/dialog/connector_prompt_dialog.py",
+    "randovania/gui/dialog/login_prompt_dialog.py",
     "randovania/gui/preset_settings/trick_level_tab.py",
     "randovania/gui/preset_settings/hints_tab.py",
     "randovania/gui/lib/editable_table_model.py",

@@ -20,6 +20,7 @@ from randovania.layout.lib.teleporters import TeleporterShuffleMode
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
@@ -127,8 +128,8 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
         result.extend(items)
         return result
 
-    def _key_error_for_node(self, node: Node, err: KeyError):
-        return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has no extra {err}")
+    def _key_error_for_node(self, node: Node, err: KeyError) -> KeyError:
+        return KeyError(f"{node.full_name()} has no extra {err}")
 
     def _get_or_create_spawn_point(self, node: Node, level_name: str):
         if node in self.new_spawn_points:
@@ -424,16 +425,14 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
 
         return cosmetic_dict
 
-    def _door_patches(self):
-        wl = self.game.region_list
-
+    def _door_patches(self) -> list[dict[str, dict]]:
         result = []
         used_actors = {}
 
         for node, weakness in self.patches.all_dock_weaknesses():
             if "type" not in weakness.extra:
                 raise ValueError(
-                    f"Unable to change door {wl.node_name(node)} into {weakness.name}: incompatible door weakness"
+                    f"Unable to change door {node.full_name()} into {weakness.name}: incompatible door weakness"
                 )
 
             if "actor_name" not in node.extra:
@@ -449,7 +448,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             actor_idef = str(actor)
             if used_actors.get(actor_idef, door_type) != door_type:
                 raise ValueError(
-                    f"Door for {wl.node_name(node)} ({actor}) previously "
+                    f"Door for {node.full_name()} ({actor}) previously "
                     f"patched to use {used_actors[actor_idef]}, tried to change to {door_type}."
                 )
             used_actors[actor_idef] = door_type
@@ -515,7 +514,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
         return pickup_creator.create_visual_nothing(self.game_enum(), "Nothing")
 
-    def create_game_specific_data(self) -> dict:
+    def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         starting_location_node = self.game.region_list.node_by_identifier(self.patches.starting_location)
         starting_location = self._start_point_ref_for(starting_location_node)
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())

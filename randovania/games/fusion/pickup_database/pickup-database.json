@@ -38,6 +38,13 @@
                 "suit"
             ]
         },
+        "keycard": {
+            "long_name": "Keycards",
+            "hint_details": [
+                "a ",
+                "Keycard"
+            ]
+        },
         "energy_tank": {
             "long_name": "Energy Tanks",
             "hint_details": [
@@ -64,13 +71,6 @@
             "hint_details": [
                 "a ",
                 "life support system"
-            ]
-        },
-        "keycard": {
-            "long_name": "Keycards",
-            "hint_details": [
-                "a ",
-                "Keycard"
             ]
         },
         "InfantMetroid": {
@@ -126,7 +126,8 @@
             "progression": [
                 "Infant Metroid {i}"
             ],
-            "expected_case_for_describer": "shuffled"
+            "expected_case_for_describer": "shuffled",
+            "starting_condition": "never_start"
         }
     },
     "standard_pickups": {
@@ -759,7 +760,8 @@
             ],
             "unlocked_by": "MissileData",
             "temporary": "LockedMissiles",
-            "allows_negative": true
+            "allows_negative": true,
+            "hide_requires_main": true
         },
         "Power Bomb Tank": {
             "gui_category": "morph_ball",
@@ -783,7 +785,8 @@
             ],
             "unlocked_by": "PowerBombData",
             "temporary": "LockedPowerBombs",
-            "allows_negative": true
+            "allows_negative": true,
+            "hide_requires_main": true
         }
     },
     "default_pickups": {},

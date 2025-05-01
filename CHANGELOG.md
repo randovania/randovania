@@ -7,7 +7,62 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [9.1.x] - 2025-05-??
 
-- TODO
+- Added: After clicking the "Login with Discord" button, a link and a QR Code are displayed instead of opening the default browser directly.
+- Changed: The relative time to start/finish in Async Race rooms now update as time passes, and the window reacts appropriately when the race starts and finishes.
+- Changed: The default and minimum size for the area view in the data visualizer has been increased.
+- Fixed: A server issue that caused async race exporting of AM2R and MSR to let you easily view the spoiler.
+- Fixed: When submitting proof for an async race, it is now clearer that it's only providing a proof URL is not required if submission notes were given.
+- Fixed: Clicking links to the Data Visualizer should now open all links succesfully.
+- Removed: The initial Randovania screen no longer contains the list of supported games.
+
+### Generator
+
+- Fixed: Bugs where the generator would collect dangerous resources too early, leading to generation failure in some cases.
+- Fixed: Bug where the requirements that apply beyond a point of no return weren't considered correctly.
+- Improved: Try a little harder to check if seemingly unsafe options are actually safe.
+
+### AM2R
+
+- Fixed: Long Beam, Infinite Bomb Propulsion and Walljump Boots now show up in the credits spoiler log.
+
+### Cave Story
+
+- Changed: Outer Wall is now a separate region.
+
+### Factorio
+
+- Fixed: Random recipes can no longer have multiples of Modular Armor, Power Armor and Power Armor Mk2 as ingredients, as the game doesn't allow these to stack even on the assembler input.
+
+### Metroid Dread
+
+- Changed: The maximum number of Speed Booster Upgrade items that will have an effect is now 4 instead of 5 (any further upgrades have no effect). This is to prevent a quirk with inconsistent Speed Booster activation with very short charge times.
+- Fixed: The patching data being exported on race seeds.
+- Fixed: Speed Booster Upgrade items will no longer be hinted or included in the credits.
+
+#### Logic Database
+
+##### Artaria
+
+- Added: In EMMI Zone Hub, it's now logical to climb to the Dock to EMMI Zone Exit South by using Flash Shift.
+
+### Metroid Prime
+
+#### Logic Database
+
+- Fixed: Fix the Door Lock Rando misc resource being called Dock Rando.
+
+##### Phendrana Drifts
+
+- Fixed: Observatory: Logic will now properly reflect the fact that you can activate the Observatory even after collecting the item in Research Core.
+
+### Metroid Prime 2: Echoes
+
+- Changed: The Light and Dark regions are now properly different regions for Randovania.
+- Fixed: Booting the game using the included Nintendont should no longer hang with a black screen.
+
+### Metroid: Samus Returns
+
+- Fixed: The patching data being exported on race seeds.
 
 ## [9.0.0] - 2025-04-01
 
