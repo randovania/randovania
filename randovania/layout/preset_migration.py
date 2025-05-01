@@ -1163,6 +1163,13 @@ def _migrate_v102(preset: dict, game: RandovaniaGame) -> None:
             fix(it)
 
 
+def _migrate_v103(preset: dict, game: RandovaniaGame) -> None:
+    if preset["game"] == "prime1":
+        items = ["Unlimited Missiles", "Unlimited Power Bombs"]
+        for i in items:
+            preset["configuration"]["standard_pickup_configuration"]["pickups_state"][i] = {}
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1266,6 +1273,7 @@ _MIGRATIONS = [
     _migrate_v100,  # hints configuration
     _migrate_v101,
     _migrate_v102,  # removal of in_dark_aether
+    _migrate_v103,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
