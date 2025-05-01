@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [9.2.x] - 2025-06-??
 
-- Nothing yet
+- Fixed: The experimental option called Logical Pickup Placement is now respected by the resolver. It also now checks for items configured to be placed in their vanilla location.
 
 ## [9.1.0] - 2025-05-01
 
@@ -18,7 +18,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: A server issue that caused async race exporting of AM2R and MSR to let you easily view the spoiler.
 - Fixed: When submitting proof for an async race, it is now clearer that it's only providing a proof URL is not required if submission notes were given.
 - Fixed: Clicking links to the Data Visualizer should now open all links succesfully.
-- Fixed: The experimental option called Logical Pickup Placement is now respected by the resolver. It also now checks for items configured to be placed in their vanilla location.
 - Removed: The initial Randovania screen no longer contains the list of supported games.
 
 ### Generator
