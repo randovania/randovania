@@ -446,7 +446,11 @@ jobs:
         env:
             SHOULD_PUSH: ${{ github.event_name != 'pull_request' && github.event_name != 'merge_group' && !startsWith(github.ref, 'refs/heads/stable') }}
         run: |
-          echo should=${SHOULD_PUSH} >> $GITHUB_OUTPUT
+          if [[ "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
+            echo should=${{ inputs.deploy_server }} >> $GITHUB_OUTPUT
+          else
+            echo should=${SHOULD_PUSH} >> $GITHUB_OUTPUT
+          fi
 
       -
         name: Login to DockerHub
@@ -459,7 +463,7 @@ jobs:
       -
         name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v6.15.0
+        uses: docker/build-push-action@v6.16.0
         with:
           context: .
           file: ./Dockerfile.server

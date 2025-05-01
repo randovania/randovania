@@ -15,6 +15,7 @@ from randovania.layout import filtered_database
 
 if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
+    from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -119,8 +120,7 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
 
         for region, area, node in game_description.region_list.all_regions_areas_nodes:
             if isinstance(node, PickupNode):
-                region_name = region.correct_name(area.in_dark_aether)
-                nodes_in_region[region_name].append((f"{area.name} - {node.name}", node.pickup_index))
+                nodes_in_region[region.name].append((f"{area.name} - {node.name}", node.pickup_index))
                 continue
 
         for region_name in sorted(nodes_in_region.keys()):
@@ -198,35 +198,31 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
             return
 
         pickup_names = set()
-        rows = []
+        rows: list[tuple[str, str, NodeIdentifier]] = []
 
         for source_index, patches in all_patches.items():
             rl = patches.game.region_list
             for pickup_index, pickup_target in patches.pickup_assignment.items():
                 if pickup_target.player == players.player_index:
                     node = rl.node_from_pickup_index(pickup_index)
-                    area = rl.nodes_to_area(node)
-
                     rows.append(
                         (
                             pickup_target.pickup.name,
                             players.player_names[source_index],
-                            rl.region_name_from_area(area, True),
-                            area.name,
-                            node.name,
+                            node.identifier,
                         )
                     )
                     pickup_names.add(pickup_target.pickup.name)
 
         self.search_pickup_model.setRowCount(len(rows))
 
-        for i, (pickup_name, player_name, region_name, area_name, node_name) in enumerate(rows):
+        for i, (pickup_name, player_name, identifier) in enumerate(rows):
             player_item = QtGui.QStandardItem(player_name)
             player_item.setData(pickup_name, QtCore.Qt.ItemDataRole.UserRole)
             self.search_pickup_model.setItem(i, 0, player_item)
-            self.search_pickup_model.setItem(i, 1, QtGui.QStandardItem(region_name))
-            self.search_pickup_model.setItem(i, 2, QtGui.QStandardItem(area_name))
-            self.search_pickup_model.setItem(i, 3, QtGui.QStandardItem(node_name))
+            self.search_pickup_model.setItem(i, 1, QtGui.QStandardItem(identifier.region))
+            self.search_pickup_model.setItem(i, 2, QtGui.QStandardItem(identifier.area))
+            self.search_pickup_model.setItem(i, 3, QtGui.QStandardItem(identifier.node))
 
         self.search_pickup_combo.clear()
         self.search_pickup_combo.addItem("Select pickup", None)

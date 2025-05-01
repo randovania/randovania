@@ -84,6 +84,9 @@ class RecipeAlgorithm(pyeasyga.GeneticAlgorithm):
                 if item_count > self.max_items:
                     return math.inf
 
+                if item.max_amount is not None and selected > item.max_amount:
+                    return math.inf
+
                 ingredients.append((item, selected))
 
         material, complexity = cost_for_ingredient_list(ingredients)

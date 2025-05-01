@@ -7,6 +7,11 @@ from randovania.games.factorio.data_importer import data_parser
 
 BASIC_RESOURCES = {"water", "steam", "crude-oil", "iron-ore", "copper-ore", "coal", "stone"}
 _FLUID_NAMES = {"water", "steam", "crude-oil", "heavy-oil", "light-oil", "petroleum-gas", "lubricant", "sulfuric-acid"}
+_UNSTACKABLE_STACK_ITEMS = {
+    "modular-armor",
+    "power-armor",
+    "power-armor-mk2",
+}
 _COMPLEXITY_PER_INGREDIENT = 2
 
 
@@ -16,6 +21,7 @@ class ItemCost:
     complexity: float
     steps: int
     categories: set[str]
+    max_amount: int | None = None
     is_fluid: bool = False
 
     def combine(self, material: float, complexity: int, categories: set[str]) -> ItemCost:
@@ -111,7 +117,11 @@ def cost_calculator(recipes_raw: dict[str, dict], techs_raw: dict[str, dict]) ->
         else:
             raise ValueError(f"No recipes for {item_name}")
 
-        item_costs[item_name] = dataclasses.replace(cost, is_fluid=item_name in _FLUID_NAMES)
+        item_costs[item_name] = dataclasses.replace(
+            cost,
+            max_amount=1 if item_name in _UNSTACKABLE_STACK_ITEMS else None,
+            is_fluid=item_name in _FLUID_NAMES,
+        )
         processing_items.remove(item_name)
         return cost
 

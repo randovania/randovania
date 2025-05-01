@@ -219,6 +219,11 @@ def msr_game_description() -> GameDescription:
 
 
 @pytest.fixture(scope="session")
+def cs_game_description() -> GameDescription:
+    return default_database.game_description_for(RandovaniaGame.CAVE_STORY)
+
+
+@pytest.fixture(scope="session")
 def fusion_game_description() -> GameDescription:
     return default_database.game_description_for(RandovaniaGame.FUSION)
 
@@ -473,6 +478,7 @@ def cs_panties_pickup(default_generator_params: PickupGeneratorParams) -> Pickup
         generator_params=default_generator_params,
         resource_lock=None,
         unlocks_resource=False,
+        extra=frozendict({"script": "<EVE0085"}),
     )
 
 

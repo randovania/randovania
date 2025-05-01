@@ -1,7 +1,6 @@
 ----------------
 Egg Corridor?
 Extra - map_name: Eggs2
-Extra - in_dark_aether: False
 Extra - starting_script: <TRA0049:0099:0007:0006
 > Door to Cthulhu's Abode? (Upper); Heals? False
   * Layers: default
@@ -132,7 +131,6 @@ Extra - starting_script: <TRA0049:0099:0007:0006
 ----------------
 Cthulhu's Abode?
 Extra - map_name: Cthu2
-Extra - in_dark_aether: False
 Extra - starting_script: <TRA0050:0094:0011:0012
 > Door to Egg Corridor? (Upper); Heals? False
   * Layers: default
@@ -165,7 +163,6 @@ Extra - starting_script: <TRA0050:0094:0011:0012
 ----------------
 Egg Observation Room?
 Extra - map_name: EggR2
-Extra - in_dark_aether: False
 Extra - starting_script: <TRA0051:0094:0004:0004
 Hint Features - Boss
 > Door to Egg Corridor? (Western); Heals? False; Spawn Point; Default Node
@@ -224,7 +221,6 @@ Hint Features - Boss
 ----------------
 Side Room
 Extra - map_name: EgEnd2
-Extra - in_dark_aether: False
 Extra - starting_script: <TRA0054:0094:0011:0006
 > Door to Egg Corridor?; Heals? False
   * Layers: default
@@ -247,7 +243,6 @@ Extra - starting_script: <TRA0054:0094:0011:0006
 ----------------
 Egg No. 00
 Extra - map_name: EggX2
-Extra - in_dark_aether: False
 Extra - starting_script: <TRA0052:0094:0004:0010
 > Door to Egg Corridor?; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -259,145 +254,5 @@ Extra - starting_script: <TRA0052:0094:0004:0010
   * Layers: default
   * Door to Outer Wall/Door to Egg No. 00
   > Door to Egg Corridor?
-      Trivial
-
-----------------
-Outer Wall
-Extra - map_name: Oside
-Extra - in_dark_aether: True
-Extra - starting_script: <TRA0053:0092:0165:0004
-> Door to Egg No. 00; Heals? False
-  * Layers: default
-  * Door to Egg No. 00/Door to Outer Wall
-  > Room Bottom
-      Trivial
-
-> Door to Little House; Heals? False
-  * Layers: default
-  * Door to Little House/Door to Outer Wall
-  > Room Bottom
-      Has Flight
-
-> Outside Clock Room; Heals? False
-  * Layers: default
-  > Room Bottom
-      Trivial
-  > Room Top
-      Any of the following:
-          # https://youtu.be/-hZwtVL18l0
-          # Kill enemies
-          Has Weapon
-          # Fly over problematic Hoppies
-          Pacifist Strats (Intermediate) and Has Flight
-          # Tank a hit on a Hoppy
-          Pacifist Strats (Advanced) and Normal Damage ≥ 5
-          # Damageless
-          Pacifist Strats (Expert)
-  > Door to Clock Room
-      Trivial
-  > Event - Level MG
-      Machine Gun
-
-> Door to Storehouse; Heals? False
-  * Layers: default
-  * Door to Storehouse/Door to Outer Wall
-  > Event - Entered Outer Wall from Storehouse
-      Trivial
-
-> Room Bottom; Heals? False; Spawn Point; Default Node
-  * Layers: default
-  > Door to Egg No. 00
-      After Saved Kazuma
-  > Door to Little House
-      Has Flight
-  > Outside Clock Room
-      Any of the following:
-          Has Flight
-          After Entered Outer Wall from above and Remove Points of No Return
-  > Event - Bad Ending
-      After Defeated Core and After Saved Kazuma and Enabled Bad Ending
-
-> Room Top; Heals? False
-  * Layers: default
-  > Outside Clock Room
-      Trivial
-  > Door to Storehouse
-      Trivial
-
-> Door to Clock Room; Heals? False
-  * Layers: default
-  * Door to Clock Room/Door to Outer Wall
-  > Event - Entered Outer Wall from Clock Room
-      Trivial
-
-> Event - Bad Ending; Heals? False
-  * Layers: default
-  * Event Bad Ending
-  * Extra - different_strongly_connected_component: True
-
-> Event - Entered Outer Wall from Storehouse; Heals? False
-  * Layers: default
-  * Event Entered Outer Wall from above
-  > Room Top
-      Trivial
-
-> Event - Entered Outer Wall from Clock Room; Heals? False
-  * Layers: default
-  * Event Entered Outer Wall from above
-  > Outside Clock Room
-      Trivial
-
-> Event - Level MG; Heals? False
-  * Layers: default
-  * Event Level Up Machine Gun
-  > Outside Clock Room
-      Trivial
-
-----------------
-Little House
-Extra - map_name: Little
-Extra - in_dark_aether: True
-Extra - starting_script: <TRA0069:0090:0015:0008
-Hint Features - Someone's House
-> Door to Outer Wall; Heals? False; Spawn Point; Default Node
-  * Layers: default
-  * Door to Outer Wall/Door to Little House
-  > Pickup (Little House)
-      Blade and Little Man
-  > Hint - Mrs. Little
-      Trivial
-
-> Pickup (Little House); Heals? False
-  * Layers: default
-  * Pickup 55; Category? Minor
-  * Extra - event: 0204
-  > Door to Outer Wall
-      Trivial
-
-> Hint - Mrs. Little; Heals? False
-  * Layers: default
-  * Hint
-  * Extra - event: 0212
-  * Extra - hint_index: 55
-  * Extra - string_asset_id: 11
-  > Door to Outer Wall
-      Trivial
-
-----------------
-Clock Room
-Extra - map_name: Clock
-Extra - in_dark_aether: True
-Extra - starting_script: <TRA0094:0090:0014:0007
-> Door to Outer Wall; Heals? False; Spawn Point; Default Node
-  * Layers: default
-  * Door to Outer Wall/Door to Clock Room
-  > Pickup (Clock Room)
-      Trivial
-
-> Pickup (Clock Room); Heals? False
-  * Layers: default
-  * Pickup 56; Category? Minor
-  * Extra - event: 0300
-  > Door to Outer Wall
       Trivial
 

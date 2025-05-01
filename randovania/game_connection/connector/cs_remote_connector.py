@@ -198,7 +198,7 @@ class CSRemoteConnector(RemoteConnector):
 
         message = f"Received item from ={provider_name}=!"
         message = wrap_msg_text(message, False)
-        pickup_script = self.pickup_db.get_pickup_with_name(pickup.name).extra.get("script", NOTHING_ITEM_SCRIPT)
+        pickup_script = pickup.extra.get("script", NOTHING_ITEM_SCRIPT)
         script = f"<MSG<TUR{message}<FL+{ITEM_RECEIVED_FLAG}{pickup_script}"
         await self.executor.exec_script(script)
 

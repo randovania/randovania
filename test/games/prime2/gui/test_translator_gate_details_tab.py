@@ -27,6 +27,7 @@ def test_update_content(skip_qtbot, test_files_dir):
     counts = {}
     for i in range(tab.tree_widget.topLevelItemCount()):
         item = tab.tree_widget.topLevelItem(i)
+        assert item is not None
         counts[item.text(0)] = item.childCount()
 
     assert counts == {

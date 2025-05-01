@@ -15,6 +15,7 @@ from randovania.generator.pickup_pool import pickup_creator
 if typing.TYPE_CHECKING:
     import factorio_randovania_mod.configuration as cfg
 
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.games.factorio.generator.base_patches_factory import FactorioGameSpecific
 
@@ -34,7 +35,7 @@ class FactorioPatchDataFactory(PatchDataFactory[FactorioConfiguration, FactorioC
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
         return self.create_useless_pickup()
 
-    def create_game_specific_data(self) -> dict:
+    def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         rl = self.game.region_list
 
         technologies = []

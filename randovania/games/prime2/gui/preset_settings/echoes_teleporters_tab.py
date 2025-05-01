@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import copy
 import dataclasses
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 import randovania
 from randovania.game_description.db.dock_node import DockNode
+from randovania.games.prime2 import dark_aether_helper
 from randovania.games.prime2.exporter.patch_data_factory import (
     should_keep_elevator_sounds,
 )
@@ -27,6 +28,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_description import GameDescription
+    from randovania.games.common.elevators import NodeListGrouping
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
@@ -85,6 +87,12 @@ class PresetTeleportersPrime2(PresetTeleporterTab[EchoesConfiguration], Ui_Prese
     @classmethod
     def tab_title(cls) -> str:
         return "Elevators"
+
+    @override
+    def nodes_by_areas_by_region_from_locations(self, all_node_locations: list[NodeIdentifier]) -> NodeListGrouping:
+        return dark_aether_helper.wrap_node_list_grouping(
+            super().nodes_by_areas_by_region_from_locations(all_node_locations)
+        )
 
     def _create_source_teleporters(self) -> None:
         row = 0

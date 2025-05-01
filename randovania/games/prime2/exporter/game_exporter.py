@@ -24,6 +24,8 @@ from randovania.patching.patchers.gamecube import banner_patcher, iso_packager
 if TYPE_CHECKING:
     from pathlib import Path
 
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
+
 
 class EchoesGameExporter(GameExporter[EchoesGameExportParams]):
     _busy: bool = False
@@ -66,6 +68,7 @@ class EchoesGameExporter(GameExporter[EchoesGameExportParams]):
         patch_data: dict,
         export_params: EchoesGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
+        randovania_meta: PatcherDataMeta,
     ) -> None:
         new_patcher = patch_data.pop("new_patcher", None)
         monitoring.set_tag("echoes_new_patcher", new_patcher is not None)

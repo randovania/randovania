@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import urllib.parse
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -23,15 +24,15 @@ def on_click_data_editor_link(
     If `trick_levels` is provided, the data editor will automatically set its trick filters accordingly.
     """
 
-    link_pattern = re.compile(r"^data-editor://([^)]+)/([^)]+)$")
+    link_pattern = re.compile(r"^data-editor://(.+?)/(.+?)$")
 
     def inner(link: str) -> None:
         info = link_pattern.match(link)
         if info:
             region_name, area_name = info.group(1, 2)
             window_manager.open_data_visualizer_at(
-                region_name,
-                area_name,
+                urllib.parse.unquote(region_name),
+                urllib.parse.unquote(area_name),
                 game=game,
                 trick_levels=trick_levels,
             )
@@ -48,8 +49,10 @@ def data_editor_href(region: Region, area: Area, text: str | None = None) -> str
 
     if text is None:
         text = get_human_readable_region_and_area(region, area)
-    return f'<a href="data-editor://{region.correct_name(area.in_dark_aether)}/{area.name}">{text}</a>'
+    region_name = urllib.parse.quote(region.name)
+    area_name = urllib.parse.quote(area.name)
+    return f'<a href="data-editor://{region_name}/{area_name}">{text}</a>'
 
 
 def get_human_readable_region_and_area(region: Region, area: Area) -> str:
-    return f"{region.correct_name(area.in_dark_aether)} - {area.name}"
+    return f"{region.name} - {area.name}"

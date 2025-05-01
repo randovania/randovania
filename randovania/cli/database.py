@@ -384,7 +384,7 @@ def pickups_per_area_command_logic(args: Namespace) -> None:
     for region in gd.region_list.regions:
         num_pickups = sum(1 for node in region.all_nodes if isinstance(node, PickupNode))
         total += num_pickups
-        print(f"{region.correct_name(False)}: {num_pickups}")
+        print(f"{region.name}: {num_pickups}")
     print(f"Total: {total}")
 
 
