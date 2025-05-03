@@ -3,7 +3,9 @@ from __future__ import annotations
 import dataclasses
 import hashlib
 import math
+import struct
 import typing
+from collections.abc import Mapping, Sequence
 from enum import Enum
 from typing import TYPE_CHECKING, TypeVar
 
@@ -12,9 +14,11 @@ import bitstruct
 from randovania.lib import type_lib
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterator, Sequence
+    from collections.abc import Callable, Iterator
 
     from _typeshed import DataclassInstance, SupportsRichComparisonT
+
+    from randovania.lib.json_lib import JsonObject, JsonObject_RO, JsonType, JsonType_RO
 
 T = TypeVar("T")
 
@@ -289,6 +293,107 @@ class BitPackDataclass(BitPackValue):
         return cls(**args)
 
 
+class BitPackJson(BitPackValue):
+    """
+    BitPackValue that operates on valid JSON objects. Less efficient than manual
+    dedicated bitpacking, but gets the job done for stuff like `extra` dicts
+    """
+
+    class JsonTypes(BitPackEnum, Enum):
+        ARRAY = 0
+        BOOLEAN = 1
+        NULL = 2
+        INTEGER = 3
+        NUMBER = 4
+        OBJECT = 5
+        STRING = 6
+
+    value: JsonObject_RO
+
+    def __init__(self, value: JsonObject_RO):
+        self.value = value
+
+    def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
+        yield from encode_big_int(len(self.value))
+
+        for key, value in self.value.items():
+            yield from encode_string(key)
+            yield from self.encode_json_value(value)
+
+    def encode_json_value(self, value: JsonType_RO) -> Iterator[tuple[int, int]]:
+        encoded = typing.cast("Iterator[tuple[int, int]]", ())
+
+        if isinstance(value, str):
+            value_type = BitPackJson.JsonTypes.STRING
+            encoded = encode_string(value)
+
+        elif isinstance(value, bool):
+            value_type = BitPackJson.JsonTypes.BOOLEAN
+            encoded = encode_bool(value)
+
+        elif value is None:
+            value_type = BitPackJson.JsonTypes.NULL
+
+        elif isinstance(value, int):
+            value_type = BitPackJson.JsonTypes.INTEGER
+            encoded = encode_big_int(value)
+
+        elif isinstance(value, float):
+            value_type = BitPackJson.JsonTypes.NUMBER
+            encoded = encode_float_as_bytes(value)
+
+        elif isinstance(value, Sequence):
+            value_type = BitPackJson.JsonTypes.ARRAY
+            encoded = encode_tuple(value, self.encode_json_value)
+
+        elif isinstance(value, Mapping):
+            value_type = BitPackJson.JsonTypes.OBJECT
+            encoded = BitPackJson(value).bit_pack_encode({})
+
+        else:
+            raise TypeError(f"Encoding error in bitpacking: value of type {type(value)} is not a JSON value")
+
+        yield from value_type.bit_pack_encode({})
+        yield from encoded
+
+    @classmethod
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata: dict) -> JsonObject:  # type: ignore[override]
+        result: JsonObject = {}
+
+        size = decode_big_int(decoder)
+        for _ in range(size):
+            key = decode_string(decoder)
+            result[key] = cls.decode_json_value(decoder)
+
+        return result
+
+    @classmethod
+    def decode_json_value(cls, decoder: BitPackDecoder) -> JsonType:
+        value_type = BitPackJson.JsonTypes.bit_pack_unpack(decoder, {})
+
+        match value_type:
+            case BitPackJson.JsonTypes.STRING:
+                return decode_string(decoder)
+
+            case BitPackJson.JsonTypes.BOOLEAN:
+                return decode_bool(decoder)
+
+            case BitPackJson.JsonTypes.NULL:
+                return None
+
+            case BitPackJson.JsonTypes.INTEGER:
+                return decode_big_int(decoder)
+
+            case BitPackJson.JsonTypes.NUMBER:
+                return decode_float_as_bytes(decoder)
+
+            case BitPackJson.JsonTypes.ARRAY:
+                return list(decode_tuple(decoder, cls.decode_json_value))
+
+            case BitPackJson.JsonTypes.OBJECT:
+                return BitPackJson.bit_pack_unpack(decoder, {})
+
+
 def pack_array_element(element: T, array: list[T]) -> Iterator[tuple[int, int]]:
     if len(array) > 1:
         yield array.index(element), len(array)
@@ -424,6 +529,16 @@ def decode_bytes(decoder: BitPackDecoder) -> bytes:
     return bytes(decoder.decode(*([256] * size)))
 
 
+def encode_float_as_bytes(f: float) -> Iterator[tuple[int, int]]:
+    packed = struct.pack("<d", f)
+    return encode_bytes(packed)
+
+
+def decode_float_as_bytes(decoder: BitPackDecoder) -> float:
+    packed = decode_bytes(decoder)
+    return struct.unpack("<d", packed)[0]
+
+
 def encode_string(s: str) -> Iterator[tuple[int, int]]:
     yield from encode_bytes(s.encode("utf-8"))
 
@@ -440,7 +555,7 @@ def decode_bool(decoder: BitPackDecoder) -> bool:
     return bool(decoder.decode_single(2))
 
 
-def encode_tuple(value: tuple[T, ...], encoder: Callable[[T], Iterator[tuple[int, int]]]) -> Iterator[tuple[int, int]]:
+def encode_tuple(value: Sequence[T], encoder: Callable[[T], Iterator[tuple[int, int]]]) -> Iterator[tuple[int, int]]:
     yield from encode_big_int(len(value))
     for it in value:
         yield from encoder(it)
