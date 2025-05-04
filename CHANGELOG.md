@@ -8,13 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [9.2.x] - 2025-06-??
 
-- Fixed: Duplicating a session now also duplicates the Co-op setting.
+- Nothing yet
 
 ### Resolver
 
 - Fixed: Bug that could lead to timeouts or longer resolving time in some cases.
 
 ## [9.1.1] - 2025-05-03
+
+- Fixed: Duplicating a session now also duplicates the admin settings for Co-op and "Everyone can claim worlds".
 
 ### Cave Story
 
