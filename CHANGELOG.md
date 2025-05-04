@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [9.1.1] - 2025-05-03
 
+- Fixed: Duplicating a session now also duplicates the admin settings for Co-op and "Everyone can claim worlds".
+
 ### Cave Story
 
 - Fixed: A regression introduced in 9.1.0 that made all received pickups in multiworld behave as Nothings.
