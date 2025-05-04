@@ -347,6 +347,7 @@ def _duplicate_session(sa: ServerApp, session: MultiplayerSession, new_title: st
             layout_description_json=session.layout_description_json,
             game_details_json=session.game_details_json,
             dev_features=session.dev_features,
+            allow_coop=session.allow_coop,
         )
         for world in session.worlds:
             assert isinstance(world, World)
