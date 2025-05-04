@@ -6,6 +6,7 @@ import typing
 import uuid
 
 import pytest
+from frozendict import frozendict
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
@@ -228,6 +229,7 @@ def test_bit_pack_pickup_entry(
             ),
         ),
         resource_lock=resource_lock,
+        extra=frozendict({"foo": "bar"}),
     )
 
     # Run

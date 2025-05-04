@@ -845,7 +845,12 @@ def test_admin_session_duplicate_session(clean_database, mock_emit_session_updat
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=2345, name="Other Name")
     session = database.MultiplayerSession.create(
-        id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE, creator=user1
+        id=1,
+        name="Debug",
+        state=MultiplayerSessionVisibility.VISIBLE,
+        creator=user1,
+        allow_coop=True,
+        allow_everyone_claim_world=True,
     )
     database.World.create(session=session, name="W1", preset="{}")
     database.World.create(session=session, name="W2", preset='{"foo": 5}')
@@ -863,6 +868,8 @@ def test_admin_session_duplicate_session(clean_database, mock_emit_session_updat
     mock_audit.assert_called_once_with(sa, session, "Duplicated session as new_name")
     new_session = database.MultiplayerSession.get_by_id(2)
     assert new_session.name == "new_name"
+    assert new_session.allow_coop
+    assert new_session.allow_everyone_claim_world
     assert [w.name for w in new_session.worlds] == ["W1", "W2"]
     assert [w.preset for w in new_session.worlds] == ["{}", '{"foo": 5}']
     assert [mem.user.name for mem in new_session.members] == ["The Name"]
