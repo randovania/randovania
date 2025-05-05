@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [9.2.x] - 2025-06-??
 
-- Nothing yet
+- Fixed: A rare division-by-zero error during generation when placing hints.
 
 ### Resolver
 
