@@ -122,6 +122,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "planets_zebeth/starter_preset_shuffle_keys.rdvgame",  # starter preset (shuffled keys)
         # Prime Hunters
         "prime_hunters/starter_preset.rdvgame",  # starter preset
+        "prime_hunters/shuffled_force_fields.rdvgame",  # starter preset with shuffled force fields
         # Prime 1
         "prime1_crazy_seed.rdvgame",  # chaos features
         "prime1_crazy_seed_one_way_door.rdvgame",  # same as above but 1-way doors
