@@ -7,6 +7,7 @@ from PySide6 import QtCore
 from randovania.games.prime_hunters.gui.generated.preset_prime_hunters_force_fields_ui import (
     Ui_PresetHuntersForceFields,
 )
+from randovania.games.prime_hunters.layout.force_field_configuration import LayoutForceFieldRequirement
 from randovania.games.prime_hunters.layout.prime_hunters_configuration import HuntersConfiguration
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
@@ -48,17 +49,20 @@ class PresetHuntersForceFields(PresetTab, Ui_PresetHuntersForceFields):
             return
         with self._editor as editor:
             editor.set_configuration_field("force_field_configuration", _force_field_config(editor).with_full_random())
-            editor.set_configuration_field("shuffled_force_fields", True)
 
     def _on_vanilla_force_fields_pressed(self, value: bool) -> None:
         if not value:
             return
         with self._editor as editor:
             editor.set_configuration_field("force_field_configuration", _force_field_config(editor).with_vanilla())
-            editor.set_configuration_field("shuffled_force_fields", False)
 
     def on_preset_changed(self, preset: Preset) -> None:
         assert isinstance(preset.configuration, HuntersConfiguration)
-        force_fields = preset.configuration.shuffled_force_fields
-        self.force_field_randomize_all_radiobutton.setChecked(force_fields)
-        self.force_field_vanilla_radiobutton.setChecked(not force_fields)
+        force_fields = preset.configuration.force_field_configuration
+        requirements = force_fields.force_field_requirement
+        for node_identifier, requirement in requirements.items():
+            if requirement == LayoutForceFieldRequirement.RANDOM:
+                self.force_field_randomize_all_radiobutton.setChecked(True)
+            else:
+                self.force_field_vanilla_radiobutton.setChecked(True)
+            break
