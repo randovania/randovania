@@ -80,9 +80,8 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
     def _calculate_starting_inventory(self, resources: ResourceCollection) -> dict[str, str | int]:
         result: dict[str, str | int] = {}
         starting_items = {}
-        resource_gain = [(resource, quantity) for resource, quantity in resources.as_resource_gain()]
 
-        for resource, quantity in resource_gain:
+        for resource, quantity in resources.as_resource_gain():
             try:
                 starting_items[item_type_for_item_resource(resource)] = quantity
             except KeyError:
