@@ -15,7 +15,9 @@ from randovania.interface_common.preset_manager import PresetManager
 @pytest.mark.parametrize(
     ("octoliths"),
     [
-        HuntersOctolithConfig(True, 8),
+        HuntersOctolithConfig(True, 8, 8),
+        HuntersOctolithConfig(True, 4, 4),
+        HuntersOctolithConfig(True, 0, 0),
     ],
 )
 def test_hunters_format_params(octoliths) -> None:
@@ -30,9 +32,6 @@ def test_hunters_format_params(octoliths) -> None:
     # Run
     result = RandovaniaGame.METROID_PRIME_HUNTERS.data.layout.preset_describer.format_params(configuration)
 
-    if octoliths.prefer_bosses:
-        octoliths_where = "Prefers Bosses"
-
     # Assert
     assert dict(result) == {
         "Logic Settings": ["All tricks disabled"],
@@ -42,7 +41,11 @@ def test_hunters_format_params(octoliths) -> None:
             "Force Fields: Vanilla",
         ],
         "Difficulty": [],
-        "Goal": ([f"{octoliths.placed_octoliths} Octoliths", octoliths_where]),
+        "Goal": (
+            [f"{octoliths.required_octoliths} out of {octoliths.placed_octoliths} Octoliths"]
+            if octoliths.required_octoliths
+            else ["Defeat Gorea 1"]
+        ),
         "Game Changes": [],
         "Hints": [],
     }

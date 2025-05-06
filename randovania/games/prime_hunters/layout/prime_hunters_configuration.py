@@ -12,6 +12,7 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 @dataclasses.dataclass(frozen=True)
 class HuntersOctolithConfig(BitPackDataclass, JsonDataclass):
     prefer_bosses: bool
+    required_octoliths: int = dataclasses.field(metadata={"min": 0, "max": 8, "precision": 1})
     placed_octoliths: int = dataclasses.field(metadata={"min": 0, "max": 8, "precision": 1})
 
 
