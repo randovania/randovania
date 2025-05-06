@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import typing
 from typing import TYPE_CHECKING
 from unittest.mock import MagicMock, call
 
@@ -12,6 +13,7 @@ if TYPE_CHECKING:
     from collections.abc import Iterator
 
     from randovania.bitpacking.bitpacking import BitPackDecoder
+    from randovania.lib.json_lib import JsonObject_RO
 
 
 @pytest.mark.parametrize(
@@ -291,3 +293,42 @@ def test_encode_dataclass_for_test(int_v, int_reference, data_value, data_refere
 
     result = bitpacking.pack_value(data, {"reference": ref})
     assert result == expected
+
+
+@pytest.fixture
+def json_fixture(request) -> tuple[JsonObject_RO, bytes]:
+    value = {
+        "string": "foo",
+        "bool": True,
+        "null": None,
+        "integer": 1000,
+        "number": 24.03,
+        "array": [False, None],
+        "object": {
+            "key": None,
+        },
+    }
+    encoded = (
+        b"\x87\t\xcd\xd1\xc9\xa5\xb9\x9f6f\xf6\xf8"
+        b"\x0cM\xed\xed\x87\x01\xb9\xd5\xb1\xb1C"
+        b"integers8m\x10\x9b\x9d[X\x99\\\xa4D\x8e"
+        b"\x17\xa1J\xe0s\x84\x08,.NL/!\x12\x84\xde"
+        b"\xc4\xd4\xca\xc6\xe9Kkey@"
+    )
+    return typing.cast("JsonObject_RO", value), encoded
+
+
+def test_encode_json(json_fixture):
+    value, expected = json_fixture
+    data = bitpacking.BitPackJson(value)
+
+    result = bitpacking.pack_value(data)
+    assert result == expected
+
+
+def test_round_trip_json(json_fixture):
+    value, _ = json_fixture
+    data = bitpacking.BitPackJson(value)
+
+    result = bitpacking.round_trip(data)
+    assert result == value

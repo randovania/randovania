@@ -219,6 +219,11 @@ def msr_game_description() -> GameDescription:
 
 
 @pytest.fixture(scope="session")
+def cs_game_description() -> GameDescription:
+    return default_database.game_description_for(RandovaniaGame.CAVE_STORY)
+
+
+@pytest.fixture(scope="session")
 def fusion_game_description() -> GameDescription:
     return default_database.game_description_for(RandovaniaGame.FUSION)
 
