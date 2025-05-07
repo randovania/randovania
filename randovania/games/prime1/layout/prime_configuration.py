@@ -119,6 +119,7 @@ class PrimeConfiguration(BaseConfiguration):
     legacy_mode: bool
     qol_cutscenes: LayoutCutsceneMode
     ingame_difficulty: IngameDifficulty
+    blast_shield_lockon: bool
 
     enemy_attributes: EnemyAttributeRandomizer | None
 

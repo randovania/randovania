@@ -802,9 +802,6 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                     key=lambda n: n.extra["dock_index"],
                 )
                 for node in dock_nodes:
-                    if node.extra.get("exclude_dock_rando", False):
-                        continue
-
                     if self.patches.has_default_weakness(node):
                         continue
 
@@ -999,6 +996,11 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         else:
             boss_sizes = {}
 
+        if self.configuration.spring_ball:
+            spring_ball_item = "Morph Ball Bomb"
+        else:
+            spring_ball_item = "Spring Ball"
+
         data: dict = {
             "$schema": "https://randovania.github.io/randomprime/randomprime.schema.json",
             "seed": self.description.get_seed_for_world(self.players_config.player_index),
@@ -1024,7 +1026,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                 "noDoors": self.configuration.no_doors,
                 "startingRoom": starting_room,
                 "warpToStart": self.configuration.warp_to_start,
-                "springBall": self.configuration.spring_ball,
+                "springBallItem": spring_ball_item,
                 "incineratorDroneConfig": idrone_config,
                 "mazeSeeds": maze_seeds,
                 "nonvariaHeatDamage": not self.configuration.legacy_mode,
@@ -1035,6 +1037,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                 "multiworldDolPatches": True,
                 "doorOpenMode": "PrimaryBlastShield",
                 "difficultyBehavior": self.configuration.ingame_difficulty.randomprime_value,
+                "blastShieldLockon": self.configuration.blast_shield_lockon,
                 "disableItemLoss": True,  # Item Loss in Frigate
                 "startingItems": starting_items,
                 "etankCapacity": self.configuration.energy_per_tank,
