@@ -262,10 +262,12 @@ class Bootstrap[Configuration: BaseConfiguration]:
         pre_placed_indices = list(pool_results.assignment.keys())
         reduced_locations = [loc for loc in locations.keys() if loc.pickup_index not in pre_placed_indices]
 
+        # working_locations is a copy of locations with only the keys in reduced locations
         working_locations = {}
         for loc in reduced_locations:
             working_locations[loc] = locations[loc]
 
+        # weighted locations is a list filled by selecting weighted elements from working locations
         weighted_locations = []
         for _ in reduced_locations:
             loc = random_lib.select_element_with_weight_and_uniform_fallback(rng, working_locations)
@@ -282,6 +284,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
                 f"but only {len(weighted_locations)} valid locations."
             )
 
+        # places an artifact in the next location of weighted_locations until all_artifacts is exhausted
         for artifact, location in zip(all_artifacts, weighted_locations, strict=False):
             pool_results.to_place.remove(artifact)
             pool_results.assignment[location.pickup_index] = artifact
@@ -294,6 +297,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
         item_category: str,
         game: RandovaniaGame,
     ) -> None:
+        # calls pre_place_pickups_weighted with all weightings set to 1.0
         self.pre_place_pickups_weighted(
             rng,
             dict.fromkeys(locations, 1.0),
