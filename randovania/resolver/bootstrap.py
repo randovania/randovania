@@ -260,19 +260,14 @@ class Bootstrap[Configuration: BaseConfiguration]:
         game: RandovaniaGame,
     ) -> None:
         pre_placed_indices = list(pool_results.assignment.keys())
-        reduced_locations = [loc for loc in locations.keys() if loc.pickup_index not in pre_placed_indices]
+        reduced_locations = {loc: v for loc, v in locations.items() if loc.pickup_index not in pre_placed_indices}
 
-        # working_locations is a copy of locations with only the keys in reduced locations
-        working_locations = {}
-        for loc in reduced_locations:
-            working_locations[loc] = locations[loc]
-
-        # weighted locations is a list filled by selecting weighted elements from working locations
+        # weighted_locations is a list filled by selecting weighted elements from reduced_locations
         weighted_locations = []
-        for _ in reduced_locations:
-            loc = random_lib.select_element_with_weight_and_uniform_fallback(rng, working_locations)
+        while bool(reduced_locations):
+            loc = random_lib.select_element_with_weight_and_uniform_fallback(rng, reduced_locations)
             weighted_locations.append(loc)
-            working_locations.pop(loc)
+            reduced_locations.pop(loc)
 
         pickup_database = default_database.pickup_database_for_game(game)
         category = pickup_database.pickup_categories[item_category]
