@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [9.2.x] - 2025-06-??
 
 - Fixed: A rare division-by-zero error during generation when placing hints.
+- Fixed: The experimental option called Logical Pickup Placement is now respected by the resolver. It also now checks for items configured to be placed in their vanilla location.
 
 ### Resolver
 
@@ -27,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Cave Story
 
 - Fixed: A regression introduced in 9.1.0 that made all received pickups in multiworld behave as Nothings.
+
 
 ## [9.1.0] - 2025-05-01
 
