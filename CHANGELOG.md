@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [9.2.x] - 2025-06-??
 
-- Nothing yet
+- Fixed: A rare division-by-zero error during generation when placing hints.
 
 ### Resolver
 
@@ -22,6 +22,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Flipper Room: The Morph Ball Launcher now connects to the door to Navigation Station and is trivial, instead ot connecting to the door to Elun Transport Access and requiring that the Flipper has been rotated.
 - Changed: Flipper Room: Spinning the Flipper with the ledge warp from below now connects from the door to Elun Transport Access instead of from the Tunnel to Spider Magnet Elevator. It is now also logical to the ledge warp from below when Transport Randomizer is disabled.
+
+### Metroid: Samus Returns
+
+- Changed: Display the number of remaining DNA in the DNA message before entering the final boss.
+- Fixed: If Metroid Queen is the final boss and you don't have all DNA, the DNA message now appears.
+- Fixed: For tanks with non required main option, the jingle of the tank item is played instead of the jingle of the main object.
+
+## [9.1.1] - 2025-05-03
+
+- Fixed: Duplicating a session now also duplicates the admin settings for Co-op and "Everyone can claim worlds".
+
+### Cave Story
+
+- Fixed: A regression introduced in 9.1.0 that made all received pickups in multiworld behave as Nothings.
 
 ## [9.1.0] - 2025-05-01
 

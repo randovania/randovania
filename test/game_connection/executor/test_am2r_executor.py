@@ -126,7 +126,7 @@ async def test_packet_types_with_signals(executor):
     answer = [b"\x06\x00\x00\x00", b"{INDICES}"]
     reader.read.side_effect = answer
     await executor._parse_packet(PacketType.PACKET_COLLECTED_INDICES)
-    executor.signals.new_collected_locations.emit.assert_called_with("{INDICES}")
+    executor.signals.new_collected_locations.emit.assert_called_with(b"{INDICES}")
 
     # PACKET_RECEIVED_PICKUPS
     executor.signals.new_received_pickups = MagicMock()
