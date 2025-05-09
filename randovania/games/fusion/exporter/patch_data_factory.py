@@ -63,7 +63,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             custom_message = {}
             # Special case where we ignore metroid dna right now, because that needs more patcher work.
             if text != self._placeholder_metroid_message:
-                custom_message = {"Languages": dict.fromkeys(self._lang_list, text)}
+                custom_message = {"Languages": dict.fromkeys(self._lang_list, text), "Kind": "CustomMessage"}
 
             # Shiny easter eggs
             if (
@@ -76,11 +76,17 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     and self.rng.randint(0, self._easter_egg_bob) == 0
                 ):
                     sprite = "ShinyMissileTank"
-                    custom_message = {"Languages": dict.fromkeys(self._lang_list, "Bob acquired.\nHe says hi to you.")}
+                    custom_message = {
+                        "Languages": dict.fromkeys(self._lang_list, "Bob acquired.\nHe says hi to you."),
+                        "Kind": "CustomMessage",
+                    }
 
                 if resource == "PowerBombTank" and self.rng.randint(0, self._easter_egg_shiny) == 0:
                     sprite = "ShinyPowerBombTank"
-                    custom_message = {"Languages": dict.fromkeys(self._lang_list, "Shiny Power Bomb Tank acquired.")}
+                    custom_message = {
+                        "Languages": dict.fromkeys(self._lang_list, "Shiny Power Bomb Tank acquired."),
+                        "Kind": "CustomMessage",
+                    }
 
             if is_major:
                 major_pickup = {
