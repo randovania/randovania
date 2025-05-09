@@ -9,6 +9,7 @@ from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.exceptions import InvalidConfiguration
+from randovania.lib import random_lib
 from randovania.resolver.state import State
 
 if TYPE_CHECKING:
@@ -250,6 +251,41 @@ class Bootstrap[Configuration: BaseConfiguration]:
 
         return locations
 
+    def pre_place_pickups_weighted(
+        self,
+        rng: Random,
+        locations: dict[PickupNode, float],
+        pool_results: PoolResults,
+        item_category: str,
+        game: RandovaniaGame,
+    ) -> None:
+        pre_placed_indices = list(pool_results.assignment.keys())
+        reduced_locations = [loc for loc in locations.keys() if loc.pickup_index not in pre_placed_indices]
+
+        working_locations = {}
+        for loc in reduced_locations:
+            working_locations[loc] = locations[loc]
+
+        weighted_locations = []
+        for _ in reduced_locations:
+            loc = random_lib.select_element_with_weight_and_uniform_fallback(rng, working_locations)
+            weighted_locations.append(loc)
+            working_locations.pop(loc)
+
+        pickup_database = default_database.pickup_database_for_game(game)
+        category = pickup_database.pickup_categories[item_category]
+
+        all_artifacts = [pickup for pickup in list(pool_results.to_place) if pickup.gui_category is category]
+        if len(all_artifacts) > len(weighted_locations):
+            raise InvalidConfiguration(
+                f"Has {len(all_artifacts)} {category.long_name} in the pool, "
+                f"but only {len(weighted_locations)} valid locations."
+            )
+
+        for artifact, location in zip(all_artifacts, weighted_locations, strict=False):
+            pool_results.to_place.remove(artifact)
+            pool_results.assignment[location.pickup_index] = artifact
+
     def pre_place_pickups(
         self,
         rng: Random,
@@ -258,21 +294,10 @@ class Bootstrap[Configuration: BaseConfiguration]:
         item_category: str,
         game: RandovaniaGame,
     ) -> None:
-        pre_placed_indices = list(pool_results.assignment.keys())
-        reduced_locations = [loc for loc in locations if loc.pickup_index not in pre_placed_indices]
-
-        rng.shuffle(reduced_locations)
-
-        pickup_database = default_database.pickup_database_for_game(game)
-        category = pickup_database.pickup_categories[item_category]
-
-        all_artifacts = [pickup for pickup in list(pool_results.to_place) if pickup.gui_category is category]
-        if len(all_artifacts) > len(reduced_locations):
-            raise InvalidConfiguration(
-                f"Has {len(all_artifacts)} {category.long_name} in the pool, "
-                f"but only {len(reduced_locations)} valid locations."
-            )
-
-        for artifact, location in zip(all_artifacts, reduced_locations, strict=False):
-            pool_results.to_place.remove(artifact)
-            pool_results.assignment[location.pickup_index] = artifact
+        self.pre_place_pickups_weighted(
+            rng,
+            dict.fromkeys(locations, 1.0),
+            pool_results,
+            item_category,
+            game,
+        )
