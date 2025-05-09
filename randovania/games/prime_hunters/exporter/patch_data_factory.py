@@ -100,7 +100,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
                 1,  # Power Beam
             ]
         )
-        starting_weapons = "".join(filter(str.isdigit, weapons))
+        starting_weapons = weapons.strip("[]").replace(", ", "")
         result["weapons"] = starting_weapons
 
         # The value of missiles ends up being starting + 1, so subtract 1
