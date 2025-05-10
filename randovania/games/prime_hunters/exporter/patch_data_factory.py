@@ -88,19 +88,17 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
                 print(f"Skipping {resource} for starting inventory: no item id")
                 continue
 
-        weapons = str(
-            [
-                starting_items.get(_ITEM_TO_ITEM_TYPE["Shock Coil"], 0),
-                starting_items.get(_ITEM_TO_ITEM_TYPE["Magmaul"], 0),
-                starting_items.get(_ITEM_TO_ITEM_TYPE["Judicator"], 0),
-                starting_items.get(_ITEM_TO_ITEM_TYPE["Imperialist"], 0),
-                starting_items.get(_ITEM_TO_ITEM_TYPE["Battlehammer"], 0),
-                1,  # Missiles
-                starting_items.get(_ITEM_TO_ITEM_TYPE["Volt Driver"], 0),
-                1,  # Power Beam
-            ]
-        )
-        starting_weapons = weapons.strip("[]").replace(", ", "")
+        weapons = [
+            starting_items.get(_ITEM_TO_ITEM_TYPE["Shock Coil"], 0),
+            starting_items.get(_ITEM_TO_ITEM_TYPE["Magmaul"], 0),
+            starting_items.get(_ITEM_TO_ITEM_TYPE["Judicator"], 0),
+            starting_items.get(_ITEM_TO_ITEM_TYPE["Imperialist"], 0),
+            starting_items.get(_ITEM_TO_ITEM_TYPE["Battlehammer"], 0),
+            1,  # Missiles
+            starting_items.get(_ITEM_TO_ITEM_TYPE["Volt Driver"], 0),
+            1,  # Power Beam
+        ]
+        starting_weapons = "".join(map(str, weapons))
         result["weapons"] = starting_weapons
 
         # The value of missiles ends up being starting + 1, so subtract 1
