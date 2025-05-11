@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Bug that could lead to timeouts or longer resolving time in some cases.
 
+### Metroid Dread
+
+- Changed: Energy Parts are now logical.
+
 ### Metroid: Samus Returns
 
 - Changed: Display the number of remaining DNA in the DNA message before entering the final boss.
