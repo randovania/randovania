@@ -49,8 +49,11 @@ def _unsatisfied_item_requirements_for_danage(
     Returns None if the requirements are already satisfied.
     """
     context = state.node_context()
+    sum_damage = 0
 
-    sum_damage = alternative.damage(context)
+    for individual in alternative.values():
+        if individual.resource.resource_type == ResourceType.DAMAGE:
+            sum_damage += individual.damage(context)
 
     if state.health_for_damage_requirements <= sum_damage:
         # Delegates to the game for how to handle the damage requirement
