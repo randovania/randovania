@@ -37,7 +37,7 @@ def interesting_resources_for_reach(reach: GeneratorReach) -> frozenset[Resource
         )
     )
     return game_description.calculate_interesting_resources(
-        satisfiable_requirements, reach.state.node_context(), reach.state.health_for_damage_requirements
+        satisfiable_requirements, reach.state.node_context(), reach.state.damage_state
     )
 
 

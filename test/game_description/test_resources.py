@@ -14,6 +14,7 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -119,7 +120,14 @@ def test_resources_for_unsatisfied_damage_as_interesting(echoes_resource_databas
         db,
         MagicMock(),
     )
-    interesting_resources = calculate_interesting_resources(frozenset([RequirementList([req])]), context, 99)
+
+    damage_state = EnergyTankDamageState(
+        99,
+        100,
+        db.energy_tank,
+    )
+
+    interesting_resources = calculate_interesting_resources(frozenset([RequirementList([req])]), context, damage_state)
     d_suit = db.get_item_by_name("Dark Suit")
     l_suit = db.get_item_by_name("Light Suit")
     e_tank = db.get_item_by_name("Energy Tank")
@@ -143,7 +151,13 @@ def test_resources_for_satisfied_damage_as_interesting(echoes_resource_database)
         db,
         MagicMock(),
     )
-    interesting_resources = calculate_interesting_resources(frozenset([RequirementList([req])]), context, 99)
+    damage_state = EnergyTankDamageState(
+        99,
+        100,
+        db.energy_tank,
+    )
+
+    interesting_resources = calculate_interesting_resources(frozenset([RequirementList([req])]), context, damage_state)
     d_suit = db.get_item_by_name("Dark Suit")
     l_suit = db.get_item_by_name("Light Suit")
     e_tank = db.get_item_by_name("Energy Tank")
