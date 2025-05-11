@@ -13,7 +13,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator, Sequence
+    from collections.abc import Sequence
 
     from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -41,16 +41,36 @@ def interesting_resources_for_reach(reach: GeneratorReach) -> frozenset[Resource
     )
 
 
-def _unsatisfied_item_requirements_in_list(
+def _unsatisfied_item_requirements_for_danage(
+    alternative: RequirementList, state: State
+) -> list[list[ResourceRequirement]] | None:
+    """Returns a list of item requirements to satisfy a RequirementList containing damage requirements.
+    Requirements are allowed to contain multiple individual items, hence list of lists.
+    Returns None if the requirements are already satisfied.
+    """
+    context = state.node_context()
+
+    sum_damage = alternative.damage(context)
+
+    if state.health_for_damage_requirements <= sum_damage:
+        # Delegates to the game for how to handle the damage requirement
+        return state.damage_state.resource_requirements_for_satisfying_damage(sum_damage)
+    return None
+
+
+def _unsatisfied_requirements_in_list(
     alternative: RequirementList, state: State, uncollected_resources: set[ResourceInfo]
-) -> Iterator[list[ResourceRequirement]]:
+) -> list[ResourceRequirement] | None:
+    """Returns a list of unmet requirements to satisfy a requirement list.
+    Damage requirements are handled separately.
+    Returns None if requirements cannot be satisfied by collecting uncollected resources.
+    Returns an empty list if requirements are already satisfied.
+    """
     items = []
-    damage = []
     context = state.node_context()
 
     for individual in alternative.values():
         if individual.resource.resource_type == ResourceType.DAMAGE:
-            damage.append(individual)
             continue
 
         if individual.satisfied(context, state.health_for_damage_requirements):
@@ -63,16 +83,11 @@ def _unsatisfied_item_requirements_in_list(
             # - There is a negative requirement which is unsatisfied, as that means we have lost the chance to
             #   ever satisfy it
             # - There is a non-item requirement for something that is not reachable
-            return
+            return None
 
         items.append(individual)
 
-    sum_damage = sum(req.damage(context) for req in damage)
-    if state.health_for_damage_requirements <= sum_damage:
-        # Delegates to the game for how to handle the damage requirement
-        yield items + state.damage_state.resource_requirements_for_satisfying_damage(sum_damage)
-    else:
-        yield items
+    return items
 
 
 def _requirement_lists_without_satisfied_resources(
@@ -95,8 +110,15 @@ def _requirement_lists_without_satisfied_resources(
                 continue
             seen_lists.add(alternative)
 
-            for items in _unsatisfied_item_requirements_in_list(alternative, state, uncollected_resources):
-                _add_items(items)
+            item_lists_for_damage = _unsatisfied_item_requirements_for_danage(alternative, state, uncollected_resources)
+            other_items = _unsatisfied_requirements_in_list(alternative, state, uncollected_resources)
+
+            if other_items is not None:
+                if item_lists_for_damage is None:
+                    _add_items(other_items)
+                else:
+                    for list_for_damage in item_lists_for_damage:
+                        _add_items(list_for_damage + other_items)
 
     if debug.debug_level() > 2:
         print(">> All requirement lists:")
