@@ -40,8 +40,7 @@ class DreadBootstrap(Bootstrap[DreadConfiguration]):
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
-            game.resource_database,
-            game.region_list,
+            game.resource_database.energy_tank,
         )
 
     def _get_enabled_misc_resources(

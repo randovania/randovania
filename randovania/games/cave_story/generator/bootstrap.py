@@ -56,8 +56,7 @@ class CSBootstrap(Bootstrap[CSConfiguration]):
         return EnergyTankDamageState(
             configuration.starting_hp,
             1,
-            game.resource_database,
-            game.region_list,
+            game.resource_database.energy_tank_item,
         )
 
     def assign_pool_results(

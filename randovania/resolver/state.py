@@ -36,13 +36,8 @@ class State:
 
     hint_state: ResolverHintState | None
 
-    @property
-    def resource_database(self) -> ResourceDatabase:
-        return self.damage_state.resource_database()
-
-    @property
-    def region_list(self) -> RegionList:
-        return self.damage_state.region_list()
+    resource_database: ResourceDatabase
+    region_list: RegionList
 
     def __init__(
         self,
@@ -51,6 +46,8 @@ class State:
         damage_state: DamageState,
         node: Node,
         patches: GamePatches,
+        resource_database: ResourceDatabase,
+        region_list: RegionList,
         previous: Self | None,
         hint_state: ResolverHintState | None = None,
     ):
@@ -62,6 +59,9 @@ class State:
         self.previous_state = previous
         self.hint_state = hint_state
 
+        self.resource_database = resource_database
+        self.region_list = region_list
+
         # We place this last because we need resource_database set
         self.damage_state = damage_state.limited_by_maximum(self.resources)
 
@@ -72,6 +72,8 @@ class State:
             self.damage_state,
             self.node,
             self.patches,
+            self.resource_database,
+            self.region_list,
             self.previous_state,
             copy.copy(self.hint_state),
         )
@@ -128,6 +130,8 @@ class State:
             damage_state.apply_collected_resource_difference(new_resources, self.resources),
             self.node,
             self.patches,
+            self.resource_database,
+            self.region_list,
             self,
             copy.copy(self.hint_state),
         )
@@ -156,6 +160,8 @@ class State:
             self.damage_state.apply_collected_resource_difference(new_resources, self.resources),
             self.node,
             self.patches,
+            self.resource_database,
+            self.region_list,
             self,
             copy.copy(self.hint_state),
         )
@@ -174,6 +180,8 @@ class State:
             self.damage_state.apply_new_starting_resource_difference(new_resources, self.resources),
             self.node,
             self.patches.assign_extra_starting_pickups([pickup]),
+            self.resource_database,
+            self.region_list,
             self,
             copy.copy(self.hint_state),
         )
