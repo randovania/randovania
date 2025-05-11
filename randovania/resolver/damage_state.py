@@ -4,8 +4,11 @@ from abc import ABC
 from typing import TYPE_CHECKING, Self
 
 if TYPE_CHECKING:
+    from collections.abc import Generator
+
     from randovania.game_description.db.node import Node
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
 
 
@@ -16,6 +19,9 @@ class DamageState(ABC):
 
     def health_for_damage_requirements(self) -> int:
         """How much health is present for purpose of checking damage requirements."""
+
+    def resources_for_energy(self) -> Generator[ItemResourceInfo]:
+        """Which items give energy."""
 
     def is_better_than(self, other: DamageState | None) -> bool:
         """Is this state strictly better than other, regarding damage requirements.
@@ -58,5 +64,5 @@ class DamageState(ABC):
         """
         Determines what are the requirements for satisfying a damage requirement with the given value.
         :param damage:
-        :return: a list of resource requirements
+        :return: a list containing lists of resource requirements
         """

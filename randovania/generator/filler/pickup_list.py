@@ -110,7 +110,7 @@ def _requirement_lists_without_satisfied_resources(
                 continue
             seen_lists.add(alternative)
 
-            item_lists_for_damage = _unsatisfied_item_requirements_for_danage(alternative, state, uncollected_resources)
+            item_lists_for_damage = _unsatisfied_item_requirements_for_danage(alternative, state)
             other_items = _unsatisfied_requirements_in_list(alternative, state, uncollected_resources)
 
             if other_items is not None:
