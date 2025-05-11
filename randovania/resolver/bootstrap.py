@@ -259,12 +259,15 @@ class Bootstrap[Configuration: BaseConfiguration]:
         item_category: str,
         game: RandovaniaGame,
     ) -> None:
+        """
+        Pre-places all pickups of item_category from a set of weighted PickupNodes.
+        """
         pre_placed_indices = list(pool_results.assignment.keys())
         reduced_locations = {loc: v for loc, v in locations.items() if loc.pickup_index not in pre_placed_indices}
 
         # weighted_locations is a list filled by selecting weighted elements from reduced_locations
         weighted_locations = []
-        while bool(reduced_locations):
+        while reduced_locations:
             loc = random_lib.select_element_with_weight_and_uniform_fallback(rng, reduced_locations)
             weighted_locations.append(loc)
             reduced_locations.pop(loc)
@@ -292,7 +295,9 @@ class Bootstrap[Configuration: BaseConfiguration]:
         item_category: str,
         game: RandovaniaGame,
     ) -> None:
-        # calls pre_place_pickups_weighted with all weightings set to 1.0
+        """
+        Calls pre_place_pickups_weighted with all weightings set to 1.0.
+        """
         self.pre_place_pickups_weighted(
             rng,
             dict.fromkeys(locations, 1.0),
