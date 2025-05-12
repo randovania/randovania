@@ -23,7 +23,11 @@ def is_metroid_location(node: PickupNode, config: FusionConfiguration) -> bool:
     _boss_indices = [100, 106, 114, 104, 115, 107, 110, 102, 109, 108, 111]
     artifact_config = config.artifacts
     index = node.pickup_index.index
-    return artifact_config.prefer_bosses and index in _boss_indices
+
+    # if node.extra.get("infant_weight", None) == "Main Deck":
+    #    print("main deck")
+    #    return False
+    return artifact_config.prefer_bosses and index in _boss_indices or True
 
 
 class FusionBootstrap(Bootstrap[FusionConfiguration]):
@@ -70,5 +74,6 @@ class FusionBootstrap(Bootstrap[FusionConfiguration]):
             pickup for pickup in list(pool_results.to_place) if pickup.gui_category.name == "InfantMetroid"
         ]
         locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_metroid_location)
-        self.pre_place_pickups(rng, pickups_to_preplace, locations, pool_results, patches.game.game)
+        weighted_locations = {location: location.extra.get("infant_weight", 1.0) for location in locations}
+        self.pre_place_pickups_weighted(rng, pickups_to_preplace, weighted_locations, pool_results, patches.game.game)
         return super().assign_pool_results(rng, configuration, patches, pool_results)
