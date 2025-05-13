@@ -3,8 +3,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
+from randovania.games.dread.layout.dread_damage_state import DreadDamageState
 from randovania.resolver.bootstrap import Bootstrap
-from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
     from random import Random
@@ -37,10 +37,12 @@ def is_dna_node(node: PickupNode, config: DreadConfiguration) -> bool:
 
 class DreadBootstrap(Bootstrap[DreadConfiguration]):
     def create_damage_state(self, game: GameDescription, configuration: DreadConfiguration) -> DamageState:
-        return EnergyTankDamageState(
+        return DreadDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
             game.resource_database.energy_tank,
+            configuration.immediate_energy_parts,
+            game.resource_database.get_item_by_name("Energy Part"),
         )
 
     def _get_enabled_misc_resources(
