@@ -1,12 +1,12 @@
 from __future__ import annotations
 
+from collections import defaultdict
 from typing import TYPE_CHECKING, Final, override
 
 from randovania.exporter.patch_data_factory import PatchDataFactory, PatcherDataMeta
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.prime_hunters.exporter.hint_namer import HuntersHintNamer
 from randovania.games.prime_hunters.layout import HuntersConfiguration, HuntersCosmeticPatches
 from randovania.games.prime_hunters.layout.force_field_configuration import LayoutForceFieldRequirement
@@ -17,13 +17,8 @@ if TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
-    from randovania.game_description.resources.resource_info import ResourceInfo
-
-
-def item_type_for_item_resource(resource: ResourceInfo) -> int:
-    assert isinstance(resource, ItemResourceInfo)
-    return resource.extra["item_type"]
 
 
 def item_id_for_item_resource(resource: ItemResourceInfo) -> int:
@@ -61,17 +56,6 @@ _OCTOLITH_TO_ARTIFACT_ID = {
     "Octolith8": 7,
 }
 
-_ITEM_TO_ITEM_TYPE = {
-    "Energy Tank": 4,
-    "Volt Driver": 5,
-    "Missile": 6,
-    "Battlehammer": 7,
-    "Imperialist": 8,
-    "Judicator": 9,
-    "Magmaul": 10,
-    "Shock Coil": 11,
-}
-
 
 class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosmeticPatches]):
     def game_enum(self) -> RandovaniaGame:
@@ -79,34 +63,33 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
 
     def _calculate_starting_inventory(self, resources: ResourceCollection) -> dict[str, str | int]:
         result: dict[str, str | int] = {}
-        starting_items = {}
 
-        for resource, quantity in resources.as_resource_gain():
-            try:
-                starting_items[item_type_for_item_resource(resource)] = quantity
-            except KeyError:
-                print(f"Skipping {resource} for starting inventory: no item id")
-                continue
+        starting_items = defaultdict(int)
+        starting_items.update({resource.long_name: quantity for resource, quantity in resources.as_resource_gain()})
+
+        def starts_with_weapon(weapon_name: str) -> bool:
+            return starting_items[weapon_name] > 0
 
         weapons = [
-            starting_items.get(_ITEM_TO_ITEM_TYPE["Shock Coil"], 0),
-            starting_items.get(_ITEM_TO_ITEM_TYPE["Magmaul"], 0),
-            starting_items.get(_ITEM_TO_ITEM_TYPE["Judicator"], 0),
-            starting_items.get(_ITEM_TO_ITEM_TYPE["Imperialist"], 0),
-            starting_items.get(_ITEM_TO_ITEM_TYPE["Battlehammer"], 0),
-            1,  # Missiles
-            starting_items.get(_ITEM_TO_ITEM_TYPE["Volt Driver"], 0),
-            1,  # Power Beam
+            starts_with_weapon("Shock Coil"),
+            starts_with_weapon("Magmaul"),
+            starts_with_weapon("Judicator"),
+            starts_with_weapon("Imperialist"),
+            starts_with_weapon("Battlehammer"),
+            True,  # Missiles
+            starts_with_weapon("Volt Driver"),
+            True,  # Power Beam
         ]
-        starting_weapons = "".join(map(str, weapons))
-        result["weapons"] = starting_weapons
+        fmt = "{:d}" * 8  # 8-bit bitfield
 
-        # The value of missiles ends up being starting + 1, so subtract 1
-        starting_missiles = starting_items.get(_ITEM_TO_ITEM_TYPE["Missile"], 1) - 1
-        starting_energy = 100 + (starting_items.get(_ITEM_TO_ITEM_TYPE["Energy Tank"], 0) * 100)
-        result["missiles"] = starting_missiles
+        result["weapons"] = fmt.format(*weapons)
+        result["missiles"] = starting_items["Missile"]
+        if starting_items["Missile"] > 0:
+            result["missiles"] -= 1
         result["ammo"] = 40
-        result["energy"] = starting_energy
+
+        if starting_items["Energy Tank"] > 0:
+            result["energy_tanks"] = starting_items["Energy Tank"]
 
         return result
 
