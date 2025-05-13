@@ -5,7 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [9.1.x] - 2025-05-??
+
+## [9.2.x] - 2025-06-??
+
+- Fixed: A rare division-by-zero error during generation when placing hints.
+- Fixed: The experimental option called Logical Pickup Placement is now respected by the resolver. It also now checks for items configured to be placed in their vanilla location.
+
+### Resolver
+
+- Fixed: Bug that could lead to timeouts or longer resolving time in some cases.
+
+### Metroid: Samus Returns
+
+- Changed: Display the number of remaining DNA in the DNA message before entering the final boss.
+- Fixed: If Metroid Queen is the final boss and you don't have all DNA, the DNA message now appears.
+- Fixed: For tanks with non required main option, the jingle of the tank item is played instead of the jingle of the main object.
+
+## [9.1.1] - 2025-05-03
+
+- Fixed: Duplicating a session now also duplicates the admin settings for Co-op and "Everyone can claim worlds".
+
+### Cave Story
+
+- Fixed: A regression introduced in 9.1.0 that made all received pickups in multiworld behave as Nothings.
+
+
+## [9.1.0] - 2025-05-01
 
 - Added: After clicking the "Login with Discord" button, a link and a QR Code are displayed instead of opening the default browser directly.
 - Changed: The relative time to start/finish in Async Race rooms now update as time passes, and the window reacts appropriately when the race starts and finishes.
@@ -28,6 +53,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Cave Story
 
 - Changed: Outer Wall is now a separate region.
+
+### Factorio
+
+- Fixed: Random recipes can no longer have multiples of Modular Armor, Power Armor and Power Armor Mk2 as ingredients, as the game doesn't allow these to stack even on the assembler input.
 
 ### Metroid Dread
 
