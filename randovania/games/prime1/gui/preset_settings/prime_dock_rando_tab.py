@@ -28,13 +28,21 @@ class PresetPrimeDockRando(PresetDockRando):
         self.changes_layout = QtWidgets.QVBoxLayout(self.changes_box)
 
         extra_widgets: list[tuple[type[QtWidgets.QCheckBox | QtWidgets.QLabel], str, str]] = [
-            (QtWidgets.QCheckBox, "blue_save_doors_check", "Unlock Save Station Doors"),
+            (
+                QtWidgets.QCheckBox,
+                "blue_save_doors_check",
+                "Unlock Save Station Doors",
+            ),
             (
                 QtWidgets.QLabel,
                 "blue_save_doors_label",
                 "Sets all Save Station doors to blue regardless of door randomization mode",
             ),
-            (QtWidgets.QCheckBox, "blast_shield_lockon_check", "Enable Blast Shield Lock-On"),
+            (
+                QtWidgets.QCheckBox,
+                "blast_shield_lockon_check",
+                "Enable Blast Shield Lock-On",
+            ),
             (
                 QtWidgets.QLabel,
                 "blast_shield_lockon_label",
