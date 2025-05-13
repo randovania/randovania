@@ -21,6 +21,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: If Metroid Queen is the final boss and you don't have all DNA, the DNA message now appears.
 - Fixed: For tanks with non required main option, the jingle of the tank item is played instead of the jingle of the main object.
 
+### Metroid Prime
+
+- Added: Blast Shield Lock-On preset option
+- Added: Patch to fix Kerry Ann Odem's name in the credits on game version(s) where it is incorrectly spelled
+- Fixed: Main Plaza vault ledge door is now affected by door lock rando
+- Fixed: Elite Research Phazon Elite getting stuck on frame perfect cutscene skip
+- Fixed: Minor music transition fixes
+- Fixed: Chaos option export error when submerging rooms
+- Changed: [PAL] Remove extra door lock in Central Dynamo
+- Changed: [PAL] Load Hunter Metroid in Frost Cave
+
 ## [9.1.1] - 2025-05-03
 
 - Fixed: Duplicating a session now also duplicates the admin settings for Co-op and "Everyone can claim worlds".
