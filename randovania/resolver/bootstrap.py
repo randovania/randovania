@@ -6,18 +6,27 @@ from randovania.game_description import default_database
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_collection import ResourceCollection
+from randovania.generator.pickup_pool.pickup_creator import create_ammo_pickup, create_standard_pickup
+from randovania.generator.pickup_pool.standard_pickup import find_ammo_for
+from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.exceptions import InvalidConfiguration
+from randovania.lib import random_lib
 from randovania.resolver.state import State
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Generator, Iterable
     from random import Random
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
@@ -25,6 +34,72 @@ if TYPE_CHECKING:
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
     from randovania.resolver.damage_state import DamageState
+
+
+def enabled_standard_pickups(game: GameDescription, configuration: BaseConfiguration) -> Generator[PickupEntry]:
+    for pickup, state in configuration.standard_pickup_configuration.pickups_state.items():
+        if len(pickup.ammo) != len(state.included_ammo):
+            raise InvalidConfiguration(
+                f"Item {pickup.name} uses {pickup.ammo} as ammo, "
+                f"but there's only {len(state.included_ammo)} values in included_ammo"
+            )
+
+        ammo, locked_ammo = find_ammo_for(pickup.ammo, configuration.ammo_pickup_configuration)
+
+        if state.include_copy_in_original_location:
+            if not pickup.original_locations:
+                raise InvalidConfiguration(
+                    f"Item {pickup.name} does not exist in the original game, cannot use state {state}",
+                )
+            for _ in pickup.original_locations:
+                yield create_standard_pickup(pickup, state, game.get_resource_database_view(), ammo, locked_ammo)
+
+        for _ in range(state.num_shuffled_pickups):
+            yield create_standard_pickup(pickup, state, game.get_resource_database_view(), ammo, locked_ammo)
+
+        for _ in range(state.num_included_in_starting_pickups):
+            yield create_standard_pickup(pickup, state, game.get_resource_database_view(), ammo, locked_ammo)
+
+
+def enabled_ammo_pickups(game: GameDescription, configuration: BaseConfiguration) -> Generator[PickupEntry]:
+    for ammo, state in configuration.ammo_pickup_configuration.pickups_state.items():
+        pickup = create_ammo_pickup(ammo, state.ammo_count, state.requires_main_item, game.get_resource_database_view())
+        for _ in range(state.pickup_count):
+            yield pickup
+
+
+def enabled_pickups(game: GameDescription, configuration: BaseConfiguration) -> Generator[PickupEntry]:
+    yield from enabled_standard_pickups(game, configuration)
+    yield from enabled_ammo_pickups(game, configuration)
+
+
+def victory_condition_for_pickup_placement(
+    pickups: Iterable[PickupEntry], game: GameDescription, placement_config: LogicalPickupPlacementConfiguration
+) -> Requirement:
+    """
+    Creates a Requirement with the game's victory condition adjusted to a specified pickup set.
+    :param pickups:
+    :param game:
+    :param placement_config: The configuration for adjusting the victory condition.
+    :return:
+    """
+    if placement_config is LogicalPickupPlacementConfiguration.MINIMAL:
+        return game.victory_condition
+
+    add_all_pickups = placement_config is LogicalPickupPlacementConfiguration.ALL
+    resources = ResourceCollection.with_database(game.resource_database)
+
+    for pickup in pickups:
+        if pickup.generator_params.preferred_location_category is LocationCategory.MAJOR or add_all_pickups:
+            resources.add_resource_gain(pickup.resource_gain(resources, force_lock=True))
+
+    # Create a requirement with the victory condition and the pickups
+    return RequirementAnd(
+        [
+            game.victory_condition,
+            *(ResourceRequirement.create(resource[0], resource[1], False) for resource in resources.as_resource_gain()),
+        ]
+    ).simplify()
 
 
 class EnergyConfig(NamedTuple):
@@ -222,6 +297,11 @@ class Bootstrap[Configuration: BaseConfiguration]:
         self.apply_game_specific_patches(configuration, game, patches)
         game.patch_requirements(starting_state.resources, configuration.damage_strictness.value)
 
+        # All majors/pickups required
+        game.victory_condition = victory_condition_for_pickup_placement(
+            enabled_pickups(game, configuration), game, configuration.logical_pickup_placement
+        )
+
         return game, starting_state
 
     def apply_game_specific_patches(
@@ -250,6 +330,42 @@ class Bootstrap[Configuration: BaseConfiguration]:
 
         return locations
 
+    def pre_place_pickups_weighted(
+        self,
+        rng: Random,
+        locations: dict[PickupNode, float],
+        pool_results: PoolResults,
+        item_category: str,
+        game: RandovaniaGame,
+    ) -> None:
+        """
+        Pre-places all pickups of item_category from a set of weighted PickupNodes.
+        """
+        pre_placed_indices = list(pool_results.assignment.keys())
+        reduced_locations = {loc: v for loc, v in locations.items() if loc.pickup_index not in pre_placed_indices}
+
+        # weighted_locations is a list filled by selecting weighted elements from reduced_locations
+        weighted_locations = []
+        while reduced_locations:
+            loc = random_lib.select_element_with_weight_and_uniform_fallback(rng, reduced_locations)
+            weighted_locations.append(loc)
+            reduced_locations.pop(loc)
+
+        pickup_database = default_database.pickup_database_for_game(game)
+        category = pickup_database.pickup_categories[item_category]
+
+        all_artifacts = [pickup for pickup in list(pool_results.to_place) if pickup.gui_category is category]
+        if len(all_artifacts) > len(weighted_locations):
+            raise InvalidConfiguration(
+                f"Has {len(all_artifacts)} {category.long_name} in the pool, "
+                f"but only {len(weighted_locations)} valid locations."
+            )
+
+        # places an artifact in the next location of weighted_locations until all_artifacts is exhausted
+        for artifact, location in zip(all_artifacts, weighted_locations, strict=False):
+            pool_results.to_place.remove(artifact)
+            pool_results.assignment[location.pickup_index] = artifact
+
     def pre_place_pickups(
         self,
         rng: Random,
@@ -258,21 +374,13 @@ class Bootstrap[Configuration: BaseConfiguration]:
         item_category: str,
         game: RandovaniaGame,
     ) -> None:
-        pre_placed_indices = list(pool_results.assignment.keys())
-        reduced_locations = [loc for loc in locations if loc.pickup_index not in pre_placed_indices]
-
-        rng.shuffle(reduced_locations)
-
-        pickup_database = default_database.pickup_database_for_game(game)
-        category = pickup_database.pickup_categories[item_category]
-
-        all_artifacts = [pickup for pickup in list(pool_results.to_place) if pickup.gui_category is category]
-        if len(all_artifacts) > len(reduced_locations):
-            raise InvalidConfiguration(
-                f"Has {len(all_artifacts)} {category.long_name} in the pool, "
-                f"but only {len(reduced_locations)} valid locations."
-            )
-
-        for artifact, location in zip(all_artifacts, reduced_locations, strict=False):
-            pool_results.to_place.remove(artifact)
-            pool_results.assignment[location.pickup_index] = artifact
+        """
+        Calls pre_place_pickups_weighted with all weightings set to 1.0.
+        """
+        self.pre_place_pickups_weighted(
+            rng,
+            dict.fromkeys(locations, 1.0),
+            pool_results,
+            item_category,
+            game,
+        )

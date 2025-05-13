@@ -11,7 +11,7 @@ import randovania.game.hints
 import randovania.game.layout
 import randovania.game.web_info
 from randovania.games.prime_hunters import layout
-from randovania.layout.preset_describer import GamePresetDescriber
+from randovania.games.prime_hunters.layout.preset_describer import HuntersPresetDescriber
 
 if typing.TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExporter
@@ -100,7 +100,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     layout=randovania.game.layout.GameLayout(
         configuration=layout.HuntersConfiguration,
         cosmetic_patches=layout.HuntersCosmeticPatches,
-        preset_describer=GamePresetDescriber(),
+        preset_describer=HuntersPresetDescriber(),
     ),
     options=_options,
     gui=_gui,

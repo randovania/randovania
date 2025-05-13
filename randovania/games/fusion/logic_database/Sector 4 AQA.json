@@ -3763,7 +3763,9 @@
         },
         "Reservoir Vault": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "multiple-pickups"
+            ],
             "extra": {
                 "map_name": "Sector 413",
                 "room_id": [
@@ -11893,14 +11895,14 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Gravityless method",
+                                                        "comment": "No Gravity Suit: https://youtu.be/F6iQaCkrbV0",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "StandOnFrozenEnemies",
-                                                                    "amount": 1,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -11909,30 +11911,8 @@
                                                                 "data": "Can Freeze Enemies With Any Weapon"
                                                             },
                                                             {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Hi-Jump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "StandOnFrozenEnemies",
-                                                                                "amount": 3,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Have Any Jump Upgrade"
                                                             }
                                                         ]
                                                     }
@@ -11940,7 +11920,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Gravity method",
+                                                        "comment": null,
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -11959,7 +11939,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "Shinespark",
+                                                                                "comment": "Shinespark: https://youtu.be/zDXCR7HINss",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -12021,7 +12001,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "Single walljump on the side and kill the powamps",
+                                                                                "comment": "Single Wall Jump: https://youtu.be/6iSEl5LF6aU",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
@@ -12044,6 +12024,27 @@
                                                                                             "amount": 2,
                                                                                             "negate": false
                                                                                         }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Stand On Frozen Enemies: https://youtu.be/eoniGf8_j70",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "StandOnFrozenEnemies",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Freeze Enemies With Any Weapon"
                                                                                     }
                                                                                 ]
                                                                             }
@@ -13660,7 +13661,9 @@
         },
         "Aquarium Kago Storage": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "multiple-pickups"
+            ],
             "extra": {
                 "map_name": "Sector 438",
                 "room_id": [

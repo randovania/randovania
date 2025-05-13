@@ -44,7 +44,7 @@ if TYPE_CHECKING:
             StartingPickupBehavior.CAN_BE_STARTING,
             (
                 "C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr"
-                "mqu35FxlB#nOvG!<^@M(Ze?<5V<1U%Wo;lsVRU6@Z*qBTEyNQ5I=4BvGO@I?G_tY~G`cdjfl&GZVg"
+                "mqu35FxlB#nOvG!<^@M(Ze?<5V<1U%Wo;lsVRU6@Z*qBTEyNQ5I=4BvGO@I?G_tY~G`cdjfl&GZVgL"
             ),
         ),
         (  # progressive
