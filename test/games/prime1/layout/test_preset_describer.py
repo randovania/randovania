@@ -64,6 +64,7 @@ def test_prime_format_params(use_enemy_attribute_randomizer):
             "53.1% chance of superheated, 28.7% chance of submerged",
             "Allowed backwards: Frigate, Labs, Upper Mines",
             "Damage reduction: Additive",
+            "Unlocked Save Station doors",
         ],
     }
 
