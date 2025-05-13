@@ -1169,8 +1169,10 @@ def _migrate_v103(preset: dict, game: RandovaniaGame) -> None:
 
     dlr = preset["configuration"]["dock_rando"]["mode"] != "vanilla"
     legacy = preset["configuration"]["legacy_mode"]
+
     preset["configuration"]["blast_shield_lockon"] = dlr and not legacy
-    preset["configuration"]["blue_save_doors"] = dlr and not legacy
+    if dlr and not legacy:
+        preset["configuration"]["blue_save_doors"] = True
 
 
 _MIGRATIONS = [
