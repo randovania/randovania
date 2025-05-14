@@ -417,7 +417,11 @@ Extra - enemy_data: {'133881': 'oAutrack', '133883': 'oTPO', '133884': 'oTPO', '
   > Door to Energy Distribution Tower East
       Trivial
   > Event - EMP Slot
-      Missiles ≥ 2 or Super Missiles or Can Use Bombs
+      Any of the following:
+          Can Use Bombs
+          All of the following:
+              Can Shoot
+              Missiles ≥ 2 or Super Missiles
 
 > Event - EMP Slot; Heals? False
   * Layers: default
@@ -447,7 +451,7 @@ Extra - enemy_data: {'133947': 'oRoboMine', '133956': 'oRoboMine', '133957': 'oR
       Any of the following:
           Can Use Bombs
           All of the following:
-              Can Use Power Bombs
+              Can Shoot and Can Use Power Bombs
               Missiles ≥ 10 or Super Missiles ≥ 3
   > Bottom
       Can Use Any Bombs
@@ -740,7 +744,11 @@ Extra - enemy_data: {'134443': 'oBladeBot', '134444': 'oBladeBot', '134445': 'oB
   > Door to Distribution Center Exterior West
       Trivial
   > Event - EMP Slot
-      Missiles ≥ 10 or Super Missiles ≥ 5 or Can Use Bombs
+      Any of the following:
+          Can Use Bombs
+          All of the following:
+              Can Shoot
+              Missiles ≥ 10 or Super Missiles ≥ 5
 
 > Door to Distribution Center Exterior West; Heals? False
   * Layers: default
@@ -1080,9 +1088,9 @@ Extra - enemy_data: {'134728': 'oBladeBot', '134729': 'oBladeBot', '134730': 'oB
           Morph Ball and Morph Glide (Advanced)
           Any of the following:
               # Shoot the EMP from the door
-              Super Missiles
+              Can Shoot Super Missile
               # RNG dependant
-              Missiles and Knowledge (Expert)
+              Missiles and Knowledge (Expert) and Can Shoot
 
 > Door to Bullet Hell Room; Heals? False
   * Layers: default
@@ -1124,7 +1132,11 @@ Extra - enemy_data: {'134728': 'oBladeBot', '134729': 'oBladeBot', '134730': 'oB
 > EMP Ball; Heals? False
   * Layers: default
   > Event - EMP Slot
-      Missiles ≥ 20 or Super Missiles ≥ 10 or Can Use Bombs
+      Any of the following:
+          Can Use Bombs
+          All of the following:
+              Can Shoot
+              Missiles ≥ 20 or Super Missiles ≥ 10
 
 > Center; Heals? False
   * Layers: default
@@ -1289,7 +1301,7 @@ Extra - enemy_data: {'135192': 'oBlobThrowerWater', '135193': 'oBlobThrowerWater
   > Door to Moheek Hangout
       Any of the following:
           # Freeze the WaterBlob
-          Ice Beam
+          Can Shoot Ice Beam
           All of the following:
               # Gravity methods to pass Waterblob
               Gravity Suit
@@ -1306,7 +1318,7 @@ Extra - enemy_data: {'135192': 'oBlobThrowerWater', '135193': 'oBlobThrowerWater
   > Door to Facility Storage Save Station
       Any of the following:
           # Freeze the Waterblob
-          Ice Beam
+          Can Shoot Ice Beam
           All of the following:
               # Gravity methods to pass Waterblob
               Gravity Suit
@@ -1492,7 +1504,11 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   > Event - EMP Slot
       All of the following:
           Can Use Any Bombs
-          Missiles ≥ 2 or Super Missiles or Can Use Bombs
+          Any of the following:
+              Can Use Bombs
+              All of the following:
+                  Can Shoot
+                  Missiles ≥ 2 or Super Missiles
 
 > Door to Distribution Facility Intersection; Heals? False
   * Layers: default
@@ -1528,7 +1544,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': -100, 'should_be_at_very
       Any of the following:
           Gravity Suit and Speed Booster and Disabled Entrance Rando
           All of the following:
-              Super Missiles and Knowledge (Advanced)
+              Knowledge (Advanced) and Can Shoot Super Missile
               Any of the following:
                   Tunnel Climb
                   Morph Ball and Mid-Air Morph (Intermediate)
@@ -1609,6 +1625,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': -100, 'should_be_at_very
   * Layers: default
   > Event - Serris
       All of the following:
+          Can Shoot
           Any of the following:
               # Movement requirements
               Combat (Advanced)
@@ -1947,10 +1964,10 @@ Extra - enemy_data: {'136097': 'oBlobThrowerWater'}
               All of the following:
                   # Short charge with the plant alive
                   Short Charge (Intermediate)
-                  Ice Beam or Movement (Beginner)
+                  Movement (Beginner) or Can Shoot Ice Beam
               All of the following:
                   # Regular charge by killing plant
-                  Ice Beam
+                  Can Shoot Ice Beam
                   Missiles ≥ 2 or Super Missiles
 
 > Pickup (Super Missile Tank); Heals? False
@@ -2160,11 +2177,15 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Extra - door_instance_id: 136531
   > Door to Gravity Area Corridor
       Any of the following:
-          Gravity Suit or Long Beam
+          Gravity Suit
           All of the following:
-              Disabled Door Lock Rando
-              # No Long Beam needs to check for DLR else you could have missiles + beam door
-              Missiles or Super Missiles
+              Can Shoot
+              Any of the following:
+                  Long Beam
+                  All of the following:
+                      Disabled Door Lock Rando
+                      # No Long Beam needs to check for DLR else you could have missiles + beam door
+                      Missiles or Super Missiles
 
 ----------------
 Gravity Area Corridor
@@ -2248,13 +2269,15 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   > Door to Gravity Area Corridor
       Walljump (Intermediate) and Enabled Septogg Helpers and Can Walljump
   > Door to Gravity Chamber Access
-      # The door cannot be opened unless these conditions are met.
-      Gravity Suit or Missiles or Super Missiles
+      All of the following:
+          # The door cannot be opened unless these conditions are met.
+          Can Shoot
+          Gravity Suit or Missiles or Super Missiles
   > Top
       Any of the following:
           Space Jump Wall
           # Shinespark from next room
-          Missiles and Speed Booster and Shinesparking Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+          Missiles and Speed Booster and Shinesparking Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Shoot
           Gravity Suit and Enabled Septogg Helpers
 
 ----------------

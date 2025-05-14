@@ -27,7 +27,14 @@ combined_resources = {
     "DiagonalIBJ": ("Infinite Bomb Propulsion", "Bombs", "Morph Ball"),
     "Zip": ("Walljump Boots",),
     "ChargedBombJump": ("Charge Beam", "Bombs", "Morph Ball"),
-    "MissileLessMetroids": ("Charge Beam",),
+    "MissileLessMetroids": ("Charge Beam", "Arm Cannon"),
+    "Charge Beam": ("Arm Cannon",),
+    "Ice Beam": ("Arm Cannon",),
+    "Wave Beam": ("Arm Cannon",),
+    "Spazer Beam": ("Arm Cannon",),
+    "Plasma Beam": ("Arm Cannon",),
+    "Missiles": ("Arm Cannon",),
+    "Super Missiles": ("Arm Cannon",),
 }
 
 
