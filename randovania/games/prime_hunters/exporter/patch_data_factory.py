@@ -64,7 +64,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
     def _calculate_starting_inventory(self, resources: ResourceCollection) -> dict[str, str | int]:
         result: dict[str, str | int] = {}
 
-        starting_items = defaultdict(int)
+        starting_items: defaultdict = defaultdict(int)
         starting_items.update({resource.long_name: quantity for resource, quantity in resources.as_resource_gain()})
 
         def starts_with_weapon(weapon_name: str) -> bool:
