@@ -660,7 +660,7 @@ Extra - room_id: [20]
 
 > Door to Sub-Zero Containment; Heals? False
   * Layers: default
-  * L0 Hatch to Sub-Zero Containment/Door to Dark Stairwell
+  * L3 Hatch to Sub-Zero Containment/Door to Dark Stairwell
   * Extra - door_idx: (104,)
   > Door to Nexus Navigation Room
       Trivial
@@ -1338,8 +1338,16 @@ Extra - map_name: Main Deck46
 Extra - room_id: [46]
 > Door to Dark Stairwell; Heals? False
   * Layers: default
-  * L0 Hatch to Dark Stairwell/Door to Sub-Zero Containment
+  * L3 Hatch to Dark Stairwell/Door to Sub-Zero Containment
   * Extra - door_idx: (103,)
+  > Pickup (Frozen Ridley)
+      Varia Suit or Damage Runs (Intermediate) or Cold Damage ≥ 25
+
+> Pickup (Frozen Ridley); Heals? False
+  * Layers: default
+  * Pickup 123; Category? Minor
+  > Door to Dark Stairwell
+      Varia Suit or Damage Runs (Intermediate) or Cold Damage ≥ 25
 
 ----------------
 Genesis Speedway
@@ -1645,12 +1653,12 @@ Extra - room_id: [54]
   * Extra - door_idx: (123,)
   > Other to Yakuza Arena
       Trivial
-  > Event - Reactor Control
+  > Pickup (Reactor Control)
       Trivial
 
-> Event - Reactor Control; Heals? False
+> Pickup (Reactor Control); Heals? False
   * Layers: default
-  * Event Reactor Controls Activated
+  * Pickup 122; Category? Minor
   > Door to Auxiliary Navigation Room
       Trivial
 
@@ -1961,11 +1969,12 @@ Hint Features - 1-way Shutter
   > Door to Habitation Deck Entrance (Upper)
       # Animals causes issues in generation with DLR, removed as an event for now
       Enabled Generator Workaround
-  > Save the Animals
+  > Pickup (Save the Animals)
       Trivial
 
-> Save the Animals; Heals? False
+> Pickup (Save the Animals); Heals? False
   * Layers: default
+  * Pickup 120; Category? Minor
   * FIXME: Causes issues with door lock rando.
 
 Generation gets stuck after giving SJ and speed and trying to reach this event.
@@ -2016,11 +2025,12 @@ Extra - room_id: [71]
   * Layers: default
   * Open Hatch to Quarantine Junction/Door to Quarantine Bay
   * Extra - door_idx: (167,)
-  > Hornoad
+  > Pickup (Hornoad)
       Trivial
 
-> Hornoad; Heals? False
+> Pickup (Hornoad); Heals? False
   * Layers: default
+  * Pickup 124; Category? Minor
   > Door to Quarantine Junction
       Trivial
 
