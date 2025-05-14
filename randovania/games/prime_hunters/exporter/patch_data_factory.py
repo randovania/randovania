@@ -83,9 +83,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
         fmt = "{:d}" * 8  # 8-bit bitfield
 
         result["weapons"] = fmt.format(*weapons)
-        result["missiles"] = starting_items["Missile"]
-        if starting_items["Missile"] > 0:
-            result["missiles"] -= 1
+        result["missiles"] = starting_items["Missiles"]
         result["ammo"] = 40
 
         if starting_items["Energy Tank"] > 0:
