@@ -69,14 +69,13 @@ class DreadDamageState(EnergyTankDamageState):
     ) -> Self:
         if self._energy_tank_difference(new_resources, old_resources) > 0:
             return self._at_maximum_energy(new_resources)
-        elif (new_parts := self._energy_part_difference(new_resources, old_resources)) > 0:
+        elif self._energy_part_difference(new_resources, old_resources) > 0:
             if self._use_immediate_energy_parts:
+                old_max = self._maximum_energy(old_resources)
+                new_max = self._maximum_energy(new_resources)
+
                 result = self._duplicate()
-                result._energy = (
-                    self._energy
-                    + (self._energy_per_tank * new_parts // 4)
-                    + (self._energy_per_tank * (new_parts % 4)) % 4
-                )
+                result._energy = self._energy + (new_max - old_max)
                 return result
             if (new_resources[self._energy_part_item] // 4) > (old_resources[self._energy_part_item] // 4):
                 return self._at_maximum_energy(new_resources)
