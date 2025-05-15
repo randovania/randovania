@@ -55,7 +55,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Extra - x: 0
   * Extra - y: 656
   > Door to Breeding Grounds Access East
-      Arm Cannon or Can Use Any Bombs
+      Can Destroy Shot Block
   > Top
       Hijump Wall
   > Bottom Pit
@@ -70,7 +70,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Extra - y: 176
   * Extra - is_area_transition: True
   > Top
-      Trivial
+      Can Destroy Shot Block
 
 > Door to Breeding Grounds Access East; Heals? False
   * Layers: default
@@ -80,7 +80,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Extra - x: 320
   * Extra - y: 656
   > Door to Eastern Cave Save Station
-      Arm Cannon or Can Use Any Bombs
+      Can Destroy Shot Block
 
 > Vertical Dock to Breeding Grounds Gamma Nest West; Heals? False
   * Layers: default
@@ -102,20 +102,18 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Layers: default
   * 5-Tiles High Dock to EMP Sentry Cavern/Horizontal Dock to Pincherfly Parlor
   > Door to Eastern Cave Save Station
-      Arm Cannon or Can Use Any Bombs
+      Can Destroy Shot Block
 
 > Top; Heals? False
   * Layers: default
   > Door to Eastern Cave Save Station
       Trivial
   > Door to Industrial Complex Exterior Access
-      All of the following:
-          Hijump Wall
-          Arm Cannon or Can Use Any Bombs
+      Can Destroy Shot Block and Hijump Wall
   > Door to EMP Sentry Cavern
       Can Shoot Super Missile and Hijump Wall
   > Horizontal Dock to EMP Sentry Cavern
-      Arm Cannon or Can Use Any Bombs
+      Can Destroy Shot Block
 
 > Bottom Pit; Heals? False
   * Layers: default
@@ -183,10 +181,10 @@ Extra - enemy_data: {'114062': 'oGravitt', '114063': 'oGravitt', '114064': 'oGra
               Power Grip Wall
               Hi-Jump Boots or Enabled Septogg Helpers
               Any of the following:
-                  Arm Cannon or Can Use Any Bombs
+                  Can Destroy Shot Block
                   Walljump (Advanced) and Can Walljump
           All of the following:
-              Arm Cannon or Can Use Any Bombs
+              Can Destroy Shot Block
               Space Jump or Can Use Spider Ball
           # Shinespark from next room
           Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando and Disabled Shuffled Open Transitions
@@ -208,7 +206,7 @@ Extra - enemy_data: {'114062': 'oGravitt', '114063': 'oGravitt', '114064': 'oGra
   > Left Septogg
       Trivial
   > Pickup (Left Missile Tank)
-      Arm Cannon or Can Use Any Bombs
+      Can Destroy Shot Block
 
 > Tunnel to Exterior Maze (Bottom); Heals? False
   * Layers: default
@@ -226,13 +224,13 @@ Extra - enemy_data: {'114062': 'oGravitt', '114063': 'oGravitt', '114064': 'oGra
   * Layers: default
   * 2-Tiles Wide Dock to Upper Factory Save Station/Vertical Dock to Industrial Complex Exterior
   > Door to Senjoo Settlement
-      Arm Cannon or Can Use Any Bombs
+      Can Destroy Shot Block
   > Tunnel to Exterior Maze (Top)
       All of the following:
           Morph Ball
           Power Grip or Mid-Air Morph (Beginner)
   > Door to Torizo Arena
-      Arm Cannon or Can Use Any Bombs
+      Can Destroy Shot Block
   > Door to Exterior Puzzle Cavern
       Any of the following:
           Space Jump or Can Use Spider Ball
@@ -253,12 +251,14 @@ Extra - enemy_data: {'114062': 'oGravitt', '114063': 'oGravitt', '114064': 'oGra
   * Missile Door to Torizo Arena/Door to Industrial Complex Exterior; Dock Lock Rando incompatible with: Hydro Station Water Turbine, Research Site Open Hatch
   * Extra - door_instance_id: 114250
   > Vertical Dock to Upper Factory Save Station
-      Any of the following:
-          Space Jump or Enabled Septogg Helpers
-          # IBJ
-          Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
-          # Walljump up
-          Damage Boost (Intermediate) and Walljump (Advanced) and Normal Damage ≥ 10 and Can Walljump
+      All of the following:
+          Can Destroy Shot Block
+          Any of the following:
+              Space Jump or Enabled Septogg Helpers
+              # IBJ
+              Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
+              # Walljump up
+              Damage Boost (Intermediate) and Walljump (Advanced) and Normal Damage ≥ 10 and Can Walljump
   > Above torizo
       Space Jump Wall
 
@@ -288,15 +288,13 @@ Extra - enemy_data: {'114062': 'oGravitt', '114063': 'oGravitt', '114064': 'oGra
       Any of the following:
           All of the following:
               Movement (Beginner)
-              Arm Cannon or Can Use Bombs
-          All of the following:
-              Hijump Wall
-              Arm Cannon or Can Use Any Bombs
+              Can Shoot or Can Use Bombs
+          Can Destroy Shot Block and Hijump Wall
 
 > Above torizo; Heals? False
   * Layers: default
   > Door to Torizo Arena
-      Arm Cannon or Can Use Any Bombs
+      Can Destroy Shot Block
   > Left Septogg
       Trivial
 
@@ -526,7 +524,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
                       Combat (Ludicrous) or Normal Damage ≥ 150
                       Combat (Expert) and Normal Damage ≥ 100
           # Fusion Mode Requirements
-          Missiles or Super Missiles or Disabled Fusion Mode
+          Disabled Fusion Mode or Can Shoot Missile or Can Shoot Super Missile
 
 > Event - Torizo; Heals? False
   * Layers: default
@@ -550,7 +548,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
           Movement (Intermediate) and Hijump Wall
   > Save Station
       All of the following:
-          Arm Cannon or Can Use Any Bombs
+          Can Destroy Shot Block
           Any of the following:
               Tunnel Climb
               All of the following:
@@ -582,7 +580,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
               Tunnel Climb
               Morph Ball and Mid-Air Morph (Beginner)
           # Destroy Sand
-          Missiles or Super Missiles or Wave Beam or Can Use Any Bombs
+          Can Shoot Missile or Can Shoot Super Missile or Can Shoot Wave Beam or Can Use Any Bombs
   > Vertical Dock to Upper Factory Intersection
       Trivial
 
@@ -604,7 +602,7 @@ Extra - enemy_data: {'115453': 'oTsumuri', '115454': 'oTsumuri', '115455': 'oTsu
   * Layers: default
   * 2-Tiles Wide Dock to Upper Factory Save Station/Vertical Dock to Upper Factory Intersection
   > Door to Upper Factory Gamma Nest
-      Arm Cannon or Can Use Any Bombs
+      Can Destroy Shot Block
 
 > Door to Upper Factory Gamma Nest; Heals? False
   * Layers: default
@@ -617,16 +615,16 @@ Extra - enemy_data: {'115453': 'oTsumuri', '115454': 'oTsumuri', '115455': 'oTsu
       Any of the following:
           All of the following:
               # Get up using sand
-              Arm Cannon and Movement (Intermediate)
+              Movement (Intermediate) and Can Shoot
               Any of the following:
                   # Get up through dock at the top
                   Hi-Jump Boots
                   Walljump (Beginner) and Can Walljump
           All of the following:
-              Arm Cannon or Can Use Any Bombs
+              Can Destroy Shot Block
               Space Jump or Can Use Spider Ball
   > Door to Spazer Beam Chamber Access
-      Arm Cannon or Can Use Any Bombs
+      Can Destroy Shot Block
 
 > Door to Spazer Beam Chamber Access; Heals? False
   * Layers: default
@@ -647,9 +645,9 @@ down to the gamma room
   > Door to Upper Factory Gamma Nest
       Any of the following:
           # Get up using sand
-          Arm Cannon and Movement (Intermediate) and Power Grip Wall
+          Movement (Intermediate) and Can Shoot and Power Grip Wall
           All of the following:
-              Arm Cannon or Can Use Any Bombs
+              Can Destroy Shot Block
               Space Jump or Can Use Spider Ball
           # IBJ
           Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
@@ -731,7 +729,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   > Pickup (Energy Tank)
       All of the following:
           Can Shoot and Power Grip Climb
-          Missiles or Super Missiles
+          Can Shoot Missile or Can Shoot Super Missile
 
 > Tunnel to Industrial Complex Exterior (Bottom); Heals? False
   * Layers: default
@@ -752,7 +750,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
               Movement (Beginner) and Disabled Entrance Rando
               All of the following:
                   Can Shoot and Can Use Any Bombs and Power Grip Climb
-                  Missiles or Super Missiles
+                  Can Shoot Missile or Can Shoot Super Missile
   > Tunnel to Industrial Complex Exterior (Bottom)
       Can Use Any Bombs and Power Grip Climb
 
@@ -770,7 +768,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Extra - x: 0
   * Extra - y: 160
   > Vertical Dock to Upper Factory Autoad Fork
-      Arm Cannon or Can Use Any Bombs
+      Can Destroy Shot Block
   > Pickup (Missile Tank)
       All of the following:
           # Charge Spark in Spazer Beam Chamber Access
@@ -932,16 +930,14 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Normal Door to Speed Booster Chamber Access/Door to Speed Booster Chamber
   * Extra - door_instance_id: 116779
   > Pickup (Speed Booster)
-      All of the following:
-          Power Grip Wall
-          Arm Cannon or Can Use Any Bombs
+      Can Destroy Shot Block and Power Grip Wall
 
 > Pickup (Speed Booster); Heals? False
   * Layers: default
   * Pickup 7; Category? Major
   * Extra - object_name: oItemSpeedBooster
   > Door to Speed Booster Chamber Access
-      Arm Cannon and Can Use Any Bombs
+      Can Destroy Shot Block
 
 ----------------
 Shirk Prisons
@@ -992,7 +988,7 @@ Extra - enemy_data: {'116801': 'oShirk', '116802': 'oShirk', '116803': 'oShirk',
               All of the following:
                   # Shinespark on far right
                   Morph Ball and Shinesparking Tricks (Beginner) and Can Shoot
-                  Missiles or Super Missiles
+                  Can Shoot Missile or Can Shoot Super Missile
 
 ----------------
 Treadmill Room
@@ -1495,10 +1491,10 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
           Hijump With Power Grip Wall
           Any of the following:
               # Get past super blocks
-              After Area 3 - Industrial Complex Skippy Minigame Cleared or Can Use Any Bombs
               Super Missiles ≥ 3 and Can Shoot Super Missile
+              After Area 3 - Industrial Complex Skippy Minigame Cleared and Can Destroy Shot Block
           # Get past shot blocks
-          Arm Cannon or Can Use Any Bombs
+          Can Shoot or Can Use Any Bombs
 
 > Vertical Dock to Super Missile Chamber Access; Heals? False
   * Layers: default
@@ -1516,9 +1512,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Layers: default
   * Event Area 3 - Industrial Complex Skippy Minigame Cleared
   > Door to Assembly Line
-      All of the following:
-          Space Jump Wall
-          Arm Cannon or Can Use Any Bombs
+      Can Destroy Shot Block and Space Jump Wall
   > Vertical Dock to Super Missile Chamber Access
       Trivial
 
@@ -1569,9 +1563,14 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Extra - x: 640
   * Extra - y: 192
   > In Front Of Super
-      After Area 3 - Super Missile Crystal Destroyed or Power Grip Wall
+      Any of the following:
+          After Area 3 - Super Missile Crystal Destroyed
+          All of the following:
+              Power Grip Wall
+              # Crumble blocks turn into shot blocks on softlock prevention
+              Disabled Softlock Prevention or Can Shoot
   > Event - Crystal
-      Can Shoot
+      Can Shoot Super Missile
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
@@ -1703,9 +1702,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Layers: default
   * 3-Tiles High Dock to Spazer Beam Chamber Access/Horizontal Dock to Upper Factory Pipe
   > Pipe to Distribution Center
-      All of the following:
-          Morph Ball and Power Grip Wall
-          Arm Cannon or Can Use Any Bombs
+      Morph Ball and Can Destroy Shot Block and Power Grip Wall
 
 > Pipe to Distribution Center; Heals? False
   * Layers: default
@@ -1714,9 +1711,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Extra - dest_x: 472
   * Extra - dest_y: 128
   > Horizontal Dock to Spazer Beam Chamber Access
-      All of the following:
-          Morph Ball
-          Arm Cannon or Can Use Any Bombs
+      Morph Ball and Can Destroy Shot Block
 
 ----------------
 Breeding Grounds Access East
@@ -2076,7 +2071,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
           Infinite Bomb Jumping (Intermediate) and Can IBJ and Can Use Bombs
           All of the following:
               # Break shot blocks
-              Arm Cannon or Can Use Power Bombs
+              Can Shoot or Can Use Power Bombs
               Any of the following:
                   # Get up
                   Hi-Jump Boots or Space Jump or Can Use Spider Ball
@@ -2086,18 +2081,14 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Layers: default
   * 3-Tiles High Dock to Breeding Grounds Maze/Horizontal Dock to Breeding Grounds Fly Stadium
   > Top Near Pinchers
-      All of the following:
-          Power Grip Wall
-          Arm Cannon or Can Use Any Bombs
+      Can Destroy Shot Block and Power Grip Wall
 
 > Top Near Pinchers; Heals? False
   * Layers: default
   > Horizontal Dock to Breeding Grounds Fly Stadium Access
-      Arm Cannon or Can Use Any Bombs
+      Can Destroy Shot Block
   > Horizontal Dock to Breeding Grounds Maze
-      All of the following:
-          Power Grip Wall
-          Arm Cannon or Can Use Any Bombs
+      Can Destroy Shot Block and Power Grip Wall
   > Pickup (Super Missile Tank)
       # Get item: https://www.youtube.com/watch?v=gsjS_J5Li0U
       Speed Booster and Shinesparking Tricks (Intermediate) and Can Shoot Super Missile

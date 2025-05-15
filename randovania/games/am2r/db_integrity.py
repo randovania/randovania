@@ -14,6 +14,9 @@ use_templates_over_items = {
     "Power Bombs": "Can Use Power Bombs",
     "Walljump Boots": "Can Walljump",
     "Infinite Bomb Propulsion": "Can IBJ",
+    "Missiles": "Can Shoot Missiles",
+    "Super Missiles": "Can Shoot Super Missiles",
+    "Arm Cannon": "Can Shoot",
 }
 
 # short name resource -> Tuple(short name resources)

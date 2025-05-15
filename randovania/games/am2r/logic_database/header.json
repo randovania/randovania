@@ -5133,6 +5133,49 @@
                         ]
                     }
                 }
+            },
+            "Can Shoot Missile": {
+                "display_name": "Can Shoot Missile",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Can Shoot"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missiles",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Destroy Shot Block": {
+                "display_name": "Can Destroy Shot Block",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Can Shoot"
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Use Any Bombs"
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [],
@@ -5455,22 +5498,13 @@
                                     "comment": null,
                                     "items": [
                                         {
-                                            "type": "template",
-                                            "data": "Can Shoot"
-                                        },
-                                        {
                                             "type": "or",
                                             "data": {
                                                 "comment": null,
                                                 "items": [
                                                     {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "Missiles",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
+                                                        "type": "template",
+                                                        "data": "Can Shoot Missile"
                                                     },
                                                     {
                                                         "type": "and",
@@ -5478,13 +5512,8 @@
                                                             "comment": null,
                                                             "items": [
                                                                 {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": "items",
-                                                                        "name": "Super Missiles",
-                                                                        "amount": 1,
-                                                                        "negate": false
-                                                                    }
+                                                                    "type": "template",
+                                                                    "data": "Can Shoot Super Missile"
                                                                 },
                                                                 {
                                                                     "type": "resource",
@@ -5524,16 +5553,7 @@
                                     "items": [
                                         {
                                             "type": "template",
-                                            "data": "Can Shoot"
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Super Missiles",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "data": "Can Shoot Super Missile"
                                         }
                                     ]
                                 }
