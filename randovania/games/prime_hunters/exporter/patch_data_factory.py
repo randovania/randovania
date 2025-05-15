@@ -85,9 +85,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
         result["weapons"] = fmt.format(*weapons)
         result["missiles"] = starting_items["Missiles"]
         result["ammo"] = 40
-
-        if starting_items["Energy Tank"] > 0:
-            result["energy_tanks"] = starting_items["Energy Tank"]
+        result["energy_tanks"] = starting_items["Energy Tank"]
 
         return result
 
