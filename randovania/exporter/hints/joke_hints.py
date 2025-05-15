@@ -7,6 +7,7 @@ GENERIC_JOKE_HINTS = [
     # 3. They should be understandable by as many people as possible.
     # All games that have joke hints will use this list and any joke hints defined by the game.
     "By this point in your run, you should have consumed at least 200 mL of water to maintain optimum hydration.",
+    "Don't forget that you can always get help if you are struggling.",
     "Back in my day, we didn't need hints!",
     "I wonder how many players will see this message...?",
     "Imagining this hint is left as an exercise to the player.",
