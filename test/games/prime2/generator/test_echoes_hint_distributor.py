@@ -181,7 +181,7 @@ async def test_keybearer_hint_precisions(
     [
         ("Amber Translator", 0, set(), True, True),
         ("Energy Tank", 0, {"energy_tank"}, False, False),
-        ("Unlimited Missiles", 0, {"cheat"}, False, False),
+        ("Unlimited Missiles", 0, {"cheat"}, True, False),
         ("Beam Ammo Expansion", 0, set(), False, False),
     ],
 )
