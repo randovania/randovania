@@ -4,6 +4,7 @@ from typing import Any
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
+from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 
@@ -27,6 +28,8 @@ def does_requirement_contain_resource(requirement, resource, db):
     if isinstance(requirement, ResourceRequirement):
         if requirement.pretty_text == resource:
             return True
+        return False
+    if isinstance(requirement, NodeRequirement):
         return False
     for subreq in requirement.items:
         if does_requirement_contain_resource(subreq, resource, db):
