@@ -4305,7 +4305,7 @@
                         "area": "Sub-Zero Containment",
                         "node": "Door to Dark Stairwell"
                     },
-                    "default_dock_weakness": "L0 Hatch",
+                    "default_dock_weakness": "L3 Hatch",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -7961,13 +7961,126 @@
                         "area": "Dark Stairwell",
                         "node": "Door to Sub-Zero Containment"
                     },
-                    "default_dock_weakness": "L0 Hatch",
+                    "default_dock_weakness": "L3 Hatch",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Frozen Ridley)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 80,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Pickup (Frozen Ridley)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 151.36,
+                        "y": 98.83,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "area": 0,
+                        "room": 46,
+                        "blockx": 9,
+                        "blocky": 8
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 123,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Door to Dark Stairwell": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 69,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -8651,12 +8764,11 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "resource",
+                                                                                        "type": "node",
                                                                                         "data": {
-                                                                                            "type": "events",
-                                                                                            "name": "ReactorControl",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
+                                                                                            "region": "Main Deck",
+                                                                                            "area": "Auxiliary Power Station",
+                                                                                            "node": "Pickup (Reactor Control)"
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -8701,12 +8813,11 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "node",
                                                                 "data": {
-                                                                    "type": "events",
-                                                                    "name": "ReactorControl",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "region": "Main Deck",
+                                                                    "area": "Auxiliary Power Station",
+                                                                    "node": "Pickup (Reactor Control)"
                                                                 }
                                                             }
                                                         ]
@@ -9965,7 +10076,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Reactor Control": {
+                        "Pickup (Reactor Control)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9974,8 +10085,8 @@
                         }
                     }
                 },
-                "Event - Reactor Control": {
-                    "node_type": "event",
+                "Pickup (Reactor Control)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
                         "x": 165.56,
@@ -9986,9 +10097,16 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 0,
+                        "room": 54,
+                        "source": "AuxiliaryPower"
+                    },
                     "valid_starting_location": false,
-                    "event_name": "ReactorControl",
+                    "pickup_index": 122,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Door to Auxiliary Navigation Room": {
                             "type": "and",
@@ -11606,7 +11724,7 @@
                                 ]
                             }
                         },
-                        "Save the Animals": {
+                        "Pickup (Save the Animals)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11615,20 +11733,28 @@
                         }
                     }
                 },
-                "Save the Animals": {
-                    "node_type": "generic",
+                "Pickup (Save the Animals)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
                         "x": 312.28,
                         "y": 410.23,
                         "z": 0.0
                     },
-                    "description": "FIXME: Causes issues with door lock rando.\n\nGeneration gets stuck after giving SJ and speed and trying to reach this event.",
+                    "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 0,
+                        "room": 69,
+                        "source": "Animals"
+                    },
                     "valid_starting_location": false,
+                    "pickup_index": 120,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Other to Habitation Ventilation (Upper)": {
                             "type": "and",
@@ -11870,7 +11996,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Hornoad": {
+                        "Pickup (Hornoad)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11879,20 +12005,29 @@
                         }
                     }
                 },
-                "Hornoad": {
-                    "node_type": "generic",
+                "Pickup (Hornoad)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 128.01323407775018,
-                        "y": 113.49986214502341,
+                        "x": 128.01,
+                        "y": 113.5,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 0,
+                        "room": 71,
+                        "blockx": 6,
+                        "blocky": 9
+                    },
                     "valid_starting_location": false,
+                    "pickup_index": 124,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Door to Quarantine Junction": {
                             "type": "and",
