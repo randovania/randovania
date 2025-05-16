@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import defaultdict
 from typing import TYPE_CHECKING, Final, override
 
 from randovania.exporter.patch_data_factory import PatchDataFactory, PatcherDataMeta
@@ -9,11 +10,13 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.prime_hunters.exporter.hint_namer import HuntersHintNamer
 from randovania.games.prime_hunters.layout import HuntersConfiguration, HuntersCosmeticPatches
 from randovania.games.prime_hunters.layout.force_field_configuration import LayoutForceFieldRequirement
+from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
     from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.game_description.db.area import Area
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
 
@@ -29,6 +32,7 @@ def force_field_index_for_requirement(game: GameDescription, requirement: Layout
 ITEM_SPAWN_ENTITY_TYPE: Final = 4
 ARTIFACT_ENTITY_TYPE: Final = 17
 OCTOLITH_MODEL_ID: Final = 8
+NOTHING_ITEM_TYPE: Final = 21
 
 _ARTIFACT_TO_MODEL_ID = {
     "AlinosArtifact1": 0,
@@ -57,11 +61,32 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME_HUNTERS
 
-    def _calculate_starting_inventory(self, resources: ResourceCollection) -> dict[str, str]:
-        result = {
-            # TODO: Take starting weapons into account
-            "weapons_string": "00000101",
-        }
+    def _calculate_starting_inventory(self, resources: ResourceCollection) -> dict[str, str | int]:
+        result: dict[str, str | int] = {}
+
+        starting_items: defaultdict = defaultdict(int)
+        starting_items.update({resource.long_name: quantity for resource, quantity in resources.as_resource_gain()})
+
+        def starts_with_weapon(weapon_name: str) -> bool:
+            return starting_items[weapon_name] > 0
+
+        weapons = [
+            starts_with_weapon("Shock Coil"),
+            starts_with_weapon("Magmaul"),
+            starts_with_weapon("Judicator"),
+            starts_with_weapon("Imperialist"),
+            starts_with_weapon("Battlehammer"),
+            True,  # Missiles
+            starts_with_weapon("Volt Driver"),
+            True,  # Power Beam
+        ]
+        fmt = "{:d}" * 8  # 8-bit bitfield
+
+        result["weapons"] = fmt.format(*weapons)
+        result["missiles"] = starting_items["Missiles"]
+        result["ammo"] = 40
+        result["energy_tanks"] = starting_items["Energy Tank"]
+
         return result
 
     def _get_pickups_for_area(self, area: Area) -> list:
@@ -71,26 +96,27 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
 
         for node in pickup_nodes:
             target = self.patches.pickup_assignment.get(node.pickup_index, None)
-
-            # TODO: Add handling for nothing items
-            assert target is not None
             pickup: dict = {}
 
             pickup["entity_id"] = node.extra["entity_id"]
-            entity_type = target.pickup.extra["entity_type"]
 
-            if entity_type == ITEM_SPAWN_ENTITY_TYPE:
+            if target is None:
                 pickup["entity_type"] = ITEM_SPAWN_ENTITY_TYPE
-                pickup["item_type"] = target.pickup.extra["item_type"]
+                pickup["item_type"] = NOTHING_ITEM_TYPE
             else:
-                pickup["entity_type"] = ARTIFACT_ENTITY_TYPE
-                model_id = target.pickup.extra.get("model_id", None)
-                if model_id == OCTOLITH_MODEL_ID:
-                    pickup["model_id"] = model_id
-                    pickup["artifact_id"] = _OCTOLITH_TO_ARTIFACT_ID[target.pickup.model.name]
+                entity_type = target.pickup.extra["entity_type"]
+                if entity_type == ITEM_SPAWN_ENTITY_TYPE:
+                    pickup["entity_type"] = ITEM_SPAWN_ENTITY_TYPE
+                    pickup["item_type"] = target.pickup.extra["item_type"]
                 else:
-                    pickup["model_id"] = _ARTIFACT_TO_MODEL_ID[target.pickup.model.name]
-                    pickup["artifact_id"] = target.pickup.extra["artifact_id"]
+                    pickup["entity_type"] = ARTIFACT_ENTITY_TYPE
+                    model_id = target.pickup.extra.get("model_id", None)
+                    if model_id == OCTOLITH_MODEL_ID:
+                        pickup["model_id"] = model_id
+                        pickup["artifact_id"] = _OCTOLITH_TO_ARTIFACT_ID[target.pickup.model.name]
+                    else:
+                        pickup["model_id"] = _ARTIFACT_TO_MODEL_ID[target.pickup.model.name]
+                        pickup["artifact_id"] = target.pickup.extra["artifact_id"]
             pickups.append(pickup)
 
         return pickups
@@ -128,6 +154,10 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
                 }
 
         return level_data
+
+    def create_visual_nothing(self) -> PickupEntry:
+        """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
+        return pickup_creator.create_visual_nothing(self.game_enum(), "Nothing")
 
     def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
