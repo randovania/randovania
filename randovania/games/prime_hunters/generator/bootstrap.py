@@ -32,8 +32,7 @@ class HuntersBootstrap(Bootstrap[HuntersConfiguration]):
         return EnergyTankDamageState(
             99,
             100,
-            game.resource_database,
-            game.region_list,
+            game.resource_database.energy_tank_item,
         )
 
     def assign_pool_results(
