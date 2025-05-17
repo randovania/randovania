@@ -9,13 +9,13 @@ if TYPE_CHECKING:
 
 
 def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
+    from randovania.games.prime1.gui.preset_settings.prime_dock_rando_tab import PresetPrimeDockRando
     from randovania.games.prime1.gui.preset_settings.prime_enemy_stat_randomizer import PresetEnemyAttributeRandomizer
     from randovania.games.prime1.gui.preset_settings.prime_generation_tab import PresetPrimeGeneration
     from randovania.games.prime1.gui.preset_settings.prime_goal_tab import PresetPrimeGoal
     from randovania.games.prime1.gui.preset_settings.prime_patches_chaos import PresetPrimeChaos
     from randovania.games.prime1.gui.preset_settings.prime_patches_qol import PresetPrimeQol
     from randovania.games.prime1.gui.preset_settings.prime_teleporters_tab import PresetTeleportersPrime1
-    from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
     from randovania.gui.preset_settings.hints_tab import PresetHints
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
@@ -33,7 +33,7 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> l
         PresetPatcherEnergy,
         PresetTeleportersPrime1,
         PresetMetroidStartingArea,
-        PresetDockRando,
+        PresetPrimeDockRando,
         PresetPrimeQol,
         PresetEnemyAttributeRandomizer,
         PresetPrimeChaos,
