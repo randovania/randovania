@@ -18,7 +18,7 @@ _boss_indices = [100, 106, 114, 104, 115, 107, 110, 102, 109, 108, 111]
 @pytest.mark.parametrize(
     ("artifacts", "expected"),
     [
-        (FusionArtifactConfig(True, False, 5, 5), [102, 106, 107, 110, 114]),
+        (FusionArtifactConfig(True, False, 5, 5), [100, 102, 107, 110, 114]),
         (FusionArtifactConfig(True, False, 11, 11), _boss_indices),
         (FusionArtifactConfig(False, False, 0, 0), []),
     ],

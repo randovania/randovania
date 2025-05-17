@@ -19,11 +19,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Energy Parts are now logical.
 
+#### Logic Database
+
+- Changed: All instances of the Cross Bomb Skip trick that were previously rated as Beginner or Intermediate are now rated one level higher.
+- Changed: All instances of the Single Wall Jump trick are now rated one level higher.
+
 ### Metroid: Samus Returns
 
 - Changed: Display the number of remaining DNA in the DNA message before entering the final boss.
 - Fixed: If Metroid Queen is the final boss and you don't have all DNA, the DNA message now appears.
 - Fixed: For tanks with non required main option, the jingle of the tank item is played instead of the jingle of the main object.
+
+### Metroid Prime
+
+- Added: Blast Shield Lock-On preset option
+- Added: Patch to fix Kerry Ann Odem's name in the credits on game version(s) where it is incorrectly spelled
+- Fixed: Main Plaza vault ledge door is now affected by door lock rando
+- Fixed: Elite Research Phazon Elite getting stuck on frame perfect cutscene skip
+- Fixed: Minor music transition fixes
+- Fixed: Chaos option export error when submerging rooms
+- Changed: [PAL] Remove extra door lock in Central Dynamo
+- Changed: [PAL] Load Hunter Metroid in Frost Cave
 
 ## [9.1.1] - 2025-05-03
 

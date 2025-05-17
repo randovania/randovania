@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>HuntersGameTabWidget</class>
- <widget class="QTabWidget" name="BlankGameTabWidget">
+ <widget class="QTabWidget" name="HuntersGameTabWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -33,7 +33,7 @@
       <item>
        <widget class="QLabel" name="intro_label">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;The Blank game is used by Randovania to serve as an example of how a game is integrated.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;Explore the ruins of the Alimbic Cluster and recover the Octoliths, then activate the Alimbic Cannon to open the Oubliette and defeat Gorea.&lt;/p&gt;&lt;p&gt;To get started, use the Quick Generate button to generate a game using the default settings!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
@@ -52,7 +52,7 @@
     <item>
      <spacer name="intro_spacer">
       <property name="orientation">
-       <enum>Qt::Vertical</enum>
+       <enum>Qt::Orientation::Vertical</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
@@ -107,7 +107,7 @@
            <string># updated from code</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
