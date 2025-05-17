@@ -31,15 +31,23 @@ class EchoesHintDistributor(HintDistributor):
         return 2
 
     @override
+    def is_pickup_more_interesting(self, target: PickupTarget, player_id: int, hint_node: HintNode) -> bool:
+        interesting_features = ["cheat", "energy_tank"]
+        for feature in interesting_features:
+            if target.pickup.has_hint_feature(feature):
+                return False
+        return super().is_pickup_more_interesting(target, player_id, hint_node)
+
+    @override
     def is_pickup_interesting(self, target: PickupTarget, player_id: int, hint_node: HintNode) -> bool:
-        non_interesting_features = ["key", "energy_tank"]
+        non_interesting_features = ["key"]
         for feature in non_interesting_features:
             if target.pickup.has_hint_feature(feature):
                 return False
         if target.player == player_id and ("Translator" in target.pickup.name):
             # don't place a translator hint on its color of lore scan
             return hint_node.extra["translator"] not in target.pickup.name
-        return True
+        return super().is_pickup_interesting(target, player_id, hint_node)
 
     @override
     async def get_guaranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
