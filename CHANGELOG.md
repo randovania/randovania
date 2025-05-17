@@ -15,6 +15,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Bug that could lead to timeouts or longer resolving time in some cases.
 
+### Metroid Dread
+
+#### Logic Database
+
+- Changed: All instances of the Cross Bomb Skip trick that were previously rated as Beginner or Intermediate are now rated one level higher.
+- Changed: All instances of the Single Wall Jump trick are now rated one level higher.
+
 ### Metroid: Samus Returns
 
 - Changed: Display the number of remaining DNA in the DNA message before entering the final boss.
