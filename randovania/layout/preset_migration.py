@@ -1175,6 +1175,13 @@ def _migrate_v103(preset: dict, game: RandovaniaGame) -> None:
         preset["configuration"]["blue_save_doors"] = True
 
 
+def _migrate_v104(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
+        preset["configuration"]["pre_place_artifact"] = False
+        preset["configuration"]["pre_place_phazon"] = False
+
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1279,6 +1286,7 @@ _MIGRATIONS = [
     _migrate_v101,
     _migrate_v102,  # removal of in_dark_aether
     _migrate_v103,  # prime1 blast-shield lockon
+    _migrate_v104,  # add pre-placement to prime
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -12,11 +12,29 @@ from randovania.resolver.bootstrap import Bootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
+    from random import Random
+
+    from randovania.game_description.db.pickup_node import PickupNode
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.damage_state import DamageState
+
+
+def is_pickup_to_pre_place(pickup: PickupEntry, configuration: PrimeConfiguration) -> bool:
+    if configuration.pre_place_artifact and pickup.gui_category.name == "artifact":
+        return True
+    if configuration.pre_place_phazon and pickup.name == "Phazon Suit":
+        return True
+    return False
+
+
+def is_location_to_pre_place(node: PickupNode, configuration: PrimeConfiguration) -> bool:
+    return True
 
 
 class PrimeBootstrap(Bootstrap):
@@ -146,3 +164,14 @@ class PrimeBootstrap(Bootstrap):
             base_damage_reduction=base_damage_reduction,
             requirement_template=requirement_template,
         )
+
+    def assign_pool_results(
+        self, rng: Random, configuration: PrimeConfiguration, patches: GamePatches, pool_results: PoolResults
+    ) -> GamePatches:
+        pickups_to_preplace = [
+            pickup for pickup in list(pool_results.to_place) if is_pickup_to_pre_place(pickup, configuration)
+        ]
+        locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_location_to_pre_place)
+        weighted_locations = {location: location.extra.get("regional_weight", 1.0) for location in locations}
+        self.pre_place_pickups_weighted(rng, pickups_to_preplace, weighted_locations, pool_results, patches.game.game)
+        return super().assign_pool_results(rng, configuration, patches, pool_results)
