@@ -1820,19 +1820,43 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Morph",
+                                            "type": "events",
+                                            "name": "s010_cave:default:PRP_DB_CV_014",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "events",
-                                            "name": "s010_cave:default:PRP_DB_CV_014",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Hand wave, increases variety of first accessible pickup.",
+                                                        "items": [
+                                                            {
+                                                                "type": "node",
+                                                                "data": {
+                                                                    "region": "Artaria",
+                                                                    "area": "Melee Tutorial Room",
+                                                                    "node": "Pickup (Missile Tank 2)"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
