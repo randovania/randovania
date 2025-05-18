@@ -22,6 +22,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: All instances of the Cross Bomb Skip trick that were previously rated as Beginner or Intermediate are now rated one level higher.
 - Changed: All instances of the Single Wall Jump trick are now rated one level higher.
 
+##### Artaria
+
+- Changed: A small adjustment that should decrease the frequency of placing Morph Ball in the first accessible location in standard presets.
+
 ### Metroid: Samus Returns
 
 - Changed: Display the number of remaining DNA in the DNA message before entering the final boss.
