@@ -1181,7 +1181,6 @@ def _migrate_v104(preset: dict, game: RandovaniaGame) -> None:
         preset["configuration"]["pre_place_phazon"] = False
 
 
-
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
