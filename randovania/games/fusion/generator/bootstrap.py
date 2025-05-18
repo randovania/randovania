@@ -66,6 +66,9 @@ class FusionBootstrap(Bootstrap[FusionConfiguration]):
         if configuration.artifacts.prefer_anywhere:
             return super().assign_pool_results(rng, configuration, patches, pool_results)
 
+        pickups_to_preplace = [
+            pickup for pickup in list(pool_results.to_place) if pickup.gui_category.name == "InfantMetroid"
+        ]
         locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_metroid_location)
-        self.pre_place_pickups(rng, locations, pool_results, "InfantMetroid", patches.game.game)
+        self.pre_place_pickups(rng, pickups_to_preplace, locations, pool_results, patches.game.game)
         return super().assign_pool_results(rng, configuration, patches, pool_results)
