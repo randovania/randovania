@@ -13,10 +13,17 @@ if TYPE_CHECKING:
     from randovania.game_description.db.pickup_node import PickupNode
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.generator.pickup_pool import PoolResults
     from randovania.resolver.damage_state import DamageState
+
+
+def is_pickup_to_preplace(pickup: PickupEntry):
+    if pickup.gui_category.name == "InfantMetroid":
+        return True
+    return False
 
 
 def is_metroid_location(node: PickupNode, config: FusionConfiguration) -> bool:
@@ -66,6 +73,9 @@ class FusionBootstrap(Bootstrap[FusionConfiguration]):
         if configuration.artifacts.prefer_anywhere:
             return super().assign_pool_results(rng, configuration, patches, pool_results)
 
+        pickups_to_preplace = [
+            pickup for pickup in list(pool_results.to_place) if pickup.gui_category.name == "InfantMetroid"
+        ]
         locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_metroid_location)
-        self.pre_place_pickups(rng, locations, pool_results, "InfantMetroid", patches.game.game)
+        self.pre_place_pickups(rng, pickups_to_preplace, locations, pool_results, patches.game.game)
         return super().assign_pool_results(rng, configuration, patches, pool_results)
