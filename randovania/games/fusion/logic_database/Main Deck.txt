@@ -1461,9 +1461,9 @@ Extra - room_id: [49, 59]
                   Any of the following:
                       Wave Beam
                       # If you only have charge, you need to have access to the other side
-                      Charge Beam and Main Deck/Auxiliary Power Station/Pickup (Reactor Control)
+                      Charge Beam and After Access Right of Silo Checkpoint Shutter
               # Without Wave nor Charge, there's only one attempt and its hard.
-              Shinespark Tricks (Ludicrous) and Main Deck/Auxiliary Power Station/Pickup (Reactor Control)
+              After Access Right of Silo Checkpoint Shutter and Shinespark Tricks (Ludicrous)
   > Door to Silo Save Room
       Trivial
 
@@ -1632,6 +1632,8 @@ Extra - room_id: [52]
   * Extra - door_idx: (118,)
   > Door to Central Reactor Core
       Trivial
+  > Event - Access Right of Silo Checkpoint Shutter
+      Trivial
 
 > Door to Central Reactor Core; Heals? False
   * Layers: default
@@ -1639,6 +1641,12 @@ Extra - room_id: [52]
   * Extra - door_idx: (119,)
   > Door to Auxiliary Navigation Room
       Wave Beam
+
+> Event - Access Right of Silo Checkpoint Shutter; Heals? False
+  * Layers: default
+  * Event Access Right of Silo Checkpoint Shutter
+  > Door to Auxiliary Navigation Room
+      Trivial
 
 ----------------
 Auxiliary Power Station

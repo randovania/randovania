@@ -8764,11 +8764,12 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "node",
+                                                                                        "type": "resource",
                                                                                         "data": {
-                                                                                            "region": "Main Deck",
-                                                                                            "area": "Auxiliary Power Station",
-                                                                                            "node": "Pickup (Reactor Control)"
+                                                                                            "type": "events",
+                                                                                            "name": "RightSiloCheckpointShutter",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -8813,11 +8814,12 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "node",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "region": "Main Deck",
-                                                                    "area": "Auxiliary Power Station",
-                                                                    "node": "Pickup (Reactor Control)"
+                                                                    "type": "events",
+                                                                    "name": "RightSiloCheckpointShutter",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -9933,6 +9935,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Access Right of Silo Checkpoint Shutter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -9982,6 +9991,31 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Event - Access Right of Silo Checkpoint Shutter": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 201.96,
+                        "y": 116.83,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "RightSiloCheckpointShutter",
+                    "connections": {
+                        "Door to Auxiliary Navigation Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
