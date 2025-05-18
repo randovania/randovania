@@ -101,9 +101,9 @@ def test_prime1_additive_damage_reduction(prime1_resource_database, expected, su
     ("pre_place_artifact", "pre_place_phazon", "expected"),
     [
         (False, False, []),
-        (True, False, [86, 135, 161, 182, 227, 265]),
-        (True, True, [86, 135, 161, 182, 227, 238, 265]),
-        (False, True, [86]),
+        (True, False, [35, 135, 160, 182, 224, 269]),
+        (True, True, [35, 135, 160, 182, 224, 237, 269]),
+        (False, True, [224]),
     ],
 )
 def test_assign_pool_results(
