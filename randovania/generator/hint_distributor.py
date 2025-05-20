@@ -275,7 +275,8 @@ class HintDistributor(ABC):
     async def assign_pre_filler_hints(
         self, patches: GamePatches, prefill: PreFillParams, rng_required: bool = True
     ) -> GamePatches:
-        patches = await self.assign_specific_location_hints(patches, prefill)
+        if patches.configuration.hints.enable_specific_location_hints:
+            patches = await self.assign_specific_location_hints(patches, prefill)
 
         if patches.configuration.hints.enable_random_hints:
             hint_identifiers = self.get_generic_hint_nodes(prefill)
