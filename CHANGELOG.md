@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
-- Changed: "Cheater's delight" pickups are no longer valid targets for logical hints when Logical Pickup Placement is set higher than Minimal.
+- Changed: "Cheater's delight" pickups are now less likely to be hinted.
 
 ## [9.1.1] - 2025-05-03
 
