@@ -212,5 +212,9 @@ class PrimePresetDescriber(GamePresetDescriber):
             f"{configuration.artifact_target.num_artifacts} Artifacts, "
             f"{configuration.artifact_minimum_progression} min actions"
         )
+        if configuration.pre_place_artifact:
+            template_strings["Item Pool"].append("Pre-place Artifacts")
+        if configuration.pre_place_phazon:
+            template_strings["Item Pool"].append("Pre-place Phazon Suit")
 
         return template_strings

@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Blast Shield Lock-On preset option
 - Added: Patch to fix Kerry Ann Odem's name in the credits on game version(s) where it is incorrectly spelled
+- Added: Experimental option to pre-place Artifacts and/or Phazon Suit before generation.
 - Fixed: Main Plaza vault ledge door is now affected by door lock rando
 - Fixed: Elite Research Phazon Elite getting stuck on frame perfect cutscene skip
 - Fixed: Minor music transition fixes
