@@ -45,6 +45,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: [PAL] Remove extra door lock in Central Dynamo
 - Changed: [PAL] Load Hunter Metroid in Frost Cave
 
+### Metroid Prime 2: Echoes
+
+#### Logic Databse
+
+##### Sky Temple Grouds
+
+- Added: Half pipe hint feature on War Ritual Grounds.
+
 ## [9.1.1] - 2025-05-03
 
 - Fixed: Duplicating a session now also duplicates the admin settings for Co-op and "Everyone can claim worlds".
