@@ -28,12 +28,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: A small adjustment that should decrease the frequency of placing Morph Ball in the first accessible location in standard presets.
 
-### Metroid: Samus Returns
-
-- Changed: Display the number of remaining DNA in the DNA message before entering the final boss.
-- Fixed: If Metroid Queen is the final boss and you don't have all DNA, the DNA message now appears.
-- Fixed: For tanks with non required main option, the jingle of the tank item is played instead of the jingle of the main object.
-
 ### Metroid Prime
 
 - Added: Blast Shield Lock-On preset option
@@ -52,6 +46,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Sky Temple Grouds
 
 - Added: Half pipe hint feature on War Ritual Grounds.
+
+### Metroid: Samus Returns
+
+- Changed: Display the number of remaining DNA in the DNA message before entering the final boss.
+- Fixed: If Metroid Queen is the final boss and you don't have all DNA, the DNA message now appears.
+- Fixed: For tanks with non required main option, the jingle of the tank item is played instead of the jingle of the main object.
 
 ## [9.1.1] - 2025-05-03
 
