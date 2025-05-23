@@ -177,13 +177,50 @@ async def test_keybearer_hint_precisions(
 
 
 @pytest.mark.parametrize(
+    ("target_pickup", "target_player", "features", "in_spoiler", "expected"),
+    [
+        ("Amber Translator", 0, set(), True, True),
+        ("Energy Tank", 0, {"energy_tank"}, False, False),
+        ("Unlimited Missiles", 0, {"cheat"}, True, False),
+        ("Beam Ammo Expansion", 0, set(), False, False),
+    ],
+)
+def test_echoes_more_interesting_pickups(
+    target_pickup: str,
+    target_player: int,
+    features: set[str],
+    in_spoiler: bool,
+    expected: bool,
+    echoes_game_description,
+):
+    # Setup
+    hint_node = echoes_game_description.region_list.typed_node_by_identifier(
+        NodeIdentifier.create("Great Temple", "Main Energy Controller", "Lore Scan"),
+        HintNode,
+    )
+    hint_distributor = EchoesHintDistributor()
+
+    target = MagicMock(spec=PickupTarget)
+    target.pickup.name = target_pickup
+    target.pickup.show_in_credits_spoiler = in_spoiler
+    target.pickup.has_hint_feature = lambda feat: feat in features
+    target.player = target_player
+
+    # Run
+    result = hint_distributor.is_pickup_more_interesting(target, 0, hint_node)
+
+    # Assert
+    assert result == expected
+
+
+@pytest.mark.parametrize(
     ("target_pickup", "target_player", "features", "expected"),
     [
         ("Violet Translator", 0, set(), False),
         ("Amber Translator", 0, set(), True),
         ("Violet Translator", 1, set(), True),
         ("Sky Temple Key 1", 0, {"key"}, False),
-        ("Energy Tank", 0, {"energy_tank"}, False),
+        ("Energy Tank", 0, {"energy_tank"}, True),
     ],
 )
 def test_echoes_interesting_pickups(

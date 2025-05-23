@@ -30,14 +30,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Added: Blast Shield Lock-On preset option
-- Added: Patch to fix Kerry Ann Odem's name in the credits on game version(s) where it is incorrectly spelled
-- Fixed: Main Plaza vault ledge door is now affected by door lock rando
-- Fixed: Elite Research Phazon Elite getting stuck on frame perfect cutscene skip
-- Fixed: Minor music transition fixes
-- Fixed: Chaos option export error when submerging rooms
-- Changed: [PAL] Remove extra door lock in Central Dynamo
-- Changed: [PAL] Load Hunter Metroid in Frost Cave
+- Added: Blast Shield Lock-On preset option.
+- Added: Patch to fix Kerry Ann Odem's name in the credits on game version(s) where it is incorrectly spelled.
+- Fixed: Main Plaza vault ledge door is now affected by door lock rando.
+- Fixed: Elite Research Phazon Elite getting stuck on frame perfect cutscene skip.
+- Fixed: Minor music transition fixes.
+- Fixed: Chaos option export error when submerging rooms.
+- Changed: [PAL] Remove extra door lock in Central Dynamo.
+- Changed: [PAL] Load Hunter Metroid in Frost Cave.
+
+### Metroid Prime 2: Echoes
+
+- Changed: "Cheater's delight" pickups are now less likely to be hinted.
 
 ### Metroid Prime 2: Echoes
 
