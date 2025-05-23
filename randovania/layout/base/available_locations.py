@@ -99,3 +99,6 @@ class AvailableLocationsConfiguration(BitPackValue):
         elif index in excluded_indices:
             excluded_indices.remove(index)
         return dataclasses.replace(self, excluded_indices=frozenset(excluded_indices))
+
+    def get_excluded_locations_count(self) -> int:
+        return len(self.excluded_indices)
