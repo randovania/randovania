@@ -17,11 +17,11 @@ if TYPE_CHECKING:
 
 
 def describe_objective(octoliths: HuntersOctolithConfig) -> list[dict[str, bool]]:
-    has_octoliths = octoliths.required_octoliths > 0
+    has_octoliths = octoliths.placed_octoliths > 0
     if has_octoliths:
         return [
             {
-                f"{octoliths.required_octoliths} out of {octoliths.placed_octoliths} Octoliths": True,
+                f"{octoliths.placed_octoliths} Octoliths": True,
             },
         ]
     else:

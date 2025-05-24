@@ -28,8 +28,6 @@ class PresetHuntersGoal(PresetTab, Ui_PresetHuntersGoal):
 
         self.goal_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         self.placed_slider.valueChanged.connect(self._on_placed_slider_changed)
-        self.required_slider.valueChanged.connect(self._on_required_slider_changed)
-        self._update_slider_max()
         self._on_prefer_bosses(True)
 
     @classmethod
@@ -39,10 +37,6 @@ class PresetHuntersGoal(PresetTab, Ui_PresetHuntersGoal):
     @classmethod
     def header_name(cls) -> str | None:
         return None
-
-    def _update_slider_max(self) -> None:
-        self.required_slider.setMaximum(self.placed_slider.value())
-        self.required_slider.setEnabled(self.placed_slider.value() > 0)
 
     def _edit_config(self, call: Callable[[HuntersOctolithConfig], HuntersOctolithConfig]) -> None:
         config = self._editor.configuration
@@ -56,20 +50,9 @@ class PresetHuntersGoal(PresetTab, Ui_PresetHuntersGoal):
             return dataclasses.replace(config, prefer_bosses=value)
 
         self._edit_config(edit)
-        self._update_slider_max()
-
-    def _on_required_slider_changed(self) -> None:
-        self.required_slider_label.setText(f"{self.required_slider.value()} Octoliths Required")
-
-        def edit(config: HuntersOctolithConfig) -> HuntersOctolithConfig:
-            return dataclasses.replace(config, required_octoliths=self.required_slider.value())
-
-        self._edit_config(edit)
 
     def _on_placed_slider_changed(self) -> None:
-        self.placed_slider_label.setText(f"{self.placed_slider.value()} Octoliths in Pool")
-        self.required_slider.setMaximum(self.placed_slider.value())
-        self.required_slider.setEnabled(self.placed_slider.value() > 0)
+        self.placed_slider_label.setText(f"{self.placed_slider.value()}")
 
         def edit(config: HuntersOctolithConfig) -> HuntersOctolithConfig:
             return dataclasses.replace(config, placed_octoliths=self.placed_slider.value())
@@ -80,4 +63,3 @@ class PresetHuntersGoal(PresetTab, Ui_PresetHuntersGoal):
         assert isinstance(preset.configuration, HuntersConfiguration)
         octoliths = preset.configuration.octoliths
         self.placed_slider.setValue(octoliths.placed_octoliths)
-        self.required_slider.setValue(octoliths.required_octoliths)

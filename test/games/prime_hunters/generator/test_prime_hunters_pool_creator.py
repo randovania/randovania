@@ -8,18 +8,16 @@ from randovania.generator.pickup_pool import PoolResults
 from randovania.generator.pickup_pool.pickup_creator import create_generated_pickup
 
 
-@pytest.mark.parametrize(("required_octoliths", "placed_octoliths"), [(0, 0), (1, 1), (4, 4), (8, 8)])
-def test_add_octoliths(prime_hunters_game_description, required_octoliths, placed_octoliths):
+@pytest.mark.parametrize("placed_octoliths", [0, 1, 4, 8])
+def test_add_octoliths(prime_hunters_game_description, placed_octoliths):
     db = prime_hunters_game_description.resource_database
     pdb = prime_hunters_game_description.get_pickup_database()
     # Run
-    results = add_octoliths(
-        prime_hunters_game_description, HuntersOctolithConfig(True, required_octoliths, placed_octoliths)
-    )
+    results = add_octoliths(prime_hunters_game_description, HuntersOctolithConfig(True, placed_octoliths))
 
     # Assert
     assert results == PoolResults(
-        [create_generated_pickup("Octolith", db, pdb, i=i + 1) for i in range(required_octoliths)],
+        [create_generated_pickup("Octolith", db, pdb, i=i + 1) for i in range(placed_octoliths)],
         {},
         [create_generated_pickup("Octolith", db, pdb, i=i + 1) for i in range(placed_octoliths, 8)],
     )

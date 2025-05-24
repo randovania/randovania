@@ -8,7 +8,6 @@ from randovania.games.prime_hunters.layout.prime_hunters_configuration import (
 )
 from randovania.generator.pickup_pool import PoolResults
 from randovania.generator.pickup_pool.pickup_creator import create_generated_pickup
-from randovania.layout.exceptions import InvalidConfiguration
 
 if TYPE_CHECKING:
     from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
@@ -57,10 +56,6 @@ def add_octoliths(
     :param resource_database:
     :return:
     """
-    # Check whether we have valid octolith requirements in configuration
-    if config.required_octoliths > config.placed_octoliths:
-        raise InvalidConfiguration("More Octoliths than allowed!")
-
     octoliths: list[PickupEntry] = [
         create_generated_pickup("Octolith", game.get_resource_database_view(), game.get_pickup_database(), i=i + 1)
         for i in range(8)
