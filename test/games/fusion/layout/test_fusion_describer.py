@@ -42,14 +42,18 @@ def test_fusion_format_params(artifacts):
 
     # Assert
     assert dict(result) == {
-        "Game Changes": [],
-        "Gameplay": ["Starts at Main Deck - Docking Bay Hangar"],
+        "Game Changes": ["Unlocked hatches in Sector Hub"],
+        "Gameplay": ["Starts at Main Deck - Sector Hub"],
         "Goal": (
             [f"{artifacts.required_artifacts} of {artifacts.placed_artifacts} Metroids Required", metroids_where]
             if artifacts.required_artifacts
             else [metroids_where]
         ),
         "Hints": ["Infant Metroids Hint: Region and area", "Charge Beam Hint: Region only"],
-        "Item Pool": [f"Size: {115 + artifacts.placed_artifacts} of 120", "Vanilla starting items"],
+        "Item Pool": [
+            f"Size: {115 + artifacts.placed_artifacts} of 127",
+            "1 random starting items",
+            "Starts with Energy Tank",
+        ],
         "Logic Settings": ["All tricks disabled"],
     }
