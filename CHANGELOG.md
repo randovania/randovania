@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Changed: Energy Parts are now logical.
+
 #### Logic Database
 
 - Changed: All instances of the Cross Bomb Skip trick that were previously rated as Beginner or Intermediate are now rated one level higher.
