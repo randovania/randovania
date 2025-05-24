@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from abc import ABC
+from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Self
 
 if TYPE_CHECKING:
@@ -60,9 +60,13 @@ class DamageState(ABC):
         """Creates a new state after new resources were added as if they were starting.
         Common difference: collecting a health upgrade fully heals you. But it won't do it here."""
 
+    @abstractmethod
     def resource_requirements_for_satisfying_damage(self, damage: int) -> list[list[ResourceRequirement]]:
         """
         Determines what are the requirements for satisfying a damage requirement with the given value.
         :param damage:
-        :return: a list containing lists of resource requirements
+        :return: a list containing lists of resource requirements. Each sublist contains a combination of requirements.
+        If two resources can be used, the options can be to satisfy the damage with some number of only the first
+        resource, some number of only the second resource, or by any combination of the two resources that together
+        satisfy the damage requirement.
         """

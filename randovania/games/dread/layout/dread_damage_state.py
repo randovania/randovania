@@ -46,7 +46,7 @@ class DreadDamageState(EnergyTankDamageState):
         return self._starting_energy + (self._energy_per_tank * num_whole_tanks) + energy_from_partial
 
     def _duplicate(self) -> Self:
-        result = DreadDamageState(
+        result = self.__class__(
             self._starting_energy,
             self._energy_per_tank,
             self._energy_tank,

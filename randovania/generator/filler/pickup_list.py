@@ -41,7 +41,7 @@ def interesting_resources_for_reach(reach: GeneratorReach) -> frozenset[Resource
     )
 
 
-def _unsatisfied_item_requirements_for_danage(
+def _unsatisfied_item_requirements_for_damage(
     alternative: RequirementList, state: State
 ) -> list[list[ResourceRequirement]] | None:
     """Returns a list of item requirements to satisfy a RequirementList containing damage requirements.
@@ -113,7 +113,7 @@ def _requirement_lists_without_satisfied_resources(
                 continue
             seen_lists.add(alternative)
 
-            item_lists_for_damage = _unsatisfied_item_requirements_for_danage(alternative, state)
+            item_lists_for_damage = _unsatisfied_item_requirements_for_damage(alternative, state)
             other_items = _unsatisfied_requirements_in_list(alternative, state, uncollected_resources)
 
             if other_items is not None:
