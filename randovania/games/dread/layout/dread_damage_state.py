@@ -68,9 +68,12 @@ class DreadDamageState(EnergyTankDamageState):
         self, new_resources: ResourceCollection, old_resources: ResourceCollection
     ) -> Self:
         if self._energy_tank_difference(new_resources, old_resources) > 0:
+            # Apply full heal when collecting an Energy Tank
             return self._at_maximum_energy(new_resources)
         elif self._energy_part_difference(new_resources, old_resources) > 0:
             if self._use_immediate_energy_parts:
+                # When using immediate energy parts, increase current health by the same amount of energy as the maximum
+                # increases by.
                 old_max = self._maximum_energy(old_resources)
                 new_max = self._maximum_energy(new_resources)
 
@@ -78,6 +81,8 @@ class DreadDamageState(EnergyTankDamageState):
                 result._energy = self._energy + (new_max - old_max)
                 return result
             if (new_resources[self._energy_part_item] // 4) > (old_resources[self._energy_part_item] // 4):
+                # When not using immediate energy parts, apply full heal when collecting an energy part that finishes a
+                # full set of 4.
                 return self._at_maximum_energy(new_resources)
             return self
         else:
