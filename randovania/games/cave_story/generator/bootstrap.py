@@ -76,8 +76,9 @@ class CSBootstrap(Bootstrap[CSConfiguration]):
 
         # puppies
         if not configuration.puppies_anywhere:
+            pickups_to_preplace = [pickup for pickup in list(results.to_place) if pickup.gui_category.name == "puppies"]
             locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_puppy_node)
-            self.pre_place_pickups(rng, locations, results, "puppies", patches.game.game)
+            self.pre_place_pickups(rng, pickups_to_preplace, locations, results, patches.game.game)
 
         # weapon to break blocks in first cave (do it this way to ensure a particular distribution chance)
         if patches.starting_location.area in {"Start Point", "First Cave", "Hermit Gunsmith"}:

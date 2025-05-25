@@ -21,11 +21,7 @@ def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: G
 
 def artifact_pool(game: GameDatabaseView, config: FusionArtifactConfig) -> PoolResults:
     # Check whether we have valid artifact requirements in configuration
-    max_artifacts = 0
-    if config.prefer_anywhere:
-        max_artifacts = 20
-    elif config.prefer_bosses:
-        max_artifacts = 11
+    max_artifacts = 20
     if config.required_artifacts > max_artifacts:
         raise InvalidConfiguration("More Infant Metroids than allowed!")
 

@@ -223,7 +223,9 @@ class HintDistributor(ABC):
                     LocationHint(
                         specific_location_precisions[identifier],
                         PickupIndex(node.extra["hint_index"]),
-                    ),
+                    )
+                    if patches.configuration.hints.enable_specific_location_hints
+                    else JokeHint(),
                 )
 
         return patches
