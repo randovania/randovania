@@ -259,14 +259,13 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         )
         if len(starting_items_list) == 0:
             starting_items_text = ""
-        metroid_location_text = "anywhere" if self.configuration.artifacts.prefer_anywhere else "at bosses"
         colorize_text = FusionHintNamer.colorize_text
         long_intro = (
             f"{starting_items_text}Your objective is as follows: the {colorize_text(FusionColor.YELLOW, 'SA-X', True)} "
             f"has discovered and destroyed a top secret {colorize_text(FusionColor.YELLOW, 'Metroid', True)} "
             f"breeding facility. It released {self.configuration.artifacts.placed_artifacts} "
             "infant Metroids into the station. "
-            f"Initial scans indicate that they are hiding {metroid_location_text}. "
+            f"Initial scans indicate that they are hiding around the B.S.L.. "
             f"Find and capture {self.configuration.artifacts.required_artifacts} of them, "
             "to lure out the SA-X. "
             "Then initiate the station's self-destruct sequence. "
@@ -280,7 +279,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     (
                         f'Gather {self.configuration.artifacts.required_artifacts}/'
                         f'{self.configuration.artifacts.placed_artifacts} Infant Metroids hiding '
-                        f'{metroid_location_text} to lure out the '
+                        'around the B.S.L. to lure out the '
                         f'{colorize_text(FusionColor.YELLOW, "SA-X", True)} and prepare for battle.'
                     )
                     if self.configuration.artifacts.required_artifacts > 0
