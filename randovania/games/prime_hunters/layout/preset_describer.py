@@ -17,14 +17,19 @@ if TYPE_CHECKING:
 
 
 def describe_objective(octoliths: HuntersOctolithConfig) -> list[dict[str, bool]]:
-    return [
-        {
-            f"{octoliths.placed_octoliths} Octoliths": True,
-        },
-        {
-            "Prefers Bosses": octoliths.prefer_bosses,
-        },
-    ]
+    has_octoliths = octoliths.placed_octoliths > 0
+    if has_octoliths:
+        return [
+            {
+                f"{octoliths.placed_octoliths} Octoliths": True,
+            },
+        ]
+    else:
+        return [
+            {
+                "Defeat Gorea 1": True,
+            }
+        ]
 
 
 class HuntersPresetDescriber(GamePresetDescriber):
