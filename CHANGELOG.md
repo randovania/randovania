@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: A rare division-by-zero error during generation when placing hints.
 - Fixed: An error where turning off specific location hints would still consume that locations pickup as a viable hint target for regular hints.
 - Fixed: The experimental option called Logical Pickup Placement is now respected by the resolver. It also now checks for items configured to be placed in their vanilla location.
+- Added: The preset summary now displays a count of excluded locations, if there are any.
 
 ### Resolver
 
