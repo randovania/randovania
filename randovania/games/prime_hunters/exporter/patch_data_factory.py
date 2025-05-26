@@ -67,25 +67,31 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
         starting_items: defaultdict = defaultdict(int)
         starting_items.update({resource.long_name: quantity for resource, quantity in resources.as_resource_gain()})
 
-        def starts_with_weapon(weapon_name: str) -> bool:
+        def starts_with_item(weapon_name: str) -> bool:
             return starting_items[weapon_name] > 0
 
+        fmt = "{:d}" * 8  # 8-bit bitfield
+
         weapons = [
-            starts_with_weapon("Shock Coil"),
-            starts_with_weapon("Magmaul"),
-            starts_with_weapon("Judicator"),
-            starts_with_weapon("Imperialist"),
-            starts_with_weapon("Battlehammer"),
+            starts_with_item("Shock Coil"),
+            starts_with_item("Magmaul"),
+            starts_with_item("Judicator"),
+            starts_with_item("Imperialist"),
+            starts_with_item("Battlehammer"),
             True,  # Missiles
-            starts_with_weapon("Volt Driver"),
+            starts_with_item("Volt Driver"),
             True,  # Power Beam
         ]
-        fmt = "{:d}" * 8  # 8-bit bitfield
+
+        octoliths = []
+        for i in reversed(range(1, 9)):
+            octoliths.append(starts_with_item(f"Octolith {i}"))
 
         result["weapons"] = fmt.format(*weapons)
         result["missiles"] = starting_items["Missiles"]
         result["ammo"] = 40
         result["energy_tanks"] = starting_items["Energy Tank"]
+        result["octoliths"] = fmt.format(*octoliths)
 
         return result
 
