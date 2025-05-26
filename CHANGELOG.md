@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: A rare division-by-zero error during generation when placing hints.
 - Fixed: An error where turning off specific location hints would still consume that locations pickup as a viable hint target for regular hints.
 - Fixed: The experimental option called Logical Pickup Placement is now respected by the resolver. It also now checks for items configured to be placed in their vanilla location.
+- Added: The preset summary now displays a count of excluded locations, if there are any.
 
 ### Resolver
 
@@ -65,6 +66,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: A regression introduced in 9.1.0 that made all received pickups in multiworld behave as Nothings.
 
+
+## [9.1.1] - 2025-05-03
+
+- Fixed: Duplicating a session now also duplicates the admin settings for Co-op and "Everyone can claim worlds".
+
+### Cave Story
+
+- Fixed: A regression introduced in 9.1.0 that made all received pickups in multiworld behave as Nothings.
 
 ## [9.1.0] - 2025-05-01
 

@@ -236,13 +236,13 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         for node in self.game.region_list.iterate_nodes_of_type(HintNode):
             hint_location = node.extra["hint_name"]
             if hint_location == "AuxiliaryPower" and charge_precision != SpecificPickupHintMode.DISABLED:
-                hints[hint_location] = " ".join(
-                    [text for _, text in charge_hint_mapping.items() if "has no need to be located" not in text]
-                )
+                hints[hint_location] = " ".join([text for _, text in charge_hint_mapping.items()])
             elif hint_location == "RestrictedLabs" and metroid_precision != SpecificPickupHintMode.DISABLED:
                 hints[hint_location] = " ".join(
                     [text for _, text in metroid_hint_mapping.items() if "has no need to be located" not in text]
                 )
+                if not self.configuration.artifacts.placed_artifacts:
+                    hints[hint_location] = "The Metroids are in captivity, there is no need to locate them."
             else:
                 hints[hint_location] = exporter.create_message_for_hint(
                     self.patches.hints[node.identifier],
