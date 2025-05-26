@@ -20,6 +20,7 @@ if TYPE_CHECKING:
 
 
 def is_metroid_location(node: PickupNode, config: FusionConfiguration) -> bool:
+    # Returns True for all locations, enabling Metroids to be pre-placed at any PickupNode
     return True
 
 
@@ -64,6 +65,6 @@ class FusionBootstrap(Bootstrap[FusionConfiguration]):
             pickup for pickup in list(pool_results.to_place) if pickup.gui_category.name == "InfantMetroid"
         ]
         locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_metroid_location)
-        weighted_locations = {location: location.extra.get("infant_weight", 1.0) for location in locations}
+        weighted_locations = {location: location.extra["infant_weight"] for location in locations}
         self.pre_place_pickups_weighted(rng, pickups_to_preplace, weighted_locations, pool_results, patches.game.game)
         return super().assign_pool_results(rng, configuration, patches, pool_results)
