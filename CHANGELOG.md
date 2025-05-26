@@ -49,8 +49,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: "Cheater's delight" pickups are now less likely to be hinted.
 
-### Metroid Prime 2: Echoes
-
 #### Logic Databse
 
 ##### Sky Temple Grouds
