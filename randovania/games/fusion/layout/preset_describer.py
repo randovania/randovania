@@ -14,23 +14,11 @@ if TYPE_CHECKING:
 
 def describe_artifacts(artifacts: FusionArtifactConfig) -> list[dict[str, bool]]:
     has_artifacts = artifacts.required_artifacts > 0
-    if has_artifacts and artifacts.prefer_anywhere:
+    if has_artifacts:
         return [
             {
                 f"{artifacts.required_artifacts} of {artifacts.placed_artifacts} Metroids Required": True,
-            },
-            {
-                "Place at any item location": artifacts.prefer_anywhere,
-            },
-        ]
-    elif has_artifacts:
-        return [
-            {
-                f"{artifacts.required_artifacts} of {artifacts.placed_artifacts} Metroids Required": True,
-            },
-            {
-                "Place on major bosses": artifacts.prefer_bosses,
-            },
+            }
         ]
     else:
         return [

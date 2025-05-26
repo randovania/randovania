@@ -117,6 +117,7 @@ Extra - room_id: [7]
   * Extra - room: 7
   * Extra - blockx: 13
   * Extra - blocky: 14
+  * Extra - infant_weight: 0.4
   > Door to Docking Bay Climb
       Trivial
   > Other to Genesis Speedway
@@ -522,6 +523,7 @@ Extra - room_id: [17, 77]
   * Extra - room: 17
   * Extra - blockx: 9
   * Extra - blocky: 20
+  * Extra - infant_weight: 0.4
   > Door to Restricted Navigation Room
       Speed Booster
   > Door to Restricted Corridor
@@ -660,7 +662,7 @@ Extra - room_id: [20]
 
 > Door to Sub-Zero Containment; Heals? False
   * Layers: default
-  * L0 Hatch to Sub-Zero Containment/Door to Dark Stairwell
+  * L3 Hatch to Sub-Zero Containment/Door to Dark Stairwell
   * Extra - door_idx: (104,)
   > Door to Nexus Navigation Room
       Trivial
@@ -1049,6 +1051,7 @@ Hint Features - Climbable Surface
   * Extra - room: 35
   * Extra - blockx: 14
   * Extra - blocky: 65
+  * Extra - infant_weight: 0.4
   > Other to Crew Quarters East
       Trivial
 
@@ -1144,6 +1147,7 @@ Hint Features - Multiple Pickups
   * Extra - room: 38
   * Extra - blockx: 53
   * Extra - blocky: 10
+  * Extra - infant_weight: 0.4
   > Next to Pickup
       Trivial
 
@@ -1189,6 +1193,7 @@ Hint Features - Multiple Pickups
   * Extra - area: 0
   * Extra - room: 38
   * Extra - source: Arachnus
+  * Extra - infant_weight: 3.5
   > Arena
       Trivial
 
@@ -1244,6 +1249,7 @@ Hint Features - Data Room
   * Extra - area: 0
   * Extra - room: 39
   * Extra - source: MainDeckData
+  * Extra - infant_weight: 0.4
   > Door to Operations Deck Navigation Room
       Trivial
 
@@ -1322,6 +1328,7 @@ Extra - room_id: [45]
   * Extra - room: 45
   * Extra - blockx: 4
   * Extra - blocky: 6
+  * Extra - infant_weight: 0.4
   > Other to Operations Ventilation
       Trivial
 
@@ -1338,8 +1345,21 @@ Extra - map_name: Main Deck46
 Extra - room_id: [46]
 > Door to Dark Stairwell; Heals? False
   * Layers: default
-  * L0 Hatch to Dark Stairwell/Door to Sub-Zero Containment
+  * L3 Hatch to Dark Stairwell/Door to Sub-Zero Containment
   * Extra - door_idx: (103,)
+  > Pickup (Frozen Ridley)
+      Varia Suit or Damage Runs (Intermediate) or Cold Damage ≥ 80
+
+> Pickup (Frozen Ridley); Heals? False
+  * Layers: default
+  * Pickup 123; Category? Minor
+  * Extra - area: 0
+  * Extra - room: 46
+  * Extra - blockx: 9
+  * Extra - blocky: 8
+  * Extra - infant_weight: 0.4
+  > Door to Dark Stairwell
+      Varia Suit or Damage Runs (Intermediate) or Cold Damage ≥ 69
 
 ----------------
 Genesis Speedway
@@ -1352,6 +1372,7 @@ Extra - room_id: [47]
   * Extra - room: 47
   * Extra - blockx: 4
   * Extra - blocky: 3
+  * Extra - infant_weight: 0.4
   > Other to Station Entrance
       All of the following:
           Morph Ball
@@ -1449,9 +1470,9 @@ Extra - room_id: [49, 59]
                   Any of the following:
                       Wave Beam
                       # If you only have charge, you need to have access to the other side
-                      Charge Beam and After Reactor Controls Activated
+                      Charge Beam and After Access Right of Silo Checkpoint Shutter
               # Without Wave nor Charge, there's only one attempt and its hard.
-              After Reactor Controls Activated and Shinespark Tricks (Ludicrous)
+              After Access Right of Silo Checkpoint Shutter and Shinespark Tricks (Ludicrous)
   > Door to Silo Save Room
       Trivial
 
@@ -1489,6 +1510,7 @@ Extra - room_id: [50]
   * Extra - room: 50
   * Extra - blockx: 54
   * Extra - blocky: 8
+  * Extra - infant_weight: 0.4
   > Other to Silo Scaffolding
       Trivial
   > Beside Pickup
@@ -1543,6 +1565,7 @@ Hint Features - Climbable Surface
   * Extra - room: 51
   * Extra - blockx: 5
   * Extra - blocky: 29
+  * Extra - infant_weight: 0.4
   > Beside Pickup
       Morph Ball
 
@@ -1620,6 +1643,8 @@ Extra - room_id: [52]
   * Extra - door_idx: (118,)
   > Door to Central Reactor Core
       Trivial
+  > Event - Access Right of Silo Checkpoint Shutter
+      Trivial
 
 > Door to Central Reactor Core; Heals? False
   * Layers: default
@@ -1627,6 +1652,12 @@ Extra - room_id: [52]
   * Extra - door_idx: (119,)
   > Door to Auxiliary Navigation Room
       Wave Beam
+
+> Event - Access Right of Silo Checkpoint Shutter; Heals? False
+  * Layers: default
+  * Event Access Right of Silo Checkpoint Shutter
+  > Door to Auxiliary Navigation Room
+      Trivial
 
 ----------------
 Auxiliary Power Station
@@ -1645,12 +1676,16 @@ Extra - room_id: [54]
   * Extra - door_idx: (123,)
   > Other to Yakuza Arena
       Trivial
-  > Event - Reactor Control
+  > Pickup (Reactor Control)
       Trivial
 
-> Event - Reactor Control; Heals? False
+> Pickup (Reactor Control); Heals? False
   * Layers: default
-  * Event Reactor Controls Activated
+  * Pickup 122; Category? Minor
+  * Extra - area: 0
+  * Extra - room: 54
+  * Extra - source: AuxiliaryPower
+  * Extra - infant_weight: 0.4
   > Door to Auxiliary Navigation Room
       Trivial
 
@@ -1716,6 +1751,7 @@ Extra - room_id: [57]
   * Extra - room: 57
   * Extra - blockx: 12
   * Extra - blocky: 10
+  * Extra - infant_weight: 0.4
   > Door to Central Nexus
       Any of the following:
           Can Use Any Bombs
@@ -1916,6 +1952,7 @@ Hint Features - 1-way Shutter
   * Extra - room: 69
   * Extra - blockx: 29
   * Extra - blocky: 29
+  * Extra - infant_weight: 0.4
   > Beside Pickup
       Trivial
 
@@ -1961,14 +1998,16 @@ Hint Features - 1-way Shutter
   > Door to Habitation Deck Entrance (Upper)
       # Animals causes issues in generation with DLR, removed as an event for now
       Enabled Generator Workaround
-  > Save the Animals
+  > Pickup (Save the Animals)
       Trivial
 
-> Save the Animals; Heals? False
+> Pickup (Save the Animals); Heals? False
   * Layers: default
-  * FIXME: Causes issues with door lock rando.
-
-Generation gets stuck after giving SJ and speed and trying to reach this event.
+  * Pickup 120; Category? Major
+  * Extra - area: 0
+  * Extra - room: 69
+  * Extra - source: Animals
+  * Extra - infant_weight: 0.4
   > Other to Habitation Ventilation (Upper)
       Trivial
 
@@ -2016,11 +2055,17 @@ Extra - room_id: [71]
   * Layers: default
   * Open Hatch to Quarantine Junction/Door to Quarantine Bay
   * Extra - door_idx: (167,)
-  > Hornoad
+  > Pickup (Hornoad)
       Trivial
 
-> Hornoad; Heals? False
+> Pickup (Hornoad); Heals? False
   * Layers: default
+  * Pickup 124; Category? Minor
+  * Extra - area: 0
+  * Extra - room: 71
+  * Extra - blockx: 6
+  * Extra - blocky: 9
+  * Extra - infant_weight: 0.4
   > Door to Quarantine Junction
       Trivial
 
@@ -2035,6 +2080,7 @@ Extra - room_id: [72]
   * Extra - room: 72
   * Extra - blockx: 13
   * Extra - blocky: 9
+  * Extra - infant_weight: 0.4
   > Other to Dark Stairwell
       Morph Ball
 
@@ -2056,6 +2102,7 @@ Extra - room_id: [73]
   * Extra - room: 73
   * Extra - blockx: 6
   * Extra - blocky: 10
+  * Extra - infant_weight: 0.4
   > Other to Elevator to Sector Hub
       Trivial
 
@@ -2166,6 +2213,7 @@ Extra - room_id: [84]
   * Extra - room: 84
   * Extra - blockx: 14
   * Extra - blocky: 10
+  * Extra - infant_weight: 0.4
   > Other to Arachnus Arena
       Trivial
 
@@ -2206,6 +2254,7 @@ Extra - room_id: [86]
   * Extra - area: 0
   * Extra - room: 86
   * Extra - source: Yakuza
+  * Extra - infant_weight: 3.5
   > Arena
       Trivial
 
