@@ -44,9 +44,10 @@ def test_fusion_format_params(artifacts):
         ),
         "Hints": ["Infant Metroids Hint: Region and area", "Charge Beam Hint: Region only"],
         "Item Pool": [
-            f"Size: {115 + artifacts.placed_artifacts} of 127",
+            f"Size: {114 + artifacts.placed_artifacts} of 127",
             "1 random starting items",
             "Starts with Energy Tank",
+            "Shuffles 19x Energy Tank",
         ],
         "Logic Settings": ["All tricks disabled"],
     }
