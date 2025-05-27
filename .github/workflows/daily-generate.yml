@@ -77,7 +77,7 @@ jobs:
           WEBHOOK_URL: ${{ secrets.DREAD_DEV_TALK_WEBHOOK }}
 
       - name: Bulk Generate (Fusion)
-        run: uv run tools/bulk_generate_for_discord.py --game fusion --preset open_sector_hub
+        run: uv run tools/bulk_generate_for_discord.py --game fusion --preset "Open Sector Hub"
         if: inputs.game == 'fusion' || github.event.schedule == '0 10 * * 2,6'
         env:
           WEBHOOK_URL: ${{ secrets.FUSION_DEV_TALK_WEBHOOK }}
