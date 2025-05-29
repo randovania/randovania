@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any, NamedTuple, Self, TypeVar
 
 from randovania.game_description.db.event_node import EventNode
+from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
@@ -73,11 +74,15 @@ class UncollectedState(NamedTuple):
         context = reach.node_context()
 
         def all_resource_nodes_of_type[T: ResourceNode](res_type: type[T]) -> Iterator[T]:
-            yield from (
-                node
-                for node in reach.iterate_nodes
-                if (node.node_index in base_state.nodes) and isinstance(node, res_type)
-            )
+            for node in reach.iterate_nodes:
+                if node.node_index in base_state.nodes:
+                    if isinstance(node, res_type):
+                        yield node
+                    if isinstance(node, EventPickupNode):
+                        if res_type == PickupNode:
+                            yield node.pickup_node
+                        if res_type == EventNode:
+                            yield node.event_node
 
         def all_collectable_resource_nodes_of_type[T: ResourceNode](res_type: type[T]) -> Iterator[T]:
             yield from (
