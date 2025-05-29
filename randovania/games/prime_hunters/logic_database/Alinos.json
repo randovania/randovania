@@ -2077,7 +2077,7 @@
                                 "items": []
                             }
                         },
-                        "Pickup (Binary Subcripture)": {
+                        "Pickup (Binary Subcripture Artifact)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2142,7 +2142,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Binary Subcripture)": {
+                        "Pickup (Binary Subcripture Artifact)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2151,7 +2151,7 @@
                         }
                     }
                 },
-                "Pickup (Binary Subcripture)": {
+                "Pickup (Binary Subcripture Artifact)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -3312,9 +3312,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -13.34,
-                        "y": -2.19,
-                        "z": 11.06
+                        "x": -12.651721081270843,
+                        "y": 5.5903027909426015,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -3379,8 +3379,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -9.86,
-                        "y": 5.83,
+                        "x": -13.376225206248902,
+                        "y": -4.134771809724413,
                         "z": 0.0
                     },
                     "description": "",
@@ -4029,6 +4029,32 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Portal to Magma Drop": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Clip through the wall with Boost Ball and hold backwards to enter the portal: https://youtu.be/tKfqR1rLSQM",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "WallClip",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Judicator Force Field (Upper)": {
@@ -4802,7 +4828,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Security System Disabled": {
+                        "Event - Security System Deactivated": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -4870,7 +4896,7 @@
                         }
                     }
                 },
-                "Event - Security System Disabled": {
+                "Event - Security System Deactivated": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -6517,15 +6543,6 @@
                                 "items": []
                             }
                         },
-                        "Portal to Alinos Gateway": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "AlinosElderPassagePortal",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Event - Ship Deck Portal Unlocked": {
                             "type": "and",
                             "data": {
@@ -6769,7 +6786,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to High Ground (Top)": {
+                        "Next to Stronghold Portal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6927,6 +6944,15 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Portal to Alinos Gateway": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosElderPassagePortal",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Small Arena": {
