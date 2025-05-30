@@ -79,9 +79,9 @@ class UncollectedState(NamedTuple):
                     if isinstance(node, res_type):
                         yield node
                     elif (res_type is PickupNode) and isinstance(node, EventPickupNode):
-                        yield node.pickup_node
+                        yield node.pickup_node  # type: ignore[misc]
                     elif (res_type is EventNode) and isinstance(node, EventPickupNode):
-                        yield node.event_node
+                        yield node.event_node  # type: ignore[misc]
 
         def all_collectable_resource_nodes_of_type[T: ResourceNode](res_type: type[T]) -> Iterator[T]:
             yield from (
