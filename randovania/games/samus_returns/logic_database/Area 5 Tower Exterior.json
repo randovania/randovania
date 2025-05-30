@@ -11,7 +11,11 @@
     "areas": {
         "Tower Exterior": {
             "default_node": "Elevator to Area 5 Tower Interior",
-            "hint_features": [],
+            "hint_features": [
+                "chozo_seal",
+                "elevator",
+                "teleporter"
+            ],
             "extra": {
                 "total_boundings": {
                     "x1": -11000.0,
@@ -167,7 +171,6 @@
                     "valid_starting_location": false,
                     "pickup_index": 111,
                     "location_category": "minor",
-                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Overgrown Maze": {
@@ -230,7 +233,6 @@
                     "valid_starting_location": false,
                     "pickup_index": 114,
                     "location_category": "minor",
-                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Underwater": {
@@ -263,7 +265,6 @@
                     "valid_starting_location": false,
                     "pickup_index": 115,
                     "location_category": "minor",
-                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Save Station Left": {
@@ -1634,7 +1635,6 @@
                     "valid_starting_location": false,
                     "pickup_index": 118,
                     "location_category": "minor",
-                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Overgrown Maze": {
@@ -3158,7 +3158,6 @@
                     "valid_starting_location": false,
                     "pickup_index": 110,
                     "location_category": "major",
-                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Pickup (Power Bomb Tank)": {
@@ -3344,7 +3343,6 @@
                     "valid_starting_location": false,
                     "pickup_index": 116,
                     "location_category": "minor",
-                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Pickup (Energy Tank)": {
@@ -3667,7 +3665,6 @@
                     "valid_starting_location": false,
                     "pickup_index": 117,
                     "location_category": "major",
-                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Next to Pickup": {
@@ -3767,7 +3764,7 @@
                         "default"
                     ],
                     "extra": {
-                        "start_point_actor_name": "ST_CheckPoint_005"
+                        "start_point_actor_name": "ST_Checkpoint_005"
                     },
                     "valid_starting_location": true,
                     "connections": {
@@ -4297,7 +4294,6 @@
                     "valid_starting_location": false,
                     "pickup_index": 112,
                     "location_category": "minor",
-                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Tower Exterior": {
@@ -4632,7 +4628,9 @@
         },
         "Zeta Arena": {
             "default_node": "Room Center",
-            "hint_features": [],
+            "hint_features": [
+                "zeta_metroid"
+            ],
             "extra": {
                 "total_boundings": {
                     "x1": -4700.0,
@@ -4853,7 +4851,6 @@
                     "valid_starting_location": false,
                     "pickup_index": 204,
                     "location_category": "minor",
-                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Room Center": {
@@ -5069,7 +5066,6 @@
                     "valid_starting_location": false,
                     "pickup_index": 113,
                     "location_category": "minor",
-                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Bottom of Climb": {
@@ -6047,8 +6043,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 6819.166958756864,
-                        "y": -4292.060988433228,
+                        "x": 6819.17,
+                        "y": -4292.06,
                         "z": 0.0
                     },
                     "description": "",
@@ -6062,8 +6058,9 @@
                     "valid_starting_location": false,
                     "pickup_index": 201,
                     "location_category": "minor",
-                    "custom_index_group": null,
-                    "hint_features": [],
+                    "hint_features": [
+                        "gamma_metroid"
+                    ],
                     "connections": {
                         "Inside Arena": {
                             "type": "and",
@@ -7070,7 +7067,10 @@
         },
         "Gamma+ Arena": {
             "default_node": "Start Point",
-            "hint_features": [],
+            "hint_features": [
+                "gamma_metroid",
+                "heat"
+            ],
             "extra": {
                 "total_boundings": {
                     "x1": 10250.0,
@@ -7301,7 +7301,6 @@
                     "valid_starting_location": false,
                     "pickup_index": 200,
                     "location_category": "major",
-                    "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
                         "Door to Gamma+ Arena Access": {
