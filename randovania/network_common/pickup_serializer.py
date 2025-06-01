@@ -2,8 +2,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from frozendict import frozendict
+
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackFloat
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackFloat, BitPackJson
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.pickup.pickup_entry import (
@@ -137,6 +139,7 @@ class BitPackPickupEntry:
         yield from bitpacking.encode_big_int(self.value.generator_params.required_progression)
         yield from bitpacking.encode_bool(self.value.show_in_credits_spoiler)
         yield from bitpacking.encode_bool(self.value.is_expansion)
+        yield from BitPackJson(self.value.extra).bit_pack_encode({})
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, database: ResourceDatabase) -> PickupEntry:
@@ -166,6 +169,8 @@ class BitPackPickupEntry:
         show_in_credits_spoiler = bitpacking.decode_bool(decoder)
         is_expansion = bitpacking.decode_bool(decoder)
 
+        extra = frozendict(BitPackJson.bit_pack_unpack(decoder, {}))
+
         return PickupEntry(
             name=name,
             model=model,
@@ -185,4 +190,5 @@ class BitPackPickupEntry:
             ),
             show_in_credits_spoiler=show_in_credits_spoiler,
             is_expansion=is_expansion,
+            extra=extra,
         )

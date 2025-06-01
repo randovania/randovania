@@ -18,7 +18,6 @@ if typing.TYPE_CHECKING:
 _FIELDS = [
     "warp_to_start",
     "main_plaza_door",
-    "blue_save_doors",
     "backwards_frigate",
     "backwards_labs",
     "backwards_upper_mines",

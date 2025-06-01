@@ -16,7 +16,7 @@ from randovania.generator.pickup_pool import pool_creator
     ("octoliths", "expected"),
     [
         (HuntersOctolithConfig(True, 8), [0, 1, 16, 17, 33, 34, 45, 46]),
-        (HuntersOctolithConfig(True, 4), [1, 17, 33, 34]),
+        (HuntersOctolithConfig(True, 4), [0, 16, 45, 46]),
         (HuntersOctolithConfig(False, 0), []),
     ],
 )

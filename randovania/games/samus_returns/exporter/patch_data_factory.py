@@ -46,6 +46,24 @@ _ALTERNATIVE_MODELS = {
     PickupModel(RandovaniaGame.METROID_SAMUS_RETURNS, "PROGRESSIVE_SUIT"): ["powerup_variasuit", "powerup_gravitysuit"],
 }
 
+_MODEL_SOUND_MAPPING = {
+    # DNA
+    "adn": "k_matad_jinchozo",
+    # Aeion abilities
+    "powerup_scanningpulse": "special_ability2_32",
+    "powerup_energyshield": "special_ability2_32",
+    "powerup_energywave": "special_ability2_32",
+    "powerup_phasedisplacement": "special_ability2_32",
+    # tanks
+    "item_energytank": "tank_jingle",
+    "item_missiletank": "tank_jingle",
+    "item_supermissiletank": "tank_jingle",
+    "item_powerbombtank": "tank_jingle",
+    "item_senergytank": "tank_jingle",
+    # nothing
+    "itemsphere": "sphere_jingle_placeholder",
+}
+
 
 def get_item_id_for_item(item: ResourceInfo) -> str:
     assert isinstance(item, ItemResourceInfo)
@@ -283,7 +301,13 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         if len(set(detail.collection_text)) > 1:
             hud_text = self.memo_data[detail.original_pickup.name]
 
-        details = {"pickup_type": pickup_type, "caption": hud_text, "resources": resources}
+        sound = _MODEL_SOUND_MAPPING.get(model_names[0], _MODEL_SOUND_MAPPING["itemsphere"])
+        details = {
+            "pickup_type": pickup_type,
+            "caption": hud_text,
+            "resources": resources,
+            "sound": sound,
+        }
 
         if pickup_type == "actor":
             pickup_actor = self._teleporter_ref_for(pickup_node)
