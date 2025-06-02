@@ -1175,6 +1175,14 @@ def _migrate_v103(preset: dict, game: RandovaniaGame) -> None:
         preset["configuration"]["blue_save_doors"] = True
 
 
+def _migrate_v104(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.AM2R:
+        state = preset["configuration"]["standard_pickup_configuration"]["pickups_state"]
+        item_list = ["Alpha Metroid Lure", "Gamma Metroid Lure", "Zeta Metroid Lure", "Omega Metroid Lure"]
+        for item_name in item_list:
+            state[item_name] = {"num_included_in_starting_pickups": 1}
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1279,6 +1287,7 @@ _MIGRATIONS = [
     _migrate_v101,
     _migrate_v102,  # removal of in_dark_aether
     _migrate_v103,  # prime1 blast-shield lockon
+    _migrate_v104,  # am2r add metroid lures
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
