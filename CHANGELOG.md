@@ -51,7 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-##### Sky Temple Grouds
+##### Sky Temple Grounds
 
 - Added: Half pipe hint feature on War Ritual Grounds.
 
