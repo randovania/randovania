@@ -5,8 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [9.3.0] - 2025-07-0?
 
-## [9.2.x] - 2025-06-??
+- Add notes for next release
+
+## [9.2.0] - 2025-06-02
 
 - Added: 1 more Joke hint.
 - Fixed: A rare division-by-zero error during generation when placing hints.
@@ -46,11 +49,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: "Cheater's delight" pickups are now less likely to be hinted.
 
-### Metroid Prime 2: Echoes
+#### Logic Database
 
-#### Logic Databse
-
-##### Sky Temple Grouds
+##### Sky Temple Grounds
 
 - Added: Half pipe hint feature on War Ritual Grounds.
 
