@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [9.3.0] - 2025-07-0?
 
-- Add notes for next release
+### Metroid Dread
+
+#### Logic Database
+
+##### Ghavoran
+
+- Fixed: The door between EMMI Zone Exit Southeast and Blue EMMI Introduction is now considered as a Plasma Beam Door on both sides.
 
 ## [9.2.0] - 2025-06-02
 
