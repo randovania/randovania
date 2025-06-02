@@ -46,7 +46,7 @@ def _generator() -> randovania.game.generator.GameGenerator:
         pickup_pool_creator=generator.pool_creator,
         bootstrap=generator.FusionBootstrap(),
         base_patches_factory=generator.FusionBasePatchesFactory(),
-        action_weights=ActionWeights(events_weight=0.75, hints_weight=0.5),
+        action_weights=ActionWeights(events_weight=0.75, hints_weight=0.25),
     )
 
 
