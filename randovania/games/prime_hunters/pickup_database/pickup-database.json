@@ -189,7 +189,7 @@
             "expected_case_for_describer": "starting_item",
             "hide_from_gui": true
         },
-        "Missile": {
+        "Missile Launcher": {
             "gui_category": "missile",
             "hint_features": [
                 "missile"
@@ -198,11 +198,12 @@
             "offworld_models": {},
             "preferred_location_category": "minor",
             "progression": [
-                "Missile"
+                "MissileLauncher"
             ],
             "ammo": [
-                "Missile"
+                "MissileAmmo"
             ],
+            "unlocks_ammo": true,
             "expected_case_for_describer": "shuffled",
             "extra": {
                 "entity_type": 4,
@@ -360,15 +361,16 @@
             "offworld_models": {},
             "preferred_location_category": "minor",
             "items": [
-                "Missile"
+                "MissileAmmo"
             ],
-            "unlocked_by": "Missile",
-            "temporary": "Missile",
+            "unlocked_by": "MissileLauncher",
+            "temporary": "MissileLocked",
             "allows_negative": false,
             "extra": {
                 "entity_type": 4,
                 "item_type": 6
-            }
+            },
+            "hide_requires_main": true
         },
         "UA Expansion": {
             "gui_category": "beam",

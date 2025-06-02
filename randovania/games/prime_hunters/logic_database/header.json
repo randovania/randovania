@@ -3,6 +3,13 @@
     "game": "prime_hunters",
     "resource_database": {
         "items": {
+            "Nothing": {
+                "long_name": "Nothing",
+                "max_capacity": 1,
+                "extra": {
+                    "item_type": 21
+                }
+            },
             "PowerBeam": {
                 "long_name": "Power Beam",
                 "max_capacity": 1,
@@ -25,9 +32,9 @@
                     "weapon_id": 1
                 }
             },
-            "Missile": {
-                "long_name": "Missile",
-                "max_capacity": 95,
+            "MissileLauncher": {
+                "long_name": "Missile Launcher",
+                "max_capacity": 1,
                 "extra": {
                     "item_type": 6,
                     "weapon_id": 2
@@ -71,6 +78,22 @@
                 "extra": {
                     "item_type": 11,
                     "weapon_id": 7
+                }
+            },
+            "MissileAmmo": {
+                "long_name": "Missiles",
+                "max_capacity": 99,
+                "extra": {
+                    "item_type": 6,
+                    "weapon_id": 2
+                }
+            },
+            "MissileLocked": {
+                "long_name": "MissileLocked",
+                "max_capacity": 99,
+                "extra": {
+                    "item_type": 6,
+                    "weapon_id": 2
                 }
             },
             "UAExpansion": {
@@ -661,7 +684,7 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "Missile",
+                                    "name": "MissileAmmo",
                                     "amount": 1,
                                     "negate": false
                                 }
@@ -690,7 +713,7 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "Missile",
+                                    "name": "MissileAmmo",
                                     "amount": 3,
                                     "negate": false
                                 }
@@ -757,7 +780,7 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "Missile",
+                                    "name": "MissileAmmo",
                                     "amount": 1,
                                     "negate": false
                                 }

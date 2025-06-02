@@ -20,10 +20,8 @@ if TYPE_CHECKING:
 
 
 def is_metroid_location(node: PickupNode, config: FusionConfiguration) -> bool:
-    _boss_indices = [100, 106, 114, 104, 115, 107, 110, 102, 109, 108, 111]
-    artifact_config = config.artifacts
-    index = node.pickup_index.index
-    return artifact_config.prefer_bosses and index in _boss_indices
+    # Returns True for all locations, enabling Metroids to be pre-placed at any PickupNode
+    return True
 
 
 class FusionBootstrap(Bootstrap[FusionConfiguration]):
@@ -63,9 +61,10 @@ class FusionBootstrap(Bootstrap[FusionConfiguration]):
     def assign_pool_results(
         self, rng: Random, configuration: FusionConfiguration, patches: GamePatches, pool_results: PoolResults
     ) -> GamePatches:
-        if configuration.artifacts.prefer_anywhere:
-            return super().assign_pool_results(rng, configuration, patches, pool_results)
-
+        pickups_to_preplace = [
+            pickup for pickup in list(pool_results.to_place) if pickup.gui_category.name == "InfantMetroid"
+        ]
         locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_metroid_location)
-        self.pre_place_pickups(rng, locations, pool_results, "InfantMetroid", patches.game.game)
+        weighted_locations = {location: location.extra["infant_weight"] for location in locations}
+        self.pre_place_pickups_weighted(rng, pickups_to_preplace, weighted_locations, pool_results, patches.game.game)
         return super().assign_pool_results(rng, configuration, patches, pool_results)

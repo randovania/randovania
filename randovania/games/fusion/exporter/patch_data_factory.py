@@ -63,7 +63,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             custom_message = {}
             # Special case where we ignore metroid dna right now, because that needs more patcher work.
             if text != self._placeholder_metroid_message:
-                custom_message = {"Languages": dict.fromkeys(self._lang_list, text)}
+                custom_message = {"Languages": dict.fromkeys(self._lang_list, text), "Kind": "CustomMessage"}
 
             # Shiny easter eggs
             if (
@@ -76,11 +76,17 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     and self.rng.randint(0, self._easter_egg_bob) == 0
                 ):
                     sprite = "ShinyMissileTank"
-                    custom_message = {"Languages": dict.fromkeys(self._lang_list, "Bob acquired.\nHe says hi to you.")}
+                    custom_message = {
+                        "Languages": dict.fromkeys(self._lang_list, "Bob acquired.\nHe says hi to you."),
+                        "Kind": "CustomMessage",
+                    }
 
                 if resource == "PowerBombTank" and self.rng.randint(0, self._easter_egg_shiny) == 0:
                     sprite = "ShinyPowerBombTank"
-                    custom_message = {"Languages": dict.fromkeys(self._lang_list, "Shiny Power Bomb Tank acquired.")}
+                    custom_message = {
+                        "Languages": dict.fromkeys(self._lang_list, "Shiny Power Bomb Tank acquired."),
+                        "Kind": "CustomMessage",
+                    }
 
             if is_major:
                 major_pickup = {
@@ -230,13 +236,13 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         for node in self.game.region_list.iterate_nodes_of_type(HintNode):
             hint_location = node.extra["hint_name"]
             if hint_location == "AuxiliaryPower" and charge_precision != SpecificPickupHintMode.DISABLED:
-                hints[hint_location] = " ".join(
-                    [text for _, text in charge_hint_mapping.items() if "has no need to be located" not in text]
-                )
+                hints[hint_location] = " ".join([text for _, text in charge_hint_mapping.items()])
             elif hint_location == "RestrictedLabs" and metroid_precision != SpecificPickupHintMode.DISABLED:
                 hints[hint_location] = " ".join(
                     [text for _, text in metroid_hint_mapping.items() if "has no need to be located" not in text]
                 )
+                if not self.configuration.artifacts.placed_artifacts:
+                    hints[hint_location] = "The Metroids are in captivity, there is no need to locate them."
             else:
                 hints[hint_location] = exporter.create_message_for_hint(
                     self.patches.hints[node.identifier],
@@ -253,14 +259,13 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         )
         if len(starting_items_list) == 0:
             starting_items_text = ""
-        metroid_location_text = "anywhere" if self.configuration.artifacts.prefer_anywhere else "at bosses"
         colorize_text = FusionHintNamer.colorize_text
         long_intro = (
             f"{starting_items_text}Your objective is as follows: the {colorize_text(FusionColor.YELLOW, 'SA-X', True)} "
             f"has discovered and destroyed a top secret {colorize_text(FusionColor.YELLOW, 'Metroid', True)} "
             f"breeding facility. It released {self.configuration.artifacts.placed_artifacts} "
             "infant Metroids into the station. "
-            f"Initial scans indicate that they are hiding {metroid_location_text}. "
+            f"Initial scans indicate that they are hiding around the B.S.L.. "
             f"Find and capture {self.configuration.artifacts.required_artifacts} of them, "
             "to lure out the SA-X. "
             "Then initiate the station's self-destruct sequence. "
@@ -274,7 +279,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     (
                         f'Gather {self.configuration.artifacts.required_artifacts}/'
                         f'{self.configuration.artifacts.placed_artifacts} Infant Metroids hiding '
-                        f'{metroid_location_text} to lure out the '
+                        'around the B.S.L. to lure out the '
                         f'{colorize_text(FusionColor.YELLOW, "SA-X", True)} and prepare for battle.'
                     )
                     if self.configuration.artifacts.required_artifacts > 0

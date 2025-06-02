@@ -91,8 +91,8 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     long_name="Metroid Fusion",
     development_state=randovania.game.development_state.DevelopmentState.STAGING,
     presets=[
-        {"path": "starter_preset.rdvpreset"},
         {"path": "open_sector_hub.rdvpreset"},
+        {"path": "vanilla_start.rdvpreset"},
     ],
     faq=[
         (

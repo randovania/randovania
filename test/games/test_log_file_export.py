@@ -108,6 +108,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "fusion/starter_preset.rdvgame",
         "fusion/short_intro.rdvgame",
         "fusion/all_hidden_with_nothing.rdvgame",
+        "fusion/starting_items.rdvgame",
         # Dread
         "dread/starter_preset.rdvgame",  # starter preset
         "dread/crazy_settings.rdvgame",  # crazy settings
@@ -122,6 +123,8 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "planets_zebeth/starter_preset_shuffle_keys.rdvgame",  # starter preset (shuffled keys)
         # Prime Hunters
         "prime_hunters/starter_preset.rdvgame",  # starter preset
+        "prime_hunters/shuffled_force_fields.rdvgame",  # starter preset with shuffled force fields
+        "prime_hunters/starting_items_with_nothings.rdvgame",  # starter preset + random starting item + nothing items
         # Prime 1
         "prime1_crazy_seed.rdvgame",  # chaos features
         "prime1_crazy_seed_one_way_door.rdvgame",  # same as above but 1-way doors
@@ -137,6 +140,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "samus_returns/queen_boss_custom_required_dna.rdvgame",  # queen final boss + custom required dna 20/30
         "samus_returns/starter_preset.rdvgame",  # starter preset
         "samus_returns/progressive_beams_and_suits.rdvgame",  # starter preset + progressive beam and suit
+        "samus_returns/non_required_mains.rdvgame",  # non-required main for power bombs + hide model
     ]
 
     coop_names = [

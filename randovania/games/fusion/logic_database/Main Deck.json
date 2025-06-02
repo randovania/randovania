@@ -703,7 +703,8 @@
                         "area": 0,
                         "room": 7,
                         "blockx": 13,
-                        "blocky": 14
+                        "blocky": 14,
+                        "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
                     "pickup_index": 0,
@@ -3310,7 +3311,8 @@
                         "area": 0,
                         "room": 17,
                         "blockx": 9,
-                        "blocky": 20
+                        "blocky": 20,
+                        "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
                     "pickup_index": 1,
@@ -4305,7 +4307,7 @@
                         "area": "Sub-Zero Containment",
                         "node": "Door to Dark Stairwell"
                     },
-                    "default_dock_weakness": "L0 Hatch",
+                    "default_dock_weakness": "L3 Hatch",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6340,7 +6342,8 @@
                         "area": 0,
                         "room": 35,
                         "blockx": 14,
-                        "blocky": 65
+                        "blocky": 65,
+                        "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
                     "pickup_index": 2,
@@ -6906,7 +6909,9 @@
         },
         "Arachnus Arena": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "multiple-pickups"
+            ],
             "extra": {
                 "map_name": "Main Deck38",
                 "room_id": [
@@ -6930,7 +6935,8 @@
                         "area": 0,
                         "room": 38,
                         "blockx": 53,
-                        "blocky": 10
+                        "blocky": 10,
+                        "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
                     "pickup_index": 3,
@@ -7191,7 +7197,8 @@
                     "extra": {
                         "area": 0,
                         "room": 38,
-                        "source": "Arachnus"
+                        "source": "Arachnus",
+                        "infant_weight": 3.5
                     },
                     "valid_starting_location": false,
                     "pickup_index": 100,
@@ -7504,7 +7511,8 @@
                     "extra": {
                         "area": 0,
                         "room": 39,
-                        "source": "MainDeckData"
+                        "source": "MainDeckData",
+                        "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
                     "pickup_index": 15,
@@ -7866,7 +7874,8 @@
                         "area": 0,
                         "room": 45,
                         "blockx": 4,
-                        "blocky": 6
+                        "blocky": 6,
+                        "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
                     "pickup_index": 4,
@@ -7959,13 +7968,127 @@
                         "area": "Dark Stairwell",
                         "node": "Door to Sub-Zero Containment"
                     },
-                    "default_dock_weakness": "L0 Hatch",
+                    "default_dock_weakness": "L3 Hatch",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Frozen Ridley)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 80,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Pickup (Frozen Ridley)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 151.36,
+                        "y": 98.83,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "area": 0,
+                        "room": 46,
+                        "blockx": 9,
+                        "blocky": 8,
+                        "infant_weight": 0.4
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 123,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Door to Dark Stairwell": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 69,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -7995,7 +8118,8 @@
                         "area": 0,
                         "room": 47,
                         "blockx": 4,
-                        "blocky": 3
+                        "blocky": 3,
+                        "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
                     "pickup_index": 5,
@@ -8652,7 +8776,7 @@
                                                                                         "type": "resource",
                                                                                         "data": {
                                                                                             "type": "events",
-                                                                                            "name": "ReactorControl",
+                                                                                            "name": "RightSiloCheckpointShutter",
                                                                                             "amount": 1,
                                                                                             "negate": false
                                                                                         }
@@ -8702,7 +8826,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "events",
-                                                                    "name": "ReactorControl",
+                                                                    "name": "RightSiloCheckpointShutter",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -8957,7 +9081,8 @@
                         "area": 0,
                         "room": 50,
                         "blockx": 54,
-                        "blocky": 8
+                        "blocky": 8,
+                        "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
                     "pickup_index": 6,
@@ -9270,7 +9395,8 @@
                         "area": 0,
                         "room": 51,
                         "blockx": 5,
-                        "blocky": 29
+                        "blocky": 29,
+                        "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
                     "pickup_index": 7,
@@ -9820,6 +9946,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Access Right of Silo Checkpoint Shutter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -9869,6 +10002,31 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Event - Access Right of Silo Checkpoint Shutter": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 201.96,
+                        "y": 116.83,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "RightSiloCheckpointShutter",
+                    "connections": {
+                        "Door to Auxiliary Navigation Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -9963,7 +10121,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Reactor Control": {
+                        "Pickup (Reactor Control)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9972,8 +10130,8 @@
                         }
                     }
                 },
-                "Event - Reactor Control": {
-                    "node_type": "event",
+                "Pickup (Reactor Control)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
                         "x": 165.56,
@@ -9984,9 +10142,17 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 0,
+                        "room": 54,
+                        "source": "AuxiliaryPower",
+                        "infant_weight": 0.4
+                    },
                     "valid_starting_location": false,
-                    "event_name": "ReactorControl",
+                    "pickup_index": 122,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Door to Auxiliary Navigation Room": {
                             "type": "and",
@@ -10317,7 +10483,8 @@
                         "area": 0,
                         "room": 57,
                         "blockx": 12,
-                        "blocky": 10
+                        "blocky": 10,
+                        "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
                     "pickup_index": 8,
@@ -11328,7 +11495,8 @@
                         "area": 0,
                         "room": 69,
                         "blockx": 29,
-                        "blocky": 29
+                        "blocky": 29,
+                        "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
                     "pickup_index": 9,
@@ -11604,7 +11772,7 @@
                                 ]
                             }
                         },
-                        "Save the Animals": {
+                        "Pickup (Save the Animals)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11613,20 +11781,29 @@
                         }
                     }
                 },
-                "Save the Animals": {
-                    "node_type": "generic",
+                "Pickup (Save the Animals)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
                         "x": 312.28,
                         "y": 410.23,
                         "z": 0.0
                     },
-                    "description": "FIXME: Causes issues with door lock rando.\n\nGeneration gets stuck after giving SJ and speed and trying to reach this event.",
+                    "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 0,
+                        "room": 69,
+                        "source": "Animals",
+                        "infant_weight": 0.4
+                    },
                     "valid_starting_location": false,
+                    "pickup_index": 120,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Other to Habitation Ventilation (Upper)": {
                             "type": "and",
@@ -11868,7 +12045,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Hornoad": {
+                        "Pickup (Hornoad)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11877,20 +12054,30 @@
                         }
                     }
                 },
-                "Hornoad": {
-                    "node_type": "generic",
+                "Pickup (Hornoad)": {
+                    "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 128.01323407775018,
-                        "y": 113.49986214502341,
+                        "x": 128.01,
+                        "y": 113.5,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 0,
+                        "room": 71,
+                        "blockx": 6,
+                        "blocky": 9,
+                        "infant_weight": 0.4
+                    },
                     "valid_starting_location": false,
+                    "pickup_index": 124,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
                     "connections": {
                         "Door to Quarantine Junction": {
                             "type": "and",
@@ -11929,7 +12116,8 @@
                         "area": 0,
                         "room": 72,
                         "blockx": 13,
-                        "blocky": 9
+                        "blocky": 9,
+                        "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
                     "pickup_index": 10,
@@ -12034,7 +12222,8 @@
                         "area": 0,
                         "room": 73,
                         "blockx": 6,
-                        "blocky": 10
+                        "blocky": 10,
+                        "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
                     "pickup_index": 11,
@@ -12570,7 +12759,8 @@
                         "area": 0,
                         "room": 84,
                         "blockx": 14,
-                        "blocky": 10
+                        "blocky": 10,
+                        "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
                     "pickup_index": 12,
@@ -12723,8 +12913,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 152.75569724878972,
-                        "y": 131.06246310072027,
+                        "x": 152.76,
+                        "y": 131.06,
                         "z": 0.0
                     },
                     "description": "",
@@ -12759,7 +12949,8 @@
                     "extra": {
                         "area": 0,
                         "room": 86,
-                        "source": "Yakuza"
+                        "source": "Yakuza",
+                        "infant_weight": 3.5
                     },
                     "valid_starting_location": false,
                     "pickup_index": 106,

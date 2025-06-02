@@ -15,7 +15,7 @@ if TYPE_CHECKING:
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 
 
-def _find_ammo_for(
+def find_ammo_for(
     ammo_names: tuple[str, ...],
     ammo_pickup_configuration: AmmoPickupConfiguration,
 ) -> tuple[AmmoPickupDefinition | None, bool]:
@@ -50,7 +50,7 @@ def add_standard_pickups(
                 f"but there's only {len(state.included_ammo)} values in included_ammo"
             )
 
-        ammo, locked_ammo = _find_ammo_for(pickup.ammo, ammo_pickup_configuration)
+        ammo, locked_ammo = find_ammo_for(pickup.ammo, ammo_pickup_configuration)
 
         if state.include_copy_in_original_location:
             if not pickup.original_locations:
