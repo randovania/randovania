@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [9.3.0] - 2025-07-0?
 
+### Generator
+
+- Fixed: Some cases where weights from certain actions would not be calculated correctly.
+
 ### Metroid Dread
 
 #### Logic Database
