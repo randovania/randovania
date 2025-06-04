@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Ghavoran
 
+- Changed: Flipper Room: The Morph Ball Launcher now connects to the door to Navigation Station and is trivial, instead ot connecting to the door to Elun Transport Access and requiring that the Flipper has been rotated.
+- Changed: Flipper Room: Spinning the Flipper with the ledge warp from below now connects from the door to Elun Transport Access instead of from the Tunnel to Spider Magnet Elevator. It is now also logical to the ledge warp from below when Transport Randomizer is disabled.
 - Fixed: The door between EMMI Zone Exit Southeast and Blue EMMI Introduction is now considered as a Plasma Beam Door on both sides.
 
 ## [9.2.0] - 2025-06-02
@@ -43,11 +45,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Artaria
 
 - Changed: A small adjustment that should decrease the frequency of placing Morph Ball in the first accessible location in standard presets.
-
-##### Ghavoran
-
-- Changed: Flipper Room: The Morph Ball Launcher now connects to the door to Navigation Station and is trivial, instead ot connecting to the door to Elun Transport Access and requiring that the Flipper has been rotated.
-- Changed: Flipper Room: Spinning the Flipper with the ledge warp from below now connects from the door to Elun Transport Access instead of from the Tunnel to Spider Magnet Elevator. It is now also logical to the ledge warp from below when Transport Randomizer is disabled.
 
 ### Metroid Prime
 
