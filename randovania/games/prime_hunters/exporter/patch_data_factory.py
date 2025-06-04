@@ -3,14 +3,18 @@ from __future__ import annotations
 from collections import defaultdict
 from typing import TYPE_CHECKING, Final, override
 
+from randovania.exporter.hints import guaranteed_item_hint
+from randovania.exporter.hints.joke_hints import GENERIC_JOKE_HINTS
 from randovania.exporter.patch_data_factory import PatchDataFactory, PatcherDataMeta
 from randovania.game.game_enum import RandovaniaGame
+from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.prime_hunters.exporter.hint_namer import HuntersHintNamer
 from randovania.games.prime_hunters.layout import HuntersConfiguration, HuntersCosmeticPatches
 from randovania.games.prime_hunters.layout.force_field_configuration import LayoutForceFieldRequirement
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 
 if TYPE_CHECKING:
     from randovania.exporter.hints.hint_namer import HintNamer
@@ -54,6 +58,13 @@ _OCTOLITH_TO_ARTIFACT_ID = {
     "Octolith6": 5,
     "Octolith7": 6,
     "Octolith8": 7,
+}
+
+_STRING_ID_TO_SCAN_TITLE = {
+    "904L": "OCTOLITH HINTS 01",
+    "014L": "OCTOLITH HINTS 02",
+    "114L": "OCTOLITH HINTS 03",
+    "214L": "OCTOLITH HINTS 04",
 }
 
 
@@ -161,6 +172,66 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
 
         return level_data
 
+    def _encode_hints(self) -> list[dict]:
+        exporter = self.get_hint_exporter(
+            self.description.all_patches, self.players_config, self.rng, GENERIC_JOKE_HINTS
+        )
+
+        octoliths = [self.game.resource_database.get_item(f"Octolith{i + 1}") for i in range(8)]
+        octoliths_precision = self.configuration.hints.specific_pickup_hints["octoliths"]
+
+        if octoliths_precision != SpecificPickupHintMode.DISABLED:
+            octolith_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+                self.description.all_patches,
+                self.players_config,
+                exporter.namer,
+                True if octoliths_precision == SpecificPickupHintMode.HIDE_AREA else False,
+                octoliths,
+                False,
+            )
+
+        hints = []
+
+        hint_nodes = sorted(self.game.region_list.iterate_nodes_of_type(HintNode))
+
+        i = 1
+        for node in hint_nodes:
+            hint_dict = {}
+            string_id = node.extra["entity_type_data"]["string_id"]
+            hint_dict["string_id"] = string_id
+
+            scan_title = f"{_STRING_ID_TO_SCAN_TITLE[string_id]}\\"
+            scan_text = " ".join(
+                [
+                    text
+                    for text in octolith_hint_mapping.values()
+                    if f"OCTOLITH {i}" in text or f"OCTOLITH {i + 1}" in text
+                ]
+            )
+
+            dud_hint = "this lore scan did not provide any useful OCTOLITH hints."
+            useless_hints = [self.rng.choice(GENERIC_JOKE_HINTS + [dud_hint])]
+
+            if octoliths_precision != SpecificPickupHintMode.DISABLED:
+                if scan_text == "":
+                    hint_dict["string"] = scan_title + self.rng.choice(useless_hints).lower()
+                else:
+                    hint_dict["string"] = scan_title + scan_text
+
+                if not self.configuration.octoliths.placed_octoliths:
+                    hint_dict["string"] = "the OCTOLITHS have already been found. there is no need to locate them."
+            else:
+                hints["string"] = exporter.create_message_for_hint(
+                    self.patches.hints[node.identifier],
+                    True,
+                ).strip()
+
+            hints.append(hint_dict)
+
+            i += 2
+
+        return hints
+
     def create_visual_nothing(self) -> PickupEntry:
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
         return pickup_creator.create_visual_nothing(self.game_enum(), "Nothing")
@@ -170,6 +241,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
         return {
             "starting_items": starting_items,
             "areas": self._entity_patching_per_area(),
+            "hints": self._encode_hints(),
         }
 
     @override
