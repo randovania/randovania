@@ -190,7 +190,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
                 False,
             )
 
-        hints = []
+        hints: list = []
 
         hint_nodes = sorted(self.game.region_list.iterate_nodes_of_type(HintNode))
 
@@ -221,10 +221,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
                 if not self.configuration.octoliths.placed_octoliths:
                     hint_dict["string"] = "the OCTOLITHS have already been found. there is no need to locate them."
             else:
-                hints["string"] = exporter.create_message_for_hint(
-                    self.patches.hints[node.identifier],
-                    True,
-                ).strip()
+                hint_dict["string"] = scan_title + self.rng.choice(useless_hints).lower()
 
             hints.append(hint_dict)
 
