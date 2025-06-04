@@ -5,8 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [9.3.0] - 2025-07-0?
 
-## [9.2.x] - 2025-06-??
+### Generator
+
+- Fixed: Some cases where weights from certain actions would not be calculated correctly.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Ghavoran
+
+- Fixed: The door between EMMI Zone Exit Southeast and Blue EMMI Introduction is now considered as a Plasma Beam Door on both sides.
+
+## [9.2.0] - 2025-06-02
 
 - Added: 1 more Joke hint.
 - Fixed: A rare division-by-zero error during generation when placing hints.
@@ -19,6 +32,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Bug that could lead to timeouts or longer resolving time in some cases.
 
 ### Metroid Dread
+
+- Added: A 4 line non-progressive tracker layout.
 
 #### Logic Database
 
@@ -49,9 +64,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: "Cheater's delight" pickups are now less likely to be hinted.
 
-#### Logic Databse
+#### Logic Database
 
-##### Sky Temple Grouds
+##### Sky Temple Grounds
 
 - Added: Half pipe hint feature on War Ritual Grounds.
 
