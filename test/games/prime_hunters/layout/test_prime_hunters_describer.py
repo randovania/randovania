@@ -43,5 +43,5 @@ def test_hunters_format_params(octoliths) -> None:
         "Difficulty": [],
         "Goal": ([f"{octoliths.placed_octoliths} Octoliths"] if octoliths.placed_octoliths else ["Defeat Gorea 1"]),
         "Game Changes": [],
-        "Hints": [],
+        "Hints": ["Octoliths Hint: Region only"],
     }
