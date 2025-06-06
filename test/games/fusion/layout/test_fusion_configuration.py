@@ -14,9 +14,7 @@ def test_has_unsupported_features(preset_manager):
 
     configuration = dataclasses.replace(
         configuration,
-        artifacts=FusionArtifactConfig(
-            prefer_bosses=True, prefer_anywhere=False, required_artifacts=5, placed_artifacts=1
-        ),
+        artifacts=FusionArtifactConfig(required_artifacts=5, placed_artifacts=1),
     )
 
     assert configuration.unsupported_features() == [

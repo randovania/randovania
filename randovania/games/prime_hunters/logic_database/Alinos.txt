@@ -404,7 +404,7 @@ Extra - entity_file: Unit1_C5_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 1, 'connector_id': 5, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 11, 'out_loader_id': 117, 'entity_filename': 'unit1_RM5_Ent.b', 'room_name': 'unit1_RM5_Ent.b'})
   > Player Spawn
       Trivial
-  > Pickup (Binary Subcripture)
+  > Pickup (Binary Subcripture Artifact)
       Trivial
 
 > Morph Ball Door to Processor Core (Exit); Heals? False
@@ -415,10 +415,10 @@ Extra - entity_file: Unit1_C5_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 1, 'connector_id': 7, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 12, 'out_loader_id': 117, 'entity_filename': 'unit1_RM5_Ent.b', 'room_name': 'unit1_RM5_Ent.b'})
-  > Pickup (Binary Subcripture)
+  > Pickup (Binary Subcripture Artifact)
       Trivial
 
-> Pickup (Binary Subcripture); Heals? False
+> Pickup (Binary Subcripture Artifact); Heals? False
   * Layers: default
   * Pickup 6; Category? Major
   * Extra - entity_id: 38
@@ -721,7 +721,7 @@ Extra - entity_file: unit1_RM1_Ent.bin
   * Extra - facing_vector: frozendict.frozendict({'x': -0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 3, 'connector_id': 22, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 12, 'out_loader_id': 117, 'entity_filename': 'unit1_RM6_Ent.b', 'room_name': 'unit1_RM6_Ent.b'})
   > Door to Alimbic Gardens
-      Missile ≥ 3 and Missile Jump (Intermediate)
+      Missiles ≥ 3 and Missile Jump (Intermediate)
   > Upper Level
       Trivial
 
@@ -786,6 +786,9 @@ Extra - entity_file: unit1_RM1_Ent.bin
       Trivial
   > Volt Driver Force Field (Upper)
       Trivial
+  > Portal to Magma Drop
+      # Clip through the wall with Boost Ball and hold backwards to enter the portal: https://youtu.be/tKfqR1rLSQM
+      Movement (Advanced) and Wall Clip (Advanced)
   > Judicator Force Field (Upper)
       Trivial
   > Pickup (Missile Expansion)
@@ -917,7 +920,7 @@ Extra - entity_file: unit1_RM2_Ent.bin
 > Room Center; Heals? False
   * Layers: default
   > Door to Crash Site (Upper)
-      After Alinos - Alinos Perch Entrance Platforms Moved and After Alinos - Alinos Perch Security System Deactivate
+      After Alinos - Alinos Perch Entrance Platforms Moved and After Alinos - Alinos Perch Security System Deactivated
   > Door to Thermal Vast
       Trivial
   > Door to Council Chamber
@@ -929,10 +932,10 @@ Extra - entity_file: unit1_RM2_Ent.bin
           Bomb Jump (Beginner)
           All of the following:
               Missile Jump (Beginner)
-              Magmaul or Missile ≥ 3
+              Magmaul or Missiles ≥ 3
   > Event - Guardian Defeated
       Trivial
-  > Event - Security System Disabled
+  > Event - Security System Deactivated
       After Alinos - Alinos Perch Force Field Platform Moved
   > Event - Entrance Platforms Moved
       Trivial
@@ -949,9 +952,9 @@ Extra - entity_file: unit1_RM2_Ent.bin
   > Magmaul Force Field
       Trivial
 
-> Event - Security System Disabled; Heals? False
+> Event - Security System Deactivated; Heals? False
   * Layers: default
-  * Event Alinos - Alinos Perch Security System Deactivate
+  * Event Alinos - Alinos Perch Security System Deactivated
   > Room Center
       Trivial
 
@@ -1270,8 +1273,6 @@ Extra - entity_file: unit1_RM6_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 3, 'connector_id': 23, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 12, 'out_loader_id': 117, 'entity_filename': 'unit1_RM1_Ent.b', 'room_name': 'unit1_RM1_Ent.b'})
   > Player Spawn
       Trivial
-  > Portal to Alinos Gateway
-      After Alinos - Elder Passage Ship Deck Portal Unlocked
   > Event - Ship Deck Portal Unlocked
       Trivial
   > Next to Stronghold Portal
@@ -1317,7 +1318,7 @@ Extra - entity_file: unit1_RM6_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.302734375, 'y': 0.0, 'z': -0.952880859375})
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 20, 'target_index': 20, 'artifact_id': 8, 'active': False, 'invisible': False, 'entity_filename': 'unit1_Land_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
-  > Door to High Ground (Top)
+  > Next to Stronghold Portal
       Trivial
 
 > Event - Spire Encounter; Heals? False
@@ -1347,6 +1348,8 @@ Extra - entity_file: unit1_RM6_Ent.bin
       After Alinos - High Ground Spire Defeated
   > Portal to Stronghold Void B
       Alinos Attameter Artifact 1 and Alinos Binary Subscripture Artifact 1 and Alinos Cartograph Artifact 1
+  > Portal to Alinos Gateway
+      After Alinos - Elder Passage Ship Deck Portal Unlocked
   > Small Arena
       Trivial
 

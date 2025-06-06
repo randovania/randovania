@@ -105,8 +105,11 @@ class EchoesBootstrap(Bootstrap):
         mode = configuration.sky_temple_keys
 
         if mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
+            pickups_to_preplace = [
+                pickup for pickup in list(pool_results.to_place) if pickup.gui_category.name == "sky_temple_key"
+            ]
             locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_boss_location)
-            self.pre_place_pickups(rng, locations, pool_results, "sky_temple_key", patches.game.game)
+            self.pre_place_pickups(rng, pickups_to_preplace, locations, pool_results, patches.game.game)
 
         return super().assign_pool_results(rng, configuration, patches, pool_results)
 
