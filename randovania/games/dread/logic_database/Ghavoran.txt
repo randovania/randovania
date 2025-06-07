@@ -471,12 +471,14 @@ Extra - asset_id: collision_camera_007
   > Event - Super Missile Rotatable
       All of the following:
           Morph Ball and Before Ghavoran - Super Missile Rotatable
+          # Guarding against the generator taking this connection and being stuck when no items would help.
           After Ghavoran - Burenia Transport Grapple Box or After Dairon - Power Switch 2 or Enabled Transport Randomizer
   > Event - Super Missile Rotatable Enky
       Destroy Enky
   > Event - Super Missile Rotatable with Ledge Warp
       All of the following:
           Morph Ball and Ledge Warp (Intermediate)
+          # Taking the Spider Elevator could be the required path to the Super Missile Area. Doing the Ledge Warp cuts off that path permantently.
           After Ghavoran - Super Missile Area Access or Enabled Highly Dangerous Logic
 
 > Door to Elun Transport Access; Heals? False
@@ -491,7 +493,17 @@ Extra - asset_id: collision_camera_007
   > Door to Navigation Station
       After Ghavoran - Super Missile Rotatable
   > Tunnel to Spider Magnet Elevator
+      # This connection would always lead to an incompletable game in non Transport Randomizer.
       Before Ghavoran - Super Missile Rotatable and Enabled Transport Randomizer
+  > Event - Super Missile Rotatable with Ledge Warp
+      All of the following:
+          Knowledge (Intermediate) and Ledge Warp (Intermediate) and Lay Small Bomb
+          Any of the following:
+              Enabled Highly Dangerous Logic
+              # This connection is required to start in Elun when not using Transport Randomizer.
+              Disabled Transport Randomizer
+              # Taking the Spider Elevator could be the required path to the Super Missile Area. Doing the Ledge Warp cuts off that path permantently.
+              After Ghavoran - Super Missile Area Access
 
 > Start Point; Heals? False; Default Node
   * Layers: default
@@ -517,22 +529,22 @@ Extra - asset_id: collision_camera_007
 > Dock from Spider Magnet Elevator; Heals? False
   * Layers: default
   * Blocked Passage to Spider Magnet Elevator/Tunnel to Flipper Room (Cannon)
-  > Door to Elun Transport Access
-      After Ghavoran - Super Missile Rotatable
+  > Door to Navigation Station
+      Trivial
 
 > Tunnel to Spider Magnet Elevator; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Spider Magnet Elevator/Tunnel to Flipper Room (Tunnel)
   > Door to Elun Transport Access
+      # When not using Transport Randomizer it is not relevant to go back.
       Before Ghavoran - Super Missile Rotatable and Enabled Transport Randomizer
   > Event - Super Missile Rotatable
       All of the following:
           Morph Ball
-          After Ghavoran - Super Missile Rotatable or Knowledge (Intermediate)
-  > Event - Super Missile Rotatable with Ledge Warp
-      All of the following:
-          Knowledge (Intermediate) and Ledge Warp (Intermediate) and Lay Small Bomb
-          After Ghavoran - Super Missile Area Access or Enabled Highly Dangerous Logic
+          Any of the following:
+              Knowledge (Intermediate)
+              # Having a connection back to the Event Node after taking the event makes the event less dangerous
+              After Ghavoran - Super Missile Rotatable
 
 > Event - Super Missile Rotatable Enky; Heals? False
   * Layers: default
