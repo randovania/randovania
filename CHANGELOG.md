@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+##### Elun
+
+- Changed: In Ammo Recharge Station the connection from Alcove to Event - Release X is now also viable when the event has already been collected.
+
 ##### Ghavoran
 
 - Fixed: The door between EMMI Zone Exit Southeast and Blue EMMI Introduction is now considered as a Plasma Beam Door on both sides.
