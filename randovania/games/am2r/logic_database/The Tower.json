@@ -89,7 +89,14 @@
                     "125476": "oHalzyn",
                     "125477": "oHalzyn",
                     "125478": "oHalzyn",
-                    "125479": "oHalzyn"
+                    "125479": "oHalzyn",
+                    "125262": "oPincherFly",
+                    "125263": "oPincherFly",
+                    "125264": "oPincherFly",
+                    "125265": "oPincherFly",
+                    "125266": "oPincherFly",
+                    "125267": "oPincherFly",
+                    "125268": "oPincherFly"
                 }
             },
             "nodes": {
@@ -8416,6 +8423,10 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Shoot"
                                     }
                                 ]
                             }
@@ -10072,6 +10083,22 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Power Grip Wall"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Power Bombs"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot"
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -11546,13 +11573,50 @@
                             }
                         },
                         "Tunnel to Power Plant Hidden Storage": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Power Grip Climb"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Power Bombs"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can IBJ"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -11769,13 +11833,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Shoot Super Missile"
                                     },
                                     {
                                         "type": "or",

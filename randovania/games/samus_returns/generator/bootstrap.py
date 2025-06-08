@@ -149,8 +149,8 @@ class MSRBootstrap(Bootstrap[MSRConfiguration]):
     ) -> GamePatches:
         if configuration.artifacts.prefer_anywhere:
             return super().assign_pool_results(rng, configuration, patches, pool_results)
-
+        pickups_to_preplace = [pickup for pickup in list(pool_results.to_place) if pickup.gui_category.name == "dna"]
         locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_dna_node)
-        self.pre_place_pickups(rng, locations, pool_results, "dna", patches.game.game)
+        self.pre_place_pickups(rng, pickups_to_preplace, locations, pool_results, patches.game.game)
 
         return super().assign_pool_results(rng, configuration, patches, pool_results)

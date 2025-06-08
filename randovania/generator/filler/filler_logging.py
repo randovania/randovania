@@ -45,7 +45,7 @@ def print_retcon_loop_start(
             f"{len(current_uncollected.events)} open events{extra}"
         )
 
-        if debug.debug_level() > 2:
+        if debug.debug_level() > 3:
             print("\nCurrent reach:")
             for node in reach.nodes:
                 print(

@@ -3,8 +3,8 @@
     "game": "am2r",
     "resource_database": {
         "items": {
-            "Power Beam": {
-                "long_name": "Power Beam",
+            "Arm Cannon": {
+                "long_name": "Arm Cannon",
                 "max_capacity": 1,
                 "extra": {}
             },
@@ -460,6 +460,31 @@
             },
             "Queen": {
                 "long_name": "Queen",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Power Beam": {
+                "long_name": "Power Beam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Alpha Metroid Lure": {
+                "long_name": "Alpha Metroid Lure",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Gamma Metroid Lure": {
+                "long_name": "Gamma Metroid Lure",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Zeta Metroid Lure": {
+                "long_name": "Zeta Metroid Lure",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Omega Metroid Lure": {
+                "long_name": "Omega Metroid Lure",
                 "max_capacity": 1,
                 "extra": {}
             }
@@ -2668,6 +2693,19 @@
                                         }
                                     ]
                                 }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Shoot"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Alpha Metroid Lure",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
                         ]
                     }
@@ -2791,6 +2829,19 @@
                                         }
                                     ]
                                 }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Shoot"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Alpha Metroid Lure",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
                         ]
                     }
@@ -2913,6 +2964,19 @@
                                             }
                                         }
                                     ]
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Shoot"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Alpha Metroid Lure",
+                                    "amount": 1,
+                                    "negate": false
                                 }
                             }
                         ]
@@ -3099,6 +3163,19 @@
                                         }
                                     ]
                                 }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Shoot"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Alpha Metroid Lure",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
                         ]
                     }
@@ -3221,6 +3298,19 @@
                                             }
                                         }
                                     ]
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Shoot"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Gamma Metroid Lure",
+                                    "amount": 1,
+                                    "negate": false
                                 }
                             }
                         ]
@@ -3529,6 +3619,19 @@
                                         }
                                     ]
                                 }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Shoot"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Gamma Metroid Lure",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
                         ]
                     }
@@ -3775,6 +3878,19 @@
                                             }
                                         }
                                     ]
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Shoot"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Zeta Metroid Lure",
+                                    "amount": 1,
+                                    "negate": false
                                 }
                             }
                         ]
@@ -4100,6 +4216,19 @@
                                         }
                                     ]
                                 }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Shoot"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Omega Metroid Lure",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
                         ]
                     }
@@ -4142,26 +4271,46 @@
                         "comment": null,
                         "items": [
                             {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Missiles",
-                                    "amount": 3,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Super Missiles",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
                                 "type": "template",
                                 "data": "Can Use Any Bombs"
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "Can Shoot"
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Missiles",
+                                                            "amount": 3,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Super Missiles",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
                             }
                         ]
                     }
@@ -4175,13 +4324,8 @@
                         "comment": null,
                         "items": [
                             {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Ice Beam",
-                                    "amount": 1,
-                                    "negate": false
-                                }
+                                "type": "template",
+                                "data": "Can Shoot Ice Beam"
                             },
                             {
                                 "type": "or",
@@ -4296,6 +4440,10 @@
                                         {
                                             "type": "template",
                                             "data": "Can Walljump"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Can Shoot"
                                         }
                                     ]
                                 }
@@ -4321,57 +4469,8 @@
                                 }
                             },
                             {
-                                "type": "or",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Power Beam",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Wave Beam",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Spazer Beam",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Plasma Beam",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Ice Beam",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                }
+                                "type": "template",
+                                "data": "Can Shoot"
                             },
                             {
                                 "type": "template",
@@ -4389,13 +4488,8 @@
                         "comment": null,
                         "items": [
                             {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Ice Beam",
-                                    "amount": 1,
-                                    "negate": false
-                                }
+                                "type": "template",
+                                "data": "Can Shoot Ice Beam"
                             },
                             {
                                 "type": "or",
@@ -4972,6 +5066,213 @@
                         ]
                     }
                 }
+            },
+            "Can Shoot": {
+                "display_name": "Can Shoot",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Arm Cannon",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Shoot Ice Beam": {
+                "display_name": "Can Shoot Ice Beam",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Can Shoot"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Ice Beam",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Shoot Wave Beam": {
+                "display_name": "Can Shoot Wave Beam",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Can Shoot"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Wave Beam",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Shoot Charge Beam": {
+                "display_name": "Can Shoot Charge Beam",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Can Shoot"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Charge Beam",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Shoot Spazer Beam": {
+                "display_name": "Can Shoot Spazer Beam",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Can Shoot"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Spazer Beam",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Shoot Plasma Beam": {
+                "display_name": "Can Shoot Plasma Beam",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Can Shoot"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Plasma Beam",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Shoot Super Missile": {
+                "display_name": "Can Shoot Super Missile",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Can Shoot"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Super Missiles",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Shoot Missile": {
+                "display_name": "Can Shoot Missile",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Can Shoot"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missiles",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Destroy Shot Block": {
+                "display_name": "Can Destroy Shot Block",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Can Shoot"
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Use Any Bombs"
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [],
@@ -5262,11 +5563,8 @@
                     "Normal Door": {
                         "extra": {},
                         "requirement": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Can Shoot"
                         },
                         "lock": null
                     },
@@ -5275,11 +5573,8 @@
                             "door_name": "Normal Door"
                         },
                         "requirement": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Can Shoot"
                         },
                         "lock": null
                     },
@@ -5295,40 +5590,38 @@
                         "lock": {
                             "lock_type": "front-blast-back-free-unlock",
                             "requirement": {
-                                "type": "or",
+                                "type": "and",
                                 "data": {
                                     "comment": null,
                                     "items": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Missiles",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "and",
+                                            "type": "or",
                                             "data": {
                                                 "comment": null,
                                                 "items": [
                                                     {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "Super Missiles",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
+                                                        "type": "template",
+                                                        "data": "Can Shoot Missile"
                                                     },
                                                     {
-                                                        "type": "resource",
+                                                        "type": "and",
                                                         "data": {
-                                                            "type": "misc",
-                                                            "name": "SupersOnMissileDoors",
-                                                            "amount": 1,
-                                                            "negate": false
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Can Shoot Super Missile"
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "misc",
+                                                                        "name": "SupersOnMissileDoors",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     }
                                                 ]
@@ -5351,12 +5644,15 @@
                         "lock": {
                             "lock_type": "front-blast-back-free-unlock",
                             "requirement": {
-                                "type": "resource",
+                                "type": "and",
                                 "data": {
-                                    "type": "items",
-                                    "name": "Super Missiles",
-                                    "amount": 1,
-                                    "negate": false
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "Can Shoot Super Missile"
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -5645,65 +5941,40 @@
                     "Charge Beam Door": {
                         "extra": {},
                         "requirement": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Charge Beam",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Can Shoot Charge Beam"
                         },
                         "lock": null
                     },
                     "Wave Beam Door": {
                         "extra": {},
                         "requirement": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Wave Beam",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Can Shoot Wave Beam"
                         },
                         "lock": null
                     },
                     "Spazer Beam Door": {
                         "extra": {},
                         "requirement": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Spazer Beam",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Can Shoot Spazer Beam"
                         },
                         "lock": null
                     },
                     "Plasma Beam Door": {
                         "extra": {},
                         "requirement": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Plasma Beam",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Can Shoot Plasma Beam"
                         },
                         "lock": null
                     },
                     "Ice Beam Door": {
                         "extra": {},
                         "requirement": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Ice Beam",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Can Shoot Ice Beam"
                         },
                         "lock": null
                     },

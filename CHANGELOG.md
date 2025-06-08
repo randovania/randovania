@@ -5,15 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [9.3.0] - 2025-07-0?
 
-## [9.2.x] - 2025-06-??
+### Generator
 
-- Fixed: A rare division-by-zero error during generation when placing hints.
-- Fixed: The experimental option called Logical Pickup Placement is now respected by the resolver. It also now checks for items configured to be placed in their vanilla location.
-
-### Resolver
-
-- Fixed: Bug that could lead to timeouts or longer resolving time in some cases.
+- Fixed: Some cases where weights from certain actions would not be calculated correctly.
 
 ### Metroid Dread
 
@@ -21,25 +17,65 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+##### Ghavoran
+
+- Fixed: The door between EMMI Zone Exit Southeast and Blue EMMI Introduction is now considered as a Plasma Beam Door on both sides.
+
+### Metroid Prime 2: Echoes
+
+- Added: "Captain" is now included as a possible word for the seed hash.
+
+## [9.2.0] - 2025-06-02
+
+- Added: 1 more Joke hint.
+- Fixed: A rare division-by-zero error during generation when placing hints.
+- Fixed: An error where turning off specific location hints would still consume that locations pickup as a viable hint target for regular hints.
+- Fixed: The experimental option called Logical Pickup Placement is now respected by the resolver. It also now checks for items configured to be placed in their vanilla location.
+- Added: The preset summary now displays a count of excluded locations, if there are any.
+
+### Resolver
+
+- Fixed: Bug that could lead to timeouts or longer resolving time in some cases.
+
+### Metroid Dread
+
+- Added: A 4 line non-progressive tracker layout.
+
+#### Logic Database
+
 - Changed: All instances of the Cross Bomb Skip trick that were previously rated as Beginner or Intermediate are now rated one level higher.
 - Changed: All instances of the Single Wall Jump trick are now rated one level higher.
+
+##### Artaria
+
+- Changed: A small adjustment that should decrease the frequency of placing Morph Ball in the first accessible location in standard presets.
+
+### Metroid Prime
+
+- Added: Blast Shield Lock-On preset option.
+- Added: Patch to fix Kerry Ann Odem's name in the credits on game version(s) where it is incorrectly spelled.
+- Fixed: Main Plaza vault ledge door is now affected by door lock rando.
+- Fixed: Elite Research Phazon Elite getting stuck on frame perfect cutscene skip.
+- Fixed: Minor music transition fixes.
+- Fixed: Chaos option export error when submerging rooms.
+- Changed: [PAL] Remove extra door lock in Central Dynamo.
+- Changed: [PAL] Load Hunter Metroid in Frost Cave.
+
+### Metroid Prime 2: Echoes
+
+- Changed: "Cheater's delight" pickups are now less likely to be hinted.
+
+#### Logic Database
+
+##### Sky Temple Grounds
+
+- Added: Half pipe hint feature on War Ritual Grounds.
 
 ### Metroid: Samus Returns
 
 - Changed: Display the number of remaining DNA in the DNA message before entering the final boss.
 - Fixed: If Metroid Queen is the final boss and you don't have all DNA, the DNA message now appears.
 - Fixed: For tanks with non required main option, the jingle of the tank item is played instead of the jingle of the main object.
-
-### Metroid Prime
-
-- Added: Blast Shield Lock-On preset option
-- Added: Patch to fix Kerry Ann Odem's name in the credits on game version(s) where it is incorrectly spelled
-- Fixed: Main Plaza vault ledge door is now affected by door lock rando
-- Fixed: Elite Research Phazon Elite getting stuck on frame perfect cutscene skip
-- Fixed: Minor music transition fixes
-- Fixed: Chaos option export error when submerging rooms
-- Changed: [PAL] Remove extra door lock in Central Dynamo
-- Changed: [PAL] Load Hunter Metroid in Frost Cave
 
 ## [9.1.1] - 2025-05-03
 
@@ -49,6 +85,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: A regression introduced in 9.1.0 that made all received pickups in multiworld behave as Nothings.
 
+
+## [9.1.1] - 2025-05-03
+
+- Fixed: Duplicating a session now also duplicates the admin settings for Co-op and "Everyone can claim worlds".
+
+### Cave Story
+
+- Fixed: A regression introduced in 9.1.0 that made all received pickups in multiworld behave as Nothings.
 
 ## [9.1.0] - 2025-05-01
 

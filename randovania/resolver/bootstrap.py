@@ -335,13 +335,13 @@ class Bootstrap[Configuration: BaseConfiguration]:
     def pre_place_pickups_weighted(
         self,
         rng: Random,
+        pickups_to_place: list[PickupEntry],
         locations: dict[PickupNode, float],
         pool_results: PoolResults,
-        item_category: str,
         game: RandovaniaGame,
     ) -> None:
         """
-        Pre-places all pickups of item_category from a set of weighted PickupNodes.
+        Pre-places a list of PickupEntry(s) from a set of weighted PickupNodes.
         """
         pre_placed_indices = list(pool_results.assignment.keys())
         reduced_locations = {loc: v for loc, v in locations.items() if loc.pickup_index not in pre_placed_indices}
@@ -353,27 +353,23 @@ class Bootstrap[Configuration: BaseConfiguration]:
             weighted_locations.append(loc)
             reduced_locations.pop(loc)
 
-        pickup_database = default_database.pickup_database_for_game(game)
-        category = pickup_database.pickup_categories[item_category]
-
-        all_artifacts = [pickup for pickup in list(pool_results.to_place) if pickup.gui_category is category]
-        if len(all_artifacts) > len(weighted_locations):
+        if len(pickups_to_place) > len(weighted_locations):
             raise InvalidConfiguration(
-                f"Has {len(all_artifacts)} {category.long_name} in the pool, "
+                f"Has {len(pickups_to_place)} pre-placed pickups in the pool, "
                 f"but only {len(weighted_locations)} valid locations."
             )
 
-        # places an artifact in the next location of weighted_locations until all_artifacts is exhausted
-        for artifact, location in zip(all_artifacts, weighted_locations, strict=False):
-            pool_results.to_place.remove(artifact)
-            pool_results.assignment[location.pickup_index] = artifact
+        # places a pickup in the next location of weighted_locations until pickups_to_place is exhausted
+        for pickup, location in zip(pickups_to_place, weighted_locations, strict=False):
+            pool_results.to_place.remove(pickup)
+            pool_results.assignment[location.pickup_index] = pickup
 
     def pre_place_pickups(
         self,
         rng: Random,
+        pickups_to_place: list[PickupEntry],
         locations: list[PickupNode],
         pool_results: PoolResults,
-        item_category: str,
         game: RandovaniaGame,
     ) -> None:
         """
@@ -381,8 +377,8 @@ class Bootstrap[Configuration: BaseConfiguration]:
         """
         self.pre_place_pickups_weighted(
             rng,
+            pickups_to_place,
             dict.fromkeys(locations, 1.0),
             pool_results,
-            item_category,
             game,
         )

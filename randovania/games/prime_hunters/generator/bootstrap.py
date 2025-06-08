@@ -38,8 +38,11 @@ class HuntersBootstrap(Bootstrap[HuntersConfiguration]):
     def assign_pool_results(
         self, rng: Random, configuration: HuntersConfiguration, patches: GamePatches, pool_results: PoolResults
     ) -> GamePatches:
+        pickups_to_preplace = [
+            pickup for pickup in list(pool_results.to_place) if pickup.gui_category.name == "octolith"
+        ]
         locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_boss_location)
-        self.pre_place_pickups(rng, locations, pool_results, "octolith", patches.game.game)
+        self.pre_place_pickups(rng, pickups_to_preplace, locations, pool_results, patches.game.game)
 
         return super().assign_pool_results(rng, configuration, patches, pool_results)
 

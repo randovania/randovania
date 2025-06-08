@@ -48,6 +48,7 @@ HASH_WORDS = [
     "Brooding",
     "Cache",
     "Cannon",
+    "Captain",
     "Caretaker",
     "Catacombs",
     "Cavern",
