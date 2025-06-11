@@ -232,17 +232,39 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             )
 
         hints = {}
+        restricted_hint: str = ""
+        operations_hint: str = ""
+        i = 0
+        if metroid_precision != SpecificPickupHintMode.DISABLED:
+            for _, text in metroid_hint_mapping.items():
+                print(i)
+                print(text)
+                if "has no need to be located" in text:
+                    continue
+                if i % 2 == 0:
+                    restricted_hint = restricted_hint + text + " "
+                else:
+                    operations_hint = operations_hint + text + " "
+                i += 1
+        print("restricted_hint: " + restricted_hint)
+        print("operations_hint: " + operations_hint)
 
         for node in self.game.region_list.iterate_nodes_of_type(HintNode):
             hint_location = node.extra["hint_name"]
             if hint_location == "AuxiliaryPower" and charge_precision != SpecificPickupHintMode.DISABLED:
                 hints[hint_location] = " ".join([text for _, text in charge_hint_mapping.items()])
             elif hint_location == "RestrictedLabs" and metroid_precision != SpecificPickupHintMode.DISABLED:
-                hints[hint_location] = " ".join(
-                    [text for _, text in metroid_hint_mapping.items() if "has no need to be located" not in text]
+                hints[hint_location] = (
+                    restricted_hint
+                    if self.configuration.artifacts.placed_artifacts
+                    else "The Metroids are in captivity, there is no need to locate them."
                 )
-                if not self.configuration.artifacts.placed_artifacts:
-                    hints[hint_location] = "The Metroids are in captivity, there is no need to locate them."
+            elif hint_location == "OperationsDeck" and metroid_precision != SpecificPickupHintMode.DISABLED:
+                hints[hint_location] = (
+                    operations_hint
+                    if self.configuration.artifacts.placed_artifacts
+                    else "The Metroids are in captivity, there is no need to locate them."
+                )
             else:
                 hints[hint_location] = exporter.create_message_for_hint(
                     self.patches.hints[node.identifier],
