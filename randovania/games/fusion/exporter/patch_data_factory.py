@@ -364,7 +364,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         locks = {
             "MainDeckWest": "RED",
             "MainDeckEast": "BLUE",
-            "OperationsDeck": "GREY",
+            "OperationsDeck": "BLUE",
             "Sector1Entrance": "GREEN",
             "Sector2Entrance": "GREEN",
             "Sector3Entrance": "YELLOW",
@@ -372,7 +372,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "Sector5Entrance": "RED",
             "Sector6Entrance": "RED",
             "AuxiliaryPower": "OPEN",
-            "RestrictedLabs": "OPEN",
+            "RestrictedLabs": "RED",
         }
         return locks
 
