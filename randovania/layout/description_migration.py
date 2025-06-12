@@ -712,6 +712,18 @@ def _migrate_v35(data: dict) -> None:
                     game_modifications[index]["locations"][region].update({location: "Nothing"})
 
 
+def _migrate_v36(data: dict) -> None:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        game_name = game["game"]
+        if game_name != "am2r":
+            continue
+        pickups = game["starting_equipment"]["pickups"]
+        pickups.remove("Power Beam")
+        pickups.append("Arm Cannon")
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -748,6 +760,7 @@ _MIGRATIONS = [
     _migrate_v33,
     _migrate_v34,  # removal of in_dark_aether
     _migrate_v35,  # rename ETMs to Nothing
+    _migrate_v36,  # am2r: repurpose power beam to arm cannon
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -46,7 +46,7 @@ def _generator() -> randovania.game.generator.GameGenerator:
         pickup_pool_creator=generator.pool_creator,
         bootstrap=generator.FusionBootstrap(),
         base_patches_factory=generator.FusionBasePatchesFactory(),
-        action_weights=ActionWeights(events_weight=0.75, hints_weight=0.5),
+        action_weights=ActionWeights(events_weight=0.75, hints_weight=0.25),
     )
 
 
@@ -91,8 +91,8 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     long_name="Metroid Fusion",
     development_state=randovania.game.development_state.DevelopmentState.STAGING,
     presets=[
-        {"path": "starter_preset.rdvpreset"},
         {"path": "open_sector_hub.rdvpreset"},
+        {"path": "vanilla_start.rdvpreset"},
     ],
     faq=[
         (

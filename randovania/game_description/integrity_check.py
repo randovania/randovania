@@ -398,6 +398,8 @@ def get_videos(req: Requirement, node: Node, target: Node) -> Iterator[str]:
     if isinstance(req, RequirementArrayBase):
         if req.comment is not None:
             for word in req.comment.split(" "):
+                if "discord" in word:
+                    yield f"Discord media linked in {node.identifier.as_string} -> {target.name}."
                 if "youtu" not in word:
                     continue
                 if "&list" in word:

@@ -63,6 +63,7 @@ Extra - map_name: rm_a5h04
 Extra - minimap_data: [{'x': 52, 'y': 45}, {'x': 52, 'y': 46}, {'x': 52, 'y': 47}, {'x': 52, 'y': 48}, {'x': 52, 'y': 49}, {'x': 52, 'y': 50}, {'x': 53, 'y': 43}, {'x': 53, 'y': 44}, {'x': 53, 'y': 45}, {'x': 53, 'y': 46}, {'x': 53, 'y': 47}, {'x': 53, 'y': 48}, {'x': 53, 'y': 49}, {'x': 53, 'y': 50}, {'x': 54, 'y': 42}, {'x': 54, 'y': 43}, {'x': 54, 'y': 44}, {'x': 54, 'y': 45}, {'x': 54, 'y': 46}, {'x': 54, 'y': 47}, {'x': 54, 'y': 48}, {'x': 54, 'y': 49}, {'x': 54, 'y': 50}, {'x': 55, 'y': 42}, {'x': 55, 'y': 43}, {'x': 55, 'y': 44}, {'x': 55, 'y': 45}, {'x': 55, 'y': 46}, {'x': 55, 'y': 50}, {'x': 56, 'y': 42}, {'x': 56, 'y': 43}, {'x': 57, 'y': 42}, {'x': 58, 'y': 42}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 1520, 'should_be_at_very_front': True}
+Extra - enemy_data: {'132242': 'oMoheekWater', '132244': 'oMoheekWater', '132245': 'oMoheekWater', '132247': 'oMoheekWater', '132258': 'oMoheekWater', '132494': 'oMoheekWater', '132521': 'oMoheekWater', '132522': 'oMoheekWater', '132523': 'oMoheekWater', '132524': 'oMoheekWater', '132525': 'oMoheekWater', '132526': 'oMoheekWater', '132527': 'oMoheekWater'}
 > Door to Facility Storage Tower West; Heals? False
   * Layers: default
   * Normal Door to Facility Storage Tower West/Door to Distribution Center Exterior West; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door
@@ -417,7 +418,11 @@ Extra - enemy_data: {'133881': 'oAutrack', '133883': 'oTPO', '133884': 'oTPO', '
   > Door to Energy Distribution Tower East
       Trivial
   > Event - EMP Slot
-      Missiles ≥ 2 or Super Missiles or Can Use Bombs
+      Any of the following:
+          Can Use Bombs
+          All of the following:
+              Can Shoot
+              Missiles ≥ 2 or Can Shoot Super Missile
 
 > Event - EMP Slot; Heals? False
   * Layers: default
@@ -447,7 +452,7 @@ Extra - enemy_data: {'133947': 'oRoboMine', '133956': 'oRoboMine', '133957': 'oR
       Any of the following:
           Can Use Bombs
           All of the following:
-              Can Use Power Bombs
+              Can Shoot and Can Use Power Bombs
               Missiles ≥ 10 or Super Missiles ≥ 3
   > Bottom
       Can Use Any Bombs
@@ -738,9 +743,13 @@ Extra - enemy_data: {'134443': 'oBladeBot', '134444': 'oBladeBot', '134445': 'oB
   * Normal Door to Pipe Hub/Door to Pipe Hub Access
   * Extra - door_instance_id: 134427
   > Door to Distribution Center Exterior West
-      Trivial
+      Can Destroy Shot Block
   > Event - EMP Slot
-      Missiles ≥ 10 or Super Missiles ≥ 5 or Can Use Bombs
+      Any of the following:
+          Can Use Bombs
+          All of the following:
+              Can Shoot
+              Missiles ≥ 10 or Super Missiles ≥ 5
 
 > Door to Distribution Center Exterior West; Heals? False
   * Layers: default
@@ -749,7 +758,7 @@ Extra - enemy_data: {'134443': 'oBladeBot', '134444': 'oBladeBot', '134445': 'oB
   * Extra - instance_id: 134450
   * Extra - facing: right
   > Door to Pipe Hub
-      Trivial
+      Can Destroy Shot Block
 
 > Event - EMP Slot; Heals? False
   * Layers: default
@@ -1080,9 +1089,9 @@ Extra - enemy_data: {'134728': 'oBladeBot', '134729': 'oBladeBot', '134730': 'oB
           Morph Ball and Morph Glide (Advanced)
           Any of the following:
               # Shoot the EMP from the door
-              Super Missiles
+              Can Shoot Super Missile
               # RNG dependant
-              Missiles and Knowledge (Expert)
+              Knowledge (Expert) and Can Shoot and Can Shoot Missile
 
 > Door to Bullet Hell Room; Heals? False
   * Layers: default
@@ -1124,7 +1133,11 @@ Extra - enemy_data: {'134728': 'oBladeBot', '134729': 'oBladeBot', '134730': 'oB
 > EMP Ball; Heals? False
   * Layers: default
   > Event - EMP Slot
-      Missiles ≥ 20 or Super Missiles ≥ 10 or Can Use Bombs
+      Any of the following:
+          Can Use Bombs
+          All of the following:
+              Can Shoot
+              Missiles ≥ 20 or Super Missiles ≥ 10
 
 > Center; Heals? False
   * Layers: default
@@ -1217,7 +1230,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
           Any of the following:
               # Get near pipe
               Destroy Ice Barrier
-              High Mid-Air Morph Tunnel Climb and Tunnel Climb
+              Can Destroy Shot Block and High Mid-Air Morph Tunnel Climb and Tunnel Climb
           All of the following:
               # Get into pipe
               Morph Ball
@@ -1236,7 +1249,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
           Any of the following:
               # Get near pipe
               Destroy Ice Barrier
-              High Mid-Air Morph Tunnel Climb and Tunnel Climb
+              Can Destroy Shot Block and High Mid-Air Morph Tunnel Climb and Tunnel Climb
           All of the following:
               # Get into pipe
               Morph Ball
@@ -1259,6 +1272,7 @@ Extra - map_name: rm_a5c26
 Extra - minimap_data: [{'x': 62, 'y': 48}, {'x': 62, 'y': 49}, {'x': 63, 'y': 48}, {'x': 63, 'y': 49}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 80, 'should_be_at_very_front': True}
+Extra - enemy_data: {'135142': 'oMoheekWater', '135143': 'oMoheekWater', '135144': 'oMoheekWater', '135145': 'oMoheekWater', '135146': 'oMoheekWater'}
 > Door to Waterblob Habitat; Heals? False
   * Layers: default
   * Normal Door to Waterblob Habitat/Door to Moheek Hangout; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door
@@ -1281,7 +1295,7 @@ Extra - map_name: rm_a5c27
 Extra - minimap_data: [{'x': 64, 'y': 48}, {'x': 65, 'y': 48}, {'x': 66, 'y': 48}, {'x': 67, 'y': 48}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 80, 'should_be_at_very_front': True}
-Extra - enemy_data: {'135192': 'oBlobThrowerWater', '135193': 'oBlobThrowerWater'}
+Extra - enemy_data: {'135192': 'oBlobThrowerWater', '135193': 'oBlobThrowerWater', '135185': 'oMoheekWater', '135186': 'oMoheekWater', '135187': 'oMoheekWater', '135188': 'oMoheekWater', '135189': 'oMoheekWater', '135190': 'oMoheekWater', '135191': 'oMoheekWater'}
 > Door to Facility Storage Save Station; Heals? False
   * Layers: default
   * Normal Door to Facility Storage Save Station/Door to Waterblob Habitat; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door
@@ -1289,7 +1303,7 @@ Extra - enemy_data: {'135192': 'oBlobThrowerWater', '135193': 'oBlobThrowerWater
   > Door to Moheek Hangout
       Any of the following:
           # Freeze the WaterBlob
-          Ice Beam
+          Can Shoot Ice Beam
           All of the following:
               # Gravity methods to pass Waterblob
               Gravity Suit
@@ -1306,7 +1320,7 @@ Extra - enemy_data: {'135192': 'oBlobThrowerWater', '135193': 'oBlobThrowerWater
   > Door to Facility Storage Save Station
       Any of the following:
           # Freeze the Waterblob
-          Ice Beam
+          Can Shoot Ice Beam
           All of the following:
               # Gravity methods to pass Waterblob
               Gravity Suit
@@ -1351,6 +1365,7 @@ Extra - map_name: rm_a5c29
 Extra - minimap_data: [{'x': 69, 'y': 48}, {'x': 69, 'y': 49}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 80, 'should_be_at_very_front': True}
+Extra - enemy_data: {'135239': 'oMoheekWater', '135240': 'oMoheekWater'}
 > Door to Facility Storage Save Station; Heals? False
   * Layers: default
   * Normal Door to Facility Storage Save Station/Door to Facility Storage Intersection East; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door
@@ -1449,7 +1464,9 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Extra - dest_x: 72
   * Extra - dest_y: 144
   > Door to Ice Beam Chamber
-      Destroy Ice Barrier or Hijump Tunnel Climb
+      Any of the following:
+          Destroy Ice Barrier
+          Can Destroy Shot Block and Hijump Tunnel Climb
 
 ----------------
 Ice Beam Chamber
@@ -1492,7 +1509,11 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   > Event - EMP Slot
       All of the following:
           Can Use Any Bombs
-          Missiles ≥ 2 or Super Missiles or Can Use Bombs
+          Any of the following:
+              Can Use Bombs
+              All of the following:
+                  Can Shoot
+                  Missiles ≥ 2 or Can Shoot Super Missile
 
 > Door to Distribution Facility Intersection; Heals? False
   * Layers: default
@@ -1518,8 +1539,8 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': -100, 'should_be_at_very
   * 3-Tiles High Dock to Serris Arena Access/Horizontal Dock to Facility Storage Clogged Pipe North
   > Horizontal Dock to Facility Storage Intersection East
       Any of the following:
-          Knowledge (Advanced)
           Gravity Suit and Speed Booster
+          Knowledge (Advanced) and Can Destroy Shot Block
 
 > Horizontal Dock to Facility Storage Intersection East; Heals? False
   * Layers: default
@@ -1528,7 +1549,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': -100, 'should_be_at_very
       Any of the following:
           Gravity Suit and Speed Booster and Disabled Entrance Rando
           All of the following:
-              Super Missiles and Knowledge (Advanced)
+              Knowledge (Advanced) and Can Shoot Super Missile
               Any of the following:
                   Tunnel Climb
                   Morph Ball and Mid-Air Morph (Intermediate)
@@ -1539,6 +1560,7 @@ Extra - map_name: rm_a5b02
 Extra - minimap_data: [{'x': 66, 'y': 49}, {'x': 66, 'y': 50}, {'x': 66, 'y': 51}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': -100, 'should_be_at_very_front': True}
+Extra - enemy_data: {'135414': 'oMoheekWater', '135415': 'oMoheekWater', '135425': 'oMoheekWater'}
 > Horizontal Dock to Spiky Spider Trial; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Spiky Spider Trial/Horizontal Dock to Serris Arena Access
@@ -1609,6 +1631,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': -100, 'should_be_at_very
   * Layers: default
   > Event - Serris
       All of the following:
+          Can Shoot
           Any of the following:
               # Movement requirements
               Combat (Advanced)
@@ -1628,7 +1651,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': -100, 'should_be_at_very
                           Combat (Ludicrous)
                           Morph Ball and Combat (Expert) and Zip Trick (Intermediate) and Can Walljump
           # Fusion Mode requirements
-          Missiles or Super Missiles or Disabled Fusion Mode
+          Disabled Fusion Mode or Can Shoot Missile or Can Shoot Super Missile
           Long Beam or Combat (Ludicrous)
 
 ----------------
@@ -1663,13 +1686,17 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': -100, 'should_be_at_very
   * Layers: default
   * 3-Tiles High Dock to Serris Arena Access/Horizontal Dock to Facility Storage Clogged Pipe South
   > Horizontal Dock to Facility Storage Tower East
-      Trivial
+      Any of the following:
+          Can Destroy Shot Block
+          Morph Ball and Mid-Air Morph (Advanced)
 
 > Horizontal Dock to Facility Storage Tower East; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Facility Storage Tower East/Horizontal Dock to Facility Storage Clogged Pipe South
   > Horizontal Dock to Serris Arena Access
-      Trivial
+      Any of the following:
+          Can Destroy Shot Block
+          Morph Ball and Mid-Air Morph (Advanced)
 
 ----------------
 Spiky Spider Trial
@@ -1873,7 +1900,8 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': -100, 'should_be_at_very
   * 3-Tiles High Dock to Facility Storage Tower East/Horizontal Dock to Spiky Space Jump Trial Entrance
   > Center
       Any of the following:
-          Movement (Beginner) or Underwater Power Grip Wall
+          Can Destroy Shot Block and Underwater Power Grip Wall
+          Movement (Beginner) and Can Shoot
           Speed Booster and Shinesparking Tricks (Beginner)
 
 > Horizontal Dock to Spiky Space Jump Trial; Heals? False
@@ -1894,7 +1922,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': -100, 'should_be_at_very
 > Center; Heals? False
   * Layers: default
   > Horizontal Dock to Facility Storage Tower East
-      Trivial
+      Can Destroy Shot Block
   > Horizontal Dock to Spiky Space Jump Trial
       Gravity Suit and Speed Booster and Shinesparking Tricks (Intermediate)
   > Pickup (Missile Tank)
@@ -1947,11 +1975,11 @@ Extra - enemy_data: {'136097': 'oBlobThrowerWater'}
               All of the following:
                   # Short charge with the plant alive
                   Short Charge (Intermediate)
-                  Ice Beam or Movement (Beginner)
+                  Movement (Beginner) or Can Shoot Ice Beam
               All of the following:
                   # Regular charge by killing plant
-                  Ice Beam
-                  Missiles ≥ 2 or Super Missiles
+                  Can Shoot Ice Beam
+                  Missiles ≥ 2 or Can Shoot Super Missile
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
@@ -2160,11 +2188,15 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Extra - door_instance_id: 136531
   > Door to Gravity Area Corridor
       Any of the following:
-          Gravity Suit or Long Beam
+          Gravity Suit
           All of the following:
-              Disabled Door Lock Rando
-              # No Long Beam needs to check for DLR else you could have missiles + beam door
-              Missiles or Super Missiles
+              Can Shoot
+              Any of the following:
+                  Long Beam
+                  All of the following:
+                      Disabled Door Lock Rando
+                      # No Long Beam needs to check for DLR else you could have missiles + beam door
+                      Can Shoot Missile or Can Shoot Super Missile
 
 ----------------
 Gravity Area Corridor
@@ -2172,6 +2204,7 @@ Extra - map_name: rm_a5a04
 Extra - minimap_data: [{'x': 69, 'y': 39}, {'x': 70, 'y': 39}, {'x': 71, 'y': 39}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
+Extra - enemy_data: {'136615': 'oPincherFly', '136616': 'oPincherFly', '136617': 'oPincherFly', '136618': 'oPincherFly'}
 > Door to Gravity Area Trapdoor; Heals? False
   * Layers: default
   * Normal Door to Gravity Area Trapdoor/Door to Gravity Area Corridor
@@ -2248,13 +2281,15 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   > Door to Gravity Area Corridor
       Walljump (Intermediate) and Enabled Septogg Helpers and Can Walljump
   > Door to Gravity Chamber Access
-      # The door cannot be opened unless these conditions are met.
-      Gravity Suit or Missiles or Super Missiles
+      All of the following:
+          # The door cannot be opened unless these conditions are met.
+          Can Shoot
+          Gravity Suit or Can Shoot Missile or Can Shoot Super Missile
   > Top
       Any of the following:
           Space Jump Wall
           # Shinespark from next room
-          Missiles and Speed Booster and Shinesparking Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+          Speed Booster and Shinesparking Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Shoot and Can Shoot Missile
           Gravity Suit and Enabled Septogg Helpers
 
 ----------------
@@ -2335,14 +2370,14 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Normal Door to Gravity Area Shaft/Door to Gravity Area Barricade
   * Extra - door_instance_id: 136853
   > Door to Gravity Area East Pipe
-      Gravity Suit and Space Jump Wall
+      Gravity Suit and Can Destroy Shot Block and Space Jump Wall
 
 > Door to Gravity Area East Pipe; Heals? False
   * Layers: default
   * Normal Door to Gravity Area East Pipe/Door to Gravity Area Barricade
   * Extra - door_instance_id: 136854
   > Door to Gravity Area Shaft
-      Gravity Suit and Space Jump Wall
+      Gravity Suit and Can Destroy Shot Block and Space Jump Wall
 
 ----------------
 Gravity Area East Pipe

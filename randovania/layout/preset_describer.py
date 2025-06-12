@@ -165,6 +165,10 @@ class GamePresetDescriber:
         if configuration.consider_possible_unsafe_resources:
             template_strings["Logic Settings"].append("Considers possible unsafe resources")
 
+        excluded_locations_count = configuration.available_locations.get_excluded_locations_count()
+        if excluded_locations_count > 0:
+            template_strings["Logic Settings"].append(f"{excluded_locations_count} locations excluded")
+
         if randomization_mode != RandomizationMode.default():
             template_strings["Item Pool"].append(randomization_mode.description)
 
