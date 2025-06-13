@@ -1,19 +1,19 @@
 {
     "schema_version": 36,
     "info": {
-        "randovania_version": "9.2.0.dev96-dirty",
-        "randovania_version_git": "781d4939",
-        "permalink": "DeynQbHZy3gdSTkMoO6mocqYGGFTcU3QAN_M",
+        "randovania_version": "9.3.0.dev25-dirty",
+        "randovania_version_git": "2f93b1ac",
+        "permalink": "DchqH3833C-TsawLfVCVvgbACkEPF4gAADmK",
         "has_spoiler": true,
-        "seed": 93895787,
-        "hash": "U5A3DWOL",
-        "word_hash": "Passage War Biodefense",
+        "seed": 1882154919,
+        "hash": "NIPX6N64",
+        "word_hash": "Trocra Spire Red",
         "presets": [
             {
-                "schema_version": 104,
+                "schema_version": 105,
                 "base_preset_uuid": null,
                 "name": "Starter Preset Copy",
-                "uuid": "59b28743-3868-4818-9812-d98f88e085b4",
+                "uuid": "dd553c40-0623-4814-95a8-048d5f50b12e",
                 "description": "A copy version of Starter Preset.",
                 "game": "prime_hunters",
                 "configuration": {
@@ -64,8 +64,8 @@
                             }
                         },
                         "default_pickups": {},
-                        "minimum_random_starting_pickups": 2,
-                        "maximum_random_starting_pickups": 2
+                        "minimum_random_starting_pickups": 1,
+                        "maximum_random_starting_pickups": 1
                     },
                     "ammo_pickup_configuration": {
                         "pickups_state": {
@@ -112,14 +112,16 @@
                     "hints": {
                         "enable_random_hints": true,
                         "enable_specific_location_hints": true,
-                        "specific_pickup_hints": {},
+                        "specific_pickup_hints": {
+                            "octoliths": "hide-area"
+                        },
                         "minimum_available_locations_for_hint_placement": 0,
                         "minimum_location_weight_for_hint_placement": 0.0,
                         "use_resolver_hints": false
                     },
                     "octoliths": {
                         "prefer_bosses": true,
-                        "placed_octoliths": 3
+                        "placed_octoliths": 4
                     },
                     "force_field_configuration": {
                         "force_field_requirement": {
@@ -159,13 +161,11 @@
             "game": "prime_hunters",
             "starting_equipment": {
                 "pickups": [
-                    "Octolith 4",
                     "Octolith 5",
                     "Octolith 6",
                     "Octolith 7",
                     "Octolith 8",
-                    "Battlehammer",
-                    "Imperialist"
+                    "Battlehammer"
                 ]
             },
             "starting_location": "Celestial Archives/Celestial Gateway/Ship",
@@ -173,83 +173,96 @@
             "dock_weakness": {},
             "locations": {
                 "Alinos": {
-                    "Alinos Gateway/Pickup (Missile Expansion)": "Nothing",
-                    "Alinos Perch/Pickup (Missile Expansion)": "VDO Attameter Artifact 1",
-                    "Biodefense Chamber A/Pickup (Octolith)": "Octolith 1",
-                    "Biodefense Chamber B/Pickup (Octolith)": "Octolith 3",
-                    "Council Chamber/Pickup (Attameter Artifact)": "Missile Expansion",
-                    "Council Chamber/Pickup (Energy Tank)": "Celestial Cartograph Artifact 1",
-                    "Council Chamber/Pickup (Magmaul)": "UA Expansion",
+                    "Alinos Gateway/Pickup (Missile Expansion)": "Missile Expansion",
+                    "Alinos Perch/Pickup (Missile Expansion)": "Nothing",
+                    "Biodefense Chamber A/Pickup (Octolith)": "Volt Driver",
+                    "Biodefense Chamber B/Pickup (Octolith)": "Missile Expansion",
+                    "Council Chamber/Pickup (Attameter Artifact)": "Energy Tank",
+                    "Council Chamber/Pickup (Energy Tank)": "Nothing",
+                    "Council Chamber/Pickup (Magmaul)": "Alinos Attameter Artifact 1",
                     "Crash Site/Pickup (Cartograph Artifact)": "Energy Tank",
-                    "Echo Hall/Pickup (Cartograph Artifact)": "UA Expansion",
-                    "Echo Hall/Pickup (Energy Tank)": "Alinos Cartograph Artifact 1",
-                    "Elder Passage/Pickup (Attameter Artifact)": "Celestial Binary Subscripture Artifact 2",
-                    "High Ground/Pickup (Binary Subscripture Artifact)": "Missile Expansion",
-                    "High Ground/Pickup (Missile Expansion)": "Judicator",
-                    "Magma Drop/Pickup (UA Expansion)": "Nothing",
-                    "Piston Cave/Pickup (Binary Subcripture Artifact)": "Energy Tank",
-                    "Processor Core/Pickup (Binary Subscripture Artifact)": "Missile Launcher"
+                    "Echo Hall/Pickup (Cartograph Artifact)": "Alinos Binary Subscripture Artifact 2",
+                    "Echo Hall/Pickup (Energy Tank)": "UA Expansion",
+                    "Elder Passage/Pickup (Attameter Artifact)": "Celestial Cartograph Artifact 2",
+                    "High Ground/Pickup (Binary Subscripture Artifact)": "Celestial Attameter Artifact 1",
+                    "High Ground/Pickup (Missile Expansion)": "Imperialist",
+                    "Magma Drop/Pickup (UA Expansion)": "Energy Tank",
+                    "Piston Cave/Pickup (Binary Subcripture Artifact)": "UA Expansion",
+                    "Processor Core/Pickup (Binary Subscripture Artifact)": "Alinos Cartograph Artifact 2"
                 },
                 "Arcterra": {
-                    "Biodefense Chamber A/Pickup (Octolith)": "Alinos Attameter Artifact 1",
-                    "Biodefense Chamber B/Pickup (Octolith)": "Energy Tank",
-                    "Drip Moat/Pickup (UA Expansion)": "Missile Expansion",
-                    "Fault Line/Pickup (Attameter Artifact)": "Volt Driver",
-                    "Fault Line/Pickup (Imperialist)": "Arcterra Binary Subscripture Artifact 1",
-                    "Frost Labyrinth/Pickup (Binary Subscripture Artifact)": "Celestial Attameter Artifact 2",
-                    "Frost Labyrinth/Pickup (Energy Tank)": "Energy Tank",
-                    "Ice Hive/Pickup (Cartograph Artifact)": "UA Expansion",
-                    "Ice Hive/Pickup (Judicator)": "UA Expansion",
-                    "Ice Hive/Pickup (Missile Expansion)": "VDO Cartograph Artifact 1",
-                    "Ice Hive/Pickup (UA Expansion - Alcove)": "Nothing",
-                    "Ice Hive/Pickup (UA Expansion - War Wasps)": "Celestial Attameter Artifact 1",
-                    "Sanctorus/Pickup (Binary Subscripture Artifact)": "Arcterra Cartograph Artifact 1",
-                    "Sanctorus/Pickup (UA Expansion)": "UA Expansion",
-                    "Sic Transit/Pickup (Attameter Artifact)": "VDO Attameter Artifact 2",
+                    "Biodefense Chamber A/Pickup (Octolith)": "Octolith 2",
+                    "Biodefense Chamber B/Pickup (Octolith)": "Alinos Attameter Artifact 2",
+                    "Drip Moat/Pickup (UA Expansion)": "Arcterra Cartograph Artifact 1",
+                    "Fault Line/Pickup (Attameter Artifact)": "VDO Attameter Artifact 2",
+                    "Fault Line/Pickup (Imperialist)": "Missile Expansion",
+                    "Frost Labyrinth/Pickup (Binary Subscripture Artifact)": "UA Expansion",
+                    "Frost Labyrinth/Pickup (Energy Tank)": "Missile Expansion",
+                    "Ice Hive/Pickup (Cartograph Artifact)": "Energy Tank",
+                    "Ice Hive/Pickup (Judicator)": "Nothing",
+                    "Ice Hive/Pickup (Missile Expansion)": "VDO Binary Subscripture Artifact 1",
+                    "Ice Hive/Pickup (UA Expansion - Alcove)": "Alinos Cartograph Artifact 1",
+                    "Ice Hive/Pickup (UA Expansion - War Wasps)": "UA Expansion",
+                    "Sanctorus/Pickup (Binary Subscripture Artifact)": "Missile Expansion",
+                    "Sanctorus/Pickup (UA Expansion)": "Alinos Binary Subscripture Artifact 1",
+                    "Sic Transit/Pickup (Attameter Artifact)": "Arcterra Cartograph Artifact 2",
                     "Sic Transit/Pickup (Energy Tank)": "UA Expansion",
-                    "Subterranean/Pickup (Cartograph Artifact)": "UA Expansion",
-                    "Subterranean/Pickup (Missile Expansion)": "Alinos Binary Subscripture Artifact 1"
+                    "Subterranean/Pickup (Cartograph Artifact)": "VDO Cartograph Artifact 2",
+                    "Subterranean/Pickup (Missile Expansion)": "UA Expansion"
                 },
                 "Celestial Archives": {
-                    "Biodefense Chamber A/Pickup (Octolith)": "Alinos Cartograph Artifact 2",
-                    "Biodefense Chamber B/Pickup (Octolith)": "Arcterra Cartograph Artifact 2",
-                    "Celestial Gateway/Pickup (UA Expansion)": "Energy Tank",
-                    "Data Shrine 01/Pickup (Cartograph Artifact)": "UA Expansion",
-                    "Data Shrine 01/Pickup (Energy Tank)": "Nothing",
-                    "Data Shrine 02/Pickup (Missile Expansion)": "UA Expansion",
-                    "Data Shrine 02/Pickup (UA Expansion)": "Missile Expansion",
-                    "Data Shrine 02/Pickup (Volt Driver)": "UA Expansion",
-                    "Data Shrine 03/Pickup (Attameter Artifact)": "Missile Expansion",
-                    "Docking Bay/Pickup (Cartograph Artifact)": "Shock Coil",
-                    "Docking Bay/Pickup (UA Expansion)": "Arcterra Binary Subscripture Artifact 2",
-                    "Incubation Vault 01/Pickup (Attameter Artifact)": "VDO Cartograph Artifact 2",
-                    "Incubation Vault 02/Pickup (Shock Coil)": "Nothing",
-                    "Incubation Vault 03/Pickup (Missile Expansion)": "Celestial Binary Subscripture Artifact 1",
-                    "New Arrival Registration/Pickup (Binary Subscripture Artifact)": "Alinos Attameter Artifact 2",
-                    "New Arrival Registration/Pickup (Energy Tank)": "Arcterra Attameter Artifact 1",
-                    "Synergy Core/Pickup (Binary Subscripture Artifact)": "Missile Expansion",
+                    "Biodefense Chamber A/Pickup (Octolith)": "Octolith 3",
+                    "Biodefense Chamber B/Pickup (Octolith)": "VDO Binary Subscripture Artifact 2",
+                    "Celestial Gateway/Pickup (UA Expansion)": "Missile Launcher",
+                    "Data Shrine 01/Pickup (Cartograph Artifact)": "Missile Expansion",
+                    "Data Shrine 01/Pickup (Energy Tank)": "Missile Expansion",
+                    "Data Shrine 02/Pickup (Missile Expansion)": "VDO Attameter Artifact 1",
+                    "Data Shrine 02/Pickup (UA Expansion)": "UA Expansion",
+                    "Data Shrine 02/Pickup (Volt Driver)": "Celestial Binary Subscripture Artifact 1",
+                    "Data Shrine 03/Pickup (Attameter Artifact)": "VDO Cartograph Artifact 1",
+                    "Docking Bay/Pickup (Cartograph Artifact)": "Arcterra Binary Subscripture Artifact 1",
+                    "Docking Bay/Pickup (UA Expansion)": "Energy Tank",
+                    "Incubation Vault 01/Pickup (Attameter Artifact)": "Shock Coil",
+                    "Incubation Vault 02/Pickup (Shock Coil)": "Celestial Binary Subscripture Artifact 2",
+                    "Incubation Vault 03/Pickup (Missile Expansion)": "Celestial Attameter Artifact 2",
+                    "New Arrival Registration/Pickup (Binary Subscripture Artifact)": "Arcterra Attameter Artifact 1",
+                    "New Arrival Registration/Pickup (Energy Tank)": "Celestial Cartograph Artifact 1",
+                    "Synergy Core/Pickup (Binary Subscripture Artifact)": "UA Expansion",
                     "Transfer Lock/Pickup (UA Expansion)": "UA Expansion"
                 },
                 "Oubliette": {
                     "Oubliette Storage/Pickup (Energy Tank)": "Energy Tank"
                 },
                 "Vesper Defense Outpost": {
-                    "Biodefense Chamber A/Pickup (Octolith)": "Octolith 2",
-                    "Biodefense Chamber B/Pickup (Octolith)": "Celestial Cartograph Artifact 2",
-                    "Compression Chamber/Pickup (UA Expansion)": "Alinos Binary Subscripture Artifact 2",
-                    "Compression Chamber/Pickup (Binary Subscripture Artifact)": "Magmaul",
-                    "Cortex CPU/Pickup (Battlehammer)": "Energy Tank",
-                    "Cortex CPU/Pickup (Missile Expansion)": "Arcterra Attameter Artifact 2",
-                    "Fuel Stack/Pickup (Missile Expansion)": "Nothing",
-                    "Fuel Stack/Pickup (Binary Subscripture Artifact)": "Nothing",
-                    "Stasis Bunker/Pickup (UA Expansion)": "Missile Expansion",
-                    "Stasis Bunker/Pickup (Attameter Artifact)": "Missile Expansion",
-                    "Stasis Bunker/Pickup (Cartograph Artifact)": "UA Expansion",
-                    "Weapons Complex/Pickup (Attameter Artifact)": "VDO Binary Subscripture Artifact 2",
-                    "Weapons Complex/Pickup (Cartograph Artifact)": "VDO Binary Subscripture Artifact 1"
+                    "Biodefense Chamber A/Pickup (Octolith)": "Octolith 4",
+                    "Biodefense Chamber B/Pickup (Octolith)": "Octolith 1",
+                    "Compression Chamber/Pickup (Binary Subscripture Artifact)": "Energy Tank",
+                    "Compression Chamber/Pickup (UA Expansion)": "Nothing",
+                    "Cortex CPU/Pickup (Battlehammer)": "UA Expansion",
+                    "Cortex CPU/Pickup (Missile Expansion)": "Judicator",
+                    "Fuel Stack/Pickup (Binary Subscripture Artifact)": "Missile Expansion",
+                    "Fuel Stack/Pickup (Missile Expansion)": "Arcterra Attameter Artifact 2",
+                    "Stasis Bunker/Pickup (Attameter Artifact)": "UA Expansion",
+                    "Stasis Bunker/Pickup (Cartograph Artifact)": "Nothing",
+                    "Stasis Bunker/Pickup (UA Expansion)": "Arcterra Binary Subscripture Artifact 2",
+                    "Weapons Complex/Pickup (Attameter Artifact)": "UA Expansion",
+                    "Weapons Complex/Pickup (Cartograph Artifact)": "Magmaul"
                 }
             },
-            "hints": {},
+            "hints": {
+                "Alinos/Alimbic Cannon Control Room/Lore Scan 1": {
+                    "hint_type": "joke"
+                },
+                "Alinos/Alimbic Cannon Control Room/Lore Scan 2": {
+                    "hint_type": "joke"
+                },
+                "Alinos/Alimbic Cannon Control Room/Lore Scan 3": {
+                    "hint_type": "joke"
+                },
+                "Alinos/Alimbic Cannon Control Room/Lore Scan 4": {
+                    "hint_type": "joke"
+                }
+            },
             "game_specific": {
                 "force_fields": {
                     "Celestial Archives/Synergy Core/Volt Driver Force Field": "volt-driver",
@@ -283,36 +296,36 @@
     ],
     "item_order": [
         "Battlehammer as starting item",
-        "Imperialist as starting item",
-        "Judicator at Alinos/High Ground/Pickup (Missile Expansion)",
-        "Magmaul at Vesper Defense Outpost/Compression Chamber/Pickup (Binary Subscripture Artifact)",
-        "Missile Launcher at Alinos/Processor Core/Pickup (Binary Subscripture Artifact)",
-        "VDO Binary Subscripture Artifact 2 at Vesper Defense Outpost/Weapons Complex/Pickup (Attameter Artifact)",
-        "Celestial Attameter Artifact 1 at Arcterra/Ice Hive/Pickup (UA Expansion - War Wasps)",
-        "Volt Driver at Arcterra/Fault Line/Pickup (Attameter Artifact)",
-        "Shock Coil at Celestial Archives/Docking Bay/Pickup (Cartograph Artifact)",
-        "VDO Cartograph Artifact 2 at Celestial Archives/Incubation Vault 01/Pickup (Attameter Artifact)",
-        "Alinos Cartograph Artifact 1 at Alinos/Echo Hall/Pickup (Energy Tank)",
-        "Alinos Attameter Artifact 2 at Celestial Archives/New Arrival Registration/Pickup (Binary Subscripture 2)",
-        "VDO Attameter Artifact 2 at Arcterra/Sic Transit/Pickup (Attameter Artifact)",
-        "Celestial Cartograph Artifact 2 at Vesper Defense Outpost/Biodefense Chamber B/Pickup (Octolith)",
-        "Celestial Cartograph Artifact 1 at Alinos/Council Chamber/Pickup (Energy Tank)",
-        "VDO Cartograph Artifact 1 at Arcterra/Ice Hive/Pickup (Missile Expansion)",
-        "Arcterra Binary Subscripture Artifact 2 at Celestial Archives/Docking Bay/Pickup (UA Expansion)",
-        "Arcterra Binary Subscripture Artifact 1 at Arcterra/Fault Line/Pickup (Imperialist)",
-        "Arcterra Attameter Artifact 1 at Celestial Archives/New Arrival Registration/Pickup (Energy Tank)",
-        "Arcterra Cartograph Artifact 1 at Arcterra/Sanctorus/Pickup (Binary Subscripture Artifact)",
-        "Alinos Attameter Artifact 1 at Arcterra/Biodefense Chamber A/Pickup (Octolith)",
-        "Arcterra Attameter Artifact 2 at Vesper Defense Outpost/Cortex CPU/Pickup (Missile Expansion)",
-        "Alinos Binary Subscripture Artifact 2 at Vesper Defense Outpost/Compression Chamber/Pickup (UA Expansion)",
-        "Alinos Binary Subscripture Artifact 1 at Arcterra/Subterranean/Pickup (Missile Expansion)",
-        "Celestial Binary Subscripture Artifact 1 at Celestial Archives/Incubation Vault 03/Pickup (Missile Expansion)",
-        "Alinos Cartograph Artifact 2 at Celestial Archives/Biodefense Chamber A/Pickup (Octolith)",
-        "VDO Binary Subscripture Artifact 1 at Vesper Defense Outpost/Weapons Complex/Pickup (Cartograph Artifact)",
-        "Celestial Binary Subscripture Artifact 2 at Alinos/Elder Passage/Pickup (Attameter Artifact)",
-        "Celestial Attameter Artifact 2 at Arcterra/Frost Labyrinth/Pickup (Binary Subscripture Artifact)",
-        "Arcterra Cartograph Artifact 2 at Celestial Archives/Biodefense Chamber B/Pickup (Octolith)",
-        "VDO Attameter Artifact 1 at Alinos/Alinos Perch/Pickup (Missile Expansion)"
+        "Judicator at Vesper Defense Outpost/Cortex CPU/Pickup (Missile Expansion)",
+        "VDO Binary Subscripture Artifact 1 at Arcterra/Ice Hive/Pickup (Missile Expansion)",
+        "Magmaul at Vesper Defense Outpost/Weapons Complex/Pickup (Cartograph Artifact)",
+        "Alinos Cartograph Artifact 2 at Alinos/Processor Core/Pickup (Binary Subscripture Artifact)",
+        "Missile Launcher at Celestial Archives/Celestial Gateway/Pickup (UA Expansion)",
+        "Celestial Binary Subscripture Artifact 1 at Celestial Archives/Data Shrine 02/Pickup (Volt Driver)",
+        "Alinos Attameter Artifact 1 at Alinos/Council Chamber/Pickup (Magmaul)",
+        "VDO Attameter Artifact 1 at Celestial Archives/Data Shrine 02/Pickup (Missile Expansion)",
+        "Imperialist at Alinos/High Ground/Pickup (Missile Expansion)",
+        "Alinos Binary Subscripture Artifact 1 at Arcterra/Sanctorus/Pickup (UA Expansion)",
+        "Alinos Cartograph Artifact 1 at Arcterra/Ice Hive/Pickup (UA Expansion - Alcove)",
+        "Alinos Binary Subscripture Artifact 2 at Alinos/Echo Hall/Pickup (Cartograph Artifact)",
+        "Arcterra Attameter Artifact 2 at Vesper Defense Outpost/Fuel Stack/Pickup (Missile Expansion)",
+        "Celestial Attameter Artifact 1 at Alinos/High Ground/Pickup (Binary Subscripture Artifact)",
+        "Arcterra Cartograph Artifact 1 at Arcterra/Drip Moat/Pickup (UA Expansion)",
+        "VDO Cartograph Artifact 1 at Celestial Archives/Data Shrine 03/Pickup (Attameter Artifact)",
+        "Arcterra Binary Subscripture Artifact 2 at Vesper Defense Outpost/Stasis Bunker/Pickup (UA Expansion)",
+        "Arcterra Cartograph Artifact 2 at Arcterra/Sic Transit/Pickup (Attameter Artifact)",
+        "Alinos Attameter Artifact 2 at Arcterra/Biodefense Chamber B/Pickup (Octolith)",
+        "Volt Driver at Alinos/Biodefense Chamber A/Pickup (Octolith)",
+        "Arcterra Binary Subscripture Artifact 1 at Celestial Archives/Docking Bay/Pickup (Cartograph Artifact)",
+        "Shock Coil at Celestial Archives/Incubation Vault 01/Pickup (Attameter Artifact)",
+        "Arcterra Attameter Artifact 1 at Celestial Archives/New Arrival Registration/Pickup (Binary Subscripture Artifact)",
+        "Celestial Binary Subscripture Artifact 2 at Celestial Archives/Incubation Vault 02/Pickup (Shock Coil)",
+        "Celestial Cartograph Artifact 1 at Celestial Archives/New Arrival Registration/Pickup (Energy Tank)",
+        "Celestial Cartograph Artifact 2 at Alinos/Elder Passage/Pickup (Attameter Artifact)",
+        "Celestial Attameter Artifact 2 at Celestial Archives/Incubation Vault 03/Pickup (Missile Expansion)",
+        "VDO Binary Subscripture Artifact 2 at Celestial Archives/Biodefense Chamber B/Pickup (Octolith)",
+        "VDO Cartograph Artifact 2 at Arcterra/Subterranean/Pickup (Cartograph Artifact)",
+        "VDO Attameter Artifact 2 at Arcterra/Fault Line/Pickup (Attameter Artifact)"
     ],
-    "checksum": "cd5f5beb9744c3a74b9d5ca79745fbf84f1990436f2f44b15e7e400741ddb9e77a41535738374e5236f7bdd7cf6ad636d62ee3b19239cfeeed2ebe1638ddc4bc"
+    "checksum": "7100782d56b9d13b959bc6c021d608b91530118ace97612a08092eb696565da86e9b9e10d30de12096fdde40446f21cfd6dfba14fb6b672c2530718d0e5708ec"
 }
