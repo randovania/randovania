@@ -70,7 +70,7 @@ class State:
         self.damage_state = damage_state.limited_by_maximum(self.resources)
 
     def copy(self) -> Self:
-        return State(
+        return self.__class__(
             self.resources.duplicate(),
             self.collected_resource_nodes,
             self.damage_state,
@@ -121,7 +121,7 @@ class State:
         damage_state: DamageState,
         patches: GamePatches,
     ) -> Self:
-        return State(
+        return self.__class__(
             new_resources,
             self.collected_resource_nodes + new_collected_resource_nodes,
             damage_state,
@@ -203,7 +203,7 @@ class State:
         )
 
 
-def add_pickup_to_state(state: State, pickup: PickupEntry):
+def add_pickup_to_state(state: State, pickup: PickupEntry) -> None:
     """
     Modifies inplace the given state, adding the resources of the given pickup
     :param state:
