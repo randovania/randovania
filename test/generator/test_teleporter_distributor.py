@@ -109,14 +109,12 @@ def test_try_randomize_teleporters(seed_number: int, expected_ids: list[int], ec
     # Run
     result = teleporter_distributor.try_randomize_teleporters(
         rng,
-        teleporter_distributor.create_teleporter_database(
-            echoes_game_description.region_list, teleporters, [elevator_type]
-        ),
+        teleporter_distributor.create_teleporter_database(echoes_game_description, teleporters, [elevator_type]),
     )
 
     def get_connected_id(teleporter: TeleporterHelper) -> str:
         assert teleporter.connected_teleporter is not None
-        node = echoes_game_description.region_list.node_by_identifier(teleporter.connected_teleporter.teleporter)
+        node = echoes_game_description.node_by_identifier(teleporter.connected_teleporter.teleporter)
         return node.extra["teleporter_instance_id"]
 
     connected_ids = [get_connected_id(teleporter) for teleporter in result]
