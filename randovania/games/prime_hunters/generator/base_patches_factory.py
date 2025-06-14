@@ -18,7 +18,6 @@ if TYPE_CHECKING:
     from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.node import Node
     from randovania.game_description.game_description import GameDescription
-    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class HuntersBasePatchesFactory(BasePatchesFactory[HuntersConfiguration]):
@@ -43,9 +42,8 @@ class HuntersBasePatchesFactory(BasePatchesFactory[HuntersConfiguration]):
         }
 
     def dock_connections_assignment(
-        self, configuration: BaseConfiguration, game: GameDescription, rng: Random
+        self, configuration: HuntersConfiguration, game: GameDescription, rng: Random
     ) -> Iterable[tuple[DockNode, Node]]:
-        assert isinstance(configuration, HuntersConfiguration)
         teleporter_connection = get_teleporter_connections(configuration.teleporters, game, rng)
         dock_assignment = get_dock_connections_assignment_for_teleporter(
             configuration.teleporters, game, teleporter_connection
