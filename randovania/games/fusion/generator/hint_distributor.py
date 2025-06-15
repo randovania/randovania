@@ -48,6 +48,7 @@ class FusionHintDistributor(HintDistributor):
         fake_hints = [
             ("Main Deck", "Auxiliary Navigation Room", "Navigation Terminal"),
             ("Main Deck", "Restricted Navigation Room", "Navigation Terminal"),
+            ("Main Deck", "Operations Deck Navigation Room", "Navigation Terminal"),
         ]
         for region, area, node in fake_hints:
             patches = patches.assign_hint(NodeIdentifier.create(region, area, node), JokeHint())
