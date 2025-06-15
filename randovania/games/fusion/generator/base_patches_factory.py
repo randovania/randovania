@@ -43,14 +43,14 @@ class FusionBasePatchesFactory(BasePatchesFactory[FusionConfiguration]):
 
         # Some areas have issues with the hatch limit of 6, so we set some to open to remove 1-way possibilities
         docks = [
-            {"region": "Sector 2 (TRO)", "area": "Cathedral", "dock": "Door to Ripper Tower"},
-            {"region": "Sector 2 (TRO)", "area": "Ripper Tower", "dock": "Door to Cathedral"},
-            {"region": "Sector 5 (ARC)", "area": "Arctic Containment", "dock": "Door to Ripper Road"},
-            {"region": "Sector 5 (ARC)", "area": "Ripper Road", "dock": "Door to Arctic Containment"},
+            ("Sector 2 (TRO)", "Cathedral", "Door to Ripper Tower"),
+            ("Sector 2 (TRO)", "Ripper Tower", "Door to Cathedral"),
+            ("Sector 5 (ARC)", "Arctic Containment", "Door to Ripper Road"),
+            ("Sector 5 (ARC)", "Ripper Road", "Door to Arctic Containment"),
         ]
-        for dock in docks:
+        for region, area, dock in docks:
             dock_weakness.append(
-                (get_node(nic(dock["region"], dock["area"], dock["dock"]), DockNode), open_transition_door),
+                (get_node(nic(region, area, dock), DockNode), open_transition_door),
             )
 
         return parent.assign_dock_weakness(dock_weakness)
