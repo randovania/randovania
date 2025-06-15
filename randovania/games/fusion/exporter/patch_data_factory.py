@@ -245,6 +245,9 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 else:
                     operations_hint = operations_hint + text + " "
                 hint_counter += 1
+            restricted_hint = restricted_hint.rstrip()
+            operations_hint = operations_hint.rstrip()
+
             # special handling when there's no Metroids to hint on Operations Deck
             if hint_counter == 1:
                 operations_hint = "This terminal was unable to scan for any [COLOR=3]Metroids[/COLOR]."
