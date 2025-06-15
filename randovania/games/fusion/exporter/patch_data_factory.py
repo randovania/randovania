@@ -234,19 +234,19 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         hints = {}
         restricted_hint = ""
         operations_hint = ""
-        i = 0
+        hint_counter = 0
         if metroid_precision != SpecificPickupHintMode.DISABLED:
             # loop through all metroids and place them alternating on Restricted then Operations Nav Rooms
             for _, text in metroid_hint_mapping.items():
                 if "has no need to be located" in text:
                     continue
-                if i % 2 == 0:
+                if hint_counter % 2 == 0:
                     restricted_hint = restricted_hint + text + " "
                 else:
                     operations_hint = operations_hint + text + " "
-                i += 1
+                hint_counter += 1
             # special handling when there's no Metroids to hint on Operations Deck
-            if i == 1:
+            if hint_counter == 1:
                 operations_hint = "This terminal was unable to scan for any [COLOR=3]Metroids[/COLOR]."
 
         for node in self.game.region_list.iterate_nodes_of_type(HintNode):
