@@ -32,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Agon Wastes
 
-- Added: In Transport Center, added an Instant Morph (Advanced) method of climbing the half-pipe.
+- Added: In Transport Center, added an Instant Morph + Bomb Space Jump (Advanced) method of climbing the half-pipe.
 
 ## [9.2.0] - 2025-06-02
 
