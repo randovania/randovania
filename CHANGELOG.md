@@ -71,7 +71,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Tallon Overworld
 
-- Fixed: Climbing Reactor Core with Bomb Jumps is now classified as Complex Bomb Jump(s).
+- Changed: Climbing Reactor Core with Bomb Jumps is now classified as Complex Bomb Jump(s) (Ludicrous).
 
 ### Metroid Prime 2: Echoes
 
