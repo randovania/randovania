@@ -9,13 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: An error when the computer shuts down unexpectedly or crashes during a multiworld that corrupts some files and prevents Randovania from starting.
 
+### Generator
+- Added: The generator will now check for the count of major pickups when major/minor split is enabled.
+
 ## [9.3.0] - 2025-07-02
 
 ### Generator
 
 - Fixed: Some cases where weights from certain actions would not be calculated correctly.
 - Fixed: Pre placed pickups now avoid using locations configured as non-progression.
-- Added: The generator will now check for the count of major pickups when major/minor split is enabled.
 
 ### Metroid Dread
 
