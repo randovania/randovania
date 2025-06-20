@@ -156,19 +156,9 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             tank_dict[definition.extra["TankIncrementName"]] = state.ammo_count[0]
         tank_dict["EnergyTank"] = self.configuration.energy_per_tank
 
-        missile_launcher = next(
-            state
-            for defi, state in self.configuration.standard_pickup_configuration.pickups_state.items()
-            if defi.name == "Missile Launcher Data"
-        )
-        tank_dict["MissileData"] = missile_launcher.included_ammo[0]
-
-        pb_launcher = next(
-            state
-            for defi, state in self.configuration.standard_pickup_configuration.pickups_state.items()
-            if defi.name == "Power Bomb Data"
-        )
-        tank_dict["PowerBombData"] = pb_launcher.included_ammo[0]
+        for definition, state in self.configuration.standard_pickup_configuration.pickups_state.items():
+            if "LauncherIncrementName" in definition.extra:
+                tank_dict[definition.extra["LauncherIncrementName"]] = state.included_ammo[0]
 
         return tank_dict
 
