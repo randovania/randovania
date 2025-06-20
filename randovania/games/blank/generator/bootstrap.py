@@ -16,6 +16,5 @@ class BlankBootstrap(Bootstrap[BlankConfiguration]):
         return EnergyTankDamageState(
             100,
             100,
-            game.resource_database,
-            game.region_list,
+            game.resource_database.energy_tank_item,
         )
