@@ -152,13 +152,13 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
 
     def _create_tank_increments(self) -> dict:
         tank_dict = {}
-        for definition, state in self.patches.configuration.ammo_pickup_configuration.pickups_state.items():
-            tank_dict[definition.extra["TankIncrementName"]] = state.ammo_count[0]
+        for ammo_definition, ammo_state in self.patches.configuration.ammo_pickup_configuration.pickups_state.items():
+            tank_dict[ammo_definition.extra["TankIncrementName"]] = ammo_state.ammo_count[0]
         tank_dict["EnergyTank"] = self.configuration.energy_per_tank
 
-        for definition, state in self.configuration.standard_pickup_configuration.pickups_state.items():
-            if "LauncherIncrementName" in definition.extra:
-                tank_dict[definition.extra["LauncherIncrementName"]] = state.included_ammo[0]
+        for stand_definition, stand_state in self.configuration.standard_pickup_configuration.pickups_state.items():
+            if "LauncherIncrementName" in stand_definition.extra:
+                tank_dict[stand_definition.extra["LauncherIncrementName"]] = stand_state.included_ammo[0]
 
         return tank_dict
 
