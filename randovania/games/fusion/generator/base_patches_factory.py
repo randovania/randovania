@@ -20,7 +20,7 @@ class FusionBasePatchesFactory(BasePatchesFactory[FusionConfiguration]):
         parent = super().assign_static_dock_weakness(configuration, game, initial_patches)
 
         nic = NodeIdentifier.create
-        get_node = game.region_list.typed_node_by_identifier
+        get_node = game.typed_node_by_identifier
 
         dock_weakness: list[tuple[DockNode, DockWeakness]] = []
         open_transition_door = game.get_dock_weakness("Door", "Open Hatch")
