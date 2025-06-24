@@ -280,11 +280,12 @@ def test_basic_search_with_translator_gate(
         EnergyTankDamageState(
             99,
             100,
-            game.resource_database,
-            game.region_list,
+            game.resource_database.energy_tank,
         ),
         node_a,
         echoes_game_patches,
+        game.resource_database,
+        game.region_list,
         None,
     )
 

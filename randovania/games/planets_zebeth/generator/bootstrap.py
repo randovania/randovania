@@ -20,6 +20,5 @@ class PlanetsZebethBootstrap(Bootstrap):
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
-            game.resource_database,
-            game.region_list,
+            game.resource_database.energy_tank_item,
         )

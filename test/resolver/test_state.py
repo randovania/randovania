@@ -30,7 +30,16 @@ def test_collected_pickup_indices(state_game_data, empty_patches):
     resources = ResourceCollection.from_dict(
         db, {db.item[0]: 5, pickup_nodes[0].resource(context): 1, pickup_nodes[1].resource(context): 1}
     )
-    s = state.State(resources, (), state_game_data, starting, empty_patches, None)
+    s = state.State(
+        resources,
+        (),
+        state_game_data,
+        starting,
+        empty_patches,
+        empty_patches.game.resource_database,
+        empty_patches.game.region_list,
+        None,
+    )
 
     # Run
     indices = list(s.collected_pickup_indices)
@@ -43,7 +52,16 @@ def test_add_pickup_to_state(state_game_data, empty_patches, generic_pickup_cate
     # Starting State
     db = state_game_data.resource_database()
     starting_node = state_game_data.region_list().node_by_identifier(empty_patches.game.starting_location)
-    s = state.State(ResourceCollection(), (), state_game_data, starting_node, empty_patches, None)
+    s = state.State(
+        ResourceCollection(),
+        (),
+        state_game_data,
+        starting_node,
+        empty_patches,
+        empty_patches.game.resource_database,
+        empty_patches.game.region_list,
+        None,
+    )
 
     resource_a = db.item[0]
     resource_b = db.item[1]
@@ -79,7 +97,16 @@ def test_assign_pickup_to_starting_items(
     # Setup
     db = state_game_data.resource_database()
     starting_node = state_game_data.region_list().node_by_identifier(empty_patches.game.starting_location)
-    starting = state.State(ResourceCollection(), (), state_game_data, starting_node, empty_patches, None)
+    starting = state.State(
+        ResourceCollection(),
+        (),
+        state_game_data,
+        starting_node,
+        empty_patches,
+        empty_patches.game.resource_database,
+        empty_patches.game.region_list,
+        None,
+    )
 
     resource_a = db.get_item("Ammo")
     resource_b = db.item[0]
