@@ -214,14 +214,14 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
 
             if octoliths_precision != SpecificPickupHintMode.DISABLED:
                 if scan_text == "":
-                    hint_dict["string"] = scan_title + self.rng.choice(useless_hints).lower()
+                    hint_dict["text"] = scan_title + self.rng.choice(useless_hints).lower()
                 else:
-                    hint_dict["string"] = scan_title + scan_text
+                    hint_dict["text"] = scan_title + scan_text
 
                 if not self.configuration.octoliths.placed_octoliths:
-                    hint_dict["string"] = "the OCTOLITHS have already been found. there is no need to locate them."
+                    hint_dict["text"] = "the OCTOLITHS have already been found. there is no need to locate them."
             else:
-                hint_dict["string"] = scan_title + self.rng.choice(useless_hints).lower()
+                hint_dict["text"] = scan_title + self.rng.choice(useless_hints).lower()
 
             hints.append(hint_dict)
 
