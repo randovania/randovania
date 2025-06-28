@@ -1,0 +1,72 @@
+{
+    "name": "Distorted Memory",
+    "extra": {
+        "area_id": "Zone_PrincessChambers",
+        "map_min_x": 0,
+        "map_min_y": 0,
+        "map_max_x": 0,
+        "map_max_y": 0
+    },
+    "areas": {
+        "Princess Chambers": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "room_id": 0
+            },
+            "nodes": {
+                "Event - Defeat Princess": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1050.0,
+                        "y": 250.0,
+                        "z": 540.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 70
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "DistortedMemory_PrincessChambers_DefeatPrincess",
+                    "connections": {}
+                },
+                "Transition to Tower Remains": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5400.0,
+                        "y": 200.0,
+                        "z": 15400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 87,
+                        "transition_tag": "towerTop",
+                        "start_tag": "chambersStart"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Upper Roof",
+                        "node": "Transition to Distorted Memory"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        }
+    }
+}

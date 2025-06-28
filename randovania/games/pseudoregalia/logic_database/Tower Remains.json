@@ -1,0 +1,868 @@
+{
+    "name": "Tower Remains",
+    "extra": {
+        "area_id": "Zone_Tower",
+        "map_min_x": 12,
+        "map_min_y": 12,
+        "map_max_x": 12,
+        "map_max_y": 26
+    },
+    "areas": {
+        "Bridge": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 3400.0,
+                    "x2": 7000.0,
+                    "y1": -3450.0,
+                    "y2": 10100.0
+                },
+                "polygon": [
+                    [
+                        3400.0,
+                        -3450.0
+                    ],
+                    [
+                        3400.0,
+                        10100.0
+                    ],
+                    [
+                        7000.0,
+                        10100.0
+                    ],
+                    [
+                        7000.0,
+                        -3450.0
+                    ]
+                ],
+                "room_id": 0
+            },
+            "nodes": {
+                "Door to Lower Interior": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5250.0,
+                        "y": 10100.0,
+                        "z": 1050.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 124
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Lower Interior",
+                        "node": "Door to Bridge"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Lower Roof": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5200.0,
+                        "y": 7400.0,
+                        "z": 3650.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Lower Roof",
+                        "node": "Door to Bridge"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Transition to Empty Bailey": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5250.0,
+                        "y": -3450.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 130,
+                        "transition_tag": "exteriorSouthEast",
+                        "start_tag": "towerSouth"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Empty Bailey",
+                        "area": "Bridge",
+                        "node": "Transition to Tower Remains"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Upper Interior": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 1550.0001,
+                    "x2": 8800.0,
+                    "y1": 17100.0,
+                    "y2": 21400.0
+                },
+                "polygon": [
+                    [
+                        1550.0001,
+                        17100.0
+                    ],
+                    [
+                        1550.0001,
+                        21400.0
+                    ],
+                    [
+                        8800.0,
+                        21400.0
+                    ],
+                    [
+                        8800.0,
+                        17100.0
+                    ]
+                ],
+                "room_id": 1
+            },
+            "nodes": {
+                "Pickup (Cling Gem)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5250.0,
+                        "y": 20350.0,
+                        "z": 4150.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 155
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 71,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Pickup (a Bleeding Heart)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3050.0,
+                        "y": 17750.0,
+                        "z": 4000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 156
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 73,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Event - Hit Switch": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3700.0,
+                        "y": 20700.0,
+                        "z": 4000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 86
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TowerRemains_UpperInterior_HitSwitch",
+                    "connections": {}
+                },
+                "Door to Lower Interior": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5150.0,
+                        "y": 19250.0,
+                        "z": 2600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Lower Interior",
+                        "node": "Door to Upper Interior"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Lower Roof": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5250.0,
+                        "y": 17100.0,
+                        "z": 4200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Lower Roof",
+                        "node": "Door to Upper Interior"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Wall Ride (East)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6550.0,
+                        "y": 21400.0,
+                        "z": 4200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Wall Ride",
+                        "node": "Door to Upper Interior (East)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Wall Ride (West)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3850.0,
+                        "y": 21400.0,
+                        "z": 4300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Wall Ride",
+                        "node": "Door to Upper Interior (West)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Upper Roof": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5250.0,
+                        "y": 19250.0,
+                        "z": 7200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Upper Roof",
+                        "node": "Door to Upper Interior"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Upper Roof": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 3650.0,
+                    "x2": 6850.0,
+                    "y1": 24400.0,
+                    "y2": 29350.0
+                },
+                "polygon": [
+                    [
+                        3650.0,
+                        24400.0
+                    ],
+                    [
+                        3650.0,
+                        29350.0
+                    ],
+                    [
+                        6850.0,
+                        29350.0
+                    ],
+                    [
+                        6850.0,
+                        24400.0
+                    ]
+                ],
+                "room_id": 2
+            },
+            "nodes": {
+                "Pickup (Major Key)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5250.0,
+                        "y": 24650.0,
+                        "z": 7100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 77
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 72,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Event - Hit Switch": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4200.0,
+                        "y": 25250.0,
+                        "z": 7200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 87
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TowerRemains_UpperRoof_HitSwitch",
+                    "connections": {}
+                },
+                "Door to Lower Roof": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5250.0,
+                        "y": 24400.0,
+                        "z": 6900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Lower Roof",
+                        "node": "Door to Upper Roof"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Upper Interior": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5250.0,
+                        "y": 27250.0,
+                        "z": 7200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Upper Interior",
+                        "node": "Door to Upper Roof"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Transition to Distorted Memory": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5250.0,
+                        "y": 29300.0,
+                        "z": 8350.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 131,
+                        "transition_tag": "chamberStart",
+                        "start_tag": "towerTop"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Distorted Memory",
+                        "area": "Princess Chambers",
+                        "node": "Transition to Tower Remains"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Lower Interior": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 3200.0,
+                    "x2": 7300.0,
+                    "y1": 10100.0,
+                    "y2": 14310.0
+                },
+                "polygon": [
+                    [
+                        3200.0,
+                        10100.0
+                    ],
+                    [
+                        3200.0,
+                        14310.0
+                    ],
+                    [
+                        7300.0,
+                        14310.0
+                    ],
+                    [
+                        7300.0,
+                        10100.0
+                    ]
+                ],
+                "room_id": 4
+            },
+            "nodes": {
+                "Save Crystal": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 4500.0,
+                        "y": 10700.0,
+                        "z": 200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 116,
+                        "start_tag": "towerSave"
+                    },
+                    "valid_starting_location": true,
+                    "connections": {}
+                },
+                "Event - Hit Switch": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5700.0,
+                        "y": 10300.0,
+                        "z": 200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 83
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TowerRemains_LowerInterior_HitSwitch",
+                    "connections": {}
+                },
+                "Door to Bridge": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5250.0,
+                        "y": 10100.0,
+                        "z": 1050.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 124
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Bridge",
+                        "node": "Door to Lower Interior"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Upper Interior": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5150.0,
+                        "y": 12250.0,
+                        "z": 2600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Upper Interior",
+                        "node": "Door to Lower Interior"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Lower Roof": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 4000.0,
+                    "x2": 6500.0,
+                    "y1": 14400.0,
+                    "y2": 17100.0
+                },
+                "polygon": [
+                    [
+                        4000.0,
+                        14400.0
+                    ],
+                    [
+                        4000.0,
+                        17100.0
+                    ],
+                    [
+                        6500.0,
+                        17100.0
+                    ],
+                    [
+                        6500.0,
+                        14400.0
+                    ]
+                ],
+                "room_id": 5
+            },
+            "nodes": {
+                "Door to Bridge": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5200.0,
+                        "y": 14400.0,
+                        "z": 3650.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Bridge",
+                        "node": "Door to Lower Roof"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Upper Interior": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5250.0,
+                        "y": 17100.0,
+                        "z": 4200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Upper Interior",
+                        "node": "Door to Lower Roof"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Upper Roof": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5250.0,
+                        "y": 16400.0,
+                        "z": 6900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Upper Roof",
+                        "node": "Door to Lower Roof"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Wall Ride": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 3600.0,
+                    "x2": 6800.0,
+                    "y1": 21400.0,
+                    "y2": 24400.0
+                },
+                "polygon": [
+                    [
+                        3600.0,
+                        21400.0
+                    ],
+                    [
+                        3600.0,
+                        24400.0
+                    ],
+                    [
+                        6800.0,
+                        24400.0
+                    ],
+                    [
+                        6800.0,
+                        21400.0
+                    ]
+                ],
+                "room_id": 6
+            },
+            "nodes": {
+                "Door to Upper Interior (East)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6550.0,
+                        "y": 21400.0,
+                        "z": 4200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Upper Interior",
+                        "node": "Door to Wall Ride (East)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Upper Interior (West)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3850.0,
+                        "y": 21400.0,
+                        "z": 4300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Upper Interior",
+                        "node": "Door to Wall Ride (West)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,119 @@
+----------------
+Bridge
+Extra - total_boundings: {'x1': -2850.0, 'x2': 10200.0, 'y1': -8400.0, 'y2': 3000.0}
+Extra - polygon: [[-2850.0, -8400.0], [-2850.0, 3000.0], [10200.0, 3000.0], [10200.0, -8400.0]]
+Extra - room_id: 0
+> Save Crystal; Heals? True; Spawn Point
+  * Layers: default
+  * Extra - actor_index: 121
+  * Extra - start_tag: exteriorSouthSave
+
+> Event - Hit Switch; Heals? False
+  * Layers: default
+  * Event Empty Bailey/Bridge/Hit Switch
+  * Extra - actor_index: 83
+
+> Event - Breakable Floor; Heals? False
+  * Layers: default
+  * Event Empty Bailey/Bridge/Breakable Floor
+  * Extra - actor_index: 56
+
+> Transition to Castle Sansa; Heals? False; Spawn Point
+  * Layers: default
+  * Transition to double transition room/Transition to Empty Bailey
+  * Extra - actor_index: 129
+  * Extra - transition_tag: exterior1
+  * Extra - start_tag: exteriorWest
+
+> Transition to The Underbelly; Heals? False; Spawn Point
+  * Layers: default
+  * Transition to Transition to Empty Bailey/Transition to Empty Bailey
+  * Extra - actor_index: 132
+  * Extra - transition_tag: cavesSouth
+  * Extra - start_tag: exteriorEast
+
+> Transition to Tower Remains; Heals? False; Spawn Point
+  * Layers: default
+  * Transition to Bridge/Transition to Empty Bailey
+  * Extra - actor_index: 131
+  * Extra - transition_tag: towerSouth
+  * Extra - start_tag: exteriorSouthEast
+
+> Door to Courtyard (Lower); Heals? False
+  * Layers: default
+  * No Wall to Courtyard/Door to Bridge (Lower)
+
+> Door to Courtyard (Upper); Heals? False
+  * Layers: default
+  * No Wall to Courtyard/Door to Bridge (Upper)
+
+----------------
+Courtyard
+Extra - total_boundings: {'x1': -12950.0, 'x2': -2850.0, 'y1': -6050.0, 'y2': 3550.0}
+Extra - polygon: [[-12950.0, -6050.0], [-12950.0, 3550.0], [-2850.0, 3550.0], [-2850.0, -6050.0]]
+Extra - room_id: 1
+> Pickup (Solar Wind); Heals? False
+  * Layers: default
+  * Pickup 55; Category? Major
+  * Extra - actor_index: 148
+
+> Pickup (Major Key); Heals? False
+  * Layers: default
+  * Pickup 54; Category? Major
+  * Extra - actor_index: 69
+
+> Pickup (Empathy); Heals? False
+  * Layers: default
+  * Pickup 57; Category? Minor
+  * Extra - actor_index: 149
+
+> Event - Hit Switch 1; Heals? False
+  * Layers: default
+  * Event Empty Bailey/Courtyard/Hit Switch 1
+  * Extra - actor_index: 81
+
+> Event - Hit Switch 2; Heals? False
+  * Layers: default
+  * Event Empty Bailey/Courtyard/Hit Switch 2
+  * Extra - actor_index: 84
+
+> Pickup (Chivalry); Heals? False
+  * Layers: default
+  * Pickup 58; Category? Major
+  * Extra - actor_index: 150
+
+> Pickup (Health Piece); Heals? False
+  * Layers: default
+  * Pickup 56; Category? Minor
+  * Extra - actor_index: 80
+
+> Pickup (Small Key); Heals? False
+  * Layers: default
+  * Pickup 53; Category? Minor
+  * Extra - actor_index: 70
+
+> Event - Hit Switch 3; Heals? False
+  * Layers: default
+  * Event Empty Bailey/Courtyard/Hit Switch 3
+  * Extra - actor_index: 82
+
+> Pickup (Goatling); Heals? False
+  * Layers: goatling_shuffle
+  * Pickup 52; Category? Minor
+  * Extra - actor_index: 115
+
+> Door to Bridge (Lower); Heals? False
+  * Layers: default
+  * No Wall to Bridge/Door to Courtyard (Lower)
+
+> Door to Bridge (Upper); Heals? False
+  * Layers: default
+  * No Wall to Bridge/Door to Courtyard (Upper)
+
+> Transition to Twilight Theatre; Heals? False; Spawn Point
+  * Layers: default
+  * Transition to Transition to Empty Bailey/Transition to Empty Bailey
+  * Extra - actor_index: 130
+  * Extra - transition_tag: theatreSouthWest
+  * Extra - start_tag: exteriorWest
+

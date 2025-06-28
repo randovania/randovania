@@ -1,0 +1,3145 @@
+{
+    "name": "Twilight Theatre",
+    "extra": {
+        "area_id": "Zone_Theatre",
+        "map_min_x": 9,
+        "map_min_y": 9,
+        "map_max_x": 9,
+        "map_max_y": 9
+    },
+    "areas": {
+        "Entrance": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 4500.0,
+                    "x2": 13150.0,
+                    "y1": -7400.0,
+                    "y2": -4550.0
+                },
+                "polygon": [
+                    [
+                        4500.0,
+                        -7400.0
+                    ],
+                    [
+                        4500.0,
+                        -4550.0
+                    ],
+                    [
+                        13150.0,
+                        -4550.0
+                    ],
+                    [
+                        13150.0,
+                        -7400.0
+                    ]
+                ],
+                "room_id": 0
+            },
+            "nodes": {
+                "Pickup (Goatling) 1": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9550.0,
+                        "y": -5250.0,
+                        "z": 1733.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "goatling_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 1072
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 80,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Pickup (Goatling) 2": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8600.0,
+                        "y": -5100.0,
+                        "z": 1753.1251
+                    },
+                    "description": "",
+                    "layers": [
+                        "goatling_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 1074
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 81,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Pickup (Goatling) 3": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7750.0,
+                        "y": -6200.0,
+                        "z": 1733.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "goatling_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 1079
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 82,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Pickup (Goatling) 4": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7600.0,
+                        "y": -6050.0,
+                        "z": 1733.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "goatling_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 1080
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 83,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to Entrance Hallway": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5600.0,
+                        "y": -4550.0,
+                        "z": 1700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3053
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Entrance Hallway",
+                        "node": "Door to Entrance"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Transition to Castle Sansa": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12850.0,
+                        "y": -6000.0,
+                        "z": 1600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1212,
+                        "transition_tag": "lowerNorthNorthWest",
+                        "start_tag": "theatreEast"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Castle Sansa",
+                        "area": "West Transition to Twilight Theatre",
+                        "node": "Transition to Twilight Theatre"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Entrance Hallway": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 4150.0,
+                    "x2": 5900.0,
+                    "y1": -4550.0,
+                    "y2": -1100.0
+                },
+                "polygon": [
+                    [
+                        4150.0,
+                        -4550.0
+                    ],
+                    [
+                        4150.0,
+                        -1100.0
+                    ],
+                    [
+                        5900.0,
+                        -1100.0
+                    ],
+                    [
+                        5900.0,
+                        -4550.0
+                    ]
+                ],
+                "room_id": 1
+            },
+            "nodes": {
+                "Door to Entrance": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5600.0,
+                        "y": -4550.0,
+                        "z": 1700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3053
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Entrance",
+                        "node": "Door to Entrance Hallway"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Showroom": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4150.0,
+                        "y": -1400.0,
+                        "z": 1700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3014
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Showroom",
+                        "node": "Door to Entrance Hallway"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Showroom": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -850.0,
+                    "x2": 4150.0,
+                    "y1": -1850.0,
+                    "y2": 6600.0
+                },
+                "polygon": [
+                    [
+                        -850.0,
+                        -1850.0
+                    ],
+                    [
+                        -850.0,
+                        6600.0
+                    ],
+                    [
+                        4150.0,
+                        6600.0
+                    ],
+                    [
+                        4150.0,
+                        -1850.0
+                    ]
+                ],
+                "room_id": 2
+            },
+            "nodes": {
+                "Pickup (Major Key)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1550.0,
+                        "y": 5200.0,
+                        "z": 700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 871
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 88,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Save Crystal": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 150.0,
+                        "y": 3800.0,
+                        "z": 200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1126,
+                        "start_tag": "theatreSaveMain"
+                    },
+                    "valid_starting_location": true,
+                    "connections": {}
+                },
+                "Event - Hit Switch 1": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3768.198,
+                        "y": 4406.066,
+                        "z": 1500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 914
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TwilightTheatre_Showroom_HitSwitch_1",
+                    "connections": {}
+                },
+                "Event - Hit Switch 2": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1700.0,
+                        "y": 5350.0,
+                        "z": 2300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 920
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TwilightTheatre_Showroom_HitSwitch_2",
+                    "connections": {}
+                },
+                "Pickup (Health Piece) 1": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1500.0,
+                        "y": -1600.0,
+                        "z": 2600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 913
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 90,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Pickup (Health Piece) 2": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1150.0,
+                        "y": 254.87425,
+                        "z": 50.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 912
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 84,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Pickup (Goatling)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2200.0,
+                        "y": -1500.0,
+                        "z": 33.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "goatling_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 1071
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 85,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to Entrance Hallway": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4150.0,
+                        "y": -1400.0,
+                        "z": 1700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3014
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Entrance Hallway",
+                        "node": "Door to Showroom"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Showroom Storage": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -850.0,
+                        "y": -1400.0,
+                        "z": 1640.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1005
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Showroom Storage",
+                        "node": "Door to Showroom"
+                    },
+                    "default_dock_weakness": "Small Key Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Stage Right": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 150.0,
+                        "y": 5200.0,
+                        "z": 500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3010
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Stage Right",
+                        "node": "Door to Showroom"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Stage Left": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2950.0,
+                        "y": 5200.0,
+                        "z": 500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3009
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Stage Left",
+                        "node": "Door to Showroom"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Backstage": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1550.0,
+                        "y": 6600.0,
+                        "z": 500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3012
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Backstage",
+                        "node": "Door to Showroom"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to stage right switch": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -250.0,
+                        "y": 4200.0,
+                        "z": 1500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "stage right switch",
+                        "node": "Door to Showroom"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to huge parkour room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4150.0,
+                        "y": 4650.0,
+                        "z": 1500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3082
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "huge parkour room",
+                        "node": "Door to Showroom"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to bubble room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1550.0,
+                        "y": -1800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3005
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "bubble room",
+                        "node": "Door to Showroom"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Showroom Storage": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -2800.0,
+                    "x2": -850.0,
+                    "y1": -1650.0,
+                    "y2": -350.0
+                },
+                "polygon": [
+                    [
+                        -2800.0,
+                        -1650.0
+                    ],
+                    [
+                        -2800.0,
+                        -350.0
+                    ],
+                    [
+                        -850.0,
+                        -350.0
+                    ],
+                    [
+                        -850.0,
+                        -1650.0
+                    ]
+                ],
+                "room_id": 3
+            },
+            "nodes": {
+                "Pickup (Empathy)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2550.0,
+                        "y": -1460.0,
+                        "z": 2240.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1233
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 91,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to Showroom": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -850.0,
+                        "y": -1400.0,
+                        "z": 1640.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1005
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Showroom",
+                        "node": "Door to Showroom Storage"
+                    },
+                    "default_dock_weakness": "Small Key Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Stage Right": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -2000.0,
+                    "x2": 150.0,
+                    "y1": 5053.5903,
+                    "y2": 7050.0
+                },
+                "polygon": [
+                    [
+                        -2000.0,
+                        5053.5903
+                    ],
+                    [
+                        -2000.0,
+                        7050.0
+                    ],
+                    [
+                        150.0,
+                        7050.0
+                    ],
+                    [
+                        150.0,
+                        5053.5903
+                    ]
+                ],
+                "room_id": 4
+            },
+            "nodes": {
+                "Event - Strikebreak Wall": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1540.0,
+                        "y": 6110.0,
+                        "z": 500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 825
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TwilightTheatre_StageRight_StrikebreakWall",
+                    "connections": {}
+                },
+                "Door to Showroom": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 150.0,
+                        "y": 5200.0,
+                        "z": 500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3010
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Showroom",
+                        "node": "Door to Stage Right"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to soul cutter hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -950.0,
+                        "y": 6600.0,
+                        "z": -2100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3088
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "soul cutter hub",
+                        "node": "Door to Stage Right"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "soul cutter hub": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -10450.0,
+                    "x2": -6850.0,
+                    "y1": 5300.0,
+                    "y2": 8950.0
+                },
+                "polygon": [
+                    [
+                        -10450.0,
+                        5300.0
+                    ],
+                    [
+                        -10450.0,
+                        8950.0
+                    ],
+                    [
+                        -6850.0,
+                        8950.0
+                    ],
+                    [
+                        -6850.0,
+                        5300.0
+                    ]
+                ],
+                "room_id": 5
+            },
+            "nodes": {
+                "Event - Hit Switch": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8150.0,
+                        "y": 5600.0,
+                        "z": -1900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 916
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TwilightTheatre_soulcutterhub_HitSwitch",
+                    "connections": {}
+                },
+                "Event - Strikebreak Wall": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7750.0,
+                        "y": 8500.0,
+                        "z": -1900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 826
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TwilightTheatre_soulcutterhub_StrikebreakWall",
+                    "connections": {}
+                },
+                "Door to Stage Right": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10450.0,
+                        "y": 6600.0,
+                        "z": -2100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3088
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Stage Right",
+                        "node": "Door to soul cutter hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Soul Cutter Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6850.0,
+                        "y": 8500.0,
+                        "z": -3000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Soul Cutter Access",
+                        "node": "Door to soul cutter hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to room that requires soul cutter to call the platform": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8450.0,
+                        "y": 5300.0,
+                        "z": -1900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3091
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "room that requires soul cutter to call the platform",
+                        "node": "Door to soul cutter hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Soul Cutter Access": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -8800.0,
+                    "x2": -3800.0,
+                    "y1": 7650.0,
+                    "y2": 9350.0
+                },
+                "polygon": [
+                    [
+                        -8800.0,
+                        7650.0
+                    ],
+                    [
+                        -8800.0,
+                        9350.0
+                    ],
+                    [
+                        -3800.0,
+                        9350.0
+                    ],
+                    [
+                        -3800.0,
+                        7650.0
+                    ]
+                ],
+                "room_id": 6
+            },
+            "nodes": {
+                "Door to soul cutter hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6850.0,
+                        "y": 8500.0,
+                        "z": -3000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "soul cutter hub",
+                        "node": "Door to Soul Cutter Access"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Soul Cutter Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4150.0,
+                        "y": 8500.0,
+                        "z": -1950.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Soul Cutter Room",
+                        "node": "Door to Soul Cutter Access"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Soul Cutter Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -4900.0,
+                    "x2": -1200.0,
+                    "y1": 8050.0,
+                    "y2": 8950.0
+                },
+                "polygon": [
+                    [
+                        -4900.0,
+                        8050.0
+                    ],
+                    [
+                        -4900.0,
+                        8950.0
+                    ],
+                    [
+                        -1200.0,
+                        8950.0
+                    ],
+                    [
+                        -1200.0,
+                        8050.0
+                    ]
+                ],
+                "room_id": 7
+            },
+            "nodes": {
+                "Pickup (Soul Cutter)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1650.0,
+                        "y": 8500.0,
+                        "z": -1400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1230
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 89,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to Soul Cutter Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4150.0,
+                        "y": 8500.0,
+                        "z": -1950.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Soul Cutter Access",
+                        "node": "Door to Soul Cutter Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "room that requires soul cutter to call the platform": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -8975.0,
+                    "x2": -8100.0,
+                    "y1": -1350.0,
+                    "y2": 5300.0
+                },
+                "polygon": [
+                    [
+                        -8975.0,
+                        -1350.0
+                    ],
+                    [
+                        -8975.0,
+                        5300.0
+                    ],
+                    [
+                        -8100.0,
+                        5300.0
+                    ],
+                    [
+                        -8100.0,
+                        -1350.0
+                    ]
+                ],
+                "room_id": 8
+            },
+            "nodes": {
+                "Door to soul cutter hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8450.0,
+                        "y": 5300.0,
+                        "z": -1900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3091
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "soul cutter hub",
+                        "node": "Door to room that requires soul cutter to call the platform"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to outside access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8975.0,
+                        "y": -1000.0,
+                        "z": -2200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "outside access",
+                        "node": "Door to room that requires soul cutter to call the platform"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "outside access": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -11150.0,
+                    "x2": -8975.0,
+                    "y1": -1250.0,
+                    "y2": -750.0
+                },
+                "polygon": [
+                    [
+                        -11150.0,
+                        -1250.0
+                    ],
+                    [
+                        -11150.0,
+                        -750.0
+                    ],
+                    [
+                        -8975.0,
+                        -750.0
+                    ],
+                    [
+                        -8975.0,
+                        -1250.0
+                    ]
+                ],
+                "room_id": 9
+            },
+            "nodes": {
+                "Door to room that requires soul cutter to call the platform": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8975.0,
+                        "y": -1000.0,
+                        "z": -2200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "room that requires soul cutter to call the platform",
+                        "node": "Door to outside access"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Theatre Wall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11150.0,
+                        "y": -1000.0,
+                        "z": -2200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Theatre Wall",
+                        "node": "Door to outside access"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Theatre Wall": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -12200.0,
+                    "x2": -9500.0,
+                    "y1": -1350.0,
+                    "y2": 4650.0
+                },
+                "polygon": [
+                    [
+                        -12200.0,
+                        -1350.0
+                    ],
+                    [
+                        -12200.0,
+                        4650.0
+                    ],
+                    [
+                        -9500.0,
+                        4650.0
+                    ],
+                    [
+                        -9500.0,
+                        -1350.0
+                    ]
+                ],
+                "room_id": 10
+            },
+            "nodes": {
+                "Pickup (Chair)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11640.0,
+                        "y": -1180.0,
+                        "z": -2200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "chair_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 1083
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 87,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to outside access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11150.0,
+                        "y": -1000.0,
+                        "z": -2200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "outside access",
+                        "node": "Door to Theatre Wall"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to stage right switch": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10550.0,
+                        "y": 4650.0,
+                        "z": 1500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3527
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "stage right switch",
+                        "node": "Door to Theatre Wall"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "stage right switch": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -1050.0,
+                    "x2": -250.0,
+                    "y1": 4050.0,
+                    "y2": 4850.0
+                },
+                "polygon": [
+                    [
+                        -1050.0,
+                        4050.0
+                    ],
+                    [
+                        -1050.0,
+                        4850.0
+                    ],
+                    [
+                        -250.0,
+                        4850.0
+                    ],
+                    [
+                        -250.0,
+                        4050.0
+                    ]
+                ],
+                "room_id": 11
+            },
+            "nodes": {
+                "Event - Hit Switch": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -420.71066,
+                        "y": 4653.553,
+                        "z": 1500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 915
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TwilightTheatre_stagerightswitch_HitSwitch",
+                    "connections": {}
+                },
+                "Door to Theatre Wall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1050.0,
+                        "y": 4650.0,
+                        "z": 1500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3527
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Theatre Wall",
+                        "node": "Door to stage right switch"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Showroom": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -250.0,
+                        "y": 4200.0,
+                        "z": 1500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Showroom",
+                        "node": "Door to stage right switch"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Stage Left": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 2950.0,
+                    "x2": 11700.0,
+                    "y1": 3250.0,
+                    "y2": 5970.0
+                },
+                "polygon": [
+                    [
+                        2950.0,
+                        3250.0
+                    ],
+                    [
+                        2950.0,
+                        5970.0
+                    ],
+                    [
+                        11700.0,
+                        5970.0
+                    ],
+                    [
+                        11700.0,
+                        3250.0
+                    ]
+                ],
+                "room_id": 12
+            },
+            "nodes": {
+                "Pickup (Chair)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11470.0,
+                        "y": 3380.0,
+                        "z": -1600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "chair_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 1082
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 86,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to Showroom": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2950.0,
+                        "y": 5200.0,
+                        "z": 500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3009
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Showroom",
+                        "node": "Door to Stage Left"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to huge parkour room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10750.0,
+                        "y": 3500.0,
+                        "z": -1700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3084
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "huge parkour room",
+                        "node": "Door to Stage Left"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "huge parkour room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 4150.0,
+                    "x2": 10750.0,
+                    "y1": -510.0,
+                    "y2": 4950.0
+                },
+                "polygon": [
+                    [
+                        4150.0,
+                        -510.0
+                    ],
+                    [
+                        4150.0,
+                        4950.0
+                    ],
+                    [
+                        10750.0,
+                        4950.0
+                    ],
+                    [
+                        10750.0,
+                        -510.0
+                    ]
+                ],
+                "room_id": 13
+            },
+            "nodes": {
+                "Door to Stage Left": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10750.0,
+                        "y": 3500.0,
+                        "z": -1700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3084
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Stage Left",
+                        "node": "Door to huge parkour room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Showroom": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4150.0,
+                        "y": 4650.0,
+                        "z": 1500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3082
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Showroom",
+                        "node": "Door to huge parkour room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Backstage": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 697.71765,
+                    "x2": 2397.7175,
+                    "y1": 6600.0,
+                    "y2": 9300.0
+                },
+                "polygon": [
+                    [
+                        697.71765,
+                        6600.0
+                    ],
+                    [
+                        697.71765,
+                        9300.0
+                    ],
+                    [
+                        2397.7175,
+                        9300.0
+                    ],
+                    [
+                        2397.7175,
+                        6600.0
+                    ]
+                ],
+                "room_id": 14
+            },
+            "nodes": {
+                "Door to Showroom": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1550.0,
+                        "y": 6600.0,
+                        "z": 500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3012
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Showroom",
+                        "node": "Door to Backstage"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to backstage hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1550.0,
+                        "y": 9300.0,
+                        "z": 500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2918
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "backstage hub",
+                        "node": "Door to Backstage"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "backstage hub": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 400.0,
+                    "x2": 2800.0,
+                    "y1": 9300.0,
+                    "y2": 11700.0
+                },
+                "polygon": [
+                    [
+                        400.0,
+                        9300.0
+                    ],
+                    [
+                        400.0,
+                        11700.0
+                    ],
+                    [
+                        2800.0,
+                        11700.0
+                    ],
+                    [
+                        2800.0,
+                        9300.0
+                    ]
+                ],
+                "room_id": 15
+            },
+            "nodes": {
+                "Door to Backstage": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1550.0,
+                        "y": 9300.0,
+                        "z": 500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2918
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Backstage",
+                        "node": "Door to backstage hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Combat Room (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1550.0,
+                        "y": 11700.0,
+                        "z": 500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2925
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Combat Room",
+                        "node": "Door to backstage hub (Lower)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Combat Room (Upper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1550.0,
+                        "y": 11650.0,
+                        "z": 2300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2927
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Combat Room",
+                        "node": "Door to backstage hub (Upper)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Axe Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2800.0,
+                        "y": 10500.0,
+                        "z": 1000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3077
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Axe Room",
+                        "node": "Door to backstage hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Combat Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -600.0,
+                    "x2": 3500.0,
+                    "y1": 11650.0,
+                    "y2": 15800.0
+                },
+                "polygon": [
+                    [
+                        -600.0,
+                        11650.0
+                    ],
+                    [
+                        -600.0,
+                        15800.0
+                    ],
+                    [
+                        3500.0,
+                        15800.0
+                    ],
+                    [
+                        3500.0,
+                        11650.0
+                    ]
+                ],
+                "room_id": 16
+            },
+            "nodes": {
+                "Door to backstage hub (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1550.0,
+                        "y": 11700.0,
+                        "z": 500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2925
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "backstage hub",
+                        "node": "Door to Combat Room (Lower)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to backstage hub (Upper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1550.0,
+                        "y": 11650.0,
+                        "z": 2300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2927
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "backstage hub",
+                        "node": "Door to Combat Room (Upper)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Axe Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 2800.0,
+                    "x2": 9250.0,
+                    "y1": 10100.0,
+                    "y2": 10900.0
+                },
+                "polygon": [
+                    [
+                        2800.0,
+                        10100.0
+                    ],
+                    [
+                        2800.0,
+                        10900.0
+                    ],
+                    [
+                        9250.0,
+                        10900.0
+                    ],
+                    [
+                        9250.0,
+                        10100.0
+                    ]
+                ],
+                "room_id": 17
+            },
+            "nodes": {
+                "Door to backstage hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2800.0,
+                        "y": 10500.0,
+                        "z": 1000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3077
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "backstage hub",
+                        "node": "Door to Axe Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to cylinder hub room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9250.0,
+                        "y": 10500.0,
+                        "z": 900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3075
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "cylinder hub room",
+                        "node": "Door to Axe Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "cylinder hub room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 9250.0,
+                    "x2": 13200.0,
+                    "y1": 8150.0,
+                    "y2": 14800.0
+                },
+                "polygon": [
+                    [
+                        9250.0,
+                        8150.0
+                    ],
+                    [
+                        9250.0,
+                        14800.0
+                    ],
+                    [
+                        13200.0,
+                        14800.0
+                    ],
+                    [
+                        13200.0,
+                        8150.0
+                    ]
+                ],
+                "room_id": 18
+            },
+            "nodes": {
+                "Door to Axe Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9250.0,
+                        "y": 10500.0,
+                        "z": 900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3075
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Axe Room",
+                        "node": "Door to cylinder hub room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Transition to Dilapidated Dungeon": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10650.0,
+                        "y": 14800.0,
+                        "z": -100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3073
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Transition to Dilapidated Dungeon",
+                        "node": "Door to cylinder hub room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Transition to Sansa Keep": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12600.0,
+                        "y": 8150.0,
+                        "z": 500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3071
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Transition to Sansa Keep",
+                        "node": "Door to cylinder hub room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Transition to Dilapidated Dungeon": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 8900.0,
+                    "x2": 12200.0,
+                    "y1": 14800.0,
+                    "y2": 16800.0
+                },
+                "polygon": [
+                    [
+                        8900.0,
+                        14800.0
+                    ],
+                    [
+                        8900.0,
+                        16800.0
+                    ],
+                    [
+                        12200.0,
+                        16800.0
+                    ],
+                    [
+                        12200.0,
+                        14800.0
+                    ]
+                ],
+                "room_id": 19
+            },
+            "nodes": {
+                "Pickup (Chair) 1": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9050.0,
+                        "y": 15900.0,
+                        "z": -800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "chair_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 1081
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 76,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Pickup (Chair) 2": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9200.0,
+                        "y": 15600.0,
+                        "z": -800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "chair_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 1084
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 77,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Pickup (Chair) 3": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9200.0,
+                        "y": 15800.0,
+                        "z": -800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "chair_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 1085
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 78,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to cylinder hub room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10650.0,
+                        "y": 14800.0,
+                        "z": -100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3073
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "cylinder hub room",
+                        "node": "Door to Transition to Dilapidated Dungeon"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Transition to Dilapidated Dungeon": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11950.0,
+                        "y": 16350.0,
+                        "z": -1250.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1215,
+                        "transition_tag": "dungeonNorth",
+                        "start_tag": "theatreNorthEastLower"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Transition to Twilight Theatre",
+                        "node": "Transition to Twilight Theatre"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Transition to Sansa Keep": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 11900.0,
+                    "x2": 18350.0,
+                    "y1": 5700.0,
+                    "y2": 8150.0
+                },
+                "polygon": [
+                    [
+                        11900.0,
+                        5700.0
+                    ],
+                    [
+                        11900.0,
+                        8150.0
+                    ],
+                    [
+                        18350.0,
+                        8150.0
+                    ],
+                    [
+                        18350.0,
+                        5700.0
+                    ]
+                ],
+                "room_id": 20
+            },
+            "nodes": {
+                "Pickup (Chair)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 16100.0,
+                        "y": 8000.0,
+                        "z": 500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "chair_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 1086
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 79,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to cylinder hub room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12600.0,
+                        "y": 8150.0,
+                        "z": 500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3071
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "cylinder hub room",
+                        "node": "Door to Transition to Sansa Keep"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Transition to Sansa Keep": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 18000.0,
+                        "y": 7700.0,
+                        "z": 750.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1213,
+                        "transition_tag": "upperSouthWest",
+                        "start_tag": "theatreNorthEastUpper"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Sansa Keep",
+                        "area": "Transition to Twilight Theatre",
+                        "node": "Transition to Twilight Theatre"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "bubble room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -1750.0,
+                    "x2": 2350.0,
+                    "y1": -7800.0,
+                    "y2": -1800.0
+                },
+                "polygon": [
+                    [
+                        -1750.0,
+                        -7800.0
+                    ],
+                    [
+                        -1750.0,
+                        -1800.0
+                    ],
+                    [
+                        2350.0,
+                        -1800.0
+                    ],
+                    [
+                        2350.0,
+                        -7800.0
+                    ]
+                ],
+                "room_id": 21
+            },
+            "nodes": {
+                "Door to Showroom": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1550.0,
+                        "y": -1800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3005
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Showroom",
+                        "node": "Door to bubble room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to back hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1800.0,
+                        "y": -7800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3003
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "back hub",
+                        "node": "Door to bubble room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "back hub": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -2000.0,
+                    "x2": 6900.0,
+                    "y1": -16200.0,
+                    "y2": -7800.0
+                },
+                "polygon": [
+                    [
+                        -2000.0,
+                        -16200.0
+                    ],
+                    [
+                        -2000.0,
+                        -7800.0
+                    ],
+                    [
+                        6900.0,
+                        -7800.0
+                    ],
+                    [
+                        6900.0,
+                        -16200.0
+                    ]
+                ],
+                "room_id": 22
+            },
+            "nodes": {
+                "Event - Hit Switch": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5750.0,
+                        "y": -8950.0,
+                        "z": 1770.4832
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 921
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TwilightTheatre_backhub_HitSwitch",
+                    "connections": {}
+                },
+                "Pickup (Aerial Finesse)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -150.0,
+                        "y": -15100.0,
+                        "z": 1950.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1231
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 74,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Pickup (Class)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3900.0,
+                        "y": -15750.0,
+                        "z": 100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1232
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 75,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to bubble room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1800.0,
+                        "y": -7800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3003
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "bubble room",
+                        "node": "Door to back hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Transition to Empty Bailey": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2000.0,
+                        "y": -10350.0,
+                        "z": -1050.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3001
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Transition to Empty Bailey",
+                        "node": "Door to back hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Transition to Castle Sansa": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6900.0,
+                        "y": -11400.0,
+                        "z": -200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2998
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Transition to Castle Sansa",
+                        "node": "Door to back hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Transition to Empty Bailey": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -4950.0,
+                    "x2": -2000.0,
+                    "y1": -11000.0,
+                    "y2": -9700.0
+                },
+                "polygon": [
+                    [
+                        -4950.0,
+                        -11000.0
+                    ],
+                    [
+                        -4950.0,
+                        -9700.0
+                    ],
+                    [
+                        -2000.0,
+                        -9700.0
+                    ],
+                    [
+                        -2000.0,
+                        -11000.0
+                    ]
+                ],
+                "room_id": 23
+            },
+            "nodes": {
+                "Door to back hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2000.0,
+                        "y": -10350.0,
+                        "z": -1050.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 3001
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "back hub",
+                        "node": "Door to Transition to Empty Bailey"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Transition to Empty Bailey": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4600.0,
+                        "y": -10350.0,
+                        "z": -1050.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1214,
+                        "transition_tag": "exteriorWest",
+                        "start_tag": "theatreSouthWest"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Empty Bailey",
+                        "area": "Courtyard",
+                        "node": "Transition to Twilight Theatre"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Transition to Castle Sansa": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 6900.0,
+                    "x2": 11250.0,
+                    "y1": -12100.0,
+                    "y2": -9900.0
+                },
+                "polygon": [
+                    [
+                        6900.0,
+                        -12100.0
+                    ],
+                    [
+                        6900.0,
+                        -9900.0
+                    ],
+                    [
+                        11250.0,
+                        -9900.0
+                    ],
+                    [
+                        11250.0,
+                        -12100.0
+                    ]
+                ],
+                "room_id": 24
+            },
+            "nodes": {
+                "Door to back hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6900.0,
+                        "y": -11400.0,
+                        "z": -200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2998
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "back hub",
+                        "node": "Door to Transition to Castle Sansa"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Transition to Castle Sansa": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10850.0,
+                        "y": -10200.0,
+                        "z": 650.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1216,
+                        "transition_tag": "lowerWest",
+                        "start_tag": "theatreSouthEast"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Castle Sansa",
+                        "area": "Central Transition to Twilight Theatre",
+                        "node": "Transition to Twilight Theatre"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        }
+    }
+}

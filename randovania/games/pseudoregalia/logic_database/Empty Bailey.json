@@ -1,0 +1,586 @@
+{
+    "name": "Empty Bailey",
+    "extra": {
+        "area_id": "ZONE_Exterior",
+        "map_min_x": 12,
+        "map_min_y": 12,
+        "map_max_x": 25,
+        "map_max_y": 11
+    },
+    "areas": {
+        "Bridge": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -2850.0,
+                    "x2": 10200.0,
+                    "y1": -8400.0,
+                    "y2": 3000.0
+                },
+                "polygon": [
+                    [
+                        -2850.0,
+                        -8400.0
+                    ],
+                    [
+                        -2850.0,
+                        3000.0
+                    ],
+                    [
+                        10200.0,
+                        3000.0
+                    ],
+                    [
+                        10200.0,
+                        -8400.0
+                    ]
+                ],
+                "room_id": 0
+            },
+            "nodes": {
+                "Save Crystal": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": -2350.0,
+                        "y": -4050.0,
+                        "z": -600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 121,
+                        "start_tag": "exteriorSouthSave"
+                    },
+                    "valid_starting_location": true,
+                    "connections": {}
+                },
+                "Event - Hit Switch": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2690.0,
+                        "y": -2170.0,
+                        "z": 1000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 83
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "EmptyBailey_Bridge_HitSwitch",
+                    "connections": {}
+                },
+                "Event - Breakable Floor": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3600.0,
+                        "y": 400.0,
+                        "z": 0.01
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 56
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "EmptyBailey_Bridge_BreakableFloor",
+                    "connections": {}
+                },
+                "Transition to Castle Sansa": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.0,
+                        "y": 300.0,
+                        "z": 250.01
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 129,
+                        "transition_tag": "exterior1",
+                        "start_tag": "exteriorWest"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Castle Sansa",
+                        "area": "double transition room",
+                        "node": "Transition to Empty Bailey"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Transition to The Underbelly": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3800.0,
+                        "y": 400.0,
+                        "z": -350.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 132,
+                        "transition_tag": "cavesSouth",
+                        "start_tag": "exteriorEast"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Transition to Empty Bailey",
+                        "node": "Transition to Empty Bailey"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Transition to Tower Remains": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10000.0,
+                        "y": -5900.0,
+                        "z": 1500.0001
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 131,
+                        "transition_tag": "towerSouth",
+                        "start_tag": "exteriorSouthEast"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Bridge",
+                        "node": "Transition to Empty Bailey"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Courtyard (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2850.0,
+                        "y": -4750.0,
+                        "z": -600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Empty Bailey",
+                        "area": "Courtyard",
+                        "node": "Door to Bridge (Lower)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Courtyard (Upper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2850.0,
+                        "y": -3200.0,
+                        "z": 1550.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Empty Bailey",
+                        "area": "Courtyard",
+                        "node": "Door to Bridge (Upper)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Courtyard": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -12950.0,
+                    "x2": -2850.0,
+                    "y1": -6050.0,
+                    "y2": 3550.0
+                },
+                "polygon": [
+                    [
+                        -12950.0,
+                        -6050.0
+                    ],
+                    [
+                        -12950.0,
+                        3550.0
+                    ],
+                    [
+                        -2850.0,
+                        3550.0
+                    ],
+                    [
+                        -2850.0,
+                        -6050.0
+                    ]
+                ],
+                "room_id": 1
+            },
+            "nodes": {
+                "Pickup (Solar Wind)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10850.0,
+                        "y": 1100.0,
+                        "z": 150.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 148
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 55,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Pickup (Major Key)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5235.976,
+                        "y": 1786.7222,
+                        "z": 650.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 69
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 54,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Pickup (Empathy)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7150.0,
+                        "y": -5040.0,
+                        "z": 2500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 149
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 57,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Event - Hit Switch 1": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11750.0,
+                        "y": 950.0,
+                        "z": -500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 81
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "EmptyBailey_Courtyard_HitSwitch_1",
+                    "connections": {}
+                },
+                "Event - Hit Switch 2": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7150.0,
+                        "y": -5650.0,
+                        "z": 2500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 84
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "EmptyBailey_Courtyard_HitSwitch_2",
+                    "connections": {}
+                },
+                "Pickup (Chivalry)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5250.0,
+                        "y": -1150.0,
+                        "z": -600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 150
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 58,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Pickup (Health Piece)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7260.0,
+                        "y": -2350.0,
+                        "z": 2110.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 80
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 56,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Pickup (Small Key)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3456.6987,
+                        "y": -3007.292,
+                        "z": 300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 70
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 53,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Event - Hit Switch 3": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3850.0,
+                        "y": -3000.0,
+                        "z": 300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 82
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "EmptyBailey_Courtyard_HitSwitch_3",
+                    "connections": {}
+                },
+                "Pickup (Goatling)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6928.193,
+                        "y": -2969.377,
+                        "z": -567.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "goatling_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 115
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 52,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to Bridge (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2850.0,
+                        "y": -4750.0,
+                        "z": -600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Empty Bailey",
+                        "area": "Bridge",
+                        "node": "Door to Courtyard (Lower)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Bridge (Upper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2850.0,
+                        "y": -3200.0,
+                        "z": 1550.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Empty Bailey",
+                        "area": "Bridge",
+                        "node": "Door to Courtyard (Upper)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Transition to Twilight Theatre": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7650.0,
+                        "y": 2550.0,
+                        "z": -600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 130,
+                        "transition_tag": "theatreSouthWest",
+                        "start_tag": "exteriorWest"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Transition to Empty Bailey",
+                        "node": "Transition to Empty Bailey"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        }
+    }
+}

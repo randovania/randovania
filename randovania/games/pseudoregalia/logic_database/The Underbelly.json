@@ -1,0 +1,4423 @@
+{
+    "name": "The Underbelly",
+    "extra": {
+        "area_id": "Zone_Caves",
+        "map_min_x": 12,
+        "map_min_y": 12,
+        "map_max_x": 12,
+        "map_max_y": 12
+    },
+    "areas": {
+        "Transition to Empty Bailey": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 60.0,
+                    "x2": 1370.0,
+                    "y1": -35550.0,
+                    "y2": -33150.0
+                },
+                "polygon": [
+                    [
+                        60.0,
+                        -35550.0
+                    ],
+                    [
+                        60.0,
+                        -33150.0
+                    ],
+                    [
+                        1370.0,
+                        -33150.0
+                    ],
+                    [
+                        1370.0,
+                        -35550.0
+                    ]
+                ],
+                "room_id": 0
+            },
+            "nodes": {
+                "Door to Southwest Save Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 700.0,
+                        "y": -33150.0,
+                        "z": 100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Southwest Save Room",
+                        "node": "Door to Transition to Empty Bailey"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Transition to Empty Bailey": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1000.00055,
+                        "y": -34850.0,
+                        "z": 3150.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1029,
+                        "transition_tag": "exteriorEast",
+                        "start_tag": "cavesSouth"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Empty Bailey",
+                        "area": "Bridge",
+                        "node": "Transition to The Underbelly"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Southwest Save Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -749.9996,
+                    "x2": 1750.0,
+                    "y1": -33150.0,
+                    "y2": -30740.0
+                },
+                "polygon": [
+                    [
+                        -749.9996,
+                        -33150.0
+                    ],
+                    [
+                        -749.9996,
+                        -30740.0
+                    ],
+                    [
+                        1750.0,
+                        -30740.0
+                    ],
+                    [
+                        1750.0,
+                        -33150.0
+                    ]
+                ],
+                "room_id": 1
+            },
+            "nodes": {
+                "Save Crystal": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 0.00044273626,
+                        "y": -30850.0,
+                        "z": -100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 946,
+                        "start_tag": "cavesSouthSave"
+                    },
+                    "valid_starting_location": true,
+                    "connections": {}
+                },
+                "Pickup (Note)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -208.3754,
+                        "y": -32663.021,
+                        "z": 635.7788
+                    },
+                    "description": "",
+                    "layers": [
+                        "note_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 896
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 69,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to Transition to Empty Bailey": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 700.0,
+                        "y": -33150.0,
+                        "z": 100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Transition to Empty Bailey",
+                        "node": "Door to Southwest Save Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to small sloped hallway": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -749.9996,
+                        "y": -31200.0,
+                        "z": -100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2670
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "small sloped hallway",
+                        "node": "Door to Southwest Save Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Tiny Statue Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1750.0,
+                        "y": -31000.0,
+                        "z": 89.79662
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1015
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Tiny Statue Room",
+                        "node": "Door to Southwest Save Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "small sloped hallway": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -2949.9995,
+                    "x2": -749.9996,
+                    "y1": -31650.0,
+                    "y2": -30750.0
+                },
+                "polygon": [
+                    [
+                        -2949.9995,
+                        -31650.0
+                    ],
+                    [
+                        -2949.9995,
+                        -30750.0
+                    ],
+                    [
+                        -749.9996,
+                        -30750.0
+                    ],
+                    [
+                        -749.9996,
+                        -31650.0
+                    ]
+                ],
+                "room_id": 2
+            },
+            "nodes": {
+                "Door to Southwest Save Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -749.9996,
+                        "y": -31200.0,
+                        "z": -100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2670
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Southwest Save Room",
+                        "node": "Door to small sloped hallway"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Building Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2949.9995,
+                        "y": -31200.0,
+                        "z": -500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2691
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Building Room",
+                        "node": "Door to small sloped hallway"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Building Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -5600.0,
+                    "x2": -2949.9995,
+                    "y1": -31890.0,
+                    "y2": -23850.0
+                },
+                "polygon": [
+                    [
+                        -5600.0,
+                        -31890.0
+                    ],
+                    [
+                        -5600.0,
+                        -23850.0
+                    ],
+                    [
+                        -2949.9995,
+                        -23850.0
+                    ],
+                    [
+                        -2949.9995,
+                        -31890.0
+                    ]
+                ],
+                "room_id": 3
+            },
+            "nodes": {
+                "Pickup (Health Piece)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4350.0,
+                        "y": -28350.0,
+                        "z": 1850.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 615
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 70,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to small sloped hallway": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2949.9995,
+                        "y": -31200.0,
+                        "z": -500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2691
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "small sloped hallway",
+                        "node": "Door to Building Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Tiny Statue Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3100.0,
+                        "y": -28800.0,
+                        "z": 300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2736
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Tiny Statue Room",
+                        "node": "Door to Building Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Tiny Statue Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -3100.0,
+                    "x2": 2507.0916,
+                    "y1": -31000.0,
+                    "y2": -28000.0
+                },
+                "polygon": [
+                    [
+                        -3100.0,
+                        -31000.0
+                    ],
+                    [
+                        -3100.0,
+                        -28000.0
+                    ],
+                    [
+                        2507.0916,
+                        -28000.0
+                    ],
+                    [
+                        2507.0916,
+                        -31000.0
+                    ]
+                ],
+                "room_id": 4
+            },
+            "nodes": {
+                "Door to Building Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3100.0,
+                        "y": -28800.0,
+                        "z": 300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2736
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Building Room",
+                        "node": "Door to Tiny Statue Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Southwest Save Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1750.0,
+                        "y": -31000.0,
+                        "z": 89.79662
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1015
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Southwest Save Room",
+                        "node": "Door to Tiny Statue Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Central Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 300.0,
+                        "y": -28000.0,
+                        "z": 400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2744
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Central Hub",
+                        "node": "Door to Tiny Statue Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Central Hub": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -2700.0,
+                    "x2": 13400.0,
+                    "y1": -28000.0,
+                    "y2": -13900.0
+                },
+                "polygon": [
+                    [
+                        -2700.0,
+                        -28000.0
+                    ],
+                    [
+                        -2700.0,
+                        -13900.0
+                    ],
+                    [
+                        13400.0,
+                        -13900.0
+                    ],
+                    [
+                        13400.0,
+                        -28000.0
+                    ]
+                ],
+                "room_id": 5
+            },
+            "nodes": {
+                "Pickup (Note)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3312.427,
+                        "y": -25171.967,
+                        "z": 2276.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "note_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 894
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 64,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Save Crystal": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 2950.0,
+                        "y": -18550.0,
+                        "z": 2600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 944,
+                        "start_tag": "cavesBigMiddleStart"
+                    },
+                    "valid_starting_location": true,
+                    "connections": {}
+                },
+                "Event - Hit Switch 1": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3100.0,
+                        "y": -21000.0,
+                        "z": 3400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 634
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_CentralHub_HitSwitch_1",
+                    "connections": {}
+                },
+                "Event - Hit Switch 2": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11200.0,
+                        "y": -14800.0,
+                        "z": 4900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 635
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_CentralHub_HitSwitch_2",
+                    "connections": {}
+                },
+                "Pickup (Small Key)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -726.41125,
+                        "y": -19782.35,
+                        "z": 3200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 546
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 63,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Pickup (Nostalgia)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1250.0,
+                        "y": -18000.0,
+                        "z": 3000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1045
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 66,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to Tiny Statue Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 300.0,
+                        "y": -28000.0,
+                        "z": 400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2744
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Tiny Statue Room",
+                        "node": "Door to Central Hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to another sloped hallway": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8600.0,
+                        "y": -26550.0,
+                        "z": 1300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2712
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "another sloped hallway",
+                        "node": "Door to Central Hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to hallway leading to northeast hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13400.0,
+                        "y": -22200.0,
+                        "z": 400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2710
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "hallway leading to northeast hub",
+                        "node": "Door to Central Hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Martial Prowess Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9100.0,
+                        "y": -13900.0,
+                        "z": 2200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 480
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Martial Prowess Room",
+                        "node": "Door to Central Hub"
+                    },
+                    "default_dock_weakness": "Strikebreak Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Many Breakable Walls Room (West)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -800.0,
+                        "y": -16700.0,
+                        "z": 4100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2854
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Many Breakable Walls Room",
+                        "node": "Door to Central Hub (West)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to room with boxes in the corner": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3417.101,
+                        "y": -15703.016,
+                        "z": 5100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2719
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "room with boxes in the corner",
+                        "node": "Door to Central Hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to room where you duck under haze while riding a platform": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12000.0,
+                        "y": -19550.0,
+                        "z": 2450.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2715
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "room where you duck under haze while riding a platform",
+                        "node": "Door to Central Hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Many Breakable Walls Room (East)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7350.0,
+                        "y": -14300.0,
+                        "z": 4700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2717
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Many Breakable Walls Room",
+                        "node": "Door to Central Hub (East)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "another sloped hallway": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 8600.0,
+                    "x2": 12000.0,
+                    "y1": -26750.0,
+                    "y2": -26350.0
+                },
+                "polygon": [
+                    [
+                        8600.0,
+                        -26750.0
+                    ],
+                    [
+                        8600.0,
+                        -26350.0
+                    ],
+                    [
+                        12000.0,
+                        -26350.0
+                    ],
+                    [
+                        12000.0,
+                        -26750.0
+                    ]
+                ],
+                "room_id": 6
+            },
+            "nodes": {
+                "Door to Central Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8600.0,
+                        "y": -26550.0,
+                        "z": 1300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2712
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Central Hub",
+                        "node": "Door to another sloped hallway"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Rotating Platforms Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12000.0,
+                        "y": -26550.0,
+                        "z": 1700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2625
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Rotating Platforms Room",
+                        "node": "Door to another sloped hallway"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Rotating Platforms Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 12000.0,
+                    "x2": 17450.0,
+                    "y1": -27600.0,
+                    "y2": -23500.0
+                },
+                "polygon": [
+                    [
+                        12000.0,
+                        -27600.0
+                    ],
+                    [
+                        12000.0,
+                        -23500.0
+                    ],
+                    [
+                        17450.0,
+                        -23500.0
+                    ],
+                    [
+                        17450.0,
+                        -27600.0
+                    ]
+                ],
+                "room_id": 7
+            },
+            "nodes": {
+                "Door to another sloped hallway": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12000.0,
+                        "y": -26550.0,
+                        "z": 1700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2625
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "another sloped hallway",
+                        "node": "Door to Rotating Platforms Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Wood Bend": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 17450.0,
+                        "y": -24550.0,
+                        "z": 2300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2603
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Wood Bend",
+                        "node": "Door to Rotating Platforms Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Wood Bend": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 17450.0,
+                    "x2": 20450.0,
+                    "y1": -25800.0,
+                    "y2": -24300.0
+                },
+                "polygon": [
+                    [
+                        17450.0,
+                        -25800.0
+                    ],
+                    [
+                        17450.0,
+                        -24300.0
+                    ],
+                    [
+                        20450.0,
+                        -24300.0
+                    ],
+                    [
+                        20450.0,
+                        -25800.0
+                    ]
+                ],
+                "room_id": 8
+            },
+            "nodes": {
+                "Door to Rotating Platforms Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 17450.0,
+                        "y": -24550.0,
+                        "z": 2300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2603
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Rotating Platforms Room",
+                        "node": "Door to Wood Bend"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Southeast Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20250.0,
+                        "y": -24400.0,
+                        "z": 2600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2547
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Southeast Hub",
+                        "node": "Door to Wood Bend"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Southeast Hub": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 19150.0,
+                    "x2": 22550.0,
+                    "y1": -24400.0,
+                    "y2": -18550.0
+                },
+                "polygon": [
+                    [
+                        19150.0,
+                        -24400.0
+                    ],
+                    [
+                        19150.0,
+                        -18550.0
+                    ],
+                    [
+                        22550.0,
+                        -18550.0
+                    ],
+                    [
+                        22550.0,
+                        -24400.0
+                    ]
+                ],
+                "room_id": 9
+            },
+            "nodes": {
+                "Door to Wood Bend": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20250.0,
+                        "y": -24400.0,
+                        "z": 2600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2547
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Wood Bend",
+                        "node": "Door to Southeast Hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Transition to Sansa Keep": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20250.0,
+                        "y": -18550.0,
+                        "z": 2600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2802
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Transition to Sansa Keep",
+                        "node": "Door to Southeast Hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Major Key Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 22550.0,
+                        "y": -21650.0,
+                        "z": 2600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2595
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Major Key Access",
+                        "node": "Door to Southeast Hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Transition to Sansa Keep": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 19300.0,
+                    "x2": 21200.0,
+                    "y1": -18550.0,
+                    "y2": -15699.999
+                },
+                "polygon": [
+                    [
+                        19300.0,
+                        -18550.0
+                    ],
+                    [
+                        19300.0,
+                        -15699.999
+                    ],
+                    [
+                        21200.0,
+                        -15699.999
+                    ],
+                    [
+                        21200.0,
+                        -18550.0
+                    ]
+                ],
+                "room_id": 10
+            },
+            "nodes": {
+                "Event - Breakable Floor": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20250.0,
+                        "y": -17800.0,
+                        "z": 3000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 489
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_TransitiontoSansaKeep_BreakableFloor",
+                    "connections": {}
+                },
+                "Pickup (Health Piece)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 19600.0,
+                        "y": -17750.0,
+                        "z": 5700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 614
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 59,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to Southeast Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20250.0,
+                        "y": -18550.0,
+                        "z": 2600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2802
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Southeast Hub",
+                        "node": "Door to Transition to Sansa Keep"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Transition to Sansa Keep": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20250.0,
+                        "y": -15799.999,
+                        "z": 5100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1031,
+                        "transition_tag": "upperNorthEast",
+                        "start_tag": "cavesEast"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Sansa Keep",
+                        "area": "Transition to The Underbelly",
+                        "node": "Transition to The Underbelly"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Major Key Access": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 22550.0,
+                    "x2": 25350.0,
+                    "y1": -25250.0,
+                    "y2": -19650.0
+                },
+                "polygon": [
+                    [
+                        22550.0,
+                        -25250.0
+                    ],
+                    [
+                        22550.0,
+                        -19650.0
+                    ],
+                    [
+                        25350.0,
+                        -19650.0
+                    ],
+                    [
+                        25350.0,
+                        -25250.0
+                    ]
+                ],
+                "room_id": 11
+            },
+            "nodes": {
+                "Door to Southeast Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 22550.0,
+                        "y": -21650.0,
+                        "z": 2600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2595
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Southeast Hub",
+                        "node": "Door to Major Key Access"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Major Key Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 25350.0,
+                        "y": -24100.0,
+                        "z": 2800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2795
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Major Key Room",
+                        "node": "Door to Major Key Access"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Major Key Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 25350.0,
+                    "x2": 33250.0,
+                    "y1": -28250.0,
+                    "y2": -19950.0
+                },
+                "polygon": [
+                    [
+                        25350.0,
+                        -28250.0
+                    ],
+                    [
+                        25350.0,
+                        -19950.0
+                    ],
+                    [
+                        33250.0,
+                        -19950.0
+                    ],
+                    [
+                        33250.0,
+                        -28250.0
+                    ]
+                ],
+                "room_id": 12
+            },
+            "nodes": {
+                "Event - Hit Switch 1": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 28600.0,
+                        "y": -20200.0,
+                        "z": 4200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 630
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_MajorKeyRoom_HitSwitch_1",
+                    "connections": {}
+                },
+                "Event - Hit Switch 2": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 28600.0,
+                        "y": -28000.0,
+                        "z": 3300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 628
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_MajorKeyRoom_HitSwitch_2",
+                    "connections": {}
+                },
+                "Pickup (Major Key)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 33050.0,
+                        "y": -24100.0,
+                        "z": 3850.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 545
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 60,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to Major Key Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 25350.0,
+                        "y": -24100.0,
+                        "z": 2800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2795
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Major Key Access",
+                        "node": "Door to Major Key Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "hallway leading to northeast hub": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 13400.0,
+                    "x2": 19300.0,
+                    "y1": -22700.0,
+                    "y2": -13950.0
+                },
+                "polygon": [
+                    [
+                        13400.0,
+                        -22700.0
+                    ],
+                    [
+                        13400.0,
+                        -13950.0
+                    ],
+                    [
+                        19300.0,
+                        -13950.0
+                    ],
+                    [
+                        19300.0,
+                        -22700.0
+                    ]
+                ],
+                "room_id": 13
+            },
+            "nodes": {
+                "Door to Central Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13400.0,
+                        "y": -22200.0,
+                        "z": 400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2710
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Central Hub",
+                        "node": "Door to hallway leading to northeast hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Northeast Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 18750.0,
+                        "y": -13950.0,
+                        "z": 900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2725
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Northeast Hub",
+                        "node": "Door to hallway leading to northeast hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Northeast Hub": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 14050.0,
+                    "x2": 20200.0,
+                    "y1": -13950.0,
+                    "y2": -9300.0
+                },
+                "polygon": [
+                    [
+                        14050.0,
+                        -13950.0
+                    ],
+                    [
+                        14050.0,
+                        -9300.0
+                    ],
+                    [
+                        20200.0,
+                        -9300.0
+                    ],
+                    [
+                        20200.0,
+                        -13950.0
+                    ]
+                ],
+                "room_id": 14
+            },
+            "nodes": {
+                "Save Crystal": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 18600.0,
+                        "y": -10950.0,
+                        "z": 600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 947,
+                        "start_tag": "cavesBigSideStart"
+                    },
+                    "valid_starting_location": true,
+                    "connections": {}
+                },
+                "Event - Hit Switch": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 19650.0,
+                        "y": -11850.0,
+                        "z": 2050.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 639
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_NortheastHub_HitSwitch",
+                    "connections": {}
+                },
+                "Event - Cut and Drop Platform": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 14391.238,
+                        "y": -11600.0,
+                        "z": 1213.4614
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 512
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_NortheastHub_CutandDropPlatform",
+                    "connections": {}
+                },
+                "Door to hallway leading to northeast hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 18750.0,
+                        "y": -13950.0,
+                        "z": 900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2725
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "hallway leading to northeast hub",
+                        "node": "Door to Northeast Hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Northeast Combat Room (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20200.0,
+                        "y": -11000.0,
+                        "z": 950.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2731
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Northeast Combat Room",
+                        "node": "Door to Northeast Hub (Lower)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Northeast Combat Room (Upper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20050.0,
+                        "y": -12100.0,
+                        "z": 2050.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2729
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Northeast Combat Room",
+                        "node": "Door to Northeast Hub (Upper)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to room where you lift the platform and can lower it again for no reason": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 14050.0,
+                        "y": -11600.0,
+                        "z": 1050.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2727
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "room where you lift the platform and can lower it again for no reason",
+                        "node": "Door to Northeast Hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Heliacal Power Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 18650.0,
+                        "y": -9300.0,
+                        "z": 1200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2624
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Heliacal Power Room",
+                        "node": "Door to Northeast Hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Northeast Combat Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 20050.0,
+                    "x2": 23750.0,
+                    "y1": -13650.0,
+                    "y2": -10150.0
+                },
+                "polygon": [
+                    [
+                        20050.0,
+                        -13650.0
+                    ],
+                    [
+                        20050.0,
+                        -10150.0
+                    ],
+                    [
+                        23750.0,
+                        -10150.0
+                    ],
+                    [
+                        23750.0,
+                        -13650.0
+                    ]
+                ],
+                "room_id": 15
+            },
+            "nodes": {
+                "Door to Northeast Hub (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20200.0,
+                        "y": -11000.0,
+                        "z": 950.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2731
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Northeast Hub",
+                        "node": "Door to Northeast Combat Room (Lower)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Northeast Hub (Upper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20050.0,
+                        "y": -12100.0,
+                        "z": 2050.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2729
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Northeast Hub",
+                        "node": "Door to Northeast Combat Room (Upper)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Heliacal Power Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 17950.0,
+                    "x2": 19250.0,
+                    "y1": -9300.0,
+                    "y2": -7350.0
+                },
+                "polygon": [
+                    [
+                        17950.0,
+                        -9300.0
+                    ],
+                    [
+                        17950.0,
+                        -7350.0
+                    ],
+                    [
+                        19250.0,
+                        -7350.0
+                    ],
+                    [
+                        19250.0,
+                        -9300.0
+                    ]
+                ],
+                "room_id": 16
+            },
+            "nodes": {
+                "Pickup (Heliiacal Power)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 18646.387,
+                        "y": -7936.757,
+                        "z": 1200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1047
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 67,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Pickup (Note)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 18158.715,
+                        "y": -8165.256,
+                        "z": 1275.5726
+                    },
+                    "description": "",
+                    "layers": [
+                        "note_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 895
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 68,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to Northeast Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 18650.0,
+                        "y": -9300.0,
+                        "z": 1200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2624
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Northeast Hub",
+                        "node": "Door to Heliacal Power Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "room where you lift the platform and can lower it again for no reason": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 12100.105,
+                    "x2": 14050.0,
+                    "y1": -14350.0,
+                    "y2": -9948.707
+                },
+                "polygon": [
+                    [
+                        12100.105,
+                        -14350.0
+                    ],
+                    [
+                        12100.105,
+                        -9948.707
+                    ],
+                    [
+                        14050.0,
+                        -9948.707
+                    ],
+                    [
+                        14050.0,
+                        -14350.0
+                    ]
+                ],
+                "room_id": 17
+            },
+            "nodes": {
+                "Event - Hit Switch": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13500.0,
+                        "y": -9950.0,
+                        "z": 1950.0001
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 633
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_roomwhereyoulifttheplatformandcanloweritagainfornoreason_HitSwitch",
+                    "connections": {}
+                },
+                "Door to Northeast Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 14050.0,
+                        "y": -11600.0,
+                        "z": 1050.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2727
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Northeast Hub",
+                        "node": "Door to room where you lift the platform and can lower it again for no reason"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to room where you duck under haze while riding a platform": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12700.0,
+                        "y": -14350.0,
+                        "z": 1900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "room where you duck under haze while riding a platform",
+                        "node": "Door to room where you lift the platform and can lower it again for no reason"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "room where you duck under haze while riding a platform": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 12000.0,
+                    "x2": 14000.0,
+                    "y1": -20100.0,
+                    "y2": -14350.0
+                },
+                "polygon": [
+                    [
+                        12000.0,
+                        -20100.0
+                    ],
+                    [
+                        12000.0,
+                        -14350.0
+                    ],
+                    [
+                        14000.0,
+                        -14350.0
+                    ],
+                    [
+                        14000.0,
+                        -20100.0
+                    ]
+                ],
+                "room_id": 18
+            },
+            "nodes": {
+                "Door to room where you lift the platform and can lower it again for no reason": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12700.0,
+                        "y": -14350.0,
+                        "z": 1900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "room where you lift the platform and can lower it again for no reason",
+                        "node": "Door to room where you duck under haze while riding a platform"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Central Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12000.0,
+                        "y": -19550.0,
+                        "z": 2450.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2715
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Central Hub",
+                        "node": "Door to room where you duck under haze while riding a platform"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Martial Prowess Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 7550.0,
+                    "x2": 11950.0,
+                    "y1": -13900.0,
+                    "y2": -7200.0
+                },
+                "polygon": [
+                    [
+                        7550.0,
+                        -13900.0
+                    ],
+                    [
+                        7550.0,
+                        -7200.0
+                    ],
+                    [
+                        11950.0,
+                        -7200.0
+                    ],
+                    [
+                        11950.0,
+                        -13900.0
+                    ]
+                ],
+                "room_id": 19
+            },
+            "nodes": {
+                "Pickup (Martial Prowess)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11300.0,
+                        "y": -12700.0,
+                        "z": 3106.6357
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1046
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 65,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to Central Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9100.0,
+                        "y": -13900.0,
+                        "z": 2200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 480
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Central Hub",
+                        "node": "Door to Martial Prowess Room"
+                    },
+                    "default_dock_weakness": "Strikebreak Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Many Breakable Walls Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -1450.0,
+                    "x2": 8390.0,
+                    "y1": -16700.0,
+                    "y2": -11050.0
+                },
+                "polygon": [
+                    [
+                        -1450.0,
+                        -16700.0
+                    ],
+                    [
+                        -1450.0,
+                        -11050.0
+                    ],
+                    [
+                        8390.0,
+                        -11050.0
+                    ],
+                    [
+                        8390.0,
+                        -16700.0
+                    ]
+                ],
+                "room_id": 20
+            },
+            "nodes": {
+                "Door to Central Hub (West)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -800.0,
+                        "y": -16700.0,
+                        "z": 4100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2854
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Central Hub",
+                        "node": "Door to Many Breakable Walls Room (West)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Central Hub (East)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7350.0,
+                        "y": -14300.0,
+                        "z": 4700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2717
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Central Hub",
+                        "node": "Door to Many Breakable Walls Room (East)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "room with boxes in the corner": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 1700.0,
+                    "x2": 8812.145,
+                    "y1": -15703.016,
+                    "y2": -7700.0
+                },
+                "polygon": [
+                    [
+                        1700.0,
+                        -15703.016
+                    ],
+                    [
+                        1700.0,
+                        -7700.0
+                    ],
+                    [
+                        8812.145,
+                        -7700.0
+                    ],
+                    [
+                        8812.145,
+                        -15703.016
+                    ]
+                ],
+                "room_id": 21
+            },
+            "nodes": {
+                "Door to Central Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3417.101,
+                        "y": -15703.016,
+                        "z": 5100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2719
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Central Hub",
+                        "node": "Door to room with boxes in the corner"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Crawler Tower": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2400.0,
+                        "y": -7700.0,
+                        "z": 5200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2643
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Crawler Tower",
+                        "node": "Door to room with boxes in the corner"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Crawler Tower": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 1300.0002,
+                    "x2": 3150.0,
+                    "y1": -7700.0,
+                    "y2": -5949.9995
+                },
+                "polygon": [
+                    [
+                        1300.0002,
+                        -7700.0
+                    ],
+                    [
+                        1300.0002,
+                        -5949.9995
+                    ],
+                    [
+                        3150.0,
+                        -5949.9995
+                    ],
+                    [
+                        3150.0,
+                        -7700.0
+                    ]
+                ],
+                "room_id": 22
+            },
+            "nodes": {
+                "Door to room with boxes in the corner": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2400.0,
+                        "y": -7700.0,
+                        "z": 5200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2643
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "room with boxes in the corner",
+                        "node": "Door to Crawler Tower"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to room with the bridge on top (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1450.0002,
+                        "y": -6649.9995,
+                        "z": 5100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2614
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "room with the bridge on top",
+                        "node": "Door to Crawler Tower (Lower)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to just another small hallway i don't know how to name": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2400.0,
+                        "y": -6100.0,
+                        "z": 6800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "just another small hallway i don't know how to name",
+                        "node": "Door to Crawler Tower"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Transition to Dilapidated Dungeon": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2400.0,
+                        "y": -6650.0,
+                        "z": 9700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Transition to Dilapidated Dungeon",
+                        "node": "Door to Crawler Tower"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to room with the bridge on top": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1300.0002,
+                        "y": -6649.9995,
+                        "z": 6300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2823
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "room with the bridge on top",
+                        "node": "Door to Crawler Tower"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "room with the bridge on top": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -99.999794,
+                    "x2": 1450.0002,
+                    "y1": -7299.9995,
+                    "y2": -6200.0
+                },
+                "polygon": [
+                    [
+                        -99.999794,
+                        -7299.9995
+                    ],
+                    [
+                        -99.999794,
+                        -6200.0
+                    ],
+                    [
+                        1450.0002,
+                        -6200.0
+                    ],
+                    [
+                        1450.0002,
+                        -7299.9995
+                    ]
+                ],
+                "room_id": 23
+            },
+            "nodes": {
+                "Door to Crawler Tower (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1450.0002,
+                        "y": -6649.9995,
+                        "z": 5100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2614
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Crawler Tower",
+                        "node": "Door to room with the bridge on top (Lower)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to sloped moving platform room (Upper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 600.00024,
+                        "y": -7299.9995,
+                        "z": 5000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2785
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "sloped moving platform room",
+                        "node": "Door to room with the bridge on top (Upper)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Crawler Tower": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1300.0002,
+                        "y": -6649.9995,
+                        "z": 6300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2823
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Crawler Tower",
+                        "node": "Door to room with the bridge on top"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Ascendant Light Tutorial": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -99.999794,
+                        "y": -6649.9995,
+                        "z": 6300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2819
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Ascendant Light Tutorial",
+                        "node": "Door to room with the bridge on top"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "sloped moving platform room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -549.99963,
+                    "x2": 1150.0,
+                    "y1": -12800.0,
+                    "y2": -7299.9995
+                },
+                "polygon": [
+                    [
+                        -549.99963,
+                        -12800.0
+                    ],
+                    [
+                        -549.99963,
+                        -7299.9995
+                    ],
+                    [
+                        1150.0,
+                        -7299.9995
+                    ],
+                    [
+                        1150.0,
+                        -12800.0
+                    ]
+                ],
+                "room_id": 24
+            },
+            "nodes": {
+                "Door to room with the bridge on top (Upper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 600.00024,
+                        "y": -7299.9995,
+                        "z": 5000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2785
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "room with the bridge on top",
+                        "node": "Door to sloped moving platform room (Upper)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to room with health piece behind the pillar": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -549.99963,
+                        "y": -12249.999,
+                        "z": 4000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2746
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "room with health piece behind the pillar",
+                        "node": "Door to sloped moving platform room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "room with health piece behind the pillar": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -2650.0,
+                    "x2": -549.99963,
+                    "y1": -13000.0,
+                    "y2": -10549.999
+                },
+                "polygon": [
+                    [
+                        -2650.0,
+                        -13000.0
+                    ],
+                    [
+                        -2650.0,
+                        -10549.999
+                    ],
+                    [
+                        -549.99963,
+                        -10549.999
+                    ],
+                    [
+                        -549.99963,
+                        -13000.0
+                    ]
+                ],
+                "room_id": 25
+            },
+            "nodes": {
+                "Pickup (Health Piece)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2550.0,
+                        "y": -12300.0,
+                        "z": 4400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 616
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 62,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to sloped moving platform room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -549.99963,
+                        "y": -12249.999,
+                        "z": 4000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2746
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "sloped moving platform room",
+                        "node": "Door to room with health piece behind the pillar"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to room with really fast moving platforms on both sides": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1699.9998,
+                        "y": -10549.999,
+                        "z": 3650.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2702
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "room with really fast moving platforms on both sides",
+                        "node": "Door to room with health piece behind the pillar"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "room with really fast moving platforms on both sides": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -2450.0,
+                    "x2": -950.0,
+                    "y1": -10549.999,
+                    "y2": -4599.9995
+                },
+                "polygon": [
+                    [
+                        -2450.0,
+                        -10549.999
+                    ],
+                    [
+                        -2450.0,
+                        -4599.9995
+                    ],
+                    [
+                        -950.0,
+                        -4599.9995
+                    ],
+                    [
+                        -950.0,
+                        -10549.999
+                    ]
+                ],
+                "room_id": 26
+            },
+            "nodes": {
+                "Door to room with health piece behind the pillar": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1699.9998,
+                        "y": -10549.999,
+                        "z": 3650.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2702
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "room with health piece behind the pillar",
+                        "node": "Door to room with really fast moving platforms on both sides"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Northwest Save Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1699.9999,
+                        "y": -4599.9995,
+                        "z": 3800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2659
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Northwest Save Room",
+                        "node": "Door to room with really fast moving platforms on both sides"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Northwest Save Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -2599.9998,
+                    "x2": -950.0,
+                    "y1": -4599.9995,
+                    "y2": -3400.0
+                },
+                "polygon": [
+                    [
+                        -2599.9998,
+                        -4599.9995
+                    ],
+                    [
+                        -2599.9998,
+                        -3400.0
+                    ],
+                    [
+                        -950.0,
+                        -3400.0
+                    ],
+                    [
+                        -950.0,
+                        -4599.9995
+                    ]
+                ],
+                "room_id": 27
+            },
+            "nodes": {
+                "Save Crystal": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": -1799.9999,
+                        "y": -3549.9995,
+                        "z": 3800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 945,
+                        "start_tag": "cavesWestSave"
+                    },
+                    "valid_starting_location": true,
+                    "connections": {}
+                },
+                "Door to room with really fast moving platforms on both sides": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1699.9999,
+                        "y": -4599.9995,
+                        "z": 3800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2659
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "room with really fast moving platforms on both sides",
+                        "node": "Door to Northwest Save Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Northwest Combat Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2599.9998,
+                        "y": -3899.9995,
+                        "z": 3800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2812
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Northwest Combat Room",
+                        "node": "Door to Northwest Save Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Northwest Combat Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -5950.0,
+                    "x2": -2599.9998,
+                    "y1": -4600.0,
+                    "y2": -3200.0
+                },
+                "polygon": [
+                    [
+                        -5950.0,
+                        -4600.0
+                    ],
+                    [
+                        -5950.0,
+                        -3200.0
+                    ],
+                    [
+                        -2599.9998,
+                        -3200.0
+                    ],
+                    [
+                        -2599.9998,
+                        -4600.0
+                    ]
+                ],
+                "room_id": 28
+            },
+            "nodes": {
+                "Door to Northwest Save Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2599.9998,
+                        "y": -3899.9995,
+                        "z": 3800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2812
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Northwest Save Room",
+                        "node": "Door to Northwest Combat Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to really tall slope room with pillars": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5950.0,
+                        "y": -3899.9995,
+                        "z": 4300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2814
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "really tall slope room with pillars",
+                        "node": "Door to Northwest Combat Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "really tall slope room with pillars": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -9550.0,
+                    "x2": -5950.0,
+                    "y1": -4499.9995,
+                    "y2": -3500.0
+                },
+                "polygon": [
+                    [
+                        -9550.0,
+                        -4499.9995
+                    ],
+                    [
+                        -9550.0,
+                        -3500.0
+                    ],
+                    [
+                        -5950.0,
+                        -3500.0
+                    ],
+                    [
+                        -5950.0,
+                        -4499.9995
+                    ]
+                ],
+                "room_id": 29
+            },
+            "nodes": {
+                "Door to Northwest Combat Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5950.0,
+                        "y": -3899.9995,
+                        "z": 4300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2814
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Northwest Combat Room",
+                        "node": "Door to really tall slope room with pillars"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Ascendant Light Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9150.0,
+                        "y": -4499.9995,
+                        "z": 3400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2816
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Ascendant Light Room",
+                        "node": "Door to really tall slope room with pillars"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Ascendant Light Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -11550.0,
+                    "x2": -3299.9998,
+                    "y1": -9500.0,
+                    "y2": -4499.9995
+                },
+                "polygon": [
+                    [
+                        -11550.0,
+                        -9500.0
+                    ],
+                    [
+                        -11550.0,
+                        -4499.9995
+                    ],
+                    [
+                        -3299.9998,
+                        -4499.9995
+                    ],
+                    [
+                        -3299.9998,
+                        -9500.0
+                    ]
+                ],
+                "room_id": 30
+            },
+            "nodes": {
+                "Event - Hit Switch 1": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8150.0,
+                        "y": -6650.0,
+                        "z": 3400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 627
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_1",
+                    "connections": {}
+                },
+                "Event - Hit Switch 2": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6500.0,
+                        "y": -5100.0,
+                        "z": 5400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 620
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_2",
+                    "connections": {}
+                },
+                "Event - Hit Switch 3": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6050.0,
+                        "y": -6000.0,
+                        "z": 4400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 621
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_3",
+                    "connections": {}
+                },
+                "Event - Hit Switch 4": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6050.0,
+                        "y": -5550.0,
+                        "z": 4400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 645
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_4",
+                    "connections": {}
+                },
+                "Event - Hit Switch 5": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7599.9995,
+                        "y": -8450.0,
+                        "z": 4400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 624
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_5",
+                    "connections": {}
+                },
+                "Event - Hit Switch 6": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6700.0,
+                        "y": -5100.0,
+                        "z": 4400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 623
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_6",
+                    "connections": {}
+                },
+                "Event - Hit Switch 7": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11400.0,
+                        "y": -6650.0,
+                        "z": 4900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 625
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_7",
+                    "connections": {}
+                },
+                "Event - Hit Switch 8": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6500.0,
+                        "y": -5100.0,
+                        "z": 5400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 620
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_8",
+                    "connections": {}
+                },
+                "Event - Hit Switch 9": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6949.9995,
+                        "y": -8200.0,
+                        "z": 5400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 626
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_9",
+                    "connections": {}
+                },
+                "Event - Hit Switch 10": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8700.0,
+                        "y": -8200.0,
+                        "z": 5400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 622
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_10",
+                    "connections": {}
+                },
+                "Save Crystal": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": -3699.9998,
+                        "y": -6349.9995,
+                        "z": 6300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 943,
+                        "start_tag": "postLightSave"
+                    },
+                    "valid_starting_location": true,
+                    "connections": {}
+                },
+                "Pickup (Ascendant Light)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5400.0,
+                        "y": -6649.9995,
+                        "z": 6750.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1044
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 61,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to really tall slope room with pillars": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9150.0,
+                        "y": -4499.9995,
+                        "z": 3400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2816
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "really tall slope room with pillars",
+                        "node": "Door to Ascendant Light Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Ascendant Light Tutorial": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3299.9998,
+                        "y": -6649.9995,
+                        "z": 6300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2821
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Ascendant Light Tutorial",
+                        "node": "Door to Ascendant Light Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Ascendant Light Tutorial": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -3299.9998,
+                    "x2": -99.999794,
+                    "y1": -7100.0,
+                    "y2": -6200.0
+                },
+                "polygon": [
+                    [
+                        -3299.9998,
+                        -7100.0
+                    ],
+                    [
+                        -3299.9998,
+                        -6200.0
+                    ],
+                    [
+                        -99.999794,
+                        -6200.0
+                    ],
+                    [
+                        -99.999794,
+                        -7100.0
+                    ]
+                ],
+                "room_id": 32
+            },
+            "nodes": {
+                "Door to Ascendant Light Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3299.9998,
+                        "y": -6649.9995,
+                        "z": 6300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2821
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Ascendant Light Room",
+                        "node": "Door to Ascendant Light Tutorial"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to room with the bridge on top": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -99.999794,
+                        "y": -6649.9995,
+                        "z": 6300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 2819
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "room with the bridge on top",
+                        "node": "Door to Ascendant Light Tutorial"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Shortcut to Ascendant Light": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2900.0,
+                        "y": -6600.0,
+                        "z": 7000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Shortcut to Ascendant Light",
+                        "node": "Door to Ascendant Light Tutorial"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Transition to Dilapidated Dungeon": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 4250.0,
+                    "x2": 6650.0,
+                    "y1": -7600.0,
+                    "y2": -3249.9993
+                },
+                "polygon": [
+                    [
+                        4250.0,
+                        -7600.0
+                    ],
+                    [
+                        4250.0,
+                        -3249.9993
+                    ],
+                    [
+                        6650.0,
+                        -3249.9993
+                    ],
+                    [
+                        6650.0,
+                        -7600.0
+                    ]
+                ],
+                "room_id": 33
+            },
+            "nodes": {
+                "Door to Crawler Tower": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5400.0,
+                        "y": -6650.0,
+                        "z": 9700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Crawler Tower",
+                        "node": "Door to Transition to Dilapidated Dungeon"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Transition to Dilapidated Dungeon": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6600.0002,
+                        "y": -3249.9993,
+                        "z": 10900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1030,
+                        "transition_tag": "dungeonWest",
+                        "start_tag": "cavesWest"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Transition to The Underbelly",
+                        "node": "Transition to The Underbelly"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "just another small hallway i don't know how to name": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 1950.0,
+                    "x2": 2850.0,
+                    "y1": -1300.0,
+                    "y2": 1050.0007
+                },
+                "polygon": [
+                    [
+                        1950.0,
+                        -1300.0
+                    ],
+                    [
+                        1950.0,
+                        1050.0007
+                    ],
+                    [
+                        2850.0,
+                        1050.0007
+                    ],
+                    [
+                        2850.0,
+                        -1300.0
+                    ]
+                ],
+                "room_id": 34
+            },
+            "nodes": {
+                "Door to Shortcut to Ascendant Light": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2400.0002,
+                        "y": 1050.0007,
+                        "z": 6600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 479
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Shortcut to Ascendant Light",
+                        "node": "Door to just another small hallway i don't know how to name"
+                    },
+                    "default_dock_weakness": "Breakable Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Crawler Tower": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2400.0,
+                        "y": -1300.0,
+                        "z": 6800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Crawler Tower",
+                        "node": "Door to just another small hallway i don't know how to name"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Shortcut to Ascendant Light": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -2950.0,
+                    "x2": 2550.0,
+                    "y1": -2000.0,
+                    "y2": 1800.0005
+                },
+                "polygon": [
+                    [
+                        -2950.0,
+                        -2000.0
+                    ],
+                    [
+                        -2950.0,
+                        1800.0005
+                    ],
+                    [
+                        2550.0,
+                        1800.0005
+                    ],
+                    [
+                        2550.0,
+                        -2000.0
+                    ]
+                ],
+                "room_id": 35
+            },
+            "nodes": {
+                "Event - Hit Switch": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2300.0,
+                        "y": 1800.0005,
+                        "z": 7800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 631
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_ShortcuttoAscendantLight_HitSwitch",
+                    "connections": {}
+                },
+                "Door to just another small hallway i don't know how to name": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2400.0002,
+                        "y": 1050.0007,
+                        "z": 6600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 479
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "just another small hallway i don't know how to name",
+                        "node": "Door to Shortcut to Ascendant Light"
+                    },
+                    "default_dock_weakness": "Breakable Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Ascendant Light Tutorial": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2900.0,
+                        "y": -1800.0,
+                        "z": 7000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Ascendant Light Tutorial",
+                        "node": "Door to Shortcut to Ascendant Light"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,1318 @@
+{
+    "name": "Listless Library",
+    "extra": {
+        "area_id": "Zone_Library",
+        "map_min_x": 47,
+        "map_min_y": 12,
+        "map_max_x": 12,
+        "map_max_y": 12
+    },
+    "areas": {
+        "Main Library": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -3000.0,
+                    "x2": 4000.0,
+                    "y1": -2400.0,
+                    "y2": 2400.0
+                },
+                "polygon": [
+                    [
+                        -3000.0,
+                        -2400.0
+                    ],
+                    [
+                        -3000.0,
+                        2400.0
+                    ],
+                    [
+                        4000.0,
+                        2400.0
+                    ],
+                    [
+                        4000.0,
+                        -2400.0
+                    ]
+                ],
+                "room_id": 0
+            },
+            "nodes": {
+                "Pickup (Chair)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -33.925674,
+                        "y": 449.2626,
+                        "z": -700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "chair_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 289
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 32,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Save Crystal": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 1050.0,
+                        "y": 1200.0,
+                        "z": -699.9999
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 300,
+                        "start_tag": "librarySave"
+                    },
+                    "valid_starting_location": true,
+                    "connections": {}
+                },
+                "Door to Sun Greaves Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3250.0,
+                        "y": 2400.0,
+                        "z": -500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 788
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Sun Greaves Access",
+                        "node": "Door to Main Library"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Hidden Challenge": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3955.6145,
+                        "y": -1650.0,
+                        "z": 700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 209
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Hidden Challenge",
+                        "node": "Door to Main Library"
+                    },
+                    "default_dock_weakness": "Breakable Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Locked Challenge": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1250.0,
+                        "y": -2400.0,
+                        "z": -700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 263
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Locked Challenge",
+                        "node": "Door to Main Library"
+                    },
+                    "default_dock_weakness": "Small Key Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Transition to Castle Sansa": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2950.0,
+                        "y": 0.0,
+                        "z": 550.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 315,
+                        "transition_tag": "lowerEast",
+                        "start_tag": "libraryWest"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Castle Sansa",
+                        "area": "Transition to Listless Library",
+                        "node": "Transition to Listless Library"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Egg Pen Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4000.0,
+                        "y": 1550.0,
+                        "z": 700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 848
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Egg Pen Room",
+                        "node": "Door to Main Library"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Sun Greaves Access": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 1800.0,
+                    "x2": 4500.0,
+                    "y1": 2400.0,
+                    "y2": 5650.0
+                },
+                "polygon": [
+                    [
+                        1800.0,
+                        2400.0
+                    ],
+                    [
+                        1800.0,
+                        5650.0
+                    ],
+                    [
+                        4500.0,
+                        5650.0
+                    ],
+                    [
+                        4500.0,
+                        2400.0
+                    ]
+                ],
+                "room_id": 1
+            },
+            "nodes": {
+                "Pickup (Sweater)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2850.0,
+                        "y": 3600.0,
+                        "z": 900.0002
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 325
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 33,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to Main Library": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3250.0,
+                        "y": 2400.0,
+                        "z": -500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 788
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Main Library",
+                        "node": "Door to Sun Greaves Access"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Sun Greaves Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3150.0,
+                        "y": 5650.0,
+                        "z": 750.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Sun Greaves Room",
+                        "node": "Door to Sun Greaves Access"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Sun Greaves Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 2600.0,
+                    "x2": 5250.0,
+                    "y1": 5650.0,
+                    "y2": 9800.0
+                },
+                "polygon": [
+                    [
+                        2600.0,
+                        5650.0
+                    ],
+                    [
+                        2600.0,
+                        9800.0
+                    ],
+                    [
+                        5250.0,
+                        9800.0
+                    ],
+                    [
+                        5250.0,
+                        5650.0
+                    ]
+                ],
+                "room_id": 2
+            },
+            "nodes": {
+                "Pickup (Sun Greaves)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4150.0,
+                        "y": 9200.0,
+                        "z": -100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 324
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 34,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to Sun Greaves Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3150.0,
+                        "y": 5650.0,
+                        "z": 750.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Sun Greaves Access",
+                        "node": "Door to Sun Greaves Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Sun Greaves Tutorial": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5250.0,
+                        "y": 6850.0,
+                        "z": -500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 210
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Sun Greaves Tutorial",
+                        "node": "Door to Sun Greaves Room"
+                    },
+                    "default_dock_weakness": "Breakable Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Sun Greaves Tutorial": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 5250.0,
+                    "x2": 9700.0,
+                    "y1": 5700.0,
+                    "y2": 10300.0
+                },
+                "polygon": [
+                    [
+                        5250.0,
+                        5700.0
+                    ],
+                    [
+                        5250.0,
+                        10300.0
+                    ],
+                    [
+                        9700.0,
+                        10300.0
+                    ],
+                    [
+                        9700.0,
+                        5700.0
+                    ]
+                ],
+                "room_id": 3
+            },
+            "nodes": {
+                "Save Crystal": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 7300.0,
+                        "y": 7100.0,
+                        "z": 150.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 301,
+                        "start_tag": "saveLibraryWest"
+                    },
+                    "valid_starting_location": true,
+                    "connections": {}
+                },
+                "Door to Sun Greaves Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5250.0,
+                        "y": 6850.0,
+                        "z": -500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 210
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Sun Greaves Room",
+                        "node": "Door to Sun Greaves Tutorial"
+                    },
+                    "default_dock_weakness": "Breakable Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to haze room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9400.0,
+                        "y": 5700.0,
+                        "z": 1850.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 834
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "haze room",
+                        "node": "Door to Sun Greaves Tutorial"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "haze room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 6600.0,
+                    "x2": 10000.0,
+                    "y1": 600.0,
+                    "y2": 5700.0
+                },
+                "polygon": [
+                    [
+                        6600.0,
+                        600.0
+                    ],
+                    [
+                        6600.0,
+                        5700.0
+                    ],
+                    [
+                        10000.0,
+                        5700.0
+                    ],
+                    [
+                        10000.0,
+                        600.0
+                    ]
+                ],
+                "room_id": 4
+            },
+            "nodes": {
+                "Event - Hit Switch": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9200.0,
+                        "y": 3150.0,
+                        "z": 2550.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 241
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "ListlessLibrary_hazeroom_HitSwitch",
+                    "connections": {}
+                },
+                "Pickup (Chair)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9801.157,
+                        "y": 4990.049,
+                        "z": 1850.0002
+                    },
+                    "description": "",
+                    "layers": [
+                        "chair_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 291
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 35,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to Sun Greaves Tutorial": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9400.0,
+                        "y": 5700.0,
+                        "z": 1850.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 834
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Sun Greaves Tutorial",
+                        "node": "Door to haze room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Egg Pen Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6600.0,
+                        "y": 1550.0,
+                        "z": 1300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 840
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Egg Pen Room",
+                        "node": "Door to haze room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Egg Pen Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 4000.0,
+                    "x2": 6600.0,
+                    "y1": 800.0,
+                    "y2": 2500.0
+                },
+                "polygon": [
+                    [
+                        4000.0,
+                        800.0
+                    ],
+                    [
+                        4000.0,
+                        2500.0
+                    ],
+                    [
+                        6600.0,
+                        2500.0
+                    ],
+                    [
+                        6600.0,
+                        800.0
+                    ]
+                ],
+                "room_id": 5
+            },
+            "nodes": {
+                "Pickup (Note)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4761.2373,
+                        "y": 2314.6448,
+                        "z": 775.0001
+                    },
+                    "description": "",
+                    "layers": [
+                        "note_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 288
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 36,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Pickup (Chair)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5080.808,
+                        "y": 2226.546,
+                        "z": 693.8727
+                    },
+                    "description": "",
+                    "layers": [
+                        "chair_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 290
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 37,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to haze room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6600.0,
+                        "y": 1550.0,
+                        "z": 1300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 840
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "haze room",
+                        "node": "Door to Egg Pen Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Main Library": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4000.0,
+                        "y": 1550.0,
+                        "z": 700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 848
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Main Library",
+                        "node": "Door to Egg Pen Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Hidden Challenge": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 3955.6145,
+                    "x2": 8341.0,
+                    "y1": -2700.0,
+                    "y2": -700.0
+                },
+                "polygon": [
+                    [
+                        3955.6145,
+                        -2700.0
+                    ],
+                    [
+                        3955.6145,
+                        -700.0
+                    ],
+                    [
+                        8341.0,
+                        -700.0
+                    ],
+                    [
+                        8341.0,
+                        -2700.0
+                    ]
+                ],
+                "room_id": 6
+            },
+            "nodes": {
+                "Door to Main Library": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3955.6145,
+                        "y": -1650.0,
+                        "z": 700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 209
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Main Library",
+                        "node": "Door to Hidden Challenge"
+                    },
+                    "default_dock_weakness": "Breakable Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Hidden Challenge Reward": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8341.0,
+                        "y": -1649.9309,
+                        "z": 1250.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1057
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Hidden Challenge Reward",
+                        "node": "Door to Hidden Challenge"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Hidden Challenge Reward": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 8341.0,
+                    "x2": 9600.0,
+                    "y1": -2500.0,
+                    "y2": -900.0
+                },
+                "polygon": [
+                    [
+                        8341.0,
+                        -2500.0
+                    ],
+                    [
+                        8341.0,
+                        -900.0
+                    ],
+                    [
+                        9600.0,
+                        -900.0
+                    ],
+                    [
+                        9600.0,
+                        -2500.0
+                    ]
+                ],
+                "room_id": 7
+            },
+            "nodes": {
+                "Pickup (Health Piece)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9250.0,
+                        "y": -1850.0,
+                        "z": 1250.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 237
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 38,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to Hidden Challenge": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8341.0,
+                        "y": -1649.9309,
+                        "z": 1250.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1057
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Hidden Challenge",
+                        "node": "Door to Hidden Challenge Reward"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Locked Challenge": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -200.0,
+                    "x2": 2800.0,
+                    "y1": -5700.0,
+                    "y2": -2400.0
+                },
+                "polygon": [
+                    [
+                        -200.0,
+                        -5700.0
+                    ],
+                    [
+                        -200.0,
+                        -2400.0
+                    ],
+                    [
+                        2800.0,
+                        -2400.0
+                    ],
+                    [
+                        2800.0,
+                        -5700.0
+                    ]
+                ],
+                "room_id": 8
+            },
+            "nodes": {
+                "Door to Main Library": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1250.0,
+                        "y": -2400.0,
+                        "z": -700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 263
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Main Library",
+                        "node": "Door to Locked Challenge"
+                    },
+                    "default_dock_weakness": "Small Key Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Locked Health Piece Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2800.0,
+                        "y": -4150.0,
+                        "z": -700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 868
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Locked Health Piece Room",
+                        "node": "Door to Locked Challenge"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Clear Mind Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1300.0,
+                        "y": -5700.0,
+                        "z": -700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1001
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Clear Mind Room",
+                        "node": "Door to Locked Challenge"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Locked Health Piece Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 2800.0,
+                    "x2": 4150.0,
+                    "y1": -5000.0,
+                    "y2": -3400.0
+                },
+                "polygon": [
+                    [
+                        2800.0,
+                        -5000.0
+                    ],
+                    [
+                        2800.0,
+                        -3400.0
+                    ],
+                    [
+                        4150.0,
+                        -3400.0
+                    ],
+                    [
+                        4150.0,
+                        -5000.0
+                    ]
+                ],
+                "room_id": 9
+            },
+            "nodes": {
+                "Pickup (Health Piece)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3750.0,
+                        "y": -4170.0,
+                        "z": -700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 238
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 40,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to Locked Challenge": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2800.0,
+                        "y": -4150.0,
+                        "z": -700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 868
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Locked Challenge",
+                        "node": "Door to Locked Health Piece Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Clear Mind Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 450.0,
+                    "x2": 2050.0,
+                    "y1": -7200.0,
+                    "y2": -5700.0
+                },
+                "polygon": [
+                    [
+                        450.0,
+                        -7200.0
+                    ],
+                    [
+                        450.0,
+                        -5700.0
+                    ],
+                    [
+                        2050.0,
+                        -5700.0
+                    ],
+                    [
+                        2050.0,
+                        -7200.0
+                    ]
+                ],
+                "room_id": 10
+            },
+            "nodes": {
+                "Pickup (Clear Mind)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1300.0,
+                        "y": -6750.0,
+                        "z": -700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 326
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 39,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {}
+                },
+                "Door to Locked Challenge": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1300.0,
+                        "y": -5700.0,
+                        "z": -700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1001
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Listless Library",
+                        "area": "Locked Challenge",
+                        "node": "Door to Clear Mind Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        }
+    }
+}

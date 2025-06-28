@@ -1,0 +1,145 @@
+----------------
+Bridge
+Extra - total_boundings: {'x1': 3400.0, 'x2': 7000.0, 'y1': -3450.0, 'y2': 10100.0}
+Extra - polygon: [[3400.0, -3450.0], [3400.0, 10100.0], [7000.0, 10100.0], [7000.0, -3450.0]]
+Extra - room_id: 0
+> Door to Lower Interior; Heals? False
+  * Layers: default
+  * No Wall to Lower Interior/Door to Bridge
+  * Extra - actor_index: 124
+
+> Door to Lower Roof; Heals? False
+  * Layers: default
+  * No Wall to Lower Roof/Door to Bridge
+
+> Transition to Empty Bailey; Heals? False; Spawn Point
+  * Layers: default
+  * Transition to Bridge/Transition to Tower Remains
+  * Extra - actor_index: 130
+  * Extra - transition_tag: exteriorSouthEast
+  * Extra - start_tag: towerSouth
+
+----------------
+Upper Interior
+Extra - total_boundings: {'x1': 1550.0001, 'x2': 8800.0, 'y1': 17100.0, 'y2': 21400.0}
+Extra - polygon: [[1550.0001, 17100.0], [1550.0001, 21400.0], [8800.0, 21400.0], [8800.0, 17100.0]]
+Extra - room_id: 1
+> Pickup (Cling Gem); Heals? False
+  * Layers: default
+  * Pickup 71; Category? Major
+  * Extra - actor_index: 155
+
+> Pickup (a Bleeding Heart); Heals? False
+  * Layers: default
+  * Pickup 73; Category? Major
+  * Extra - actor_index: 156
+
+> Event - Hit Switch; Heals? False
+  * Layers: default
+  * Event Tower Remains/Upper Interior/Hit Switch
+  * Extra - actor_index: 86
+
+> Door to Lower Interior; Heals? False
+  * Layers: default
+  * No Wall to Lower Interior/Door to Upper Interior
+
+> Door to Lower Roof; Heals? False
+  * Layers: default
+  * No Wall to Lower Roof/Door to Upper Interior
+
+> Door to Wall Ride (East); Heals? False
+  * Layers: default
+  * No Wall to Wall Ride/Door to Upper Interior (East)
+
+> Door to Wall Ride (West); Heals? False
+  * Layers: default
+  * No Wall to Wall Ride/Door to Upper Interior (West)
+
+> Door to Upper Roof; Heals? False
+  * Layers: default
+  * No Wall to Upper Roof/Door to Upper Interior
+
+----------------
+Upper Roof
+Extra - total_boundings: {'x1': 3650.0, 'x2': 6850.0, 'y1': 24400.0, 'y2': 29350.0}
+Extra - polygon: [[3650.0, 24400.0], [3650.0, 29350.0], [6850.0, 29350.0], [6850.0, 24400.0]]
+Extra - room_id: 2
+> Pickup (Major Key); Heals? False
+  * Layers: default
+  * Pickup 72; Category? Major
+  * Extra - actor_index: 77
+
+> Event - Hit Switch; Heals? False
+  * Layers: default
+  * Event Tower Remains/Upper Roof/Hit Switch
+  * Extra - actor_index: 87
+
+> Door to Lower Roof; Heals? False
+  * Layers: default
+  * No Wall to Lower Roof/Door to Upper Roof
+
+> Door to Upper Interior; Heals? False
+  * Layers: default
+  * No Wall to Upper Interior/Door to Upper Roof
+
+> Transition to Distorted Memory; Heals? False; Spawn Point
+  * Layers: default
+  * Transition to Princess Chambers/Transition to Tower Remains
+  * Extra - actor_index: 131
+  * Extra - transition_tag: chamberStart
+  * Extra - start_tag: towerTop
+
+----------------
+Lower Interior
+Extra - total_boundings: {'x1': 3200.0, 'x2': 7300.0, 'y1': 10100.0, 'y2': 14310.0}
+Extra - polygon: [[3200.0, 10100.0], [3200.0, 14310.0], [7300.0, 14310.0], [7300.0, 10100.0]]
+Extra - room_id: 4
+> Save Crystal; Heals? True; Spawn Point
+  * Layers: default
+  * Extra - actor_index: 116
+  * Extra - start_tag: towerSave
+
+> Event - Hit Switch; Heals? False
+  * Layers: default
+  * Event Tower Remains/Lower Interior/Hit Switch
+  * Extra - actor_index: 83
+
+> Door to Bridge; Heals? False
+  * Layers: default
+  * No Wall to Bridge/Door to Lower Interior
+  * Extra - actor_index: 124
+
+> Door to Upper Interior; Heals? False
+  * Layers: default
+  * No Wall to Upper Interior/Door to Lower Interior
+
+----------------
+Lower Roof
+Extra - total_boundings: {'x1': 4000.0, 'x2': 6500.0, 'y1': 14400.0, 'y2': 17100.0}
+Extra - polygon: [[4000.0, 14400.0], [4000.0, 17100.0], [6500.0, 17100.0], [6500.0, 14400.0]]
+Extra - room_id: 5
+> Door to Bridge; Heals? False
+  * Layers: default
+  * No Wall to Bridge/Door to Lower Roof
+
+> Door to Upper Interior; Heals? False
+  * Layers: default
+  * No Wall to Upper Interior/Door to Lower Roof
+
+> Door to Upper Roof; Heals? False
+  * Layers: default
+  * No Wall to Upper Roof/Door to Lower Roof
+
+----------------
+Wall Ride
+Extra - total_boundings: {'x1': 3600.0, 'x2': 6800.0, 'y1': 21400.0, 'y2': 24400.0}
+Extra - polygon: [[3600.0, 21400.0], [3600.0, 24400.0], [6800.0, 24400.0], [6800.0, 21400.0]]
+Extra - room_id: 6
+> Door to Upper Interior (East); Heals? False
+  * Layers: default
+  * No Wall to Upper Interior/Door to Wall Ride (East)
+
+> Door to Upper Interior (West); Heals? False
+  * Layers: default
+  * No Wall to Upper Interior/Door to Wall Ride (West)
+

@@ -1,0 +1,461 @@
+----------------
+Starting Room
+Extra - total_boundings: {'x1': 1300.0, 'x2': 4250.0, 'y1': -4950.0, 'y2': -1250.0}
+Extra - polygon: [[1300.0, -4950.0], [1300.0, -1250.0], [4250.0, -1250.0], [4250.0, -4950.0]]
+Extra - room_id: 0
+> Pickup (Goatling); Heals? False
+  * Layers: goatling_shuffle
+  * Pickup 0; Category? Minor
+  * Extra - actor_index: 433
+
+> Pickup (Devotion); Heals? False
+  * Layers: default
+  * Pickup 1; Category? Major
+  * Extra - actor_index: 503
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - actor_index: 777
+  * Extra - start_tag: gameStart
+
+> Door to Dream Breaker Access; Heals? False
+  * Layers: default
+  * No Wall to Dream Breaker Access/Door to Starting Room
+  * Extra - actor_index: 1432
+
+----------------
+Dream Breaker Access
+Extra - total_boundings: {'x1': -1150.0, 'x2': 3300.0, 'y1': -1250.0, 'y2': 1100.0}
+Extra - polygon: [[-1150.0, -1250.0], [-1150.0, 1100.0], [3300.0, 1100.0], [3300.0, -1250.0]]
+Extra - room_id: 1
+> Pickup (Health Piece); Heals? False
+  * Layers: default
+  * Pickup 3; Category? Minor
+  * Extra - actor_index: 283
+
+> Door to Starting Room; Heals? False
+  * Layers: default
+  * No Wall to Starting Room/Door to Dream Breaker Access
+  * Extra - actor_index: 1432
+
+> Door to First Save Room; Heals? False
+  * Layers: default
+  * Breakable Wall to First Save Room/Door to Dream Breaker Access
+  * Extra - actor_index: 238
+
+> Door to Dream Breaker Room; Heals? False
+  * Layers: default
+  * No Wall to Dream Breaker Room/Door to Dream Breaker Access
+  * Extra - actor_index: 1719
+
+----------------
+Dream Breaker Room
+Extra - total_boundings: {'x1': -250.0, 'x2': 4350.0, 'y1': 1100.0, 'y2': 5350.0}
+Extra - polygon: [[-250.0, 1100.0], [-250.0, 5350.0], [4350.0, 5350.0], [4350.0, 1100.0]]
+Extra - room_id: 2
+> Pickup (Dream Breaker); Heals? False
+  * Layers: default
+  * Pickup 2; Category? Major
+  * Extra - actor_index: 501
+
+> Door to Dream Breaker Access; Heals? False
+  * Layers: default
+  * No Wall to Dream Breaker Access/Door to Dream Breaker Room
+  * Extra - actor_index: 1719
+
+> Door to Dream Breaker Exit (North); Heals? False
+  * Layers: default
+  * Breakable Wall to Dream Breaker Exit/Door to Dream Breaker Room (North)
+  * Extra - actor_index: 241
+
+> Door to Dream Breaker Exit (South); Heals? False
+  * Layers: default
+  * Breakable Wall to Dream Breaker Exit/Door to Dream Breaker Room (South)
+  * Extra - actor_index: 240
+
+----------------
+Dream Breaker Exit
+Extra - total_boundings: {'x1': 473.14070000000004, 'x2': 3400.0, 'y1': 1200.0, 'y2': 2450.0}
+Extra - polygon: [[473.14070000000004, 1200.0], [473.14070000000004, 2450.0], [3400.0, 2450.0], [3400.0, 1200.0]]
+Extra - room_id: 3
+> Door to Dream Breaker Room (North); Heals? False
+  * Layers: default
+  * Breakable Wall to Dream Breaker Room/Door to Dream Breaker Exit (North)
+  * Extra - actor_index: 241
+
+> Door to Dream Breaker Room (South); Heals? False
+  * Layers: default
+  * Breakable Wall to Dream Breaker Room/Door to Dream Breaker Exit (South)
+  * Extra - actor_index: 240
+
+----------------
+First Save Room
+Extra - total_boundings: {'x1': -3350.0, 'x2': -300.0, 'y1': -3800.0, 'y2': -1005.0509}
+Extra - polygon: [[-3350.0, -3800.0], [-3350.0, -1005.0509], [-300.0, -1005.0509], [-300.0, -3800.0]]
+Extra - room_id: 4
+> Save Crystal; Heals? True; Spawn Point
+  * Layers: default
+  * Extra - actor_index: 440
+  * Extra - start_tag: dungeonlowestSave
+
+> Door to Dream Breaker Access; Heals? False
+  * Layers: default
+  * Breakable Wall to Dream Breaker Access/Door to First Save Room
+  * Extra - actor_index: 238
+
+> Door to Parkour Room; Heals? False
+  * Layers: default
+  * No Wall to Parkour Room/Door to First Save Room
+  * Extra - actor_index: 1795
+
+----------------
+Parkour Room
+Extra - total_boundings: {'x1': -7450.0, 'x2': -3350.0, 'y1': -4400.0, 'y2': -2000.0}
+Extra - polygon: [[-7450.0, -4400.0], [-7450.0, -2000.0], [-3350.0, -2000.0], [-3350.0, -4400.0]]
+Extra - room_id: 5
+> Event - Cut and Drop Platform; Heals? False
+  * Layers: default
+  * Event Dilapidated Dungeon/Parkour Room/Cut and Drop Platform
+  * Extra - actor_index: 248
+
+> Door to First Save Room; Heals? False
+  * Layers: default
+  * No Wall to First Save Room/Door to Parkour Room
+  * Extra - actor_index: 1795
+
+> Door to Rock Room; Heals? False
+  * Layers: default
+  * Breakable Wall to Rock Room/Door to Parkour Room
+  * Extra - actor_index: 239
+
+----------------
+Rock Room
+Extra - total_boundings: {'x1': -12500.0, 'x2': -7450.0, 'y1': -2900.0, 'y2': -1200.0}
+Extra - polygon: [[-12500.0, -2900.0], [-12500.0, -1200.0], [-7450.0, -1200.0], [-7450.0, -2900.0]]
+Extra - room_id: 6
+> Door to Parkour Room; Heals? False
+  * Layers: default
+  * Breakable Wall to Parkour Room/Door to Rock Room
+  * Extra - actor_index: 239
+
+> Door to Cave Entrance; Heals? False
+  * Layers: default
+  * Breakable Wall to Cave Entrance/Door to Rock Room
+  * Extra - actor_index: 237
+
+> Door to Second Save Room; Heals? False
+  * Layers: default
+  * No Wall to Second Save Room/Door to Rock Room
+
+----------------
+Second Save Room
+Extra - total_boundings: {'x1': -13600.0, 'x2': -11650.0, 'y1': -1200.0, 'y2': 1416.6962}
+Extra - polygon: [[-13600.0, -1200.0], [-13600.0, 1416.6962], [-11650.0, 1416.6962], [-11650.0, -1200.0]]
+Extra - room_id: 7
+> Save Crystal; Heals? True; Spawn Point
+  * Layers: default
+  * Extra - actor_index: 439
+  * Extra - start_tag: dungeonWestSave
+
+> Door to Rock Room; Heals? False
+  * Layers: default
+  * No Wall to Rock Room/Door to Second Save Room
+
+> Door to Slide Hub; Heals? False
+  * Layers: default
+  * No Wall to Slide Hub/Door to Second Save Room
+  * Extra - actor_index: 1452
+
+> Door to some hallway idk; Heals? False
+  * Layers: default
+  * No Wall to some hallway idk/Door to Second Save Room
+
+----------------
+Slide Hub
+Extra - total_boundings: {'x1': -15700.0, 'x2': -13600.0, 'y1': -725.0, 'y2': 500.0}
+Extra - polygon: [[-15700.0, -725.0], [-15700.0, 500.0], [-13600.0, 500.0], [-13600.0, -725.0]]
+Extra - room_id: 8
+> Door to Second Save Room; Heals? False
+  * Layers: default
+  * No Wall to Second Save Room/Door to Slide Hub
+  * Extra - actor_index: 1452
+
+> Door to Slide Room; Heals? False
+  * Layers: default
+  * No Wall to Slide Room/Door to Slide Hub
+  * Extra - actor_index: 1386
+
+> Door to Slide Exit; Heals? False
+  * Layers: default
+  * No Wall to Slide Exit/Door to Slide Hub
+
+----------------
+Slide Room
+Extra - total_boundings: {'x1': -17400.0, 'x2': -15700.0, 'y1': -650.0, 'y2': 3000.0}
+Extra - polygon: [[-17400.0, -650.0], [-17400.0, 3000.0], [-15700.0, 3000.0], [-15700.0, -650.0]]
+Extra - room_id: 9
+> Pickup (Slide); Heals? False
+  * Layers: default
+  * Pickup 4; Category? Major
+  * Extra - actor_index: 502
+
+> Door to Slide Hub; Heals? False
+  * Layers: default
+  * No Wall to Slide Hub/Door to Slide Room
+  * Extra - actor_index: 1386
+
+> Door to Slide Exit; Heals? False
+  * Layers: default
+  * No Wall to Slide Exit/Door to Slide Room
+
+----------------
+Slide Exit
+Extra - total_boundings: {'x1': -17029.463, 'x2': -13800.0, 'y1': -4200.0, 'y2': -650.0}
+Extra - polygon: [[-17029.463, -4200.0], [-17029.463, -650.0], [-13800.0, -650.0], [-13800.0, -4200.0]]
+Extra - room_id: 10
+> Door to Slide Hub; Heals? False
+  * Layers: default
+  * No Wall to Slide Hub/Door to Slide Exit
+
+> Door to Slide Room; Heals? False
+  * Layers: default
+  * No Wall to Slide Room/Door to Slide Exit
+
+----------------
+some hallway idk
+Extra - total_boundings: {'x1': -11700.0, 'x2': -9050.0, 'y1': 700.0, 'y2': 1416.6962}
+Extra - polygon: [[-11700.0, 700.0], [-11700.0, 1416.6962], [-9050.0, 1416.6962], [-9050.0, 700.0]]
+Extra - room_id: 11
+> Door to Second Save Room; Heals? False
+  * Layers: default
+  * No Wall to Second Save Room/Door to some hallway idk
+
+> Door to Goatling Prison; Heals? False
+  * Layers: default
+  * No Wall to Goatling Prison/Door to some hallway idk
+  * Extra - actor_index: 1779
+
+----------------
+Goatling Prison
+Extra - total_boundings: {'x1': -9050.0, 'x2': -6050.0, 'y1': -118.31922, 'y2': 2250.0}
+Extra - polygon: [[-9050.0, -118.31922], [-9050.0, 2250.0], [-6050.0, 2250.0], [-6050.0, -118.31922]]
+Extra - room_id: 12
+> Pickup (Small Key); Heals? False
+  * Layers: default
+  * Pickup 6; Category? Minor
+  * Extra - actor_index: 255
+
+> Door to some hallway idk; Heals? False
+  * Layers: default
+  * No Wall to some hallway idk/Door to Goatling Prison
+  * Extra - actor_index: 1779
+
+> Door to Key Door Room; Heals? False
+  * Layers: default
+  * No Wall to Key Door Room/Door to Goatling Prison
+  * Extra - actor_index: 1800
+
+> Door to Prison Challenge; Heals? False
+  * Layers: default
+  * No Wall to Prison Challenge/Door to Goatling Prison
+  * Extra - actor_index: 1796
+
+----------------
+Key Door Room
+Extra - total_boundings: {'x1': -6050.0, 'x2': -400.0, 'y1': -405.0, 'y2': 4550.0}
+Extra - polygon: [[-6050.0, -405.0], [-6050.0, 4550.0], [-400.0, 4550.0], [-400.0, -405.0]]
+Extra - room_id: 13
+> Save Crystal; Heals? True; Spawn Point
+  * Layers: default
+  * Extra - actor_index: 441
+  * Extra - start_tag: dungeonSaveNearBoss
+
+> Event - Hit Switch; Heals? False
+  * Layers: default
+  * Event Dilapidated Dungeon/Key Door Room/Hit Switch
+  * Extra - actor_index: 286
+
+> Door to Goatling Prison; Heals? False
+  * Layers: default
+  * No Wall to Goatling Prison/Door to Key Door Room
+  * Extra - actor_index: 1800
+
+> Door to Strong Eyes Arena; Heals? False
+  * Layers: default
+  * No Wall to Strong Eyes Arena/Door to Key Door Room
+  * Extra - actor_index: 1580
+
+> Door to Above Dream Breaker Access (Key); Heals? False
+  * Layers: default
+  * Small Key Door to Above Dream Breaker Access/Door to Key Door Room (Key)
+  * Extra - actor_index: 368
+
+> Door to Above Dream Breaker Access (Out of Bounds); Heals? False
+  * Layers: default
+  * Breakable Wall to Above Dream Breaker Access/Door to Key Door Room (Out of Bounds)
+  * Extra - actor_index: 242
+
+----------------
+Strong Eyes Arena
+Extra - total_boundings: {'x1': -2300.0, 'x2': 850.0, 'y1': 4550.0, 'y2': 9800.0}
+Extra - polygon: [[-2300.0, 4550.0], [-2300.0, 9800.0], [850.0, 9800.0], [850.0, 4550.0]]
+Extra - room_id: 14
+> Pickup (Small Key); Heals? False
+  * Layers: default
+  * Pickup 8; Category? Minor
+  * Extra - actor_index: 254
+
+> Door to Key Door Room; Heals? False
+  * Layers: default
+  * No Wall to Key Door Room/Door to Strong Eyes Arena
+  * Extra - actor_index: 1580
+
+----------------
+Above Dream Breaker Access
+Extra - total_boundings: {'x1': 4400.0, 'x2': 10050.0, 'y1': -450.0, 'y2': 750.0}
+Extra - polygon: [[4400.0, -450.0], [4400.0, 750.0], [10050.0, 750.0], [10050.0, -450.0]]
+Extra - room_id: 15
+> Door to Key Door Room (Key); Heals? False
+  * Layers: default
+  * Small Key Door to Key Door Room/Door to Above Dream Breaker Access (Key)
+  * Extra - actor_index: 368
+
+> Door to Key Door Room (Out of Bounds); Heals? False
+  * Layers: default
+  * Breakable Wall to Key Door Room/Door to Above Dream Breaker Access (Out of Bounds)
+  * Extra - actor_index: 243
+
+> Transition to Castle Sansa; Heals? False; Spawn Point
+  * Layers: default
+  * Transition to Transition to Dilapidated Dungeon/Transition to Dilapidated Dungeon
+  * Extra - actor_index: 487
+  * Extra - transition_tag: dungeon1
+  * Extra - start_tag: lower1
+
+----------------
+Prison Challenge
+Extra - total_boundings: {'x1': -9200.0, 'x2': -5600.0, 'y1': 2250.0, 'y2': 9000.0}
+Extra - polygon: [[-9200.0, 2250.0], [-9200.0, 9000.0], [-5600.0, 9000.0], [-5600.0, 2250.0]]
+Extra - room_id: 16
+> Pickup (Health Piece); Heals? False
+  * Layers: default
+  * Pickup 7; Category? Minor
+  * Extra - actor_index: 284
+
+> Event - Hit Switch; Heals? False
+  * Layers: default
+  * Event Dilapidated Dungeon/Prison Challenge/Hit Switch
+  * Extra - actor_index: 285
+
+> Door to Goatling Prison; Heals? False
+  * Layers: default
+  * No Wall to Goatling Prison/Door to Prison Challenge
+  * Extra - actor_index: 1796
+
+----------------
+Cave Entrance
+Extra - total_boundings: {'x1': -11300.0, 'x2': -8700.0, 'y1': -8300.0, 'y2': -2900.0}
+Extra - polygon: [[-11300.0, -8300.0], [-11300.0, -2900.0], [-8700.0, -2900.0], [-8700.0, -8300.0]]
+Extra - room_id: 17
+> Door to Rock Room; Heals? False
+  * Layers: default
+  * Breakable Wall to Rock Room/Door to Cave Entrance
+  * Extra - actor_index: 237
+
+> Door to Cave Hub; Heals? False
+  * Layers: default
+  * No Wall to Cave Hub/Door to Cave Entrance
+
+----------------
+Cave Hub
+Extra - total_boundings: {'x1': -13500.0, 'x2': -11300.0, 'y1': -10195.682, 'y2': -7100.0}
+Extra - polygon: [[-13500.0, -10195.682], [-13500.0, -7100.0], [-11300.0, -7100.0], [-11300.0, -10195.682]]
+Extra - room_id: 18
+> Door to Cave Entrance; Heals? False
+  * Layers: default
+  * No Wall to Cave Entrance/Door to Cave Hub
+
+> Door to Cave Hallway; Heals? False
+  * Layers: default
+  * No Wall to Cave Hallway/Door to Cave Hub
+
+> Door to Good Graces Room; Heals? False
+  * Layers: default
+  * No Wall to Good Graces Room/Door to Cave Hub
+
+----------------
+Cave Hallway
+Extra - total_boundings: {'x1': -12613.673, 'x2': -11963.673, 'y1': -12900.0, 'y2': -10150.0}
+Extra - polygon: [[-12613.673, -12900.0], [-12613.673, -10150.0], [-11963.673, -10150.0], [-11963.673, -12900.0]]
+Extra - room_id: 19
+> Door to Cave Hub; Heals? False
+  * Layers: default
+  * No Wall to Cave Hub/Door to Cave Hallway
+
+> Door to Transition to The Underbelly; Heals? False
+  * Layers: default
+  * No Wall to Transition to The Underbelly/Door to Cave Hallway
+
+----------------
+Transition to The Underbelly
+Extra - total_boundings: {'x1': -13000.0, 'x2': -9550.0, 'y1': -14600.0, 'y2': -12900.0}
+Extra - polygon: [[-13000.0, -14600.0], [-13000.0, -12900.0], [-9550.0, -12900.0], [-9550.0, -14600.0]]
+Extra - room_id: 20
+> Door to Cave Hallway; Heals? False
+  * Layers: default
+  * No Wall to Cave Hallway/Door to Transition to The Underbelly
+
+> Transition to The Underbelly; Heals? False; Spawn Point
+  * Layers: default
+  * Transition to Transition to Dilapidated Dungeon/Transition to Dilapidated Dungeon
+  * Extra - actor_index: 488
+  * Extra - transition_tag: cavesWest
+  * Extra - start_tag: dungeonWest
+
+----------------
+Good Graces Room
+Extra - total_boundings: {'x1': -18600.0, 'x2': -13500.0, 'y1': -11000.0, 'y2': -7050.0}
+Extra - polygon: [[-18600.0, -11000.0], [-18600.0, -7050.0], [-13500.0, -7050.0], [-13500.0, -11000.0]]
+Extra - room_id: 21
+> Pickup (Good Graces); Heals? False
+  * Layers: default
+  * Pickup 5; Category? Minor
+  * Extra - actor_index: 504
+
+> Door to Cave Hub; Heals? False
+  * Layers: default
+  * No Wall to Cave Hub/Door to Good Graces Room
+
+> Door to Mushroom Platform Room; Heals? False
+  * Layers: default
+  * No Wall to Mushroom Platform Room/Door to Good Graces Room
+
+----------------
+Mushroom Platform Room
+Extra - total_boundings: {'x1': -18000.0, 'x2': -14950.0, 'y1': -7700.0, 'y2': -5100.0}
+Extra - polygon: [[-18000.0, -7700.0], [-18000.0, -5100.0], [-14950.0, -5100.0], [-14950.0, -7700.0]]
+Extra - room_id: 22
+> Door to Good Graces Room; Heals? False
+  * Layers: default
+  * No Wall to Good Graces Room/Door to Mushroom Platform Room
+
+> Door to Transition to Twilight Theatre; Heals? False
+  * Layers: default
+  * No Wall to Transition to Twilight Theatre/Door to Mushroom Platform Room
+
+----------------
+Transition to Twilight Theatre
+Extra - total_boundings: {'x1': -21500.0, 'x2': -17900.0, 'y1': -6300.0, 'y2': -4200.0}
+Extra - polygon: [[-21500.0, -6300.0], [-21500.0, -4200.0], [-17900.0, -4200.0], [-17900.0, -6300.0]]
+Extra - room_id: 23
+> Door to Mushroom Platform Room; Heals? False
+  * Layers: default
+  * No Wall to Mushroom Platform Room/Door to Transition to Twilight Theatre
+
+> Transition to Twilight Theatre; Heals? False; Spawn Point
+  * Layers: default
+  * Transition to Transition to Dilapidated Dungeon/Transition to Dilapidated Dungeon
+  * Extra - actor_index: 489
+  * Extra - transition_tag: theatreNorthEastLower
+  * Extra - start_tag: dungeonNorth
+
