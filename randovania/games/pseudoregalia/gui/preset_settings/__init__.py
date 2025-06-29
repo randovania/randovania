@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 
 def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
-    from randovania.games.pseudoregalia.gui.preset_settings.pseudoregalia_patches_tab import PresetPseudoregaliaPatches
+    from randovania.games.pseudoregalia.gui.preset_settings.pseudoregalia_other_tab import PresetPseudoregaliaOther
     from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
     from randovania.gui.preset_settings.hints_tab import PresetHints
@@ -25,7 +25,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         PresetHints,
         PresetLocationPool,
         PresetItemPool,
-        PresetPseudoregaliaPatches,
+        PresetPseudoregaliaOther,
         PresetDockRando,
         PresetStartingArea,
     ]

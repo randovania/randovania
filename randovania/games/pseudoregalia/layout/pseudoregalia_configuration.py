@@ -8,8 +8,9 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 
 @dataclasses.dataclass(frozen=True)
 class PseudoregaliaConfiguration(BaseConfiguration):
-    # These fields aren't necessary for a new game: they're here to have example/test features
-    include_extra_pickups: bool
+    goatling_shuffle: bool
+    chair_shuffle: bool
+    note_shuffle: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
@@ -18,7 +19,11 @@ class PseudoregaliaConfiguration(BaseConfiguration):
     def active_layers(self) -> set[str]:
         result = super().active_layers()
 
-        if self.include_extra_pickups:
-            result.add("extra_pickups")
+        if self.goatling_shuffle:
+            result.add("goatling_shuffle")
+        if self.chair_shuffle:
+            result.add("chair_shuffle")
+        if self.note_shuffle:
+            result.add("note_shuffle")
 
         return result
