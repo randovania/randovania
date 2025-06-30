@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PseudoregaliaGameExportDialog</class>
+ <widget class="QDialog" name="PseudoregaliaGameExportDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>543</width>
+    <height>351</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Factorio Mod Exporter</string>
+  </property>
+  <layout class="QGridLayout" name="root_layout">
+   <item row="11" column="0">
+    <widget class="QPushButton" name="accept_button">
+     <property name="text">
+      <string>Accept</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="1">
+    <widget class="QPushButton" name="cancel_button">
+     <property name="text">
+      <string>Cancel</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="QLabel" name="description">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The mod will immediately be installed into the game. To uninstall the mod, open your Pseudoregalia files and delete &lt;span style=&quot; font-style:italic;&quot;&gt;pseudoregalia/Content/Paks/rando_p.pak&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignJustify|Qt::AlignmentFlag::AlignVCenter</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QCheckBox" name="auto_save_spoiler_check">
+     <property name="text">
+      <string>Include a spoiler log on same directory</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <spacer name="vertical_spacer">
+     <property name="orientation">
+      <enum>Qt::Orientation::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="game_dir_label">
+     <property name="text">
+      <string>Pseudoregalia Game Directory</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLineEdit" name="game_dir_edit">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>Path to Pseudoregalia game directory</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QPushButton" name="game_dir_button">
+     <property name="text">
+      <string>Select Folder</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QPushButton" name="default_button">
+     <property name="text">
+      <string>Default Folder</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

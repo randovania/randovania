@@ -12,15 +12,13 @@ from randovania.interface_common.options import PerGameOptions, decode_if_not_no
 class PseudoregaliaPerGameOptions(PerGameOptions):
     """ """
 
-    input_path: Path | None = None
-    output_path: Path | None = None
+    game_dir: Path | None = None
 
     @property
     def as_json(self) -> dict:
         return {
             **super().as_json,
-            "input_path": str(self.input_path) if self.input_path is not None else None,
-            "output_path": str(self.output_path) if self.output_path is not None else None,
+            "game_dir": str(self.game_dir) if self.game_dir is not None else None,
         }
 
     @classmethod
@@ -29,8 +27,7 @@ class PseudoregaliaPerGameOptions(PerGameOptions):
         cosmetic_patches = game.data.layout.cosmetic_patches.from_json(value["cosmetic_patches"])
         return cls(
             cosmetic_patches=cosmetic_patches,
-            input_path=decode_if_not_none(value["input_path"], Path),
-            output_path=decode_if_not_none(value["output_path"], Path),
+            game_dir=decode_if_not_none(value["game_dir"], Path),
         )
 
     @classmethod
