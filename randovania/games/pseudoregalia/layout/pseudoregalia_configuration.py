@@ -8,6 +8,7 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 
 @dataclasses.dataclass(frozen=True)
 class PseudoregaliaConfiguration(BaseConfiguration):
+    required_keys: int = dataclasses.field(metadata={"min": 0, "max": 5, "precision": 1})
     goatling_shuffle: bool
     chair_shuffle: bool
     note_shuffle: bool

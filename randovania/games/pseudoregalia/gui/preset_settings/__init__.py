@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from randovania.games.pseudoregalia.gui.preset_settings.pseudoregalia_goal_tab import PresetPseudoregaliaGoal
 from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
 
 if TYPE_CHECKING:
@@ -24,6 +25,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         PresetGeneration,
         PresetHints,
         PresetLocationPool,
+        PresetPseudoregaliaGoal,
         PresetItemPool,
         PresetPseudoregaliaOther,
         PresetDockRando,

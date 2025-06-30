@@ -3,7 +3,14 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import GamePresetDescriber, fill_template_strings_from_tree
 
 
-def format_extra_locations(configuration: PseudoregaliaConfiguration):
+def describe_goal(configuration: PseudoregaliaConfiguration):
+    if configuration.required_keys == 0:
+        return "Reach Distorted Memory"
+    else:
+        return f"{configuration.required_keys} Key{'' if configuration.required_keys == 1 else 's'}"
+
+
+def describe_extra_locations(configuration: PseudoregaliaConfiguration):
     extra_locations = []
     if configuration.goatling_shuffle:
         extra_locations.append("Goatlings")
@@ -31,8 +38,13 @@ class PseudoregaliaPresetDescriber(GamePresetDescriber):
         template_strings = super().format_params(configuration)
 
         extra_message_tree = {
+            "Goal": [
+                {
+                    describe_goal(configuration): True,
+                },
+            ],
             "Extra Locations": [
-                format_extra_locations(configuration),
+                describe_extra_locations(configuration),
             ],
         }
 
