@@ -1,6 +1,7 @@
 HASH_WORDS = [
     "Aerial",
     "Ascendant",
+    "Attire",
     "Bailey",
     "Basic",
     "Bean",
@@ -80,6 +81,7 @@ HASH_WORDS = [
     "Prowess",
     "Remains",
     "Sansa",
+    "Save",
     "Seraphic",
     "Silver",
     "Sister",
