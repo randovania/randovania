@@ -120,9 +120,9 @@ def test_resources_for_unsatisfied_damage_as_interesting(echoes_resource_databas
         MagicMock(),
     )
     interesting_resources = calculate_interesting_resources(frozenset([RequirementList([req])]), context, 99)
-    d_suit = db.get_item_by_name("Dark Suit")
-    l_suit = db.get_item_by_name("Light Suit")
-    e_tank = db.get_item_by_name("Energy Tank")
+    d_suit = db.get_item_by_display_name("Dark Suit")
+    l_suit = db.get_item_by_display_name("Light Suit")
+    e_tank = db.get_item_by_display_name("Energy Tank")
 
     assert d_suit in interesting_resources
     assert l_suit in interesting_resources
@@ -144,9 +144,9 @@ def test_resources_for_satisfied_damage_as_interesting(echoes_resource_database)
         MagicMock(),
     )
     interesting_resources = calculate_interesting_resources(frozenset([RequirementList([req])]), context, 99)
-    d_suit = db.get_item_by_name("Dark Suit")
-    l_suit = db.get_item_by_name("Light Suit")
-    e_tank = db.get_item_by_name("Energy Tank")
+    d_suit = db.get_item_by_display_name("Dark Suit")
+    l_suit = db.get_item_by_display_name("Light Suit")
+    e_tank = db.get_item_by_display_name("Energy Tank")
 
     assert d_suit in interesting_resources
     assert l_suit in interesting_resources

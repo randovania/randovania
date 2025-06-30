@@ -22,7 +22,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
 
-def default_base_damage_reduction(db: ResourceDatabase, current_resources: ResourceCollection) -> float:
+def default_base_damage_reduction(db: ResourceDatabaseView, current_resources: ResourceCollection) -> float:
     return 1.0
 
 
@@ -54,7 +54,7 @@ class ResourceDatabase(ResourceDatabaseView):
     requirement_template: dict[str, NamedRequirementTemplate]
     damage_reductions: dict[SimpleResourceInfo, list[DamageReduction]]
     energy_tank_item: ItemResourceInfo
-    base_damage_reduction: Callable[[ResourceDatabase, ResourceCollection], float] = default_base_damage_reduction
+    base_damage_reduction: Callable[[ResourceDatabaseView, ResourceCollection], float] = default_base_damage_reduction
     resource_by_index: list[ResourceInfo | None] = dataclasses.field(default_factory=list)
 
     def __post_init__(self) -> None:
@@ -96,12 +96,13 @@ class ResourceDatabase(ResourceDatabaseView):
             typing.cast("list[ResourceInfo]", self.get_by_type(resource_type)), name, resource_type
         )
 
-    def get_item_by_name(self, name: str) -> ItemResourceInfo:
-        return search.find_resource_info_with_long_name(self.item, name)
-
     @override
     def get_item(self, short_name: str) -> ItemResourceInfo:
         return search.find_resource_info_with_id(self.item, short_name, ResourceType.ITEM)
+
+    @override
+    def get_item_by_display_name(self, name: str) -> ItemResourceInfo:
+        return search.find_resource_info_with_long_name(self.item, name)
 
     @override
     def get_event(self, short_name: str) -> SimpleResourceInfo:

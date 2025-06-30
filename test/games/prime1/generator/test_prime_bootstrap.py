@@ -29,7 +29,7 @@ from randovania.generator.pickup_pool import pool_creator
 def test_prime1_progressive_damage_reduction(prime1_resource_database, expected, suits):
     # Setup
     current_resources = ResourceCollection.from_dict(
-        prime1_resource_database, {prime1_resource_database.get_item_by_name(suit): 1 for suit in suits}
+        prime1_resource_database, {prime1_resource_database.get_item_by_display_name(suit): 1 for suit in suits}
     )
     bootstrap = RandovaniaGame.METROID_PRIME.generator.bootstrap
     assert isinstance(bootstrap, PrimeBootstrap)
@@ -57,7 +57,7 @@ def test_prime1_progressive_damage_reduction(prime1_resource_database, expected,
 def test_prime1_absolute_damage_reduction(prime1_resource_database, expected, suits):
     # Setup
     current_resources = ResourceCollection.from_dict(
-        prime1_resource_database, {prime1_resource_database.get_item_by_name(suit): 1 for suit in suits}
+        prime1_resource_database, {prime1_resource_database.get_item_by_display_name(suit): 1 for suit in suits}
     )
     bootstrap = RandovaniaGame.METROID_PRIME.generator.bootstrap
     assert isinstance(bootstrap, PrimeBootstrap)
@@ -85,7 +85,7 @@ def test_prime1_absolute_damage_reduction(prime1_resource_database, expected, su
 def test_prime1_additive_damage_reduction(prime1_resource_database, expected, suits):
     # Setup
     current_resources = ResourceCollection.from_dict(
-        prime1_resource_database, {prime1_resource_database.get_item_by_name(suit): 1 for suit in suits}
+        prime1_resource_database, {prime1_resource_database.get_item_by_display_name(suit): 1 for suit in suits}
     )
     bootstrap = RandovaniaGame.METROID_PRIME.generator.bootstrap
     assert isinstance(bootstrap, PrimeBootstrap)

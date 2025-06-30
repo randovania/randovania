@@ -16,20 +16,20 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.node import Node
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
 
 
 class DreadBasePatchesFactory(BasePatchesFactory[DreadConfiguration]):
     def assign_static_dock_weakness(
-        self, configuration: DreadConfiguration, game: GameDescription, initial_patches: GamePatches
+        self, configuration: DreadConfiguration, game: GameDatabaseView, initial_patches: GamePatches
     ) -> GamePatches:
         parent = super().assign_static_dock_weakness(configuration, game, initial_patches)
 
         dock_weakness = []
         if configuration.hanubia_easier_path_to_itorash:
             nic = NodeIdentifier.create
-            power_weak = game.dock_weakness_database.get_by_weakness("door", "Power Beam Door")
+            power_weak = game.get_dock_weakness("door", "Power Beam Door")
 
             dock_weakness.extend(
                 [
@@ -39,15 +39,14 @@ class DreadBasePatchesFactory(BasePatchesFactory[DreadConfiguration]):
             )
 
         return parent.assign_dock_weakness(
-            (
-                (game.region_list.typed_node_by_identifier(identifier, DockNode), target)
-                for identifier, target in dock_weakness
-            )
+            ((game.typed_node_by_identifier(identifier, DockNode), target) for identifier, target in dock_weakness)
         )
 
     def dock_connections_assignment(
-        self, configuration: DreadConfiguration, game: GameDescription, rng: Random
+        self, configuration: DreadConfiguration, game: GameDatabaseView, rng: Random
     ) -> Iterable[tuple[DockNode, Node]]:
+        yield from super().dock_connections_assignment(configuration, game, rng)
+
         teleporter_connection = get_teleporter_connections(configuration.teleporters, game, rng)
         dock_assignment = get_dock_connections_assignment_for_teleporter(
             configuration.teleporters, game, teleporter_connection

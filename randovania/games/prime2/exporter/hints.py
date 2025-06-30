@@ -14,8 +14,8 @@ if TYPE_CHECKING:
     from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
     from randovania.interface_common.players_configuration import PlayersConfiguration
 
@@ -78,7 +78,7 @@ _SKY_TEMPLE_KEY_SCAN_ASSETS = [
 def create_stk_hints(
     all_patches: dict[int, GamePatches],
     players_config: PlayersConfiguration,
-    resource_database: ResourceDatabase,
+    resource_database: ResourceDatabaseView,
     namer: HintNamer,
     hide_area: bool,
 ) -> list:
