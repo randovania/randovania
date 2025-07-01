@@ -10,7 +10,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.layout.base.base_configuration import BaseConfiguration
 
-key_regions = [
+PSEUDOREGALIA_KEY_REGIONS = [
     "Tower Remains",
     "Empty Bailey",
     "Sansa Keep",
@@ -30,7 +30,7 @@ def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: G
             region=region,
             region_short=region.replace(" ", ""),
         )
-        for region in key_regions
+        for region in PSEUDOREGALIA_KEY_REGIONS
     ]
     keys_to_shuffle = keys[: configuration.required_keys]
     starting_keys = keys[configuration.required_keys :]

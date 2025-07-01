@@ -57,7 +57,12 @@ def _hints() -> randovania.game.hints.GameHints:
 
     return randovania.game.hints.GameHints(
         hint_distributor=generator.PseudoregaliaHintDistributor(),
-        specific_pickup_hints={},
+        specific_pickup_hints={
+            "major_keys": randovania.game.hints.SpecificHintDetails(
+                long_name="Major Keys",
+                description="This controls how precise the hints in Tower Remains are for Major Keys.",
+            )
+        },
     )
 
 
