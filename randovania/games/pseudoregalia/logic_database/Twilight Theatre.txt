@@ -52,8 +52,8 @@ Extra - room_id: 1
 
 ----------------
 Showroom
-Extra - total_boundings: {'x1': -850.0, 'x2': 4150.0, 'y1': -1850.0, 'y2': 6600.0}
-Extra - polygon: [[-850.0, -1850.0], [-850.0, 6600.0], [4150.0, 6600.0], [4150.0, -1850.0]]
+Extra - total_boundings: {'x1': -850.0, 'x2': 4150.0, 'y1': -1850.0, 'y2': 6650.0}
+Extra - polygon: [[-850.0, -1850.0], [-850.0, 6650.0], [4150.0, 6650.0], [4150.0, -1850.0]]
 Extra - room_id: 2
 > Pickup (Major Key); Heals? False
   * Layers: default
@@ -110,10 +110,15 @@ Extra - room_id: 2
   * No Wall to Stage Left/Door to Showroom
   * Extra - actor_index: 3009
 
-> Door to Backstage; Heals? False
+> Door to Backstage (Lower); Heals? False
   * Layers: default
-  * No Wall to Backstage/Door to Showroom
+  * No Wall to Backstage/Door to Showroom (Lower)
   * Extra - actor_index: 3012
+
+> Door to Backstage (Upper); Heals? False
+  * Layers: default
+  * No Wall to Backstage/Door to Showroom (Upper)
+  * Extra - actor_index: 2950
 
 > Door to stage right switch; Heals? False
   * Layers: default
@@ -124,9 +129,9 @@ Extra - room_id: 2
   * No Wall to huge parkour room/Door to Showroom
   * Extra - actor_index: 3082
 
-> Door to bubble room; Heals? False
+> Door to Bubble Hallway; Heals? False
   * Layers: default
-  * No Wall to bubble room/Door to Showroom
+  * No Wall to Bubble Hallway/Door to Showroom
   * Extra - actor_index: 3005
 
 ----------------
@@ -159,38 +164,38 @@ Extra - room_id: 4
   * No Wall to Showroom/Door to Stage Right
   * Extra - actor_index: 3010
 
-> Door to soul cutter hub; Heals? False
+> Door to Soul Cutter Hub; Heals? False
   * Layers: default
-  * No Wall to soul cutter hub/Door to Stage Right
+  * No Wall to Soul Cutter Hub/Door to Stage Right
   * Extra - actor_index: 3088
 
 ----------------
-soul cutter hub
+Soul Cutter Hub
 Extra - total_boundings: {'x1': -10450.0, 'x2': -6850.0, 'y1': 5300.0, 'y2': 8950.0}
 Extra - polygon: [[-10450.0, 5300.0], [-10450.0, 8950.0], [-6850.0, 8950.0], [-6850.0, 5300.0]]
 Extra - room_id: 5
 > Event - Hit Switch; Heals? False
   * Layers: default
-  * Event Twilight Theatre/soul cutter hub/Hit Switch
+  * Event Twilight Theatre/Soul Cutter Hub/Hit Switch
   * Extra - actor_index: 916
 
 > Event - Strikebreak Wall; Heals? False
   * Layers: default
-  * Event Twilight Theatre/soul cutter hub/Strikebreak Wall
+  * Event Twilight Theatre/Soul Cutter Hub/Strikebreak Wall
   * Extra - actor_index: 826
 
 > Door to Stage Right; Heals? False
   * Layers: default
-  * No Wall to Stage Right/Door to soul cutter hub
+  * No Wall to Stage Right/Door to Soul Cutter Hub
   * Extra - actor_index: 3088
 
 > Door to Soul Cutter Access; Heals? False
   * Layers: default
-  * No Wall to Soul Cutter Access/Door to soul cutter hub
+  * No Wall to Soul Cutter Access/Door to Soul Cutter Hub
 
 > Door to room that requires soul cutter to call the platform; Heals? False
   * Layers: default
-  * No Wall to room that requires soul cutter to call the platform/Door to soul cutter hub
+  * No Wall to room that requires soul cutter to call the platform/Door to Soul Cutter Hub
   * Extra - actor_index: 3091
 
 ----------------
@@ -198,9 +203,9 @@ Soul Cutter Access
 Extra - total_boundings: {'x1': -8800.0, 'x2': -3800.0, 'y1': 7650.0, 'y2': 9350.0}
 Extra - polygon: [[-8800.0, 7650.0], [-8800.0, 9350.0], [-3800.0, 9350.0], [-3800.0, 7650.0]]
 Extra - room_id: 6
-> Door to soul cutter hub; Heals? False
+> Door to Soul Cutter Hub; Heals? False
   * Layers: default
-  * No Wall to soul cutter hub/Door to Soul Cutter Access
+  * No Wall to Soul Cutter Hub/Door to Soul Cutter Access
 
 > Door to Soul Cutter Room; Heals? False
   * Layers: default
@@ -225,9 +230,9 @@ room that requires soul cutter to call the platform
 Extra - total_boundings: {'x1': -8975.0, 'x2': -8100.0, 'y1': -1350.0, 'y2': 5300.0}
 Extra - polygon: [[-8975.0, -1350.0], [-8975.0, 5300.0], [-8100.0, 5300.0], [-8100.0, -1350.0]]
 Extra - room_id: 8
-> Door to soul cutter hub; Heals? False
+> Door to Soul Cutter Hub; Heals? False
   * Layers: default
-  * No Wall to soul cutter hub/Door to room that requires soul cutter to call the platform
+  * No Wall to Soul Cutter Hub/Door to room that requires soul cutter to call the platform
   * Extra - actor_index: 3091
 
 > Door to outside access; Heals? False
@@ -325,39 +330,54 @@ Backstage
 Extra - total_boundings: {'x1': 697.71765, 'x2': 2397.7175, 'y1': 6600.0, 'y2': 9300.0}
 Extra - polygon: [[697.71765, 6600.0], [697.71765, 9300.0], [2397.7175, 9300.0], [2397.7175, 6600.0]]
 Extra - room_id: 14
-> Door to Showroom; Heals? False
+> Door to Showroom (Lower); Heals? False
   * Layers: default
-  * No Wall to Showroom/Door to Backstage
+  * No Wall to Showroom/Door to Backstage (Lower)
   * Extra - actor_index: 3012
 
-> Door to backstage hub; Heals? False
+> Door to Showroom (Upper); Heals? False
   * Layers: default
-  * No Wall to backstage hub/Door to Backstage
+  * No Wall to Showroom/Door to Backstage (Upper)
+  * Extra - actor_index: 2950
+
+> Door to Backstage Hub (Lower); Heals? False
+  * Layers: default
+  * No Wall to Backstage Hub/Door to Backstage (Lower)
   * Extra - actor_index: 2918
 
+> Door to Backstage Hub (Upper); Heals? False
+  * Layers: default
+  * No Wall to Backstage Hub/Door to Backstage (Upper)
+  * Extra - actor_index: 2929
+
 ----------------
-backstage hub
+Backstage Hub
 Extra - total_boundings: {'x1': 400.0, 'x2': 2800.0, 'y1': 9300.0, 'y2': 11700.0}
 Extra - polygon: [[400.0, 9300.0], [400.0, 11700.0], [2800.0, 11700.0], [2800.0, 9300.0]]
 Extra - room_id: 15
-> Door to Backstage; Heals? False
+> Door to Backstage (Lower); Heals? False
   * Layers: default
-  * No Wall to Backstage/Door to backstage hub
+  * No Wall to Backstage/Door to Backstage Hub (Lower)
   * Extra - actor_index: 2918
+
+> Door to Backstage (Upper); Heals? False
+  * Layers: default
+  * No Wall to Backstage/Door to Backstage Hub (Upper)
+  * Extra - actor_index: 2929
 
 > Door to Combat Room (Lower); Heals? False
   * Layers: default
-  * No Wall to Combat Room/Door to backstage hub (Lower)
+  * No Wall to Combat Room/Door to Backstage Hub (Lower)
   * Extra - actor_index: 2925
 
 > Door to Combat Room (Upper); Heals? False
   * Layers: default
-  * No Wall to Combat Room/Door to backstage hub (Upper)
+  * No Wall to Combat Room/Door to Backstage Hub (Upper)
   * Extra - actor_index: 2927
 
 > Door to Axe Room; Heals? False
   * Layers: default
-  * No Wall to Axe Room/Door to backstage hub
+  * No Wall to Axe Room/Door to Backstage Hub
   * Extra - actor_index: 3077
 
 ----------------
@@ -365,14 +385,14 @@ Combat Room
 Extra - total_boundings: {'x1': -600.0, 'x2': 3500.0, 'y1': 11650.0, 'y2': 15800.0}
 Extra - polygon: [[-600.0, 11650.0], [-600.0, 15800.0], [3500.0, 15800.0], [3500.0, 11650.0]]
 Extra - room_id: 16
-> Door to backstage hub (Lower); Heals? False
+> Door to Backstage Hub (Lower); Heals? False
   * Layers: default
-  * No Wall to backstage hub/Door to Combat Room (Lower)
+  * No Wall to Backstage Hub/Door to Combat Room (Lower)
   * Extra - actor_index: 2925
 
-> Door to backstage hub (Upper); Heals? False
+> Door to Backstage Hub (Upper); Heals? False
   * Layers: default
-  * No Wall to backstage hub/Door to Combat Room (Upper)
+  * No Wall to Backstage Hub/Door to Combat Room (Upper)
   * Extra - actor_index: 2927
 
 ----------------
@@ -380,34 +400,34 @@ Axe Room
 Extra - total_boundings: {'x1': 2800.0, 'x2': 9250.0, 'y1': 10100.0, 'y2': 10900.0}
 Extra - polygon: [[2800.0, 10100.0], [2800.0, 10900.0], [9250.0, 10900.0], [9250.0, 10100.0]]
 Extra - room_id: 17
-> Door to backstage hub; Heals? False
+> Door to Backstage Hub; Heals? False
   * Layers: default
-  * No Wall to backstage hub/Door to Axe Room
+  * No Wall to Backstage Hub/Door to Axe Room
   * Extra - actor_index: 3077
 
-> Door to cylinder hub room; Heals? False
+> Door to Northeast Hub; Heals? False
   * Layers: default
-  * No Wall to cylinder hub room/Door to Axe Room
+  * No Wall to Northeast Hub/Door to Axe Room
   * Extra - actor_index: 3075
 
 ----------------
-cylinder hub room
+Northeast Hub
 Extra - total_boundings: {'x1': 9250.0, 'x2': 13200.0, 'y1': 8150.0, 'y2': 14800.0}
 Extra - polygon: [[9250.0, 8150.0], [9250.0, 14800.0], [13200.0, 14800.0], [13200.0, 8150.0]]
 Extra - room_id: 18
 > Door to Axe Room; Heals? False
   * Layers: default
-  * No Wall to Axe Room/Door to cylinder hub room
+  * No Wall to Axe Room/Door to Northeast Hub
   * Extra - actor_index: 3075
 
 > Door to Transition to Dilapidated Dungeon; Heals? False
   * Layers: default
-  * No Wall to Transition to Dilapidated Dungeon/Door to cylinder hub room
+  * No Wall to Transition to Dilapidated Dungeon/Door to Northeast Hub
   * Extra - actor_index: 3073
 
 > Door to Transition to Sansa Keep; Heals? False
   * Layers: default
-  * No Wall to Transition to Sansa Keep/Door to cylinder hub room
+  * No Wall to Transition to Sansa Keep/Door to Northeast Hub
   * Extra - actor_index: 3071
 
 ----------------
@@ -430,9 +450,9 @@ Extra - room_id: 19
   * Pickup 78; Category? Minor
   * Extra - actor_index: 1085
 
-> Door to cylinder hub room; Heals? False
+> Door to Northeast Hub; Heals? False
   * Layers: default
-  * No Wall to cylinder hub room/Door to Transition to Dilapidated Dungeon
+  * No Wall to Northeast Hub/Door to Transition to Dilapidated Dungeon
   * Extra - actor_index: 3073
 
 > Transition to Dilapidated Dungeon; Heals? False; Spawn Point
@@ -452,9 +472,9 @@ Extra - room_id: 20
   * Pickup 79; Category? Minor
   * Extra - actor_index: 1086
 
-> Door to cylinder hub room; Heals? False
+> Door to Northeast Hub; Heals? False
   * Layers: default
-  * No Wall to cylinder hub room/Door to Transition to Sansa Keep
+  * No Wall to Northeast Hub/Door to Transition to Sansa Keep
   * Extra - actor_index: 3071
 
 > Transition to Sansa Keep; Heals? False; Spawn Point
@@ -465,28 +485,28 @@ Extra - room_id: 20
   * Extra - start_tag: theatreNorthEastUpper
 
 ----------------
-bubble room
+Bubble Hallway
 Extra - total_boundings: {'x1': -1750.0, 'x2': 2350.0, 'y1': -7800.0, 'y2': -1800.0}
 Extra - polygon: [[-1750.0, -7800.0], [-1750.0, -1800.0], [2350.0, -1800.0], [2350.0, -7800.0]]
 Extra - room_id: 21
 > Door to Showroom; Heals? False
   * Layers: default
-  * No Wall to Showroom/Door to bubble room
+  * No Wall to Showroom/Door to Bubble Hallway
   * Extra - actor_index: 3005
 
-> Door to back hub; Heals? False
+> Door to South Hub; Heals? False
   * Layers: default
-  * No Wall to back hub/Door to bubble room
+  * No Wall to South Hub/Door to Bubble Hallway
   * Extra - actor_index: 3003
 
 ----------------
-back hub
+South Hub
 Extra - total_boundings: {'x1': -2000.0, 'x2': 6900.0, 'y1': -16200.0, 'y2': -7800.0}
 Extra - polygon: [[-2000.0, -16200.0], [-2000.0, -7800.0], [6900.0, -7800.0], [6900.0, -16200.0]]
 Extra - room_id: 22
 > Event - Hit Switch; Heals? False
   * Layers: default
-  * Event Twilight Theatre/back hub/Hit Switch
+  * Event Twilight Theatre/South Hub/Hit Switch
   * Extra - actor_index: 921
 
 > Pickup (Aerial Finesse); Heals? False
@@ -499,19 +519,19 @@ Extra - room_id: 22
   * Pickup 75; Category? Major
   * Extra - actor_index: 1232
 
-> Door to bubble room; Heals? False
+> Door to Bubble Hallway; Heals? False
   * Layers: default
-  * No Wall to bubble room/Door to back hub
+  * No Wall to Bubble Hallway/Door to South Hub
   * Extra - actor_index: 3003
 
 > Door to Transition to Empty Bailey; Heals? False
   * Layers: default
-  * No Wall to Transition to Empty Bailey/Door to back hub
+  * No Wall to Transition to Empty Bailey/Door to South Hub
   * Extra - actor_index: 3001
 
 > Door to Transition to Castle Sansa; Heals? False
   * Layers: default
-  * No Wall to Transition to Castle Sansa/Door to back hub
+  * No Wall to Transition to Castle Sansa/Door to South Hub
   * Extra - actor_index: 2998
 
 ----------------
@@ -519,9 +539,9 @@ Transition to Empty Bailey
 Extra - total_boundings: {'x1': -4950.0, 'x2': -2000.0, 'y1': -11000.0, 'y2': -9700.0}
 Extra - polygon: [[-4950.0, -11000.0], [-4950.0, -9700.0], [-2000.0, -9700.0], [-2000.0, -11000.0]]
 Extra - room_id: 23
-> Door to back hub; Heals? False
+> Door to South Hub; Heals? False
   * Layers: default
-  * No Wall to back hub/Door to Transition to Empty Bailey
+  * No Wall to South Hub/Door to Transition to Empty Bailey
   * Extra - actor_index: 3001
 
 > Transition to Empty Bailey; Heals? False; Spawn Point
@@ -536,9 +556,9 @@ Transition to Castle Sansa
 Extra - total_boundings: {'x1': 6900.0, 'x2': 11250.0, 'y1': -12100.0, 'y2': -9900.0}
 Extra - polygon: [[6900.0, -12100.0], [6900.0, -9900.0], [11250.0, -9900.0], [11250.0, -12100.0]]
 Extra - room_id: 24
-> Door to back hub; Heals? False
+> Door to South Hub; Heals? False
   * Layers: default
-  * No Wall to back hub/Door to Transition to Castle Sansa
+  * No Wall to South Hub/Door to Transition to Castle Sansa
   * Extra - actor_index: 2998
 
 > Transition to Castle Sansa; Heals? False; Spawn Point
