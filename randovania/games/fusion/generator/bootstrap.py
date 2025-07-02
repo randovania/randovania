@@ -3,11 +3,14 @@ from __future__ import annotations
 import dataclasses
 from typing import TYPE_CHECKING
 
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.games.fusion.layout import FusionConfiguration
+from randovania.layout.base.available_locations import RandomizationMode
 from randovania.resolver.bootstrap import Bootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
@@ -22,6 +25,23 @@ if TYPE_CHECKING:
 def is_metroid_location(node: PickupNode, config: FusionConfiguration) -> bool:
     # Returns True for all locations, enabling Metroids to be pre-placed at any PickupNode
     return True
+
+
+def is_major_metroid_location_predicate(game: GameDescription) -> Callable[[PickupNode, FusionConfiguration], bool]:
+    def is_major_metroid_location(node: PickupNode, config: FusionConfiguration) -> bool:
+        return game.region_list.node_from_pickup_index(node.pickup_index).location_category == LocationCategory.MAJOR
+
+    return is_major_metroid_location
+
+
+def get_metroid_location_predicate(
+    game: GameDescription, config: FusionConfiguration
+) -> Callable[[PickupNode, FusionConfiguration], bool]:
+    return (
+        is_metroid_location
+        if config.available_locations.randomization_mode == RandomizationMode.FULL
+        else is_major_metroid_location_predicate(game)
+    )
 
 
 class FusionBootstrap(Bootstrap[FusionConfiguration]):
@@ -64,7 +84,9 @@ class FusionBootstrap(Bootstrap[FusionConfiguration]):
         pickups_to_preplace = [
             pickup for pickup in list(pool_results.to_place) if pickup.gui_category.name == "InfantMetroid"
         ]
-        locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_metroid_location)
+        locations = self.all_preplaced_pickup_locations(
+            patches.game, configuration, get_metroid_location_predicate(patches.game, configuration)
+        )
         weighted_locations = {location: location.extra["infant_weight"] for location in locations}
         self.pre_place_pickups_weighted(rng, pickups_to_preplace, weighted_locations, pool_results, patches.game.game)
         return super().assign_pool_results(rng, configuration, patches, pool_results)

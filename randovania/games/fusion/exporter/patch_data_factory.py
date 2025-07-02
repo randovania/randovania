@@ -127,26 +127,18 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "Abilities": [],
             "SecurityLevels": [],
             "DownloadedMaps": [0, 1, 2, 3, 4, 5, 6],
+            "Missiles": 0,
+            "PowerBombs": 0,
         }
-        missile_launcher = next(
-            state
-            for defi, state in self.configuration.standard_pickup_configuration.pickups_state.items()
-            if defi.name == "Missile Launcher Data"
-        )
-        # Fusion always starts with launchers ammo, even if launcher is not a starting item
-        starting_dict["Missiles"] = missile_launcher.included_ammo[0]
-
-        pb_launcher = next(
-            state
-            for defi, state in self.configuration.standard_pickup_configuration.pickups_state.items()
-            if defi.name == "Power Bomb Data"
-        )
-        starting_dict["PowerBombs"] = pb_launcher.included_ammo[0]
 
         for item, quantity in self.patches.starting_resources().as_resource_gain():
             match item.extra["StartingItemCategory"]:
-                case "Missiles" | "PowerBombs" | "Metroids":
+                case "Metroids":
                     continue
+                case "Missiles":
+                    starting_dict["Missiles"] += quantity
+                case "PowerBombs":
+                    starting_dict["PowerBombs"] += quantity
                 case "Energy":
                     starting_dict["Energy"] += self.configuration.energy_per_tank * quantity
                 case "SecurityLevels":
@@ -160,9 +152,14 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
 
     def _create_tank_increments(self) -> dict:
         tank_dict = {}
-        for definition, state in self.patches.configuration.ammo_pickup_configuration.pickups_state.items():
-            tank_dict[definition.extra["TankIncrementName"]] = state.ammo_count[0]
+        for ammo_definition, ammo_state in self.patches.configuration.ammo_pickup_configuration.pickups_state.items():
+            tank_dict[ammo_definition.extra["TankIncrementName"]] = ammo_state.ammo_count[0]
         tank_dict["EnergyTank"] = self.configuration.energy_per_tank
+
+        for stand_definition, stand_state in self.configuration.standard_pickup_configuration.pickups_state.items():
+            if "LauncherIncrementName" in stand_definition.extra:
+                tank_dict[stand_definition.extra["LauncherIncrementName"]] = stand_state.included_ammo[0]
+
         return tank_dict
 
     def _create_door_locks(self) -> list[dict]:
@@ -232,17 +229,42 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             )
 
         hints = {}
+        restricted_hint = ""
+        operations_hint = ""
+        hint_counter = 0
+        if metroid_precision != SpecificPickupHintMode.DISABLED:
+            # loop through all metroids and place them alternating on Restricted then Operations Nav Rooms
+            for _, text in metroid_hint_mapping.items():
+                if "has no need to be located" in text:
+                    continue
+                if hint_counter % 2 == 0:
+                    restricted_hint = restricted_hint + text + " "
+                else:
+                    operations_hint = operations_hint + text + " "
+                hint_counter += 1
+            restricted_hint = restricted_hint.rstrip()
+            operations_hint = operations_hint.rstrip()
+
+            # special handling when there's no Metroids to hint on Operations Deck
+            if hint_counter == 1:
+                operations_hint = "This terminal was unable to scan for any [COLOR=3]Metroids[/COLOR]."
 
         for node in self.game.region_list.iterate_nodes_of_type(HintNode):
             hint_location = node.extra["hint_name"]
             if hint_location == "AuxiliaryPower" and charge_precision != SpecificPickupHintMode.DISABLED:
                 hints[hint_location] = " ".join([text for _, text in charge_hint_mapping.items()])
             elif hint_location == "RestrictedLabs" and metroid_precision != SpecificPickupHintMode.DISABLED:
-                hints[hint_location] = " ".join(
-                    [text for _, text in metroid_hint_mapping.items() if "has no need to be located" not in text]
+                hints[hint_location] = (
+                    restricted_hint
+                    if self.configuration.artifacts.placed_artifacts
+                    else "The Metroids are in captivity, there is no need to locate them."
                 )
-                if not self.configuration.artifacts.placed_artifacts:
-                    hints[hint_location] = "The Metroids are in captivity, there is no need to locate them."
+            elif hint_location == "OperationsDeck" and metroid_precision != SpecificPickupHintMode.DISABLED:
+                hints[hint_location] = (
+                    operations_hint
+                    if self.configuration.artifacts.placed_artifacts
+                    else "The Metroids are in captivity, there is no need to locate them."
+                )
             else:
                 hints[hint_location] = exporter.create_message_for_hint(
                     self.patches.hints[node.identifier],
@@ -342,7 +364,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         locks = {
             "MainDeckWest": "RED",
             "MainDeckEast": "BLUE",
-            "OperationsDeck": "GREY",
+            "OperationsDeck": "BLUE",
             "Sector1Entrance": "GREEN",
             "Sector2Entrance": "GREEN",
             "Sector3Entrance": "YELLOW",
@@ -350,7 +372,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "Sector5Entrance": "RED",
             "Sector6Entrance": "RED",
             "AuxiliaryPower": "OPEN",
-            "RestrictedLabs": "OPEN",
+            "RestrictedLabs": "RED",
         }
         return locks
 
