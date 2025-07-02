@@ -59,6 +59,20 @@
                     "item_id": "wallRide"
                 }
             },
+            "Cling": {
+                "long_name": "Cling",
+                "max_capacity": 99,
+                "extra": {
+                    "item_id": "wallRide"
+                }
+            },
+            "LockedCling": {
+                "long_name": "Locked Cling",
+                "max_capacity": 99,
+                "extra": {
+                    "item_id": "wallRide"
+                }
+            },
             "AscendantLight": {
                 "long_name": "Ascendant Light",
                 "max_capacity": 1,
@@ -284,8 +298,8 @@
                 "long_name": "Empty Bailey/Courtyard/Hit Switch 3",
                 "extra": {}
             },
-            "CastleSansa_IndignationRoom_SamllKeyDoor": {
-                "long_name": "Castle Sansa/Indignation Room/Samll Key Door",
+            "CastleSansa_IndignationRoom_SmallKeyDoor": {
+                "long_name": "Castle Sansa/Indignation Room/Small Key Door",
                 "extra": {}
             },
             "CastleSansa_SoutheastHub_HitSwitch": {
@@ -330,6 +344,10 @@
             },
             "DilapidatedDungeon_KeyDoorRoom_HitSwitch": {
                 "long_name": "Dilapidated Dungeon/Key Door Room/Hit Switch",
+                "extra": {}
+            },
+            "DilapidatedDungeon_StrongEyesArena_DefeatStrongEyes": {
+                "long_name": "Dilapidated Dungeon/Strong Eyes Arena/Defeat Strong Eyes",
                 "extra": {}
             },
             "DilapidatedDungeon_PrisonChallenge_HitSwitch": {
@@ -513,7 +531,14 @@
                 "extra": {}
             }
         },
-        "tricks": {},
+        "tricks": {
+            "Knowledge": {
+                "long_name": "Knowledge",
+                "description": "",
+                "require_documentation_above": 0,
+                "extra": {}
+            }
+        },
         "damage": {},
         "versions": {},
         "misc": {},
@@ -521,20 +546,149 @@
             "Can Do Damage": {
                 "display_name": "Can Do Damage",
                 "requirement": {
-                    "type": "and",
+                    "type": "or",
                     "data": {
                         "comment": null,
-                        "items": []
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "DreamBreaker",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Sunsetter",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
                     }
                 }
             },
-            "Can Use Strikebreak": {
-                "display_name": "Can Use Strikebreak",
+            "Can Strikebreak": {
+                "display_name": "Can Strikebreak",
                 "requirement": {
                     "type": "and",
                     "data": {
                         "comment": null,
-                        "items": []
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "DreamBreaker",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Strikebreak",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Soul Cutter": {
+                "display_name": "Can Soul Cutter",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "DreamBreaker",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Strikebreak",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "SoulCutter",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Use Ascendant Light": {
+                "display_name": "Can Use Ascendant Light",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "AscendantLight",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "DreamBreaker",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Bounce Off Torch": {
+                "display_name": "Bounce Off Torch",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Can Use Ascendant Light"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "tricks",
+                                    "name": "Knowledge",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
                     }
                 }
             }
@@ -626,7 +780,7 @@
                                     "items": [
                                         {
                                             "type": "template",
-                                            "data": "Can Use Strikebreak"
+                                            "data": "Can Strikebreak"
                                         }
                                     ]
                                 }
@@ -788,7 +942,12 @@
         }
     },
     "hint_feature_database": {},
-    "used_trick_levels": {},
+    "used_trick_levels": {
+        "Knowledge": [
+            1,
+            2
+        ]
+    },
     "flatten_to_set_on_patch": false,
     "regions": [
         "Dilapidated Dungeon.json",

@@ -1,12 +1,14 @@
 ----------------
 Starting Room
-Extra - total_boundings: {'x1': 1300.0, 'x2': 4250.0, 'y1': -4950.0, 'y2': -1250.0}
-Extra - polygon: [[1300.0, -4950.0], [1300.0, -1250.0], [4250.0, -1250.0], [4250.0, -4950.0]]
+Extra - total_boundings: {'x1': 1300, 'x2': 4325, 'y1': -5000, 'y2': -1250}
+Extra - polygon: [[1300, -4100], [2200, -5000], [3425, -5000], [4325, -4100], [4325, -2850], [3450, -1975], [3100, -1975], [3100, -1250], [2525, -1250], [2525, -1975], [2200, -1975], [1300, -2850]]
 Extra - room_id: 0
 > Pickup (Goatling); Heals? False
   * Layers: goatling_shuffle
   * Pickup 0; Category? Minor
   * Extra - actor_index: 433
+  > Start Point
+      Trivial
 
 > Pickup (Devotion); Heals? False
   * Layers: default
@@ -17,232 +19,332 @@ Extra - room_id: 0
   * Layers: default
   * Extra - actor_index: 777
   * Extra - start_tag: gameStart
+  > Pickup (Goatling)
+      Trivial
+  > Door to Dream Breaker Access
+      Trivial
 
 > Door to Dream Breaker Access; Heals? False
   * Layers: default
   * No Wall to Dream Breaker Access/Door to Starting Room
   * Extra - actor_index: 1432
+  > Start Point
+      Trivial
 
 ----------------
 Dream Breaker Access
-Extra - total_boundings: {'x1': -1150.0, 'x2': 3300.0, 'y1': -1250.0, 'y2': 1100.0}
-Extra - polygon: [[-1150.0, -1250.0], [-1150.0, 1100.0], [3300.0, 1100.0], [3300.0, -1250.0]]
+Extra - total_boundings: {'x1': -1200, 'x2': 3350, 'y1': -1250, 'y2': 1150}
+Extra - polygon: [[3350, -525], [3100, -525], [3100, -1250], [2525, -1250], [2525, -525], [550, -525], [550, -1050], [-1200, -1050], [-1200, 1150], [3350, 1150]]
 Extra - room_id: 1
 > Pickup (Health Piece); Heals? False
   * Layers: default
   * Pickup 3; Category? Minor
   * Extra - actor_index: 283
+  > Door to First Save Room
+      Trivial
 
 > Door to Starting Room; Heals? False
   * Layers: default
   * No Wall to Starting Room/Door to Dream Breaker Access
   * Extra - actor_index: 1432
+  > Door to Dream Breaker Room
+      Trivial
 
 > Door to First Save Room; Heals? False
   * Layers: default
   * Breakable Wall to First Save Room/Door to Dream Breaker Access
   * Extra - actor_index: 238
+  > Pickup (Health Piece)
+      Sunsetter or Bounce Off Torch
+  > Door to Dream Breaker Room
+      Trivial
 
 > Door to Above Dream Breaker Access; Heals? False
   * Layers: default
   * No Wall to Above Dream Breaker Access/Door to Dream Breaker Access
+  > Pickup (Health Piece)
+      Trivial
 
 > Door to Dream Breaker Room; Heals? False
   * Layers: default
   * No Wall to Dream Breaker Room/Door to Dream Breaker Access
   * Extra - actor_index: 1719
+  > Door to Starting Room
+      Trivial
+  > Door to First Save Room
+      Trivial
 
 ----------------
 Dream Breaker Room
-Extra - total_boundings: {'x1': -250.0, 'x2': 4350.0, 'y1': 1100.0, 'y2': 5350.0}
-Extra - polygon: [[-250.0, 1100.0], [-250.0, 5350.0], [4350.0, 5350.0], [4350.0, 1100.0]]
+Extra - total_boundings: {'x1': -250, 'x2': 4350, 'y1': 1150, 'y2': 5325}
+Extra - polygon: [[-250, 2900], [-250, 1150], [500, 1150], [500, 2350], [4350, 2350], [4350, 5325], [2675, 5325], [2675, 4125], [400, 4125], [400, 2900]]
 Extra - room_id: 2
 > Pickup (Dream Breaker); Heals? False
   * Layers: default
   * Pickup 2; Category? Major
   * Extra - actor_index: 501
+  > Door to Dream Breaker Access
+      Any of the following:
+          Air Kick ≥ 4
+          Air Kick ≥ 3 and Sunsetter
+  > Door to Dream Breaker Exit (North)
+      Trivial
 
 > Door to Dream Breaker Access; Heals? False
   * Layers: default
   * No Wall to Dream Breaker Access/Door to Dream Breaker Room
   * Extra - actor_index: 1719
+  > Pickup (Dream Breaker)
+      Trivial
+  > Door to Dream Breaker Exit (South)
+      Trivial
 
 > Door to Dream Breaker Exit (North); Heals? False
   * Layers: default
   * Breakable Wall to Dream Breaker Exit/Door to Dream Breaker Room (North)
   * Extra - actor_index: 241
+  > Pickup (Dream Breaker)
+      Trivial
 
 > Door to Dream Breaker Exit (South); Heals? False
   * Layers: default
   * Breakable Wall to Dream Breaker Exit/Door to Dream Breaker Room (South)
   * Extra - actor_index: 240
+  > Door to Dream Breaker Access
+      Trivial
 
 ----------------
 Dream Breaker Exit
-Extra - total_boundings: {'x1': 473.14070000000004, 'x2': 3400.0, 'y1': 1200.0, 'y2': 2450.0}
-Extra - polygon: [[473.14070000000004, 1200.0], [473.14070000000004, 2450.0], [3400.0, 2450.0], [3400.0, 1200.0]]
+Extra - total_boundings: {'x1': 500, 'x2': 3525, 'y1': 1325, 'y2': 2425}
+Extra - polygon: [[500, 1325], [3525, 1325], [3525, 2425], [2800, 2425], [2800, 1850], [500, 1875]]
 Extra - room_id: 3
 > Door to Dream Breaker Room (North); Heals? False
   * Layers: default
   * Breakable Wall to Dream Breaker Room/Door to Dream Breaker Exit (North)
   * Extra - actor_index: 241
+  > Door to Dream Breaker Room (South)
+      Trivial
 
 > Door to Dream Breaker Room (South); Heals? False
   * Layers: default
   * Breakable Wall to Dream Breaker Room/Door to Dream Breaker Exit (South)
   * Extra - actor_index: 240
+  > Door to Dream Breaker Room (North)
+      Trivial
 
 ----------------
 First Save Room
-Extra - total_boundings: {'x1': -3350.0, 'x2': -300.0, 'y1': -3800.0, 'y2': -1005.0509}
-Extra - polygon: [[-3350.0, -3800.0], [-3350.0, -1005.0509], [-300.0, -1005.0509], [-300.0, -3800.0]]
+Extra - total_boundings: {'x1': -3325, 'x2': -150, 'y1': -3825, 'y2': -1050}
+Extra - polygon: [[-3325, -3825], [-3325, -1050], [-150, -1050], [-150, -3825]]
 Extra - room_id: 4
 > Save Crystal; Heals? True; Spawn Point
   * Layers: default
   * Extra - actor_index: 440
   * Extra - start_tag: dungeonlowestSave
+  > Door to Dream Breaker Access
+      Trivial
+  > Door to Parkour Room
+      Trivial
 
 > Door to Dream Breaker Access; Heals? False
   * Layers: default
   * Breakable Wall to Dream Breaker Access/Door to First Save Room
   * Extra - actor_index: 238
+  > Save Crystal
+      Trivial
 
 > Door to Parkour Room; Heals? False
   * Layers: default
   * No Wall to Parkour Room/Door to First Save Room
   * Extra - actor_index: 1795
+  > Save Crystal
+      Trivial
 
 ----------------
 Parkour Room
-Extra - total_boundings: {'x1': -7450.0, 'x2': -3350.0, 'y1': -4400.0, 'y2': -2000.0}
-Extra - polygon: [[-7450.0, -4400.0], [-7450.0, -2000.0], [-3350.0, -2000.0], [-3350.0, -4400.0]]
+Extra - total_boundings: {'x1': -7425, 'x2': -3325, 'y1': -4425, 'y2': -1900}
+Extra - polygon: [[-7425, -4425], [-7425, -1900], [-3325, -1900], [-3325, -4425]]
 Extra - room_id: 5
 > Event - Cut and Drop Platform; Heals? False
   * Layers: default
   * Event Dilapidated Dungeon/Parkour Room/Cut and Drop Platform
   * Extra - actor_index: 248
+  > Door to First Save Room
+      Trivial
 
 > Door to First Save Room; Heals? False
   * Layers: default
   * No Wall to First Save Room/Door to Parkour Room
   * Extra - actor_index: 1795
+  > Event - Cut and Drop Platform
+      Can Do Damage
+  > Door to Rock Room
+      Trivial
 
 > Door to Rock Room; Heals? False
   * Layers: default
   * Breakable Wall to Rock Room/Door to Parkour Room
   * Extra - actor_index: 239
+  > Door to First Save Room
+      Trivial
 
 ----------------
 Rock Room
-Extra - total_boundings: {'x1': -12500.0, 'x2': -7450.0, 'y1': -2900.0, 'y2': -1200.0}
-Extra - polygon: [[-12500.0, -2900.0], [-12500.0, -1200.0], [-7450.0, -1200.0], [-7450.0, -2900.0]]
+Extra - total_boundings: {'x1': -12625, 'x2': -7450, 'y1': -3000, 'y2': -1300}
+Extra - polygon: [[-12625, -3000], [-12625, -1300], [-7450, -1300], [-7450, -3000]]
 Extra - room_id: 6
 > Door to Parkour Room; Heals? False
   * Layers: default
   * Breakable Wall to Parkour Room/Door to Rock Room
   * Extra - actor_index: 239
+  > Door to Cave Entrance
+      Trivial
+  > Door to Second Save Room
+      Trivial
 
 > Door to Cave Entrance; Heals? False
   * Layers: default
   * Breakable Wall to Cave Entrance/Door to Rock Room
   * Extra - actor_index: 237
+  > Door to Parkour Room
+      Trivial
 
 > Door to Second Save Room; Heals? False
   * Layers: default
   * No Wall to Second Save Room/Door to Rock Room
+  > Door to Parkour Room
+      Trivial
 
 ----------------
 Second Save Room
-Extra - total_boundings: {'x1': -13600.0, 'x2': -11650.0, 'y1': -1200.0, 'y2': 1416.6962}
-Extra - polygon: [[-13600.0, -1200.0], [-13600.0, 1416.6962], [-11650.0, 1416.6962], [-11650.0, -1200.0]]
+Extra - total_boundings: {'x1': -13675, 'x2': -11750, 'y1': -1300, 'y2': 1425}
+Extra - polygon: [[-13675, -1300], [-13675, 1425], [-11750, 1425], [-11750, -1300]]
 Extra - room_id: 7
 > Save Crystal; Heals? True; Spawn Point
   * Layers: default
   * Extra - actor_index: 439
   * Extra - start_tag: dungeonWestSave
+  > Door to Rock Room
+      Trivial
+  > Door to Slide Hub
+      Trivial
+  > Tunnel to Prison Access
+      Trivial
 
 > Door to Rock Room; Heals? False
   * Layers: default
   * No Wall to Rock Room/Door to Second Save Room
+  > Save Crystal
+      Trivial
 
 > Door to Slide Hub; Heals? False
   * Layers: default
   * No Wall to Slide Hub/Door to Second Save Room
   * Extra - actor_index: 1452
+  > Save Crystal
+      Trivial
 
-> Door to Prison Access; Heals? False
+> Tunnel to Prison Access; Heals? False
   * Layers: default
-  * No Wall to Prison Access/Door to Second Save Room
+  * Slide Tunnel to Prison Access/Tunnel to Second Save Room
+  > Save Crystal
+      Trivial
 
 ----------------
 Slide Hub
-Extra - total_boundings: {'x1': -15700.0, 'x2': -13600.0, 'y1': -725.0, 'y2': 500.0}
-Extra - polygon: [[-15700.0, -725.0], [-15700.0, 500.0], [-13600.0, 500.0], [-13600.0, -725.0]]
+Extra - total_boundings: {'x1': -15700, 'x2': -13675, 'y1': -775, 'y2': 525}
+Extra - polygon: [[-15700, -775], [-15700, 525], [-13675, 525], [-13675, -775]]
 Extra - room_id: 8
 > Door to Second Save Room; Heals? False
   * Layers: default
   * No Wall to Second Save Room/Door to Slide Hub
   * Extra - actor_index: 1452
+  > Door to Slide Room
+      Trivial
+  > Tunnel to Slide Exit
+      Trivial
 
 > Door to Slide Room; Heals? False
   * Layers: default
   * No Wall to Slide Room/Door to Slide Hub
   * Extra - actor_index: 1386
+  > Door to Second Save Room
+      Trivial
 
-> Door to Slide Exit; Heals? False
+> Tunnel to Slide Exit; Heals? False
   * Layers: default
-  * No Wall to Slide Exit/Door to Slide Hub
+  * Slide Tunnel to Slide Exit/Tunnel to Slide Hub
+  > Door to Second Save Room
+      Trivial
 
 ----------------
 Slide Room
-Extra - total_boundings: {'x1': -17400.0, 'x2': -15700.0, 'y1': -650.0, 'y2': 3000.0}
-Extra - polygon: [[-17400.0, -650.0], [-17400.0, 3000.0], [-15700.0, 3000.0], [-15700.0, -650.0]]
+Extra - total_boundings: {'x1': -17475, 'x2': -15700, 'y1': -775, 'y2': 2975}
+Extra - polygon: [[-17475, -775], [-17475, 2975], [-15700, 2975], [-15700, -775]]
 Extra - room_id: 9
 > Pickup (Slide); Heals? False
   * Layers: default
   * Pickup 4; Category? Major
   * Extra - actor_index: 502
+  > Door to Slide Hub
+      All of the following:
+          Air Kick ≥ 3 and Sunsetter
+          Air Kick or Cling
+  > Door to Slide Exit
+      Trivial
 
 > Door to Slide Hub; Heals? False
   * Layers: default
   * No Wall to Slide Hub/Door to Slide Room
   * Extra - actor_index: 1386
+  > Pickup (Slide)
+      Trivial
 
 > Door to Slide Exit; Heals? False
   * Layers: default
   * No Wall to Slide Exit/Door to Slide Room
+  > Pickup (Slide)
+      Trivial
 
 ----------------
 Slide Exit
-Extra - total_boundings: {'x1': -17029.463, 'x2': -13800.0, 'y1': -4200.0, 'y2': -650.0}
-Extra - polygon: [[-17029.463, -4200.0], [-17029.463, -650.0], [-13800.0, -650.0], [-13800.0, -4200.0]]
+Extra - total_boundings: {'x1': -17200, 'x2': -13775, 'y1': -4275, 'y2': -700}
+Extra - polygon: [[-17200, -4275], [-17200, -700], [-13775, -700], [-13775, -4275]]
 Extra - room_id: 10
-> Door to Slide Hub; Heals? False
+> Tunnel to Slide Hub; Heals? False
   * Layers: default
-  * No Wall to Slide Hub/Door to Slide Exit
+  * Slide Tunnel to Slide Hub/Tunnel to Slide Exit
+  > Door to Slide Room
+      Trivial
 
 > Door to Slide Room; Heals? False
   * Layers: default
   * No Wall to Slide Room/Door to Slide Exit
+  > Tunnel to Slide Hub
+      Air Kick ≥ 2 or Cling or Slide
 
 ----------------
 Prison Access
-Extra - total_boundings: {'x1': -11700.0, 'x2': -9050.0, 'y1': 600.0, 'y2': 1500.0}
-Extra - polygon: [[-11700.0, 600.0], [-11700.0, 1500.0], [-9050.0, 1500.0], [-9050.0, 600.0]]
+Extra - total_boundings: {'x1': -11750, 'x2': -9100, 'y1': 475, 'y2': 1625}
+Extra - polygon: [[-11750, 475], [-11750, 1625], [-9100, 1625], [-9100, 475]]
 Extra - room_id: 11
-> Door to Second Save Room; Heals? False
+> Tunnel to Second Save Room; Heals? False
   * Layers: default
-  * No Wall to Second Save Room/Door to Prison Access
+  * Slide Tunnel to Second Save Room/Tunnel to Prison Access
+  > Door to Goatling Prison
+      Trivial
 
 > Door to Goatling Prison; Heals? False
   * Layers: default
   * No Wall to Goatling Prison/Door to Prison Access
   * Extra - actor_index: 1779
+  > Tunnel to Second Save Room
+      Trivial
 
 ----------------
 Goatling Prison
-Extra - total_boundings: {'x1': -9050.0, 'x2': -6050.0, 'y1': 300.0, 'y2': 2250.0}
-Extra - polygon: [[-9050.0, 300.0], [-9050.0, 2250.0], [-6050.0, 2250.0], [-6050.0, 300.0]]
+Extra - total_boundings: {'x1': -9100, 'x2': -6025, 'y1': 275, 'y2': 2325}
+Extra - polygon: [[-9100, 275], [-9100, 2325], [-6025, 2325], [-6025, 275]]
 Extra - room_id: 12
 > Pickup (Small Key); Heals? False
   * Layers: default
@@ -253,46 +355,76 @@ Extra - room_id: 12
   * Layers: default
   * No Wall to Prison Access/Door to Goatling Prison
   * Extra - actor_index: 1779
+  > Door to Key Door Room
+      Trivial
+  > Door to Prison Challenge
+      Trivial
 
 > Door to Key Door Room; Heals? False
   * Layers: default
   * No Wall to Key Door Room/Door to Goatling Prison
   * Extra - actor_index: 1800
+  > Door to Prison Access
+      Trivial
 
 > Door to Prison Challenge; Heals? False
   * Layers: default
   * No Wall to Prison Challenge/Door to Goatling Prison
   * Extra - actor_index: 1796
+  > Door to Prison Access
+      Trivial
 
 ----------------
 Key Door Room
-Extra - total_boundings: {'x1': -6050.0, 'x2': -400.0, 'y1': -405.0, 'y2': 4550.0}
-Extra - polygon: [[-6050.0, -405.0], [-6050.0, 4550.0], [-400.0, 4550.0], [-400.0, -405.0]]
+Extra - total_boundings: {'x1': -6025, 'x2': -225, 'y1': -525, 'y2': 4625}
+Extra - polygon: [[-6025, 2000], [-3400, 2000], [-3375, 3350], [-3375, 4625], [-1425, 4625], [-225, 4625], [-250, 3925], [-450, 3925], [-450, 2700], [-2000, 2700], [-2000, -525], [-6025, -525]]
 Extra - room_id: 13
 > Save Crystal; Heals? True; Spawn Point
   * Layers: default
   * Extra - actor_index: 441
   * Extra - start_tag: dungeonSaveNearBoss
+  > Event - Hit Switch
+      Can Do Damage
+  > Door to Goatling Prison
+      Air Kick or Cling or Solar Wind or Sunsetter or After Dilapidated Dungeon/Key Door Room/Hit Switch
+  > Door to Strong Eyes Arena
+      Trivial
+  > Door to Above Dream Breaker Access (Key)
+      Trivial
 
 > Event - Hit Switch; Heals? False
   * Layers: default
   * Event Dilapidated Dungeon/Key Door Room/Hit Switch
   * Extra - actor_index: 286
+  > Save Crystal
+      Trivial
 
 > Door to Goatling Prison; Heals? False
   * Layers: default
   * No Wall to Goatling Prison/Door to Key Door Room
   * Extra - actor_index: 1800
+  > Save Crystal
+      Trivial
 
 > Door to Strong Eyes Arena; Heals? False
   * Layers: default
   * No Wall to Strong Eyes Arena/Door to Key Door Room
   * Extra - actor_index: 1580
+  > Save Crystal
+      Trivial
+  > Door to Above Dream Breaker Access (Out of Bounds)
+      All of the following:
+          Knowledge (Intermediate)
+          Any of the following:
+              Air Kick ≥ 2 or Cling or Can Use Ascendant Light
+              Air Kick and Sunsetter
 
 > Door to Above Dream Breaker Access (Key); Heals? False
   * Layers: default
   * Small Key Door to Above Dream Breaker Access/Door to Key Door Room (Key)
   * Extra - actor_index: 368
+  > Save Crystal
+      Trivial
 
 > Door to Above Dream Breaker Access (Out of Bounds); Heals? False
   * Layers: default
@@ -301,33 +433,57 @@ Extra - room_id: 13
 
 ----------------
 Strong Eyes Arena
-Extra - total_boundings: {'x1': -2300.0, 'x2': 850.0, 'y1': 4550.0, 'y2': 9800.0}
-Extra - polygon: [[-2300.0, 4550.0], [-2300.0, 9800.0], [850.0, 9800.0], [850.0, 4550.0]]
+Extra - total_boundings: {'x1': -2325, 'x2': 850, 'y1': 4625, 'y2': 9775}
+Extra - polygon: [[-2325, 4625], [-2325, 9775], [850, 9775], [850, 4625]]
 Extra - room_id: 14
+> Event - Defeat Strong Eyes; Heals? False
+  * Layers: default
+  * Event Dilapidated Dungeon/Strong Eyes Arena/Defeat Strong Eyes
+  * Extra - actor_index: 1080
+  > Door to Key Door Room
+      Trivial
+
 > Pickup (Small Key); Heals? False
   * Layers: default
   * Pickup 8; Category? Minor
   * Extra - actor_index: 254
+  > Door to Key Door Room
+      Trivial
 
 > Door to Key Door Room; Heals? False
   * Layers: default
   * No Wall to Key Door Room/Door to Strong Eyes Arena
   * Extra - actor_index: 1580
+  > Event - Defeat Strong Eyes
+      # TODO: Fight without Dream Breaker
+      Dream Breaker
+  > Pickup (Small Key)
+      After Dilapidated Dungeon/Strong Eyes Arena/Defeat Strong Eyes
 
 ----------------
 Above Dream Breaker Access
-Extra - total_boundings: {'x1': 4400.0, 'x2': 10050.0, 'y1': -450.0, 'y2': 750.0}
-Extra - polygon: [[4400.0, -450.0], [4400.0, 750.0], [10050.0, 750.0], [10050.0, -450.0]]
+Extra - total_boundings: {'x1': 4350, 'x2': 9850, 'y1': -525, 'y2': 550}
+Extra - polygon: [[4350, -525], [4350, 550], [9850, 550], [9850, -525]]
 Extra - room_id: 15
 > Door to Key Door Room (Key); Heals? False
   * Layers: default
   * Small Key Door to Key Door Room/Door to Above Dream Breaker Access (Key)
   * Extra - actor_index: 368
+  > Door to Key Door Room (Out of Bounds)
+      All of the following:
+          Knowledge (Intermediate)
+          Air Kick or Cling ≥ 2 or Sunsetter
+  > Door to Dream Breaker Access
+      Trivial
+  > Transition to Castle Sansa
+      Trivial
 
 > Door to Key Door Room (Out of Bounds); Heals? False
   * Layers: default
   * Breakable Wall to Key Door Room/Door to Above Dream Breaker Access (Out of Bounds)
   * Extra - actor_index: 243
+  > Door to Key Door Room (Key)
+      Trivial
 
 > Door to Dream Breaker Access; Heals? False
   * Layers: default
@@ -342,76 +498,124 @@ Extra - room_id: 15
 
 ----------------
 Prison Challenge
-Extra - total_boundings: {'x1': -9200.0, 'x2': -5600.0, 'y1': 2250.0, 'y2': 9000.0}
-Extra - polygon: [[-9200.0, 2250.0], [-9200.0, 9000.0], [-5600.0, 9000.0], [-5600.0, 2250.0]]
+Extra - total_boundings: {'x1': -9350, 'x2': -5500, 'y1': 2325, 'y2': 9200}
+Extra - polygon: [[-9350, 2325], [-9350, 9200], [-5500, 9200], [-5500, 2325]]
 Extra - room_id: 16
 > Pickup (Health Piece); Heals? False
   * Layers: default
   * Pickup 7; Category? Minor
   * Extra - actor_index: 284
+  > Event - Hit Switch
+      All of the following:
+          Can Do Damage
+          Air Kick or Cling ≥ 2 or Sunsetter
+  > Challenge Start
+      Any of the following:
+          Air Kick ≥ 3 or Cling
+          All of the following:
+              After Dilapidated Dungeon/Prison Challenge/Hit Switch
+              Air Kick ≥ 2 or Cling
 
 > Event - Hit Switch; Heals? False
   * Layers: default
   * Event Dilapidated Dungeon/Prison Challenge/Hit Switch
   * Extra - actor_index: 285
+  > Pickup (Health Piece)
+      Trivial
 
 > Door to Goatling Prison; Heals? False
   * Layers: default
   * No Wall to Goatling Prison/Door to Prison Challenge
   * Extra - actor_index: 1796
+  > Challenge Start
+      Air Kick ≥ 2 or Sunsetter
+
+> Challenge Start; Heals? False
+  * Layers: default
+  > Pickup (Health Piece)
+      Air Kick ≥ 3 or Cling
+  > Door to Goatling Prison
+      Trivial
 
 ----------------
 Cave Entrance
-Extra - total_boundings: {'x1': -11300.0, 'x2': -8700.0, 'y1': -8300.0, 'y2': -2900.0}
-Extra - polygon: [[-11300.0, -8300.0], [-11300.0, -2900.0], [-8700.0, -2900.0], [-8700.0, -8300.0]]
+Extra - total_boundings: {'x1': -11300, 'x2': -8575, 'y1': -8500, 'y2': -3000}
+Extra - polygon: [[-11300, -8500], [-11300, -3000], [-8575, -3000], [-8575, -8500]]
 Extra - room_id: 17
 > Door to Rock Room; Heals? False
   * Layers: default
   * Breakable Wall to Rock Room/Door to Cave Entrance
   * Extra - actor_index: 237
+  > Door to Cave Hub
+      # TODO: Dark logic
+      Ascendant Light
 
 > Door to Cave Hub; Heals? False
   * Layers: default
   * No Wall to Cave Hub/Door to Cave Entrance
+  > Door to Rock Room
+      # TODO: Dark logic
+      Ascendant Light
 
 ----------------
 Cave Hub
-Extra - total_boundings: {'x1': -13500.0, 'x2': -11300.0, 'y1': -10195.682, 'y2': -7100.0}
-Extra - polygon: [[-13500.0, -10195.682], [-13500.0, -7100.0], [-11300.0, -7100.0], [-11300.0, -10195.682]]
+Extra - total_boundings: {'x1': -13475, 'x2': -11300, 'y1': -10150, 'y2': -7075}
+Extra - polygon: [[-13475, -10150], [-13475, -7075], [-11300, -7075], [-11300, -10150]]
 Extra - room_id: 18
 > Door to Cave Entrance; Heals? False
   * Layers: default
   * No Wall to Cave Entrance/Door to Cave Hub
+  > Door to Cave Hallway
+      # TODO: Dark logic
+      Ascendant Light
+  > Door to Good Graces Room
+      # TODO: Dark logic
+      Ascendant Light
 
 > Door to Cave Hallway; Heals? False
   * Layers: default
   * No Wall to Cave Hallway/Door to Cave Hub
+  > Door to Cave Entrance
+      # TODO: Dark logic
+      Ascendant Light
 
 > Door to Good Graces Room; Heals? False
   * Layers: default
   * No Wall to Good Graces Room/Door to Cave Hub
+  > Door to Cave Entrance
+      # TODO: Dark logic
+      Ascendant Light
 
 ----------------
 Cave Hallway
-Extra - total_boundings: {'x1': -12613.673, 'x2': -11963.673, 'y1': -12900.0, 'y2': -10150.0}
-Extra - polygon: [[-12613.673, -12900.0], [-12613.673, -10150.0], [-11963.673, -10150.0], [-11963.673, -12900.0]]
+Extra - total_boundings: {'x1': -12725, 'x2': -11725, 'y1': -12725, 'y2': -10150}
+Extra - polygon: [[-12725, -12725], [-12725, -10150], [-11725, -10150], [-11725, -12725]]
 Extra - room_id: 19
 > Door to Cave Hub; Heals? False
   * Layers: default
   * No Wall to Cave Hub/Door to Cave Hallway
+  > Door to Transition to The Underbelly
+      # TODO: Dark logic
+      Ascendant Light
 
 > Door to Transition to The Underbelly; Heals? False
   * Layers: default
   * No Wall to Transition to The Underbelly/Door to Cave Hallway
+  > Door to Cave Hub
+      # TODO: Dark logic
+      Ascendant Light
 
 ----------------
 Transition to The Underbelly
-Extra - total_boundings: {'x1': -13000.0, 'x2': -9550.0, 'y1': -14600.0, 'y2': -12900.0}
-Extra - polygon: [[-13000.0, -14600.0], [-13000.0, -12900.0], [-9550.0, -12900.0], [-9550.0, -14600.0]]
+Extra - total_boundings: {'x1': -13100, 'x2': -9700, 'y1': -14600, 'y2': -12725}
+Extra - polygon: [[-13100, -14600], [-13100, -12725], [-9700, -12725], [-9700, -14600]]
 Extra - room_id: 20
 > Door to Cave Hallway; Heals? False
   * Layers: default
   * No Wall to Cave Hallway/Door to Transition to The Underbelly
+  > Transition to The Underbelly
+      # TODO: Dark logic
+      Ascendant Light
 
 > Transition to The Underbelly; Heals? False; Spawn Point
   * Layers: default
@@ -419,46 +623,77 @@ Extra - room_id: 20
   * Extra - actor_index: 488
   * Extra - transition_tag: cavesWest
   * Extra - start_tag: dungeonWest
+  > Door to Cave Hallway
+      # TODO: Dark logic
+      Ascendant Light
 
 ----------------
 Good Graces Room
-Extra - total_boundings: {'x1': -18600.0, 'x2': -13500.0, 'y1': -11000.0, 'y2': -7050.0}
-Extra - polygon: [[-18600.0, -11000.0], [-18600.0, -7050.0], [-13500.0, -7050.0], [-13500.0, -11000.0]]
+Extra - total_boundings: {'x1': -18700, 'x2': -13475, 'y1': -11025, 'y2': -7000}
+Extra - polygon: [[-13475, -7000], [-15150, -7000], [-15150, -9450], [-18700, -9450], [-18700, -11025], [-13475, -11025]]
 Extra - room_id: 21
 > Pickup (Good Graces); Heals? False
   * Layers: default
   * Pickup 5; Category? Minor
   * Extra - actor_index: 504
+  > Door to Cave Hub
+      All of the following:
+          # TODO: Dark logic
+          Ascendant Light
+          Air Kick ≥ 2 or Cling
 
 > Door to Cave Hub; Heals? False
   * Layers: default
   * No Wall to Cave Hub/Door to Good Graces Room
+  > Pickup (Good Graces)
+      All of the following:
+          # TODO: Dark logic
+          Ascendant Light
+          Air Kick ≥ 2 or Cling
+  > Door to Mushroom Platform Room
+      # TODO: Dark logic
+      Ascendant Light
 
 > Door to Mushroom Platform Room; Heals? False
   * Layers: default
   * No Wall to Mushroom Platform Room/Door to Good Graces Room
+  > Door to Cave Hub
+      # TODO: Dark logic
+      Ascendant Light
+
 
 ----------------
 Mushroom Platform Room
-Extra - total_boundings: {'x1': -18000.0, 'x2': -14950.0, 'y1': -7700.0, 'y2': -5100.0}
-Extra - polygon: [[-18000.0, -7700.0], [-18000.0, -5100.0], [-14950.0, -5100.0], [-14950.0, -7700.0]]
+Extra - total_boundings: {'x1': -18350, 'x2': -14625, 'y1': -8150, 'y2': -4900}
+Extra - polygon: [[-14625, -7000], [-14625, -4900], [-18350, -4900], [-18350, -8150], [-15300, -8150], [-15300, -7000]]
 Extra - room_id: 22
 > Door to Good Graces Room; Heals? False
   * Layers: default
   * No Wall to Good Graces Room/Door to Mushroom Platform Room
+  > Door to Transition to Twilight Theatre
+      All of the following:
+          # TODO: Dark logic
+          Ascendant Light
+          Air Kick or Cling or Sunsetter or Bounce Off Torch
 
 > Door to Transition to Twilight Theatre; Heals? False
   * Layers: default
   * No Wall to Transition to Twilight Theatre/Door to Mushroom Platform Room
+  > Door to Good Graces Room
+      # TODO: Dark logic
+      Ascendant Light
 
 ----------------
 Transition to Twilight Theatre
-Extra - total_boundings: {'x1': -21500.0, 'x2': -17900.0, 'y1': -6300.0, 'y2': -4200.0}
-Extra - polygon: [[-21500.0, -6300.0], [-21500.0, -4200.0], [-17900.0, -4200.0], [-17900.0, -6300.0]]
+Extra - total_boundings: {'x1': -21575, 'x2': -17825, 'y1': -6350, 'y2': -4150}
+Extra - polygon: [[-17825, -4900], [-18975, -4900], [-18975, -6350], [-21575, -6350], [-21575, -4150], [-17825, -4150]]
 Extra - room_id: 23
 > Door to Mushroom Platform Room; Heals? False
   * Layers: default
   * No Wall to Mushroom Platform Room/Door to Transition to Twilight Theatre
+  > Transition to Twilight Theatre
+      # TODO: Dark logic
+      Ascendant Light
 
 > Transition to Twilight Theatre; Heals? False; Spawn Point
   * Layers: default
@@ -466,4 +701,7 @@ Extra - room_id: 23
   * Extra - actor_index: 489
   * Extra - transition_tag: theatreNorthEastLower
   * Extra - start_tag: dungeonNorth
+  > Door to Mushroom Platform Room
+      # TODO: Dark logic
+      Ascendant Light
 
