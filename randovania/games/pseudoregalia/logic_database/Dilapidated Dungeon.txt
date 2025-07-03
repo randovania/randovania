@@ -308,8 +308,8 @@ Extra - room_id: 9
 
 ----------------
 Slide Exit
-Extra - total_boundings: {'x1': -17200, 'x2': -13775, 'y1': -4275, 'y2': -700}
-Extra - polygon: [[-17200, -4275], [-17200, -700], [-13775, -700], [-13775, -4275]]
+Extra - total_boundings: {'x1': -17200, 'x2': -13775, 'y1': -4275, 'y2': -775}
+Extra - polygon: [[-17200, -4275], [-17200, -775], [-13775, -775], [-13775, -4275]]
 Extra - room_id: 10
 > Tunnel to Slide Hub; Heals? False
   * Layers: default
@@ -350,6 +350,8 @@ Extra - room_id: 12
   * Layers: default
   * Pickup 6; Category? Minor
   * Extra - actor_index: 255
+  > Door to Key Door Room
+      Trivial
 
 > Door to Prison Access; Heals? False
   * Layers: default
@@ -364,6 +366,11 @@ Extra - room_id: 12
   * Layers: default
   * No Wall to Key Door Room/Door to Goatling Prison
   * Extra - actor_index: 1800
+  > Pickup (Small Key)
+      All of the following:
+          Bounce Off Torch
+          Air Kick or Cling ≥ 2
+          Air Kick ≥ 2 or Can Long Jump
   > Door to Prison Access
       Trivial
 
@@ -660,7 +667,6 @@ Extra - room_id: 21
   > Door to Cave Hub
       # TODO: Dark logic
       Ascendant Light
-
 
 ----------------
 Mushroom Platform Room

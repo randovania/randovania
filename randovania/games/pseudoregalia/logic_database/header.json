@@ -537,6 +537,48 @@
                 "description": "",
                 "require_documentation_above": 0,
                 "extra": {}
+            },
+            "SkidJump": {
+                "long_name": "Skid Jump",
+                "description": "",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "LongRange": {
+                "long_name": "Long Range",
+                "description": "",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "Sunsetter": {
+                "long_name": "Sunsetter Mastery",
+                "description": "",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "AirKick": {
+                "long_name": "Air Kick Mastery",
+                "description": "",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "Cling": {
+                "long_name": "Cling Mastery",
+                "description": "",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "VoidOut": {
+                "long_name": "Void Out Warp",
+                "description": "",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "Coyote": {
+                "long_name": "Coyote Jump",
+                "description": "",
+                "require_documentation_above": 0,
+                "extra": {}
             }
         },
         "damage": {},
@@ -684,6 +726,35 @@
                                 "data": {
                                     "type": "tricks",
                                     "name": "Knowledge",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Long Jump": {
+                "display_name": "Can Long Jump",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Slide",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "SolarWind",
                                     "amount": 1,
                                     "negate": false
                                 }
@@ -945,6 +1016,34 @@
     "used_trick_levels": {
         "Knowledge": [
             1,
+            2
+        ],
+        "VoidOut": [
+            1
+        ],
+        "Sunsetter": [
+            1,
+            2
+        ],
+        "Cling": [
+            1,
+            2
+        ],
+        "SkidJump": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "LongRange": [
+            1
+        ],
+        "AirKick": [
+            1,
+            2,
+            3
+        ],
+        "Coyote": [
             2
         ]
     },
