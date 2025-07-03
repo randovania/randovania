@@ -415,6 +415,13 @@ def test_invalid_db():
                                     "Pickup (Not A Pickup)": trivial_req,
                                     "Bad Pickup": trivial_req,
                                     "Pickup (Duplicate Id)": trivial_req,
+                                    "Bad Connection Comment": {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://cdn.discordapp.com/attachments/this-is-a-bad-attachment",
+                                            "items": [],
+                                        },
+                                    },
                                 },
                             },
                             "Door to World (2)": {
@@ -502,6 +509,24 @@ def test_invalid_db():
                                 "hint_features": ["unnormalized"],
                                 "connections": {"Door to World (1)": trivial_req},
                             },
+                            "Bad Connection Comment": {
+                                "node_type": "generic",
+                                "heal": False,
+                                "coordinates": None,
+                                "description": "",
+                                "layers": ["default"],
+                                "extra": {},
+                                "valid_starting_location": False,
+                                "connections": {
+                                    "Door to World (1)": {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=invalid-playlist",
+                                            "items": [],
+                                        },
+                                    }
+                                },
+                            },
                         },
                     }
                 },
@@ -554,6 +579,8 @@ def test_invalid_db():
         "Checking A: Loop detected: ['A', 'B', 'A']",
         "Checking B: Loop detected: ['B', 'A', 'B']",
         "Lava World/Hot/Pickup (Duplicate Id) has PickupIndex 5, but it was already used in Lava World/Hot/Bad Pickup",
+        "Discord media linked in Lava World/Hot/Door to World (1) -> Bad Connection Comment.",
+        "YouTube Playlist linked in Lava World/Hot/Bad Connection Comment -> Door to World (1).",
         'Grass World/Plains/Windmill -> Grass World/Plains/Hut contains "BombHoverTrick" but not "(\'BombsItem\',)"',
         (
             'Grass World/Plains/Windmill -> Grass World/Plains/Hut is using the resource "BombsItem" directly '

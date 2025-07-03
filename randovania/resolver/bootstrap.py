@@ -325,7 +325,11 @@ class Bootstrap[Configuration: BaseConfiguration]:
         locations = []
 
         for node in game.region_list.all_nodes:
-            if isinstance(node, PickupNode) and game_specific_check(node, config):
+            if (
+                isinstance(node, PickupNode)
+                and game_specific_check(node, config)
+                and node.pickup_index not in config.available_locations.excluded_indices
+            ):
                 locations.append(node)
 
         return locations
