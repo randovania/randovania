@@ -116,8 +116,10 @@ class DreadDamageState(EnergyTankDamageState):
         parts = part_count_if_using_only_parts - 4
         while parts > 0:
             # Add every possible combination of tanks and parts that together satisfy the damage
-            if tanks >= current_tank_count and parts >= current_part_count:
+            if tanks >= current_tank_count and parts - current_part_count > -4:
                 # Except, skip combinations that use fewer of one kind of item than we already have of that item
+                # Allow overshoot of up to 3 energy parts so that a tank can be used as an alternative to
+                # 1, 2 or 3 parts.
                 ret.append(
                     [
                         ResourceRequirement.create(self._energy_tank, tanks, False),
