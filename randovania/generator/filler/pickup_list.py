@@ -171,30 +171,6 @@ def pickups_to_solve_list(
     return pickups
 
 
-def _is_proper_subset(candidate: tuple[PickupEntry, ...], occurrence_counts: dict[PickupEntry, int]) -> bool:
-    occurrences: dict[PickupEntry, int] = {}
-    for entry in candidate:
-        if entry in occurrences:
-            occurrences[entry] += 1
-        else:
-            occurrences[entry] = 1
-    return all(occurrence_counts.get(pickup, 0) > count for pickup, count in occurrences.items())
-
-
-def _has_proper_subset(haystack: list[tuple[PickupEntry, ...]], needle: tuple[PickupEntry, ...]) -> bool:
-    occurrences: dict[PickupEntry, int] = {}
-    for entry in needle:
-        if entry in occurrences:
-            occurrences[entry] += 1
-        else:
-            occurrences[entry] = 1
-
-    return any(
-        len(candidate) < len(needle) and candidate != needle and _is_proper_subset(candidate, occurrences)
-        for candidate in haystack
-    )
-
-
 def get_pickups_that_solves_unreachable(
     pickups_left: Sequence[PickupEntry],
     reach: GeneratorReach,
@@ -230,10 +206,9 @@ def get_pickups_that_solves_unreachable(
             # FIXME: avoid duplicates in result
             result.append(tuple(pickups))
 
-    end_result = [pickups for pickups in result if not _has_proper_subset(result, pickups)]
     if debug.debug_level() > 2:
         print(">> All pickup combinations alternatives:")
-        for items in sorted(end_result):
+        for items in sorted(result):
             print("* {}".format(", ".join(p.name for p in items)))
 
-    return tuple(end_result)
+    return tuple(result)
