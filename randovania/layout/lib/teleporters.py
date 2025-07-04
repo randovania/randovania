@@ -109,13 +109,6 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
         return self.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING
 
     @property
-    def has_one_way_anywhere(self) -> bool:
-        if self.game in (RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES):
-            return True
-        else:
-            return False
-
-    @property
     def editable_teleporters(self) -> list[NodeIdentifier]:
         return [
             teleporter
@@ -125,13 +118,6 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
 
     @property
     def valid_targets(self) -> list[NodeIdentifier]:
-        if self.has_one_way_anywhere() and self.has_shuffled_target():
-            return [
-                location
-                for location in self.excluded_targets.nodes_list(self.game)
-                if location not in self.excluded_targets.locations
-            ]
-
         if self.mode in {
             TeleporterShuffleMode.ONE_WAY_TELEPORTER,
             TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT,
@@ -144,19 +130,7 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
             for identifier in self.editable_teleporters:
                 node = region_list.node_by_identifier(identifier)
                 if isinstance(node, DockNode) and node.dock_type in teleporter_dock_types:
-                    if self.has_one_way_anywhere():
-                        # Valid destinations must be valid starting areas
-                        area = region_list.nodes_to_area(node)
-                        if area.has_start_node():
-                            result.append(identifier)
-                        # Hack for Metroid Prime 1, where the scripting for Metroid Prime Lair is dependent
-                        # on the previous room
-                        elif area.name == "Metroid Prime Lair":
-                            result.append(
-                                NodeIdentifier.create("Impact Crater", "Subchamber Five", "Dock to Subchamber Four")
-                            )
-                    else:
-                        result.append(identifier)
+                    result.append(identifier)
             return result
         else:
             return []
