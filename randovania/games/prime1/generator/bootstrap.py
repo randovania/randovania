@@ -5,18 +5,56 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.game_description.resources.damage_reduction import DamageReduction
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.prime1.layout.prime_configuration import DamageReduction as DamageReductionConfig
 from randovania.games.prime1.layout.prime_configuration import IngameDifficulty, PrimeConfiguration
+from randovania.layout.base.available_locations import RandomizationMode
 from randovania.resolver.bootstrap import Bootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+    from random import Random
+
+    from randovania.game_description.db.pickup_node import PickupNode
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.damage_state import DamageState
+
+
+def is_pickup_to_pre_place(pickup: PickupEntry, configuration: PrimeConfiguration) -> bool:
+    if configuration.pre_place_artifact and pickup.gui_category.name == "artifact":
+        return True
+    if configuration.pre_place_phazon and pickup.name == "Phazon Suit":
+        return True
+    return False
+
+
+def is_location_to_pre_place(node: PickupNode, configuration: PrimeConfiguration) -> bool:
+    return True
+
+
+def is_major_artifact_location_predicate(game: GameDescription) -> Callable[[PickupNode, PrimeConfiguration], bool]:
+    def is_major_artifact_location(node: PickupNode, config: PrimeConfiguration) -> bool:
+        return game.region_list.node_from_pickup_index(node.pickup_index).location_category == LocationCategory.MAJOR
+
+    return is_major_artifact_location
+
+
+def get_artifact_location_predicate(
+    game: GameDescription, config: PrimeConfiguration
+) -> Callable[[PickupNode, PrimeConfiguration], bool]:
+    return (
+        is_location_to_pre_place
+        if config.available_locations.randomization_mode == RandomizationMode.FULL
+        else is_major_artifact_location_predicate(game)
+    )
 
 
 class PrimeBootstrap(Bootstrap):
@@ -145,3 +183,16 @@ class PrimeBootstrap(Bootstrap):
             base_damage_reduction=base_damage_reduction,
             requirement_template=requirement_template,
         )
+
+    def assign_pool_results(
+        self, rng: Random, configuration: PrimeConfiguration, patches: GamePatches, pool_results: PoolResults
+    ) -> GamePatches:
+        pickups_to_preplace = [
+            pickup for pickup in list(pool_results.to_place) if is_pickup_to_pre_place(pickup, configuration)
+        ]
+        locations = self.all_preplaced_pickup_locations(
+            patches.game, configuration, get_artifact_location_predicate(patches.game, configuration)
+        )
+        weighted_locations = {location: location.extra.get("regional_weight", 1.0) for location in locations}
+        self.pre_place_pickups_weighted(rng, pickups_to_preplace, weighted_locations, pool_results, patches.game.game)
+        return super().assign_pool_results(rng, configuration, patches, pool_results)
