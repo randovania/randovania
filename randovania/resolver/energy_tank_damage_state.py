@@ -107,7 +107,9 @@ class EnergyTankDamageState(DamageState):
         return result.limited_by_maximum(new_resources)
 
     @override
-    def resource_requirements_for_satisfying_damage(self, damage: int) -> list[list[ResourceRequirement]]:
+    def resource_requirements_for_satisfying_damage(
+        self, damage: int, resources: ResourceCollection
+    ) -> list[list[ResourceRequirement]]:
         # A requirement for many "Energy Tanks" is added,
         # which is then decreased by how many tanks is in the state by pickups_to_solve_list
         # FIXME: get the required items for reductions (aka suits)

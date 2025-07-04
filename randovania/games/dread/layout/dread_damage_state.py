@@ -89,27 +89,41 @@ class DreadDamageState(EnergyTankDamageState):
             return self
 
     @override
-    def resource_requirements_for_satisfying_damage(self, damage: int) -> list[list[ResourceRequirement]]:
+    def resource_requirements_for_satisfying_damage(
+        self, damage: int, resources: ResourceCollection
+    ) -> list[list[ResourceRequirement]]:
         # A requirement for many "Energy Tanks" is added,
         # which is then decreased by how many tanks is in the state by pickups_to_solve_list
         # FIXME: get the required items for reductions (aka suits)
-        tank_count = 1 + (damage - self._starting_energy) // self._energy_per_tank
-        part_count = 1 + (damage - self._starting_energy) // (self._energy_per_tank // 4)
-        if not self._use_immediate_energy_parts:
-            part_count += (4 - (part_count % 4)) % 4
-        ret: list[list[ResourceRequirement]] = [
-            [ResourceRequirement.create(self._energy_tank, tank_count, False)],
-            [ResourceRequirement.create(self._energy_part_item, part_count, False)],
-        ]
+
+        current_tank_count = resources[self._energy_tank]
+        current_part_count = resources[self._energy_part_item]
+
+        tank_count_if_using_only_tanks = 1 + (damage - self._starting_energy) // self._energy_per_tank
+        part_count_if_using_only_parts = 1 + (damage - self._starting_energy) // (self._energy_per_tank // 4)
+        if not self._use_immediate_energy_parts and part_count_if_using_only_parts % 4 != 0:
+            part_count_if_using_only_parts += (4 - (part_count_if_using_only_parts % 4)) % 4
+
+        ret: list[list[ResourceRequirement]] = []
+
+        # Only use a combination using only tanks or parts when we don't already have energy from the other kind
+        if current_tank_count == 0:
+            ret.append([ResourceRequirement.create(self._energy_part_item, part_count_if_using_only_parts, False)])
+        if (current_part_count < 4 and not self._use_immediate_energy_parts) or current_part_count == 0:
+            ret.append([ResourceRequirement.create(self._energy_tank, tank_count_if_using_only_tanks, False)])
+
         tanks = 1
-        parts = part_count - 4
+        parts = part_count_if_using_only_parts - 4
         while parts > 0:
-            ret.append(
-                [
-                    ResourceRequirement.create(self._energy_tank, tanks, False),
-                    ResourceRequirement.create(self._energy_part_item, parts, False),
-                ]
-            )
+            # Add every possible combination of tanks and parts that together satisfy the damage
+            if tanks >= current_tank_count and parts >= current_part_count:
+                # Except, skip combinations that use fewer of one kind of item than we already have of that item
+                ret.append(
+                    [
+                        ResourceRequirement.create(self._energy_tank, tanks, False),
+                        ResourceRequirement.create(self._energy_part_item, parts, False),
+                    ]
+                )
             parts -= 4
             tanks += 1
 

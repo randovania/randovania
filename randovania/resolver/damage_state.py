@@ -61,10 +61,13 @@ class DamageState(ABC):
         Common difference: collecting a health upgrade fully heals you. But it won't do it here."""
 
     @abstractmethod
-    def resource_requirements_for_satisfying_damage(self, damage: int) -> list[list[ResourceRequirement]]:
+    def resource_requirements_for_satisfying_damage(
+        self, damage: int, resources: ResourceCollection
+    ) -> list[list[ResourceRequirement]]:
         """
         Determines what are the requirements for satisfying a damage requirement with the given value.
         :param damage:
+        :param resources:
         :return: a list containing lists of resource requirements. Each sublist contains a combination of requirements.
         If two resources can be used, the options can be to satisfy the damage with some number of only the first
         resource, some number of only the second resource, or by any combination of the two resources that together

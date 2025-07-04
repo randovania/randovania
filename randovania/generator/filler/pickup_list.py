@@ -57,7 +57,7 @@ def _unsatisfied_item_requirements_for_damage(
 
     if state.health_for_damage_requirements <= sum_damage:
         # Delegates to the game for how to handle the damage requirement
-        return state.damage_state.resource_requirements_for_satisfying_damage(sum_damage)
+        return state.damage_state.resource_requirements_for_satisfying_damage(sum_damage, state.resources)
     return None
 
 
