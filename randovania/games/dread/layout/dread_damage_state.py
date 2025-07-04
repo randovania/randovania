@@ -102,7 +102,7 @@ class DreadDamageState(EnergyTankDamageState):
         tank_count_if_using_only_tanks = 1 + (damage - self._starting_energy) // self._energy_per_tank
         part_count_if_using_only_parts = 1 + (damage - self._starting_energy) // (self._energy_per_tank // 4)
         if not self._use_immediate_energy_parts and part_count_if_using_only_parts % 4 != 0:
-            part_count_if_using_only_parts += (4 - (part_count_if_using_only_parts % 4)) % 4
+            part_count_if_using_only_parts += 4 - (part_count_if_using_only_parts % 4)
 
         ret: list[list[ResourceRequirement]] = []
 
