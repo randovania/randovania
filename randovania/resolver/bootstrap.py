@@ -209,6 +209,8 @@ class Bootstrap[Configuration: BaseConfiguration]:
             ),
             starting_node,
             patches,
+            game.resource_database,
+            game.region_list,
             None,
         )
 

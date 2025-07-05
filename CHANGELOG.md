@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [9.4.0] - 2025-08-0?
 
-- To be filled.
+### Metroid Dread
+
+- Changed: Energy Parts are now logical.
 
 ## [9.3.0] - 2025-07-02
 
