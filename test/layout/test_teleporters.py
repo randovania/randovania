@@ -13,6 +13,7 @@ from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters i
     PrimeTrilogyTeleporterConfiguration,
 )
 from randovania.layout.lib.teleporters import (
+    TeleporterConfiguration,
     TeleporterList,
     TeleporterShuffleMode,
     TeleporterTargetList,
@@ -20,10 +21,10 @@ from randovania.layout.lib.teleporters import (
 
 
 class Data(NamedTuple):
-    reference: PrimeTrilogyTeleporterConfiguration
+    reference: TeleporterConfiguration | PrimeTrilogyTeleporterConfiguration
     encoded: bytes
     bit_count: int
-    expected: PrimeTrilogyTeleporterConfiguration
+    expected: TeleporterConfiguration | PrimeTrilogyTeleporterConfiguration
     description: str
 
 
@@ -61,6 +62,62 @@ def _a(region, area, instance_id=None):
     return AreaIdentifier(region, area).as_json
 
 
+def _g(
+    encoded: bytes,
+    bit_count: int,
+    description: str,
+    mode: str = "vanilla",
+    excluded_teleporters=None,
+    excluded_targets=None,
+):
+    if excluded_teleporters is None:
+        excluded_teleporters = []
+    if excluded_targets is None:
+        excluded_targets = []
+    return {
+        "encoded": encoded,
+        "bit_count": bit_count,
+        "description": description,
+        "json": {
+            "mode": mode,
+            "excluded_teleporters": excluded_teleporters,
+            "excluded_targets": excluded_targets,
+        },
+    }
+
+
+@pytest.fixture(
+    params=[
+        _g(b"\x00", 3, "Original connections"),
+        _g(b"\xc0", 6, "One-way, with cycles", mode="one-way-teleporter"),
+        _g(
+            b"\xd8\x12",
+            16,
+            "One-way, with replacement; excluded 1 elevators",
+            mode="one-way-teleporter-replacement",
+            excluded_teleporters=[
+                _a("Area 1", "Transport to Surface and Area 2", "Elevator to Surface East"),
+                _a("Area 4 Crystal Mines", "Transport to Area 4", "Elevator to Central Caves"),
+            ],
+        ),
+    ],
+)
+def test_generic_data(request):
+    game = RandovaniaGame.METROID_SAMUS_RETURNS
+    reference = TeleporterConfiguration(
+        mode=TeleporterShuffleMode.VANILLA,
+        excluded_teleporters=TeleporterList((), game),
+        excluded_targets=TeleporterTargetList((), game),
+    )
+    return Data(
+        reference=reference,
+        encoded=request.param["encoded"],
+        bit_count=request.param["bit_count"],
+        expected=TeleporterConfiguration.from_json(request.param["json"], game=game),
+        description=request.param["description"],
+    )
+
+
 @pytest.fixture(
     params=[
         _m(b"\x08", 5, "Original connections"),
@@ -82,7 +139,7 @@ def _a(region, area, instance_id=None):
         ),
     ],
 )
-def test_data(request):
+def test_echoes_data(request):
     game = RandovaniaGame.METROID_PRIME_ECHOES
     reference = PrimeTrilogyTeleporterConfiguration(
         mode=TeleporterShuffleMode.VANILLA,
@@ -100,26 +157,44 @@ def test_data(request):
     )
 
 
-def test_decode(test_data):
+def test_decode(test_echoes_data, test_generic_data):
     # Run
-    decoder = BitPackDecoder(test_data.encoded)
-    result = PrimeTrilogyTeleporterConfiguration.bit_pack_unpack(decoder, {"reference": test_data.reference})
+    echoes_decoder = BitPackDecoder(test_echoes_data.encoded)
+    echoes_result = PrimeTrilogyTeleporterConfiguration.bit_pack_unpack(
+        echoes_decoder, {"reference": test_echoes_data.reference}
+    )
+
+    generic_decoder = BitPackDecoder(test_generic_data.encoded)
+    generic_result = TeleporterConfiguration.bit_pack_unpack(
+        generic_decoder, {"reference": test_generic_data.reference}
+    )
 
     # Assert
-    assert result == test_data.expected
+    assert echoes_result == test_echoes_data.expected
+    assert generic_result == test_generic_data.expected
 
 
-def test_encode(test_data):
+def test_encode(test_echoes_data, test_generic_data):
     # Setup
-    value = test_data.expected
+    echoes_value = test_echoes_data.expected
+    generic_value = test_generic_data.expected
 
     # Run
-    result, bit_count = bitpacking.pack_results_and_bit_count(value.bit_pack_encode({"reference": test_data.reference}))
+    echoes_result, echoes_bit_count = bitpacking.pack_results_and_bit_count(
+        echoes_value.bit_pack_encode({"reference": test_echoes_data.reference})
+    )
+    generic_result, generic_bit_count = bitpacking.pack_results_and_bit_count(
+        generic_value.bit_pack_encode({"reference": test_generic_data.reference})
+    )
 
     # Assert
-    assert result == test_data.encoded
-    assert bit_count == test_data.bit_count
+    assert echoes_result == test_echoes_data.encoded
+    assert echoes_bit_count == test_echoes_data.bit_count
+
+    assert generic_result == test_generic_data.encoded
+    assert generic_bit_count == test_generic_data.bit_count
 
 
-def test_description(test_data):
-    assert test_data.expected.description("elevators") == test_data.description
+def test_description(test_echoes_data, test_generic_data):
+    assert test_echoes_data.expected.description("elevators") == test_echoes_data.description
+    assert test_generic_data.expected.description("elevators") == test_generic_data.description
