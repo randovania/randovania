@@ -36,14 +36,7 @@ class PrimeTrilogyTeleporterConfiguration(TeleporterConfiguration):
     def valid_targets(self) -> list[NodeIdentifier]:
         original = super().valid_targets
 
-        if self.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
-            return [
-                location
-                for location in self.excluded_targets.nodes_list(self.game)
-                if location not in self.excluded_targets.locations
-            ]
-
-        elif self.mode in {
+        if self.mode in {
             TeleporterShuffleMode.ONE_WAY_TELEPORTER,
             TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT,
         }:
@@ -60,9 +53,7 @@ class PrimeTrilogyTeleporterConfiguration(TeleporterConfiguration):
                 # Hack for Metroid Prime 1, where the scripting for Metroid Prime Lair is dependent
                 # on the previous room
                 elif area.name == "Metroid Prime Lair":
-                    original.append(
-                        NodeIdentifier.create("Impact Crater", "Subchamber Five", "Dock to Subchamber Four")
-                    )
+                    result.append(NodeIdentifier.create("Impact Crater", "Subchamber Five", "Dock to Subchamber Four"))
             return result
         else:
             return []

@@ -118,7 +118,13 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
 
     @property
     def valid_targets(self) -> list[NodeIdentifier]:
-        if self.mode in {
+        if self.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
+            return [
+                location
+                for location in self.excluded_targets.nodes_list(self.game)
+                if location not in self.excluded_targets.locations
+            ]
+        elif self.mode in {
             TeleporterShuffleMode.ONE_WAY_TELEPORTER,
             TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT,
         }:
