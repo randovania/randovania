@@ -106,10 +106,11 @@ class DreadDamageState(EnergyTankDamageState):
 
         ret: list[list[ResourceRequirement]] = []
 
-        # Only use a combination using only tanks or parts when we don't already have energy from the other kind
+        # Allow using only parts as an option when having no tanks
         if current_tank_count == 0:
             ret.append([ResourceRequirement.create(self._energy_part_item, part_count_if_using_only_parts, False)])
-        if (current_part_count < 4 and not self._use_immediate_energy_parts) or current_part_count == 0:
+        # Allow using only tanks when we would end up with an overshoot of less than 4 parts.
+        if current_part_count == 0 or current_part_count < (part_count_if_using_only_parts % 4):
             ret.append([ResourceRequirement.create(self._energy_tank, tank_count_if_using_only_tanks, False)])
 
         tanks = 1
