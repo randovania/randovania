@@ -204,12 +204,13 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
         EnergyTankDamageState(
             99,
             100,
-            db,
-            echoes_game_description.region_list,
+            db.get_item("EnergyTank"),
         ),
         MagicMock(),
         echoes_game_patches,
         None,
+        db,
+        echoes_game_description.region_list,
     )
 
     # Run

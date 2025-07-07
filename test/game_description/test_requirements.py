@@ -766,8 +766,8 @@ def test_simple_echoes_damage(echoes_resource_database):
         50,
         False,
     )
-    d_suit = db.get_item_by_name("Dark Suit")
-    l_suit = db.get_item_by_name("Light Suit")
+    d_suit = db.get_item_by_display_name("Dark Suit")
+    l_suit = db.get_item_by_display_name("Light Suit")
 
     assert req.damage(_ctx_for(db)) == 50
     assert req.damage(_ctx_for(db, d_suit)) == 11
@@ -795,7 +795,7 @@ def test_requirement_list_constructor(echoes_resource_database):
 
 
 def test_requirement_set_constructor(echoes_resource_database):
-    item = echoes_resource_database.get_item_by_name
+    item = echoes_resource_database.get_item_by_display_name
 
     req_set = RequirementSet(
         [
@@ -862,7 +862,7 @@ def test_set_as_str_trivial():
 
 
 def test_set_as_str_things(echoes_resource_database):
-    item = echoes_resource_database.get_item_by_name
+    item = echoes_resource_database.get_item_by_display_name
 
     req_set = RequirementSet(
         [
@@ -888,7 +888,7 @@ def test_set_hash(echoes_resource_database):
         [
             RequirementList(
                 [
-                    ResourceRequirement.simple(echoes_resource_database.get_item_by_name("Power Bomb")),
+                    ResourceRequirement.simple(echoes_resource_database.get_item_by_display_name("Power Bomb")),
                 ]
             ),
         ]
@@ -897,7 +897,7 @@ def test_set_hash(echoes_resource_database):
         [
             RequirementList(
                 [
-                    ResourceRequirement.simple(echoes_resource_database.get_item_by_name("Power Bomb")),
+                    ResourceRequirement.simple(echoes_resource_database.get_item_by_display_name("Power Bomb")),
                 ]
             ),
         ]

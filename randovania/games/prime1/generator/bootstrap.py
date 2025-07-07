@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.resources.damage_reduction import DamageReduction
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.prime1.layout.prime_configuration import DamageReduction as DamageReductionConfig
 from randovania.games.prime1.layout.prime_configuration import IngameDifficulty, PrimeConfiguration
 from randovania.layout.base.available_locations import RandomizationMode
@@ -18,6 +17,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -58,17 +58,16 @@ def get_artifact_location_predicate(
 
 
 class PrimeBootstrap(Bootstrap):
-    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: BaseConfiguration) -> DamageState:
         assert isinstance(configuration, PrimeConfiguration)
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
-            game.resource_database,
-            game.region_list,
+            game.get_resource_database_view().get_item("EnergyTank"),
         )
 
     def _get_enabled_misc_resources(
-        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         assert isinstance(configuration, PrimeConfiguration)
         enabled_resources = set()
@@ -106,9 +105,12 @@ class PrimeBootstrap(Bootstrap):
 
         return enabled_resources
 
-    def prime1_progressive_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection) -> float:
+    def prime1_progressive_damage_reduction(
+        self, db: ResourceDatabaseView, current_resources: ResourceCollection
+    ) -> float:
         num_suits = sum(
-            current_resources[db.get_item_by_name(suit)] for suit in ["Varia Suit", "Gravity Suit", "Phazon Suit"]
+            current_resources[db.get_item_by_display_name(suit)]
+            for suit in ["Varia Suit", "Gravity Suit", "Phazon Suit"]
         )
         if num_suits >= 3:
             dr = 0.5
@@ -119,38 +121,42 @@ class PrimeBootstrap(Bootstrap):
         else:
             dr = 1
 
-        hard_mode = db.get_by_type_and_index(ResourceType.MISC, "hard_mode")
+        hard_mode = db.get_misc("hard_mode")
         if current_resources.has_resource(hard_mode):
             dr *= 1.53
 
         return dr
 
-    def prime1_additive_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection) -> float:
+    def prime1_additive_damage_reduction(
+        self, db: ResourceDatabaseView, current_resources: ResourceCollection
+    ) -> float:
         dr = 1.0
-        if current_resources[db.get_item_by_name("Varia Suit")]:
+        if current_resources[db.get_item_by_display_name("Varia Suit")]:
             dr -= 0.1
-        if current_resources[db.get_item_by_name("Gravity Suit")]:
+        if current_resources[db.get_item_by_display_name("Gravity Suit")]:
             dr -= 0.1
-        if current_resources[db.get_item_by_name("Phazon Suit")]:
+        if current_resources[db.get_item_by_display_name("Phazon Suit")]:
             dr -= 0.3
 
-        hard_mode = db.get_by_type_and_index(ResourceType.MISC, "hard_mode")
+        hard_mode = db.get_misc("hard_mode")
         if current_resources.has_resource(hard_mode):
             dr *= 1.53
 
         return dr
 
-    def prime1_absolute_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection) -> float:
-        if current_resources[db.get_item_by_name("Phazon Suit")] > 0:
+    def prime1_absolute_damage_reduction(
+        self, db: ResourceDatabaseView, current_resources: ResourceCollection
+    ) -> float:
+        if current_resources[db.get_item_by_display_name("Phazon Suit")] > 0:
             dr = 0.5
-        elif current_resources[db.get_item_by_name("Gravity Suit")] > 0:
+        elif current_resources[db.get_item_by_display_name("Gravity Suit")] > 0:
             dr = 0.8
-        elif current_resources[db.get_item_by_name("Varia Suit")] > 0:
+        elif current_resources[db.get_item_by_display_name("Varia Suit")] > 0:
             dr = 0.9
         else:
             dr = 1
 
-        hard_mode = db.get_by_type_and_index(ResourceType.MISC, "hard_mode")
+        hard_mode = db.get_misc("hard_mode")
         if current_resources.has_resource(hard_mode):
             dr *= 1.53
 
@@ -159,13 +165,12 @@ class PrimeBootstrap(Bootstrap):
     def patch_resource_database(self, db: ResourceDatabase, configuration: BaseConfiguration) -> ResourceDatabase:
         assert isinstance(configuration, PrimeConfiguration)
 
-        base_damage_reduction = db.base_damage_reduction
         damage_reductions = copy.copy(db.damage_reductions)
         requirement_template = copy.copy(db.requirement_template)
 
-        suits = [db.get_item_by_name("Varia Suit")]
+        suits = [db.get_item_by_display_name("Varia Suit")]
         if configuration.legacy_mode:
-            suits.extend([db.get_item_by_name("Gravity Suit"), db.get_item_by_name("Phazon Suit")])
+            suits.extend([db.get_item_by_display_name("Gravity Suit"), db.get_item_by_display_name("Phazon Suit")])
 
         reductions = [DamageReduction(None, configuration.heat_damage / 10.0)]
         reductions.extend([DamageReduction(suit, 0) for suit in suits])

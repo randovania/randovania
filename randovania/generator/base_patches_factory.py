@@ -17,6 +17,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.dock import DockType, DockWeakness
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.layout.base.base_configuration import BaseConfiguration
 
@@ -81,7 +82,7 @@ class BasePatchesFactory[Configuration: BaseConfiguration]:
         return patches
 
     def assign_static_dock_weakness(
-        self, configuration: Configuration, game: GameDescription, initial_patches: GamePatches
+        self, configuration: Configuration, game: GameDatabaseView, initial_patches: GamePatches
     ) -> GamePatches:
         """Add/Update dock weaknesses that don't depend on RNG."""
         return initial_patches
@@ -100,7 +101,7 @@ class BasePatchesFactory[Configuration: BaseConfiguration]:
             )
 
     def dock_connections_assignment(
-        self, configuration: Configuration, game: GameDescription, rng: Random
+        self, configuration: Configuration, game: GameDatabaseView, rng: Random
     ) -> Iterable[tuple[DockNode, Node]]:
         """
         Adds dock connections if a game's patcher factory overwrites it. e.g. add teleporters
@@ -134,7 +135,7 @@ class BasePatchesFactory[Configuration: BaseConfiguration]:
 
 
 def weaknesses_for_unlocked_saves(
-    game: GameDescription,
+    game: GameDatabaseView,
     unlocked_weakness: DockWeakness,
     target_dock_type: DockType,
     area_filter: Callable[[Area], bool],
@@ -151,15 +152,14 @@ def weaknesses_for_unlocked_saves(
     :return:
     """
 
-    get_node = game.region_list.typed_node_by_identifier
+    get_node = game.typed_node_by_identifier
     result = []
 
-    for area in game.region_list.all_areas:
+    for _, area, node in game.iterate_nodes_of_type(DockNode):
         if area_filter(area):
-            for node in area.nodes:
-                if isinstance(node, DockNode) and node.dock_type == target_dock_type and dock_filter(node):
-                    result.append((node, unlocked_weakness))
-                    # TODO: This is not correct in entrance rando
-                    result.append((get_node(node.default_connection, DockNode), unlocked_weakness))
+            if node.dock_type == target_dock_type and dock_filter(node):
+                result.append((node, unlocked_weakness))
+                # TODO: This is not correct in entrance rando
+                result.append((get_node(node.default_connection, DockNode), unlocked_weakness))
 
     return result
