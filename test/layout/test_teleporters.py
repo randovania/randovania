@@ -157,6 +157,19 @@ def test_echoes_data(request):
     )
 
 
+def test_valid_targets(test_echoes_data):
+    game = RandovaniaGame.METROID_PRIME_ECHOES
+    config = PrimeTrilogyTeleporterConfiguration(
+        mode=TeleporterShuffleMode.ONE_WAY_TELEPORTER,
+        skip_final_bosses=False,
+        allow_unvisited_room_names=False,
+        excluded_teleporters=TeleporterList((), game),
+        excluded_targets=TeleporterTargetList((), game),
+    )
+    targets = config.valid_targets
+    assert targets != [test_echoes_data]
+
+
 def test_decode(test_echoes_data, test_generic_data):
     # Run
     echoes_decoder = BitPackDecoder(test_echoes_data.encoded)
