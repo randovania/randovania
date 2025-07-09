@@ -111,7 +111,7 @@ class DreadDamageState(EnergyTankDamageState):
         if current_tank_count == 0:
             ret.append([ResourceRequirement.create(self._energy_part_item, part_count_if_using_only_parts, False)])
         # Allow using only tanks when we would end up with an overshoot of less than 4 parts.
-        if current_part_count == 0 or current_part_count < (part_count_if_using_only_parts % 4):
+        if current_part_count < ((part_count_if_using_only_parts - 1) % 4) + 1:
             ret.append([ResourceRequirement.create(self._energy_tank, tank_count_if_using_only_tanks, False)])
 
         tanks = 1
