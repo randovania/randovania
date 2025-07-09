@@ -40,7 +40,8 @@ class DreadDamageState(EnergyTankDamageState):
         num_tanks = resources[self._energy_tank]
         num_parts = resources[self._energy_part_item]
         num_whole_tanks = num_tanks + num_parts // 4
-        num_partial_parts = num_parts % 4
+
+        num_partial_parts = num_parts % 4 if self._use_immediate_energy_parts else 0
         energy_from_partial = (self._energy_per_tank * num_partial_parts) // 4
 
         return self._starting_energy + (self._energy_per_tank * num_whole_tanks) + energy_from_partial
