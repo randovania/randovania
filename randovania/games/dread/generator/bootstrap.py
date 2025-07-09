@@ -10,9 +10,8 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
     from randovania.resolver.damage_state import DamageState
@@ -36,17 +35,17 @@ def is_dna_node(node: PickupNode, config: DreadConfiguration) -> bool:
 
 
 class DreadBootstrap(Bootstrap[DreadConfiguration]):
-    def create_damage_state(self, game: GameDescription, configuration: DreadConfiguration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: DreadConfiguration) -> DamageState:
         return DreadDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
-            game.resource_database.energy_tank,
+            game.get_resource_database_view().get_item("ETank"),
             configuration.immediate_energy_parts,
-            game.resource_database.get_item_by_name("Energy Part"),
+            game.get_resource_database_view().get_item("EFragment"),
         )
 
     def _get_enabled_misc_resources(
-        self, configuration: DreadConfiguration, resource_database: ResourceDatabase
+        self, configuration: DreadConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         enabled_resources = {"SeparateBeams", "SeparateMissiles"}
 
@@ -69,7 +68,7 @@ class DreadBootstrap(Bootstrap[DreadConfiguration]):
     def event_resources_for_configuration(
         self,
         configuration: DreadConfiguration,
-        resource_database: ResourceDatabase,
+        resource_database: ResourceDatabaseView,
     ) -> ResourceGain:
         if configuration.hanubia_shortcut_no_grapple:
             for name in ["s080_shipyard:default:grapplepulloff1x2_000", "s080_shipyard:default:grapplepulloff1x2"]:

@@ -36,8 +36,13 @@ class State:
 
     hint_state: ResolverHintState | None
 
-    resource_database: ResourceDatabase
-    region_list: RegionList
+    @property
+    def resource_database(self) -> ResourceDatabase:
+        return self._resource_database
+
+    @property
+    def region_list(self) -> RegionList:
+        return self._region_list
 
     def __init__(
         self,
@@ -46,9 +51,9 @@ class State:
         damage_state: DamageState,
         node: Node,
         patches: GamePatches,
+        previous: Self | None,
         resource_database: ResourceDatabase,
         region_list: RegionList,
-        previous: Self | None,
         hint_state: ResolverHintState | None = None,
     ):
         self.resources = resources
@@ -57,24 +62,23 @@ class State:
         self.patches = patches
         self.path_from_previous_state = ()
         self.previous_state = previous
+        self._resource_database = resource_database
+        self._region_list = region_list
         self.hint_state = hint_state
-
-        self.resource_database = resource_database
-        self.region_list = region_list
 
         # We place this last because we need resource_database set
         self.damage_state = damage_state.limited_by_maximum(self.resources)
 
     def copy(self) -> Self:
-        return State(
+        return self.__class__(
             self.resources.duplicate(),
             self.collected_resource_nodes,
             self.damage_state,
             self.node,
             self.patches,
-            self.resource_database,
-            self.region_list,
             self.previous_state,
+            self._resource_database,
+            self._region_list,
             copy.copy(self.hint_state),
         )
 
@@ -110,6 +114,25 @@ class State:
         """A string that represents the game state for purpose of resolver and generator logs."""
         return self.damage_state.debug_string(self.resources)
 
+    def _advance_to(
+        self,
+        new_resources: ResourceCollection,
+        new_collected_resource_nodes: tuple[ResourceNode, ...],
+        damage_state: DamageState,
+        patches: GamePatches,
+    ) -> Self:
+        return self.__class__(
+            new_resources,
+            self.collected_resource_nodes + new_collected_resource_nodes,
+            damage_state,
+            self.node,
+            patches,
+            self,
+            self._resource_database,
+            self._region_list,
+            copy.copy(self.hint_state),
+        )
+
     def collect_resource_node(self, node: ResourceNode, damage_state: DamageState) -> Self:
         """
         Creates a new State that has the given ResourceNode collected.
@@ -124,16 +147,11 @@ class State:
         new_resources = self.resources.duplicate()
         new_resources.add_resource_gain(node.resource_gain_on_collect(self.node_context()))
 
-        return State(
+        return self._advance_to(
             new_resources,
-            self.collected_resource_nodes + (node,),
+            (node,),
             damage_state.apply_collected_resource_difference(new_resources, self.resources),
-            self.node,
             self.patches,
-            self.resource_database,
-            self.region_list,
-            self,
-            copy.copy(self.hint_state),
         )
 
     def act_on_node(
@@ -154,16 +172,11 @@ class State:
         for pickup in pickups:
             new_resources.add_resource_gain(pickup.resource_gain(new_resources, force_lock=True))
 
-        return State(
+        return self._advance_to(
             new_resources,
-            self.collected_resource_nodes,
+            (),
             self.damage_state.apply_collected_resource_difference(new_resources, self.resources),
-            self.node,
             self.patches,
-            self.resource_database,
-            self.region_list,
-            self,
-            copy.copy(self.hint_state),
         )
 
     def assign_pickup_to_starting_items(self, pickup: PickupEntry) -> Self:
@@ -174,16 +187,11 @@ class State:
         new_resources = self.resources.duplicate()
         new_resources.add_resource_gain(pickup_resources.as_resource_gain())
 
-        return State(
+        return self._advance_to(
             new_resources,
-            self.collected_resource_nodes,
+            (),
             self.damage_state.apply_new_starting_resource_difference(new_resources, self.resources),
-            self.node,
             self.patches.assign_extra_starting_pickups([pickup]),
-            self.resource_database,
-            self.region_list,
-            self,
-            copy.copy(self.hint_state),
         )
 
     def node_context(self) -> NodeContext:
@@ -195,7 +203,7 @@ class State:
         )
 
 
-def add_pickup_to_state(state: State, pickup: PickupEntry):
+def add_pickup_to_state(state: State, pickup: PickupEntry) -> None:
     """
     Modifies inplace the given state, adding the resources of the given pickup
     :param state:

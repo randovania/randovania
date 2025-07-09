@@ -6,26 +6,12 @@ from randovania.resolver.damage_state import DamageState
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
-    from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
     from randovania.game_description.resources.resource_collection import ResourceCollection
-    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 class NoOpDamageState(DamageState):
     """A DamageState implementation that does absolutely no damage tracking."""
-
-    def __init__(self, resource_database: ResourceDatabase, region_list: RegionList):
-        self._resource_database = resource_database
-        self._region_list = region_list
-
-    @override
-    def resource_database(self) -> ResourceDatabase:
-        return self._resource_database
-
-    @override
-    def region_list(self) -> RegionList:
-        return self._region_list
 
     @override
     def health_for_damage_requirements(self) -> int:

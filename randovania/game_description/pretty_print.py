@@ -213,7 +213,7 @@ def pretty_print_area(game: GameDescription, area: Area, print_function: typing.
                     )
                     print_function("")
 
-        for target_node, requirement in game.region_list.area_connections_from(node):
+        for target_node, requirement in area.connections[node].items():
             if target_node.is_derived_node:
                 continue
 
