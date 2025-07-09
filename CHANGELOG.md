@@ -12,6 +12,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Generator
 - Added: The generator will now check for the count of major pickups when major/minor split is enabled.
 
+## [9.3.1] - 2025-07-05
+
+### AM2R
+
+- Fixed: Exporting games now work.
+
 ## [9.3.0] - 2025-07-02
 
 ### Generator
