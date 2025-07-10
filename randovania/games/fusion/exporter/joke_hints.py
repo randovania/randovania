@@ -37,7 +37,7 @@ FUSION_JOKE_HINTS = GENERIC_JOKE_HINTS + [
     "Quickly moving left and right is not a Fusion Dance.",
     "Samus does not have an ADAM's apple.",
     "The Baby...",
-    "You shouldn't MISSILE enemies when low on ammunition.",
+    "I'm having a blast shooting missiles at enemies.",
     "When seeing spiders, my first Reaction is to jump.",
     "This Terminal cannot Navigate.",
     "Nettori's strength comes from its feet being planted into the ground.",
