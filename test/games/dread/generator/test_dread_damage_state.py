@@ -50,6 +50,7 @@ def test_apply_collected_resource_difference(dread_game_description, immediate_p
         (True, 230, 0, 0, [(2, 0), (0, 6), (1, 2)]),
         (True, 230, 0, 2, [(0, 6), (1, 2)]),
         (True, 230, 1, 0, [(2, 0), (1, 2)]),
+        (True, 562, 2, 8, [(3, 7), (2, 11)]),
         (False, 156, 0, 0, [(1, 0), (0, 4)]),
         (False, 156, 0, 2, [(1, 0), (0, 4)]),
         (False, 230, 0, 0, [(2, 0), (0, 8), (1, 4)]),
