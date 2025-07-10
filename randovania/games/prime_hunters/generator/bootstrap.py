@@ -13,6 +13,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.generator.pickup_pool import PoolResults
@@ -28,12 +29,11 @@ def is_boss_location(node: PickupNode, config: HuntersConfiguration) -> bool:
 
 
 class HuntersBootstrap(Bootstrap[HuntersConfiguration]):
-    def create_damage_state(self, game: GameDescription, configuration: HuntersConfiguration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: HuntersConfiguration) -> DamageState:
         return EnergyTankDamageState(
             99,
             100,
-            game.resource_database,
-            game.region_list,
+            game.get_resource_database_view().get_item("EnergyTank"),
         )
 
     def assign_pool_results(

@@ -55,6 +55,14 @@ def _validate_pickup_pool_size(
             f"which is more than the maximum of {max_starting_pickups}."
         )
 
+    if configuration.available_locations.randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
+        per_category_pool = pool_creator.calculate_pool_pickup_count(configuration)
+        for category, (count, num_nodes) in per_category_pool.items():
+            if category is LocationCategory.MAJOR and count > num_nodes:
+                raise InvalidConfiguration(
+                    f"Preset has {count} major pickups, which is more than the maximum of {num_nodes}."
+                )
+
 
 async def check_if_beatable(patches: GamePatches, pool: PoolResults) -> bool:
     patches = patches.assign_extra_starting_pickups(itertools.chain(pool.starting, pool.to_place))

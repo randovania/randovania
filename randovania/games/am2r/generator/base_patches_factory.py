@@ -17,22 +17,22 @@ if TYPE_CHECKING:
     from randovania.game_description.db.dock import DockWeakness
     from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.node import Node
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
 
 
 class AM2RBasePatchesFactory(BasePatchesFactory[AM2RConfiguration]):
     def assign_static_dock_weakness(
-        self, configuration: AM2RConfiguration, game: GameDescription, initial_patches: GamePatches
+        self, configuration: AM2RConfiguration, game: GameDatabaseView, initial_patches: GamePatches
     ) -> GamePatches:
         parent = super().assign_static_dock_weakness(configuration, game, initial_patches)
 
         dock_weakness: list[tuple[DockNode, DockWeakness]] = []
 
-        door_type = game.dock_weakness_database.find_type("door")
+        door_type = game.find_dock_type_by_short_name("door")
 
-        blue_door = game.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)")
-        open_transition_door = game.dock_weakness_database.get_by_weakness("door", "Open Transition")
+        blue_door = game.get_dock_weakness("door", "Normal Door (Forced)")
+        open_transition_door = game.get_dock_weakness("door", "Open Transition")
         are_transitions_shuffled = (
             open_transition_door in configuration.dock_rando.types_state[door_type].can_change_from
         )
@@ -63,8 +63,10 @@ class AM2RBasePatchesFactory(BasePatchesFactory[AM2RConfiguration]):
         return parent.assign_dock_weakness(dock_weakness)
 
     def dock_connections_assignment(
-        self, configuration: AM2RConfiguration, game: GameDescription, rng: Random
+        self, configuration: AM2RConfiguration, game: GameDatabaseView, rng: Random
     ) -> Iterable[tuple[DockNode, Node]]:
+        yield from super().dock_connections_assignment(configuration, game, rng)
+
         teleporter_connection = get_teleporter_connections(configuration.teleporters, game, rng)
         dock_assignment = get_dock_connections_assignment_for_teleporter(
             configuration.teleporters, game, teleporter_connection
