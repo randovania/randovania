@@ -53,19 +53,24 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             if "source" in node.extra:
                 is_major = True
             if not pickup.is_for_remote_player and pickup.conditional_resources[0].resources:
-                resource = pickup.conditional_resources[0].resources[-1][0].extra["item"]
-                jingle = pickup.conditional_resources[0].resources[-1][0].extra.get("Jingle", "Minor")
-                message_id = pickup.conditional_resources[0].resources[-1][0].extra.get("MessageID", None)
+                conditional_extras = pickup.conditional_resources[0].resources[-1][0].extra
+                resource = conditional_extras["item"]
+                jingle = conditional_extras.get("Jingle", "Minor")
+                message_id = conditional_extras.get("MessageID", None)
             else:
                 resource = "None"
 
             text = pickup.collection_text[0]
             sprite = pickup.model.name
 
-            custom_message = {}
+            item_message = {}
             # Special case where we ignore metroid dna right now, because that needs more patcher work.
             if text != self._placeholder_metroid_message:
-                custom_message = {"Languages": dict.fromkeys(self._lang_list, text), "Kind": "CustomMessage"}
+                item_message = {"Languages": dict.fromkeys(self._lang_list, text), "Kind": "CustomMessage"}
+
+            # Resources we want to specify a generic Message ID if we have not already provided custom messaging
+            if resource in ["InfantMetroid"] and not item_message and message_id is not None:
+                item_message = {"Kind": "MessageID", "MessageID": message_id}
 
             # Shiny easter eggs
             if (
@@ -78,14 +83,14 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     and self.rng.randint(0, self._easter_egg_bob) == 0
                 ):
                     sprite = "ShinyMissileTank"
-                    custom_message = {
+                    item_message = {
                         "Languages": dict.fromkeys(self._lang_list, "Bob acquired.\nHe says hi to you."),
                         "Kind": "CustomMessage",
                     }
 
                 if resource == "PowerBombTank" and self.rng.randint(0, self._easter_egg_shiny) == 0:
                     sprite = "ShinyPowerBombTank"
-                    custom_message = {
+                    item_message = {
                         "Languages": dict.fromkeys(self._lang_list, "Shiny Power Bomb Tank acquired."),
                         "Kind": "CustomMessage",
                     }
@@ -96,10 +101,8 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     "Item": resource,
                     "Jingle": jingle,
                 }
-                if custom_message:
-                    major_pickup["ItemMessages"] = custom_message
-                elif message_id is not None:
-                    major_pickup["ItemMessages"] = {"Kind": "MessageID", "MessageID": message_id}
+                if item_message:
+                    major_pickup["ItemMessages"] = item_message
                 major_pickup_list.append(major_pickup)
             else:
                 minor_pickup = {
@@ -111,10 +114,8 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     "ItemSprite": sprite,
                     "Jingle": jingle,
                 }
-                if custom_message:
-                    minor_pickup["ItemMessages"] = custom_message
-                elif message_id is not None:
-                    minor_pickup["ItemMessages"] = {"Kind": "MessageID", "MessageID": message_id}
+                if item_message:
+                    minor_pickup["ItemMessages"] = item_message
                 minor_pickup_list.append(minor_pickup)
         pickup_map_dict = {"MajorLocations": major_pickup_list, "MinorLocations": minor_pickup_list}
         return pickup_map_dict
