@@ -64,13 +64,12 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             sprite = pickup.model.name
 
             item_message = {}
-            # Special case where we ignore metroid dna right now, because that needs more patcher work.
+            # Handles special case for infant metroids which use ASM to automatically determine message via a MessageID
             if text != self._placeholder_metroid_message:
                 item_message = {"Languages": dict.fromkeys(self._lang_list, text), "Kind": "CustomMessage"}
-
-            # Resources we want to specify a generic Message ID if we have not already provided custom messaging
-            if resource in ["InfantMetroid"] and not item_message and message_id is not None:
-                item_message = {"Kind": "MessageID", "MessageID": message_id}
+            else:
+                if message_id is not None:
+                    item_message = {"Kind": "MessageID", "MessageID": message_id}
 
             # Shiny easter eggs
             if (
