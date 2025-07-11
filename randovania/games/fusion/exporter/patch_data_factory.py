@@ -54,6 +54,8 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 is_major = True
             if not pickup.is_for_remote_player and pickup.conditional_resources[0].resources:
                 resource = pickup.conditional_resources[0].resources[-1][0].extra["item"]
+                jingle = pickup.conditional_resources[0].resources[-1][0].extra.get("Jingle", "Minor")
+                message_id = pickup.conditional_resources[0].resources[-1][0].extra.get("MessageID", None)
             else:
                 resource = "None"
 
@@ -92,9 +94,12 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 major_pickup = {
                     "Source": node.extra["source"],
                     "Item": resource,
+                    "Jingle": jingle,
                 }
                 if custom_message:
                     major_pickup["ItemMessages"] = custom_message
+                elif message_id is not None:
+                    major_pickup["ItemMessages"] = {"Kind": "MessageID", "MessageID": message_id}
                 major_pickup_list.append(major_pickup)
             else:
                 minor_pickup = {
@@ -104,9 +109,12 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     "BlockY": node.extra["blocky"],
                     "Item": resource,
                     "ItemSprite": sprite,
+                    "Jingle": jingle,
                 }
                 if custom_message:
                     minor_pickup["ItemMessages"] = custom_message
+                elif message_id is not None:
+                    minor_pickup["ItemMessages"] = {"Kind": "MessageID", "MessageID": message_id}
                 minor_pickup_list.append(minor_pickup)
         pickup_map_dict = {"MajorLocations": major_pickup_list, "MinorLocations": minor_pickup_list}
         return pickup_map_dict
