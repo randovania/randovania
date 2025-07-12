@@ -99,7 +99,7 @@ Extra - room_id: 2
   * Extra - actor_index: 1126
   * Extra - start_tag: theatreSaveMain
   > Pickup (Major Key)
-      After Twilight Theatre/Showroom/Hit Switch (Stage Left) and After Twilight Theatre/Showroom/Hit Switch (Backstage) and After Twilight Theatre/stage right switch/Hit Switch
+      After Twilight Theatre/Showroom/Hit Switch (Stage Left) and After Twilight Theatre/Showroom/Hit Switch (Backstage) and After Twilight Theatre/Stage Right Switch Room/Hit Switch
   > Pickup (Health Piece, Lower)
       Trivial
   > Door to Entrance Hallway
@@ -117,7 +117,7 @@ Extra - room_id: 2
   * Layers: default
   * Event Twilight Theatre/Showroom/Hit Switch (Stage Left)
   * Extra - actor_index: 914
-  > Door to huge parkour room
+  > Door to Huge Parkour Room
       Trivial
 
 > Event - Hit Switch (Backstage); Heals? False
@@ -198,15 +198,15 @@ Extra - room_id: 2
   > Event - Hit Switch (Backstage)
       Can Do Damage
 
-> Door to stage right switch; Heals? False
+> Door to Stage Right Switch Room; Heals? False
   * Layers: default
-  * No Wall to stage right switch/Door to Showroom
+  * No Wall to Stage Right Switch Room/Door to Showroom
   > Save Crystal
       Trivial
 
-> Door to huge parkour room; Heals? False
+> Door to Huge Parkour Room; Heals? False
   * Layers: default
-  * No Wall to huge parkour room/Door to Showroom
+  * No Wall to Huge Parkour Room/Door to Showroom
   * Extra - actor_index: 3082
   > Save Crystal
       After Twilight Theatre/Showroom/Hit Switch (Stage Left)
@@ -357,7 +357,7 @@ Extra - room_id: 8
   * Layers: default
   * No Wall to Soul Cutter Hub/Door to room that requires soul cutter to call the platform
   * Extra - actor_index: 3091
-  > Door to outside access
+  > Door to Theatre Wall Access
       All of the following:
           Can Soul Cutter
           Any of the following:
@@ -366,9 +366,9 @@ Extra - room_id: 8
                   Air Kick
                   Air Kick Mastery (Beginner) or Can Long Jump
 
-> Door to outside access; Heals? False
+> Door to Theatre Wall Access; Heals? False
   * Layers: default
-  * No Wall to outside access/Door to room that requires soul cutter to call the platform
+  * No Wall to Theatre Wall Access/Door to room that requires soul cutter to call the platform
   > Door to Soul Cutter Hub
       All of the following:
           Can Soul Cutter
@@ -379,17 +379,17 @@ Extra - room_id: 8
                   Air Kick Mastery (Beginner) or Can Long Jump
 
 ----------------
-outside access
+Theatre Wall Access
 Extra - total_boundings: {'x1': -10900, 'x2': -8775, 'y1': -1325, 'y2': -475}
 Extra - polygon: [[-10900, -1325], [-10900, -475], [-8775, -475], [-8775, -1325]]
 Extra - room_id: 9
 > Door to room that requires soul cutter to call the platform; Heals? False
   * Layers: default
-  * No Wall to room that requires soul cutter to call the platform/Door to outside access
+  * No Wall to room that requires soul cutter to call the platform/Door to Theatre Wall Access
 
 > Door to Theatre Wall; Heals? False
   * Layers: default
-  * No Wall to Theatre Wall/Door to outside access
+  * No Wall to Theatre Wall/Door to Theatre Wall Access
 
 ----------------
 Theatre Wall
@@ -400,48 +400,48 @@ Extra - room_id: 10
   * Layers: chair_shuffle
   * Pickup 87; Category? Minor
   * Extra - actor_index: 1083
-  > Door to outside access
+  > Door to Theatre Wall Access
       Trivial
 
-> Door to outside access; Heals? False
+> Door to Theatre Wall Access; Heals? False
   * Layers: default
-  * No Wall to outside access/Door to Theatre Wall
+  * No Wall to Theatre Wall Access/Door to Theatre Wall
   > Pickup (Chair)
       Trivial
-  > Door to stage right switch
+  > Door to Stage Right Switch Room
       Cling and Can Soul Cutter
 
-> Door to stage right switch; Heals? False
+> Door to Stage Right Switch Room; Heals? False
   * Layers: default
-  * No Wall to stage right switch/Door to Theatre Wall
+  * No Wall to Stage Right Switch Room/Door to Theatre Wall
   * Extra - actor_index: 3527
 
 ----------------
-stage right switch
+Stage Right Switch Room
 Extra - total_boundings: {'x1': -2500, 'x2': -150, 'y1': 4175, 'y2': 4825}
 Extra - polygon: [[-2500, 4825], [-2500, 4175], [-450, 4175], [-150, 4475], [-150, 4825]]
 Extra - room_id: 11
 > Event - Hit Switch; Heals? False
   * Layers: default
-  * Event Twilight Theatre/stage right switch/Hit Switch
+  * Event Twilight Theatre/Stage Right Switch Room/Hit Switch
   * Extra - actor_index: 915
   > Door to Theatre Wall
       Trivial
 
 > Door to Theatre Wall; Heals? False
   * Layers: default
-  * No Wall to Theatre Wall/Door to stage right switch
+  * No Wall to Theatre Wall/Door to Stage Right Switch Room
   * Extra - actor_index: 3527
   > Event - Hit Switch
       Can Do Damage
   > Door to Showroom
-      After Twilight Theatre/stage right switch/Hit Switch
+      After Twilight Theatre/Stage Right Switch Room/Hit Switch
 
 > Door to Showroom; Heals? False
   * Layers: default
-  * No Wall to Showroom/Door to stage right switch
+  * No Wall to Showroom/Door to Stage Right Switch Room
   > Door to Theatre Wall
-      After Twilight Theatre/stage right switch/Hit Switch
+      After Twilight Theatre/Stage Right Switch Room/Hit Switch
 
 ----------------
 Stage Left
@@ -452,19 +452,19 @@ Extra - room_id: 12
   * Layers: chair_shuffle
   * Pickup 86; Category? Minor
   * Extra - actor_index: 1082
-  > Door to huge parkour room
+  > Door to Huge Parkour Room
       Trivial
 
 > Door to Showroom; Heals? False
   * Layers: default
   * No Wall to Showroom/Door to Stage Left
   * Extra - actor_index: 3009
-  > Door to huge parkour room
+  > Door to Huge Parkour Room
       Cling ≥ 4
 
-> Door to huge parkour room; Heals? False
+> Door to Huge Parkour Room; Heals? False
   * Layers: default
-  * No Wall to huge parkour room/Door to Stage Left
+  * No Wall to Huge Parkour Room/Door to Stage Left
   * Extra - actor_index: 3084
   > Pickup (Chair)
       Trivial
@@ -472,20 +472,20 @@ Extra - room_id: 12
       Cling ≥ 4
 
 ----------------
-huge parkour room
+Huge Parkour Room
 Extra - total_boundings: {'x1': 4150, 'x2': 12025, 'y1': -850, 'y2': 4700}
 Extra - polygon: [[4150, -850], [4150, 4700], [12025, 4700], [12025, -850]]
 Extra - room_id: 13
 > Door to Stage Left; Heals? False
   * Layers: default
-  * No Wall to Stage Left/Door to huge parkour room
+  * No Wall to Stage Left/Door to Huge Parkour Room
   * Extra - actor_index: 3084
   > Door to Showroom
       Air Kick and Cling ≥ 2 and Sunsetter and Can Long Jump
 
 > Door to Showroom; Heals? False
   * Layers: default
-  * No Wall to Showroom/Door to huge parkour room
+  * No Wall to Showroom/Door to Huge Parkour Room
   * Extra - actor_index: 3082
   > Door to Stage Left
       Trivial
