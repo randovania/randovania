@@ -50,5 +50,7 @@ class NoOpDamageState(DamageState):
         return self
 
     @override
-    def resource_requirements_for_satisfying_damage(self, damage: int) -> list[ResourceRequirement]:
+    def resource_requirements_for_satisfying_damage(
+        self, damage: int, resources: ResourceCollection
+    ) -> list[list[ResourceRequirement]]:
         return []

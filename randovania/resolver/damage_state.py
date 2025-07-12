@@ -1,11 +1,14 @@
 from __future__ import annotations
 
-from abc import ABC
+from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Self
 
 if TYPE_CHECKING:
+    from collections.abc import Generator
+
     from randovania.game_description.db.node import Node
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
 
 
@@ -16,6 +19,9 @@ class DamageState(ABC):
 
     def health_for_damage_requirements(self) -> int:
         """How much health is present for purpose of checking damage requirements."""
+
+    def resources_for_energy(self) -> Generator[ItemResourceInfo]:
+        """Which items give energy."""
 
     def is_better_than(self, other: DamageState | None) -> bool:
         """Is this state strictly better than other, regarding damage requirements.
@@ -54,9 +60,16 @@ class DamageState(ABC):
         """Creates a new state after new resources were added as if they were starting.
         Common difference: collecting a health upgrade fully heals you. But it won't do it here."""
 
-    def resource_requirements_for_satisfying_damage(self, damage: int) -> list[ResourceRequirement]:
+    @abstractmethod
+    def resource_requirements_for_satisfying_damage(
+        self, damage: int, resources: ResourceCollection
+    ) -> list[list[ResourceRequirement]]:
         """
         Determines what are the requirements for satisfying a damage requirement with the given value.
         :param damage:
-        :return: a list of resource requirements
+        :param resources:
+        :return: a list containing lists of resource requirements. Each sublist contains a combination of requirements.
+        If two resources can be used, the options can be to satisfy the damage with some number of only the first
+        resource, some number of only the second resource, or by any combination of the two resources that together
+        satisfy the damage requirement.
         """

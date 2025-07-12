@@ -6,6 +6,8 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.resolver.damage_state import DamageState
 
 if TYPE_CHECKING:
+    from collections.abc import Generator
+
     from randovania.game_description.db.node import Node
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
@@ -25,6 +27,10 @@ class EnergyTankDamageState(DamageState):
 
     def __copy__(self) -> Self:
         return self._duplicate()
+
+    @override
+    def resources_for_energy(self) -> Generator[ItemResourceInfo]:
+        yield self._energy_tank
 
     def _maximum_energy(self, resources: ResourceCollection) -> int:
         num_tanks = resources[self._energy_tank]
@@ -101,9 +107,11 @@ class EnergyTankDamageState(DamageState):
         return result.limited_by_maximum(new_resources)
 
     @override
-    def resource_requirements_for_satisfying_damage(self, damage: int) -> list[ResourceRequirement]:
+    def resource_requirements_for_satisfying_damage(
+        self, damage: int, resources: ResourceCollection
+    ) -> list[list[ResourceRequirement]]:
         # A requirement for many "Energy Tanks" is added,
         # which is then decreased by how many tanks is in the state by pickups_to_solve_list
         # FIXME: get the required items for reductions (aka suits)
         tank_count = (damage - self._starting_energy) // self._energy_per_tank
-        return [ResourceRequirement.create(self._energy_tank, tank_count + 1, False)]
+        return [[ResourceRequirement.create(self._energy_tank, tank_count + 1, False)]]
