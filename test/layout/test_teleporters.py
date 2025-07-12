@@ -26,12 +26,14 @@ class Data(NamedTuple):
     bit_count: int
     expected: TeleporterConfiguration | PrimeTrilogyTeleporterConfiguration
     description: str
+    num_valid_targets: int
 
 
 def _m(
     encoded: bytes,
     bit_count: int,
     description: str,
+    num_valid_targets: int = 22,
     mode: str = "vanilla",
     skip_final_bosses=False,
     allow_unvisited_room_names=True,
@@ -46,6 +48,7 @@ def _m(
         "encoded": encoded,
         "bit_count": bit_count,
         "description": description,
+        "num_valid_targets": num_valid_targets,
         "json": {
             "mode": mode,
             "skip_final_bosses": skip_final_bosses,
@@ -66,6 +69,7 @@ def _g(
     encoded: bytes,
     bit_count: int,
     description: str,
+    num_valid_targets: int,
     mode: str = "vanilla",
     excluded_teleporters=None,
     excluded_targets=None,
@@ -78,6 +82,7 @@ def _g(
         "encoded": encoded,
         "bit_count": bit_count,
         "description": description,
+        "num_valid_targets": num_valid_targets,
         "json": {
             "mode": mode,
             "excluded_teleporters": excluded_teleporters,
@@ -88,12 +93,13 @@ def _g(
 
 @pytest.fixture(
     params=[
-        _g(b"\x00", 3, "Original connections"),
-        _g(b"\xc0", 6, "One-way, with cycles", mode="one-way-teleporter"),
+        _g(b"\x00", 3, "Original connections", 40),
+        _g(b"\xc0", 6, "One-way, with cycles", 40, mode="one-way-teleporter"),
         _g(
             b"\xd8\x12",
             16,
             "One-way, with replacement; excluded 1 elevators",
+            40,
             mode="one-way-teleporter-replacement",
             excluded_teleporters=[
                 _a("Area 1", "Transport to Surface and Area 2", "Elevator to Surface East"),
@@ -115,6 +121,7 @@ def test_generic_data(request):
         bit_count=request.param["bit_count"],
         expected=TeleporterConfiguration.from_json(request.param["json"], game=game),
         description=request.param["description"],
+        num_valid_targets=request.param["num_valid_targets"],
     )
 
 
@@ -154,20 +161,32 @@ def test_echoes_data(request):
         bit_count=request.param["bit_count"],
         expected=PrimeTrilogyTeleporterConfiguration.from_json(request.param["json"], game=game),
         description=request.param["description"],
+        num_valid_targets=request.param["num_valid_targets"],
     )
 
 
-def test_valid_targets(test_echoes_data):
-    game = RandovaniaGame.METROID_PRIME_ECHOES
-    config = PrimeTrilogyTeleporterConfiguration(
+def test_valid_targets(test_echoes_data, test_generic_data):
+    echoes = RandovaniaGame.METROID_PRIME_ECHOES
+    echoes_config = PrimeTrilogyTeleporterConfiguration(
         mode=TeleporterShuffleMode.ONE_WAY_TELEPORTER,
         skip_final_bosses=False,
         allow_unvisited_room_names=False,
-        excluded_teleporters=TeleporterList((), game),
-        excluded_targets=TeleporterTargetList((), game),
+        excluded_teleporters=TeleporterList((), echoes),
+        excluded_targets=TeleporterTargetList((), echoes),
     )
-    targets = config.valid_targets
-    assert targets != [test_echoes_data]
+
+    valid_echoes_targets = echoes_config.valid_targets
+    assert len(valid_echoes_targets) == test_echoes_data.num_valid_targets
+
+    msr = RandovaniaGame.METROID_SAMUS_RETURNS
+    msr_config = TeleporterConfiguration(
+        mode=TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT,
+        excluded_teleporters=TeleporterList((), msr),
+        excluded_targets=TeleporterTargetList((), msr),
+    )
+
+    valid_msr_targets = msr_config.valid_targets
+    assert len(valid_msr_targets) == test_generic_data.num_valid_targets
 
 
 def test_decode(test_echoes_data, test_generic_data):
