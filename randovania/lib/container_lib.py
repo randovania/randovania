@@ -4,13 +4,15 @@ import operator
 import typing
 
 if typing.TYPE_CHECKING:
-    from _typeshed import SupportsRichComparisonT
+    from _typeshed import SupportsRichComparison
 
 X = typing.TypeVar("X")
 Y = typing.TypeVar("Y")
 
 
-def iterate_key_sorted[Y](obj: dict[SupportsRichComparisonT, Y]) -> list[tuple[SupportsRichComparisonT, Y]]:
+def iterate_key_sorted[SupportsRichComparisonT: SupportsRichComparison, Y](
+    obj: dict[SupportsRichComparisonT, Y],
+) -> list[tuple[SupportsRichComparisonT, Y]]:
     return sorted(obj.items(), key=operator.itemgetter(0))
 
 
