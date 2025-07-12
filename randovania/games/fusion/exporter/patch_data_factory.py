@@ -50,6 +50,8 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         for pickup in pickup_list:
             node = self.game.region_list.node_from_pickup_index(pickup.index)
             is_major = False
+            jingle = "Minor"
+            message_id = None
             if "source" in node.extra:
                 is_major = True
             if not pickup.is_for_remote_player and pickup.conditional_resources[0].resources:
