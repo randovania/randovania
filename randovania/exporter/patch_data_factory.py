@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import json
 import typing
 from random import Random
 from typing import TYPE_CHECKING
 
 import json_delta
+import sentry_sdk
 
 from randovania.exporter import pickup_exporter
 from randovania.exporter.hints.hint_exporter import HintExporter
@@ -90,11 +92,19 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
         :return: The patcher data, with the randovania metadata included, as a dict.
         """
 
-        randovania_meta = custom_metadata or self.create_default_patcher_data_meta()
+        with sentry_sdk.isolation_scope() as scope:
+            scope.add_attachment(
+                json.dumps(self.description.as_json(force_spoiler=True)).encode("utf-8"),
+                filename="rdvgame.json",
+                content_type="application/json",
+                add_to_transactions=True,
+            )
 
-        game_data = self.create_game_specific_data(randovania_meta)
-        json_delta.patch(game_data, self.patches.custom_patcher_data)
-        game_data["_randovania_meta"] = randovania_meta
+            randovania_meta = custom_metadata or self.create_default_patcher_data_meta()
+
+            game_data = self.create_game_specific_data(randovania_meta)
+            json_delta.patch(game_data, self.patches.custom_patcher_data)
+            game_data["_randovania_meta"] = randovania_meta
         return game_data
 
     def create_memo_data(self) -> dict[str, str]:
