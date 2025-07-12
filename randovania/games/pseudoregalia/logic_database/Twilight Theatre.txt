@@ -3,30 +3,46 @@ Entrance
 Extra - total_boundings: {'x1': 4650, 'x2': 13100, 'y1': -7275, 'y2': -4325}
 Extra - polygon: [[4650, -7275], [4650, -4325], [13100, -4325], [13100, -7275]]
 Extra - room_id: 0
-> Pickup (Goatling) 1; Heals? False
+> Pickup (Goatling, 1); Heals? False
   * Layers: goatling_shuffle
   * Pickup 80; Category? Minor
   * Extra - actor_index: 1072
+  > Transition to Castle Sansa
+      Trivial
 
-> Pickup (Goatling) 2; Heals? False
+> Pickup (Goatling, 2); Heals? False
   * Layers: goatling_shuffle
   * Pickup 81; Category? Minor
   * Extra - actor_index: 1074
+  > Transition to Castle Sansa
+      Trivial
 
-> Pickup (Goatling) 3; Heals? False
+> Pickup (Goatling, 3); Heals? False
   * Layers: goatling_shuffle
   * Pickup 82; Category? Minor
   * Extra - actor_index: 1079
+  > Transition to Castle Sansa
+      Trivial
 
-> Pickup (Goatling) 4; Heals? False
+> Pickup (Goatling, 4); Heals? False
   * Layers: goatling_shuffle
   * Pickup 83; Category? Minor
   * Extra - actor_index: 1080
+  > Transition to Castle Sansa
+      Trivial
 
 > Door to Entrance Hallway; Heals? False
   * Layers: default
   * No Wall to Entrance Hallway/Door to Entrance
   * Extra - actor_index: 3053
+  > Transition to Castle Sansa
+      Any of the following:
+          Cling
+          All of the following:
+              Air Kick Mastery (Beginner)
+              Any of the following:
+                  Air Kick ≥ 2
+                  Air Kick and Can Long Jump
 
 > Transition to Castle Sansa; Heals? False; Spawn Point
   * Layers: default
@@ -34,6 +50,18 @@ Extra - room_id: 0
   * Extra - actor_index: 1212
   * Extra - transition_tag: lowerNorthNorthWest
   * Extra - start_tag: theatreEast
+  > Pickup (Goatling, 1)
+      Trivial
+  > Pickup (Goatling, 2)
+      Trivial
+  > Pickup (Goatling, 3)
+      Trivial
+  > Pickup (Goatling, 4)
+      Trivial
+  > Door to Entrance Hallway
+      All of the following:
+          Sunsetter
+          Air Kick or Cling
 
 ----------------
 Entrance Hallway
@@ -44,11 +72,15 @@ Extra - room_id: 1
   * Layers: default
   * No Wall to Entrance/Door to Entrance Hallway
   * Extra - actor_index: 3053
+  > Door to Showroom
+      Trivial
 
 > Door to Showroom; Heals? False
   * Layers: default
   * No Wall to Showroom/Door to Entrance Hallway
   * Extra - actor_index: 3014
+  > Door to Entrance
+      Trivial
 
 ----------------
 Showroom
@@ -59,80 +91,136 @@ Extra - room_id: 2
   * Layers: default
   * Pickup 88; Category? Major
   * Extra - actor_index: 871
+  > Save Crystal
+      Trivial
 
 > Save Crystal; Heals? True; Spawn Point
   * Layers: default
   * Extra - actor_index: 1126
   * Extra - start_tag: theatreSaveMain
+  > Pickup (Major Key)
+      After Twilight Theatre/Showroom/Hit Switch (Stage Left) and After Twilight Theatre/Showroom/Hit Switch (Backstage) and After Twilight Theatre/stage right switch/Hit Switch
+  > Pickup (Health Piece, Lower)
+      Trivial
+  > Door to Entrance Hallway
+      Air Kick ≥ 3 or Sunsetter or Skid Jump (Beginner)
+  > Door to Stage Right
+      Trivial
+  > Door to Stage Left
+      Trivial
+  > Door to Backstage (Lower)
+      Trivial
+  > Door to Bubble Hallway
+      Cling
 
-> Event - Hit Switch 1; Heals? False
+> Event - Hit Switch (Stage Left); Heals? False
   * Layers: default
-  * Event Twilight Theatre/Showroom/Hit Switch 1
+  * Event Twilight Theatre/Showroom/Hit Switch (Stage Left)
   * Extra - actor_index: 914
+  > Door to huge parkour room
+      Trivial
 
-> Event - Hit Switch 2; Heals? False
+> Event - Hit Switch (Backstage); Heals? False
   * Layers: default
-  * Event Twilight Theatre/Showroom/Hit Switch 2
+  * Event Twilight Theatre/Showroom/Hit Switch (Backstage)
   * Extra - actor_index: 920
+  > Door to Backstage (Upper)
+      Trivial
 
 > Pickup (Health Piece, Upper); Heals? False
   * Layers: default
   * Pickup 90; Category? Minor
   * Extra - actor_index: 913
+  > Door to Entrance Hallway
+      Trivial
 
 > Pickup (Health Piece, Lower); Heals? False
   * Layers: default
   * Pickup 84; Category? Minor
   * Extra - actor_index: 912
+  > Save Crystal
+      Trivial
 
 > Pickup (Goatling); Heals? False
   * Layers: goatling_shuffle
   * Pickup 85; Category? Minor
   * Extra - actor_index: 1071
+  > Door to Bubble Hallway
+      Trivial
 
 > Door to Entrance Hallway; Heals? False
   * Layers: default
   * No Wall to Entrance Hallway/Door to Showroom
   * Extra - actor_index: 3014
+  > Save Crystal
+      Trivial
+  > Pickup (Health Piece, Upper)
+      All of the following:
+          Air Kick ≥ 3
+          Cling or Air Kick Mastery (Beginner) or Can Long Jump
+  > Door to Showroom Storage
+      Trivial
 
 > Door to Showroom Storage; Heals? False
   * Layers: default
   * Small Key Door to Showroom Storage/Door to Showroom
   * Extra - actor_index: 1005
+  > Door to Entrance Hallway
+      Trivial
 
 > Door to Stage Right; Heals? False
   * Layers: default
   * No Wall to Stage Right/Door to Showroom
   * Extra - actor_index: 3010
+  > Save Crystal
+      Trivial
 
 > Door to Stage Left; Heals? False
   * Layers: default
   * No Wall to Stage Left/Door to Showroom
   * Extra - actor_index: 3009
+  > Save Crystal
+      Trivial
 
 > Door to Backstage (Lower); Heals? False
   * Layers: default
   * No Wall to Backstage/Door to Showroom (Lower)
   * Extra - actor_index: 3012
+  > Save Crystal
+      Trivial
 
 > Door to Backstage (Upper); Heals? False
   * Layers: default
   * No Wall to Backstage/Door to Showroom (Upper)
   * Extra - actor_index: 2950
+  > Save Crystal
+      After Twilight Theatre/Showroom/Hit Switch (Backstage)
+  > Event - Hit Switch (Backstage)
+      Can Do Damage
 
 > Door to stage right switch; Heals? False
   * Layers: default
   * No Wall to stage right switch/Door to Showroom
+  > Save Crystal
+      Trivial
 
 > Door to huge parkour room; Heals? False
   * Layers: default
   * No Wall to huge parkour room/Door to Showroom
   * Extra - actor_index: 3082
+  > Save Crystal
+      After Twilight Theatre/Showroom/Hit Switch (Stage Left)
+  > Event - Hit Switch (Stage Left)
+      Can Do Damage
 
 > Door to Bubble Hallway; Heals? False
   * Layers: default
   * No Wall to Bubble Hallway/Door to Showroom
   * Extra - actor_index: 3005
+  > Save Crystal
+      Cling
+  > Pickup (Goatling)
+      Trivial
 
 ----------------
 Showroom Storage
@@ -143,26 +231,29 @@ Extra - room_id: 3
   * Layers: default
   * Pickup 91; Category? Minor
   * Extra - actor_index: 1233
+  > Door to Showroom
+      Trivial
 
 > Door to Showroom; Heals? False
   * Layers: default
   * Small Key Door to Showroom/Door to Showroom Storage
   * Extra - actor_index: 1005
+  > Pickup (Empathy)
+      Any of the following:
+          Air Kick ≥ 3 or Bounce Off Torch
+          Cling and Sunsetter
 
 ----------------
 Stage Right
 Extra - total_boundings: {'x1': -2150, 'x2': 275, 'y1': 5300, 'y2': 7175}
 Extra - polygon: [[-2150, 5300], [-2150, 7175], [275, 7175], [275, 5300]]
 Extra - room_id: 4
-> Event - Strikebreak Wall; Heals? False
-  * Layers: default
-  * Event Twilight Theatre/Stage Right/Strikebreak Wall
-  * Extra - actor_index: 825
-
 > Door to Showroom; Heals? False
   * Layers: default
   * No Wall to Showroom/Door to Stage Right
   * Extra - actor_index: 3010
+  > Door to Soul Cutter Hub
+      Can Strikebreak
 
 > Door to Soul Cutter Hub; Heals? False
   * Layers: default
@@ -178,25 +269,49 @@ Extra - room_id: 5
   * Layers: default
   * Event Twilight Theatre/Soul Cutter Hub/Hit Switch
   * Extra - actor_index: 916
-
-> Event - Strikebreak Wall; Heals? False
-  * Layers: default
-  * Event Twilight Theatre/Soul Cutter Hub/Strikebreak Wall
-  * Extra - actor_index: 826
+  > Room Center
+      Trivial
 
 > Door to Stage Right; Heals? False
   * Layers: default
   * No Wall to Stage Right/Door to Soul Cutter Hub
   * Extra - actor_index: 3088
+  > Room Center
+      Trivial
 
 > Door to Soul Cutter Access; Heals? False
   * Layers: default
   * No Wall to Soul Cutter Access/Door to Soul Cutter Hub
+  > Room Center
+      After Twilight Theatre/Soul Cutter Hub/Hit Switch and Can Strikebreak
 
 > Door to room that requires soul cutter to call the platform; Heals? False
   * Layers: default
   * No Wall to room that requires soul cutter to call the platform/Door to Soul Cutter Hub
   * Extra - actor_index: 3091
+  > Room Center
+      After Twilight Theatre/Soul Cutter Hub/Hit Switch
+
+> Room Center; Heals? False
+  * Layers: default
+  > Event - Hit Switch
+      All of the following:
+          Can Do Damage
+          Any of the following:
+              Air Kick or Sunsetter
+              Skid Jump (Intermediate) and Bounce Off Torch
+              Cling ≥ 2 and Cling Mastery (Beginner)
+  > Door to Stage Right
+      Air Kick ≥ 2 or Sunsetter
+  > Door to Soul Cutter Access
+      All of the following:
+          After Twilight Theatre/Soul Cutter Hub/Hit Switch and Can Strikebreak
+          Any of the following:
+              Air Kick ≥ 2 or Cling or Sunsetter
+              # jump from hit switch
+              Coyote Jump (Beginner) and Skid Jump (Intermediate) and Bounce Off Torch
+  > Door to room that requires soul cutter to call the platform
+      Sunsetter and After Twilight Theatre/Soul Cutter Hub/Hit Switch
 
 ----------------
 Soul Cutter Access
@@ -206,10 +321,14 @@ Extra - room_id: 6
 > Door to Soul Cutter Hub; Heals? False
   * Layers: default
   * No Wall to Soul Cutter Hub/Door to Soul Cutter Access
+  > Door to Soul Cutter Room
+      Can Do Damage
 
 > Door to Soul Cutter Room; Heals? False
   * Layers: default
   * No Wall to Soul Cutter Room/Door to Soul Cutter Access
+  > Door to Soul Cutter Hub
+      Can Soul Cutter
 
 ----------------
 Soul Cutter Room
@@ -220,10 +339,14 @@ Extra - room_id: 7
   * Layers: default
   * Pickup 89; Category? Major
   * Extra - actor_index: 1230
+  > Door to Soul Cutter Access
+      Trivial
 
 > Door to Soul Cutter Access; Heals? False
   * Layers: default
   * No Wall to Soul Cutter Access/Door to Soul Cutter Room
+  > Pickup (Soul Cutter)
+      Trivial
 
 ----------------
 room that requires soul cutter to call the platform
@@ -234,10 +357,26 @@ Extra - room_id: 8
   * Layers: default
   * No Wall to Soul Cutter Hub/Door to room that requires soul cutter to call the platform
   * Extra - actor_index: 3091
+  > Door to outside access
+      All of the following:
+          Can Soul Cutter
+          Any of the following:
+              Cling
+              All of the following:
+                  Air Kick
+                  Air Kick Mastery (Beginner) or Can Long Jump
 
 > Door to outside access; Heals? False
   * Layers: default
   * No Wall to outside access/Door to room that requires soul cutter to call the platform
+  > Door to Soul Cutter Hub
+      All of the following:
+          Can Soul Cutter
+          Any of the following:
+              Cling
+              All of the following:
+                  Air Kick
+                  Air Kick Mastery (Beginner) or Can Long Jump
 
 ----------------
 outside access
@@ -261,10 +400,16 @@ Extra - room_id: 10
   * Layers: chair_shuffle
   * Pickup 87; Category? Minor
   * Extra - actor_index: 1083
+  > Door to outside access
+      Trivial
 
 > Door to outside access; Heals? False
   * Layers: default
   * No Wall to outside access/Door to Theatre Wall
+  > Pickup (Chair)
+      Trivial
+  > Door to stage right switch
+      Cling and Can Soul Cutter
 
 > Door to stage right switch; Heals? False
   * Layers: default
@@ -280,15 +425,23 @@ Extra - room_id: 11
   * Layers: default
   * Event Twilight Theatre/stage right switch/Hit Switch
   * Extra - actor_index: 915
+  > Door to Theatre Wall
+      Trivial
 
 > Door to Theatre Wall; Heals? False
   * Layers: default
   * No Wall to Theatre Wall/Door to stage right switch
   * Extra - actor_index: 3527
+  > Event - Hit Switch
+      Can Do Damage
+  > Door to Showroom
+      After Twilight Theatre/stage right switch/Hit Switch
 
 > Door to Showroom; Heals? False
   * Layers: default
   * No Wall to Showroom/Door to stage right switch
+  > Door to Theatre Wall
+      After Twilight Theatre/stage right switch/Hit Switch
 
 ----------------
 Stage Left
@@ -299,16 +452,24 @@ Extra - room_id: 12
   * Layers: chair_shuffle
   * Pickup 86; Category? Minor
   * Extra - actor_index: 1082
+  > Door to huge parkour room
+      Trivial
 
 > Door to Showroom; Heals? False
   * Layers: default
   * No Wall to Showroom/Door to Stage Left
   * Extra - actor_index: 3009
+  > Door to huge parkour room
+      Cling ≥ 4
 
 > Door to huge parkour room; Heals? False
   * Layers: default
   * No Wall to huge parkour room/Door to Stage Left
   * Extra - actor_index: 3084
+  > Pickup (Chair)
+      Trivial
+  > Door to Showroom
+      Cling ≥ 4
 
 ----------------
 huge parkour room
@@ -319,11 +480,15 @@ Extra - room_id: 13
   * Layers: default
   * No Wall to Stage Left/Door to huge parkour room
   * Extra - actor_index: 3084
+  > Door to Showroom
+      Air Kick and Cling ≥ 2 and Sunsetter and Can Long Jump
 
 > Door to Showroom; Heals? False
   * Layers: default
   * No Wall to Showroom/Door to huge parkour room
   * Extra - actor_index: 3082
+  > Door to Stage Left
+      Trivial
 
 ----------------
 Backstage
@@ -334,21 +499,33 @@ Extra - room_id: 14
   * Layers: default
   * No Wall to Showroom/Door to Backstage (Lower)
   * Extra - actor_index: 3012
+  > Door to Backstage Hub (Lower)
+      Cling ≥ 4
 
 > Door to Showroom (Upper); Heals? False
   * Layers: default
   * No Wall to Showroom/Door to Backstage (Upper)
   * Extra - actor_index: 2950
+  > Door to Showroom (Lower)
+      Trivial
+  > Door to Backstage Hub (Upper)
+      Cling
 
 > Door to Backstage Hub (Lower); Heals? False
   * Layers: default
   * No Wall to Backstage Hub/Door to Backstage (Lower)
   * Extra - actor_index: 2918
+  > Door to Showroom (Lower)
+      Cling ≥ 4
 
 > Door to Backstage Hub (Upper); Heals? False
   * Layers: default
   * No Wall to Backstage Hub/Door to Backstage (Upper)
   * Extra - actor_index: 2929
+  > Door to Showroom (Upper)
+      Cling
+  > Door to Backstage Hub (Lower)
+      Trivial
 
 ----------------
 Backstage Hub
@@ -359,26 +536,42 @@ Extra - room_id: 15
   * Layers: default
   * No Wall to Backstage/Door to Backstage Hub (Lower)
   * Extra - actor_index: 2918
+  > Door to Axe Room
+      Cling ≥ 2
 
 > Door to Backstage (Upper); Heals? False
   * Layers: default
   * No Wall to Backstage/Door to Backstage Hub (Upper)
   * Extra - actor_index: 2929
+  > Door to Backstage (Lower)
+      Trivial
+  > Door to Combat Room (Upper)
+      Cling or Sunsetter
 
 > Door to Combat Room (Lower); Heals? False
   * Layers: default
   * No Wall to Combat Room/Door to Backstage Hub (Lower)
   * Extra - actor_index: 2925
+  > Door to Axe Room
+      Air Kick ≥ 3
 
 > Door to Combat Room (Upper); Heals? False
   * Layers: default
   * No Wall to Combat Room/Door to Backstage Hub (Upper)
   * Extra - actor_index: 2927
+  > Door to Backstage (Upper)
+      Cling or Sunsetter
+  > Door to Combat Room (Lower)
+      Trivial
 
 > Door to Axe Room; Heals? False
   * Layers: default
   * No Wall to Axe Room/Door to Backstage Hub
   * Extra - actor_index: 3077
+  > Door to Backstage (Lower)
+      Trivial
+  > Door to Combat Room (Lower)
+      Trivial
 
 ----------------
 Combat Room
@@ -389,11 +582,25 @@ Extra - room_id: 16
   * Layers: default
   * No Wall to Backstage Hub/Door to Combat Room (Lower)
   * Extra - actor_index: 2925
+  > Door to Backstage Hub (Upper)
+      Cling and After Twilight Theatre/Combat Room/Combat
+  > Combat
+      Dream Breaker
 
 > Door to Backstage Hub (Upper); Heals? False
   * Layers: default
   * No Wall to Backstage Hub/Door to Combat Room (Upper)
   * Extra - actor_index: 2927
+  > Door to Backstage Hub (Lower)
+      After Twilight Theatre/Combat Room/Combat
+  > Combat
+      Dream Breaker
+
+> Combat; Heals? False
+  * Layers: default
+  * Event Twilight Theatre/Combat Room/Combat
+  > Door to Backstage Hub (Lower)
+      Trivial
 
 ----------------
 Axe Room
@@ -404,11 +611,15 @@ Extra - room_id: 17
   * Layers: default
   * No Wall to Backstage Hub/Door to Axe Room
   * Extra - actor_index: 3077
+  > Door to Northeast Hub
+      Cling ≥ 3
 
 > Door to Northeast Hub; Heals? False
   * Layers: default
   * No Wall to Northeast Hub/Door to Axe Room
   * Extra - actor_index: 3075
+  > Door to Backstage Hub
+      Cling ≥ 3
 
 ----------------
 Northeast Hub
@@ -419,16 +630,24 @@ Extra - room_id: 18
   * Layers: default
   * No Wall to Axe Room/Door to Northeast Hub
   * Extra - actor_index: 3075
+  > Door to Transition to Sansa Keep
+      Cling
 
 > Door to Transition to Dilapidated Dungeon; Heals? False
   * Layers: default
   * No Wall to Transition to Dilapidated Dungeon/Door to Northeast Hub
   * Extra - actor_index: 3073
+  > Door to Transition to Sansa Keep
+      Air Kick or Cling or Bounce Off Torch or Can Long Jump
 
 > Door to Transition to Sansa Keep; Heals? False
   * Layers: default
   * No Wall to Transition to Sansa Keep/Door to Northeast Hub
   * Extra - actor_index: 3071
+  > Door to Axe Room
+      Cling and Sunsetter and Can Long Jump
+  > Door to Transition to Dilapidated Dungeon
+      Air Kick or Cling or Bounce Off Torch or Can Long Jump
 
 ----------------
 Transition to Dilapidated Dungeon
@@ -439,21 +658,29 @@ Extra - room_id: 19
   * Layers: chair_shuffle
   * Pickup 76; Category? Minor
   * Extra - actor_index: 1081
+  > Transition to Dilapidated Dungeon
+      Trivial
 
 > Pickup (Chair) 2; Heals? False
   * Layers: chair_shuffle
   * Pickup 77; Category? Minor
   * Extra - actor_index: 1084
+  > Transition to Dilapidated Dungeon
+      Trivial
 
 > Pickup (Chair) 3; Heals? False
   * Layers: chair_shuffle
   * Pickup 78; Category? Minor
   * Extra - actor_index: 1085
+  > Transition to Dilapidated Dungeon
+      Trivial
 
 > Door to Northeast Hub; Heals? False
   * Layers: default
   * No Wall to Northeast Hub/Door to Transition to Dilapidated Dungeon
   * Extra - actor_index: 3073
+  > Transition to Dilapidated Dungeon
+      Trivial
 
 > Transition to Dilapidated Dungeon; Heals? False; Spawn Point
   * Layers: default
@@ -461,6 +688,14 @@ Extra - room_id: 19
   * Extra - actor_index: 1215
   * Extra - transition_tag: dungeonNorth
   * Extra - start_tag: theatreNorthEastLower
+  > Pickup (Chair) 1
+      Trivial
+  > Pickup (Chair) 2
+      Trivial
+  > Pickup (Chair) 3
+      Trivial
+  > Door to Northeast Hub
+      Trivial
 
 ----------------
 Transition to Sansa Keep
@@ -471,11 +706,15 @@ Extra - room_id: 20
   * Layers: chair_shuffle
   * Pickup 79; Category? Minor
   * Extra - actor_index: 1086
+  > Transition to Sansa Keep
+      Trivial
 
 > Door to Northeast Hub; Heals? False
   * Layers: default
   * No Wall to Northeast Hub/Door to Transition to Sansa Keep
   * Extra - actor_index: 3071
+  > Transition to Sansa Keep
+      Trivial
 
 > Transition to Sansa Keep; Heals? False; Spawn Point
   * Layers: default
@@ -483,6 +722,10 @@ Extra - room_id: 20
   * Extra - actor_index: 1213
   * Extra - transition_tag: upperSouthWest
   * Extra - start_tag: theatreNorthEastUpper
+  > Pickup (Chair)
+      Trivial
+  > Door to Northeast Hub
+      Trivial
 
 ----------------
 Bubble Hallway
@@ -493,11 +736,15 @@ Extra - room_id: 21
   * Layers: default
   * No Wall to Showroom/Door to Bubble Hallway
   * Extra - actor_index: 3005
+  > Door to South Hub
+      Trivial
 
 > Door to South Hub; Heals? False
   * Layers: default
   * No Wall to South Hub/Door to Bubble Hallway
   * Extra - actor_index: 3003
+  > Door to Showroom
+      Cling ≥ 3
 
 ----------------
 South Hub
@@ -543,6 +790,8 @@ Extra - room_id: 23
   * Layers: default
   * No Wall to South Hub/Door to Transition to Empty Bailey
   * Extra - actor_index: 3001
+  > Transition to Empty Bailey
+      Trivial
 
 > Transition to Empty Bailey; Heals? False; Spawn Point
   * Layers: default
@@ -550,6 +799,8 @@ Extra - room_id: 23
   * Extra - actor_index: 1214
   * Extra - transition_tag: exteriorWest
   * Extra - start_tag: theatreSouthWest
+  > Door to South Hub
+      Trivial
 
 ----------------
 Transition to Castle Sansa
@@ -560,6 +811,8 @@ Extra - room_id: 24
   * Layers: default
   * No Wall to South Hub/Door to Transition to Castle Sansa
   * Extra - actor_index: 2998
+  > Transition to Castle Sansa
+      Trivial
 
 > Transition to Castle Sansa; Heals? False; Spawn Point
   * Layers: default
@@ -567,4 +820,6 @@ Extra - room_id: 24
   * Extra - actor_index: 1216
   * Extra - transition_tag: lowerWest
   * Extra - start_tag: theatreSouthEast
+  > Door to South Hub
+      Trivial
 
