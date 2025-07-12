@@ -53,17 +53,24 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             if "source" in node.extra:
                 is_major = True
             if not pickup.is_for_remote_player and pickup.conditional_resources[0].resources:
-                resource = pickup.conditional_resources[0].resources[-1][0].extra["item"]
+                conditional_extras = pickup.conditional_resources[0].resources[-1][0].extra
+                resource = conditional_extras["item"]
+                jingle = conditional_extras.get("Jingle", "Minor")
+                message_id = conditional_extras.get("MessageID", None)
             else:
                 resource = "None"
 
             text = pickup.collection_text[0]
             sprite = pickup.model.name
 
-            custom_message = {}
-            # Special case where we ignore metroid dna right now, because that needs more patcher work.
+            item_message = {}
+            # Handles special case for infant metroids which use ASM to automatically determine message via a MessageID
             if text != self._placeholder_metroid_message:
-                custom_message = {"Languages": dict.fromkeys(self._lang_list, text), "Kind": "CustomMessage"}
+                item_message = {"Languages": dict.fromkeys(self._lang_list, text), "Kind": "CustomMessage"}
+            else:
+                if message_id is None:
+                    raise ValueError("Suppossed to use a message id but none given?")
+                item_message = {"Kind": "MessageID", "MessageID": message_id}
 
             # Shiny easter eggs
             if (
@@ -76,14 +83,14 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     and self.rng.randint(0, self._easter_egg_bob) == 0
                 ):
                     sprite = "ShinyMissileTank"
-                    custom_message = {
+                    item_message = {
                         "Languages": dict.fromkeys(self._lang_list, "Bob acquired.\nHe says hi to you."),
                         "Kind": "CustomMessage",
                     }
 
                 if resource == "PowerBombTank" and self.rng.randint(0, self._easter_egg_shiny) == 0:
                     sprite = "ShinyPowerBombTank"
-                    custom_message = {
+                    item_message = {
                         "Languages": dict.fromkeys(self._lang_list, "Shiny Power Bomb Tank acquired."),
                         "Kind": "CustomMessage",
                     }
@@ -92,9 +99,10 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 major_pickup = {
                     "Source": node.extra["source"],
                     "Item": resource,
+                    "Jingle": jingle,
                 }
-                if custom_message:
-                    major_pickup["ItemMessages"] = custom_message
+                if item_message:
+                    major_pickup["ItemMessages"] = item_message
                 major_pickup_list.append(major_pickup)
             else:
                 minor_pickup = {
@@ -104,9 +112,10 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     "BlockY": node.extra["blocky"],
                     "Item": resource,
                     "ItemSprite": sprite,
+                    "Jingle": jingle,
                 }
-                if custom_message:
-                    minor_pickup["ItemMessages"] = custom_message
+                if item_message:
+                    minor_pickup["ItemMessages"] = item_message
                 minor_pickup_list.append(minor_pickup)
         pickup_map_dict = {"MajorLocations": major_pickup_list, "MinorLocations": minor_pickup_list}
         return pickup_map_dict
@@ -436,6 +445,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "CreditsText": self._create_credits_text(),
             "DisableDemos": True,
             "RoomNames": self._create_room_names(),
+            "AccessibilityPatches": True,
             "AntiSoftlockRoomEdits": self.configuration.anti_softlock,
             "PowerBombsWithoutBombs": True,
             "SkipDoorTransitions": self.configuration.instant_transitions,
