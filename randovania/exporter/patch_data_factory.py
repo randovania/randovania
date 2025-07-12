@@ -100,11 +100,11 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
                 add_to_transactions=True,
             )
 
-            randovania_meta = custom_metadata or self.create_default_patcher_data_meta()
+        randovania_meta = custom_metadata or self.create_default_patcher_data_meta()
 
-            game_data = self.create_game_specific_data(randovania_meta)
-            json_delta.patch(game_data, self.patches.custom_patcher_data)
-            game_data["_randovania_meta"] = randovania_meta
+        game_data = self.create_game_specific_data(randovania_meta)
+        json_delta.patch(game_data, self.patches.custom_patcher_data)
+        game_data["_randovania_meta"] = randovania_meta
         return game_data
 
     def create_memo_data(self) -> dict[str, str]:
