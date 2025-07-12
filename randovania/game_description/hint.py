@@ -267,7 +267,7 @@ class RedTempleHint(BaseHint):
         return HintType.RED_TEMPLE_KEY_SET
 
 
-Hint: typing.TypeAlias = LocationHint | JokeHint | RedTempleHint
+type Hint = LocationHint | JokeHint | RedTempleHint
 
 
 class HintType(Enum):

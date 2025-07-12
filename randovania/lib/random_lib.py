@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 T = TypeVar("T")
 
 
-def shuffle(rng: Random, x: Iterator[T]) -> list[T]:
+def shuffle[T](rng: Random, x: Iterator[T]) -> list[T]:
     """
     Shuffles a copy of the given iterator.
     :param rng:
@@ -44,7 +44,7 @@ def iterate_with_weights(rng: Random, items: Iterable[T], item_weights: Mapping[
         yield item
 
 
-def select_element_with_weight(rng: Random, weighted_items: Mapping[T, float]) -> T:
+def select_element_with_weight[T](rng: Random, weighted_items: Mapping[T, float]) -> T:
     """
     Choose a random element, with each one having a custom weight.
     :param rng: The random object to use.
@@ -54,7 +54,7 @@ def select_element_with_weight(rng: Random, weighted_items: Mapping[T, float]) -
     return next(iterate_with_weights(rng=rng, items=list(weighted_items.keys()), item_weights=weighted_items))
 
 
-def select_element_with_weight_and_uniform_fallback(rng: Random, weighted_items: Mapping[T, float]) -> T:
+def select_element_with_weight_and_uniform_fallback[T](rng: Random, weighted_items: Mapping[T, float]) -> T:
     """
     Same as `select_element_with_weight`, but if all elements have weight 0 then one is selected uniformly.
     """

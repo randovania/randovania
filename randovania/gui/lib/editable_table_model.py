@@ -3,10 +3,10 @@ from __future__ import annotations
 import dataclasses
 import datetime
 import typing
+from typing import override
 
 from PySide6 import QtCore
 from PySide6.QtCore import QDateTime, Qt
-from typing_extensions import override
 
 if typing.TYPE_CHECKING:
     from types import EllipsisType

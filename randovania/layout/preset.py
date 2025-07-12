@@ -3,11 +3,11 @@ from __future__ import annotations
 import dataclasses
 import typing
 import uuid as uuid_module
-from typing import TYPE_CHECKING, Generic, Self
+from typing import TYPE_CHECKING, Self
 
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.game.game_enum import RandovaniaGame
-from randovania.layout.base.base_configuration import ConfigurationT_co
+from randovania.layout.base.base_configuration import BaseConfiguration
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -16,12 +16,12 @@ if TYPE_CHECKING:
 
 
 @dataclasses.dataclass(frozen=True)
-class Preset(BitPackValue, Generic[ConfigurationT_co]):
+class Preset[BaseConfigurationT: BaseConfiguration](BitPackValue):
     name: str
     uuid: uuid_module.UUID
     description: str
     game: RandovaniaGame
-    configuration: ConfigurationT_co
+    configuration: BaseConfigurationT
 
     @property
     def as_json(self) -> dict:
@@ -41,7 +41,7 @@ class Preset(BitPackValue, Generic[ConfigurationT_co]):
             uuid=uuid_module.UUID(value["uuid"]),
             description=value["description"],
             game=game,
-            configuration=typing.cast("type[ConfigurationT_co]", game.data.layout.configuration).from_json(
+            configuration=typing.cast("type[BaseConfigurationT]", game.data.layout.configuration).from_json(
                 value["configuration"]
             ),
         )
@@ -66,7 +66,7 @@ class Preset(BitPackValue, Generic[ConfigurationT_co]):
         manager: PresetManager = metadata["manager"]
         game: RandovaniaGame = metadata["game"]
 
-        reference = typing.cast("Preset[ConfigurationT_co]", manager.reference_preset_for_game(game).get_preset())
+        reference = typing.cast("Preset[BaseConfigurationT]", manager.reference_preset_for_game(game).get_preset())
 
         return cls(
             name=f"{game.long_name} Custom",
