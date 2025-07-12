@@ -68,8 +68,9 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             if text != self._placeholder_metroid_message:
                 item_message = {"Languages": dict.fromkeys(self._lang_list, text), "Kind": "CustomMessage"}
             else:
-                if message_id is not None:
-                    item_message = {"Kind": "MessageID", "MessageID": message_id}
+                if message_id is None:
+                    raise ValueError("Suppossed to use a message id but none given?")
+                item_message = {"Kind": "MessageID", "MessageID": message_id}
 
             # Shiny easter eggs
             if (
