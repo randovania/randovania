@@ -7,23 +7,35 @@ Extra - room_id: 0
   * Layers: default
   * No Wall to Southwest Hub Access/Door to Entrance
   * Extra - actor_index: 1489
+  > Transition to Castle Sansa
+      Trivial
 
 > Door to Sunsetter Shortcut; Heals? False
   * Layers: default
   * No Wall to Sunsetter Shortcut/Door to Entrance
   * Extra - actor_index: 1492
+  > Transition to Castle Sansa
+      Trivial
 
 > Door to Main Hallway; Heals? False
   * Layers: default
   * No Wall to Main Hallway/Door to Entrance
   * Extra - actor_index: 1472
+  > Transition to Castle Sansa
+      Trivial
 
 > Transition to Castle Sansa; Heals? False; Spawn Point
   * Layers: default
-  * Transition to Central Transition to Sansa Keep/Transition to Sansa Keep
+  * Transition to Transition to Empty Bailey/Transition to Sansa Keep
   * Extra - actor_index: 542
   * Extra - transition_tag: lowerSouthHigh
   * Extra - start_tag: upperSouth
+  > Door to Southwest Hub Access
+      Trivial
+  > Door to Sunsetter Shortcut
+      Trivial
+  > Door to Main Hallway
+      Trivial
 
 ----------------
 Southwest Hub Access
@@ -34,11 +46,15 @@ Extra - room_id: 1
   * Layers: default
   * No Wall to Entrance/Door to Southwest Hub Access
   * Extra - actor_index: 1489
+  > Door to Southwest Hub
+      Trivial
 
 > Door to Southwest Hub; Heals? False
   * Layers: default
   * No Wall to Southwest Hub/Door to Southwest Hub Access
   * Extra - actor_index: 1505
+  > Door to Entrance
+      Trivial
 
 ----------------
 Southwest Hub
@@ -49,16 +65,26 @@ Extra - room_id: 2
   * Layers: default
   * No Wall to Southwest Hub Access/Door to Southwest Hub
   * Extra - actor_index: 1505
+  > Door to Clear Mind Room
+      Any of the following:
+          Air Kick or Sunsetter
+          Cling ≥ 2 and Cling Mastery (Intermediate)
+  > Door to Transition to Twilight Theatre
+      Cling or Bounce Off Torch or Can Long Jump
 
 > Door to Clear Mind Room; Heals? False
   * Layers: default
   * No Wall to Clear Mind Room/Door to Southwest Hub
   * Extra - actor_index: 1403
+  > Door to Southwest Hub Access
+      Trivial
 
 > Door to Transition to Twilight Theatre; Heals? False
   * Layers: default
   * No Wall to Transition to Twilight Theatre/Door to Southwest Hub
   * Extra - actor_index: 1513
+  > Door to Southwest Hub Access
+      Cling or Bounce Off Torch
 
 ----------------
 Clear Mind Room
@@ -69,11 +95,15 @@ Extra - room_id: 3
   * Layers: default
   * Pickup 48; Category? Minor
   * Extra - actor_index: 566
+  > Door to Southwest Hub
+      Trivial
 
 > Door to Southwest Hub; Heals? False
   * Layers: default
   * No Wall to Southwest Hub/Door to Clear Mind Room
   * Extra - actor_index: 1403
+  > Pickup (Clear Mind)
+      Trivial
 
 ----------------
 Transition to Twilight Theatre
@@ -84,6 +114,8 @@ Extra - room_id: 4
   * Layers: default
   * No Wall to Southwest Hub/Door to Transition to Twilight Theatre
   * Extra - actor_index: 1513
+  > Transition to Twilight Theatre
+      Trivial
 
 > Transition to Twilight Theatre; Heals? False; Spawn Point
   * Layers: default
@@ -91,17 +123,14 @@ Extra - room_id: 4
   * Extra - actor_index: 545
   * Extra - transition_tag: theatreNorthEastUpper
   * Extra - start_tag: upperSouthWest
+  > Door to Southwest Hub
+      Trivial
 
 ----------------
 Parkour Gauntlet Entrance
 Extra - total_boundings: {'x1': -4950, 'x2': -575, 'y1': -2525, 'y2': 1025}
 Extra - polygon: [[-4950, -2525], [-1925, -2525], [-1925, -1100], [-575, -1100], [-575, 1025], [-4950, 1025]]
 Extra - room_id: 5
-> Event - Hit Switch; Heals? False
-  * Layers: default
-  * Event Sansa Keep/Parkour Gauntlet Entrance/Hit Switch
-  * Extra - actor_index: 336
-
 > Door to Cylinder Parkour Room (Lower); Heals? False
   * Layers: default
   * No Wall to Cylinder Parkour Room/Door to Parkour Gauntlet Entrance (Lower)
@@ -111,16 +140,26 @@ Extra - room_id: 5
   * Layers: default
   * No Wall to Cylinder Parkour Room/Door to Parkour Gauntlet Entrance (Upper)
   * Extra - actor_index: 1463
+  > Door to Cylinder Parkour Room (Lower)
+      Trivial
+  > Door to Switch Parkour Room
+      Can Long Jump
 
 > Door to Switch Parkour Room; Heals? False
   * Layers: default
   * No Wall to Switch Parkour Room/Door to Parkour Gauntlet Entrance
   * Extra - actor_index: 1464
+  > Door to Cylinder Parkour Room (Upper)
+      Can Long Jump
+  > Door to Main Hallway
+      Cling or Can Long Jump
 
 > Door to Main Hallway; Heals? False
   * Layers: default
   * No Wall to Main Hallway/Door to Parkour Gauntlet Entrance
   * Extra - actor_index: 1459
+  > Door to Cylinder Parkour Room (Lower)
+      Cling and Can Use Ascendant Light
 
 ----------------
 Cylinder Parkour Room
@@ -131,11 +170,15 @@ Extra - room_id: 6
   * Layers: default
   * No Wall to Parkour Gauntlet Entrance/Door to Cylinder Parkour Room (Lower)
   * Extra - actor_index: 1462
+  > Door to Parkour Gauntlet Entrance (Upper)
+      Cling and Sunsetter and Can Use Ascendant Light
 
 > Door to Parkour Gauntlet Entrance (Upper); Heals? False
   * Layers: default
   * No Wall to Parkour Gauntlet Entrance/Door to Cylinder Parkour Room (Upper)
   * Extra - actor_index: 1463
+  > Door to Parkour Gauntlet Entrance (Lower)
+      Trivial
 
 ----------------
 Switch Parkour Room
@@ -146,6 +189,8 @@ Extra - room_id: 7
   * Layers: default
   * No Wall to Parkour Gauntlet Entrance/Door to Switch Parkour Room
   * Extra - actor_index: 1464
+  > Door to Parkour Gauntlet Finale
+      Cling and Can Use Ascendant Light
 
 > Door to Parkour Gauntlet Finale; Heals? False
   * Layers: default
@@ -161,31 +206,54 @@ Extra - room_id: 8
   * Layers: default
   * Event Sansa Keep/Parkour Gauntlet Finale/Hit Switch 1
   * Extra - actor_index: 341
+  > Door to Switch Parkour Room
+      Cling
 
 > Event - Hit Switch 2; Heals? False
   * Layers: default
   * Event Sansa Keep/Parkour Gauntlet Finale/Hit Switch 2
-  * Extra - actor_index: 331
-
-> Event - Hit Switch 3; Heals? False
-  * Layers: default
-  * Event Sansa Keep/Parkour Gauntlet Finale/Hit Switch 3
   * Extra - actor_index: 338
+  > After Gauntlet
+      Trivial
+
+> Event - Big Hit Switch; Heals? False
+  * Layers: default
+  * Event Sansa Keep/Parkour Gauntlet Finale/Big Hit Switch
+  * Extra - actor_index: 331
+  > After Gauntlet
+      Trivial
 
 > Pickup (Chair); Heals? False
   * Layers: chair_shuffle
   * Pickup 51; Category? Minor
   * Extra - actor_index: 478
+  > Door to Switch Parkour Room
+      Trivial
 
 > Door to Switch Parkour Room; Heals? False
   * Layers: default
   * No Wall to Switch Parkour Room/Door to Parkour Gauntlet Finale
   * Extra - actor_index: 1468
+  > Event - Hit Switch 1
+      Cling and Can Do Damage
+  > Pickup (Chair)
+      Trivial
+  > After Gauntlet
+      Cling and Sunsetter and After Sansa Keep/Parkour Gauntlet Finale/Hit Switch 1
 
 > Door to Main Hallway; Heals? False
   * Layers: default
   * No Wall to Main Hallway/Door to Parkour Gauntlet Finale
   * Extra - actor_index: 534
+
+> After Gauntlet; Heals? False
+  * Layers: default
+  > Event - Hit Switch 2
+      Can Do Damage
+  > Event - Big Hit Switch
+      Can Do Damage
+  > Door to Main Hallway
+      After Sansa Keep/Parkour Gauntlet Finale/Hit Switch 2
 
 ----------------
 Main Hallway
@@ -196,36 +264,60 @@ Extra - room_id: 9
   * Layers: default
   * Extra - actor_index: 504
   * Extra - start_tag: saveUpperMid
+  > Door to Entrance
+      Trivial
+  > Door to Parkour Gauntlet Entrance
+      Trivial
+  > Door to Parkour Gauntlet Finale
+      After Sansa Keep/Parkour Gauntlet Finale/Hit Switch 2
+  > Door to Wall Grate Access
+      Trivial
+  > Door to Furniture Goatling Room
+      Trivial
+  > Door to Throne Room Access
+      After Sansa Keep/Parkour Gauntlet Finale/Big Hit Switch
 
 > Door to Entrance; Heals? False
   * Layers: default
   * No Wall to Entrance/Door to Main Hallway
   * Extra - actor_index: 1472
+  > Save Crystal
+      Trivial
 
 > Door to Parkour Gauntlet Entrance; Heals? False
   * Layers: default
   * No Wall to Parkour Gauntlet Entrance/Door to Main Hallway
   * Extra - actor_index: 1459
+  > Save Crystal
+      Trivial
 
 > Door to Parkour Gauntlet Finale; Heals? False
   * Layers: default
   * No Wall to Parkour Gauntlet Finale/Door to Main Hallway
   * Extra - actor_index: 534
+  > Save Crystal
+      Trivial
 
 > Door to Wall Grate Access; Heals? False
   * Layers: default
   * Small Key Door to Wall Grate Access/Door to Main Hallway
   * Extra - actor_index: 412
+  > Save Crystal
+      Trivial
 
 > Door to Furniture Goatling Room; Heals? False
   * Layers: default
   * No Wall to Furniture Goatling Room/Door to Main Hallway
   * Extra - actor_index: 1479
+  > Save Crystal
+      Trivial
 
 > Door to Throne Room Access; Heals? False
   * Layers: default
   * No Wall to Throne Room Access/Door to Main Hallway
   * Extra - actor_index: 1442
+  > Save Crystal
+      Trivial
 
 ----------------
 Throne Room Access
@@ -236,11 +328,15 @@ Extra - room_id: 10
   * Layers: default
   * No Wall to Main Hallway/Door to Throne Room Access
   * Extra - actor_index: 1442
+  > Door to Throne Room
+      Trivial
 
 > Door to Throne Room; Heals? False
   * Layers: default
   * No Wall to Throne Room/Door to Throne Room Access
   * Extra - actor_index: 1457
+  > Door to Main Hallway
+      After Sansa Keep/Parkour Gauntlet Finale/Big Hit Switch
 
 ----------------
 Throne Room
@@ -251,16 +347,22 @@ Extra - room_id: 11
   * Layers: default
   * Pickup 49; Category? Major
   * Extra - actor_index: 305
+  > Door to Throne Room Access
+      Trivial
 
 > Pickup (Guardian); Heals? False
   * Layers: default
   * Pickup 50; Category? Major
   * Extra - actor_index: 567
+  > Door to Throne Room Access
+      Trivial
 
 > Door to Throne Room Access; Heals? False
   * Layers: default
   * No Wall to Throne Room Access/Door to Throne Room
   * Extra - actor_index: 1457
+  > Pickup (Major Key)
+      Trivial
 
 ----------------
 Furniture Goatling Room
@@ -271,21 +373,33 @@ Extra - room_id: 12
   * Layers: goatling_shuffle
   * Pickup 41; Category? Minor
   * Extra - actor_index: 475
+  > Door to Main Hallway
+      Trivial
 
 > Door to Main Hallway; Heals? False
   * Layers: default
   * No Wall to Main Hallway/Door to Furniture Goatling Room
   * Extra - actor_index: 1479
+  > Pickup (Goatling)
+      Trivial
+  > Door to Pole Parkour Room
+      Trivial
+  > Door to Transition to Castle Sansa
+      Trivial
 
 > Door to Pole Parkour Room; Heals? False
   * Layers: default
   * No Wall to Pole Parkour Room/Door to Furniture Goatling Room
   * Extra - actor_index: 1474
+  > Door to Main Hallway
+      Trivial
 
 > Door to Transition to Castle Sansa; Heals? False
   * Layers: default
   * No Wall to Transition to Castle Sansa/Door to Furniture Goatling Room
   * Extra - actor_index: 1477
+  > Door to Main Hallway
+      Trivial
 
 ----------------
 Transition to Castle Sansa
@@ -296,11 +410,15 @@ Extra - room_id: 13
   * Layers: default
   * Event Sansa Keep/Transition to Castle Sansa/Hit Switch
   * Extra - actor_index: 339
+  > Transition to Castle Sansa
+      Trivial
 
 > Door to Furniture Goatling Room; Heals? False
   * Layers: default
   * No Wall to Furniture Goatling Room/Door to Transition to Castle Sansa
   * Extra - actor_index: 1477
+  > Transition to Castle Sansa
+      After Sansa Keep/Transition to Castle Sansa/Hit Switch
 
 > Transition to Castle Sansa; Heals? False; Spawn Point
   * Layers: default
@@ -308,6 +426,10 @@ Extra - room_id: 13
   * Extra - actor_index: 543
   * Extra - transition_tag: lowerMiddle
   * Extra - start_tag: upperMiddle
+  > Event - Hit Switch
+      Can Do Damage
+  > Door to Furniture Goatling Room
+      After Sansa Keep/Transition to Castle Sansa/Hit Switch
 
 ----------------
 Pole Parkour Room
@@ -318,16 +440,24 @@ Extra - room_id: 14
   * Layers: default
   * No Wall to Furniture Goatling Room/Door to Pole Parkour Room
   * Extra - actor_index: 1474
+  > Door to Wall Grate Room
+      Trivial
+  > Door to Strikebreak Access
+      Trivial
 
 > Door to Wall Grate Room; Heals? False
   * Layers: default
   * No Wall to Wall Grate Room/Door to Pole Parkour Room
   * Extra - actor_index: 1494
+  > Door to Furniture Goatling Room
+      Trivial
 
 > Door to Strikebreak Access; Heals? False
   * Layers: default
   * No Wall to Strikebreak Access/Door to Pole Parkour Room
   * Extra - actor_index: 1496
+  > Door to Furniture Goatling Room
+      Trivial
 
 ----------------
 Wall Grate Room
@@ -338,31 +468,51 @@ Extra - room_id: 15
   * Layers: default
   * Event Sansa Keep/Wall Grate Room/Hit Switch
   * Extra - actor_index: 334
+  > Door to Wall Grate Access
+      Trivial
 
 > Event - Cut and Drop Platform; Heals? False
   * Layers: default
   * Event Sansa Keep/Wall Grate Room/Cut and Drop Platform
   * Extra - actor_index: 277
+  > Door to Small Key Room
+      Trivial
 
 > Door to Pole Parkour Room; Heals? False
   * Layers: default
   * No Wall to Pole Parkour Room/Door to Wall Grate Room
   * Extra - actor_index: 1494
+  > Door to Small Key Room
+      Trivial
 
 > Door to Small Key Room; Heals? False
   * Layers: default
   * No Wall to Small Key Room/Door to Wall Grate Room
   * Extra - actor_index: 1485
+  > Event - Cut and Drop Platform
+      Can Do Damage
+  > Door to Pole Parkour Room
+      Trivial
+  > Door to Sunsetter Access
+      After Sansa Keep/Wall Grate Room/Hit Switch
 
 > Door to Sunsetter Access; Heals? False
   * Layers: default
   * No Wall to Sunsetter Access/Door to Wall Grate Room
   * Extra - actor_index: 1488
+  > Door to Small Key Room
+      After Sansa Keep/Wall Grate Room/Hit Switch
 
 > Door to Wall Grate Access; Heals? False
   * Layers: default
   * No Wall to Wall Grate Access/Door to Wall Grate Room
   * Extra - actor_index: 1483
+  > Event - Hit Switch
+      Can Do Damage
+  > Door to Small Key Room
+      Trivial
+  > Door to Sunsetter Access
+      Trivial
 
 ----------------
 Small Key Room
@@ -373,21 +523,33 @@ Extra - room_id: 16
   * Layers: default
   * Event Sansa Keep/Small Key Room/Hit Switch 1
   * Extra - actor_index: 333
+  > Door to Wall Grate Room
+      Trivial
 
 > Event - Hit Switch 2; Heals? False
   * Layers: default
   * Event Sansa Keep/Small Key Room/Hit Switch 2
   * Extra - actor_index: 342
+  > Door to Wall Grate Room
+      Can Do Damage
 
 > Pickup (Small Key); Heals? False
   * Layers: default
   * Pickup 47; Category? Minor
   * Extra - actor_index: 304
+  > Door to Wall Grate Room
+      After Sansa Keep/Small Key Room/Hit Switch 1 and After Sansa Keep/Small Key Room/Hit Switch 2
 
 > Door to Wall Grate Room; Heals? False
   * Layers: default
   * No Wall to Wall Grate Room/Door to Small Key Room
   * Extra - actor_index: 1485
+  > Event - Hit Switch 1
+      Can Do Damage
+  > Event - Hit Switch 2
+      Can Do Damage
+  > Pickup (Small Key)
+      After Sansa Keep/Small Key Room/Hit Switch 1 and After Sansa Keep/Small Key Room/Hit Switch 2
 
 ----------------
 Sunsetter Access
@@ -398,16 +560,29 @@ Extra - room_id: 17
   * Layers: default
   * No Wall to Wall Grate Room/Door to Sunsetter Access
   * Extra - actor_index: 1488
+  > Door to Sunsetter Room
+      Trivial
 
 > Door to Sunsetter Room; Heals? False
   * Layers: default
   * Breakable Wall to Sunsetter Room/Door to Sunsetter Access
   * Extra - actor_index: 262
+  > Door to Wall Grate Room
+      Any of the following:
+          # TODO - you can wall kick on the wall under the door
+          Sunsetter
+          Long Range (Intermediate) and Can Long Jump
+  > Door to Sunsetter Shortcut
+      Any of the following:
+          Sunsetter
+          Skid Jump (Intermediate) and Can Long Jump
 
 > Door to Sunsetter Shortcut; Heals? False
   * Layers: default
   * No Wall to Sunsetter Shortcut/Door to Sunsetter Access
   * Extra - actor_index: 1490
+  > Door to Sunsetter Room
+      Trivial
 
 ----------------
 Sunsetter Room
@@ -418,11 +593,25 @@ Extra - room_id: 18
   * Layers: default
   * Pickup 45; Category? Major
   * Extra - actor_index: 564
+  > Door to Sunsetter Access
+      Any of the following:
+          Sunsetter
+          All of the following:
+              Any of the following:
+                  # get to ledge
+                  Air Kick
+                  Skid Jump (Intermediate) and Can Long Jump
+              Any of the following:
+                  # get to top
+                  Coyote Jump (Intermediate)
+                  Air Kick and Air Kick Mastery (Intermediate)
 
 > Door to Sunsetter Access; Heals? False
   * Layers: default
   * Breakable Wall to Sunsetter Access/Door to Sunsetter Room
   * Extra - actor_index: 262
+  > Pickup (Sunsetter)
+      Trivial
 
 ----------------
 Sunsetter Shortcut
@@ -433,16 +622,24 @@ Extra - room_id: 19
   * Layers: default
   * Event Sansa Keep/Sunsetter Shortcut/Hit Switch
   * Extra - actor_index: 335
+  > Door to Sunsetter Access
+      Trivial
 
 > Door to Entrance; Heals? False
   * Layers: default
   * No Wall to Entrance/Door to Sunsetter Shortcut
   * Extra - actor_index: 1492
+  > Door to Sunsetter Access
+      After Sansa Keep/Sunsetter Shortcut/Hit Switch
 
 > Door to Sunsetter Access; Heals? False
   * Layers: default
   * No Wall to Sunsetter Access/Door to Sunsetter Shortcut
   * Extra - actor_index: 1490
+  > Event - Hit Switch
+      Can Do Damage
+  > Door to Entrance
+      After Sansa Keep/Sunsetter Shortcut/Hit Switch
 
 ----------------
 Wall Grate Access
@@ -453,16 +650,24 @@ Extra - room_id: 20
   * Layers: default
   * Pickup 46; Category? Minor
   * Extra - actor_index: 330
+  > Door to Wall Grate Room
+      Trivial
 
 > Door to Main Hallway; Heals? False
   * Layers: default
   * Small Key Door to Main Hallway/Door to Wall Grate Access
   * Extra - actor_index: 412
+  > Door to Wall Grate Room
+      Trivial
 
 > Door to Wall Grate Room; Heals? False
   * Layers: default
   * No Wall to Wall Grate Room/Door to Wall Grate Access
   * Extra - actor_index: 1483
+  > Pickup (Health Piece)
+      Sunsetter or Skid Jump (Beginner)
+  > Door to Main Hallway
+      Trivial
 
 ----------------
 Strikebreak Access
@@ -473,31 +678,61 @@ Extra - room_id: 21
   * Layers: default
   * Event Sansa Keep/Strikebreak Access/Cut and Drop Platform
   * Extra - actor_index: 278
+  > Door to Mistextured Room
+      Trivial
 
 > Save Crystal; Heals? True; Spawn Point
   * Layers: default
   * Extra - actor_index: 505
   * Extra - start_tag: upperNorthSave
+  > Door to Pole Parkour Room
+      Trivial
+  > Door to Strikebreak Room
+      All of the following:
+          Can Long Jump
+          Air Kick ≥ 2 or Skid Jump (Intermediate)
+  > Door to Transition to The Underbelly
+      Trivial
+  > Door to Mistextured Room
+      Any of the following:
+          Air Kick ≥ 2 or After Sansa Keep/Strikebreak Access/Cut and Drop Platform
+          All of the following:
+              Sunsetter
+              Air Kick or Cling
+          Cling ≥ 2 and Cling Mastery (Intermediate)
+          Skid Jump (Advanced) and Can Long Jump
 
 > Door to Pole Parkour Room; Heals? False
   * Layers: default
   * No Wall to Pole Parkour Room/Door to Strikebreak Access
   * Extra - actor_index: 1496
+  > Save Crystal
+      Trivial
 
 > Door to Strikebreak Room; Heals? False
   * Layers: default
   * Breakable Wall to Strikebreak Room/Door to Strikebreak Access
   * Extra - actor_index: 264
+  > Save Crystal
+      Trivial
+  > Door to Mistextured Room
+      Cling
 
 > Door to Transition to The Underbelly; Heals? False
   * Layers: default
   * No Wall to Transition to The Underbelly/Door to Strikebreak Access
   * Extra - actor_index: 1499
+  > Save Crystal
+      Trivial
 
 > Door to Mistextured Room; Heals? False
   * Layers: default
   * No Wall to Mistextured Room/Door to Strikebreak Access
   * Extra - actor_index: 1501
+  > Event - Cut and Drop Platform
+      Can Do Damage
+  > Door to Strikebreak Room
+      Cling
 
 ----------------
 Mistextured Room
@@ -508,16 +743,26 @@ Extra - room_id: 22
   * Layers: goatling_shuffle
   * Pickup 42; Category? Minor
   * Extra - actor_index: 476
+  > Door to Strikebreak Access
+      Trivial
 
 > Pickup (Chair); Heals? False
   * Layers: chair_shuffle
   * Pickup 43; Category? Minor
   * Extra - actor_index: 477
+  > Door to Strikebreak Access
+      Trivial
 
 > Door to Strikebreak Access; Heals? False
   * Layers: default
   * No Wall to Strikebreak Access/Door to Mistextured Room
   * Extra - actor_index: 1501
+  > Pickup (Goatling)
+      Trivial
+  > Pickup (Chair)
+      Trivial
+  > Transition to Castle Sansa
+      Trivial
 
 > Transition to Castle Sansa; Heals? False; Spawn Point
   * Layers: default
@@ -525,6 +770,8 @@ Extra - room_id: 22
   * Extra - actor_index: 546
   * Extra - transition_tag: lowerNorth
   * Extra - start_tag: upperNorth
+  > Door to Strikebreak Access
+      Trivial
 
 ----------------
 Transition to The Underbelly
@@ -535,6 +782,10 @@ Extra - room_id: 23
   * Layers: default
   * No Wall to Strikebreak Access/Door to Transition to The Underbelly
   * Extra - actor_index: 1499
+  > Transition to The Underbelly
+      Any of the following:
+          Air Kick or Cling or Sunsetter
+          Skid Jump (Intermediate) and Can Long Jump
 
 > Transition to The Underbelly; Heals? False; Spawn Point
   * Layers: default
@@ -542,29 +793,27 @@ Extra - room_id: 23
   * Extra - actor_index: 544
   * Extra - transition_tag: cavesEast
   * Extra - start_tag: upperNorthEast
+  > Door to Strikebreak Access
+      Air Kick or Cling or Sunsetter or Skid Jump (Beginner)
 
 ----------------
 Strikebreak Room
 Extra - total_boundings: {'x1': 1050, 'x2': 2425, 'y1': 6325, 'y2': 10275}
 Extra - polygon: [[1050, 6325], [1050, 10275], [2425, 10275], [2425, 6325]]
 Extra - room_id: 24
-> Event - Strikebreak Wall 1; Heals? False
-  * Layers: default
-  * Event Sansa Keep/Strikebreak Room/Strikebreak Wall 1
-  * Extra - actor_index: 263
-
-> Event - Strikebreak Wall 2; Heals? False
-  * Layers: default
-  * Event Sansa Keep/Strikebreak Room/Strikebreak Wall 2
-  * Extra - actor_index: 261
-
 > Pickup (Strikebreak); Heals? False
   * Layers: default
   * Pickup 44; Category? Major
   * Extra - actor_index: 565
+  > Door to Strikebreak Access
+      Can Strikebreak
 
 > Door to Strikebreak Access; Heals? False
   * Layers: default
   * Breakable Wall to Strikebreak Access/Door to Strikebreak Room
   * Extra - actor_index: 264
+  > Pickup (Strikebreak)
+      All of the following:
+          Dream Breaker
+          Slide or Can Strikebreak
 
