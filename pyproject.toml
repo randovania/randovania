@@ -204,7 +204,6 @@ git_describe_command = [
 
 [tool.ruff]
 line-length = 120
-target-version = "py312"
 
 [tool.ruff.lint]
 select = [
@@ -231,7 +230,6 @@ extend-ignore = [
     "PLW0603",  # we use some globals here and there
     "PLW2901",  # TODO: should actually fix these
     "PLC0415",  # we explicitly use the import within a function to postpone the loading of a module
-    "PLW1641",  # allow implementation __eq__ without __hash__
     
 ]
 

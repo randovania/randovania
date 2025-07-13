@@ -53,6 +53,9 @@ class ResourceCollection:
     def _comparison_tuple(self) -> tuple[ResourceGainTuple, bool]:
         return tuple(self.as_resource_gain()), self.add_self_as_requirement_to_resources
 
+    def __hash__(self) -> int:
+        return hash(self._comparison_tuple)
+
     def __eq__(self, other: object) -> bool:
         return isinstance(other, ResourceCollection) and (self._comparison_tuple == other._comparison_tuple)
 

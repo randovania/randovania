@@ -89,6 +89,9 @@ class VersionedPreset[BaseConfigurationT: BaseConfiguration]:
             assert self.data is not None
             return UUID(self.data["uuid"])
 
+    def __hash__(self) -> int:
+        return hash(self.get_preset())
+
     def __eq__(self, other: object) -> bool:
         if isinstance(other, VersionedPreset):
             return self.get_preset() == other.get_preset()
