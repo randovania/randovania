@@ -20,7 +20,7 @@ GENERIC_JOKE_HINTS = [
     "Hints are never gonna give you up, never gonna let you down.",
     "1, 2, 3, 4! Of randomization I want more!",
     "If you have a randomized game that you like, consider sharing it!",
-    "Yahaha! You found this message!",
+    "You found me!",
     "If you're reading this, then you're awesome.",
     "After you're done with your play session, how about going for a little walk?",
     "Are you enjoying your playthrough thus far?",
