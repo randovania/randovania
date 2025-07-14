@@ -165,7 +165,60 @@
                         "start_tag": "cavesSouthSave"
                     },
                     "valid_starting_location": true,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Note)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Sunsetter",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Bounce Off Torch"
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Transition to Empty Bailey": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to small sloped hallway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Tiny Statue Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "TheUnderbelly_TinyStatueRoom_HitSwitch",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Pickup (Note)": {
                     "node_type": "pickup",
@@ -187,7 +240,15 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Transition to Empty Bailey": {
                     "node_type": "dock",
@@ -215,7 +276,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to small sloped hallway": {
                     "node_type": "dock",
@@ -245,7 +314,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Tiny Statue Room": {
                     "node_type": "dock",
@@ -275,7 +352,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -338,7 +423,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Building Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Building Room": {
                     "node_type": "dock",
@@ -368,7 +461,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Southwest Save Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -423,7 +524,15 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Door to small sloped hallway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to small sloped hallway": {
                     "node_type": "dock",
@@ -453,7 +562,51 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Health Piece)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Sunsetter",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Tiny Statue Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Sunsetter",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AirKick",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Door to Tiny Statue Room": {
                     "node_type": "dock",
@@ -483,7 +636,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to small sloped hallway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -554,7 +715,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Central Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Southwest Save Room": {
                     "node_type": "dock",
@@ -584,7 +753,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Central Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Central Hub": {
                     "node_type": "dock",
@@ -614,7 +791,63 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Building Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Southwest Save Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "TheUnderbelly_TinyStatueRoom_HitSwitch",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Hit Switch": {
+                            "type": "template",
+                            "data": "Can Do Damage"
+                        }
+                    }
+                },
+                "Event - Hit Switch": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2100.0,
+                        "y": -30500.0,
+                        "z": 100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 632
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TheUnderbelly_TinyStatueRoom_HitSwitch",
+                    "connections": {
+                        "Door to Central Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -3438,6 +3671,27 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Across Bridge": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "TheUnderbelly_NortheastHub_HitSwitch",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Bounce Off Torch"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -3485,7 +3739,15 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "TheUnderbelly_NortheastHub_CutandDropPlatform",
-                    "connections": {}
+                    "connections": {
+                        "Across Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to hallway leading to northeast hub": {
                     "node_type": "dock",
@@ -3633,7 +3895,25 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Across Bridge": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "TheUnderbelly_NortheastHub_CutandDropPlatform",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Door to Heliacal Power Room": {
                     "node_type": "dock",
@@ -3669,6 +3949,95 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        }
+                    }
+                },
+                "Across Bridge": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 15000.0,
+                        "y": -11900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Event - Cut and Drop Platform": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Do Damage"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Sunsetter",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to room where you lift the platform and can lower it again for no reason": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "TheUnderbelly_NortheastHub_CutandDropPlatform",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Sunsetter",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4001,7 +4370,15 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "TheUnderbelly_roomwhereyoulifttheplatformandcanloweritagainfornoreason_HitSwitch",
-                    "connections": {}
+                    "connections": {
+                        "Door to Northeast Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Northeast Hub": {
                     "node_type": "dock",
@@ -4031,7 +4408,175 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Event - Hit Switch": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Do Damage"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Sunsetter",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Cling",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Bounce Off Torch"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SkidJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to room where you duck under haze while riding a platform": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "TheUnderbelly_roomwhereyoulifttheplatformandcanloweritagainfornoreason_HitSwitch",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Sunsetter",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "AirKick",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Cling",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Bounce Off Torch"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SkidJump",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Cling",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Slide",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Door to room where you duck under haze while riding a platform": {
                     "node_type": "dock",
@@ -4059,7 +4604,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Northeast Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -4120,7 +4673,12 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Central Hub": {
+                            "type": "template",
+                            "data": "Can Do Damage"
+                        }
+                    }
                 },
                 "Door to Central Hub": {
                     "node_type": "dock",
@@ -4150,7 +4708,67 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to room where you lift the platform and can lower it again for no reason": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Do Damage"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Bounce Off Torch"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Sunsetter",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "AirKick",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -4784,7 +5402,27 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to room with the bridge on top (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Transition to Dilapidated Dungeon": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Ascendant Light"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Door to room with the bridge on top (Lower)": {
                     "node_type": "dock",
@@ -4814,7 +5452,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to room with boxes in the corner": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to just another small hallway i don't know how to name": {
                     "node_type": "dock",
@@ -4842,7 +5488,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Transition to Dilapidated Dungeon": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Transition to Dilapidated Dungeon": {
                     "node_type": "dock",
@@ -4870,7 +5524,65 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to room with boxes in the corner": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to just another small hallway i don't know how to name": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room with the bridge on top (Upper)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Slide",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "AirKick",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Door to room with the bridge on top (Upper)": {
                     "node_type": "dock",
@@ -4900,7 +5612,72 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Transition to Dilapidated Dungeon": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Sunsetter",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Sunsetter",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "AirKick",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Ascendant Light"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -4963,7 +5740,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to sloped moving platform room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to sloped moving platform room": {
                     "node_type": "dock",
@@ -4993,7 +5778,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Crawler Tower (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Crawler Tower (Upper)": {
                     "node_type": "dock",
@@ -5023,7 +5816,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Ascendant Light Tutorial": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Ascendant Light Tutorial": {
                     "node_type": "dock",
@@ -5053,7 +5854,22 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to sloped moving platform room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Crawler Tower (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -5116,7 +5932,12 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to room with health piece behind the pillar": {
+                            "type": "template",
+                            "data": "Can Do Damage"
+                        }
+                    }
                 },
                 "Door to room with health piece behind the pillar": {
                     "node_type": "dock",
@@ -5146,7 +5967,12 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to room with the bridge on top": {
+                            "type": "template",
+                            "data": "Can Do Damage"
+                        }
+                    }
                 }
             }
         },
@@ -5201,7 +6027,15 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Door to sloped moving platform room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to sloped moving platform room": {
                     "node_type": "dock",
@@ -5231,7 +6065,59 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Health Piece)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Sunsetter",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AirKick",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SkidJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Cling",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to room with really fast moving platforms on both sides": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to room with really fast moving platforms on both sides": {
                     "node_type": "dock",
@@ -5261,7 +6147,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to sloped moving platform room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -5324,7 +6218,46 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Northwest Save Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Do Damage"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Sunsetter",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Door to Northwest Save Room": {
                     "node_type": "dock",
@@ -5354,7 +6287,12 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to room with health piece behind the pillar": {
+                            "type": "template",
+                            "data": "Can Do Damage"
+                        }
+                    }
                 }
             }
         },
@@ -5406,7 +6344,22 @@
                         "start_tag": "cavesWestSave"
                     },
                     "valid_starting_location": true,
-                    "connections": {}
+                    "connections": {
+                        "Door to room with really fast moving platforms on both sides": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Northwest Combat Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to room with really fast moving platforms on both sides": {
                     "node_type": "dock",
@@ -5436,7 +6389,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Northwest Combat Room": {
                     "node_type": "dock",
@@ -5466,7 +6427,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -5529,7 +6498,25 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to really tall slope room with pillars": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO - sunsetter only",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "DreamBreaker",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Door to really tall slope room with pillars": {
                     "node_type": "dock",
@@ -5559,7 +6546,25 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Northwest Save Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO - sunsetter only",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "DreamBreaker",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -5622,7 +6627,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Ascendant Light Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Ascendant Light Room": {
                     "node_type": "dock",
@@ -5652,7 +6665,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Northwest Combat Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -5687,196 +6708,6 @@
                 "room_id": 30
             },
             "nodes": {
-                "Event - Hit Switch 1": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -8150.0,
-                        "y": -6650.0,
-                        "z": 3400.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_index": 627
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_1",
-                    "connections": {}
-                },
-                "Event - Hit Switch 2": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -6500.0,
-                        "y": -5100.0,
-                        "z": 5400.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_index": 620
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_2",
-                    "connections": {}
-                },
-                "Event - Hit Switch 3": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -6050.0,
-                        "y": -6000.0,
-                        "z": 4400.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_index": 621
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_3",
-                    "connections": {}
-                },
-                "Event - Hit Switch 4": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -6050.0,
-                        "y": -5550.0,
-                        "z": 4400.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_index": 645
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_4",
-                    "connections": {}
-                },
-                "Event - Hit Switch 5": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -7599.9995,
-                        "y": -8450.0,
-                        "z": 4400.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_index": 624
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_5",
-                    "connections": {}
-                },
-                "Event - Hit Switch 6": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -6700.0,
-                        "y": -5100.0,
-                        "z": 4400.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_index": 623
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_6",
-                    "connections": {}
-                },
-                "Event - Hit Switch 7": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -11400.0,
-                        "y": -6650.0,
-                        "z": 4900.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_index": 625
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_7",
-                    "connections": {}
-                },
-                "Event - Hit Switch 8": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -6500.0,
-                        "y": -5100.0,
-                        "z": 5400.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_index": 620
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_8",
-                    "connections": {}
-                },
-                "Event - Hit Switch 9": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -6949.9995,
-                        "y": -8200.0,
-                        "z": 5400.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_index": 626
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_9",
-                    "connections": {}
-                },
-                "Event - Hit Switch 10": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -8700.0,
-                        "y": -8200.0,
-                        "z": 5400.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_index": 622
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "TheUnderbelly_AscendantLightRoom_HitSwitch_10",
-                    "connections": {}
-                },
                 "Save Crystal": {
                     "node_type": "generic",
                     "heal": true,
@@ -5894,7 +6725,15 @@
                         "start_tag": "postLightSave"
                     },
                     "valid_starting_location": true,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Ascendant Light)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Pickup (Ascendant Light)": {
                     "node_type": "pickup",
@@ -5916,7 +6755,29 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to really tall slope room with pillars": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Ascendant Light Tutorial": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to really tall slope room with pillars": {
                     "node_type": "dock",
@@ -5946,7 +6807,37 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Ascendant Light)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Do Damage"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "TODO - with tricks",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Sunsetter",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Door to Ascendant Light Tutorial": {
                     "node_type": "dock",
@@ -5976,7 +6867,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Ascendant Light)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -6039,7 +6938,29 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to room with the bridge on top": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Ascendant Light"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Cling",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Door to room with the bridge on top": {
                     "node_type": "dock",
@@ -6069,7 +6990,29 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Ascendant Light Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Ascendant Light"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Cling",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Door to Shortcut to Ascendant Light": {
                     "node_type": "dock",
@@ -6097,7 +7040,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Ascendant Light Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -6269,7 +7220,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Crawler Tower": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Crawler Tower": {
                     "node_type": "dock",
@@ -6297,7 +7256,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Shortcut to Ascendant Light": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -6357,7 +7324,15 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "TheUnderbelly_ShortcuttoAscendantLight_HitSwitch",
-                    "connections": {}
+                    "connections": {
+                        "Door to just another small hallway i don't know how to name": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to just another small hallway i don't know how to name": {
                     "node_type": "dock",
@@ -6387,7 +7362,42 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Event - Hit Switch": {
+                            "type": "template",
+                            "data": "Can Do Damage"
+                        },
+                        "Door to Ascendant Light Tutorial": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "TheUnderbelly_ShortcuttoAscendantLight_HitSwitch",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AirKick",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Bounce Off Torch"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Door to Ascendant Light Tutorial": {
                     "node_type": "dock",
@@ -6415,7 +7425,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to just another small hallway i don't know how to name": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         }

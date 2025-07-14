@@ -27,25 +27,41 @@ Extra - room_id: 1
   * Layers: default
   * Extra - actor_index: 946
   * Extra - start_tag: cavesSouthSave
+  > Pickup (Note)
+      Sunsetter or Bounce Off Torch
+  > Door to Transition to Empty Bailey
+      Trivial
+  > Door to small sloped hallway
+      Trivial
+  > Door to Tiny Statue Room
+      After The Underbelly/Tiny Statue Room/Hit Switch
 
 > Pickup (Note); Heals? False
   * Layers: note_shuffle
   * Pickup 69; Category? Major
   * Extra - actor_index: 896
+  > Save Crystal
+      Trivial
 
 > Door to Transition to Empty Bailey; Heals? False
   * Layers: default
   * No Wall to Transition to Empty Bailey/Door to Southwest Save Room
+  > Save Crystal
+      Trivial
 
 > Door to small sloped hallway; Heals? False
   * Layers: default
   * No Wall to small sloped hallway/Door to Southwest Save Room
   * Extra - actor_index: 2670
+  > Save Crystal
+      Trivial
 
 > Door to Tiny Statue Room; Heals? False
   * Layers: default
   * No Wall to Tiny Statue Room/Door to Southwest Save Room
   * Extra - actor_index: 1015
+  > Save Crystal
+      Trivial
 
 ----------------
 small sloped hallway
@@ -56,11 +72,15 @@ Extra - room_id: 2
   * Layers: default
   * No Wall to Southwest Save Room/Door to small sloped hallway
   * Extra - actor_index: 2670
+  > Door to Building Room
+      Trivial
 
 > Door to Building Room; Heals? False
   * Layers: default
   * No Wall to Building Room/Door to small sloped hallway
   * Extra - actor_index: 2691
+  > Door to Southwest Save Room
+      Trivial
 
 ----------------
 Building Room
@@ -71,16 +91,24 @@ Extra - room_id: 3
   * Layers: default
   * Pickup 70; Category? Minor
   * Extra - actor_index: 615
+  > Door to small sloped hallway
+      Trivial
 
 > Door to small sloped hallway; Heals? False
   * Layers: default
   * No Wall to small sloped hallway/Door to Building Room
   * Extra - actor_index: 2691
+  > Pickup (Health Piece)
+      Sunsetter
+  > Door to Tiny Statue Room
+      Air Kick ≥ 2 or Sunsetter
 
 > Door to Tiny Statue Room; Heals? False
   * Layers: default
   * No Wall to Tiny Statue Room/Door to Building Room
   * Extra - actor_index: 2736
+  > Door to small sloped hallway
+      Trivial
 
 ----------------
 Tiny Statue Room
@@ -91,16 +119,33 @@ Extra - room_id: 4
   * Layers: default
   * No Wall to Building Room/Door to Tiny Statue Room
   * Extra - actor_index: 2736
+  > Door to Central Hub
+      Trivial
 
 > Door to Southwest Save Room; Heals? False
   * Layers: default
   * No Wall to Southwest Save Room/Door to Tiny Statue Room
   * Extra - actor_index: 1015
+  > Door to Central Hub
+      Trivial
 
 > Door to Central Hub; Heals? False
   * Layers: default
   * No Wall to Central Hub/Door to Tiny Statue Room
   * Extra - actor_index: 2744
+  > Door to Building Room
+      Trivial
+  > Door to Southwest Save Room
+      After The Underbelly/Tiny Statue Room/Hit Switch
+  > Event - Hit Switch
+      Can Do Damage
+
+> Event - Hit Switch; Heals? False
+  * Layers: default
+  * Event The Underbelly/Tiny Statue Room/Hit Switch
+  * Extra - actor_index: 632
+  > Door to Central Hub
+      Trivial
 
 ----------------
 Central Hub
@@ -493,6 +538,8 @@ Extra - room_id: 14
       Trivial
   > Door to Heliacal Power Room
       Trivial
+  > Across Bridge
+      After The Underbelly/Northeast Hub/Hit Switch or Bounce Off Torch
 
 > Event - Hit Switch; Heals? False
   * Layers: default
@@ -505,6 +552,8 @@ Extra - room_id: 14
   * Layers: default
   * Event The Underbelly/Northeast Hub/Cut and Drop Platform
   * Extra - actor_index: 512
+  > Across Bridge
+      Trivial
 
 > Door to hallway leading to northeast hub; Heals? False
   * Layers: default
@@ -533,6 +582,8 @@ Extra - room_id: 14
   * Layers: default
   * No Wall to room where you lift the platform and can lower it again for no reason/Door to Northeast Hub
   * Extra - actor_index: 2727
+  > Across Bridge
+      After The Underbelly/Northeast Hub/Cut and Drop Platform
 
 > Door to Heliacal Power Room; Heals? False
   * Layers: default
@@ -540,6 +591,15 @@ Extra - room_id: 14
   * Extra - actor_index: 2624
   > Save Crystal
       Trivial
+
+> Across Bridge; Heals? False
+  * Layers: default
+  > Event - Cut and Drop Platform
+      Sunsetter and Can Do Damage
+  > Door to room where you lift the platform and can lower it again for no reason
+      All of the following:
+          After The Underbelly/Northeast Hub/Cut and Drop Platform
+          Air Kick ≥ 2 or Sunsetter
 
 ----------------
 Northeast Combat Room
@@ -593,15 +653,31 @@ Extra - room_id: 17
   * Layers: default
   * Event The Underbelly/room where you lift the platform and can lower it again for no reason/Hit Switch
   * Extra - actor_index: 633
+  > Door to Northeast Hub
+      Trivial
 
 > Door to Northeast Hub; Heals? False
   * Layers: default
   * No Wall to Northeast Hub/Door to room where you lift the platform and can lower it again for no reason
   * Extra - actor_index: 2727
+  > Event - Hit Switch
+      All of the following:
+          Can Do Damage
+          Air Kick or Cling or Sunsetter or Skid Jump (Beginner) or Bounce Off Torch
+  > Door to room where you duck under haze while riding a platform
+      All of the following:
+          After The Underbelly/room where you lift the platform and can lower it again for no reason/Hit Switch
+          Any of the following:
+              Air Kick or Cling ≥ 2 or Sunsetter or Bounce Off Torch
+              All of the following:
+                  Skid Jump (Advanced)
+                  Cling or Slide
 
 > Door to room where you duck under haze while riding a platform; Heals? False
   * Layers: default
   * No Wall to room where you duck under haze while riding a platform/Door to room where you lift the platform and can lower it again for no reason
+  > Door to Northeast Hub
+      Trivial
 
 ----------------
 room where you duck under haze while riding a platform
@@ -611,11 +687,19 @@ Extra - room_id: 18
 > Door to room where you lift the platform and can lower it again for no reason; Heals? False
   * Layers: default
   * No Wall to room where you lift the platform and can lower it again for no reason/Door to room where you duck under haze while riding a platform
+  > Door to Central Hub
+      Can Do Damage
 
 > Door to Central Hub; Heals? False
   * Layers: default
   * No Wall to Central Hub/Door to room where you duck under haze while riding a platform
   * Extra - actor_index: 2715
+  > Door to room where you lift the platform and can lower it again for no reason
+      All of the following:
+          Can Do Damage
+          Any of the following:
+              Air Kick ≥ 2 or Bounce Off Torch
+              Air Kick and Sunsetter
 
 ----------------
 Martial Prowess Room
@@ -693,24 +777,45 @@ Extra - room_id: 22
   * Layers: default
   * No Wall to room with boxes in the corner/Door to Crawler Tower
   * Extra - actor_index: 2643
+  > Door to room with the bridge on top (Lower)
+      Trivial
+  > Door to Transition to Dilapidated Dungeon
+      Can Use Ascendant Light
 
 > Door to room with the bridge on top (Lower); Heals? False
   * Layers: default
   * No Wall to room with the bridge on top/Door to Crawler Tower (Lower)
   * Extra - actor_index: 2614
+  > Door to room with boxes in the corner
+      Trivial
 
 > Door to just another small hallway i don't know how to name; Heals? False
   * Layers: default
   * No Wall to just another small hallway i don't know how to name/Door to Crawler Tower
+  > Door to Transition to Dilapidated Dungeon
+      Trivial
 
 > Door to Transition to Dilapidated Dungeon; Heals? False
   * Layers: default
   * No Wall to Transition to Dilapidated Dungeon/Door to Crawler Tower
+  > Door to room with boxes in the corner
+      Trivial
+  > Door to just another small hallway i don't know how to name
+      Trivial
+  > Door to room with the bridge on top (Upper)
+      Any of the following:
+          Slide
+          Air Kick and Air Kick Mastery (Beginner)
 
 > Door to room with the bridge on top (Upper); Heals? False
   * Layers: default
   * No Wall to room with the bridge on top/Door to Crawler Tower (Upper)
   * Extra - actor_index: 2823
+  > Door to Transition to Dilapidated Dungeon
+      Any of the following:
+          Can Use Ascendant Light
+          Sunsetter and Sunsetter Mastery (Intermediate)
+          Air Kick and Air Kick Mastery (Beginner)
 
 ----------------
 room with the bridge on top
@@ -721,21 +826,31 @@ Extra - room_id: 23
   * Layers: default
   * No Wall to Crawler Tower/Door to room with the bridge on top (Lower)
   * Extra - actor_index: 2614
+  > Door to sloped moving platform room
+      Trivial
 
 > Door to sloped moving platform room; Heals? False
   * Layers: default
   * No Wall to sloped moving platform room/Door to room with the bridge on top
   * Extra - actor_index: 2785
+  > Door to Crawler Tower (Lower)
+      Trivial
 
 > Door to Crawler Tower (Upper); Heals? False
   * Layers: default
   * No Wall to Crawler Tower/Door to room with the bridge on top (Upper)
   * Extra - actor_index: 2823
+  > Door to Ascendant Light Tutorial
+      Trivial
 
 > Door to Ascendant Light Tutorial; Heals? False
   * Layers: default
   * No Wall to Ascendant Light Tutorial/Door to room with the bridge on top
   * Extra - actor_index: 2819
+  > Door to sloped moving platform room
+      Trivial
+  > Door to Crawler Tower (Upper)
+      Trivial
 
 ----------------
 sloped moving platform room
@@ -746,11 +861,15 @@ Extra - room_id: 24
   * Layers: default
   * No Wall to room with the bridge on top/Door to sloped moving platform room
   * Extra - actor_index: 2785
+  > Door to room with health piece behind the pillar
+      Can Do Damage
 
 > Door to room with health piece behind the pillar; Heals? False
   * Layers: default
   * No Wall to room with health piece behind the pillar/Door to sloped moving platform room
   * Extra - actor_index: 2746
+  > Door to room with the bridge on top
+      Can Do Damage
 
 ----------------
 room with health piece behind the pillar
@@ -761,16 +880,24 @@ Extra - room_id: 25
   * Layers: default
   * Pickup 62; Category? Minor
   * Extra - actor_index: 616
+  > Door to sloped moving platform room
+      Trivial
 
 > Door to sloped moving platform room; Heals? False
   * Layers: default
   * No Wall to sloped moving platform room/Door to room with health piece behind the pillar
   * Extra - actor_index: 2746
+  > Pickup (Health Piece)
+      Air Kick or Cling or Sunsetter or Skid Jump (Beginner)
+  > Door to room with really fast moving platforms on both sides
+      Trivial
 
 > Door to room with really fast moving platforms on both sides; Heals? False
   * Layers: default
   * No Wall to room with really fast moving platforms on both sides/Door to room with health piece behind the pillar
   * Extra - actor_index: 2702
+  > Door to sloped moving platform room
+      Trivial
 
 ----------------
 room with really fast moving platforms on both sides
@@ -781,11 +908,17 @@ Extra - room_id: 26
   * Layers: default
   * No Wall to room with health piece behind the pillar/Door to room with really fast moving platforms on both sides
   * Extra - actor_index: 2702
+  > Door to Northwest Save Room
+      All of the following:
+          Can Do Damage
+          Air Kick or Sunsetter
 
 > Door to Northwest Save Room; Heals? False
   * Layers: default
   * No Wall to Northwest Save Room/Door to room with really fast moving platforms on both sides
   * Extra - actor_index: 2659
+  > Door to room with health piece behind the pillar
+      Can Do Damage
 
 ----------------
 Northwest Save Room
@@ -796,16 +929,24 @@ Extra - room_id: 27
   * Layers: default
   * Extra - actor_index: 945
   * Extra - start_tag: cavesWestSave
+  > Door to room with really fast moving platforms on both sides
+      Trivial
+  > Door to Northwest Combat Room
+      Trivial
 
 > Door to room with really fast moving platforms on both sides; Heals? False
   * Layers: default
   * No Wall to room with really fast moving platforms on both sides/Door to Northwest Save Room
   * Extra - actor_index: 2659
+  > Save Crystal
+      Trivial
 
 > Door to Northwest Combat Room; Heals? False
   * Layers: default
   * No Wall to Northwest Combat Room/Door to Northwest Save Room
   * Extra - actor_index: 2812
+  > Save Crystal
+      Trivial
 
 ----------------
 Northwest Combat Room
@@ -816,11 +957,17 @@ Extra - room_id: 28
   * Layers: default
   * No Wall to Northwest Save Room/Door to Northwest Combat Room
   * Extra - actor_index: 2812
+  > Door to really tall slope room with pillars
+      # TODO - sunsetter only
+      Dream Breaker
 
 > Door to really tall slope room with pillars; Heals? False
   * Layers: default
   * No Wall to really tall slope room with pillars/Door to Northwest Combat Room
   * Extra - actor_index: 2814
+  > Door to Northwest Save Room
+      # TODO - sunsetter only
+      Dream Breaker
 
 ----------------
 really tall slope room with pillars
@@ -831,86 +978,55 @@ Extra - room_id: 29
   * Layers: default
   * No Wall to Northwest Combat Room/Door to really tall slope room with pillars
   * Extra - actor_index: 2814
+  > Door to Ascendant Light Room
+      Trivial
 
 > Door to Ascendant Light Room; Heals? False
   * Layers: default
   * No Wall to Ascendant Light Room/Door to really tall slope room with pillars
   * Extra - actor_index: 2816
+  > Door to Northwest Combat Room
+      Trivial
 
 ----------------
 Ascendant Light Room
 Extra - total_boundings: {'x1': -11550, 'x2': -3300, 'y1': -9575, 'y2': -4550}
 Extra - polygon: [[-11550, -9575], [-11550, -4550], [-3300, -4550], [-3300, -9575]]
 Extra - room_id: 30
-> Event - Hit Switch 1; Heals? False
-  * Layers: default
-  * Event The Underbelly/Ascendant Light Room/Hit Switch 1
-  * Extra - actor_index: 627
-
-> Event - Hit Switch 2; Heals? False
-  * Layers: default
-  * Event The Underbelly/Ascendant Light Room/Hit Switch 2
-  * Extra - actor_index: 620
-
-> Event - Hit Switch 3; Heals? False
-  * Layers: default
-  * Event The Underbelly/Ascendant Light Room/Hit Switch 3
-  * Extra - actor_index: 621
-
-> Event - Hit Switch 4; Heals? False
-  * Layers: default
-  * Event The Underbelly/Ascendant Light Room/Hit Switch 4
-  * Extra - actor_index: 645
-
-> Event - Hit Switch 5; Heals? False
-  * Layers: default
-  * Event The Underbelly/Ascendant Light Room/Hit Switch 5
-  * Extra - actor_index: 624
-
-> Event - Hit Switch 6; Heals? False
-  * Layers: default
-  * Event The Underbelly/Ascendant Light Room/Hit Switch 6
-  * Extra - actor_index: 623
-
-> Event - Hit Switch 7; Heals? False
-  * Layers: default
-  * Event The Underbelly/Ascendant Light Room/Hit Switch 7
-  * Extra - actor_index: 625
-
-> Event - Hit Switch 8; Heals? False
-  * Layers: default
-  * Event The Underbelly/Ascendant Light Room/Hit Switch 8
-  * Extra - actor_index: 620
-
-> Event - Hit Switch 9; Heals? False
-  * Layers: default
-  * Event The Underbelly/Ascendant Light Room/Hit Switch 9
-  * Extra - actor_index: 626
-
-> Event - Hit Switch 10; Heals? False
-  * Layers: default
-  * Event The Underbelly/Ascendant Light Room/Hit Switch 10
-  * Extra - actor_index: 622
-
 > Save Crystal; Heals? True; Spawn Point
   * Layers: default
   * Extra - actor_index: 943
   * Extra - start_tag: postLightSave
+  > Pickup (Ascendant Light)
+      Trivial
 
 > Pickup (Ascendant Light); Heals? False
   * Layers: default
   * Pickup 61; Category? Major
   * Extra - actor_index: 1044
+  > Save Crystal
+      Trivial
+  > Door to really tall slope room with pillars
+      Trivial
+  > Door to Ascendant Light Tutorial
+      Trivial
 
 > Door to really tall slope room with pillars; Heals? False
   * Layers: default
   * No Wall to really tall slope room with pillars/Door to Ascendant Light Room
   * Extra - actor_index: 2816
+  > Pickup (Ascendant Light)
+      All of the following:
+          Can Do Damage
+          # TODO - with tricks
+          Sunsetter
 
 > Door to Ascendant Light Tutorial; Heals? False
   * Layers: default
   * No Wall to Ascendant Light Tutorial/Door to Ascendant Light Room
   * Extra - actor_index: 2821
+  > Pickup (Ascendant Light)
+      Trivial
 
 ----------------
 Ascendant Light Tutorial
@@ -921,15 +1037,21 @@ Extra - room_id: 32
   * Layers: default
   * No Wall to Ascendant Light Room/Door to Ascendant Light Tutorial
   * Extra - actor_index: 2821
+  > Door to room with the bridge on top
+      Cling or Can Use Ascendant Light
 
 > Door to room with the bridge on top; Heals? False
   * Layers: default
   * No Wall to room with the bridge on top/Door to Ascendant Light Tutorial
   * Extra - actor_index: 2819
+  > Door to Ascendant Light Room
+      Cling or Can Use Ascendant Light
 
 > Door to Shortcut to Ascendant Light; Heals? False
   * Layers: default
   * No Wall to Shortcut to Ascendant Light/Door to Ascendant Light Tutorial
+  > Door to Ascendant Light Room
+      Trivial
 
 ----------------
 Transition to Dilapidated Dungeon
@@ -960,10 +1082,14 @@ Extra - room_id: 34
   * Layers: default
   * Breakable Wall to Shortcut to Ascendant Light/Door to just another small hallway i don't know how to name
   * Extra - actor_index: 479
+  > Door to Crawler Tower
+      Trivial
 
 > Door to Crawler Tower; Heals? False
   * Layers: default
   * No Wall to Crawler Tower/Door to just another small hallway i don't know how to name
+  > Door to Shortcut to Ascendant Light
+      Trivial
 
 ----------------
 Shortcut to Ascendant Light
@@ -974,13 +1100,21 @@ Extra - room_id: 35
   * Layers: default
   * Event The Underbelly/Shortcut to Ascendant Light/Hit Switch
   * Extra - actor_index: 631
+  > Door to just another small hallway i don't know how to name
+      Trivial
 
 > Door to just another small hallway i don't know how to name; Heals? False
   * Layers: default
   * Breakable Wall to just another small hallway i don't know how to name/Door to Shortcut to Ascendant Light
   * Extra - actor_index: 479
+  > Event - Hit Switch
+      Can Do Damage
+  > Door to Ascendant Light Tutorial
+      Air Kick ≥ 2 or After The Underbelly/Shortcut to Ascendant Light/Hit Switch or Bounce Off Torch
 
 > Door to Ascendant Light Tutorial; Heals? False
   * Layers: default
   * No Wall to Ascendant Light Tutorial/Door to Shortcut to Ascendant Light
+  > Door to just another small hallway i don't know how to name
+      Trivial
 
