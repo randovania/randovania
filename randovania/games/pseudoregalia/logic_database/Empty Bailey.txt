@@ -7,16 +7,23 @@ Extra - room_id: 0
   * Layers: default
   * Extra - actor_index: 121
   * Extra - start_tag: exteriorSouthSave
+  > Transition to Castle Sansa
+      Trivial
+  > Door to Courtyard (Lower)
+      Trivial
+  > Next to Switch
+      All of the following:
+          After Empty Bailey/Bridge/Hit Switch
+          Any of the following:
+              Air Kick or Cling
+              Sunsetter and Can Long Jump
 
 > Event - Hit Switch; Heals? False
   * Layers: default
   * Event Empty Bailey/Bridge/Hit Switch
   * Extra - actor_index: 83
-
-> Event - Breakable Floor; Heals? False
-  * Layers: default
-  * Event Empty Bailey/Bridge/Breakable Floor
-  * Extra - actor_index: 56
+  > Next to Switch
+      Trivial
 
 > Transition to Castle Sansa; Heals? False; Spawn Point
   * Layers: default
@@ -24,6 +31,8 @@ Extra - room_id: 0
   * Extra - actor_index: 129
   * Extra - transition_tag: exterior1
   * Extra - start_tag: exteriorWest
+  > Save Crystal
+      Trivial
 
 > Transition to The Underbelly; Heals? False; Spawn Point
   * Layers: default
@@ -31,6 +40,8 @@ Extra - room_id: 0
   * Extra - actor_index: 132
   * Extra - transition_tag: cavesSouth
   * Extra - start_tag: exteriorEast
+  > Next to Switch
+      Trivial
 
 > Transition to Tower Remains; Heals? False; Spawn Point
   * Layers: default
@@ -38,14 +49,33 @@ Extra - room_id: 0
   * Extra - actor_index: 131
   * Extra - transition_tag: towerSouth
   * Extra - start_tag: exteriorSouthEast
+  > Door to Courtyard (Upper)
+      Can Long Jump
 
 > Door to Courtyard (Lower); Heals? False
   * Layers: default
   * No Wall to Courtyard/Door to Bridge (Lower)
+  > Save Crystal
+      Trivial
 
 > Door to Courtyard (Upper); Heals? False
   * Layers: default
   * No Wall to Courtyard/Door to Bridge (Upper)
+  > Transition to Tower Remains
+      Can Long Jump
+  > Next to Switch
+      Trivial
+
+> Next to Switch; Heals? False
+  * Layers: default
+  > Save Crystal
+      Trivial
+  > Event - Hit Switch
+      Can Do Damage
+  > Transition to The Underbelly
+      Sunsetter
+  > Door to Courtyard (Upper)
+      Void Out Warp (Intermediate)
 
 ----------------
 Courtyard
@@ -56,59 +86,108 @@ Extra - room_id: 1
   * Layers: default
   * Pickup 55; Category? Major
   * Extra - actor_index: 148
+  > Transition to Twilight Theatre
+      All of the following:
+          Slide
+          Any of the following:
+              All of the following:
+                  Can Do Damage
+                  Cling or Can Long Jump
+              Air Kick ≥ 3 and Air Kick Mastery (Advanced)
+              Air Kick ≥ 2 and Sunsetter
+              Cling ≥ 3 and Cling Mastery (Advanced)
 
 > Pickup (Major Key); Heals? False
   * Layers: default
   * Pickup 54; Category? Major
   * Extra - actor_index: 69
+  > Transition to Twilight Theatre
+      Trivial
 
 > Pickup (Empathy); Heals? False
   * Layers: default
   * Pickup 57; Category? Minor
   * Extra - actor_index: 149
-
-> Event - Hit Switch 1; Heals? False
-  * Layers: default
-  * Event Empty Bailey/Courtyard/Hit Switch 1
-  * Extra - actor_index: 81
+  > Event - Hit Switch 2
+      Can Do Damage
+  > Transition to Twilight Theatre
+      Trivial
 
 > Event - Hit Switch 2; Heals? False
   * Layers: default
   * Event Empty Bailey/Courtyard/Hit Switch 2
   * Extra - actor_index: 84
+  > Pickup (Empathy)
+      Trivial
 
 > Pickup (Chivalry); Heals? False
   * Layers: default
   * Pickup 58; Category? Major
   * Extra - actor_index: 150
+  > Transition to Twilight Theatre
+      Trivial
 
 > Pickup (Health Piece); Heals? False
   * Layers: default
   * Pickup 56; Category? Minor
   * Extra - actor_index: 80
+  > Door to Bridge (Upper)
+      Trivial
 
 > Pickup (Small Key); Heals? False
   * Layers: default
   * Pickup 53; Category? Minor
   * Extra - actor_index: 70
+  > Event - Hit Switch 3
+      Can Do Damage
+  > Door to Bridge (Lower)
+      Slide
+  > Door to Bridge (Upper)
+      All of the following:
+          After Empty Bailey/Courtyard/Hit Switch 3
+          Air Kick or Sunsetter or Skid Jump (Beginner)
 
 > Event - Hit Switch 3; Heals? False
   * Layers: default
   * Event Empty Bailey/Courtyard/Hit Switch 3
   * Extra - actor_index: 82
+  > Pickup (Small Key)
+      Trivial
 
 > Pickup (Goatling); Heals? False
   * Layers: goatling_shuffle
   * Pickup 52; Category? Minor
   * Extra - actor_index: 115
+  > Door to Bridge (Lower)
+      Slide
 
 > Door to Bridge (Lower); Heals? False
   * Layers: default
   * No Wall to Bridge/Door to Courtyard (Lower)
+  > Pickup (Small Key)
+      All of the following:
+          Slide
+          Air Kick or Cling or Sunsetter or Coyote Jump (Intermediate) or Skid Jump (Beginner) or Can Long Jump
+  > Pickup (Goatling)
+      Slide
+  > Door to Bridge (Upper)
+      Any of the following:
+          Air Kick ≥ 2 or Cling or Can Long Jump
+          Air Kick and Sunsetter
+  > Transition to Twilight Theatre
+      Trivial
 
 > Door to Bridge (Upper); Heals? False
   * Layers: default
   * No Wall to Bridge/Door to Courtyard (Upper)
+  > Pickup (Major Key)
+      Trivial
+  > Pickup (Health Piece)
+      Sunsetter
+  > Pickup (Small Key)
+      After Empty Bailey/Courtyard/Hit Switch 3
+  > Door to Bridge (Lower)
+      Trivial
 
 > Transition to Twilight Theatre; Heals? False; Spawn Point
   * Layers: default
@@ -116,4 +195,23 @@ Extra - room_id: 1
   * Extra - actor_index: 130
   * Extra - transition_tag: theatreSouthWest
   * Extra - start_tag: exteriorWest
+  > Pickup (Solar Wind)
+      Slide
+  > Pickup (Major Key)
+      Any of the following:
+          Air Kick or Sunsetter
+          Skid Jump (Advanced) and Can Long Jump
+  > Pickup (Empathy)
+      All of the following:
+          Cling
+          Any of the following:
+              Air Kick ≥ 3
+              Air Kick ≥ 2 and Sunsetter
+  > Pickup (Chivalry)
+      All of the following:
+          # TODO - time trial logic
+          After Empty Bailey/Courtyard/Hit Switch 2
+          Impossible
+  > Door to Bridge (Lower)
+      Trivial
 

@@ -56,7 +56,94 @@
                         "start_tag": "exteriorSouthSave"
                     },
                     "valid_starting_location": true,
-                    "connections": {}
+                    "connections": {
+                        "Transition to Castle Sansa": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Courtyard (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Next to Switch": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "EmptyBailey_Bridge_HitSwitch",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "AirKick",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Cling",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Long Jump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Sunsetter",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Event - Hit Switch": {
                     "node_type": "event",
@@ -75,26 +162,15 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "EmptyBailey_Bridge_HitSwitch",
-                    "connections": {}
-                },
-                "Event - Breakable Floor": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3600.0,
-                        "y": 400.0,
-                        "z": 0.01
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_index": 56
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "EmptyBailey_Bridge_BreakableFloor",
-                    "connections": {}
+                    "connections": {
+                        "Next to Switch": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Transition to Castle Sansa": {
                     "node_type": "dock",
@@ -126,14 +202,22 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Transition to The Underbelly": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 3800.0,
-                        "y": 400.0,
+                        "x": 3725.0,
+                        "y": 475.0,
                         "z": -350.0
                     },
                     "description": "",
@@ -158,7 +242,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Next to Switch": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Transition to Tower Remains": {
                     "node_type": "dock",
@@ -190,7 +282,20 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Courtyard (Upper)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Long Jump"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Door to Courtyard (Lower)": {
                     "node_type": "dock",
@@ -218,14 +323,22 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Courtyard (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -2850.0,
-                        "y": -3200.0,
+                        "y": -5700.0,
                         "z": 1550.0
                     },
                     "description": "",
@@ -246,7 +359,89 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Transition to Tower Remains": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Long Jump"
+                                    }
+                                ]
+                            }
+                        },
+                        "Next to Switch": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Next to Switch": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2800.0,
+                        "y": -3000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Hit Switch": {
+                            "type": "template",
+                            "data": "Can Do Damage"
+                        },
+                        "Transition to The Underbelly": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Sunsetter",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Courtyard (Upper)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "VoidOut",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -301,7 +496,152 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Transition to Twilight Theatre": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Slide",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Do Damage"
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Long Jump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Cling",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "AirKick",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "AirKick",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Sunsetter",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "AirKick",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Cling",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Cling",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Pickup (Major Key)": {
                     "node_type": "pickup",
@@ -323,7 +663,15 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Transition to Twilight Theatre": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Pickup (Empathy)": {
                     "node_type": "pickup",
@@ -345,26 +693,19 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
-                    "connections": {}
-                },
-                "Event - Hit Switch 1": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -11750.0,
-                        "y": 950.0,
-                        "z": -500.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_index": 81
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "EmptyBailey_Courtyard_HitSwitch_1",
-                    "connections": {}
+                    "connections": {
+                        "Event - Hit Switch 2": {
+                            "type": "template",
+                            "data": "Can Do Damage"
+                        },
+                        "Transition to Twilight Theatre": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Event - Hit Switch 2": {
                     "node_type": "event",
@@ -383,7 +724,15 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "EmptyBailey_Courtyard_HitSwitch_2",
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Empathy)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Pickup (Chivalry)": {
                     "node_type": "pickup",
@@ -405,7 +754,15 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Transition to Twilight Theatre": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Pickup (Health Piece)": {
                     "node_type": "pickup",
@@ -427,7 +784,15 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Door to Bridge (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Pickup (Small Key)": {
                     "node_type": "pickup",
@@ -449,7 +814,81 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Event - Hit Switch 3": {
+                            "type": "template",
+                            "data": "Can Do Damage"
+                        },
+                        "Door to Bridge (Lower)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Slide",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Bridge (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "EmptyBailey_Courtyard_HitSwitch_3",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Sunsetter",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SkidJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Event - Hit Switch 3": {
                     "node_type": "event",
@@ -468,7 +907,15 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "EmptyBailey_Courtyard_HitSwitch_3",
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Small Key)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Pickup (Goatling)": {
                     "node_type": "pickup",
@@ -490,7 +937,25 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Door to Bridge (Lower)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Slide",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Door to Bridge (Lower)": {
                     "node_type": "dock",
@@ -518,14 +983,169 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Small Key)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Slide",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Sunsetter",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Coyote",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SkidJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Cling",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Long Jump"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Goatling)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Slide",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Bridge (Upper)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Cling",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AirKick",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Sunsetter",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Long Jump"
+                                    }
+                                ]
+                            }
+                        },
+                        "Transition to Twilight Theatre": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Bridge (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -2850.0,
-                        "y": -3200.0,
+                        "y": -5700.0,
                         "z": 1550.0
                     },
                     "description": "",
@@ -546,7 +1166,48 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Major Key)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Health Piece)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Sunsetter",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Small Key)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "EmptyBailey_Courtyard_HitSwitch_3",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Bridge (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Transition to Twilight Theatre": {
                     "node_type": "dock",
@@ -578,7 +1239,171 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Solar Wind)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Slide",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Major Key)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Sunsetter",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AirKick",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Long Jump"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SkidJump",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Empathy)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Cling",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "AirKick",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Sunsetter",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "AirKick",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Chivalry)": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO - time trial logic",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "EmptyBailey_Courtyard_HitSwitch_2",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Bridge (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         }
