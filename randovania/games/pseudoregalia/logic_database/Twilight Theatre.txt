@@ -386,10 +386,18 @@ Extra - room_id: 9
 > Door to room that requires soul cutter to call the platform; Heals? False
   * Layers: default
   * No Wall to room that requires soul cutter to call the platform/Door to Theatre Wall Access
+  > Door to Theatre Wall
+      Any of the following:
+          Air Kick ≥ 2 or Cling
+          Air Kick and Can Long Jump
 
 > Door to Theatre Wall; Heals? False
   * Layers: default
   * No Wall to Theatre Wall/Door to Theatre Wall Access
+  > Door to room that requires soul cutter to call the platform
+      Any of the following:
+          Air Kick ≥ 2 or Cling
+          Air Kick and Can Long Jump
 
 ----------------
 Theatre Wall
@@ -584,7 +592,7 @@ Extra - room_id: 16
   * Extra - actor_index: 2925
   > Door to Backstage Hub (Upper)
       Cling and After Twilight Theatre/Combat Room/Combat
-  > Combat
+  > Event - Combat
       Dream Breaker
 
 > Door to Backstage Hub (Upper); Heals? False
@@ -593,10 +601,10 @@ Extra - room_id: 16
   * Extra - actor_index: 2927
   > Door to Backstage Hub (Lower)
       After Twilight Theatre/Combat Room/Combat
-  > Combat
+  > Event - Combat
       Dream Breaker
 
-> Combat; Heals? False
+> Event - Combat; Heals? False
   * Layers: default
   * Event Twilight Theatre/Combat Room/Combat
   > Door to Backstage Hub (Lower)
@@ -654,21 +662,21 @@ Transition to Dilapidated Dungeon
 Extra - total_boundings: {'x1': 9000, 'x2': 12025, 'y1': 14950, 'y2': 16800}
 Extra - polygon: [[9000, 14950], [9000, 16800], [12025, 16800], [12025, 14950]]
 Extra - room_id: 19
-> Pickup (Chair) 1; Heals? False
+> Pickup (Chair, 1); Heals? False
   * Layers: chair_shuffle
   * Pickup 76; Category? Minor
   * Extra - actor_index: 1081
   > Transition to Dilapidated Dungeon
       Trivial
 
-> Pickup (Chair) 2; Heals? False
+> Pickup (Chair, 2); Heals? False
   * Layers: chair_shuffle
   * Pickup 77; Category? Minor
   * Extra - actor_index: 1084
   > Transition to Dilapidated Dungeon
       Trivial
 
-> Pickup (Chair) 3; Heals? False
+> Pickup (Chair, 3); Heals? False
   * Layers: chair_shuffle
   * Pickup 78; Category? Minor
   * Extra - actor_index: 1085
@@ -688,11 +696,11 @@ Extra - room_id: 19
   * Extra - actor_index: 1215
   * Extra - transition_tag: dungeonNorth
   * Extra - start_tag: theatreNorthEastLower
-  > Pickup (Chair) 1
+  > Pickup (Chair, 1)
       Trivial
-  > Pickup (Chair) 2
+  > Pickup (Chair, 2)
       Trivial
-  > Pickup (Chair) 3
+  > Pickup (Chair, 3)
       Trivial
   > Door to Northeast Hub
       Trivial
@@ -755,11 +763,17 @@ Extra - room_id: 22
   * Layers: default
   * Event Twilight Theatre/South Hub/Hit Switch
   * Extra - actor_index: 921
+  > Top of Central Pillar
+      Cling or Void Out Warp (Beginner)
 
 > Pickup (Aerial Finesse); Heals? False
   * Layers: default
   * Pickup 74; Category? Minor
   * Extra - actor_index: 1231
+  > Door to Transition to Empty Bailey
+      Trivial
+  > Top of Central Pillar
+      Cling
 
 > Pickup (Class); Heals? False
   * Layers: default
@@ -770,16 +784,35 @@ Extra - room_id: 22
   * Layers: default
   * No Wall to Bubble Hallway/Door to South Hub
   * Extra - actor_index: 3003
+  > Top of Central Pillar
+      Trivial
 
 > Door to Transition to Empty Bailey; Heals? False
   * Layers: default
   * No Wall to Transition to Empty Bailey/Door to South Hub
   * Extra - actor_index: 3001
+  > Door to Transition to Castle Sansa
+      Can Long Jump
 
 > Door to Transition to Castle Sansa; Heals? False
   * Layers: default
   * No Wall to Transition to Castle Sansa/Door to South Hub
   * Extra - actor_index: 2998
+  > Top of Central Pillar
+      Sunsetter
+
+> Top of Central Pillar; Heals? False
+  * Layers: default
+  > Event - Hit Switch
+      Cling and Can Do Damage
+  > Pickup (Aerial Finesse)
+      Cling and Sunsetter
+  > Door to Bubble Hallway
+      Trivial
+  > Door to Transition to Empty Bailey
+      Trivial
+  > Door to Transition to Castle Sansa
+      Trivial
 
 ----------------
 Transition to Empty Bailey

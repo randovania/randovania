@@ -588,7 +588,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Sun Greaves Room": {
+                        "Tunnel to Sun Greaves Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -597,7 +597,7 @@
                         }
                     }
                 },
-                "Door to Sun Greaves Room": {
+                "Tunnel to Sun Greaves Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -615,7 +615,7 @@
                     "default_connection": {
                         "region": "Listless Library",
                         "area": "Sun Greaves Room",
-                        "node": "Door to Sun Greaves Access"
+                        "node": "Tunnel to Sun Greaves Access"
                     },
                     "default_dock_weakness": "Slide Tunnel",
                     "exclude_from_dock_rando": false,
@@ -696,7 +696,7 @@
                         }
                     }
                 },
-                "Door to Sun Greaves Access": {
+                "Tunnel to Sun Greaves Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -714,7 +714,7 @@
                     "default_connection": {
                         "region": "Listless Library",
                         "area": "Sun Greaves Access",
-                        "node": "Door to Sun Greaves Room"
+                        "node": "Tunnel to Sun Greaves Room"
                     },
                     "default_dock_weakness": "Slide Tunnel",
                     "exclude_from_dock_rando": false,
@@ -1161,7 +1161,7 @@
                 "room_id": 4
             },
             "nodes": {
-                "Event - Hit Switch": {
+                "Event - Hit Switch 2": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -1177,8 +1177,16 @@
                         "actor_index": 241
                     },
                     "valid_starting_location": false,
-                    "event_name": "ListlessLibrary_hazeroom_HitSwitch",
-                    "connections": {}
+                    "event_name": "ListlessLibrary_hazeroom_HitSwitch_2",
+                    "connections": {
+                        "Door to Sun Greaves Tutorial": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Pickup (Chair)": {
                     "node_type": "pickup",
@@ -1239,12 +1247,122 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Event - Hit Switch 2": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "ListlessLibrary_hazeroom_HitSwitch_1",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Pickup (Chair)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to Egg Pen Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "ListlessLibrary_hazeroom_HitSwitch_1",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "events",
+                                                                                "name": "ListlessLibrary_hazeroom_HitSwitch_2",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "AirKick",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Long Jump"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Cling",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Hit Switch 1": {
+                            "type": "template",
+                            "data": "Can Do Damage"
                         }
                     }
                 },
@@ -1276,7 +1394,75 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Sun Greaves Tutorial": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "ListlessLibrary_hazeroom_HitSwitch_2",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "AirKick",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Hit Switch 1": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7800.0,
+                        "y": 5500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ListlessLibrary_hazeroom_HitSwitch_1",
+                    "connections": {
+                        "Door to Sun Greaves Tutorial": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },

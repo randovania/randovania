@@ -96,12 +96,12 @@ Extra - room_id: 1
   * Layers: default
   * No Wall to Main Library/Door to Sun Greaves Access
   * Extra - actor_index: 788
-  > Door to Sun Greaves Room
+  > Tunnel to Sun Greaves Room
       Trivial
 
-> Door to Sun Greaves Room; Heals? False
+> Tunnel to Sun Greaves Room; Heals? False
   * Layers: default
-  * Slide Tunnel to Sun Greaves Room/Door to Sun Greaves Access
+  * Slide Tunnel to Sun Greaves Room/Tunnel to Sun Greaves Access
   > Door to Main Library
       Trivial
 
@@ -117,9 +117,9 @@ Extra - room_id: 2
   > Door to Sun Greaves Tutorial
       Trivial
 
-> Door to Sun Greaves Access; Heals? False
+> Tunnel to Sun Greaves Access; Heals? False
   * Layers: default
-  * Slide Tunnel to Sun Greaves Access/Door to Sun Greaves Room
+  * Slide Tunnel to Sun Greaves Access/Tunnel to Sun Greaves Room
   > Door to Sun Greaves Tutorial
       Trivial
 
@@ -175,10 +175,12 @@ haze room
 Extra - total_boundings: {'x1': 6550, 'x2': 10000, 'y1': 575, 'y2': 5750}
 Extra - polygon: [[6550, 575], [6550, 5750], [10000, 5750], [10000, 575]]
 Extra - room_id: 4
-> Event - Hit Switch; Heals? False
+> Event - Hit Switch 2; Heals? False
   * Layers: default
-  * Event Listless Library/haze room/Hit Switch
+  * Event Listless Library/haze room/Hit Switch 2
   * Extra - actor_index: 241
+  > Door to Sun Greaves Tutorial
+      Trivial
 
 > Pickup (Chair); Heals? False
   * Layers: chair_shuffle
@@ -191,13 +193,33 @@ Extra - room_id: 4
   * Layers: default
   * No Wall to Sun Greaves Tutorial/Door to haze room
   * Extra - actor_index: 834
+  > Event - Hit Switch 2
+      Air Kick ≥ 2 and After Listless Library/haze room/Hit Switch 1
   > Pickup (Chair)
       Trivial
+  > Door to Egg Pen Room
+      Any of the following:
+          Cling
+          All of the following:
+              After Listless Library/haze room/Hit Switch 1
+              Any of the following:
+                  Can Long Jump
+                  Air Kick ≥ 3 and After Listless Library/haze room/Hit Switch 2
+  > Event - Hit Switch 1
+      Can Do Damage
 
 > Door to Egg Pen Room; Heals? False
   * Layers: default
   * No Wall to Egg Pen Room/Door to haze room
   * Extra - actor_index: 840
+  > Door to Sun Greaves Tutorial
+      Air Kick ≥ 3 and After Listless Library/haze room/Hit Switch 2
+
+> Event - Hit Switch 1; Heals? False
+  * Layers: default
+  * Event Listless Library/haze room/Hit Switch 1
+  > Door to Sun Greaves Tutorial
+      Trivial
 
 ----------------
 Egg Pen Room
