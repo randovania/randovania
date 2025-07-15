@@ -268,8 +268,9 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         fusion_boss_pickup_indexes = []
         for pickup_node in self.game.region_list.iterate_nodes_of_type(PickupNode):
             for boss in fusion_bosses:
-                if boss in pickup_node.extra.values():
-                    fusion_boss_pickup_indexes.append(pickup_node.pickup_index)
+                if "source" in pickup_node.extra:
+                    if boss in pickup_node.extra["source"]:
+                        fusion_boss_pickup_indexes.append(pickup_node.pickup_index)
 
         artifacts_on_bosses = []
         for boss_index in fusion_boss_pickup_indexes:
