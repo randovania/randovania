@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, override
 
-from randovania.exporter.patch_data_factory import PatchDataFactory
+from randovania.exporter.patch_data_factory import PatchDataFactory, PatcherDataMeta
 from randovania.game.game_enum import RandovaniaGame
 from randovania.games.pseudoregalia.exporter.hint_namer import PseudoregaliaHintNamer
 from randovania.games.pseudoregalia.generator.pool_creator import PSEUDOREGALIA_KEY_REGIONS
@@ -21,7 +21,7 @@ class PseudoregaliaPatchDataFactory(PatchDataFactory[PseudoregaliaConfiguration,
     def create_visual_nothing(self):
         return create_visual_nothing(self.game_enum(), "Nothing")
 
-    def create_game_specific_data(self) -> dict:
+    def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         start_node = self.game.region_list.node_by_identifier(self.patches.starting_location)
         key_hint_mode = self.configuration.hints.specific_pickup_hints["major_keys"]
 
@@ -30,7 +30,7 @@ class PseudoregaliaPatchDataFactory(PatchDataFactory[PseudoregaliaConfiguration,
 
         for pickup_details in self.export_pickup_list():
             pickup_node = self.game.region_list.node_from_pickup_index(pickup_details.index)
-            region_name = self.game.region_list.region_name_from_node(pickup_node)
+            region_name = pickup_node.identifier.region
             pickup_name = pickup_details.original_pickup.name
 
             if region_name not in level_data:

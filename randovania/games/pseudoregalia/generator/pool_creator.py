@@ -7,7 +7,7 @@ from randovania.generator.pickup_pool import PoolResults
 from randovania.generator.pickup_pool.pickup_creator import create_generated_pickup
 
 if TYPE_CHECKING:
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 PSEUDOREGALIA_KEY_REGIONS = [
@@ -19,13 +19,13 @@ PSEUDOREGALIA_KEY_REGIONS = [
 ]
 
 
-def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDescription) -> None:
+def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDatabaseView) -> None:
     assert isinstance(configuration, PseudoregaliaConfiguration)
 
     keys = [
         create_generated_pickup(
             "Major Key",
-            game.resource_database,
+            game.get_resource_database_view(),
             game.get_pickup_database(),
             region=region,
             region_short=region.replace(" ", ""),
