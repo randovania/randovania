@@ -5,8 +5,6 @@ import json
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-import py_pseudoregalia_rando
-
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 
 if TYPE_CHECKING:
@@ -47,4 +45,4 @@ class PseudoregaliaGameExporter(GameExporter[PseudoregaliaGameExportParams]):
         export_params: PseudoregaliaGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
-        py_pseudoregalia_rando.patch_game(json.dumps(patch_data), str(export_params.game_dir))
+        raise NotImplementedError()
