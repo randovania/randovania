@@ -12,6 +12,7 @@ from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.fusion.exporter.hint_namer import FusionColor, FusionHintNamer
 from randovania.games.fusion.exporter.joke_hints import FUSION_JOKE_HINTS
 from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
@@ -242,23 +243,56 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         hints = {}
         restricted_hint = ""
         operations_hint = ""
-        hint_counter = 0
+        artifact_locations = guaranteed_item_hint.find_locations_that_gives_items(
+            artifacts, self.description.all_patches, self.players_config.player_index
+        )
+        artifact_pickup_indexes = {}
+        for resource, locations in artifact_locations.items():
+            for location in locations:
+                player, location_info = location
+                artifact_pickup_indexes.update({location_info.location: resource.long_name})
+
+        fusion_bosses = [
+            "Arachnus",
+            "Yakuza",
+            "Ridley",
+            "ChargeCoreX",
+            "Zazabi",
+            "Nettori",
+            "WideCoreX",
+            "Serris",
+            "Nightmare",
+            "MegaX",
+            "WaveCoreX",
+        ]
+        fusion_boss_pickup_indexes = []
+        for pickup_node in self.game.region_list.iterate_nodes_of_type(PickupNode):
+            for boss in fusion_bosses:
+                if boss in pickup_node.extra.values():
+                    fusion_boss_pickup_indexes.append(pickup_node.pickup_index)
+
+        artifacts_on_bosses = []
+        for boss_index in fusion_boss_pickup_indexes:
+            if boss_index in artifact_pickup_indexes:
+                artifacts_on_bosses.append(artifact_pickup_indexes[boss_index])
+
         if metroid_precision != SpecificPickupHintMode.DISABLED:
-            # loop through all metroids and place them alternating on Restricted then Operations Nav Rooms
+            # loop through all metroids and place ones on bosses on Operations Deck and the rest on Restricted Area
             for _, text in metroid_hint_mapping.items():
                 if "has no need to be located" in text:
                     continue
-                if hint_counter % 2 == 0:
-                    restricted_hint = restricted_hint + text + " "
-                else:
+                if _.long_name in artifacts_on_bosses:
                     operations_hint = operations_hint + text + " "
-                hint_counter += 1
+                else:
+                    restricted_hint = restricted_hint + text + " "
             restricted_hint = restricted_hint.rstrip()
             operations_hint = operations_hint.rstrip()
 
-            # special handling when there's no Metroids to hint on Operations Deck
-            if hint_counter == 1:
+            # special handling when there's no Metroids to hint on either terminal
+            if not operations_hint:
                 operations_hint = "This terminal was unable to scan for any [COLOR=3]Metroids[/COLOR]."
+            if not restricted_hint:
+                restricted_hint = "This terminal was unable to scan for any [COLOR=3]Metroids[/COLOR]."
 
         for node in self.game.region_list.iterate_nodes_of_type(HintNode):
             hint_location = node.extra["hint_name"]
