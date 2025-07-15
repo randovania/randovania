@@ -32,7 +32,15 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "DistortedMemory_PrincessChambers_DefeatPrincess",
-                    "connections": {}
+                    "connections": {
+                        "Transition to Tower Remains": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Transition to Tower Remains": {
                     "node_type": "dock",
@@ -64,7 +72,25 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Event - Defeat Princess": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "DreamBreaker",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         }
