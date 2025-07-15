@@ -908,11 +908,24 @@ Extra - room_id: 20
   * Layers: default
   * No Wall to Central Hub/Door to West Castle Access
   * Extra - actor_index: 2700
+  > Door to Axe Wall Ride Room
+      Any of the following:
+          All of the following:
+              Sunsetter
+              Any of the following:
+                  Cling
+                  Air Kick and Can Long Jump
+          Air Kick ≥ 2 and Air Kick Mastery (Advanced)
+          All of the following:
+              After Castle Sansa/West Castle Access/Hit Switch
+              Air Kick ≥ 2 or Sunsetter
 
 > Door to Good Graces Room; Heals? False
   * Layers: default
   * No Wall to Good Graces Room/Door to West Castle Access
   * Extra - actor_index: 2711
+  > Door to Central Hub
+      Trivial
 
 > Door to Axe Wall Ride Room; Heals? False
   * Layers: default
@@ -920,9 +933,16 @@ Extra - room_id: 20
   * Extra - actor_index: 2670
   > Event - Hit Switch
       Can Do Damage
-
-> Upper Level; Heals? False
-  * Layers: default
+  > Door to Central Hub
+      Trivial
+  > Door to Good Graces Room
+      All of the following:
+          After Castle Sansa/West Castle Access/Hit Switch
+          Any of the following:
+              Cling
+              Air Kick and Air Kick Mastery (Beginner)
+              # ground pound to stand on top of pole then long jump
+              Sunsetter and Sunsetter Mastery (Intermediate) and Can Long Jump
 
 ----------------
 Good Graces Room
@@ -933,26 +953,39 @@ Extra - room_id: 21
   * Layers: default
   * Pickup 31; Category? Minor
   * Extra - actor_index: 996
+  > Door to West Castle Access
+      Trivial
 
 > Event - Hit Switch; Heals? False
   * Layers: default
   * Event Castle Sansa/Good Graces Room/Hit Switch
   * Extra - actor_index: 603
-
-> Event - Cut and Drop Platform; Heals? False
-  * Layers: default
-  * Event Castle Sansa/Good Graces Room/Cut and Drop Platform
-  * Extra - actor_index: 509
+  > Door to West Castle Access
+      Trivial
 
 > Door to West Castle Access; Heals? False
   * Layers: default
   * No Wall to West Castle Access/Door to Good Graces Room
   * Extra - actor_index: 2711
+  > Pickup (Good Graces)
+      All of the following:
+          After Castle Sansa/Good Graces Room/Hit Switch
+          Any of the following:
+              Air Kick ≥ 3
+              Skid Jump (Advanced) and Can Long Jump
+              Air Kick and Air Kick Mastery (Intermediate)
+              Cling and Sunsetter
+  > Event - Hit Switch
+      Can Do Damage
+  > Door to dropdown room
+      Trivial
 
 > Door to dropdown room; Heals? False
   * Layers: default
   * No Wall to dropdown room/Door to Good Graces Room
   * Extra - actor_index: 2829
+  > Door to West Castle Access
+      Trivial
 
 ----------------
 Axe Wall Ride Room
@@ -963,11 +996,15 @@ Extra - room_id: 22
   * Layers: default
   * No Wall to West Castle Access/Door to Axe Wall Ride Room
   * Extra - actor_index: 2670
+  > Door to Northwest Save Room
+      Cling ≥ 2
 
 > Door to Northwest Save Room; Heals? False
   * Layers: default
   * No Wall to Northwest Save Room/Door to Axe Wall Ride Room
   * Extra - actor_index: 2673
+  > Door to West Castle Access
+      Cling ≥ 2
 
 ----------------
 Northwest Save Room
@@ -978,56 +1015,85 @@ Extra - room_id: 23
   * Layers: default
   * Pickup 21; Category? Minor
   * Extra - actor_index: 595
+  > Save Crystal
+      Trivial
 
 > Save Crystal; Heals? True; Spawn Point
   * Layers: default
   * Extra - actor_index: 906
   * Extra - start_tag: lowerNorthWestTheatre
+  > Pickup (Health Piece)
+      Any of the following:
+          Air Kick and Cling and Sunsetter
+          All of the following:
+              Air Kick ≥ 3 and Can Long Jump
+              Sunsetter or Skid Jump (Intermediate) or Bounce Off Torch
+  > Door to Axe Wall Ride Room
+      Trivial
+  > Door to Town
+      Trivial
 
 > Door to Axe Wall Ride Room; Heals? False
   * Layers: default
   * No Wall to Axe Wall Ride Room/Door to Northwest Save Room
   * Extra - actor_index: 2673
+  > Save Crystal
+      Trivial
 
 > Door to Town; Heals? False
   * Layers: default
   * No Wall to Town/Door to Northwest Save Room
   * Extra - actor_index: 2678
+  > Save Crystal
+      Trivial
 
 ----------------
 Town
 Extra - total_boundings: {'x1': -24300, 'x2': -17825, 'y1': 0, 'y2': 7925}
 Extra - polygon: [[-24300, 0], [-24300, 7925], [-17825, 7925], [-17825, 0]]
 Extra - room_id: 24
-> Event - Breakable Wall; Heals? False
-  * Layers: default
-  * Event Castle Sansa/Town/Breakable Wall
-  * Extra - actor_index: 488
-
 > Pickup (Goatling); Heals? False
   * Layers: goatling_shuffle
   * Pickup 22; Category? Minor
   * Extra - actor_index: 819
+  > Door to Northwest Save Room
+      Can Do Damage
 
 > Door to Northwest Save Room; Heals? False
   * Layers: default
   * No Wall to Northwest Save Room/Door to Town
   * Extra - actor_index: 2678
+  > Pickup (Goatling)
+      Can Do Damage
+  > Door to room with thin drop down pit
+      Cling and Sunsetter
+  > Door to West Transition to Twilight Theatre
+      Cling ≥ 5 and Cling Mastery (Advanced)
 
 > Door to room with thin drop down pit; Heals? False
   * Layers: default
   * No Wall to room with thin drop down pit/Door to Town
   * Extra - actor_index: 2436
+  > Door to Northwest Save Room
+      Trivial
 
 > Door to West Transition to Twilight Theatre; Heals? False
   * Layers: default
   * No Wall to West Transition to Twilight Theatre/Door to Town
   * Extra - actor_index: 2774
+  > Door to Northwest Save Room
+      Cling ≥ 2
+  > Door to Clear Mind Access
+      Any of the following:
+          Cling ≥ 2
+          Skid Jump (Advanced) and Can Long Jump
 
 > Door to Clear Mind Access; Heals? False
   * Layers: default
   * No Wall to Clear Mind Access/Door to Town
   * Extra - actor_index: 2754
+  > Door to West Transition to Twilight Theatre
+      Can Long Jump
 
 ----------------
 room with thin drop down pit
@@ -1038,16 +1104,28 @@ Extra - room_id: 25
   * Layers: default
   * No Wall to Town/Door to room with thin drop down pit
   * Extra - actor_index: 2436
+  > Door to dropdown room
+      Trivial
+  > Door to Clear Mind Access
+      Air Kick ≥ 3 or Cling
 
 > Door to dropdown room; Heals? False
   * Layers: default
   * No Wall to dropdown room/Door to room with thin drop down pit
   * Extra - actor_index: 2833
+  > Door to Town
+      Trivial
 
 > Door to Clear Mind Access; Heals? False
   * Layers: default
   * No Wall to Clear Mind Access/Door to room with thin drop down pit
   * Extra - actor_index: 2687
+  > Door to Town
+      Any of the following:
+          Air Kick ≥ 4 or Cling ≥ 2
+          All of the following:
+              Cling
+              Cling Mastery (Beginner) or Can Long Jump
 
 ----------------
 dropdown room
@@ -1058,6 +1136,10 @@ Extra - room_id: 26
   * Layers: default
   * No Wall to room with thin drop down pit/Door to dropdown room
   * Extra - actor_index: 2833
+  > Door to Good Graces Room
+      Any of the following:
+          Air Kick ≥ 2 or Cling or Can Long Jump or Can Use Ascendant Light
+          Air Kick and Air Kick Mastery (Intermediate)
 
 > Door to Good Graces Room; Heals? False
   * Layers: default
@@ -1073,16 +1155,26 @@ Extra - room_id: 27
   * Layers: default
   * No Wall to room with thin drop down pit/Door to Clear Mind Access
   * Extra - actor_index: 2687
+  > Door to Town
+      Air Kick and Cling ≥ 2 and Sunsetter
 
 > Door to Town; Heals? False
   * Layers: default
   * No Wall to Town/Door to Clear Mind Access
   * Extra - actor_index: 2754
+  > Door to room with thin drop down pit
+      Cling and Can Long Jump
+  > Door to Clear Mind Room
+      Any of the following:
+          Air Kick and Cling ≥ 2 and Sunsetter
+          Cling ≥ 6 and Cling Mastery (Intermediate)
 
 > Door to Clear Mind Room; Heals? False
   * Layers: default
   * No Wall to Clear Mind Room/Door to Clear Mind Access
   * Extra - actor_index: 2744
+  > Door to Town
+      Trivial
 
 ----------------
 Clear Mind Room
