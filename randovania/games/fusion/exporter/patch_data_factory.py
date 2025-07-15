@@ -258,33 +258,32 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "MegaX",
             "WaveCoreX",
         ]
-        artifacts_on_bosses = []
-
-        for resource, resource_locations in artifact_locations.items():
-            for _, resource_location in resource_locations:
-                if (
-                    self.game.region_list.node_from_pickup_index(resource_location.location).extra.get("source")
-                    in fusion_bosses
-                ):
-                    artifacts_on_bosses.append(resource.long_name)
+        artifacts_on_bosses = [
+            resource
+            for resource, resource_locations in artifact_locations.items()
+            for _, resource_location in resource_locations
+            if self.game.region_list.node_from_pickup_index(resource_location.location).extra.get("source")
+            in fusion_bosses
+        ]
 
         if metroid_precision != SpecificPickupHintMode.DISABLED:
             # loop through all metroids and place ones on bosses on Operations Deck and the rest on Restricted Area
             for metroid_resource, text in metroid_hint_mapping.items():
                 if "has no need to be located" in text:
                     continue
-                if metroid_resource.long_name in artifacts_on_bosses:
+                if metroid_resource in artifacts_on_bosses:
                     operations_hint = operations_hint + text + " "
                 else:
                     restricted_hint = restricted_hint + text + " "
             restricted_hint = restricted_hint.rstrip()
             operations_hint = operations_hint.rstrip()
 
+            no_metroids_hint = "This terminal was unable to scan for any [COLOR=3]Metroids[/COLOR]."
             # special handling when there's no Metroids to hint on either terminal
             if not operations_hint:
-                operations_hint = "This terminal was unable to scan for any [COLOR=3]Metroids[/COLOR]."
+                operations_hint = no_metroids_hint
             if not restricted_hint:
-                restricted_hint = "This terminal was unable to scan for any [COLOR=3]Metroids[/COLOR]."
+                restricted_hint = no_metroids_hint
 
         for node in self.game.region_list.iterate_nodes_of_type(HintNode):
             hint_location = node.extra["hint_name"]
