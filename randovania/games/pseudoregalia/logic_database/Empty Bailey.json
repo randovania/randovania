@@ -1375,7 +1375,7 @@
                         "Pickup (Chivalry)": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO - time trial logic",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1390,7 +1390,38 @@
                                         "type": "or",
                                         "data": {
                                             "comment": null,
-                                            "items": []
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Long Jump"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Sunsetter",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "AirKick",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
