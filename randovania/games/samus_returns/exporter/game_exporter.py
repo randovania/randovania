@@ -5,10 +5,15 @@ import shutil
 from collections.abc import Callable
 from enum import Enum
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
+from randovania.exporter.patch_data_factory import PatcherDataMeta
 from randovania.lib import json_lib, status_update_lib
+
+if TYPE_CHECKING:
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
 
 
 class MSRModPlatform(Enum):
@@ -60,6 +65,7 @@ class MSRGameExporter(GameExporter[MSRGameExportParams]):
         patch_data: dict,
         export_params: MSRGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
+        randovania_meta: PatcherDataMeta,
     ) -> None:
         export_params.output_path.mkdir(parents=True, exist_ok=True)
 
@@ -73,7 +79,8 @@ class MSRGameExporter(GameExporter[MSRGameExportParams]):
             f"OSRR v{open_samus_returns_rando_version}",
         )
 
-        json_lib.write_path(export_params.output_path.joinpath("patcher.json"), patch_data)
+        if not randovania_meta["in_race_setting"]:
+            json_lib.write_path(export_params.output_path.joinpath("patcher.json"), patch_data)
 
         patcher_update: status_update_lib.ProgressUpdateCallable
         if export_params.post_export is not None:

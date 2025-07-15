@@ -74,7 +74,7 @@ class HintDetailsTab(GameDetailsTab):
                 hinted_location = ""
             else:
                 hinted_node = region_list.node_from_pickup_index(hint.target)
-                hinted_location = region_list.node_name(hinted_node, True, True)
+                hinted_location = hinted_node.full_name()
 
                 target = patches.pickup_assignment.get(hint.target)
                 if target is None:
@@ -91,7 +91,7 @@ class HintDetailsTab(GameDetailsTab):
             region_item.setText(0, region_name)
             region_item.setExpanded(True)
             for node, content in region_contents.items():
-                source_name = region_list.node_name(node)
+                source_name = node.full_name(with_region=False)
                 area_item = QtWidgets.QTreeWidgetItem(region_item)
                 area_item.setText(0, source_name)
                 for i in range(1, NUM_COLUMNS):

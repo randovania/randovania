@@ -79,6 +79,24 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "125471": "oHalzyn",
+                    "125472": "oHalzyn",
+                    "125473": "oHalzyn",
+                    "125474": "oHalzyn",
+                    "125475": "oHalzyn",
+                    "125476": "oHalzyn",
+                    "125477": "oHalzyn",
+                    "125478": "oHalzyn",
+                    "125479": "oHalzyn",
+                    "125262": "oPincherFly",
+                    "125263": "oPincherFly",
+                    "125264": "oPincherFly",
+                    "125265": "oPincherFly",
+                    "125266": "oPincherFly",
+                    "125267": "oPincherFly",
+                    "125268": "oPincherFly"
                 }
             },
             "nodes": {
@@ -855,6 +873,11 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "125535": "oHalzyn",
+                    "125536": "oHalzyn",
+                    "125537": "oHalzyn"
                 }
             },
             "nodes": {
@@ -1671,6 +1694,14 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "125843": "oMoto",
+                    "125844": "oMoto",
+                    "125845": "oMoto",
+                    "125846": "oHalzyn",
+                    "125847": "oHalzyn",
+                    "125848": "oHalzyn"
                 }
             },
             "nodes": {
@@ -2733,6 +2764,21 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "126175": "oHalzyn",
+                    "126176": "oHalzyn",
+                    "126177": "oHalzyn",
+                    "126178": "oHalzyn",
+                    "126179": "oHalzyn",
+                    "126180": "oHalzyn",
+                    "126181": "oHalzyn",
+                    "126182": "oHalzyn",
+                    "126183": "oHalzyn",
+                    "126184": "oHalzyn",
+                    "126185": "oHalzyn",
+                    "126186": "oHalzyn",
+                    "126187": "oHalzyn"
                 }
             },
             "nodes": {
@@ -8377,6 +8423,10 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Shoot"
                                     }
                                 ]
                             }
@@ -8408,6 +8458,9 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "128101": "oShielder"
                 }
             },
             "nodes": {
@@ -8705,6 +8758,9 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "128277": "oGunzoo"
                 }
             },
             "nodes": {
@@ -8898,6 +8954,12 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "128469": "oShielder",
+                    "128526": "oShielder",
+                    "128527": "oShielder",
+                    "128534": "oGunzoo"
                 }
             },
             "nodes": {
@@ -9309,6 +9371,12 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "128585": "oShielder",
+                    "128606": "oShielder",
+                    "128609": "oShirk",
+                    "128611": "oShielder"
                 }
             },
             "nodes": {
@@ -9774,6 +9842,12 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "128769": "oShielder",
+                    "128770": "oShielder",
+                    "128771": "oShirk",
+                    "128772": "oGunzoo"
                 }
             },
             "nodes": {
@@ -10009,6 +10083,22 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Power Grip Wall"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Power Bombs"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot"
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -11483,13 +11573,50 @@
                             }
                         },
                         "Tunnel to Power Plant Hidden Storage": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Power Grip Climb"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Power Bombs"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can IBJ"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -11706,13 +11833,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Shoot Super Missile"
                                     },
                                     {
                                         "type": "or",

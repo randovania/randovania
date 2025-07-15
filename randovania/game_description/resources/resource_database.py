@@ -2,13 +2,15 @@ from __future__ import annotations
 
 import dataclasses
 import typing
+from typing import override
 
+from randovania.game_description.game_database_view import ResourceDatabaseView
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_type import ResourceType
 
 if typing.TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Sequence
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.requirements.base import Requirement
@@ -20,7 +22,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
 
-def default_base_damage_reduction(db: ResourceDatabase, current_resources: ResourceCollection) -> float:
+def default_base_damage_reduction(db: ResourceDatabaseView, current_resources: ResourceCollection) -> float:
     return 1.0
 
 
@@ -41,7 +43,7 @@ class NamedRequirementTemplate:
 
 
 @dataclasses.dataclass(frozen=True)
-class ResourceDatabase:
+class ResourceDatabase(ResourceDatabaseView):
     game_enum: RandovaniaGame
     item: list[ItemResourceInfo]
     event: list[SimpleResourceInfo]
@@ -52,7 +54,7 @@ class ResourceDatabase:
     requirement_template: dict[str, NamedRequirementTemplate]
     damage_reductions: dict[SimpleResourceInfo, list[DamageReduction]]
     energy_tank_item: ItemResourceInfo
-    base_damage_reduction: Callable[[ResourceDatabase, ResourceCollection], float] = default_base_damage_reduction
+    base_damage_reduction: Callable[[ResourceDatabaseView, ResourceCollection], float] = default_base_damage_reduction
     resource_by_index: list[ResourceInfo | None] = dataclasses.field(default_factory=list)
 
     def __post_init__(self) -> None:
@@ -94,21 +96,43 @@ class ResourceDatabase:
             typing.cast("list[ResourceInfo]", self.get_by_type(resource_type)), name, resource_type
         )
 
+    @override
     def get_item(self, short_name: str) -> ItemResourceInfo:
         return search.find_resource_info_with_id(self.item, short_name, ResourceType.ITEM)
 
+    @override
+    def get_item_by_display_name(self, name: str) -> ItemResourceInfo:
+        return search.find_resource_info_with_long_name(self.item, name)
+
+    @override
     def get_event(self, short_name: str) -> SimpleResourceInfo:
         return search.find_resource_info_with_id(self.event, short_name, ResourceType.EVENT)
 
+    @override
+    def get_misc(self, short_name: str) -> SimpleResourceInfo:
+        return search.find_resource_info_with_id(self.misc, short_name, ResourceType.MISC)
+
+    @override
     def get_trick(self, short_name: str) -> TrickResourceInfo:
         return search.find_resource_info_with_id(self.trick, short_name, ResourceType.TRICK)
 
+    @override
     def get_damage(self, short_name: str) -> SimpleResourceInfo:
         return search.find_resource_info_with_id(self.damage, short_name, ResourceType.DAMAGE)
 
-    def get_item_by_name(self, name: str) -> ItemResourceInfo:
-        return search.find_resource_info_with_long_name(self.item, name)
+    @override
+    def get_all_tricks(self) -> Sequence[TrickResourceInfo]:
+        return self.trick
 
+    @override
+    def get_template_requirement(self, name: str) -> NamedRequirementTemplate:
+        return self.requirement_template[name]
+
+    @override
+    def get_all_resources_of_type(self, resource_type: ResourceType) -> Sequence[ResourceInfo]:
+        return self.get_by_type(resource_type)
+
+    @override
     def get_pickup_model(self, name: str) -> PickupModel:
         return PickupModel(
             game=self.game_enum,

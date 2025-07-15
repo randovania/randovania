@@ -347,6 +347,8 @@ def _duplicate_session(sa: ServerApp, session: MultiplayerSession, new_title: st
             layout_description_json=session.layout_description_json,
             game_details_json=session.game_details_json,
             dev_features=session.dev_features,
+            allow_coop=session.allow_coop,
+            allow_everyone_claim_world=session.allow_everyone_claim_world,
         )
         for world in session.worlds:
             assert isinstance(world, World)
@@ -499,7 +501,12 @@ def _unclaim_world(sa: ServerApp, session: MultiplayerSession, user_id: int, wor
     world = World.get_by_uuid(world_uid)
     user = database.User.get_by_id(user_id)
 
-    WorldUserAssociation.get_by_instances(world=world, user=user).delete_instance()
+    try:
+        association = WorldUserAssociation.get_by_instances(world=world, user=user)
+    except peewee.DoesNotExist:
+        raise error.InvalidActionError(f"User {world.name} does not claim world {world.name}")
+
+    association.delete_instance()
     session_common.add_audit_entry(sa, session, f"Unassociated world {world.name} from {user.name}")
 
 

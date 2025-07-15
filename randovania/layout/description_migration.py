@@ -670,6 +670,11 @@ def _migrate_v34(data: dict) -> None:
 
                 game["dock_connections"][new_source] = new_target
 
+            for source_name, target in list(game["dock_weakness"].items()):
+                new_source = replace(source_name, rename)
+                if new_source != source_name:
+                    game["dock_weakness"][new_source] = game["dock_weakness"].pop(source_name)
+
             for source_name, hint in list(game["hints"].items()):
                 if hint["hint_type"] == "location":
                     if hint["precision"].get("location") == "relative-to-area":
@@ -693,6 +698,30 @@ def _migrate_v34(data: dict) -> None:
                 "Sky Temple/Sky Temple Energy Controller/Elevator to Temple Grounds",
                 "Sky Temple/Sky Temple Energy Controller/Elevator to Sky Temple Grounds",
             )
+
+
+def _migrate_v35(data: dict) -> None:
+    game_modifications = data["game_modifications"]
+
+    for index, game in enumerate(game_modifications):
+        for region in game["locations"].keys():
+            for location, pickup in game["locations"][region].items():
+                if "Energy Transfer Module" in pickup:
+                    # Formatted so because some older rdvgames append "for player X" to ETMs
+                    # Bad migration perhaps? idk
+                    game_modifications[index]["locations"][region].update({location: "Nothing"})
+
+
+def _migrate_v36(data: dict) -> None:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        game_name = game["game"]
+        if game_name != "am2r":
+            continue
+        pickups = game["starting_equipment"]["pickups"]
+        pickups.remove("Power Beam")
+        pickups.append("Arm Cannon")
 
 
 _MIGRATIONS = [
@@ -730,6 +759,8 @@ _MIGRATIONS = [
     _migrate_v32,  # MSR Rename Area 4 Crystal Mines - Gamma Arena to Gamma+ Arena
     _migrate_v33,
     _migrate_v34,  # removal of in_dark_aether
+    _migrate_v35,  # rename ETMs to Nothing
+    _migrate_v36,  # am2r: repurpose power beam to arm cannon
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

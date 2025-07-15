@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -54,16 +54,15 @@ def is_dna_node(node: PickupNode, config: MSRConfiguration) -> bool:
 
 
 class MSRBootstrap(Bootstrap[MSRConfiguration]):
-    def create_damage_state(self, game: GameDescription, configuration: MSRConfiguration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: MSRConfiguration) -> DamageState:
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
-            game.resource_database,
-            game.region_list,
+            game.get_resource_database_view().get_item("ETank"),
         )
 
     def _get_enabled_misc_resources(
-        self, configuration: MSRConfiguration, resource_database: ResourceDatabase
+        self, configuration: MSRConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         enabled_resources = set()
 
@@ -103,7 +102,7 @@ class MSRBootstrap(Bootstrap[MSRConfiguration]):
     def event_resources_for_configuration(
         self,
         configuration: MSRConfiguration,
-        resource_database: ResourceDatabase,
+        resource_database: ResourceDatabaseView,
     ) -> ResourceGain:
         if configuration.elevator_grapple_blocks:
             for name in [
@@ -130,9 +129,10 @@ class MSRBootstrap(Bootstrap[MSRConfiguration]):
             ]:
                 yield resource_database.get_event(name), 1
 
-    def _damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection) -> float:
+    def _damage_reduction(self, db: ResourceDatabaseView, current_resources: ResourceCollection) -> float:
         num_suits = sum(
-            (1 if current_resources[db.get_item_by_name(suit)] else 0) for suit in ("Varia Suit", "Gravity Suit")
+            (1 if current_resources[db.get_item_by_display_name(suit)] else 0)
+            for suit in ("Varia Suit", "Gravity Suit")
         )
         dr = 1.0
         if num_suits == 1:
@@ -150,8 +150,8 @@ class MSRBootstrap(Bootstrap[MSRConfiguration]):
     ) -> GamePatches:
         if configuration.artifacts.prefer_anywhere:
             return super().assign_pool_results(rng, configuration, patches, pool_results)
-
+        pickups_to_preplace = [pickup for pickup in list(pool_results.to_place) if pickup.gui_category.name == "dna"]
         locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_dna_node)
-        self.pre_place_pickups(rng, locations, pool_results, "dna", patches.game.game)
+        self.pre_place_pickups(rng, pickups_to_preplace, locations, pool_results, patches.game.game)
 
         return super().assign_pool_results(rng, configuration, patches, pool_results)

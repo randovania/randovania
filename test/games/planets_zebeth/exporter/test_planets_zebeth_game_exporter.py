@@ -52,9 +52,10 @@ def test_do_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
         output_path=tmp_path.joinpath("output", "path"),
     )
     progress_update = MagicMock()
+    randovania_meta = MagicMock()
 
     # Run
-    exporter._do_export_game(patch_data, export_params, progress_update)
+    exporter._do_export_game(patch_data, export_params, progress_update, randovania_meta)
 
     # Assert
     submit.assert_called_with(ANY, patch_data, export_params, ANY)

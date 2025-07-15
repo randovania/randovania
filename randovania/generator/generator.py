@@ -8,10 +8,7 @@ from typing import TYPE_CHECKING
 import tenacity
 
 from randovania.game_description.assignment import PickupTarget, PickupTargetAssociation
-from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.generator import dock_weakness_distributor, hint_distributor
 from randovania.generator.filler.filler_configuration import FillerResults, PlayerPool
 from randovania.generator.filler.filler_library import UnableToGenerate, filter_unassigned_pickup_nodes
@@ -20,7 +17,6 @@ from randovania.generator.pickup_pool import PoolResults, pool_creator
 from randovania.generator.pre_fill_params import PreFillParams
 from randovania.layout import filtered_database
 from randovania.layout.base.available_locations import RandomizationMode
-from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug, exceptions, resolver
@@ -34,7 +30,6 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.game_description.requirements.base import Requirement
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.generator_parameters import GeneratorParameters
     from randovania.layout.preset import Preset
@@ -59,6 +54,14 @@ def _validate_pickup_pool_size(
             f"Preset has {min_starting_pickups} minimum starting items, "
             f"which is more than the maximum of {max_starting_pickups}."
         )
+
+    if configuration.available_locations.randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
+        per_category_pool = pool_creator.calculate_pool_pickup_count(configuration)
+        for category, (count, num_nodes) in per_category_pool.items():
+            if category is LocationCategory.MAJOR and count > num_nodes:
+                raise InvalidConfiguration(
+                    f"Preset has {count} major pickups, which is more than the maximum of {num_nodes}."
+                )
 
 
 async def check_if_beatable(patches: GamePatches, pool: PoolResults) -> bool:
@@ -154,11 +157,6 @@ async def _create_pools_and_fill(
                 status_update,
             )
             _validate_pickup_pool_size(new_pool.pickups, new_pool.game, new_pool.configuration)
-
-            # All majors/pickups required
-            new_pool.game.victory_condition = victory_condition_for_pickup_placement(
-                new_pool.pickups, new_pool.game, player_preset.configuration.logical_pickup_placement
-            )
 
             player_pools.append(new_pool)
 
@@ -351,32 +349,3 @@ async def generate_and_validate_description(
             )
 
     return result
-
-
-def victory_condition_for_pickup_placement(
-    pickups: list[PickupEntry], game: GameDescription, placement_config: LogicalPickupPlacementConfiguration
-) -> Requirement:
-    """
-    Creates a Requirement with the game's victory condition adjusted to a specified pickup set.
-    :param pickups:
-    :param game:
-    :param placement_config: The configuration for adjusting the victory condition.
-    :return:
-    """
-    if placement_config is LogicalPickupPlacementConfiguration.MINIMAL:
-        return game.victory_condition
-
-    add_all_pickups = placement_config is LogicalPickupPlacementConfiguration.ALL
-    resources = ResourceCollection.with_database(game.resource_database)
-
-    for pickup in pickups:
-        if pickup.generator_params.preferred_location_category is LocationCategory.MAJOR or add_all_pickups:
-            resources.add_resource_gain(pickup.resource_gain(resources, force_lock=True))
-
-    # Create a requirement with the victory condition and the pickups
-    return RequirementAnd(
-        [
-            game.victory_condition,
-            *(ResourceRequirement.create(resource[0], resource[1], False) for resource in resources.as_resource_gain()),
-        ]
-    ).simplify()

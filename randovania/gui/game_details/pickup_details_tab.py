@@ -8,14 +8,15 @@ from PySide6 import QtCore, QtGui, QtWidgets
 
 from randovania.exporter import item_names
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.filtered_game_database_view import LayerFilteredGameDatabaseView
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.gui.generated.pickup_details_tab_ui import Ui_PickupDetailsTab
 from randovania.gui.lib import signal_handling
-from randovania.layout import filtered_database
 
 if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.interface_common.players_configuration import PlayersConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
@@ -73,15 +74,16 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
 
         patches = all_patches[players.player_index]
         pickup_names = {pickup.pickup.name for pickup in patches.pickup_assignment.values()}
-        game_description = filtered_database.game_description_for_layout(configuration)
-        self._create_pickup_spoilers(game_description)
-        starting_area = game_description.region_list.area_by_area_location(patches.starting_location)
-
-        extra_items = item_names.additional_starting_equipment(configuration, game_description, patches)
-
-        self.spoiler_starting_location_label.setText(
-            f"Starting Location: {game_description.region_list.area_name(starting_area)}"
+        game_view = LayerFilteredGameDatabaseView.create_for_configuration(
+            configuration.game_enum().game_description,
+            configuration,
         )
+        self._create_pickup_spoilers(game_view)
+        starting_node = game_view.node_by_identifier(patches.starting_location)
+
+        extra_items = item_names.additional_starting_equipment(configuration, game_view, patches)
+
+        self.spoiler_starting_location_label.setText(f"Starting Location: {starting_node.full_name(separator=' - ')}")
         self.spoiler_starting_items_label.setText(
             "Random Starting Items: {}".format(", ".join(extra_items) if extra_items else "None")
         )
@@ -107,7 +109,7 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
             if not pickup_button.item_is_hidden:
                 pickup_button.setText(pickup_button.item_name)
 
-    def _create_pickup_spoilers(self, game_description: GameDescription):
+    def _create_pickup_spoilers(self, game_view: GameDatabaseView) -> None:
         for groups in self._pickup_spoiler_region_to_group.values():
             groups.deleteLater()
 
@@ -117,10 +119,8 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
         self._pickup_spoiler_region_to_group = {}
         nodes_in_region = collections.defaultdict(list)
 
-        for region, area, node in game_description.region_list.all_regions_areas_nodes:
-            if isinstance(node, PickupNode):
-                nodes_in_region[region.name].append((f"{area.name} - {node.name}", node.pickup_index))
-                continue
+        for region, area, node in game_view.iterate_nodes_of_type(PickupNode):
+            nodes_in_region[region.name].append((f"{area.name} - {node.name}", node.pickup_index))
 
         for region_name in sorted(nodes_in_region.keys()):
             group_box = QtWidgets.QGroupBox(self.pickup_spoiler_scroll_contents)
@@ -197,35 +197,31 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
             return
 
         pickup_names = set()
-        rows = []
+        rows: list[tuple[str, str, NodeIdentifier]] = []
 
         for source_index, patches in all_patches.items():
             rl = patches.game.region_list
             for pickup_index, pickup_target in patches.pickup_assignment.items():
                 if pickup_target.player == players.player_index:
                     node = rl.node_from_pickup_index(pickup_index)
-                    area = rl.nodes_to_area(node)
-
                     rows.append(
                         (
                             pickup_target.pickup.name,
                             players.player_names[source_index],
-                            rl.region_name_from_area(area, True),
-                            area.name,
-                            node.name,
+                            node.identifier,
                         )
                     )
                     pickup_names.add(pickup_target.pickup.name)
 
         self.search_pickup_model.setRowCount(len(rows))
 
-        for i, (pickup_name, player_name, region_name, area_name, node_name) in enumerate(rows):
+        for i, (pickup_name, player_name, identifier) in enumerate(rows):
             player_item = QtGui.QStandardItem(player_name)
             player_item.setData(pickup_name, QtCore.Qt.ItemDataRole.UserRole)
             self.search_pickup_model.setItem(i, 0, player_item)
-            self.search_pickup_model.setItem(i, 1, QtGui.QStandardItem(region_name))
-            self.search_pickup_model.setItem(i, 2, QtGui.QStandardItem(area_name))
-            self.search_pickup_model.setItem(i, 3, QtGui.QStandardItem(node_name))
+            self.search_pickup_model.setItem(i, 1, QtGui.QStandardItem(identifier.region))
+            self.search_pickup_model.setItem(i, 2, QtGui.QStandardItem(identifier.area))
+            self.search_pickup_model.setItem(i, 3, QtGui.QStandardItem(identifier.node))
 
         self.search_pickup_combo.clear()
         self.search_pickup_combo.addItem("Select pickup", None)

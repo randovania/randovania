@@ -19,7 +19,7 @@ from randovania.network_common.remote_pickup import RemotePickup
 def am2r_remote_connector():
     executor_mock = MagicMock(AM2RExecutor)
     executor_mock.layout_uuid_str = "00000000-0000-1111-0000-000000000000"
-    executor_mock.signals = MagicMock(ExecutorToConnectorSignals)
+    executor_mock.signals = ExecutorToConnectorSignals()
     connector = AM2RRemoteConnector(executor_mock)
     return connector
 
@@ -89,21 +89,21 @@ async def test_new_inventory_received(connector: AM2RRemoteConnector):
     connector.logger.warning.assert_not_called()
 
     # Check Missiles
-    missiles = connector.game.resource_database.get_item_by_name("Missiles")
+    missiles = connector.game.resource_database.get_item_by_display_name("Missiles")
     assert connector.last_inventory[missiles].capacity == 10
 
     # Check Space Jump + HJ
-    hijump = connector.game.resource_database.get_item_by_name("Hi-Jump Boots")
+    hijump = connector.game.resource_database.get_item_by_display_name("Hi-Jump Boots")
     assert connector.last_inventory[hijump].capacity == 1
-    spacejump = connector.game.resource_database.get_item_by_name("Space Jump")
+    spacejump = connector.game.resource_database.get_item_by_display_name("Space Jump")
     assert connector.last_inventory[spacejump].capacity == 1
 
     # Check Speed booster
-    speedbooster = connector.game.resource_database.get_item_by_name("Speed Booster")
+    speedbooster = connector.game.resource_database.get_item_by_display_name("Speed Booster")
     assert connector.last_inventory[speedbooster].capacity == 1
 
     # Check Missile Launcher
-    missile_launcher = connector.game.resource_database.get_item_by_name("Missile Launcher")
+    missile_launcher = connector.game.resource_database.get_item_by_display_name("Missile Launcher")
     assert connector.last_inventory[missile_launcher].capacity == 1
 
 
@@ -161,10 +161,10 @@ async def test_receive_remote_pickups(connector: AM2RRemoteConnector, am2r_varia
 async def test_new_collected_locations_received_wrong_answer(connector: AM2RRemoteConnector):
     connector.logger = MagicMock()
     connector.current_region = Region("Golden Temple", [], {})
-    new_indices = "Foo"
+    new_indices = b"Foo"
     connector.new_collected_locations_received(new_indices)
 
-    connector.logger.warning.assert_called_once_with("Unknown response: %s", new_indices)
+    connector.logger.warning.assert_called_once_with("Unknown response: %s", new_indices.decode("utf-8"))
 
 
 async def test_new_collected_locations_received(connector: AM2RRemoteConnector):
@@ -172,7 +172,7 @@ async def test_new_collected_locations_received(connector: AM2RRemoteConnector):
 
     connector.logger = MagicMock()
     connector.PickupIndexCollected.connect(collected_mock)
-    new_indices = "locations:1,"
+    new_indices = b"locations:1,"
 
     connector.current_region = None
     connector.new_collected_locations_received(new_indices)

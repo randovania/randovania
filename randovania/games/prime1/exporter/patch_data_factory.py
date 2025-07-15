@@ -24,14 +24,15 @@ from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 if TYPE_CHECKING:
     from random import Random
 
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.db.dock import DockType
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import Region, RegionList
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.layout.layout_description import LayoutDescription
     from randovania.lib.json_lib import JsonObject
 
@@ -185,7 +186,7 @@ def _create_locations_with_modal_hud_memo(pickups: list[pickup_exporter.Exported
 
 
 def _starting_items_value_for(
-    resource_database: ResourceDatabase, starting_items: ResourceCollection, index: str
+    resource_database: ResourceDatabaseView, starting_items: ResourceCollection, index: str
 ) -> bool | int:
     item = resource_database.get_item(index)
     value = starting_items[item]
@@ -659,7 +660,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
         return pickup_creator.create_visual_nothing(self.game_enum(), "Nothing")
 
-    def create_game_specific_data(self) -> dict:
+    def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         # Setup
         db = self.game
         namer = PrimeHintNamer(self.description.all_patches, self.players_config)
@@ -676,7 +677,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                 )
             )
 
-        scan_visor = self.game.resource_database.get_item_by_name("Scan Visor")
+        scan_visor = self.game.resource_database.get_item_by_display_name("Scan Visor")
         pickup_list = self.export_pickup_list()
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
         regions = [region for region in db.region_list.regions if region.name != "End of Game"]
@@ -801,9 +802,6 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                     key=lambda n: n.extra["dock_index"],
                 )
                 for node in dock_nodes:
-                    if node.extra.get("exclude_dock_rando", False):
-                        continue
-
                     if self.patches.has_default_weakness(node):
                         continue
 
@@ -825,7 +823,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         # serialize text modifications
         if self.configuration.hints.specific_pickup_hints["phazon_suit"] != SpecificPickupHintMode.DISABLED:
             try:
-                phazon_suit_resource_info = self.game.resource_database.get_item_by_name("Phazon Suit")
+                phazon_suit_resource_info = self.game.resource_database.get_item_by_display_name("Phazon Suit")
 
                 hint_texts: dict[ItemResourceInfo, str] = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                     self.description.all_patches,
@@ -998,6 +996,11 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         else:
             boss_sizes = {}
 
+        if self.configuration.spring_ball:
+            spring_ball_item = "Morph Ball Bomb"
+        else:
+            spring_ball_item = "Spring Ball"
+
         data: dict = {
             "$schema": "https://randovania.github.io/randomprime/randomprime.schema.json",
             "seed": self.description.get_seed_for_world(self.players_config.player_index),
@@ -1023,7 +1026,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                 "noDoors": self.configuration.no_doors,
                 "startingRoom": starting_room,
                 "warpToStart": self.configuration.warp_to_start,
-                "springBall": self.configuration.spring_ball,
+                "springBallItem": spring_ball_item,
                 "incineratorDroneConfig": idrone_config,
                 "mazeSeeds": maze_seeds,
                 "nonvariaHeatDamage": not self.configuration.legacy_mode,
@@ -1034,6 +1037,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                 "multiworldDolPatches": True,
                 "doorOpenMode": "PrimaryBlastShield",
                 "difficultyBehavior": self.configuration.ingame_difficulty.randomprime_value,
+                "blastShieldLockon": self.configuration.blast_shield_lockon,
                 "disableItemLoss": True,  # Item Loss in Frigate
                 "startingItems": starting_items,
                 "etankCapacity": self.configuration.energy_per_tank,
@@ -1065,7 +1069,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
             },
             "tweaks": ctwk_config,
             "levelData": level_data,
-            "hasSpoiler": self.description.has_spoiler,
+            "hasSpoiler": not randovania_meta["in_race_setting"],
             "roomRandoMode": self.configuration.room_rando.value,
             "randEnemyAttributes": (
                 self.configuration.enemy_attributes.as_json if self.configuration.enemy_attributes is not None else None

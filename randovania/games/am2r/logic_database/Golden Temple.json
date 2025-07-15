@@ -580,6 +580,10 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot"
                                                 }
                                             ]
                                         }
@@ -812,6 +816,14 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "107668": "oNeedler",
+                    "107669": "oNeedler",
+                    "107670": "oNeedler",
+                    "107671": "oNeedler",
+                    "107672": "oNeedler",
+                    "107673": "oNeedler"
                 }
             },
             "nodes": {
@@ -972,6 +984,13 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "107747": "oGawronSpawner",
+                    "107748": "oGawronSpawner",
+                    "107749": "oGawronSpawner",
+                    "107750": "oGawronSpawner",
+                    "107751": "oGawronSpawner"
                 }
             },
             "nodes": {
@@ -1226,6 +1245,24 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "107808": "oChuteLeech",
+                    "107809": "oChuteLeech",
+                    "107810": "oChuteLeech",
+                    "107811": "oChuteLeech",
+                    "107812": "oChuteLeech",
+                    "107813": "oChuteLeech",
+                    "107814": "oChuteLeech",
+                    "107815": "oChuteLeech",
+                    "107816": "oChuteLeech",
+                    "107817": "oChuteLeech",
+                    "107818": "oChuteLeech",
+                    "107844": "oGullugg",
+                    "107845": "oGullugg",
+                    "107846": "oGullugg",
+                    "107847": "oGullugg",
+                    "107848": "oGullugg"
                 }
             },
             "nodes": {
@@ -4896,6 +4933,13 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "108374": "oWallfire",
+                    "108375": "oWallfire",
+                    "108376": "oWallfire",
+                    "108377": "oWallfire",
+                    "108378": "oWallfire"
                 }
             },
             "nodes": {
@@ -5211,6 +5255,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
                                     }
                                 ]
                             }
@@ -5286,17 +5334,27 @@
                             }
                         },
                         "Pickup (Left Missile Tank)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
+                                    }
+                                ]
                             }
                         },
                         "Event - 3-Orbs": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Shoot"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5469,6 +5527,18 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "108481": "oWallfire",
+                    "108482": "oWallfire",
+                    "108483": "oWallfire",
+                    "108484": "oWallfire",
+                    "108485": "oWallfire",
+                    "108486": "oWallfire",
+                    "108487": "oWallfire",
+                    "108488": "oWallfire",
+                    "108489": "oWallfire",
+                    "108543": "oWallfire"
                 }
             },
             "nodes": {
@@ -5891,12 +5961,24 @@
                                                     "data": "Can Use Bombs"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Missiles",
-                                                        "amount": 5,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missiles",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -5957,6 +6039,9 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "108575": "oWallfire"
                 }
             },
             "nodes": {
@@ -6096,15 +6181,6 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Wave Beam",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
                                             "type": "tricks",
                                             "name": "Knowledge",
                                             "amount": 2,
@@ -6119,6 +6195,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Shoot Wave Beam"
                                     }
                                 ]
                             }
@@ -6172,6 +6252,10 @@
                                     {
                                         "type": "template",
                                         "data": "Can Use Any Bombs"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Shoot"
                                     }
                                 ]
                             }
@@ -6232,20 +6316,15 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Wave Beam",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
                                             "type": "tricks",
                                             "name": "Knowledge",
                                             "amount": 2,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Shoot Wave Beam"
                                     }
                                 ]
                             }
@@ -6289,6 +6368,10 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "108610": "oWallfire",
+                    "108611": "oWallfire"
                 }
             },
             "nodes": {
@@ -6370,10 +6453,15 @@
                             }
                         },
                         "Pickup (Bottom Missile Tank)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
+                                    }
+                                ]
                             }
                         },
                         "Pickup (Top Missile Tank)": {
@@ -6445,12 +6533,24 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Power Grip",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Power Grip",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot"
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -6475,6 +6575,10 @@
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot"
                                                             }
                                                         ]
                                                     }
@@ -6506,13 +6610,29 @@
                                                                                             "amount": 1,
                                                                                             "negate": false
                                                                                         }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Shoot"
                                                                                     }
                                                                                 ]
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Can Use Spring Ball"
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Use Spring Ball"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Shoot"
+                                                                                    }
+                                                                                ]
+                                                                            }
                                                                         },
                                                                         {
                                                                             "type": "and",
@@ -6588,6 +6708,10 @@
                                                                         }
                                                                     ]
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot"
                                                             }
                                                         ]
                                                     }
@@ -7016,6 +7140,15 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "108655": "oWallfire",
+                    "108669": "oWallfire",
+                    "108670": "oWallfire",
+                    "108674": "oWallfire",
+                    "108675": "oWallfire",
+                    "108676": "oWallfire",
+                    "108699": "oWallfire"
                 }
             },
             "nodes": {
@@ -7455,13 +7588,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Shoot Super Missile"
                                     },
                                     {
                                         "type": "template",
@@ -7651,6 +7779,12 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "109117": "oGullugg",
+                    "109118": "oGullugg",
+                    "109119": "oGullugg",
+                    "109120": "oGullugg"
                 }
             },
             "nodes": {

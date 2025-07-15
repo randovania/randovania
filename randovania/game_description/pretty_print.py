@@ -121,7 +121,7 @@ def pretty_print_node_type(node: Node, region_list: RegionList, db: ResourceData
     if isinstance(node, DockNode):
         try:
             other = region_list.node_by_identifier(node.default_connection)
-            other_name = region_list.node_name(other)
+            other_name = other.full_name(with_region=False)
         except IndexError as e:
             other_name = f"(Area {node.default_connection.area}, index {node.default_connection.node}) [{e}]"
 
@@ -213,7 +213,7 @@ def pretty_print_area(game: GameDescription, area: Area, print_function: typing.
                     )
                     print_function("")
 
-        for target_node, requirement in game.region_list.area_connections_from(node):
+        for target_node, requirement in area.connections[node].items():
             if target_node.is_derived_node:
                 continue
 

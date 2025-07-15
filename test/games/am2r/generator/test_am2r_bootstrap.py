@@ -20,7 +20,7 @@ _boss_indices = [111, 3, 6, 14, 11, 50]
 @pytest.mark.parametrize(
     ("artifacts", "expected"),
     [
-        (AM2RArtifactConfig(True, True, False, 5, 5), [3, 50, 374, 389, 391]),
+        (AM2RArtifactConfig(True, True, False, 5, 5), [360, 361, 365, 385, 389]),
         (AM2RArtifactConfig(True, False, False, 46, 46), range(350, 396)),
         (AM2RArtifactConfig(False, True, False, 6, 6), _boss_indices),
         (AM2RArtifactConfig(False, False, False, 0, 0), []),
@@ -91,7 +91,7 @@ def test_assign_pool_results_prefer_anywhere(am2r_game_description, am2r_configu
 def test_configurable_damage_reduction(am2r_resource_database, am2r_configuration, expected, suits):
     # Setup
     current_resources = ResourceCollection.from_dict(
-        am2r_resource_database, {am2r_resource_database.get_item_by_name(suit): 1 for suit in suits}
+        am2r_resource_database, {am2r_resource_database.get_item_by_display_name(suit): 1 for suit in suits}
     )
     bootstrap = RandovaniaGame.AM2R.generator.bootstrap
     assert isinstance(bootstrap, AM2RBootstrap)

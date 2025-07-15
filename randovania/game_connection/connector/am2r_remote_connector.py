@@ -94,7 +94,7 @@ class AM2RRemoteConnector(RemoteConnector):
         )
         self.PlayerLocationChanged.emit(PlayerLocationEvent(self.current_region, None))
 
-    def new_collected_locations_received(self, new_indices_response: str) -> None:
+    def new_collected_locations_received(self, response: bytes) -> None:
         """
         __Collected locations implementation detail:__
         The game keeps track of which locations it collected, in a big string, with the format `locations:XX,YY,ZZ...`,
@@ -102,10 +102,12 @@ class AM2RRemoteConnector(RemoteConnector):
         Also, this string is saved to the save file.
         The game sends that string to RDV, where we then loop through it, and mark every index as collected.
 
-        :param new_indices_response: A string from the game with the format `locations:XX,YY,ZZ...`.
+        :param response: A string from the game with the format `locations:XX,YY,ZZ...`.
         """
         if self.current_region is None:
             return
+
+        new_indices_response = response.decode("utf-8")
 
         locations = set()
         start_of_indices = "locations:"
@@ -208,7 +210,7 @@ class AM2RRemoteConnector(RemoteConnector):
 
         inventory = Inventory(
             {
-                self.game.resource_database.get_item_by_name(name): InventoryItem(quantity, quantity)
+                self.game.resource_database.get_item_by_display_name(name): InventoryItem(quantity, quantity)
                 for name, quantity in inventory_dict.items()
             }
         )

@@ -6,6 +6,7 @@ import typing
 import uuid
 
 import pytest
+from frozendict import frozendict
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
@@ -104,7 +105,9 @@ def patches_with_data(request, echoes_game_description, echoes_game_patches, ech
     locations = collections.defaultdict(dict)
     for region, area, node in game.region_list.all_regions_areas_nodes:
         if node.is_resource_node and isinstance(node, PickupNode):
-            locations[region.name][game.region_list.node_name(node)] = game_patches_serializer._ETM_NAME
+            locations[region.name][f"{node.identifier.area}/{node.identifier.node}"] = (
+                game_patches_serializer._NOTHING_PICKUP_NAME
+            )
 
     data["locations"] = {region: dict(sorted(locations[region].items())) for region in sorted(locations.keys())}
 
@@ -226,6 +229,7 @@ def test_bit_pack_pickup_entry(
             ),
         ),
         resource_lock=resource_lock,
+        extra=frozendict({"foo": "bar"}),
     )
 
     # Run

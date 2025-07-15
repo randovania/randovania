@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import json
 import typing
 from random import Random
 from typing import TYPE_CHECKING
 
 import json_delta
+import sentry_sdk
 
 from randovania.exporter import pickup_exporter
 from randovania.exporter.hints.hint_exporter import HintExporter
@@ -28,6 +30,7 @@ if TYPE_CHECKING:
 
 class PatcherDataMeta(typing.TypedDict):
     layout_was_user_modified: bool
+    in_race_setting: bool
 
 
 class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCosmeticPatches]:
@@ -72,18 +75,36 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
         """Returns the game for which this PatchDataFactory is for."""
         raise NotImplementedError
 
-    def create_game_specific_data(self) -> dict:
+    def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         """Creates the game specific data. Should be overwritten by individual games."""
         raise NotImplementedError
 
-    def create_data(self) -> dict:
-        """Creates the patcher specific data. Applies custom patcher data on top if they exist."""
-
-        game_data = self.create_game_specific_data()
-        json_delta.patch(game_data, self.patches.custom_patcher_data)
-        game_data["_randovania_meta"] = {
+    def create_default_patcher_data_meta(self) -> PatcherDataMeta:
+        return {
             "layout_was_user_modified": self.description.user_modified,
+            "in_race_setting": not self.description.has_spoiler,
         }
+
+    def create_data(self, custom_metadata: PatcherDataMeta | None = None) -> dict:
+        """
+        Creates the patcher specific data. Applies custom patcher data on top if they exist.
+        :param custom_metadata: If provided, will be used over the default randovania metadata.
+        :return: The patcher data, with the randovania metadata included, as a dict.
+        """
+
+        with sentry_sdk.isolation_scope() as scope:
+            scope.add_attachment(
+                json.dumps(self.description.as_json(force_spoiler=True)).encode("utf-8"),
+                filename="rdvgame.json",
+                content_type="application/json",
+                add_to_transactions=True,
+            )
+
+        randovania_meta = custom_metadata or self.create_default_patcher_data_meta()
+
+        game_data = self.create_game_specific_data(randovania_meta)
+        json_delta.patch(game_data, self.patches.custom_patcher_data)
+        game_data["_randovania_meta"] = randovania_meta
         return game_data
 
     def create_memo_data(self) -> dict[str, str]:
@@ -92,7 +113,7 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
 
     def create_useless_pickup(self) -> PickupEntry:
         """Used for any location with no PickupEntry assigned to it."""
-        return pickup_creator.create_nothing_pickup(self.game.resource_database)
+        return pickup_creator.create_nothing_pickup(self.game.get_resource_database_view())
 
     def create_visual_nothing(self) -> PickupEntry:
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""

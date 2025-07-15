@@ -23,6 +23,7 @@ from randovania.lib import random_lib
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
@@ -43,6 +44,24 @@ _ALTERNATIVE_MODELS = {
         "powerup_spacejump",
     ],
     PickupModel(RandovaniaGame.METROID_SAMUS_RETURNS, "PROGRESSIVE_SUIT"): ["powerup_variasuit", "powerup_gravitysuit"],
+}
+
+_MODEL_SOUND_MAPPING = {
+    # DNA
+    "adn": "k_matad_jinchozo",
+    # Aeion abilities
+    "powerup_scanningpulse": "special_ability2_32",
+    "powerup_energyshield": "special_ability2_32",
+    "powerup_energywave": "special_ability2_32",
+    "powerup_phasedisplacement": "special_ability2_32",
+    # tanks
+    "item_energytank": "tank_jingle",
+    "item_missiletank": "tank_jingle",
+    "item_supermissiletank": "tank_jingle",
+    "item_powerbombtank": "tank_jingle",
+    "item_senergytank": "tank_jingle",
+    # nothing
+    "itemsphere": "sphere_jingle_placeholder",
 }
 
 
@@ -241,7 +260,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
             return {}
 
     def _key_error_for_node(self, node: Node, err: KeyError) -> KeyError:
-        return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has no extra {err}")
+        return KeyError(f"{node.full_name()} has no extra {err}")
 
     def _level_name_for(self, node: Node) -> str:
         region = self.game.region_list.nodes_to_region(node)
@@ -282,7 +301,13 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         if len(set(detail.collection_text)) > 1:
             hud_text = self.memo_data[detail.original_pickup.name]
 
-        details = {"pickup_type": pickup_type, "caption": hud_text, "resources": resources}
+        sound = _MODEL_SOUND_MAPPING.get(model_names[0], _MODEL_SOUND_MAPPING["itemsphere"])
+        details = {
+            "pickup_type": pickup_type,
+            "caption": hud_text,
+            "resources": resources,
+            "sound": sound,
+        }
 
         if pickup_type == "actor":
             pickup_actor = self._teleporter_ref_for(pickup_node)
@@ -616,15 +641,13 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         return custom_doors
 
     def _door_patches(self) -> list[dict[str, str]]:
-        wl = self.game.region_list
-
         result: list = []
         used_actors: dict[str, str] = {}
 
         for node, weakness in self.patches.all_dock_weaknesses():
             if "type" not in weakness.extra:
                 raise ValueError(
-                    f"Unable to change door {wl.node_name(node)} into {weakness.name}: incompatible door weakness"
+                    f"Unable to change door {node.full_name()} into {weakness.name}: incompatible door weakness"
                 )
 
             if "actor_name" not in node.extra:
@@ -643,7 +666,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
             actor_idef = str(actor)
             if used_actors.get(actor_idef, door_type) != door_type:
                 raise ValueError(
-                    f"Door for {wl.node_name(node)} ({actor}) previously "
+                    f"Door for {node.full_name()} ({actor}) previously "
                     f"patched to use {used_actors[actor_idef]}, tried to change to {door_type}."
                 )
             used_actors[actor_idef] = door_type
@@ -669,7 +692,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
         return pickup_creator.create_visual_nothing(self.game_enum(), "Nothing")
 
-    def create_game_specific_data(self) -> dict:
+    def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
         starting_text = self._starting_inventory_text()
@@ -707,7 +730,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
                 "reverse_area8": self.configuration.reverse_area8,
             },
             "text_patches": dict(sorted(self._static_text_changes().items())),
-            "spoiler_log": self._credits_spoiler() if self.description.has_spoiler else {},
+            "spoiler_log": self._credits_spoiler() if not randovania_meta["in_race_setting"] else {},
             "hints": self._encode_hints(self.rng),
             "final_boss_hint": self._create_final_boss_hint(),
             "cosmetic_patches": self._create_cosmetics(

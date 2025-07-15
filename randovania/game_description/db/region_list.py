@@ -122,30 +122,15 @@ class RegionList(NodeProvider):
         return sum(1 for node in self.iterate_nodes_of_type(PickupNode))
 
     @property
-    def all_regions_areas_nodes(self) -> Iterable[tuple[Region, Area, Node]]:
+    def all_regions_areas_nodes(self) -> Iterator[tuple[Region, Area, Node]]:
         for region in self.regions:
             for area in region.areas:
                 for node in area.nodes:
                     yield region, area, node
 
-    def region_name_from_area(
-        self, area: Area, distinguish_dark_aether: bool = False, region: Region | None = None
-    ) -> str:
-        if region is None:
-            region = self.region_with_area(area)
-
-        return region.name
-
-    def region_name_from_node(self, node: Node, distinguish_dark_aether: bool = False) -> str:
-        region = self.nodes_to_region(node)
-        return self.region_name_from_area(self.nodes_to_area(node), distinguish_dark_aether, region)
-
     def area_name(self, area: Area, separator: str = " - ", distinguish_dark_aether: bool = True) -> str:
-        return f"{self.region_name_from_area(area, distinguish_dark_aether)}{separator}{area.name}"
-
-    def node_name(self, node: Node, with_region: bool = False, distinguish_dark_aether: bool = False) -> str:
-        prefix = f"{self.region_name_from_node(node, distinguish_dark_aether)}/" if with_region else ""
-        return f"{prefix}{self.nodes_to_area(node).name}/{node.name}"
+        region_name = self.region_with_area(area).name
+        return f"{region_name}{separator}{area.name}"
 
     def nodes_to_region(self, node: Node) -> Region:
         self.ensure_has_node_cache()

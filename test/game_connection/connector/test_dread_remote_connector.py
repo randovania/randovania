@@ -18,7 +18,7 @@ from randovania.network_common.remote_pickup import RemotePickup
 def dread_remote_connector():
     executor_mock = MagicMock(DreadExecutor)
     executor_mock.layout_uuid_str = "00000000-0000-1111-0000-000000000000"
-    executor_mock.signals = MagicMock(ExecutorToConnectorSignals)
+    executor_mock.signals = ExecutorToConnectorSignals()
     executor_mock.version = "2.1.0"
     connector = DreadRemoteConnector(executor_mock)
     return connector
@@ -76,15 +76,15 @@ async def test_new_inventory_received(connector: DreadRemoteConnector):
     assert connector.inventory_index == 69
 
     # check wide beam
-    wide_beam = connector.game.resource_database.get_item_by_name("Wide Beam")
+    wide_beam = connector.game.resource_database.get_item_by_display_name("Wide Beam")
     assert connector.last_inventory[wide_beam].capacity == 1
 
     # check plasma beam
-    plasma_beam = connector.game.resource_database.get_item_by_name("Plasma Beam")
+    plasma_beam = connector.game.resource_database.get_item_by_display_name("Plasma Beam")
     assert connector.last_inventory[plasma_beam].capacity == 0
 
     # check wave beam
-    wave_beam = connector.game.resource_database.get_item_by_name("Wave Beam")
+    wave_beam = connector.game.resource_database.get_item_by_display_name("Wave Beam")
     assert connector.last_inventory.get(wave_beam) == InventoryItem(0, 0)
 
     inventory_updated.assert_called_once()
@@ -142,7 +142,7 @@ async def test_receive_remote_pickups(connector: DreadRemoteConnector, dread_spi
         "RandomizerPowerup,'{\\n{\\n{\\nitem_id = "
         '"ITEM_MAGNET_GLOVE",\\nquantity = 1,\\n},\\n},\\n}\',0,2)'
     )
-    connector.executor.run_lua_code.assert_called_once_with(execute_string)
+    connector.executor.run_lua_code.assert_awaited_once_with(execute_string)
 
 
 async def test_new_collected_locations_received_wrong_answer(connector: DreadRemoteConnector):
@@ -161,5 +161,5 @@ async def test_new_collected_locations_received(connector: DreadRemoteConnector)
     new_indices = b"locations:1"
     connector.new_collected_locations_received(new_indices)
 
-    connector.logger.warning.assert_not_called
-    collected_mock.assert_has_calls([call(PickupIndex(0)), call(PickupIndex(4)), call(PickupIndex(5))])
+    connector.logger.warning.assert_not_called()
+    assert collected_mock.call_args_list == [call(PickupIndex(0)), call(PickupIndex(4)), call(PickupIndex(5))]

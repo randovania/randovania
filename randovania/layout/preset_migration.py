@@ -1163,6 +1163,39 @@ def _migrate_v102(preset: dict, game: RandovaniaGame) -> None:
             fix(it)
 
 
+def _migrate_v103(preset: dict, game: RandovaniaGame) -> None:
+    if game != RandovaniaGame.METROID_PRIME:
+        return
+
+    dlr = preset["configuration"]["dock_rando"]["mode"] != "vanilla"
+    legacy = preset["configuration"]["legacy_mode"]
+
+    preset["configuration"]["blast_shield_lockon"] = dlr and not legacy
+    if dlr and not legacy:
+        preset["configuration"]["blue_save_doors"] = True
+
+
+def _migrate_v104(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.AM2R:
+        state = preset["configuration"]["standard_pickup_configuration"]["pickups_state"]
+        item_list = ["Alpha Metroid Lure", "Gamma Metroid Lure", "Zeta Metroid Lure", "Omega Metroid Lure"]
+        for item_name in item_list:
+            state[item_name] = {"num_included_in_starting_pickups": 1}
+
+
+def _migrate_v105(preset: dict, game: RandovaniaGame) -> None:
+    if game != RandovaniaGame.AM2R:
+        return
+    pickups_state = preset["configuration"]["standard_pickup_configuration"]["pickups_state"]
+    pickups_state["Arm Cannon"] = {"num_included_in_starting_pickups": 1}
+
+
+def _migrate_v106(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
+        preset["configuration"]["pre_place_artifact"] = False
+        preset["configuration"]["pre_place_phazon"] = False
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1266,6 +1299,10 @@ _MIGRATIONS = [
     _migrate_v100,  # hints configuration
     _migrate_v101,
     _migrate_v102,  # removal of in_dark_aether
+    _migrate_v103,  # prime1 blast-shield lockon
+    _migrate_v104,  # am2r add metroid lures
+    _migrate_v105,  # am2r add arm cannon
+    _migrate_v106,  # add pre-placement to prime
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

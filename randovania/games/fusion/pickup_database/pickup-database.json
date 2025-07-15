@@ -126,7 +126,8 @@
             "progression": [
                 "Infant Metroid {i}"
             ],
-            "expected_case_for_describer": "shuffled"
+            "expected_case_for_describer": "shuffled",
+            "starting_condition": "never_start"
         }
     },
     "standard_pickups": {
@@ -271,7 +272,8 @@
             "preferred_location_category": "major",
             "extra": {
                 "StartingItemCategory": "Abilities",
-                "StartingItemName": "Missiles"
+                "StartingItemName": "Missiles",
+                "LauncherIncrementName": "MissileData"
             },
             "progression": [
                 "MissileData"
@@ -433,7 +435,8 @@
             "preferred_location_category": "major",
             "extra": {
                 "StartingItemCategory": "Abilities",
-                "StartingItemName": "PowerBombs"
+                "StartingItemName": "PowerBombs",
+                "LauncherIncrementName": "PowerBombData"
             },
             "progression": [
                 "PowerBombData"
@@ -759,7 +762,8 @@
             ],
             "unlocked_by": "MissileData",
             "temporary": "LockedMissiles",
-            "allows_negative": true
+            "allows_negative": true,
+            "hide_requires_main": true
         },
         "Power Bomb Tank": {
             "gui_category": "morph_ball",
@@ -783,7 +787,8 @@
             ],
             "unlocked_by": "PowerBombData",
             "temporary": "LockedPowerBombs",
-            "allows_negative": true
+            "allows_negative": true,
+            "hide_requires_main": true
         }
     },
     "default_pickups": {},

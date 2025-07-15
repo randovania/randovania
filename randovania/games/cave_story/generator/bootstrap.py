@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
 from randovania.resolver.bootstrap import Bootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
@@ -12,10 +13,9 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
     from randovania.resolver.damage_state import DamageState
@@ -29,7 +29,7 @@ def is_puppy_node(node: PickupNode, config: CSConfiguration) -> bool:
 
 class CSBootstrap(Bootstrap[CSConfiguration]):
     def _get_enabled_misc_resources(
-        self, configuration: CSConfiguration, resource_database: ResourceDatabase
+        self, configuration: CSConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         enabled_resources = set()
 
@@ -47,23 +47,22 @@ class CSBootstrap(Bootstrap[CSConfiguration]):
         return enabled_resources
 
     def version_resources_for_game(
-        self, configuration: CSConfiguration, resource_database: ResourceDatabase
+        self, configuration: CSConfiguration, resource_database: ResourceDatabaseView
     ) -> ResourceGain:
-        for resource in resource_database.version:
+        for resource in resource_database.get_all_resources_of_type(ResourceType.VERSION):
             yield resource, 1 if resource.long_name == "Freeware" else 0
 
-    def create_damage_state(self, game: GameDescription, configuration: CSConfiguration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: CSConfiguration) -> DamageState:
         return EnergyTankDamageState(
             configuration.starting_hp,
             1,
-            game.resource_database,
-            game.region_list,
+            game.get_resource_database_view().get_item("lifeCapsule"),
         )
 
     def assign_pool_results(
         self, rng: Random, configuration: CSConfiguration, patches: GamePatches, results: PoolResults
     ) -> GamePatches:
-        db = patches.game.resource_database
+        db = patches.game.get_resource_database_view()
 
         def get_valid_indices(indices: list[PickupIndex]) -> list[PickupIndex]:
             return [p for p in indices if p not in results.assignment.keys()]
@@ -76,8 +75,9 @@ class CSBootstrap(Bootstrap[CSConfiguration]):
 
         # puppies
         if not configuration.puppies_anywhere:
+            pickups_to_preplace = [pickup for pickup in list(results.to_place) if pickup.gui_category.name == "puppies"]
             locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_puppy_node)
-            self.pre_place_pickups(rng, locations, results, "puppies", patches.game.game)
+            self.pre_place_pickups(rng, pickups_to_preplace, locations, results, patches.game.game)
 
         # weapon to break blocks in first cave (do it this way to ensure a particular distribution chance)
         if patches.starting_location.area in {"Start Point", "First Cave", "Hermit Gunsmith"}:

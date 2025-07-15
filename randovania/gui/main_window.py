@@ -832,14 +832,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     def setup_welcome_text(self):
         self.intro_label.setText(self.intro_label.text().format(version=VERSION))
-
-        welcome = get_readme_section("WELCOME")
-        supported = get_readme_section("SUPPORTED")
-        experimental = get_readme_section("EXPERIMENTAL")
-
-        self.games_supported_label.setText(supported)
-        self.games_experimental_label.setText(experimental if randovania.is_dev_version() else "")
-        self.intro_welcome_label.setText(welcome)
+        self.intro_welcome_label.setText(get_readme_section("WELCOME"))
 
     def _create_generic_window(self, widget: QtWidgets.QWidget, title: str | None = None) -> QtWidgets.QMainWindow:
         window = QtWidgets.QMainWindow()

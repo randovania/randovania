@@ -138,7 +138,6 @@ class PrimePresetDescriber(GamePresetDescriber):
                     "Warp to start": configuration.warp_to_start,
                     "Final bosses removed": configuration.teleporters.skip_final_bosses,
                     "Unlocked Vault door": configuration.main_plaza_door,
-                    "Unlocked Save Station doors": configuration.blue_save_doors,
                     "Phazon Elite without Dynamo": configuration.phazon_elite_without_dynamo,
                 },
                 {
@@ -168,6 +167,10 @@ class PrimePresetDescriber(GamePresetDescriber):
                 },
                 {
                     ingame_difficulty: ingame_difficulty is not None,
+                },
+                {
+                    "Unlocked Save Station doors": configuration.blue_save_doors,
+                    "Blast Shield Lock-On": configuration.blast_shield_lockon,
                 },
                 {
                     enemy_rando_range_scale: enemy_rando_range_scale is not None,
@@ -209,5 +212,9 @@ class PrimePresetDescriber(GamePresetDescriber):
             f"{configuration.artifact_target.num_artifacts} Artifacts, "
             f"{configuration.artifact_minimum_progression} min actions"
         )
+        if configuration.pre_place_artifact:
+            template_strings["Item Pool"].append("Pre-place Artifacts")
+        if configuration.pre_place_phazon:
+            template_strings["Item Pool"].append("Pre-place Phazon Suit")
 
         return template_strings

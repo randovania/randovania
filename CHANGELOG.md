@@ -5,18 +5,161 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [9.1.x] - 2025-05-??
+## [9.4.0] - 2025-08-0?
+
+- Added: 10 more joke hints.
+- Fixed: An error when the computer shuts down unexpectedly or crashes during a multiworld that corrupts some files and prevents Randovania from starting.
+
+### Generator
+- Added: The generator will now check for the count of major pickups when major/minor split is enabled.
+
+## [9.3.1] - 2025-07-05
+
+### AM2R
+
+- Fixed: Exporting games now work.
+
+## [9.3.0] - 2025-07-02
+
+### Generator
+
+- Fixed: Some cases where weights from certain actions would not be calculated correctly.
+- Fixed: Pre placed pickups now avoid using locations configured as non-progression.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Ghavoran
+
+- Fixed: The door between EMMI Zone Exit Southeast and Blue EMMI Introduction is now considered as a Plasma Beam Door on both sides.
+
+### Metroid Prime
+
+- Added: Experimental option to pre-place Artifacts and/or Phazon Suit before generation.
+
+### Metroid Prime 2: Echoes
+
+- Added: "Captain" is now included as a possible word for the seed hash.
+
+## [9.2.0] - 2025-06-02
+
+- Added: 1 more Joke hint.
+- Fixed: A rare division-by-zero error during generation when placing hints.
+- Fixed: An error where turning off specific location hints would still consume that locations pickup as a viable hint target for regular hints.
+- Fixed: The experimental option called Logical Pickup Placement is now respected by the resolver. It also now checks for items configured to be placed in their vanilla location.
+- Added: The preset summary now displays a count of excluded locations, if there are any.
+
+### Resolver
+
+- Fixed: Bug that could lead to timeouts or longer resolving time in some cases.
+
+### Metroid Dread
+
+- Added: A 4 line non-progressive tracker layout.
+
+#### Logic Database
+
+- Changed: All instances of the Cross Bomb Skip trick that were previously rated as Beginner or Intermediate are now rated one level higher.
+- Changed: All instances of the Single Wall Jump trick are now rated one level higher.
+
+##### Artaria
+
+- Changed: A small adjustment that should decrease the frequency of placing Morph Ball in the first accessible location in standard presets.
+
+### Metroid Prime
+
+- Added: Blast Shield Lock-On preset option.
+- Added: Patch to fix Kerry Ann Odem's name in the credits on game version(s) where it is incorrectly spelled.
+- Fixed: Main Plaza vault ledge door is now affected by door lock rando.
+- Fixed: Elite Research Phazon Elite getting stuck on frame perfect cutscene skip.
+- Fixed: Minor music transition fixes.
+- Fixed: Chaos option export error when submerging rooms.
+- Changed: [PAL] Remove extra door lock in Central Dynamo.
+- Changed: [PAL] Load Hunter Metroid in Frost Cave.
+
+### Metroid Prime 2: Echoes
+
+- Changed: "Cheater's delight" pickups are now less likely to be hinted.
+
+#### Logic Database
+
+##### Sky Temple Grounds
+
+- Added: Half pipe hint feature on War Ritual Grounds.
+
+### Metroid: Samus Returns
+
+- Changed: Display the number of remaining DNA in the DNA message before entering the final boss.
+- Fixed: If Metroid Queen is the final boss and you don't have all DNA, the DNA message now appears.
+- Fixed: For tanks with non required main option, the jingle of the tank item is played instead of the jingle of the main object.
+
+## [9.1.1] - 2025-05-03
+
+- Fixed: Duplicating a session now also duplicates the admin settings for Co-op and "Everyone can claim worlds".
+
+### Cave Story
+
+- Fixed: A regression introduced in 9.1.0 that made all received pickups in multiworld behave as Nothings.
+
+## [9.1.0] - 2025-05-01
 
 - Added: After clicking the "Login with Discord" button, a link and a QR Code are displayed instead of opening the default browser directly.
 - Changed: The relative time to start/finish in Async Race rooms now update as time passes, and the window reacts appropriately when the race starts and finishes.
+- Changed: The default and minimum size for the area view in the data visualizer has been increased.
+- Fixed: A server issue that caused async race exporting of AM2R and MSR to let you easily view the spoiler.
+- Fixed: When submitting proof for an async race, it is now clearer that it's only providing a proof URL is not required if submission notes were given.
+- Fixed: Clicking links to the Data Visualizer should now open all links succesfully.
+- Removed: The initial Randovania screen no longer contains the list of supported games.
+
+### Generator
+
+- Fixed: Bugs where the generator would collect dangerous resources too early, leading to generation failure in some cases.
+- Fixed: Bug where the requirements that apply beyond a point of no return weren't considered correctly.
+- Improved: Try a little harder to check if seemingly unsafe options are actually safe.
+
+### AM2R
+
+- Fixed: Long Beam, Infinite Bomb Propulsion and Walljump Boots now show up in the credits spoiler log.
 
 ### Cave Story
 
 - Changed: Outer Wall is now a separate region.
 
+### Factorio
+
+- Fixed: Random recipes can no longer have multiples of Modular Armor, Power Armor and Power Armor Mk2 as ingredients, as the game doesn't allow these to stack even on the assembler input.
+
+### Metroid Dread
+
+- Changed: The maximum number of Speed Booster Upgrade items that will have an effect is now 4 instead of 5 (any further upgrades have no effect). This is to prevent a quirk with inconsistent Speed Booster activation with very short charge times.
+- Fixed: The patching data being exported on race seeds.
+- Fixed: Speed Booster Upgrade items will no longer be hinted or included in the credits.
+
+#### Logic Database
+
+##### Artaria
+
+- Added: In EMMI Zone Hub, it's now logical to climb to the Dock to EMMI Zone Exit South by using Flash Shift.
+
+### Metroid Prime
+
+#### Logic Database
+
+- Fixed: Fix the Door Lock Rando misc resource being called Dock Rando.
+
+##### Phendrana Drifts
+
+- Fixed: Observatory: Logic will now properly reflect the fact that you can activate the Observatory even after collecting the item in Research Core.
+
 ### Metroid Prime 2: Echoes
 
 - Changed: The Light and Dark regions are now properly different regions for Randovania.
+- Fixed: Booting the game using the included Nintendont should no longer hang with a black screen.
+
+### Metroid: Samus Returns
+
+- Fixed: The patching data being exported on race seeds.
 
 ## [9.0.0] - 2025-04-01
 

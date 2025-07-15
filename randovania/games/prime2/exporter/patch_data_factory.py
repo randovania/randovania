@@ -35,15 +35,16 @@ if TYPE_CHECKING:
     from collections.abc import Callable, Iterator
 
     from randovania.exporter.hints.hint_namer import HintNamer
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.dock import DockType
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.interface_common.players_configuration import PlayersConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
@@ -631,7 +632,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
             "hud_color": self.cosmetic_patches.hud_color if self.cosmetic_patches.use_hud_color else None,
         }
 
-    def create_game_specific_data(self) -> dict[str, typing.Any]:
+    def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict[str, typing.Any]:
         result: dict[str, typing.Any] = {}
         _add_header_data_to_result(self.description, result)
 
@@ -931,7 +932,9 @@ def _create_pickup_list(
     players_config: PlayersConfiguration,
     rng: Random,
 ) -> list[dict]:
-    useless_target = PickupTarget(create_echoes_useless_pickup(game.resource_database), players_config.player_index)
+    useless_target = PickupTarget(
+        create_echoes_useless_pickup(game.get_resource_database_view()), players_config.player_index
+    )
 
     if cosmetic_patches.disable_hud_popup:
         memo_data = _simplified_memo_data()
@@ -1053,7 +1056,7 @@ def adjust_model_name(patcher_data: dict[str, typing.Any], randomizer_data: dict
         pickup["jingle_index"] = mapping.jingle_index.get(model_name, 0)
 
 
-def create_echoes_useless_pickup(resource_database: ResourceDatabase) -> PickupEntry:
+def create_echoes_useless_pickup(resource_database: ResourceDatabaseView) -> PickupEntry:
     """
     Creates an Energy Transfer Module pickup.
     :param resource_database:

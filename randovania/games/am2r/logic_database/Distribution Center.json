@@ -497,6 +497,21 @@
                     "liquid_type": 0,
                     "liquid_level": 1520,
                     "should_be_at_very_front": true
+                },
+                "enemy_data": {
+                    "132242": "oMoheekWater",
+                    "132244": "oMoheekWater",
+                    "132245": "oMoheekWater",
+                    "132247": "oMoheekWater",
+                    "132258": "oMoheekWater",
+                    "132494": "oMoheekWater",
+                    "132521": "oMoheekWater",
+                    "132522": "oMoheekWater",
+                    "132523": "oMoheekWater",
+                    "132524": "oMoheekWater",
+                    "132525": "oMoheekWater",
+                    "132526": "oMoheekWater",
+                    "132527": "oMoheekWater"
                 }
             },
             "nodes": {
@@ -963,6 +978,9 @@
                     "liquid_type": 0,
                     "liquid_level": 1280,
                     "should_be_at_very_front": true
+                },
+                "enemy_data": {
+                    "132618": "oBlobThrowerWater"
                 }
             },
             "nodes": {
@@ -1318,6 +1336,14 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "133431": "oBladeBot",
+                    "133432": "oBladeBot",
+                    "133436": "oBladeBot",
+                    "133437": "oBladeBot",
+                    "133440": "oBladeBot",
+                    "133441": "oBladeBot"
                 }
             },
             "nodes": {
@@ -1488,6 +1514,14 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "133459": "oRoboMine",
+                    "133460": "oRoboMine",
+                    "133461": "oRoboMine",
+                    "133462": "oRoboMine",
+                    "133463": "oRoboMine",
+                    "133464": "oRoboMine"
                 }
             },
             "nodes": {
@@ -1732,6 +1766,22 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "133529": "oRoboMine",
+                    "133531": "oBladeBot",
+                    "133532": "oBladeBot",
+                    "133533": "oBladeBot",
+                    "133534": "oBladeBot",
+                    "133535": "oBladeBot",
+                    "133536": "oBladeBot",
+                    "133537": "oBladeBot",
+                    "133538": "oBladeBot",
+                    "133539": "oBladeBot",
+                    "133540": "oBladeBot",
+                    "133541": "oBladeBot",
+                    "133542": "oBladeBot",
+                    "133543": "oRoboMine"
                 }
             },
             "nodes": {
@@ -1911,6 +1961,26 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "133625": "oRoboMine",
+                    "133633": "oBladeBot",
+                    "133634": "oBladeBot",
+                    "133635": "oBladeBot",
+                    "133636": "oBladeBot",
+                    "133637": "oBladeBot",
+                    "133638": "oBladeBot",
+                    "133639": "oBladeBot",
+                    "133640": "oBladeBot",
+                    "133641": "oRoboMine",
+                    "133642": "oRoboMine",
+                    "133643": "oRoboMine",
+                    "133644": "oRoboMine",
+                    "133645": "oRoboMine",
+                    "133646": "oRoboMine",
+                    "133647": "oRoboMine",
+                    "133648": "oRoboMine",
+                    "133674": "oBladeBot"
                 }
             },
             "nodes": {
@@ -2379,6 +2449,12 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "133749": "oRoboMine",
+                    "133750": "oRoboMine",
+                    "133751": "oRoboMine",
+                    "133752": "oRoboMine"
                 }
             },
             "nodes": {
@@ -2758,6 +2834,16 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "133881": "oAutrack",
+                    "133883": "oTPO",
+                    "133884": "oTPO",
+                    "133886": "oTPO",
+                    "133888": "oAutrack",
+                    "133890": "oTPO",
+                    "133894": "oTPO",
+                    "133907": "oRoboMine"
                 }
             },
             "nodes": {
@@ -2845,21 +2931,36 @@
                                         "data": "Can Use Bombs"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missiles",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot Super Missile"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2917,6 +3018,11 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "133947": "oRoboMine",
+                    "133956": "oRoboMine",
+                    "133957": "oRoboMine"
                 }
             },
             "nodes": {
@@ -3030,6 +3136,10 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot"
                                                 }
                                             ]
                                         }
@@ -3839,6 +3949,19 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "134129": "oBladeBot",
+                    "134156": "oShirk",
+                    "134157": "oShirk",
+                    "134158": "oRoboMine",
+                    "134159": "oRoboMine",
+                    "134160": "oRoboMine",
+                    "134164": "oBladeBot",
+                    "134165": "oBladeBot",
+                    "134166": "oBladeBot",
+                    "134167": "oBladeBot",
+                    "134168": "oShirk"
                 }
             },
             "nodes": {
@@ -5080,6 +5203,14 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "134443": "oBladeBot",
+                    "134444": "oBladeBot",
+                    "134445": "oBladeBot",
+                    "134446": "oBladeBot",
+                    "134447": "oBladeBot",
+                    "134448": "oBladeBot"
                 }
             },
             "nodes": {
@@ -5113,10 +5244,15 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Distribution Center Exterior West": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
+                                    }
+                                ]
                             }
                         },
                         "Event - EMP Slot": {
@@ -5129,21 +5265,41 @@
                                         "data": "Can Use Bombs"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 10,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 5,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missiles",
+                                                                    "amount": 10,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Super Missiles",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -5183,10 +5339,15 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Pipe Hub": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5237,6 +5398,13 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "134452": "oRoboMine",
+                    "134453": "oRoboMine",
+                    "134454": "oRoboMine",
+                    "134455": "oRoboMine",
+                    "134466": "oRoboMine"
                 }
             },
             "nodes": {
@@ -7366,6 +7534,16 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "134728": "oBladeBot",
+                    "134729": "oBladeBot",
+                    "134730": "oBladeBot",
+                    "134731": "oBladeBot",
+                    "134733": "oBladeBot",
+                    "134734": "oBladeBot",
+                    "134741": "oRoboMine",
+                    "134742": "oBladeBot"
                 }
             },
             "nodes": {
@@ -7447,13 +7625,8 @@
                                                         "comment": "RNG dependant",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missiles",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Can Shoot Missile"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -7463,18 +7636,17 @@
                                                                     "amount": 4,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot"
                                                             }
                                                         ]
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Super Missiles",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Shoot Super Missile"
                                                 }
                                             ]
                                         }
@@ -7949,21 +8121,41 @@
                                         "data": "Can Use Bombs"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 20,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 10,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missiles",
+                                                                    "amount": 20,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Super Missiles",
+                                                                    "amount": 10,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -8035,6 +8227,26 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "134852": "oRoboMine",
+                    "134853": "oRoboMine",
+                    "134854": "oRoboMine",
+                    "134855": "oRoboMine",
+                    "134856": "oRoboMine",
+                    "134857": "oRoboMine",
+                    "134858": "oRoboMine",
+                    "134859": "oRoboMine",
+                    "134860": "oRoboMine",
+                    "134861": "oRoboMine",
+                    "134862": "oRoboMine",
+                    "134863": "oRoboMine",
+                    "134864": "oRoboMine",
+                    "134865": "oRoboMine",
+                    "134866": "oRoboMine",
+                    "134867": "oRoboMine",
+                    "134868": "oRoboMine",
+                    "134869": "oRoboMine"
                 }
             },
             "nodes": {
@@ -8170,6 +8382,11 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "135023": "oRoboMine",
+                    "135024": "oRoboMine",
+                    "135025": "oRoboMine"
                 }
             },
             "nodes": {
@@ -8456,6 +8673,10 @@
                                                             {
                                                                 "type": "template",
                                                                 "data": "High Mid-Air Morph Tunnel Climb"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Destroy Shot Block"
                                                             }
                                                         ]
                                                     }
@@ -8589,6 +8810,10 @@
                                                             {
                                                                 "type": "template",
                                                                 "data": "Tunnel Climb"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Destroy Shot Block"
                                                             }
                                                         ]
                                                     }
@@ -8616,17 +8841,33 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "MidAirMorph",
-                                                                    "amount": 2,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Power Grip Wall"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "MidAirMorph",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Power Grip Wall"
                                                             },
                                                             {
                                                                 "type": "and",
@@ -8755,6 +8996,13 @@
                     "liquid_type": 0,
                     "liquid_level": 80,
                     "should_be_at_very_front": true
+                },
+                "enemy_data": {
+                    "135142": "oMoheekWater",
+                    "135143": "oMoheekWater",
+                    "135144": "oMoheekWater",
+                    "135145": "oMoheekWater",
+                    "135146": "oMoheekWater"
                 }
             },
             "nodes": {
@@ -8879,6 +9127,17 @@
                     "liquid_type": 0,
                     "liquid_level": 80,
                     "should_be_at_very_front": true
+                },
+                "enemy_data": {
+                    "135192": "oBlobThrowerWater",
+                    "135193": "oBlobThrowerWater",
+                    "135185": "oMoheekWater",
+                    "135186": "oMoheekWater",
+                    "135187": "oMoheekWater",
+                    "135188": "oMoheekWater",
+                    "135189": "oMoheekWater",
+                    "135190": "oMoheekWater",
+                    "135191": "oMoheekWater"
                 }
             },
             "nodes": {
@@ -8925,13 +9184,8 @@
                                             "comment": "Freeze the WaterBlob",
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Ice Beam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Shoot Ice Beam"
                                                 }
                                             ]
                                         }
@@ -9096,13 +9350,8 @@
                                             "comment": "Freeze the Waterblob",
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Ice Beam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Shoot Ice Beam"
                                                 }
                                             ]
                                         }
@@ -9383,6 +9632,10 @@
                     "liquid_type": 0,
                     "liquid_level": 80,
                     "should_be_at_very_front": true
+                },
+                "enemy_data": {
+                    "135239": "oMoheekWater",
+                    "135240": "oMoheekWater"
                 }
             },
             "nodes": {
@@ -9909,8 +10162,20 @@
                                         "data": "Destroy Ice Barrier"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Hijump Tunnel Climb"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Hijump Tunnel Climb"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Destroy Shot Block"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -10114,21 +10379,36 @@
                                                     "data": "Can Use Bombs"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Missiles",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Super Missiles",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot"
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Missiles",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Shoot Super Missile"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -10291,12 +10571,24 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Knowledge",
-                                            "amount": 3,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Destroy Shot Block"
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -10377,13 +10669,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Super Missiles",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Shoot Super Missile"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -10466,6 +10753,11 @@
                     "liquid_type": 0,
                     "liquid_level": -100,
                     "should_be_at_very_front": true
+                },
+                "enemy_data": {
+                    "135414": "oMoheekWater",
+                    "135415": "oMoheekWater",
+                    "135425": "oMoheekWater"
                 }
             },
             "nodes": {
@@ -11106,22 +11398,12 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Missiles",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Shoot Missile"
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Super Missiles",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Shoot Super Missile"
                                                 }
                                             ]
                                         }
@@ -11151,6 +11433,10 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Shoot"
                                     }
                                 ]
                             }
@@ -11328,10 +11614,41 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Facility Storage Tower East": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -11364,10 +11681,41 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Serris Arena Access": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -12927,16 +13275,40 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Underwater Power Grip Wall"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Underwater Power Grip Wall"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Destroy Shot Block"
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot"
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -13106,10 +13478,15 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Horizontal Dock to Facility Storage Tower East": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
+                                    }
+                                ]
                             }
                         },
                         "Horizontal Dock to Spiky Space Jump Trial": {
@@ -13202,6 +13579,9 @@
                     "liquid_type": 0,
                     "liquid_level": -100,
                     "should_be_at_very_front": true
+                },
+                "enemy_data": {
+                    "136097": "oBlobThrowerWater"
                 }
             },
             "nodes": {
@@ -13652,13 +14032,8 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Ice Beam",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Can Shoot Ice Beam"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -13681,13 +14056,8 @@
                                                         "comment": "Regular charge by killing plant",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Ice Beam",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Can Shoot Ice Beam"
                                                             },
                                                             {
                                                                 "type": "or",
@@ -13704,13 +14074,8 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Super Missiles",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Can Shoot Super Missile"
                                                                         }
                                                                     ]
                                                                 }
@@ -14458,6 +14823,9 @@
                     "liquid_type": 0,
                     "liquid_level": -100,
                     "should_be_at_very_front": true
+                },
+                "enemy_data": {
+                    "136494": "oBlobThrowerWater"
                 }
             },
             "nodes": {
@@ -14713,6 +15081,9 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "136519": "oMoto"
                 }
             },
             "nodes": {
@@ -15113,12 +15484,24 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Long Beam",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Long Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -15132,22 +15515,12 @@
                                                         "comment": "No Long Beam needs to check for DLR else you could have missiles + beam door",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missiles",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Can Shoot Missile"
                                                             },
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Super Missiles",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Can Shoot Super Missile"
                                                             }
                                                         ]
                                                     }
@@ -15160,6 +15533,10 @@
                                                         "amount": 1,
                                                         "negate": true
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot"
                                                 }
                                             ]
                                         }
@@ -15203,6 +15580,12 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "136615": "oPincherFly",
+                    "136616": "oPincherFly",
+                    "136617": "oPincherFly",
+                    "136618": "oPincherFly"
                 }
             },
             "nodes": {
@@ -15683,36 +16066,38 @@
                             }
                         },
                         "Door to Gravity Chamber Access": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": "The door cannot be opened unless these conditions are met.",
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Gravity Suit",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity Suit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot Missile"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot Super Missile"
+                                                }
+                                            ]
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Shoot"
                                     }
                                 ]
                             }
@@ -15768,13 +16153,12 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Missiles",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Shoot Missile"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot"
                                                 }
                                             ]
                                         }
@@ -16356,6 +16740,10 @@
                                     {
                                         "type": "template",
                                         "data": "Space Jump Wall"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
                                     }
                                 ]
                             }
@@ -16408,6 +16796,10 @@
                                     {
                                         "type": "template",
                                         "data": "Space Jump Wall"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
                                     }
                                 ]
                             }
