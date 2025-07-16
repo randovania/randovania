@@ -26,7 +26,7 @@ class PseudoregaliaPresetItemPool(PresetItemPool):
         self._health_piece_item = pickup_database.standard_pickups["Health Piece"]
         self._create_health_piece_box(game_description.resource_database.get_item("HealthPiece"))
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         super().on_preset_changed(preset)
         layout = preset.configuration
         major_configuration = layout.standard_pickup_configuration
@@ -36,7 +36,7 @@ class PseudoregaliaPresetItemPool(PresetItemPool):
         self.health_piece_starting_spinbox.setValue(health_piece_state.num_included_in_starting_pickups)
         self.health_piece_shuffled_spinbox.setValue(health_piece_state.num_shuffled_pickups)
 
-    def _create_health_piece_box(self, health_piece_resource: ItemResourceInfo):
+    def _create_health_piece_box(self, health_piece_resource: ItemResourceInfo) -> None:
         category_box, category_layout, _ = self._boxes_for_category["health"]
 
         category_layout.addWidget(_create_separator(category_box), category_layout.rowCount(), 0, 1, -1)
@@ -63,7 +63,7 @@ class PseudoregaliaPresetItemPool(PresetItemPool):
         category_layout.addWidget(shuffled_label, shuffled_layout_index, 0)
         category_layout.addWidget(self.health_piece_shuffled_spinbox, shuffled_layout_index, 1)
 
-    def _on_update_starting_health_piece(self, value: int):
+    def _on_update_starting_health_piece(self, value: int) -> None:
         with self._editor as options:
             pickup_config = options.standard_pickup_configuration
             options.standard_pickup_configuration = pickup_config.replace_state_for_pickup(
@@ -73,7 +73,7 @@ class PseudoregaliaPresetItemPool(PresetItemPool):
                 ),
             )
 
-    def _on_update_shuffled_health_piece(self, value: int):
+    def _on_update_shuffled_health_piece(self, value: int) -> None:
         with self._editor as options:
             pickup_config = options.standard_pickup_configuration
             options.standard_pickup_configuration = pickup_config.replace_state_for_pickup(

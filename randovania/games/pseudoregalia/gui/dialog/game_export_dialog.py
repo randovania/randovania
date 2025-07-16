@@ -21,7 +21,7 @@ from randovania.gui.dialog.game_export_dialog import (
 if TYPE_CHECKING:
     from PySide6.QtWidgets import QLineEdit
 
-    from randovania.interface_common.options import PerGameOptions
+    from randovania.interface_common.options import Options, PerGameOptions
 
 
 def game_dir_validator(line_edit: QLineEdit) -> bool:
@@ -39,7 +39,14 @@ class PseudoregaliaGameExportDialog(GameExportDialog[PseudoregaliaConfiguration]
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.PSEUDOREGALIA
 
-    def __init__(self, options, configuration, word_hash, spoiler, games):
+    def __init__(
+        self,
+        options: Options,
+        configuration: PseudoregaliaConfiguration,
+        word_hash: str,
+        spoiler: bool,
+        games: list[RandovaniaGame],
+    ) -> None:
         super().__init__(options, configuration, word_hash, spoiler, games)
         per_game = options.per_game_options(PseudoregaliaPerGameOptions)
 

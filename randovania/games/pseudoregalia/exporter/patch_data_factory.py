@@ -12,20 +12,21 @@ from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 
 if TYPE_CHECKING:
     from randovania.exporter.hints.hint_namer import HintNamer
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
 
 
 class PseudoregaliaPatchDataFactory(PatchDataFactory[PseudoregaliaConfiguration, PseudoregaliaCosmeticPatches]):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.PSEUDOREGALIA
 
-    def create_visual_nothing(self):
+    def create_visual_nothing(self) -> PickupEntry:
         return create_visual_nothing(self.game_enum(), "Nothing")
 
     def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         start_node = self.game.region_list.node_by_identifier(self.patches.starting_location)
         key_hint_mode = self.configuration.hints.specific_pickup_hints["major_keys"]
 
-        level_data = {}
+        level_data: dict[str, dict] = {}
         major_key_hints = {f"Major Key - {region}": "Seems to be missing." for region in PSEUDOREGALIA_KEY_REGIONS}
 
         for pickup_details in self.export_pickup_list():
