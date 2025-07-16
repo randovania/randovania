@@ -8,8 +8,12 @@ from randovania.games.prime_hunters.layout.force_field_configuration import Layo
 from randovania.generator.base_patches_factory import BasePatchesFactory, MissingRng
 
 if TYPE_CHECKING:
+    from collections.abc import Iterable
     from random import Random
 
+    from randovania.game_description.db.dock_node import DockNode
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
 
 
@@ -33,3 +37,8 @@ class HuntersBasePatchesFactory(BasePatchesFactory[HuntersConfiguration]):
         return {
             "force_fields": force_fields,
         }
+
+    def dock_connections_assignment(
+        self, configuration: HuntersConfiguration, game: GameDatabaseView, rng: Random
+    ) -> Iterable[tuple[DockNode, Node]]:
+        yield from super().dock_connections_assignment(configuration, game, rng)

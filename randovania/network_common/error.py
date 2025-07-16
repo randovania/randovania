@@ -43,6 +43,9 @@ class BaseNetworkError(Exception):
 
         raise RuntimeError("Unknown error")
 
+    def __hash__(self) -> int:
+        return hash(self.detail)
+
     def __eq__(self, other):
         return isinstance(other, type(self)) and self.detail == other.detail
 

@@ -79,21 +79,21 @@ Extra - enemy_data: {'100990': 'oHornoad', '100991': 'oHornoad', '100992': 'oYum
   * Extra - x: 0
   * Extra - y: 96
   > Bottom
-      Trivial
+      Can Destroy Shot Block
 
 > Horizontal Dock to Tsumuri Tunnel; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Tsumuri Tunnel/Horizontal Dock to Hornoad Hallway
   * Extra - ignore_for_er: True
   > Bottom
-      Morph Ball
+      Morph Ball and Can Destroy Shot Block
 
 > Bottom; Heals? False
   * Layers: default
   > Door to Landing Site
-      Power Grip Wall
+      Can Destroy Shot Block or Power Grip Wall
   > Horizontal Dock to Tsumuri Tunnel
-      Morph Ball
+      Morph Ball and Can Destroy Shot Block
 
 ----------------
 Tsumuri Tunnel
@@ -107,16 +107,17 @@ Extra - enemy_data: {'101111': 'oTsumuri', '101112': 'oTsumuri', '101113': 'oTsu
   * 4-Tiles Wide Dock to Cavern Crossroads/Vertical Dock to Tsumuri Tunnel
   > Horizontal Dock to Hornoad Hallway
       Any of the following:
-          Power Grip Wall
           # Shinespark from below room: https://www.youtube.com/watch?v=uFXTtaebs48
           Speed Booster and Shinesparking Tricks (Intermediate) and Disabled Entrance Rando
+          # Get up and break blocks
+          Can Destroy Shot Block and Power Grip Wall
 
 > Horizontal Dock to Hornoad Hallway; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Hornoad Hallway/Horizontal Dock to Tsumuri Tunnel
   * Extra - ignore_for_er: True
   > Vertical Dock to Cavern Crossroads
-      Trivial
+      Can Destroy Shot Block
 
 ----------------
 Cavern Crossroads
@@ -731,7 +732,7 @@ Extra - enemy_data: {'103847': 'oCaveNest', '103848': 'oCaveNest'}
   > Bottom
       After Surface - Mines Entrance Crystal Destroyed
   > Event - Crystal
-      Super Missiles
+      Can Shoot Super Missile
 
 > Horizontal Dock to Industrial Complex; Heals? False
   * Layers: default
@@ -766,7 +767,7 @@ Extra - enemy_data: {'103847': 'oCaveNest', '103848': 'oCaveNest'}
   > Middle
       Hijump Wall
   > Event - Crystal
-      Super Missiles
+      Can Shoot Super Missile
 
 > Event - Crystal; Heals? False
   * Layers: default
@@ -956,7 +957,7 @@ Extra - enemy_data: {'104968': 'oSkorp', '104969': 'oSkorp', '104970': 'oSkorp',
       All of the following:
           Power Grip Wall
           # Avoiding Skorps
-          Screw Attack or Wave Beam or Combat (Intermediate) or Normal Damage ≥ 100
+          Screw Attack or Combat (Intermediate) or Normal Damage ≥ 100 or Can Shoot Wave Beam
 
 > Top; Heals? False
   * Layers: default
@@ -1123,7 +1124,7 @@ Extra - enemy_data: {'106163': 'oHalzyn', '106164': 'oSkreekSpawner', '106165': 
       Any of the following:
           Can Use Power Bombs and Power Grip Wall
           # Blocks do not show up by bombing: https://youtu.be/4Fmq3-tIOLU&t=21
-          Super Missiles ≥ 2 and Knowledge (Advanced) and Power Grip Climb and Space Jump Wall
+          Super Missiles ≥ 2 and Knowledge (Advanced) and Can Shoot Super Missile and Power Grip Climb and Space Jump Wall
 
 > Near hidden wall; Heals? False
   * Layers: default
@@ -1133,7 +1134,7 @@ Extra - enemy_data: {'106163': 'oHalzyn', '106164': 'oSkreekSpawner', '106165': 
       Any of the following:
           Can Use Power Bombs
           # Blocks do not show up by bombing: https://www.youtube.com/watch?v=4Fmq3-tIOLU
-          Super Missiles ≥ 2 and Knowledge (Advanced) and Low Mid-Air Morph Tunnel Climb
+          Super Missiles ≥ 2 and Knowledge (Advanced) and Can Shoot Super Missile and Low Mid-Air Morph Tunnel Climb
 
 ----------------
 Tower East Exterior Access
@@ -1152,7 +1153,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   > Door to Skreek Street
       After Surface - Rock Entrance To The Tower and Power Grip Wall
   > Event - Rocks
-      Missiles or Speed Booster or Super Missiles or Can Use Any Bombs
+      Speed Booster or Can Shoot Missile or Can Shoot Super Missile or Can Use Any Bombs
 
 > Door to Skreek Street; Heals? False
   * Layers: default
@@ -1164,7 +1165,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   > Door to The Tower
       After Surface - Rock Entrance To The Tower
   > Event - Rocks
-      Missiles or Speed Booster or Super Missiles or Can Use Any Bombs
+      Speed Booster or Can Shoot Missile or Can Shoot Super Missile or Can Use Any Bombs
 
 > Event - Rocks; Heals? False
   * Layers: default
@@ -1671,7 +1672,7 @@ Extra - enemy_data: {'123690': 'oPincherFly', '123691': 'oPincherFly', '123692':
   * Layers: default
   * 5-Tiles High Dock to Moto Mania/Horizontal Dock to Drill Excavation Access
   > Door to Drill Excavation
-      Trivial
+      Can Destroy Shot Block
 
 > Door to Drill Excavation; Heals? False
   * Layers: default
@@ -1682,9 +1683,13 @@ Extra - enemy_data: {'123690': 'oPincherFly', '123691': 'oPincherFly', '123692':
   * Extra - y: 416
   > Horizontal Dock to Moto Mania
       Any of the following:
-          Hijump Wall
           # Stand in between shoot blocks
-          Movement (Beginner) and Power Grip Wall
+          Movement (Beginner) and Can Shoot and Power Grip Wall
+          All of the following:
+              Hijump Wall
+              Any of the following:
+                  Can Shoot or Can Use Power Bombs
+                  Infinite Bomb Jumping (Intermediate) and Can IBJ
 
 ----------------
 Drill Excavation
@@ -1713,7 +1718,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
       After Surface - Mines Drill Crystal Destroyed
   > Event - Drill Crystal from Left
       All of the following:
-          Super Missiles
+          Can Shoot Super Missile
           Any of the following:
               Enabled Skip cutscenes
               Can Use Any Bombs and Tunnel Climb
@@ -1728,7 +1733,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   > Door to Drill Excavation Access
       After Surface - Mines Drill Crystal Destroyed
   > Event - Drill Crystal from Right
-      Super Missiles
+      Can Shoot Super Missile
 
 > Event - Drill Crystal from Left; Heals? False
   * Layers: default

@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import asyncio
 import dataclasses
+import json
 import logging
+import typing
 import uuid
 from typing import TYPE_CHECKING, Self
 
@@ -77,9 +79,16 @@ class WorldDatabase(QObject):
         self._all_data = {}
         self._lock = asyncio.Lock()
 
-    async def _read_data(self, uid: uuid.UUID) -> WorldData:
-        raw_data = await json_lib.read_path_async(self._persist_path.joinpath(f"{uid}.json"))
-        return WorldData.from_json(migrate_to_current(raw_data)["data"])
+    async def _read_data(self, uid: uuid.UUID) -> WorldData | None:
+        try:
+            raw_data = typing.cast(
+                "dict",
+                await json_lib.read_path_async(self._persist_path.joinpath(f"{uid}.json")),
+            )
+            return WorldData.from_json(migrate_to_current(raw_data)["data"])
+        except json.decoder.JSONDecodeError:
+            self._persist_path.joinpath(f"{uid}.json").unlink()
+            return None
 
     async def _write_data(self, uid: uuid.UUID, data: WorldData):
         json_lib.write_path(
@@ -99,7 +108,9 @@ class WorldDatabase(QObject):
                 continue
 
             if uid != INVALID_UUID:
-                self._all_data[uid] = await self._read_data(uid)
+                data = await self._read_data(uid)
+                if data:
+                    self._all_data[uid] = data
 
     def get_data_for(self, uid: uuid.UUID) -> WorldData:
         if uid == INVALID_UUID:

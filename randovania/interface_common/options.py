@@ -23,7 +23,7 @@ if TYPE_CHECKING:
 T = TypeVar("T")
 
 
-def identity(v: T) -> T:
+def identity[T](v: T) -> T:
     return v
 
 

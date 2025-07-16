@@ -11,6 +11,7 @@ from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.game.game_enum import RandovaniaGame
 from randovania.games import default_data
 from randovania.interface_common.preset_manager import PresetManager
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset import Preset
 
 if TYPE_CHECKING:
@@ -98,7 +99,9 @@ class GeneratorParameters(BitPackValue):
             development = bitpacking.decode_bool(decoder)
 
         manager = PresetManager(None)
-        presets = [Preset.bit_pack_unpack(decoder, {"manager": manager, "game": game}) for game in games]
+        presets = [
+            Preset[BaseConfiguration].bit_pack_unpack(decoder, {"manager": manager, "game": game}) for game in games
+        ]
 
         if not development:
             for game in _get_unique_games(presets):

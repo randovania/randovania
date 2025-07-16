@@ -3,7 +3,6 @@ from __future__ import annotations
 import typing
 
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
-from randovania.game_description.resources.resource_collection import ResourceCollection
 
 if typing.TYPE_CHECKING:
     from collections.abc import Container
@@ -33,8 +32,8 @@ def find_locations_that_gives_items(
                 continue
 
             # TODO: iterate over all tiers of progression
-            db = patches.game.resource_database
-            resources = ResourceCollection.from_resource_gain(db, target.pickup.resource_gain(ResourceCollection()))
+            resources = patches.game.create_resource_collection()
+            resources.add_resource_gain(target.pickup.resource_gain(resources))
             for resource, quantity in resources.as_resource_gain():
                 if quantity > 0 and _resource_in_item_list(resource, result):
                     result[resource].append((other_player, PickupLocation(patches.configuration.game, pickup_index)))

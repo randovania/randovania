@@ -20,6 +20,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.dock import DockWeakness
     from randovania.game_description.db.node import Node
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
 
@@ -69,7 +70,7 @@ WORLDS = [
 
 class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
     def assign_static_dock_weakness(
-        self, configuration: EchoesConfiguration, game: GameDescription, initial_patches: GamePatches
+        self, configuration: EchoesConfiguration, game: GameDatabaseView, initial_patches: GamePatches
     ) -> GamePatches:
         parent = super().assign_static_dock_weakness(configuration, game, initial_patches)
 
@@ -79,8 +80,8 @@ class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
             dock_weakness.extend(
                 weaknesses_for_unlocked_saves(
                     game,
-                    unlocked_weakness=game.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)"),
-                    target_dock_type=game.dock_weakness_database.find_type("door"),
+                    unlocked_weakness=game.get_dock_weakness("door", "Normal Door (Forced)"),
+                    target_dock_type=game.find_dock_type_by_short_name("door"),
                     area_filter=lambda area: area.extra.get("unlocked_save_station") is True,
                 )
             )
@@ -88,8 +89,10 @@ class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
         return parent.assign_dock_weakness(dock_weakness)
 
     def dock_connections_assignment(
-        self, configuration: EchoesConfiguration, game: GameDescription, rng: Random
+        self, configuration: EchoesConfiguration, game: GameDatabaseView, rng: Random
     ) -> Iterable[tuple[DockNode, Node]]:
+        yield from super().dock_connections_assignment(configuration, game, rng)
+
         teleporter_connection = get_teleporter_connections_echoes(configuration.teleporters, game, rng)
         dock_assignment = get_dock_connections_assignment_for_teleporter(
             configuration.teleporters, game, teleporter_connection
@@ -98,9 +101,10 @@ class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
         if configuration.portal_rando:
             light_portals_by_region: dict[str, list[DockNode]] = collections.defaultdict(list)
             dark_portals_by_region: dict[str, list[DockNode]] = collections.defaultdict(list)
+            portal_type = game.find_dock_type_by_short_name("portal")
 
-            for region, area, node in game.region_list.all_regions_areas_nodes:
-                if isinstance(node, DockNode) and node.dock_type.short_name == "portal":
+            for region, area, node in game.iterate_nodes_of_type(DockNode):
+                if node.dock_type == portal_type:
                     if dark_aether_helper.is_region_light(region):
                         portal_list = light_portals_by_region[region.name]
                     else:

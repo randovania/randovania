@@ -136,7 +136,7 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple, is_dev_version
         title="`yu4abbceWfLI-`",
         description=f"{permalink_1.parameters.world_count} player multiworld permalink",
     )
-    suffix = "Seed Hash: Elevator Key Checkpoint (LBMFQWCY)"
+    suffix = "Seed Hash: Echo Junction Charge (LBMFQWCY)"
     if is_solo:
         split_desc = embed.description.split("\n")
         assert split_desc == [f"Metroid Prime 2: Echoes permalink for Randovania {mocked_rdv_version}", suffix]

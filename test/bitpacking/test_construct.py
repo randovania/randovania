@@ -141,6 +141,9 @@ class NonJsonThing:
         self.a = a
         self.b = b
 
+    def __hash__(self) -> int:
+        return hash(self.a) + hash(self.b)
+
     def __eq__(self, other):
         return isinstance(other, NonJsonThing) and other.a == self.a and other.b == self.b
 

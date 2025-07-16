@@ -826,10 +826,15 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Bottom": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -876,6 +881,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
                                     }
                                 ]
                             }
@@ -905,6 +914,10 @@
                                     {
                                         "type": "template",
                                         "data": "Power Grip Wall"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
                                     }
                                 ]
                             }
@@ -922,6 +935,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
                                     }
                                 ]
                             }
@@ -1001,10 +1018,6 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Power Grip Wall"
-                                    },
-                                    {
                                         "type": "and",
                                         "data": {
                                             "comment": "Shinespark from below room: https://www.youtube.com/watch?v=uFXTtaebs48",
@@ -1035,6 +1048,22 @@
                                                         "amount": 1,
                                                         "negate": true
                                                     }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Get up and break blocks",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Power Grip Wall"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Destroy Shot Block"
                                                 }
                                             ]
                                         }
@@ -1074,10 +1103,15 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Vertical Dock to Cavern Crossroads": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4745,13 +4779,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Shoot Super Missile"
                                     }
                                 ]
                             }
@@ -4938,13 +4967,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Shoot Super Missile"
                                     }
                                 ]
                             }
@@ -6179,13 +6203,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Wave Beam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Shoot Wave Beam"
                                                 }
                                             ]
                                         }
@@ -7384,6 +7403,10 @@
                                                         "amount": 3,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot Super Missile"
                                                 }
                                             ]
                                         }
@@ -7467,6 +7490,10 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot Super Missile"
                                                 }
                                             ]
                                         }
@@ -7567,27 +7594,33 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
                                             "name": "Speed Booster",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot Missile"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot Super Missile"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -7657,27 +7690,33 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
                                             "name": "Speed Booster",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot Missile"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot Super Missile"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -10638,10 +10677,15 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Drill Excavation": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -10700,13 +10744,62 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot"
                                                 }
                                             ]
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Hijump Wall"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Hijump Wall"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Power Bombs"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "IBJ",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can IBJ"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -10845,13 +10938,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Shoot Super Missile"
                                     },
                                     {
                                         "type": "or",
@@ -10976,13 +11064,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Shoot Super Missile"
                                     }
                                 ]
                             }

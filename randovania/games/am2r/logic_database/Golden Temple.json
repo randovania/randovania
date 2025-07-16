@@ -580,6 +580,10 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot"
                                                 }
                                             ]
                                         }
@@ -5251,6 +5255,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
                                     }
                                 ]
                             }
@@ -5326,17 +5334,27 @@
                             }
                         },
                         "Pickup (Left Missile Tank)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
+                                    }
+                                ]
                             }
                         },
                         "Event - 3-Orbs": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Shoot"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5943,12 +5961,24 @@
                                                     "data": "Can Use Bombs"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Missiles",
-                                                        "amount": 5,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missiles",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -6151,15 +6181,6 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Wave Beam",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
                                             "type": "tricks",
                                             "name": "Knowledge",
                                             "amount": 2,
@@ -6174,6 +6195,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Shoot Wave Beam"
                                     }
                                 ]
                             }
@@ -6227,6 +6252,10 @@
                                     {
                                         "type": "template",
                                         "data": "Can Use Any Bombs"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Shoot"
                                     }
                                 ]
                             }
@@ -6287,20 +6316,15 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Wave Beam",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
                                             "type": "tricks",
                                             "name": "Knowledge",
                                             "amount": 2,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Shoot Wave Beam"
                                     }
                                 ]
                             }
@@ -6429,10 +6453,15 @@
                             }
                         },
                         "Pickup (Bottom Missile Tank)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
+                                    }
+                                ]
                             }
                         },
                         "Pickup (Top Missile Tank)": {
@@ -6504,12 +6533,24 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Power Grip",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Power Grip",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot"
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -6534,6 +6575,10 @@
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot"
                                                             }
                                                         ]
                                                     }
@@ -6565,13 +6610,29 @@
                                                                                             "amount": 1,
                                                                                             "negate": false
                                                                                         }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Shoot"
                                                                                     }
                                                                                 ]
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Can Use Spring Ball"
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Use Spring Ball"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Shoot"
+                                                                                    }
+                                                                                ]
+                                                                            }
                                                                         },
                                                                         {
                                                                             "type": "and",
@@ -6647,6 +6708,10 @@
                                                                         }
                                                                     ]
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot"
                                                             }
                                                         ]
                                                     }
@@ -7523,13 +7588,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Shoot Super Missile"
                                     },
                                     {
                                         "type": "template",

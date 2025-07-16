@@ -456,7 +456,7 @@ def pack_sorted_array_elements(
         yield from normal_results
 
 
-def decode_sorted_array_elements(decoder: BitPackDecoder, array: list[T]) -> list[T]:
+def decode_sorted_array_elements[T](decoder: BitPackDecoder, array: list[T]) -> list[T]:
     result = []
 
     if not array:
@@ -561,7 +561,7 @@ def encode_tuple(value: Sequence[T], encoder: Callable[[T], Iterator[tuple[int, 
         yield from encoder(it)
 
 
-def decode_tuple(decoder: BitPackDecoder, item_decoder: Callable[[BitPackDecoder], T]) -> tuple[T, ...]:
+def decode_tuple[T](decoder: BitPackDecoder, item_decoder: Callable[[BitPackDecoder], T]) -> tuple[T, ...]:
     size = decode_big_int(decoder)
     return tuple(item_decoder(decoder) for _ in range(size))
 
@@ -599,7 +599,7 @@ def pack_value(value: BitPackValue, metadata: dict | None = None) -> bytes:
 BoundTypeValue = typing.TypeVar("BoundTypeValue", bound=BitPackValue)
 
 
-def round_trip(value: BoundTypeValue, metadata: dict | None = None) -> BoundTypeValue:
+def round_trip[BoundTypeValue: BitPackValue](value: BoundTypeValue, metadata: dict | None = None) -> BoundTypeValue:
     """
     Encodes the given value and then recreates it using the encoded value
     :param value:

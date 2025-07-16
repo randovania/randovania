@@ -22,6 +22,9 @@ class WeightedLocations:
     def __init__(self, items: dict[tuple[PlayerState, PickupIndex], float]):
         self._items = items
 
+    def __hash__(self) -> int:
+        return hash(self._items)
+
     def __eq__(self, other: object) -> bool:
         return isinstance(other, WeightedLocations) and self._items == other._items
 

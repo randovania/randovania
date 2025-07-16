@@ -240,7 +240,9 @@ class RequestPresetsView(discord.ui.View):
 T = typing.TypeVar("T")
 
 
-async def _try_get(message: discord.Message, attachment: discord.Attachment, decoder: Callable[[dict], T]) -> T | None:
+async def _try_get[T](
+    message: discord.Message, attachment: discord.Attachment, decoder: Callable[[dict], T]
+) -> T | None:
     try:
         data = await attachment.read()
         return decoder(json.loads(data.decode("utf-8")))

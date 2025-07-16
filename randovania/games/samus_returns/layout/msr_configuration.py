@@ -6,8 +6,8 @@ from enum import Enum
 from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game.game_enum import RandovaniaGame
-from randovania.games.samus_returns.layout.msr_teleporters import MSRTeleporterConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 
 @dataclasses.dataclass(frozen=True)
@@ -34,7 +34,7 @@ class FinalBossConfiguration(BitPackEnum, Enum):
 
 @dataclasses.dataclass(frozen=True)
 class MSRConfiguration(BaseConfiguration):
-    teleporters: MSRTeleporterConfiguration
+    teleporters: TeleporterConfiguration
     energy_per_tank: int = dataclasses.field(metadata={"min": 100, "max": 100, "precision": 1})
     starting_energy: int = dataclasses.field(metadata={"min": 99, "max": 99, "precision": 1})
     starting_aeion: int = dataclasses.field(metadata={"min": 1000, "max": 2200, "precision": 1})

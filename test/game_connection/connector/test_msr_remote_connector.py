@@ -75,19 +75,19 @@ async def test_new_inventory_received(connector: MSRRemoteConnector):
     assert connector.inventory_index == 69
 
     # check ice beam
-    ice_beam = connector.game.resource_database.get_item_by_name("Ice Beam")
+    ice_beam = connector.game.resource_database.get_item_by_display_name("Ice Beam")
     assert connector.last_inventory[ice_beam].capacity == 1
 
     # check wave beam
-    wave_beam = connector.game.resource_database.get_item_by_name("Wave Beam")
+    wave_beam = connector.game.resource_database.get_item_by_display_name("Wave Beam")
     assert connector.last_inventory[wave_beam].capacity == 0
 
     # check spazer beam
-    spazer_beam = connector.game.resource_database.get_item_by_name("Spazer Beam")
+    spazer_beam = connector.game.resource_database.get_item_by_display_name("Spazer Beam")
     assert connector.last_inventory[spazer_beam].capacity == 1
 
     # check rounding floats to ints via plasma beam item
-    plasma_beam = connector.game.resource_database.get_item_by_name("Plasma Beam")
+    plasma_beam = connector.game.resource_database.get_item_by_display_name("Plasma Beam")
     assert connector.last_inventory[plasma_beam].capacity == 275
 
     inventory_updated.assert_called_once()

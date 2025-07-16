@@ -5,11 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [9.3.0] - 2025-07-0?
+## [9.4.0] - 2025-08-0?
+
+- Added: 10 more joke hints.
+- Fixed: An error when the computer shuts down unexpectedly or crashes during a multiworld that corrupts some files and prevents Randovania from starting.
+
+### Generator
+- Added: The generator will now check for the count of major pickups when major/minor split is enabled.
+
+## [9.3.1] - 2025-07-05
+
+### AM2R
+
+- Fixed: Exporting games now work.
+
+## [9.3.0] - 2025-07-02
 
 ### Generator
 
 - Fixed: Some cases where weights from certain actions would not be calculated correctly.
+- Fixed: Pre placed pickups now avoid using locations configured as non-progression.
 
 ### Metroid Dread
 
@@ -18,6 +33,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Ghavoran
 
 - Fixed: The door between EMMI Zone Exit Southeast and Blue EMMI Introduction is now considered as a Plasma Beam Door on both sides.
+
+### Metroid Prime
+
+- Added: Experimental option to pre-place Artifacts and/or Phazon Suit before generation.
+
+### Metroid Prime 2: Echoes
+
+- Added: "Captain" is now included as a possible word for the seed hash.
+
+#### Logic Database
+
+##### Agon Wastes
+
+- Added: In Transport Center, added an Instant Morph + Bomb Space Jump (Advanced) method of climbing the half-pipe.
 
 ## [9.2.0] - 2025-06-02
 
@@ -70,15 +99,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Display the number of remaining DNA in the DNA message before entering the final boss.
 - Fixed: If Metroid Queen is the final boss and you don't have all DNA, the DNA message now appears.
 - Fixed: For tanks with non required main option, the jingle of the tank item is played instead of the jingle of the main object.
-
-## [9.1.1] - 2025-05-03
-
-- Fixed: Duplicating a session now also duplicates the admin settings for Co-op and "Everyone can claim worlds".
-
-### Cave Story
-
-- Fixed: A regression introduced in 9.1.0 that made all received pickups in multiworld behave as Nothings.
-
 
 ## [9.1.1] - 2025-05-03
 

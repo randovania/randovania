@@ -3,8 +3,8 @@ from __future__ import annotations
 from randovania.layout.layout_description import LayoutDescription
 
 
-def test_dangerous_settings(test_files_dir, rdvgame_filename="prime1_crazy_seed.rdvgame"):
-    rdvgame = test_files_dir.joinpath("log_files", rdvgame_filename)
+def test_dangerous_settings(test_files_dir):
+    rdvgame = test_files_dir.joinpath("log_files", "prime1_crazy_seed.rdvgame")
     layout_description = LayoutDescription.from_file(rdvgame)
     preset = layout_description.get_preset(0)
 

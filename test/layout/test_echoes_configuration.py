@@ -44,7 +44,7 @@ def empty_bit_pack_encode(*args):
 
 
 @contextlib.contextmanager
-def make_dummy(cls: type[T]) -> T:
+def make_dummy[T](cls: type[T]) -> T:
     m = MagicMock(spec=cls)
     m.bit_pack_encode = empty_bit_pack_encode
     m.as_json = m

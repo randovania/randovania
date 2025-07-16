@@ -243,6 +243,9 @@ class BitPackValueUsingReference(bitpacking.BitPackValue):
         value = decoder.decode_single(128) + reference.value
         return BitPackValueUsingReference(value)
 
+    def __hash__(self) -> int:
+        return hash(self.value)
+
     def __eq__(self, other):
         return self.value == other.value
 
