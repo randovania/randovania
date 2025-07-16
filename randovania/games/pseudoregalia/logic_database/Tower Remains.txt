@@ -1,0 +1,237 @@
+----------------
+Bridge
+Extra - total_boundings: {'x1': 3375, 'x2': 7050, 'y1': -3450, 'y2': 10825}
+Extra - polygon: [[3375, -3450], [3375, 10825], [7050, 10825], [7050, -3450]]
+Extra - room_id: 0
+> Door to Lower Interior; Heals? False
+  * Layers: default
+  * No Wall to Lower Interior/Door to Bridge
+  * Extra - actor_index: 124
+  > Near Door
+      Trivial
+
+> Door to Lower Roof; Heals? False
+  * Layers: default
+  * No Wall to Lower Roof/Door to Bridge
+  > Near Door
+      Trivial
+
+> Transition to Empty Bailey; Heals? False; Spawn Point
+  * Layers: default
+  * Transition to Bridge/Transition to Tower Remains
+  * Extra - actor_index: 130
+  * Extra - transition_tag: exteriorSouthEast
+  * Extra - start_tag: towerSouth
+  > Near Door
+      Can Long Jump
+
+> Near Door; Heals? False
+  * Layers: default
+  > Door to Lower Interior
+      After Tower Remains/Lower Interior/Hit Switch
+  > Door to Lower Roof
+      All of the following:
+          Sunsetter and Can Long Jump
+          Any of the following:
+              Air Kick ≥ 3
+              Skid Jump (Intermediate) and Bounce Off Torch
+  > Transition to Empty Bailey
+      Can Long Jump
+
+----------------
+Upper Interior
+Extra - total_boundings: {'x1': 1525, 'x2': 8850, 'y1': 17800, 'y2': 21400}
+Extra - polygon: [[1525, 17800], [1525, 21400], [8850, 21400], [8850, 17800]]
+Extra - room_id: 1
+> Pickup (Cling Gem); Heals? False
+  * Layers: default
+  * Pickup 71; Category? Major
+  * Extra - actor_index: 155
+  > Door to Wall Ride (East)
+      Trivial
+  > Door to Wall Ride (West)
+      After Tower Remains/Upper Interior/Hit Switch
+  > Room Center
+      Trivial
+
+> Pickup (Bleeding Heart); Heals? False
+  * Layers: default
+  * Pickup 73; Category? Major
+  * Extra - actor_index: 156
+  > Room Center
+      Trivial
+
+> Event - Hit Switch; Heals? False
+  * Layers: default
+  * Event Tower Remains/Upper Interior/Hit Switch
+  * Extra - actor_index: 86
+  > Door to Wall Ride (West)
+      Trivial
+
+> Door to Lower Interior; Heals? False
+  * Layers: default
+  * No Wall to Lower Interior/Door to Upper Interior
+  > Room Center
+      Trivial
+
+> Door to Lower Roof; Heals? False
+  * Layers: default
+  * No Wall to Lower Roof/Door to Upper Interior
+  > Room Center
+      Trivial
+
+> Door to Wall Ride (East); Heals? False
+  * Layers: default
+  * No Wall to Wall Ride/Door to Upper Interior (East)
+  > Pickup (Cling Gem)
+      Trivial
+
+> Door to Wall Ride (West); Heals? False
+  * Layers: default
+  * No Wall to Wall Ride/Door to Upper Interior (West)
+  > Pickup (Cling Gem)
+      After Tower Remains/Upper Interior/Hit Switch
+  > Event - Hit Switch
+      Can Do Damage
+
+> Door to Upper Roof; Heals? False
+  * Layers: default
+  * No Wall to Upper Roof/Door to Upper Interior
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Pickup (Cling Gem)
+      Any of the following:
+          Air Kick ≥ 2
+          Skid Jump (Advanced) and Can Long Jump
+  > Pickup (Bleeding Heart)
+      Air Kick ≥ 2 and Cling ≥ 3 and Sunsetter and After Tower Remains/Upper Roof/Hit Switch
+  > Door to Lower Interior
+      Can Do Damage
+  > Door to Lower Roof
+      Trivial
+  > Door to Upper Roof
+      Cling and Sunsetter and After Tower Remains/Upper Interior/Hit Switch
+
+----------------
+Upper Roof
+Extra - total_boundings: {'x1': 2850, 'x2': 7500, 'y1': 24450, 'y2': 29350}
+Extra - polygon: [[2850, 24450], [2850, 29350], [7500, 29350], [7500, 24450]]
+Extra - room_id: 2
+> Pickup (Major Key); Heals? False
+  * Layers: default
+  * Pickup 72; Category? Major
+  * Extra - actor_index: 77
+  > Door to Upper Interior
+      Trivial
+
+> Event - Hit Switch; Heals? False
+  * Layers: default
+  * Event Tower Remains/Upper Roof/Hit Switch
+  * Extra - actor_index: 87
+  > Door to Upper Interior
+      Trivial
+
+> Door to Lower Roof; Heals? False
+  * Layers: default
+  * No Wall to Lower Roof/Door to Upper Roof
+
+> Door to Upper Interior; Heals? False
+  * Layers: default
+  * No Wall to Upper Interior/Door to Upper Roof
+  > Pickup (Major Key)
+      Trivial
+  > Event - Hit Switch
+      Can Do Damage
+  > Door to Lower Roof
+      Trivial
+  > Transition to Distorted Memory
+      Major Key - Empty Bailey and Major Key - Sansa Keep and Major Key - The Underbelly and Major Key - Tower Remains and Major Key - Twilight Theatre
+
+> Transition to Distorted Memory; Heals? False; Spawn Point
+  * Layers: default
+  * Transition to Princess Chambers/Transition to Tower Remains
+  * Extra - actor_index: 131
+  * Extra - transition_tag: chamberStart
+  * Extra - start_tag: towerTop
+  > Door to Upper Interior
+      Trivial
+
+----------------
+Lower Interior
+Extra - total_boundings: {'x1': 3050, 'x2': 7325, 'y1': 10700, 'y2': 14075}
+Extra - polygon: [[3050, 10700], [3050, 14075], [7325, 14075], [7325, 10700]]
+Extra - room_id: 4
+> Save Crystal; Heals? True; Spawn Point
+  * Layers: default
+  * Extra - actor_index: 116
+  * Extra - start_tag: towerSave
+  > Event - Hit Switch
+      Can Do Damage
+  > Door to Bridge
+      After Tower Remains/Lower Interior/Hit Switch
+  > Door to Upper Interior
+      Can Do Damage
+
+> Event - Hit Switch; Heals? False
+  * Layers: default
+  * Event Tower Remains/Lower Interior/Hit Switch
+  * Extra - actor_index: 83
+  > Save Crystal
+      Trivial
+
+> Door to Bridge; Heals? False
+  * Layers: default
+  * No Wall to Bridge/Door to Lower Interior
+  * Extra - actor_index: 124
+  > Save Crystal
+      Trivial
+
+> Door to Upper Interior; Heals? False
+  * Layers: default
+  * No Wall to Upper Interior/Door to Lower Interior
+  > Save Crystal
+      Trivial
+
+----------------
+Lower Roof
+Extra - total_boundings: {'x1': 3925, 'x2': 6425, 'y1': 14750, 'y2': 17800}
+Extra - polygon: [[3925, 14750], [3925, 17800], [6425, 17800], [6425, 14750]]
+Extra - room_id: 5
+> Door to Bridge; Heals? False
+  * Layers: default
+  * No Wall to Bridge/Door to Lower Roof
+  > Door to Upper Interior
+      Trivial
+
+> Door to Upper Interior; Heals? False
+  * Layers: default
+  * No Wall to Upper Interior/Door to Lower Roof
+  > Door to Bridge
+      Trivial
+
+> Door to Upper Roof; Heals? False
+  * Layers: default
+  * No Wall to Upper Roof/Door to Lower Roof
+  > Door to Upper Interior
+      Trivial
+
+----------------
+Wall Ride
+Extra - total_boundings: {'x1': 3575, 'x2': 6775, 'y1': 21400, 'y2': 24175}
+Extra - polygon: [[3575, 21400], [3575, 24175], [6775, 24175], [6775, 21400]]
+Extra - room_id: 6
+> Door to Upper Interior (East); Heals? False
+  * Layers: default
+  * No Wall to Upper Interior/Door to Wall Ride (East)
+  > Door to Upper Interior (West)
+      Cling ≥ 2
+
+> Door to Upper Interior (West); Heals? False
+  * Layers: default
+  * No Wall to Upper Interior/Door to Wall Ride (West)
+  > Door to Upper Interior (East)
+      Cling ≥ 2
+

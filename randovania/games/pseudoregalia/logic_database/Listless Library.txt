@@ -1,0 +1,377 @@
+----------------
+Main Library
+Extra - total_boundings: {'x1': -2450, 'x2': 4050, 'y1': -2500, 'y2': 2400}
+Extra - polygon: [[-2450, -2500], [-2450, 2400], [4050, 2400], [4050, -2500]]
+Extra - room_id: 0
+> Pickup (Chair); Heals? False
+  * Layers: chair_shuffle
+  * Pickup 32; Category? Minor
+  * Extra - actor_index: 289
+  > Save Crystal
+      Trivial
+
+> Save Crystal; Heals? True; Spawn Point
+  * Layers: default
+  * Extra - actor_index: 300
+  * Extra - start_tag: librarySave
+  > Pickup (Chair)
+      Trivial
+  > Door to Sun Greaves Access
+      Trivial
+  > Door to Locked Challenge
+      Trivial
+  > Transition to Castle Sansa
+      Trivial
+  > Door to Egg Pen Room
+      Any of the following:
+          Air Kick ≥ 4
+          All of the following:
+              After Listless Library/Main Library/Hit Switch
+              Any of the following:
+                  Air Kick ≥ 2
+                  Air Kick and Sunsetter
+                  Slide and Skid Jump (Advanced)
+          # using long jump to chain two extended wall kicks
+          Air Kick ≥ 3 and Air Kick Mastery (Advanced) and Can Long Jump
+          Cling ≥ 4 and Cling Mastery (Advanced)
+
+> Door to Sun Greaves Access; Heals? False
+  * Layers: default
+  * No Wall to Sun Greaves Access/Door to Main Library
+  * Extra - actor_index: 788
+  > Save Crystal
+      Trivial
+
+> Door to Hidden Challenge; Heals? False
+  * Layers: default
+  * Breakable Wall to Hidden Challenge/Door to Main Library
+  * Extra - actor_index: 209
+  > Door to Egg Pen Room
+      Trivial
+
+> Door to Locked Challenge; Heals? False
+  * Layers: default
+  * Small Key Door to Locked Challenge/Door to Main Library
+  * Extra - actor_index: 263
+  > Save Crystal
+      Trivial
+
+> Transition to Castle Sansa; Heals? False; Spawn Point
+  * Layers: default
+  * Transition to Transition to Listless Library/Transition to Listless Library
+  * Extra - actor_index: 315
+  * Extra - transition_tag: lowerEast
+  * Extra - start_tag: libraryWest
+  > Save Crystal
+      Trivial
+
+> Door to Egg Pen Room; Heals? False
+  * Layers: default
+  * No Wall to Egg Pen Room/Door to Main Library
+  * Extra - actor_index: 848
+  > Save Crystal
+      Trivial
+  > Door to Hidden Challenge
+      Trivial
+  > Event - Hit Switch
+      Can Do Damage
+
+> Event - Hit Switch; Heals? False
+  * Layers: default
+  * Event Listless Library/Main Library/Hit Switch
+  > Door to Egg Pen Room
+      Trivial
+
+----------------
+Sun Greaves Access
+Extra - total_boundings: {'x1': 1800, 'x2': 4475, 'y1': 2400, 'y2': 5650}
+Extra - polygon: [[1800, 2400], [1800, 5650], [4475, 5650], [4475, 2400]]
+Extra - room_id: 1
+> Pickup (Sweater); Heals? False
+  * Layers: default
+  * Pickup 33; Category? Major
+  * Extra - actor_index: 325
+  > Tunnel to Sun Greaves Room
+      Trivial
+
+> Door to Main Library; Heals? False
+  * Layers: default
+  * No Wall to Main Library/Door to Sun Greaves Access
+  * Extra - actor_index: 788
+  > Tunnel to Sun Greaves Room
+      Trivial
+
+> Tunnel to Sun Greaves Room; Heals? False
+  * Layers: default
+  * Slide Tunnel to Sun Greaves Room/Tunnel to Sun Greaves Access
+  > Pickup (Sweater)
+      Any of the following:
+          Air Kick ≥ 3 or Cling
+          Air Kick and Can Long Jump
+  > Door to Main Library
+      Trivial
+
+----------------
+Sun Greaves Room
+Extra - total_boundings: {'x1': 2550, 'x2': 5225, 'y1': 5650, 'y2': 9775}
+Extra - polygon: [[2550, 5650], [2550, 9775], [5225, 9775], [5225, 5650]]
+Extra - room_id: 2
+> Pickup (Sun Greaves); Heals? False
+  * Layers: default
+  * Pickup 34; Category? Major
+  * Extra - actor_index: 324
+  > Door to Sun Greaves Tutorial
+      Trivial
+
+> Tunnel to Sun Greaves Access; Heals? False
+  * Layers: default
+  * Slide Tunnel to Sun Greaves Access/Tunnel to Sun Greaves Room
+  > Door to Sun Greaves Tutorial
+      Trivial
+
+> Door to Sun Greaves Tutorial; Heals? False
+  * Layers: default
+  * Breakable Wall to Sun Greaves Tutorial/Door to Sun Greaves Room
+  * Extra - actor_index: 210
+  > Pickup (Sun Greaves)
+      Can Do Damage
+
+----------------
+Sun Greaves Tutorial
+Extra - total_boundings: {'x1': 5225, 'x2': 9700, 'y1': 5750, 'y2': 10300}
+Extra - polygon: [[5225, 5750], [5225, 10300], [9700, 10300], [9700, 5750]]
+Extra - room_id: 3
+> Save Crystal; Heals? True; Spawn Point
+  * Layers: default
+  * Extra - actor_index: 301
+  * Extra - start_tag: saveLibraryWest
+  > Door to Sun Greaves Room
+      Trivial
+  > Before Final Jump
+      Any of the following:
+          Air Kick or Sunsetter
+          Cling ≥ 2 and Cling Mastery (Intermediate)
+          Skid Jump (Intermediate) and Can Long Jump
+          Slide and Skid Jump (Advanced)
+
+> Door to Sun Greaves Room; Heals? False
+  * Layers: default
+  * Breakable Wall to Sun Greaves Room/Door to Sun Greaves Tutorial
+  * Extra - actor_index: 210
+  > Save Crystal
+      Air Kick or Cling or Sunsetter or Skid Jump (Beginner)
+
+> Door to haze room; Heals? False
+  * Layers: default
+  * No Wall to haze room/Door to Sun Greaves Tutorial
+  * Extra - actor_index: 834
+
+> Before Final Jump; Heals? False
+  * Layers: default
+  > Save Crystal
+      Trivial
+  > Door to haze room
+      Any of the following:
+          Air Kick ≥ 3 or Cling
+          Air Kick and Can Long Jump
+          Air Kick ≥ 2 and Sunsetter
+
+----------------
+haze room
+Extra - total_boundings: {'x1': 6550, 'x2': 10000, 'y1': 575, 'y2': 5750}
+Extra - polygon: [[6550, 575], [6550, 5750], [10000, 5750], [10000, 575]]
+Extra - room_id: 4
+> Event - Hit Switch 2; Heals? False
+  * Layers: default
+  * Event Listless Library/haze room/Hit Switch 2
+  * Extra - actor_index: 241
+  > Door to Sun Greaves Tutorial
+      Trivial
+
+> Pickup (Chair); Heals? False
+  * Layers: chair_shuffle
+  * Pickup 35; Category? Minor
+  * Extra - actor_index: 291
+  > Door to Sun Greaves Tutorial
+      Trivial
+
+> Door to Sun Greaves Tutorial; Heals? False
+  * Layers: default
+  * No Wall to Sun Greaves Tutorial/Door to haze room
+  * Extra - actor_index: 834
+  > Event - Hit Switch 2
+      Air Kick ≥ 2 and After Listless Library/haze room/Hit Switch 1
+  > Pickup (Chair)
+      Trivial
+  > Door to Egg Pen Room
+      Any of the following:
+          Cling
+          All of the following:
+              After Listless Library/haze room/Hit Switch 1
+              Any of the following:
+                  Can Long Jump
+                  Air Kick ≥ 3 and After Listless Library/haze room/Hit Switch 2
+  > Event - Hit Switch 1
+      Can Do Damage
+
+> Door to Egg Pen Room; Heals? False
+  * Layers: default
+  * No Wall to Egg Pen Room/Door to haze room
+  * Extra - actor_index: 840
+  > Door to Sun Greaves Tutorial
+      Air Kick ≥ 3 and After Listless Library/haze room/Hit Switch 2
+
+> Event - Hit Switch 1; Heals? False
+  * Layers: default
+  * Event Listless Library/haze room/Hit Switch 1
+  > Door to Sun Greaves Tutorial
+      Trivial
+
+----------------
+Egg Pen Room
+Extra - total_boundings: {'x1': 4050, 'x2': 6550, 'y1': 800, 'y2': 2450}
+Extra - polygon: [[4050, 800], [4050, 2450], [6550, 2450], [6550, 800]]
+Extra - room_id: 5
+> Pickup (Note); Heals? False
+  * Layers: note_shuffle
+  * Pickup 36; Category? Major
+  * Extra - actor_index: 288
+  > Door to Main Library
+      Trivial
+
+> Pickup (Chair); Heals? False
+  * Layers: chair_shuffle
+  * Pickup 37; Category? Minor
+  * Extra - actor_index: 290
+  > Door to Main Library
+      Trivial
+
+> Door to haze room; Heals? False
+  * Layers: default
+  * No Wall to haze room/Door to Egg Pen Room
+  * Extra - actor_index: 840
+  > Door to Main Library
+      Trivial
+
+> Door to Main Library; Heals? False
+  * Layers: default
+  * No Wall to Main Library/Door to Egg Pen Room
+  * Extra - actor_index: 848
+  > Pickup (Note)
+      Trivial
+  > Pickup (Chair)
+      Trivial
+  > Door to haze room
+      Trivial
+
+----------------
+Hidden Challenge
+Extra - total_boundings: {'x1': 4000, 'x2': 8300, 'y1': -2725, 'y2': -700}
+Extra - polygon: [[4000, -2725], [4000, -700], [8300, -700], [8300, -2725]]
+Extra - room_id: 6
+> Door to Main Library; Heals? False
+  * Layers: default
+  * Breakable Wall to Main Library/Door to Hidden Challenge
+  * Extra - actor_index: 209
+  > Door to Hidden Challenge Reward
+      Any of the following:
+          Air Kick ≥ 2
+          Cling ≥ 4 and Cling Mastery (Intermediate)
+          Cling ≥ 3 and Cling Mastery (Advanced)
+
+> Door to Hidden Challenge Reward; Heals? False
+  * Layers: default
+  * No Wall to Hidden Challenge Reward/Door to Hidden Challenge
+  * Extra - actor_index: 1057
+  > Door to Main Library
+      Trivial
+
+----------------
+Hidden Challenge Reward
+Extra - total_boundings: {'x1': 8300, 'x2': 9550, 'y1': -2475, 'y2': -925}
+Extra - polygon: [[8300, -2475], [8300, -925], [9550, -925], [9550, -2475]]
+Extra - room_id: 7
+> Pickup (Health Piece); Heals? False
+  * Layers: default
+  * Pickup 38; Category? Minor
+  * Extra - actor_index: 237
+  > Door to Hidden Challenge
+      Trivial
+
+> Door to Hidden Challenge; Heals? False
+  * Layers: default
+  * No Wall to Hidden Challenge/Door to Hidden Challenge Reward
+  * Extra - actor_index: 1057
+  > Pickup (Health Piece)
+      Trivial
+
+----------------
+Locked Challenge
+Extra - total_boundings: {'x1': -175, 'x2': 2800, 'y1': -5700, 'y2': -2500}
+Extra - polygon: [[-175, -5700], [-175, -2500], [2800, -2500], [2800, -5700]]
+Extra - room_id: 8
+> Door to Main Library; Heals? False
+  * Layers: default
+  * Small Key Door to Main Library/Door to Locked Challenge
+  * Extra - actor_index: 263
+  > Door to Locked Health Piece Room
+      Cling
+  > Door to Clear Mind Room
+      Any of the following:
+          Air Kick ≥ 2 or Cling or Can Long Jump
+          Air Kick and Air Kick Mastery (Beginner)
+
+> Door to Locked Health Piece Room; Heals? False
+  * Layers: default
+  * No Wall to Locked Health Piece Room/Door to Locked Challenge
+  * Extra - actor_index: 868
+  > Door to Main Library
+      Cling
+
+> Door to Clear Mind Room; Heals? False
+  * Layers: default
+  * No Wall to Clear Mind Room/Door to Locked Challenge
+  * Extra - actor_index: 1001
+  > Door to Main Library
+      Any of the following:
+          Air Kick ≥ 2 or Cling or Can Long Jump
+          Air Kick and Air Kick Mastery (Beginner)
+
+----------------
+Locked Health Piece Room
+Extra - total_boundings: {'x1': 2800, 'x2': 4150, 'y1': -4975, 'y2': -3375}
+Extra - polygon: [[2800, -4975], [2800, -3375], [4150, -3375], [4150, -4975]]
+Extra - room_id: 9
+> Pickup (Health Piece); Heals? False
+  * Layers: default
+  * Pickup 40; Category? Minor
+  * Extra - actor_index: 238
+  > Door to Locked Challenge
+      Trivial
+
+> Door to Locked Challenge; Heals? False
+  * Layers: default
+  * No Wall to Locked Challenge/Door to Locked Health Piece Room
+  * Extra - actor_index: 868
+  > Pickup (Health Piece)
+      Trivial
+
+----------------
+Clear Mind Room
+Extra - total_boundings: {'x1': 450, 'x2': 2100, 'y1': -7200, 'y2': -5700}
+Extra - polygon: [[450, -7200], [450, -5700], [2100, -5700], [2100, -7200]]
+Extra - room_id: 10
+> Pickup (Clear Mind); Heals? False
+  * Layers: default
+  * Pickup 39; Category? Minor
+  * Extra - actor_index: 326
+  > Door to Locked Challenge
+      Trivial
+
+> Door to Locked Challenge; Heals? False
+  * Layers: default
+  * No Wall to Locked Challenge/Door to Clear Mind Room
+  * Extra - actor_index: 1001
+  > Pickup (Clear Mind)
+      Trivial
+
