@@ -9,12 +9,12 @@ if TYPE_CHECKING:
 T = TypeVar("T", bound=Enum)
 
 
-def iterate_enum(enum_class: type[T]) -> Iterator[T]:
+def iterate_enum[T: Enum](enum_class: type[T]) -> Iterator[T]:
     assert issubclass(enum_class, Enum)
     yield from enum_class
 
 
-def enum_definition_order(enum_instance: T) -> int:
+def enum_definition_order[T: Enum](enum_instance: T) -> int:
     """
     Returns the index at which the given enum instance was defined.
     Useful for sorting functions.

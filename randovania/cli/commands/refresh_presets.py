@@ -4,6 +4,7 @@ import logging
 from typing import TYPE_CHECKING
 
 from randovania.game.game_enum import RandovaniaGame
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import enum_lib
 
@@ -18,7 +19,7 @@ def refresh_presets_command_logic(args: ArgumentParser) -> None:
 
         for preset_relative_path in game.data.presets:
             preset_path = base_path.joinpath(preset_relative_path["path"])
-            preset = VersionedPreset.from_file_sync(preset_path)
+            preset = VersionedPreset[BaseConfiguration].from_file_sync(preset_path)
             preset.ensure_converted()
             preset.save_to_file(preset_path)
 
