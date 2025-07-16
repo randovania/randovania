@@ -13,9 +13,9 @@ Extra - room_id: 0
           Sunsetter and Sunsetter Mastery (Beginner)
           Cling ≥ 3 and Cling Mastery (Beginner)
 
-> Door to first save; Heals? False
+> Door to Memento Save Room; Heals? False
   * Layers: default
-  * No Wall to first save/Door to Transition to Dilapidated Dungeon
+  * No Wall to Memento Save Room/Door to Transition to Dilapidated Dungeon
   * Extra - actor_index: 2566
   > Transition to Dilapidated Dungeon
       Trivial
@@ -35,7 +35,7 @@ Extra - room_id: 0
   * Extra - actor_index: 972
   * Extra - transition_tag: lower1
   * Extra - start_tag: dungeon1
-  > Door to first save
+  > Door to Memento Save Room
       Trivial
   > Door to Central Transition to Twilight Theatre
       Any of the following:
@@ -58,7 +58,7 @@ Extra - room_id: 0
       Trivial
 
 ----------------
-first save
+Memento Save Room
 Extra - total_boundings: {'x1': -9375, 'x2': -7525, 'y1': -5600, 'y2': -3875}
 Extra - polygon: [[-9375, -5600], [-9375, -3875], [-7525, -3875], [-7525, -5600]]
 Extra - room_id: 1
@@ -111,21 +111,21 @@ Extra - room_id: 1
 
 > Door to Transition to Dilapidated Dungeon; Heals? False
   * Layers: default
-  * No Wall to Transition to Dilapidated Dungeon/Door to first save
+  * No Wall to Transition to Dilapidated Dungeon/Door to Memento Save Room
   * Extra - actor_index: 2566
   > Save Crystal
       Trivial
 
 > Door to Indignation Room; Heals? False
   * Layers: default
-  * No Wall to Indignation Room/Door to first save
+  * No Wall to Indignation Room/Door to Memento Save Room
   * Extra - actor_index: 2568
   > Save Crystal
       Trivial
 
 > Door to Memento Room; Heals? False
   * Layers: default
-  * No Wall to Memento Room/Door to first save
+  * No Wall to Memento Room/Door to Memento Save Room
   * Extra - actor_index: 2821
   > Save Crystal
       Trivial
@@ -141,7 +141,7 @@ Extra - room_id: 2
   * Extra - actor_index: 994
   > Pickup (Small Key)
       Air Kick ≥ 2 or Cling or Sunsetter
-  > Door to first save
+  > Door to Memento Save Room
       Trivial
   > Door to Central Hub
       Trivial
@@ -153,7 +153,7 @@ Extra - room_id: 2
       Trivial
   > Door to Wall Ride Challenge
       Trivial
-  > Door to room with two cut and drops
+  > Door to South Shortcut
       Trivial
 
 > Pickup (Small Key); Heals? False
@@ -163,9 +163,9 @@ Extra - room_id: 2
   > Pickup (Indignation)
       Trivial
 
-> Door to first save; Heals? False
+> Door to Memento Save Room; Heals? False
   * Layers: default
-  * No Wall to first save/Door to Indignation Room
+  * No Wall to Memento Save Room/Door to Indignation Room
   * Extra - actor_index: 2568
   > Pickup (Indignation)
       Trivial
@@ -205,9 +205,9 @@ Extra - room_id: 2
   > Pickup (Indignation)
       Trivial
 
-> Door to room with two cut and drops; Heals? False
+> Door to South Shortcut; Heals? False
   * Layers: default
-  * No Wall to room with two cut and drops/Door to Indignation Room
+  * No Wall to South Shortcut/Door to Indignation Room
   * Extra - actor_index: 2572
   > Pickup (Indignation)
       Trivial
@@ -294,16 +294,16 @@ Extra - room_id: 4
   > Door to Transition to Listless Library
       # TODO: Consider using platform's raised position
       Air Kick ≥ 3 or Cling ≥ 2 or After Castle Sansa/Southeast Hub/Hit Switch
-  > Door to some hallway
+  > Door to Southeast Hallway
       All of the following:
           Dream Breaker
           Any of the following:
               Air Kick or Cling
               Sunsetter and Sunsetter Mastery (Beginner)
 
-> Door to some hallway; Heals? False
+> Door to Southeast Hallway; Heals? False
   * Layers: default
-  * No Wall to some hallway/Door to Southeast Hub
+  * No Wall to Southeast Hallway/Door to Southeast Hub
   * Extra - actor_index: 2564
   > Door to Wall Ride Challenge
       Trivial
@@ -661,20 +661,20 @@ Extra - room_id: 13
       Trivial
 
 ----------------
-some hallway
+Southeast Hallway
 Extra - total_boundings: {'x1': -1750, 'x2': 2650, 'y1': -13700, 'y2': -11825}
 Extra - polygon: [[-1750, -13700], [450, -13700], [450, -12650], [2650, -12650], [2650, -11825], [-250, -11825], [-250, -12875], [-1750, -12875]]
 Extra - room_id: 14
 > Door to Southeast Hub; Heals? False
   * Layers: default
-  * No Wall to Southeast Hub/Door to some hallway
+  * No Wall to Southeast Hub/Door to Southeast Hallway
   * Extra - actor_index: 2564
   > Door to Transition to Empty Bailey
       Air Kick or Cling or Sunsetter or Skid Jump (Beginner)
 
 > Door to Transition to Empty Bailey; Heals? False
   * Layers: default
-  * No Wall to Transition to Empty Bailey/Door to some hallway
+  * No Wall to Transition to Empty Bailey/Door to Southeast Hallway
   * Extra - actor_index: 2558
   > Door to Southeast Hub
       Trivial
@@ -691,9 +691,9 @@ Extra - room_id: 15
   > Transition to Sansa Keep
       Trivial
 
-> Door to some hallway; Heals? False
+> Door to Southeast Hallway; Heals? False
   * Layers: default
-  * No Wall to some hallway/Door to Transition to Empty Bailey
+  * No Wall to Southeast Hallway/Door to Transition to Empty Bailey
   * Extra - actor_index: 2558
   > Transition to Sansa Keep
       Trivial
@@ -714,11 +714,11 @@ Extra - room_id: 15
           Skid Jump (Intermediate) and Can Long Jump
           # Jump from top of door
           Air Kick ≥ 3 and Air Kick Mastery (Advanced)
-  > Door to some hallway
+  > Door to Southeast Hallway
       Trivial
   > Transition to Empty Bailey
       Trivial
-  > Door to room with two cut and drops
+  > Door to South Shortcut
       Trivial
 
 > Transition to Empty Bailey; Heals? False; Spawn Point
@@ -730,35 +730,35 @@ Extra - room_id: 15
   > Transition to Sansa Keep
       Trivial
 
-> Door to room with two cut and drops; Heals? False
+> Door to South Shortcut; Heals? False
   * Layers: default
-  * No Wall to room with two cut and drops/Door to Transition to Empty Bailey
+  * No Wall to South Shortcut/Door to Transition to Empty Bailey
   * Extra - actor_index: 2561
   > Transition to Sansa Keep
       Trivial
 
 ----------------
-room with two cut and drops
+South Shortcut
 Extra - total_boundings: {'x1': -4675, 'x2': -3400, 'y1': -12725, 'y2': -9225}
 Extra - polygon: [[-4675, -12725], [-4675, -9225], [-3400, -9225], [-3400, -12725]]
 Extra - room_id: 16
 > Event - Cut and Drop Platform 1; Heals? False
   * Layers: default
-  * Event Castle Sansa/room with two cut and drops/Cut and Drop Platform 1
+  * Event Castle Sansa/South Shortcut/Cut and Drop Platform 1
   * Extra - actor_index: 506
   > Door to Indignation Room
       Trivial
 
 > Event - Cut and Drop Platform 2; Heals? False
   * Layers: default
-  * Event Castle Sansa/room with two cut and drops/Cut and Drop Platform 2
+  * Event Castle Sansa/South Shortcut/Cut and Drop Platform 2
   * Extra - actor_index: 507
   > Door to Indignation Room
       Trivial
 
 > Door to Indignation Room; Heals? False
   * Layers: default
-  * No Wall to Indignation Room/Door to room with two cut and drops
+  * No Wall to Indignation Room/Door to South Shortcut
   * Extra - actor_index: 2572
   > Event - Cut and Drop Platform 1
       Can Do Damage
@@ -769,12 +769,12 @@ Extra - room_id: 16
 
 > Door to Transition to Empty Bailey; Heals? False
   * Layers: default
-  * No Wall to Transition to Empty Bailey/Door to room with two cut and drops
+  * No Wall to Transition to Empty Bailey/Door to South Shortcut
   * Extra - actor_index: 2561
   > Door to Indignation Room
       Any of the following:
           Air Kick ≥ 2 or Cling
-          After Castle Sansa/room with two cut and drops/Cut and Drop Platform 1 and After Castle Sansa/room with two cut and drops/Cut and Drop Platform 2
+          After Castle Sansa/South Shortcut/Cut and Drop Platform 1 and After Castle Sansa/South Shortcut/Cut and Drop Platform 2
           All of the following:
               Air Kick
               Any of the following:
@@ -981,12 +981,12 @@ Extra - room_id: 21
               Cling and Sunsetter
   > Event - Hit Switch
       Can Do Damage
-  > Door to dropdown room
+  > Door to Good Graces Access
       Trivial
 
-> Door to dropdown room; Heals? False
+> Door to Good Graces Access; Heals? False
   * Layers: default
-  * No Wall to dropdown room/Door to Good Graces Room
+  * No Wall to Good Graces Access/Door to Good Graces Room
   * Extra - actor_index: 2829
   > Door to West Castle Access
       Trivial
@@ -1108,14 +1108,14 @@ Extra - room_id: 25
   * Layers: default
   * No Wall to Town/Door to room with thin drop down pit
   * Extra - actor_index: 2436
-  > Door to dropdown room
+  > Door to Good Graces Access
       Trivial
   > Door to Clear Mind Access
       Air Kick ≥ 3 or Cling
 
-> Door to dropdown room; Heals? False
+> Door to Good Graces Access; Heals? False
   * Layers: default
-  * No Wall to dropdown room/Door to room with thin drop down pit
+  * No Wall to Good Graces Access/Door to room with thin drop down pit
   * Extra - actor_index: 2833
   > Door to Town
       Trivial
@@ -1132,13 +1132,13 @@ Extra - room_id: 25
               Cling Mastery (Beginner) or Can Long Jump
 
 ----------------
-dropdown room
+Good Graces Access
 Extra - total_boundings: {'x1': -16000, 'x2': -12300, 'y1': 4400, 'y2': 7225}
 Extra - polygon: [[-16000, 4400], [-16000, 7225], [-12300, 7225], [-12300, 4400]]
 Extra - room_id: 26
 > Door to room with thin drop down pit; Heals? False
   * Layers: default
-  * No Wall to room with thin drop down pit/Door to dropdown room
+  * No Wall to room with thin drop down pit/Door to Good Graces Access
   * Extra - actor_index: 2833
   > Door to Good Graces Room
       Any of the following:
@@ -1147,7 +1147,7 @@ Extra - room_id: 26
 
 > Door to Good Graces Room; Heals? False
   * Layers: default
-  * No Wall to Good Graces Room/Door to dropdown room
+  * No Wall to Good Graces Room/Door to Good Graces Access
   * Extra - actor_index: 2829
 
 ----------------
@@ -1248,19 +1248,19 @@ Extra - room_id: 31
   * Layers: default
   * Pickup 10; Category? Major
   * Extra - actor_index: 998
-  > Door to first save
+  > Door to Memento Save Room
       Trivial
 
 > Pickup (Goatling); Heals? False
   * Layers: goatling_shuffle
   * Pickup 9; Category? Minor
   * Extra - actor_index: 820
-  > Door to first save
+  > Door to Memento Save Room
       Trivial
 
-> Door to first save; Heals? False
+> Door to Memento Save Room; Heals? False
   * Layers: default
-  * No Wall to first save/Door to Memento Room
+  * No Wall to Memento Save Room/Door to Memento Room
   * Extra - actor_index: 2821
   > Pickup (Memento)
       Trivial
