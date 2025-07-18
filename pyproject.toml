@@ -203,6 +203,10 @@ git_describe_command = [
 [tool.ruff]
 line-length = 120
 
+extend-exclude = [
+    "*_ui.py",
+]
+
 [tool.ruff.lint]
 select = [
     "E", "F", "W", "C90", "I", "UP", "C4",
