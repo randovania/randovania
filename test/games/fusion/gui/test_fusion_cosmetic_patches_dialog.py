@@ -17,6 +17,7 @@ from randovania.games.fusion.layout.fusion_cosmetic_patches import ColorSpace, F
         ("enable_tileset_palette", "tileset_rando_shift_check"),
         ("disable_music", "disable_music_check"),
         ("disable_sfx", "disable_sfx_check"),
+        ("enable_symmetric", "symmetric_check"),
     ],
 )
 def test_enable_checkboxes(skip_qtbot, field_name: str, widget_field: str) -> None:

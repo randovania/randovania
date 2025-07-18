@@ -47,9 +47,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-41</y>
-        <width>666</width>
-        <height>574</height>
+        <y>-8</y>
+        <width>663</width>
+        <height>586</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -139,7 +139,7 @@
                </size>
               </property>
               <property name="text">
-               <string>Override Hue Shift</string>
+               <string>Override Hue Shift (min,max)</string>
               </property>
               <property name="iconSize">
                <size>
@@ -150,7 +150,26 @@
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="suit_override_shift_spin">
+             <widget class="QSpinBox" name="suit_override_shift_spin_min">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>50</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="maximum">
+               <number>360</number>
+              </property>
+              <property name="singleStep">
+               <number>5</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="suit_override_shift_spin_max">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -204,12 +223,31 @@
                <bool>false</bool>
               </property>
               <property name="text">
-               <string>Override Hue Shift</string>
+               <string>Override Hue Shift (min,max)</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="beam_override_shift_spin">
+             <widget class="QSpinBox" name="beam_override_shift_spin_min">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>50</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="maximum">
+               <number>360</number>
+              </property>
+              <property name="singleStep">
+               <number>5</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="beam_override_shift_spin_max">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -257,12 +295,31 @@
                <bool>false</bool>
               </property>
               <property name="text">
-               <string>Override Hue Shift</string>
+               <string>Override Hue Shift (min,max)</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="enemy_override_shift_spin">
+             <widget class="QSpinBox" name="enemy_override_shift_spin_min">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>50</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="maximum">
+               <number>360</number>
+              </property>
+              <property name="singleStep">
+               <number>5</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="enemy_override_shift_spin_max">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -310,12 +367,37 @@
                <bool>false</bool>
               </property>
               <property name="text">
-               <string>Override Hue Shift</string>
+               <string>Override Hue Shift (min,max)</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="tileset_override_shift_spin">
+             <widget class="QSpinBox" name="tileset_override_shift_spin_min">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>50</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>360</number>
+              </property>
+              <property name="singleStep">
+               <number>5</number>
+              </property>
+              <property name="value">
+               <number>0</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="tileset_override_shift_spin_max">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -337,17 +419,7 @@
           </item>
           <item>
            <layout class="QGridLayout" name="color_space_layout">
-            <item row="0" column="1">
-             <widget class="QComboBox" name="color_space_combo">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
+            <item row="0" column="0" alignment="Qt::AlignmentFlag::AlignLeft">
              <widget class="QLabel" name="color_space_label">
               <property name="maximumSize">
                <size>
@@ -357,6 +429,26 @@
               </property>
               <property name="text">
                <string>Color Space</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2" alignment="Qt::AlignmentFlag::AlignHCenter">
+             <widget class="QCheckBox" name="symmetric_check">
+              <property name="text">
+               <string>Enable Symmetric</string>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="color_space_combo">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
               </property>
              </widget>
             </item>
