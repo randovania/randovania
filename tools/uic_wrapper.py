@@ -7,6 +7,7 @@
 import argparse
 import os
 import subprocess
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 
@@ -19,7 +20,8 @@ def main():
     new_paths: list[str] = []
 
     try:
-        for path in paths:
+
+        def process_file(path: Path):
             new_file = os.fspath(path.parents[1].joinpath("generated").joinpath(path.stem + "_ui.py"))
             new_paths.append(new_file)
             subprocess.check_call(
@@ -31,6 +33,11 @@ def main():
                     os.fspath(path),
                 ]
             )
+
+        with ThreadPoolExecutor() as executor:
+            for path_to_process in paths:
+                executor.submit(process_file, path_to_process)
+
         if args.git_add:
             subprocess.check_call(
                 ["git", "add"] + new_paths,
