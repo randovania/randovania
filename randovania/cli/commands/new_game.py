@@ -362,20 +362,6 @@ def copy_presets(old_presets: dict[str, VersionedPreset], gd: GameDescription, p
         VersionedPreset.with_preset(new_preset).save_to_file(_GAMES_PATH.joinpath(new_game.value, "presets", path))
 
 
-def update_pyuic(enum_value: str) -> None:
-    new_entry = [f"randovania/games/{enum_value}/gui/ui_files/*.ui", f"randovania/games/{enum_value}/gui/generated"]
-
-    pyuic_path = _ROOT_PATH.parent.joinpath("pyuic.json")
-    pyuic = typing.cast("dict[str, list[list[str]]]", json_lib.read_path(pyuic_path))
-
-    if not any(it == new_entry for it in pyuic["files"]):
-        pyuic["files"].append(new_entry)
-
-    pyuic["files"] = [pyuic["files"][0]] + sorted(pyuic["files"][1:])
-
-    json_lib.write_path(pyuic_path, pyuic)
-
-
 def new_game_command_logic(args: Namespace) -> None:
     enum_name: str = args.enum_name
     enum_value: str = args.enum_value
@@ -401,7 +387,6 @@ def new_game_command_logic(args: Namespace) -> None:
 
     copy_files_code(enum_name, enum_value, short_name, long_name)
     update_game_py(enum_name, enum_value)
-    update_pyuic(enum_value)
 
     json_lib.write_path(_GAMES_PATH.joinpath(enum_value).joinpath("assets", "migration_data.json"), {})
 
