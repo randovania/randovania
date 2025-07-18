@@ -30,18 +30,31 @@ enum_lib.add_long_name(
 class FusionCosmeticPatches(BaseCosmeticPatches):
     # Palette Rando
     enable_suit_palette: bool = False
+    enable_suit_palette_override: bool = False
     suit_hue_min: int = 0
     suit_hue_max: int = 360
+    suit_hue_override_min: int = 0
+    suit_hue_override_max: int = 0
     enable_beam_palette: bool = False
+    enable_beam_palette_override: bool = False
     beam_hue_min: int = 0
     beam_hue_max: int = 360
+    beam_hue_override_min: int = 0
+    beam_hue_override_max: int = 0
     enable_enemy_palette: bool = False
+    enable_enemy_palette_override: bool = False
     enemy_hue_min: int = 0
     enemy_hue_max: int = 360
+    enemy_hue_override_min: int = 0
+    enemy_hue_override_max: int = 0
     enable_tileset_palette: bool = False
+    enable_tileset_palette_override: bool = False
     tileset_hue_min: int = 0
     tileset_hue_max: int = 360
+    tileset_hue_override_min: int = 0
+    tileset_hue_override_max: int = 0
     color_space: ColorSpace = ColorSpace.Oklab
+    enable_symmetric: bool = True
     # Audio Options
     stereo_default: bool = True
     disable_music: bool = False
