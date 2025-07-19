@@ -14,3 +14,13 @@ repos:
     rev: v1.7.7
     hooks:
       - id: actionlint
+
+-   repo: local
+    hooks:
+      - id: qtui
+        name: qtui
+        language: system
+        entry: uv run tools/uic_wrapper.py --git-add
+        files: .*\.ui$
+        stages: [pre-commit, manual]
+        require_serial: true
