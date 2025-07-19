@@ -220,7 +220,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.generate_game_with_spoiler_no_retry_action = QtGui.QAction(
             "Generate game (no retries)", self.generate_game_menu
         )
-        self.generate_game_without_spoiler_action = QtGui.QAction("Generate without spoiler", self.generate_game_menu)
+        self.generate_game_without_spoiler_action = QtGui.QAction("Generate for Race", self.generate_game_menu)
         self.import_permalink_action = QtGui.QAction("Import permalink", self.generate_game_menu)
         self.import_layout_action = QtGui.QAction("Import game/spoiler", self.generate_game_menu)
 
