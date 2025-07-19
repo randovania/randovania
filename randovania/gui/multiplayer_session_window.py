@@ -988,7 +988,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         if not self._session.game_details.spoiler:
             return await async_dialog.warning(
-                self, "No Spoiler Available", "Unable to view game spoilers, game was generated without spoiler."
+                self, "No Spoiler Available", "Unable to view game spoilers, game was generated for a race."
             )
 
         description = await self.game_session_api.request_layout_description(self._session.worlds)
