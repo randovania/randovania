@@ -220,7 +220,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.generate_game_with_spoiler_no_retry_action = QtGui.QAction(
             "Generate game (no retries)", self.generate_game_menu
         )
-        self.generate_game_without_spoiler_action = QtGui.QAction("Generate without spoiler", self.generate_game_menu)
+        self.generate_game_without_spoiler_action = QtGui.QAction("Generate for Race", self.generate_game_menu)
         self.import_permalink_action = QtGui.QAction("Import permalink", self.generate_game_menu)
         self.import_layout_action = QtGui.QAction("Import game/spoiler", self.generate_game_menu)
 
@@ -988,7 +988,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         if not self._session.game_details.spoiler:
             return await async_dialog.warning(
-                self, "No Spoiler Available", "Unable to view game spoilers, game was generated without spoiler."
+                self, "No Spoiler Available", "Unable to view game spoilers, game was generated for a race."
             )
 
         description = await self.game_session_api.request_layout_description(self._session.worlds)

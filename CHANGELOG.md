@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [9.4.0] - 2025-08-0?
 
 - Added: 10 more joke hints.
+- Changed: In the Multiworld Session window, renamed "Generate without spoiler" to "Generate for Race".
 - Fixed: An error when the computer shuts down unexpectedly or crashes during a multiworld that corrupts some files and prevents Randovania from starting.
 
 ### Generator
