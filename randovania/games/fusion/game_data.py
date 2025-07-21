@@ -134,6 +134,14 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
             "- Wave Beam - Makes the beam fire 2 projectiles and a major damage increase\n"
             "- Ice Beam - Adds the ability to freeze enemies with the beam and a minor damage increase",
         ),
+        (
+            "How do the Suit Upgrades interact?",
+            "The suit upgrades have been split, allowing unique combinations of effects and damage.\n"
+            "- Varia Suit - Adds protection from heated and cold rooms, and the ability to absorb Blue-X\n"
+            "- Gravity Suit - Adds the ability to freely move in liquids\n\n"
+            "Each suit collected provides additional damage reduction (amount depending on enemy type).\n"
+            "Both suits are required for immunity to lava.",
+        ),
     ],
     hash_words=_hash_words(),
     layout=randovania.game.layout.GameLayout(
