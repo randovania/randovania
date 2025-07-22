@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid: Samus Returns
 
 - Added: 10 more joke hints.
+- Fixed: Starting with extra Metroid DNA now counts toward the goal.
+- Fixed: Exported games will now take up to 80% less storage space when music shuffle is enabled.
+- Fixed: Shuffled music tracks now play at the correct volume in game.
 
 ## [9.3.1] - 2025-07-05
 

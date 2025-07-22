@@ -675,6 +675,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
 
     def _objective(self, config: MSRConfiguration) -> dict:
         return {
+            "placed_dna": config.artifacts.placed_artifacts,
             "required_dna": config.artifacts.required_artifacts,
             "final_boss": config.final_boss.value,
         }
