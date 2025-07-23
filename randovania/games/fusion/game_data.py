@@ -8,6 +8,7 @@ import randovania.game.generator
 import randovania.game.gui
 import randovania.game.hints
 import randovania.game.layout
+import randovania.game.web_info
 from randovania.games.fusion import layout
 from randovania.games.fusion.db_integrity import find_fusion_db_errors
 from randovania.games.fusion.layout.preset_describer import FusionPresetDescriber
@@ -135,6 +136,17 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
             "- Ice Beam - Adds the ability to freeze enemies with the beam and a minor damage increase",
         ),
     ],
+    web_info=randovania.game.web_info.GameWebInfo(
+        what_can_randomize=[
+            "All items including Security Keycards",
+            "Starting locations",
+            "A new goal has been added (Infant Metroid Hunt)",
+        ],
+        need_to_play=[
+            "A ROM of Metroid Fusion (USA)",
+            "A Gameboy Advance Emulator (recommended mGBA or Bizhawk)",
+        ],
+    ),
     hash_words=_hash_words(),
     layout=randovania.game.layout.GameLayout(
         configuration=layout.FusionConfiguration,
