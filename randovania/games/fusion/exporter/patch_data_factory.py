@@ -323,7 +323,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             f"has discovered and destroyed a top secret {colorize_text(FusionColor.YELLOW, 'Metroid', True)} "
             f"breeding facility. It released {self.configuration.artifacts.placed_artifacts} "
             "infant Metroids into the station. "
-            f"Initial scans indicate that they are hiding around the B.S.L.. "
+            f"Initial scans indicate that they are hiding around the B.S.L. "
             f"Find and capture {self.configuration.artifacts.required_artifacts} of them, "
             "to lure out the SA-X. "
             "Then initiate the station's self-destruct sequence. "
