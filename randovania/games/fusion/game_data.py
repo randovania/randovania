@@ -129,11 +129,20 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
         (
             "How do the Beam Upgrades interact?",
             "The beam upgrades have been split, allowing unique combinations of effects and damage.\n"
-            "- Charge Beam - Adds the ability to charge Samus' beam and a minor damage increase\n"
-            "- Wide Beam - Makes the beam fire 3 projectiles and a major increase to damage\n"
-            "- Plasma Beam - Adds the ability to penetrate enemies and a minor damage increase\n"
-            "- Wave Beam - Makes the beam fire 2 projectiles and a major damage increase\n"
-            "- Ice Beam - Adds the ability to freeze enemies with the beam and a minor damage increase",
+            "- Charge Beam - Adds the ability to charge Samus' beam\n"
+            "- Wide Beam - Makes the beam fire 3 projectiles\n"
+            "- Plasma Beam - Adds the ability to penetrate enemies\n"
+            "- Wave Beam - Adds the ability to penetrate walls and makes the beam fire at least 2 projectiles\n"
+            "- Ice Beam - Adds the ability to freeze enemies\n\n"
+            "Each beam collected adds to the total damage dealt per projectile.",
+        ),
+        (
+            "How do the Suit Upgrades interact?",
+            "The suit upgrades have been split, allowing unique combinations of effects and damage reduction.\n"
+            "- Varia Suit - Adds protection from heated and cold rooms, and the ability to absorb Blue-X\n"
+            "- Gravity Suit - Adds the ability to freely move in liquids\n\n"
+            "Each suit collected provides additional damage reduction (amount depending on enemy type).\n"
+            "Both suits are required for immunity to lava.",
         ),
     ],
     web_info=randovania.game.web_info.GameWebInfo(
