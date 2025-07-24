@@ -203,10 +203,18 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     "HueMin": getattr(cosmetics, f"{attr_name}_hue_min"),
                     "HueMax": getattr(cosmetics, f"{attr_name}_hue_max"),
                 }
+            if getattr(cosmetics, f"enable_{attr_name}_palette") and getattr(
+                cosmetics, f"enable_{attr_name}_palette_override"
+            ):
+                palettes[palettes_key] = {
+                    "HueMin": getattr(cosmetics, f"{attr_name}_hue_override_min"),
+                    "HueMax": getattr(cosmetics, f"{attr_name}_hue_override_max"),
+                }
         palette_dict = {
             "Seed": self.description.get_seed_for_world(self.players_config.player_index),
             "Randomize": palettes,
             "ColorSpace": cosmetics.color_space.long_name,
+            "Symmetric": getattr(cosmetics, "enable_symmetric"),
         }
         return palette_dict
 

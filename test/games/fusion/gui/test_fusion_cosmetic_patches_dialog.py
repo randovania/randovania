@@ -11,12 +11,13 @@ from randovania.games.fusion.layout.fusion_cosmetic_patches import ColorSpace, F
     ("field_name", "widget_field"),
     [
         ("starting_map", "map_check"),
-        ("enable_suit_palette", "suit_palette_check"),
-        ("enable_beam_palette", "beam_palette_check"),
-        ("enable_enemy_palette", "enemy_palette_check"),
-        ("enable_tileset_palette", "tileset_palette_check"),
+        ("enable_suit_palette", "suit_rando_shift_check"),
+        ("enable_beam_palette", "beam_rando_shift_check"),
+        ("enable_enemy_palette", "enemy_rando_shift_check"),
+        ("enable_tileset_palette", "tileset_rando_shift_check"),
         ("disable_music", "disable_music_check"),
         ("disable_sfx", "disable_sfx_check"),
+        ("enable_symmetric", "symmetric_check"),
     ],
 )
 def test_enable_checkboxes(skip_qtbot, field_name: str, widget_field: str) -> None:
