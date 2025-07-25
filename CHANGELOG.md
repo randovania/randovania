@@ -14,6 +14,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Generator
 - Added: The generator will now check for the count of major pickups when major/minor split is enabled.
 
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+##### Sanctuary Fortress
+
+- Changed: Minor adjustment aimed at making Aerie safer for the generator, no changes to requirements in practice.
+
 ### Metroid: Samus Returns
 
 - Added: 10 more joke hints.
