@@ -183,7 +183,7 @@ _GameChoices = discord.Option(
     choices=[
         discord.OptionChoice(name=game.long_name, value=game.value)
         for game in enum_lib.iterate_enum(RandovaniaGame)
-        if game.data.development_state.can_view()
+        if game.data.development_state.can_view(from_bot=True)
     ],
 )
 _GameChoices.converter = EnumConverter()
