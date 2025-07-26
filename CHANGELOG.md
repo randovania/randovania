@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Generator
 - Added: The generator will now check for the count of major pickups when major/minor split is enabled.
 
+### Metroid Dread
+- Fixed: A crash when attempting to fire Proto EMMI's Omega Blaster while having 0 maximum missiles.
+
 ### Metroid: Samus Returns
 
 - Added: 10 more joke hints.
