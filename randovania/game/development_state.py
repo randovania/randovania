@@ -19,11 +19,14 @@ class DevelopmentState(Enum):
     def is_stable(self) -> bool:
         return self == DevelopmentState.STABLE
 
-    def can_view(self) -> bool:
+    def can_view(self, *, from_bot: bool = False) -> bool:
         if self.is_stable:
             return True
 
         if self == DevelopmentState.STAGING:
             return randovania.is_dev_version()
 
-        return not randovania.is_frozen()
+        if from_bot:
+            return randovania.is_dev_version()
+        else:
+            return not randovania.is_frozen()
