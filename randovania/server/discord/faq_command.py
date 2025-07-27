@@ -81,7 +81,7 @@ class FaqCommandCog(RandovaniaCog):
 
         for game in enum_lib.iterate_enum(RandovaniaGame):
             faq_entries = list(game.data.faq)
-            if not faq_entries or not game.data.development_state.can_view():
+            if not faq_entries or not game.data.development_state.can_view(from_bot=True):
                 continue
 
             faq_message = GameFaqMessage(game)
