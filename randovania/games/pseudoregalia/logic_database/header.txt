@@ -1,0 +1,104 @@
+====================
+Templates
+
+* Can Do Damage:
+      Dream Breaker or Sunsetter
+
+* Can Strikebreak:
+      Dream Breaker and Strikebreak
+
+* Can Soul Cutter:
+      Dream Breaker and Soul Cutter and Strikebreak
+
+* Can Use Ascendant Light:
+      Ascendant Light and Dream Breaker
+
+* Bounce Off Torch:
+      Knowledge (Beginner) and Can Use Ascendant Light
+
+* Can Long Jump:
+      Slide and Solar Wind
+
+====================
+Dock Weaknesses
+
+> Door
+  * No Wall
+      Open:
+          Trivial
+      No lock
+
+
+  * Breakable Wall
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Can Do Damage
+
+
+  * Strikebreak Wall
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Can Strikebreak
+
+
+  * Small Key Door
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Small Key ≥ 7
+
+
+  * Locked Door
+      Open:
+          Impossible
+      Lock type: FRONT_BLAST_BACK_IMPOSSIBLE
+          Trivial
+
+  > Dock Rando:
+      Unlocked: No Wall
+      Locked: Locked Door
+      Change from:
+          Breakable Wall
+          Strikebreak Wall
+      Change to:
+          Breakable Wall
+          No Wall
+          Strikebreak Wall
+
+
+> Tunnel
+  * Slide Tunnel
+      Open:
+          Slide
+      No lock
+
+  > Dock Rando: Disabled
+
+
+> Dock
+  * Open Passage
+      Open:
+          Trivial
+      No lock
+
+
+  * Not Determined
+      Open:
+          Impossible
+      No lock
+
+  > Dock Rando: Disabled
+
+
+> Transition
+* Extra - is_teleporter: True
+* Extra - ignore_for_hints: True
+  * Transition
+      Open:
+          Trivial
+      No lock
+
+  > Dock Rando: Disabled
+

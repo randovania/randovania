@@ -1,0 +1,1125 @@
+----------------
+Transition to Empty Bailey
+Extra - total_boundings: {'x1': -75, 'x2': 1325, 'y1': -35550, 'y2': -33550}
+Extra - polygon: [[-75, -35550], [-75, -33550], [1325, -33550], [1325, -35550]]
+Extra - room_id: 0
+> Door to Southwest Save Room; Heals? False
+  * Layers: default
+  * No Wall to Southwest Save Room/Door to Transition to Empty Bailey
+  > Transition to Empty Bailey
+      Trivial
+
+> Transition to Empty Bailey; Heals? False; Spawn Point
+  * Layers: default
+  * Transition to Bridge/Transition to The Underbelly
+  * Extra - actor_index: 1029
+  * Extra - transition_tag: exteriorEast
+  * Extra - start_tag: cavesSouth
+  > Door to Southwest Save Room
+      Trivial
+
+----------------
+Southwest Save Room
+Extra - total_boundings: {'x1': -875, 'x2': 2025, 'y1': -33550, 'y2': -30500}
+Extra - polygon: [[-875, -33550], [-875, -30500], [2025, -30500], [2025, -33550]]
+Extra - room_id: 1
+> Save Crystal; Heals? True; Spawn Point
+  * Layers: default
+  * Extra - actor_index: 946
+  * Extra - start_tag: cavesSouthSave
+  > Pickup (Note)
+      Sunsetter or Bounce Off Torch
+  > Door to Transition to Empty Bailey
+      Trivial
+  > Door to Southwest Hallway
+      Trivial
+  > Door to Tiny Statue Room
+      After The Underbelly/Tiny Statue Room/Hit Switch
+
+> Pickup (Note); Heals? False
+  * Layers: note_shuffle
+  * Pickup 69; Category? Major
+  * Extra - actor_index: 896
+  > Save Crystal
+      Trivial
+
+> Door to Transition to Empty Bailey; Heals? False
+  * Layers: default
+  * No Wall to Transition to Empty Bailey/Door to Southwest Save Room
+  > Save Crystal
+      Trivial
+
+> Door to Southwest Hallway; Heals? False
+  * Layers: default
+  * No Wall to Southwest Hallway/Door to Southwest Save Room
+  * Extra - actor_index: 2670
+  > Save Crystal
+      Trivial
+
+> Door to Tiny Statue Room; Heals? False
+  * Layers: default
+  * No Wall to Tiny Statue Room/Door to Southwest Save Room
+  * Extra - actor_index: 1015
+  > Save Crystal
+      Trivial
+
+----------------
+Southwest Hallway
+Extra - total_boundings: {'x1': -2975, 'x2': -875, 'y1': -31750, 'y2': -30575}
+Extra - polygon: [[-2975, -31750], [-2975, -30575], [-875, -30575], [-875, -31750]]
+Extra - room_id: 2
+> Door to Southwest Save Room; Heals? False
+  * Layers: default
+  * No Wall to Southwest Save Room/Door to Southwest Hallway
+  * Extra - actor_index: 2670
+  > Door to Building Room
+      Trivial
+
+> Door to Building Room; Heals? False
+  * Layers: default
+  * No Wall to Building Room/Door to Southwest Hallway
+  * Extra - actor_index: 2691
+  > Door to Southwest Save Room
+      Trivial
+
+----------------
+Building Room
+Extra - total_boundings: {'x1': -5825, 'x2': -2975, 'y1': -31850, 'y2': -23575}
+Extra - polygon: [[-5825, -31850], [-5825, -23575], [-2975, -23575], [-2975, -31850]]
+Extra - room_id: 3
+> Pickup (Health Piece); Heals? False
+  * Layers: default
+  * Pickup 70; Category? Minor
+  * Extra - actor_index: 615
+  > Door to Southwest Hallway
+      Trivial
+
+> Door to Southwest Hallway; Heals? False
+  * Layers: default
+  * No Wall to Southwest Hallway/Door to Building Room
+  * Extra - actor_index: 2691
+  > Pickup (Health Piece)
+      Sunsetter
+  > Door to Tiny Statue Room
+      Air Kick ≥ 2 or Sunsetter
+
+> Door to Tiny Statue Room; Heals? False
+  * Layers: default
+  * No Wall to Tiny Statue Room/Door to Building Room
+  * Extra - actor_index: 2736
+  > Door to Southwest Hallway
+      Trivial
+
+----------------
+Tiny Statue Room
+Extra - total_boundings: {'x1': -2975, 'x2': 2600, 'y1': -30900, 'y2': -27950}
+Extra - polygon: [[2025, -30900], [1375, -30350], [-2975, -30350], [-2975, -27950], [2600, -27950], [2600, -30450]]
+Extra - room_id: 4
+> Door to Building Room; Heals? False
+  * Layers: default
+  * No Wall to Building Room/Door to Tiny Statue Room
+  * Extra - actor_index: 2736
+  > Door to Central Hub
+      Trivial
+
+> Door to Southwest Save Room; Heals? False
+  * Layers: default
+  * No Wall to Southwest Save Room/Door to Tiny Statue Room
+  * Extra - actor_index: 1015
+  > Door to Central Hub
+      Trivial
+
+> Door to Central Hub; Heals? False
+  * Layers: default
+  * No Wall to Central Hub/Door to Tiny Statue Room
+  * Extra - actor_index: 2744
+  > Door to Building Room
+      Trivial
+  > Door to Southwest Save Room
+      After The Underbelly/Tiny Statue Room/Hit Switch
+  > Event - Hit Switch
+      Can Do Damage
+
+> Event - Hit Switch; Heals? False
+  * Layers: default
+  * Event The Underbelly/Tiny Statue Room/Hit Switch
+  * Extra - actor_index: 632
+  > Door to Central Hub
+      Trivial
+
+----------------
+Central Hub
+Extra - total_boundings: {'x1': -2800, 'x2': 13250, 'y1': -27950, 'y2': -13450}
+Extra - polygon: [[8300, -27950], [-2800, -27950], [-2800, -16550], [1750, -16550], [2825, -15675], [6600, -15675], [6600, -14175], [8000, -14175], [10675, -13450], [11850, -15850], [11850, -20200], [13250, -20200], [13250, -23600], [8300, -23600]]
+Extra - room_id: 5
+> Pickup (Note); Heals? False
+  * Layers: note_shuffle
+  * Pickup 64; Category? Major
+  * Extra - actor_index: 894
+  > Door to Tiny Statue Room
+      Trivial
+
+> Save Crystal; Heals? True; Spawn Point
+  * Layers: default
+  * Extra - actor_index: 944
+  * Extra - start_tag: cavesBigMiddleStart
+  > Event - Hit Switch 1
+      Can Do Damage
+  > Pickup (Small Key)
+      Sunsetter
+  > Pickup (Nostalgia)
+      Cling and Sunsetter and After The Underbelly/Central Hub/Hit Switch 2 and Can Long Jump
+  > Door to Martial Prowess Room
+      Trivial
+  > Door to Many Breakable Walls Room (West)
+      Sunsetter
+  > Door to room where you duck under haze while riding a platform
+      Trivial
+  > Near Bubbles
+      Trivial
+  > Near Bridge
+      After The Underbelly/Central Hub/Hit Switch 1 or Can Long Jump
+
+> Event - Hit Switch 1; Heals? False
+  * Layers: default
+  * Event The Underbelly/Central Hub/Hit Switch 1
+  * Extra - actor_index: 634
+  > Save Crystal
+      Trivial
+
+> Event - Hit Switch 2; Heals? False
+  * Layers: default
+  * Event The Underbelly/Central Hub/Hit Switch 2
+  * Extra - actor_index: 635
+  > Door to Many Breakable Walls Room (East)
+      Cling or Void Out Warp (Beginner)
+
+> Pickup (Small Key); Heals? False
+  * Layers: default
+  * Pickup 63; Category? Minor
+  * Extra - actor_index: 546
+  > Save Crystal
+      Air Kick ≥ 3 or Cling or Void Out Warp (Beginner)
+
+> Pickup (Nostalgia); Heals? False
+  * Layers: default
+  * Pickup 66; Category? Major
+  * Extra - actor_index: 1045
+  > Save Crystal
+      Trivial
+
+> Door to Tiny Statue Room; Heals? False
+  * Layers: default
+  * No Wall to Tiny Statue Room/Door to Central Hub
+  * Extra - actor_index: 2744
+  > Near Bridge
+      Air Kick or Cling ≥ 2 or Sunsetter or Skid Jump (Beginner)
+
+> Door to another sloped hallway; Heals? False
+  * Layers: default
+  * No Wall to another sloped hallway/Door to Central Hub
+  * Extra - actor_index: 2712
+  > Near Bubbles
+      Sunsetter
+
+> Door to Northeast Hub Access; Heals? False
+  * Layers: default
+  * No Wall to Northeast Hub Access/Door to Central Hub
+  * Extra - actor_index: 2710
+  > Near Bubbles
+      Trivial
+
+> Door to Martial Prowess Room; Heals? False
+  * Layers: default
+  * Strikebreak Wall to Martial Prowess Room/Door to Central Hub
+  * Extra - actor_index: 480
+  > Save Crystal
+      Trivial
+
+> Door to Many Breakable Walls Room (West); Heals? False
+  * Layers: default
+  * No Wall to Many Breakable Walls Room/Door to Central Hub (West)
+  * Extra - actor_index: 2854
+  > Save Crystal
+      Trivial
+
+> Door to Northwest Underbelly Access; Heals? False
+  * Layers: default
+  * No Wall to Northwest Underbelly Access/Door to Central Hub
+  * Extra - actor_index: 2719
+  > Door to Many Breakable Walls Room (East)
+      Any of the following:
+          Air Kick or Sunsetter
+          Skid Jump (Intermediate) and Can Long Jump
+
+> Door to room where you duck under haze while riding a platform; Heals? False
+  * Layers: default
+  * No Wall to room where you duck under haze while riding a platform/Door to Central Hub
+  * Extra - actor_index: 2715
+  > Save Crystal
+      Trivial
+
+> Door to Many Breakable Walls Room (East); Heals? False
+  * Layers: default
+  * No Wall to Many Breakable Walls Room/Door to Central Hub (East)
+  * Extra - actor_index: 2717
+  > Event - Hit Switch 2
+      All of the following:
+          Cling and Can Do Damage
+          Any of the following:
+              Air Kick ≥ 2
+              Air Kick and Air Kick Mastery (Beginner)
+  > Door to Northwest Underbelly Access
+      Any of the following:
+          Cling or Sunsetter
+          Air Kick and Air Kick Mastery (Beginner)
+          Skid Jump (Advanced) and Can Long Jump
+
+> Near Bubbles; Heals? False
+  * Layers: default
+  > Door to Tiny Statue Room
+      Air Kick or Cling or Sunsetter or Coyote Jump (Beginner) or Skid Jump (Beginner) or Can Long Jump
+  > Door to another sloped hallway
+      Sunsetter
+  > Door to Northeast Hub Access
+      Sunsetter
+
+> Near Bridge; Heals? False
+  * Layers: default
+  > Pickup (Note)
+      All of the following:
+          Can Long Jump
+          Any of the following:
+              Air Kick ≥ 2
+              Air Kick and Cling and Cling Mastery (Intermediate)
+  > Save Crystal
+      All of the following:
+          After The Underbelly/Central Hub/Hit Switch 1
+          Any of the following:
+              Sunsetter
+              Skid Jump (Intermediate) and Can Long Jump
+  > Near Bubbles
+      Trivial
+
+----------------
+another sloped hallway
+Extra - total_boundings: {'x1': 8300, 'x2': 12075, 'y1': -27425, 'y2': -25650}
+Extra - polygon: [[8300, -27425], [8300, -25650], [12075, -25650], [12075, -27425]]
+Extra - room_id: 6
+> Door to Central Hub; Heals? False
+  * Layers: default
+  * No Wall to Central Hub/Door to another sloped hallway
+  * Extra - actor_index: 2712
+  > Door to Rotating Platforms Room
+      Trivial
+
+> Door to Rotating Platforms Room; Heals? False
+  * Layers: default
+  * No Wall to Rotating Platforms Room/Door to another sloped hallway
+  * Extra - actor_index: 2625
+  > Door to Central Hub
+      Trivial
+
+----------------
+Rotating Platforms Room
+Extra - total_boundings: {'x1': 12075, 'x2': 17200, 'y1': -27725, 'y2': -23375}
+Extra - polygon: [[12075, -27725], [12075, -23375], [17200, -23375], [17200, -27725]]
+Extra - room_id: 7
+> Door to another sloped hallway; Heals? False
+  * Layers: default
+  * No Wall to another sloped hallway/Door to Rotating Platforms Room
+  * Extra - actor_index: 2625
+  > Door to Wood Bend
+      Can Do Damage
+
+> Door to Wood Bend; Heals? False
+  * Layers: default
+  * No Wall to Wood Bend/Door to Rotating Platforms Room
+  * Extra - actor_index: 2603
+  > Door to another sloped hallway
+      All of the following:
+          Can Do Damage
+          Sunsetter or Skid Jump (Advanced)
+
+----------------
+Wood Bend
+Extra - total_boundings: {'x1': 17200, 'x2': 20250, 'y1': -25900, 'y2': -24225}
+Extra - polygon: [[17200, -25900], [17200, -24225], [20250, -24225], [20250, -25900]]
+Extra - room_id: 8
+> Door to Rotating Platforms Room; Heals? False
+  * Layers: default
+  * No Wall to Rotating Platforms Room/Door to Wood Bend
+  * Extra - actor_index: 2603
+  > Door to Southeast Hub
+      Trivial
+
+> Door to Southeast Hub; Heals? False
+  * Layers: default
+  * No Wall to Southeast Hub/Door to Wood Bend
+  * Extra - actor_index: 2547
+  > Door to Rotating Platforms Room
+      Trivial
+
+----------------
+Southeast Hub
+Extra - total_boundings: {'x1': 18750, 'x2': 22400, 'y1': -24350, 'y2': -18525}
+Extra - polygon: [[21175, -22025], [21175, -24350], [18750, -24350], [18750, -18525], [21175, -18525], [21175, -21000], [22400, -21000], [22400, -22025]]
+Extra - room_id: 9
+> Door to Wood Bend; Heals? False
+  * Layers: default
+  * No Wall to Wood Bend/Door to Southeast Hub
+  * Extra - actor_index: 2547
+  > Door to Transition to Sansa Keep
+      Trivial
+
+> Door to Transition to Sansa Keep; Heals? False
+  * Layers: default
+  * No Wall to Transition to Sansa Keep/Door to Southeast Hub
+  * Extra - actor_index: 2802
+  > Door to Wood Bend
+      Trivial
+  > Door to Major Key Access
+      Trivial
+
+> Door to Major Key Access; Heals? False
+  * Layers: default
+  * No Wall to Major Key Access/Door to Southeast Hub
+  * Extra - actor_index: 2595
+  > Door to Transition to Sansa Keep
+      Trivial
+
+----------------
+Transition to Sansa Keep
+Extra - total_boundings: {'x1': 18900, 'x2': 20975, 'y1': -18525, 'y2': -15700}
+Extra - polygon: [[18900, -18525], [18900, -15700], [20975, -15700], [20975, -18525]]
+Extra - room_id: 10
+> Pickup (Health Piece); Heals? False
+  * Layers: default
+  * Pickup 59; Category? Minor
+  * Extra - actor_index: 614
+  > Transition to Sansa Keep
+      Trivial
+
+> Door to Southeast Hub; Heals? False
+  * Layers: default
+  * No Wall to Southeast Hub/Door to Transition to Sansa Keep
+  * Extra - actor_index: 2802
+  > Transition to Sansa Keep
+      Sunsetter
+
+> Transition to Sansa Keep; Heals? False; Spawn Point
+  * Layers: default
+  * Transition to Transition to The Underbelly/Transition to The Underbelly
+  * Extra - actor_index: 1031
+  * Extra - transition_tag: upperNorthEast
+  * Extra - start_tag: cavesEast
+  > Pickup (Health Piece)
+      Any of the following:
+          Air Kick ≥ 2 or Cling ≥ 2 or Bounce Off Torch
+          Air Kick and Sunsetter
+  > Door to Southeast Hub
+      Sunsetter
+
+----------------
+Major Key Access
+Extra - total_boundings: {'x1': 21750, 'x2': 25350, 'y1': -25125, 'y2': -19500}
+Extra - polygon: [[25350, -25125], [21750, -25125], [21750, -22000], [22400, -22000], [22400, -19500], [25350, -19500]]
+Extra - room_id: 11
+> Door to Southeast Hub; Heals? False
+  * Layers: default
+  * No Wall to Southeast Hub/Door to Major Key Access
+  * Extra - actor_index: 2595
+  > Door to Major Key Room
+      Any of the following:
+          All of the following:
+              Sunsetter
+              Any of the following:
+                  Air Kick ≥ 2 or Can Use Ascendant Light
+                  All of the following:
+                      Air Kick
+                      Any of the following:
+                          Cling ≥ 2
+                          Air Kick Mastery (Intermediate) and Can Long Jump
+          Skid Jump (Intermediate) and Can Long Jump
+          Air Kick and Cling and Bounce Off Torch
+
+> Door to Major Key Room; Heals? False
+  * Layers: default
+  * No Wall to Major Key Room/Door to Major Key Access
+  * Extra - actor_index: 2795
+  > Door to Southeast Hub
+      Trivial
+
+----------------
+Major Key Room
+Extra - total_boundings: {'x1': 25350, 'x2': 33250, 'y1': -28225, 'y2': -19725}
+Extra - polygon: [[25350, -28225], [25350, -19725], [33250, -19725], [33250, -28225]]
+Extra - room_id: 12
+> Event - Hit Switch 2; Heals? False
+  * Layers: default
+  * Event The Underbelly/Major Key Room/Hit Switch 2
+  * Extra - actor_index: 630
+  > Door to Major Key Access
+      Trivial
+
+> Event - Hit Switch 1; Heals? False
+  * Layers: default
+  * Event The Underbelly/Major Key Room/Hit Switch 1
+  * Extra - actor_index: 628
+  > Door to Major Key Access
+      Trivial
+
+> Pickup (Major Key); Heals? False
+  * Layers: default
+  * Pickup 60; Category? Major
+  * Extra - actor_index: 545
+  > Door to Major Key Access
+      Trivial
+
+> Door to Major Key Access; Heals? False
+  * Layers: default
+  * No Wall to Major Key Access/Door to Major Key Room
+  * Extra - actor_index: 2795
+  > Event - Hit Switch 2
+      After The Underbelly/Major Key Room/Hit Switch 1 and Can Soul Cutter and Can Use Ascendant Light
+  > Event - Hit Switch 1
+      All of the following:
+          Can Soul Cutter
+          Any of the following:
+              Can Use Ascendant Light
+              All of the following:
+                  Sunsetter
+                  Air Kick or Can Long Jump
+  > Pickup (Major Key)
+      All of the following:
+          After The Underbelly/Major Key Room/Hit Switch 2
+          Air Kick or Cling or Sunsetter or Skid Jump (Beginner)
+
+----------------
+Northeast Hub Access
+Extra - total_boundings: {'x1': 13250, 'x2': 19000, 'y1': -22725, 'y2': -13950}
+Extra - polygon: [[14000, -13950], [19000, -13950], [19000, -16200], [17500, -16200], [17500, -22725], [13250, -22725], [13250, -21550], [14000, -21550]]
+Extra - room_id: 13
+> Door to Central Hub; Heals? False
+  * Layers: default
+  * No Wall to Central Hub/Door to Northeast Hub Access
+  * Extra - actor_index: 2710
+  > Door to Northeast Hub
+      All of the following:
+          Slide
+          Air Kick or Cling or Sunsetter
+
+> Door to Northeast Hub; Heals? False
+  * Layers: default
+  * No Wall to Northeast Hub/Door to Northeast Hub Access
+  * Extra - actor_index: 2725
+  > Door to Central Hub
+      All of the following:
+          Slide and Can Use Ascendant Light
+          Any of the following:
+              Cling
+              Air Kick and Air Kick Mastery (Beginner)
+
+----------------
+Northeast Hub
+Extra - total_boundings: {'x1': 13800, 'x2': 19900, 'y1': -13950, 'y2': -9125}
+Extra - polygon: [[13800, -13950], [13800, -9125], [19900, -9125], [19900, -13950]]
+Extra - room_id: 14
+> Save Crystal; Heals? True; Spawn Point
+  * Layers: default
+  * Extra - actor_index: 947
+  * Extra - start_tag: cavesBigSideStart
+  > Door to Northeast Hub Access
+      Trivial
+  > Door to Northeast Combat Room (Lower)
+      Trivial
+  > Door to Heliacal Power Room
+      Trivial
+  > Across Bridge
+      After The Underbelly/Northeast Hub/Hit Switch or Bounce Off Torch
+
+> Event - Hit Switch; Heals? False
+  * Layers: default
+  * Event The Underbelly/Northeast Hub/Hit Switch
+  * Extra - actor_index: 639
+  > Door to Northeast Combat Room (Upper)
+      Trivial
+
+> Event - Cut and Drop Platform; Heals? False
+  * Layers: default
+  * Event The Underbelly/Northeast Hub/Cut and Drop Platform
+  * Extra - actor_index: 512
+  > Across Bridge
+      Trivial
+
+> Door to Northeast Hub Access; Heals? False
+  * Layers: default
+  * No Wall to Northeast Hub Access/Door to Northeast Hub
+  * Extra - actor_index: 2725
+  > Save Crystal
+      Trivial
+
+> Door to Northeast Combat Room (Lower); Heals? False
+  * Layers: default
+  * No Wall to Northeast Combat Room/Door to Northeast Hub (Lower)
+  * Extra - actor_index: 2731
+  > Save Crystal
+      Trivial
+
+> Door to Northeast Combat Room (Upper); Heals? False
+  * Layers: default
+  * No Wall to Northeast Combat Room/Door to Northeast Hub (Upper)
+  * Extra - actor_index: 2729
+  > Save Crystal
+      Trivial
+  > Event - Hit Switch
+      Can Do Damage
+
+> Door to room where you lift the platform and can lower it again for no reason; Heals? False
+  * Layers: default
+  * No Wall to room where you lift the platform and can lower it again for no reason/Door to Northeast Hub
+  * Extra - actor_index: 2727
+  > Across Bridge
+      After The Underbelly/Northeast Hub/Cut and Drop Platform
+
+> Door to Heliacal Power Room; Heals? False
+  * Layers: default
+  * Small Key Door to Heliacal Power Room/Door to Northeast Hub
+  * Extra - actor_index: 2624
+  > Save Crystal
+      Trivial
+
+> Across Bridge; Heals? False
+  * Layers: default
+  > Event - Cut and Drop Platform
+      Sunsetter and Can Do Damage
+  > Door to room where you lift the platform and can lower it again for no reason
+      All of the following:
+          After The Underbelly/Northeast Hub/Cut and Drop Platform
+          Air Kick ≥ 2 or Sunsetter
+
+----------------
+Northeast Combat Room
+Extra - total_boundings: {'x1': 19875, 'x2': 23425, 'y1': -13775, 'y2': -10150}
+Extra - polygon: [[19875, -13775], [19875, -10150], [23425, -10150], [23425, -13775]]
+Extra - room_id: 15
+> Door to Northeast Hub (Lower); Heals? False
+  * Layers: default
+  * No Wall to Northeast Hub/Door to Northeast Combat Room (Lower)
+  * Extra - actor_index: 2731
+  > Door to Northeast Hub (Upper)
+      All of the following:
+          Dream Breaker
+          Any of the following:
+              Sunsetter
+              Cling and Cling Mastery (Advanced) and Skid Jump (Advanced)
+
+> Door to Northeast Hub (Upper); Heals? False
+  * Layers: default
+  * No Wall to Northeast Hub/Door to Northeast Combat Room (Upper)
+  * Extra - actor_index: 2729
+  > Door to Northeast Hub (Lower)
+      Trivial
+
+----------------
+Heliacal Power Room
+Extra - total_boundings: {'x1': 17875, 'x2': 19225, 'y1': -9125, 'y2': -7375}
+Extra - polygon: [[17875, -9125], [17875, -7375], [19225, -7375], [19225, -9125]]
+Extra - room_id: 16
+> Pickup (Heliacal Power); Heals? False
+  * Layers: default
+  * Pickup 67; Category? Major
+  * Extra - actor_index: 1047
+  > Door to Northeast Hub
+      Trivial
+
+> Pickup (Note); Heals? False
+  * Layers: note_shuffle
+  * Pickup 68; Category? Major
+  * Extra - actor_index: 895
+  > Door to Northeast Hub
+      Trivial
+
+> Door to Northeast Hub; Heals? False
+  * Layers: default
+  * Small Key Door to Northeast Hub/Door to Heliacal Power Room
+  * Extra - actor_index: 2624
+  > Pickup (Heliacal Power)
+      Trivial
+  > Pickup (Note)
+      Trivial
+
+----------------
+room where you lift the platform and can lower it again for no reason
+Extra - total_boundings: {'x1': 11875, 'x2': 13800, 'y1': -14225, 'y2': -10025}
+Extra - polygon: [[11875, -14225], [11875, -10025], [13800, -10025], [13800, -14225]]
+Extra - room_id: 17
+> Event - Hit Switch; Heals? False
+  * Layers: default
+  * Event The Underbelly/room where you lift the platform and can lower it again for no reason/Hit Switch
+  * Extra - actor_index: 633
+  > Door to Northeast Hub
+      Trivial
+
+> Door to Northeast Hub; Heals? False
+  * Layers: default
+  * No Wall to Northeast Hub/Door to room where you lift the platform and can lower it again for no reason
+  * Extra - actor_index: 2727
+  > Event - Hit Switch
+      All of the following:
+          Can Do Damage
+          Air Kick or Cling or Sunsetter or Skid Jump (Beginner) or Bounce Off Torch
+  > Door to room where you duck under haze while riding a platform
+      All of the following:
+          After The Underbelly/room where you lift the platform and can lower it again for no reason/Hit Switch
+          Any of the following:
+              Air Kick or Cling ≥ 2 or Sunsetter or Bounce Off Torch
+              All of the following:
+                  Skid Jump (Advanced)
+                  Cling or Slide
+
+> Door to room where you duck under haze while riding a platform; Heals? False
+  * Layers: default
+  * No Wall to room where you duck under haze while riding a platform/Door to room where you lift the platform and can lower it again for no reason
+  > Door to Northeast Hub
+      Trivial
+
+----------------
+room where you duck under haze while riding a platform
+Extra - total_boundings: {'x1': 11850, 'x2': 13775, 'y1': -20125, 'y2': -14225}
+Extra - polygon: [[11850, -20125], [11850, -14225], [13775, -14225], [13775, -20125]]
+Extra - room_id: 18
+> Door to room where you lift the platform and can lower it again for no reason; Heals? False
+  * Layers: default
+  * No Wall to room where you lift the platform and can lower it again for no reason/Door to room where you duck under haze while riding a platform
+  > Door to Central Hub
+      Can Do Damage
+
+> Door to Central Hub; Heals? False
+  * Layers: default
+  * No Wall to Central Hub/Door to room where you duck under haze while riding a platform
+  * Extra - actor_index: 2715
+  > Door to room where you lift the platform and can lower it again for no reason
+      All of the following:
+          Can Do Damage
+          Any of the following:
+              Air Kick ≥ 2 or Bounce Off Torch
+              Air Kick and Sunsetter
+
+----------------
+Martial Prowess Room
+Extra - total_boundings: {'x1': 8350, 'x2': 12125, 'y1': -14000, 'y2': -7450}
+Extra - polygon: [[8350, -10900], [9250, -9375], [10800, -7450], [12125, -7975], [11700, -12125], [11550, -12825], [10950, -13200], [9550, -13750], [8350, -14000]]
+Extra - room_id: 19
+> Pickup (Martial Prowess); Heals? False
+  * Layers: default
+  * Pickup 65; Category? Minor
+  * Extra - actor_index: 1046
+  > Door to Central Hub
+      Trivial
+
+> Door to Central Hub; Heals? False
+  * Layers: default
+  * Strikebreak Wall to Central Hub/Door to Martial Prowess Room
+  * Extra - actor_index: 480
+  > Pickup (Martial Prowess)
+      All of the following:
+          Can Use Ascendant Light
+          Air Kick or Cling or Sunsetter or Bounce Off Torch
+
+----------------
+Many Breakable Walls Room
+Extra - total_boundings: {'x1': -1600, 'x2': 8175, 'y1': -16550, 'y2': -11075}
+Extra - polygon: [[-1600, -16550], [-1600, -14700], [1850, -13525], [1850, -11075], [8175, -11075], [8175, -14175], [2650, -14175], [2650, -15100], [-250, -16550]]
+Extra - room_id: 20
+> Door to Central Hub (West); Heals? False
+  * Layers: default
+  * No Wall to Central Hub/Door to Many Breakable Walls Room (West)
+  * Extra - actor_index: 2854
+  > Door to Central Hub (East)
+      All of the following:
+          Can Do Damage
+          Any of the following:
+              Cling or Sunsetter or Skid Jump (Advanced)
+              Skid Jump (Intermediate) and Can Long Jump
+
+> Door to Central Hub (East); Heals? False
+  * Layers: default
+  * No Wall to Central Hub/Door to Many Breakable Walls Room (East)
+  * Extra - actor_index: 2717
+  > Door to Central Hub (West)
+      All of the following:
+          Can Do Damage
+          Any of the following:
+              Air Kick ≥ 3
+              Air Kick and Sunsetter
+
+----------------
+Northwest Underbelly Access
+Extra - total_boundings: {'x1': 1350, 'x2': 8625, 'y1': -15800, 'y2': -7700}
+Extra - polygon: [[8625, -9900], [8000, -10950], [5225, -11450], [4625, -12400], [5550, -13950], [4025, -15800], [2575, -15500], [3500, -12400], [2975, -10950], [1350, -8800], [1350, -7700], [8625, -7700]]
+Extra - room_id: 21
+> Door to Central Hub; Heals? False
+  * Layers: default
+  * No Wall to Central Hub/Door to Northwest Underbelly Access
+  * Extra - actor_index: 2719
+  > Door to Crawler Tower
+      Air Kick or Sunsetter
+
+> Door to Crawler Tower; Heals? False
+  * Layers: default
+  * No Wall to Crawler Tower/Door to Northwest Underbelly Access
+  * Extra - actor_index: 2643
+  > Door to Central Hub
+      Trivial
+
+----------------
+Crawler Tower
+Extra - total_boundings: {'x1': 1300, 'x2': 3025, 'y1': -7700, 'y2': -5950}
+Extra - polygon: [[1300, -7700], [1300, -5950], [3025, -5950], [3025, -7700]]
+Extra - room_id: 22
+> Door to Northwest Underbelly Access; Heals? False
+  * Layers: default
+  * No Wall to Northwest Underbelly Access/Door to Crawler Tower
+  * Extra - actor_index: 2643
+  > Door to room with the bridge on top (Lower)
+      Trivial
+  > Door to Transition to Dilapidated Dungeon
+      Can Use Ascendant Light
+
+> Door to room with the bridge on top (Lower); Heals? False
+  * Layers: default
+  * No Wall to room with the bridge on top/Door to Crawler Tower (Lower)
+  * Extra - actor_index: 2614
+  > Door to Northwest Underbelly Access
+      Trivial
+
+> Door to just another small hallway i don't know how to name; Heals? False
+  * Layers: default
+  * No Wall to just another small hallway i don't know how to name/Door to Crawler Tower
+  > Door to Transition to Dilapidated Dungeon
+      Trivial
+
+> Door to Transition to Dilapidated Dungeon; Heals? False
+  * Layers: default
+  * No Wall to Transition to Dilapidated Dungeon/Door to Crawler Tower
+  > Door to Northwest Underbelly Access
+      Trivial
+  > Door to just another small hallway i don't know how to name
+      Trivial
+  > Door to room with the bridge on top (Upper)
+      Any of the following:
+          Slide
+          Air Kick and Air Kick Mastery (Beginner)
+
+> Door to room with the bridge on top (Upper); Heals? False
+  * Layers: default
+  * No Wall to room with the bridge on top/Door to Crawler Tower (Upper)
+  * Extra - actor_index: 2823
+  > Door to Transition to Dilapidated Dungeon
+      Any of the following:
+          Can Use Ascendant Light
+          Sunsetter and Sunsetter Mastery (Intermediate)
+          Air Kick and Air Kick Mastery (Beginner)
+
+----------------
+room with the bridge on top
+Extra - total_boundings: {'x1': -350, 'x2': 1300, 'y1': -7550, 'y2': -6100}
+Extra - polygon: [[-350, -7550], [-350, -6100], [1300, -6100], [1300, -7550]]
+Extra - room_id: 23
+> Door to Crawler Tower (Lower); Heals? False
+  * Layers: default
+  * No Wall to Crawler Tower/Door to room with the bridge on top (Lower)
+  * Extra - actor_index: 2614
+  > Door to sloped moving platform room
+      Trivial
+
+> Door to sloped moving platform room; Heals? False
+  * Layers: default
+  * No Wall to sloped moving platform room/Door to room with the bridge on top
+  * Extra - actor_index: 2785
+  > Door to Crawler Tower (Lower)
+      Trivial
+
+> Door to Crawler Tower (Upper); Heals? False
+  * Layers: default
+  * No Wall to Crawler Tower/Door to room with the bridge on top (Upper)
+  * Extra - actor_index: 2823
+  > Door to Ascendant Light Tutorial
+      Trivial
+
+> Door to Ascendant Light Tutorial; Heals? False
+  * Layers: default
+  * No Wall to Ascendant Light Tutorial/Door to room with the bridge on top
+  * Extra - actor_index: 2819
+  > Door to sloped moving platform room
+      Trivial
+  > Door to Crawler Tower (Upper)
+      Trivial
+
+----------------
+sloped moving platform room
+Extra - total_boundings: {'x1': -550, 'x2': 1050, 'y1': -12900, 'y2': -7550}
+Extra - polygon: [[-550, -12900], [-550, -7550], [1050, -7550], [1050, -12900]]
+Extra - room_id: 24
+> Door to room with the bridge on top; Heals? False
+  * Layers: default
+  * No Wall to room with the bridge on top/Door to sloped moving platform room
+  * Extra - actor_index: 2785
+  > Door to room with health piece behind the pillar
+      Can Do Damage
+
+> Door to room with health piece behind the pillar; Heals? False
+  * Layers: default
+  * No Wall to room with health piece behind the pillar/Door to sloped moving platform room
+  * Extra - actor_index: 2746
+  > Door to room with the bridge on top
+      Can Do Damage
+
+----------------
+room with health piece behind the pillar
+Extra - total_boundings: {'x1': -2700, 'x2': -550, 'y1': -13050, 'y2': -10725}
+Extra - polygon: [[-2700, -13050], [-2700, -10725], [-550, -10725], [-550, -13050]]
+Extra - room_id: 25
+> Pickup (Health Piece); Heals? False
+  * Layers: default
+  * Pickup 62; Category? Minor
+  * Extra - actor_index: 616
+  > Door to sloped moving platform room
+      Trivial
+
+> Door to sloped moving platform room; Heals? False
+  * Layers: default
+  * No Wall to sloped moving platform room/Door to room with health piece behind the pillar
+  * Extra - actor_index: 2746
+  > Pickup (Health Piece)
+      Air Kick or Cling or Sunsetter or Skid Jump (Beginner)
+  > Door to Northwest Save Access
+      Trivial
+
+> Door to Northwest Save Access; Heals? False
+  * Layers: default
+  * No Wall to Northwest Save Access/Door to room with health piece behind the pillar
+  * Extra - actor_index: 2702
+  > Door to sloped moving platform room
+      Trivial
+
+----------------
+Northwest Save Access
+Extra - total_boundings: {'x1': -2575, 'x2': -975, 'y1': -10725, 'y2': -4800}
+Extra - polygon: [[-2575, -10725], [-2575, -4800], [-975, -4800], [-975, -10725]]
+Extra - room_id: 26
+> Door to room with health piece behind the pillar; Heals? False
+  * Layers: default
+  * No Wall to room with health piece behind the pillar/Door to Northwest Save Access
+  * Extra - actor_index: 2702
+  > Door to Northwest Save Room
+      All of the following:
+          Can Do Damage
+          Air Kick or Sunsetter
+
+> Door to Northwest Save Room; Heals? False
+  * Layers: default
+  * No Wall to Northwest Save Room/Door to Northwest Save Access
+  * Extra - actor_index: 2659
+  > Door to room with health piece behind the pillar
+      Can Do Damage
+
+----------------
+Northwest Save Room
+Extra - total_boundings: {'x1': -2825, 'x2': -975, 'y1': -4800, 'y2': -3375}
+Extra - polygon: [[-2825, -4800], [-2825, -3375], [-975, -3375], [-975, -4800]]
+Extra - room_id: 27
+> Save Crystal; Heals? True; Spawn Point
+  * Layers: default
+  * Extra - actor_index: 945
+  * Extra - start_tag: cavesWestSave
+  > Door to Northwest Save Access
+      Trivial
+  > Door to Northwest Combat Room
+      Trivial
+
+> Door to Northwest Save Access; Heals? False
+  * Layers: default
+  * No Wall to Northwest Save Access/Door to Northwest Save Room
+  * Extra - actor_index: 2659
+  > Save Crystal
+      Trivial
+
+> Door to Northwest Combat Room; Heals? False
+  * Layers: default
+  * No Wall to Northwest Combat Room/Door to Northwest Save Room
+  * Extra - actor_index: 2812
+  > Save Crystal
+      Trivial
+
+----------------
+Northwest Combat Room
+Extra - total_boundings: {'x1': -5875, 'x2': -2825, 'y1': -4625, 'y2': -3300}
+Extra - polygon: [[-5875, -4625], [-5875, -3300], [-2825, -3300], [-2825, -4625]]
+Extra - room_id: 28
+> Door to Northwest Save Room; Heals? False
+  * Layers: default
+  * No Wall to Northwest Save Room/Door to Northwest Combat Room
+  * Extra - actor_index: 2812
+  > Door to Ascendant Light Access
+      # TODO - sunsetter only
+      Dream Breaker
+
+> Door to Ascendant Light Access; Heals? False
+  * Layers: default
+  * No Wall to Ascendant Light Access/Door to Northwest Combat Room
+  * Extra - actor_index: 2814
+  > Door to Northwest Save Room
+      # TODO - sunsetter only
+      Dream Breaker
+
+----------------
+Ascendant Light Access
+Extra - total_boundings: {'x1': -9525, 'x2': -5875, 'y1': -4550, 'y2': -3575}
+Extra - polygon: [[-9525, -4550], [-9525, -3575], [-5875, -3575], [-5875, -4550]]
+Extra - room_id: 29
+> Door to Northwest Combat Room; Heals? False
+  * Layers: default
+  * No Wall to Northwest Combat Room/Door to Ascendant Light Access
+  * Extra - actor_index: 2814
+  > Door to Ascendant Light Room
+      Trivial
+
+> Door to Ascendant Light Room; Heals? False
+  * Layers: default
+  * No Wall to Ascendant Light Room/Door to Ascendant Light Access
+  * Extra - actor_index: 2816
+  > Door to Northwest Combat Room
+      Trivial
+
+----------------
+Ascendant Light Room
+Extra - total_boundings: {'x1': -11550, 'x2': -3300, 'y1': -9575, 'y2': -4550}
+Extra - polygon: [[-11550, -9575], [-11550, -4550], [-3300, -4550], [-3300, -9575]]
+Extra - room_id: 30
+> Save Crystal; Heals? True; Spawn Point
+  * Layers: default
+  * Extra - actor_index: 943
+  * Extra - start_tag: postLightSave
+  > Pickup (Ascendant Light)
+      Trivial
+
+> Pickup (Ascendant Light); Heals? False
+  * Layers: default
+  * Pickup 61; Category? Major
+  * Extra - actor_index: 1044
+  > Save Crystal
+      Trivial
+  > Door to Ascendant Light Access
+      Trivial
+  > Door to Ascendant Light Tutorial
+      Trivial
+
+> Door to Ascendant Light Access; Heals? False
+  * Layers: default
+  * No Wall to Ascendant Light Access/Door to Ascendant Light Room
+  * Extra - actor_index: 2816
+  > Pickup (Ascendant Light)
+      All of the following:
+          Can Do Damage
+          # TODO - with tricks
+          Sunsetter
+
+> Door to Ascendant Light Tutorial; Heals? False
+  * Layers: default
+  * No Wall to Ascendant Light Tutorial/Door to Ascendant Light Room
+  * Extra - actor_index: 2821
+  > Pickup (Ascendant Light)
+      Trivial
+
+----------------
+Ascendant Light Tutorial
+Extra - total_boundings: {'x1': -3300, 'x2': -350, 'y1': -7375, 'y2': -6025}
+Extra - polygon: [[-3300, -7375], [-3300, -6025], [-350, -6025], [-350, -7375]]
+Extra - room_id: 32
+> Door to Ascendant Light Room; Heals? False
+  * Layers: default
+  * No Wall to Ascendant Light Room/Door to Ascendant Light Tutorial
+  * Extra - actor_index: 2821
+  > Door to room with the bridge on top
+      Cling or Can Use Ascendant Light
+
+> Door to room with the bridge on top; Heals? False
+  * Layers: default
+  * No Wall to room with the bridge on top/Door to Ascendant Light Tutorial
+  * Extra - actor_index: 2819
+  > Door to Ascendant Light Room
+      Cling or Can Use Ascendant Light
+
+> Door to Shortcut to Ascendant Light; Heals? False
+  * Layers: default
+  * No Wall to Shortcut to Ascendant Light/Door to Ascendant Light Tutorial
+  > Door to Ascendant Light Room
+      Trivial
+
+----------------
+Transition to Dilapidated Dungeon
+Extra - total_boundings: {'x1': 4500, 'x2': 6625, 'y1': -7500, 'y2': -2950}
+Extra - polygon: [[4500, -7500], [4500, -2950], [6625, -2950], [6625, -7500]]
+Extra - room_id: 33
+> Door to Crawler Tower; Heals? False
+  * Layers: default
+  * No Wall to Crawler Tower/Door to Transition to Dilapidated Dungeon
+  > Transition to Dilapidated Dungeon
+      Trivial
+
+> Transition to Dilapidated Dungeon; Heals? False; Spawn Point
+  * Layers: default
+  * Transition to Transition to The Underbelly/Transition to The Underbelly
+  * Extra - actor_index: 1030
+  * Extra - transition_tag: dungeonWest
+  * Extra - start_tag: cavesWest
+  > Door to Crawler Tower
+      Trivial
+
+----------------
+just another small hallway i don't know how to name
+Extra - total_boundings: {'x1': 1650, 'x2': 2875, 'y1': -1225, 'y2': 950}
+Extra - polygon: [[1650, -1225], [1650, 950], [2875, 950], [2875, -1225]]
+Extra - room_id: 34
+> Door to Shortcut to Ascendant Light; Heals? False
+  * Layers: default
+  * Breakable Wall to Shortcut to Ascendant Light/Door to just another small hallway i don't know how to name
+  * Extra - actor_index: 479
+  > Door to Crawler Tower
+      Trivial
+
+> Door to Crawler Tower; Heals? False
+  * Layers: default
+  * No Wall to Crawler Tower/Door to just another small hallway i don't know how to name
+  > Door to Shortcut to Ascendant Light
+      Trivial
+
+----------------
+Shortcut to Ascendant Light
+Extra - total_boundings: {'x1': -2975, 'x2': 2450, 'y1': -2150, 'y2': 1800}
+Extra - polygon: [[-2975, -2150], [625, -2150], [625, 950], [2450, 950], [2450, 1800], [-2975, 1800]]
+Extra - room_id: 35
+> Event - Hit Switch; Heals? False
+  * Layers: default
+  * Event The Underbelly/Shortcut to Ascendant Light/Hit Switch
+  * Extra - actor_index: 631
+  > Door to just another small hallway i don't know how to name
+      Trivial
+
+> Door to just another small hallway i don't know how to name; Heals? False
+  * Layers: default
+  * Breakable Wall to just another small hallway i don't know how to name/Door to Shortcut to Ascendant Light
+  * Extra - actor_index: 479
+  > Event - Hit Switch
+      Can Do Damage
+  > Door to Ascendant Light Tutorial
+      Air Kick ≥ 2 or After The Underbelly/Shortcut to Ascendant Light/Hit Switch or Bounce Off Torch
+
+> Door to Ascendant Light Tutorial; Heals? False
+  * Layers: default
+  * No Wall to Ascendant Light Tutorial/Door to Shortcut to Ascendant Light
+  > Door to just another small hallway i don't know how to name
+      Trivial
+

@@ -1,0 +1,1471 @@
+{
+    "name": "Tower Remains",
+    "extra": {
+        "area_id": "Zone_Tower",
+        "map_min_x": 11,
+        "map_min_y": 12,
+        "map_max_x": 10,
+        "map_max_y": 26
+    },
+    "areas": {
+        "Bridge": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 3375,
+                    "x2": 7050,
+                    "y1": -3450,
+                    "y2": 10825
+                },
+                "polygon": [
+                    [
+                        3375,
+                        -3450
+                    ],
+                    [
+                        3375,
+                        10825
+                    ],
+                    [
+                        7050,
+                        10825
+                    ],
+                    [
+                        7050,
+                        -3450
+                    ]
+                ],
+                "room_id": 0
+            },
+            "nodes": {
+                "Door to Lower Interior": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5200.0,
+                        "y": 10700.0,
+                        "z": 1050.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 124
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Lower Interior",
+                        "node": "Door to Bridge"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Near Door": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Lower Roof": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5800.0,
+                        "y": 9000.0,
+                        "z": 3650.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Lower Roof",
+                        "node": "Door to Bridge"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Near Door": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Transition to Empty Bailey": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5200.0,
+                        "y": -3200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 130,
+                        "transition_tag": "exteriorSouthEast",
+                        "start_tag": "towerSouth"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Empty Bailey",
+                        "area": "Bridge",
+                        "node": "Transition to Tower Remains"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Near Door": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Long Jump"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Near Door": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5200.0,
+                        "y": 9700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Lower Interior": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "TowerRemains_LowerInterior_HitSwitch",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Lower Roof": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Long Jump"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Sunsetter",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "AirKick",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Bounce Off Torch"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SkidJump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Transition to Empty Bailey": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Long Jump"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Upper Interior": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 1525,
+                    "x2": 8850,
+                    "y1": 17800,
+                    "y2": 21400
+                },
+                "polygon": [
+                    [
+                        1525,
+                        17800
+                    ],
+                    [
+                        1525,
+                        21400
+                    ],
+                    [
+                        8850,
+                        21400
+                    ],
+                    [
+                        8850,
+                        17800
+                    ]
+                ],
+                "room_id": 1
+            },
+            "nodes": {
+                "Pickup (Cling Gem)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5200.0,
+                        "y": 20500.0,
+                        "z": 4150.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 155
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 71,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Door to Wall Ride (East)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Wall Ride (West)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "TowerRemains_UpperInterior_HitSwitch",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Bleeding Heart)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3300.0,
+                        "y": 18200.0,
+                        "z": 4000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 156
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 73,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Hit Switch": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3700.0,
+                        "y": 20800.0,
+                        "z": 4000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 86
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TowerRemains_UpperInterior_HitSwitch",
+                    "connections": {
+                        "Door to Wall Ride (West)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Lower Interior": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5200.0,
+                        "y": 19300.0,
+                        "z": 2600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Lower Interior",
+                        "node": "Door to Upper Interior"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Lower Roof": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5200.0,
+                        "y": 17800.0,
+                        "z": 4200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Lower Roof",
+                        "node": "Door to Upper Interior"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Wall Ride (East)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6500.0,
+                        "y": 21400.0,
+                        "z": 4200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Wall Ride",
+                        "node": "Door to Upper Interior (East)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Cling Gem)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Wall Ride (West)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3850.0,
+                        "y": 21400.0,
+                        "z": 4300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Wall Ride",
+                        "node": "Door to Upper Interior (West)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Cling Gem)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "TowerRemains_UpperInterior_HitSwitch",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Hit Switch": {
+                            "type": "template",
+                            "data": "Can Do Damage"
+                        }
+                    }
+                },
+                "Door to Upper Roof": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5200.0,
+                        "y": 19800.0,
+                        "z": 7200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Upper Roof",
+                        "node": "Door to Upper Interior"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6000.0,
+                        "y": 19500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Cling Gem)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AirKick",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Long Jump"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SkidJump",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Bleeding Heart)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "TowerRemains_UpperRoof_HitSwitch",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Cling",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "AirKick",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Sunsetter",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Lower Interior": {
+                            "type": "template",
+                            "data": "Can Do Damage"
+                        },
+                        "Door to Lower Roof": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Upper Roof": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "TowerRemains_UpperInterior_HitSwitch",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Cling",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Sunsetter",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Upper Roof": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 2850,
+                    "x2": 7500,
+                    "y1": 24450,
+                    "y2": 29350
+                },
+                "polygon": [
+                    [
+                        2850,
+                        24450
+                    ],
+                    [
+                        2850,
+                        29350
+                    ],
+                    [
+                        7500,
+                        29350
+                    ],
+                    [
+                        7500,
+                        24450
+                    ]
+                ],
+                "room_id": 2
+            },
+            "nodes": {
+                "Pickup (Major Key)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5175.0,
+                        "y": 24800.0,
+                        "z": 7100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 77
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 72,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Door to Upper Interior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Hit Switch": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4200.0,
+                        "y": 25300.0,
+                        "z": 7200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 87
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TowerRemains_UpperRoof_HitSwitch",
+                    "connections": {
+                        "Door to Upper Interior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Lower Roof": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5175.0,
+                        "y": 24450.0,
+                        "z": 6900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Lower Roof",
+                        "node": "Door to Upper Roof"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Door to Upper Interior": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5175.0,
+                        "y": 27100.0,
+                        "z": 7200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Upper Interior",
+                        "node": "Door to Upper Roof"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Major Key)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Hit Switch": {
+                            "type": "template",
+                            "data": "Can Do Damage"
+                        },
+                        "Door to Lower Roof": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Transition to Distorted Memory": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MajorKey_EmptyBailey",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MajorKey_SansaKeep",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MajorKey_TheUnderbelly",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MajorKey_TowerRemains",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MajorKey_TwilightTheatre",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Transition to Distorted Memory": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5175.0,
+                        "y": 29275.0,
+                        "z": 8350.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 131,
+                        "transition_tag": "chamberStart",
+                        "start_tag": "towerTop"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Distorted Memory",
+                        "area": "Princess Chambers",
+                        "node": "Transition to Tower Remains"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Upper Interior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Lower Interior": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 3050,
+                    "x2": 7325,
+                    "y1": 10700,
+                    "y2": 14075
+                },
+                "polygon": [
+                    [
+                        3050,
+                        10700
+                    ],
+                    [
+                        3050,
+                        14075
+                    ],
+                    [
+                        7325,
+                        14075
+                    ],
+                    [
+                        7325,
+                        10700
+                    ]
+                ],
+                "room_id": 4
+            },
+            "nodes": {
+                "Save Crystal": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 4500.0,
+                        "y": 11200.0,
+                        "z": 200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 116,
+                        "start_tag": "towerSave"
+                    },
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Event - Hit Switch": {
+                            "type": "template",
+                            "data": "Can Do Damage"
+                        },
+                        "Door to Bridge": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "TowerRemains_LowerInterior_HitSwitch",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Upper Interior": {
+                            "type": "template",
+                            "data": "Can Do Damage"
+                        }
+                    }
+                },
+                "Event - Hit Switch": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5700.0,
+                        "y": 11000.0,
+                        "z": 200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 83
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "TowerRemains_LowerInterior_HitSwitch",
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Bridge": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5200.0,
+                        "y": 10700.0,
+                        "z": 1050.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 124
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Bridge",
+                        "node": "Door to Lower Interior"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Upper Interior": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5200.0,
+                        "y": 12250.0,
+                        "z": 2600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Upper Interior",
+                        "node": "Door to Lower Interior"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Lower Roof": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 3925,
+                    "x2": 6425,
+                    "y1": 14750,
+                    "y2": 17800
+                },
+                "polygon": [
+                    [
+                        3925,
+                        14750
+                    ],
+                    [
+                        3925,
+                        17800
+                    ],
+                    [
+                        6425,
+                        17800
+                    ],
+                    [
+                        6425,
+                        14750
+                    ]
+                ],
+                "room_id": 5
+            },
+            "nodes": {
+                "Door to Bridge": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5800.0,
+                        "y": 14750.0,
+                        "z": 3650.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Bridge",
+                        "node": "Door to Lower Roof"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Upper Interior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Upper Interior": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5200.0,
+                        "y": 17800.0,
+                        "z": 4200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Upper Interior",
+                        "node": "Door to Lower Roof"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Upper Roof": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5200.0,
+                        "y": 16400.0,
+                        "z": 6900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Upper Roof",
+                        "node": "Door to Lower Roof"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Upper Interior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Wall Ride": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 3575,
+                    "x2": 6775,
+                    "y1": 21400,
+                    "y2": 24175
+                },
+                "polygon": [
+                    [
+                        3575,
+                        21400
+                    ],
+                    [
+                        3575,
+                        24175
+                    ],
+                    [
+                        6775,
+                        24175
+                    ],
+                    [
+                        6775,
+                        21400
+                    ]
+                ],
+                "room_id": 6
+            },
+            "nodes": {
+                "Door to Upper Interior (East)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6500.0,
+                        "y": 21400.0,
+                        "z": 4200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Upper Interior",
+                        "node": "Door to Wall Ride (East)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Upper Interior (West)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Cling",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Upper Interior (West)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3850.0,
+                        "y": 21400.0,
+                        "z": 4300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tower Remains",
+                        "area": "Upper Interior",
+                        "node": "Door to Wall Ride (West)"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Upper Interior (East)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Cling",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

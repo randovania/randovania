@@ -1,0 +1,4665 @@
+{
+    "name": "Dilapidated Dungeon",
+    "extra": {
+        "area_id": "ZONE_Dungeon",
+        "map_min_x": 27,
+        "map_min_y": 12,
+        "map_max_x": 13,
+        "map_max_y": 13
+    },
+    "areas": {
+        "Starting Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 1300,
+                    "x2": 4325,
+                    "y1": -5000,
+                    "y2": -1250
+                },
+                "polygon": [
+                    [
+                        1300,
+                        -4100
+                    ],
+                    [
+                        2200,
+                        -5000
+                    ],
+                    [
+                        3425,
+                        -5000
+                    ],
+                    [
+                        4325,
+                        -4100
+                    ],
+                    [
+                        4325,
+                        -2850
+                    ],
+                    [
+                        3450,
+                        -1975
+                    ],
+                    [
+                        3100,
+                        -1975
+                    ],
+                    [
+                        3100,
+                        -1250
+                    ],
+                    [
+                        2525,
+                        -1250
+                    ],
+                    [
+                        2525,
+                        -1975
+                    ],
+                    [
+                        2200,
+                        -1975
+                    ],
+                    [
+                        1300,
+                        -2850
+                    ]
+                ],
+                "room_id": 0
+            },
+            "nodes": {
+                "Pickup (Goatling)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3350.0,
+                        "y": -3050.0,
+                        "z": -367.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "goatling_shuffle"
+                    ],
+                    "extra": {
+                        "actor_index": 433
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 0,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Devotion)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3350.0,
+                        "y": -4300.0,
+                        "z": 850.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 503
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 1,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2300.0,
+                        "y": -3650.0,
+                        "z": -307.99988
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 777,
+                        "start_tag": "gameStart"
+                    },
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Pickup (Goatling)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Devotion)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Cling",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Sunsetter",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Long Jump"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Dream Breaker Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Dream Breaker Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2800.0,
+                        "y": -1250.0,
+                        "z": -300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1432
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Dream Breaker Access",
+                        "node": "Door to Starting Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Dream Breaker Access": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -1200,
+                    "x2": 3350,
+                    "y1": -1250,
+                    "y2": 1150
+                },
+                "polygon": [
+                    [
+                        3350,
+                        -525
+                    ],
+                    [
+                        3100,
+                        -525
+                    ],
+                    [
+                        3100,
+                        -1250
+                    ],
+                    [
+                        2525,
+                        -1250
+                    ],
+                    [
+                        2525,
+                        -525
+                    ],
+                    [
+                        550,
+                        -525
+                    ],
+                    [
+                        550,
+                        -1050
+                    ],
+                    [
+                        -1200,
+                        -1050
+                    ],
+                    [
+                        -1200,
+                        1150
+                    ],
+                    [
+                        3350,
+                        1150
+                    ]
+                ],
+                "room_id": 1
+            },
+            "nodes": {
+                "Pickup (Health Piece)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1100.0,
+                        "y": -400.0,
+                        "z": 1050.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 283
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 3,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Door to First Save Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Starting Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2800.0,
+                        "y": -1250.0,
+                        "z": -300.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1432
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Starting Room",
+                        "node": "Door to Dream Breaker Access"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Dream Breaker Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to First Save Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -550.0,
+                        "y": -1050.0,
+                        "z": 500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 238
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "First Save Room",
+                        "node": "Door to Dream Breaker Access"
+                    },
+                    "default_dock_weakness": "Breakable Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Health Piece)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Bounce Off Torch"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Sunsetter",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Dream Breaker Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Above Dream Breaker Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -150.0,
+                        "y": 100.0,
+                        "z": 2800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Above Dream Breaker Access",
+                        "node": "Door to Dream Breaker Access"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Health Piece)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Dream Breaker Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 100.0,
+                        "y": 1150.0,
+                        "z": 200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1719
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Dream Breaker Room",
+                        "node": "Door to Dream Breaker Access"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Starting Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to First Save Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Dream Breaker Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -250,
+                    "x2": 4350,
+                    "y1": 1150,
+                    "y2": 5325
+                },
+                "polygon": [
+                    [
+                        -250,
+                        2900
+                    ],
+                    [
+                        -250,
+                        1150
+                    ],
+                    [
+                        500,
+                        1150
+                    ],
+                    [
+                        500,
+                        2350
+                    ],
+                    [
+                        4350,
+                        2350
+                    ],
+                    [
+                        4350,
+                        5325
+                    ],
+                    [
+                        2675,
+                        5325
+                    ],
+                    [
+                        2675,
+                        4125
+                    ],
+                    [
+                        400,
+                        4125
+                    ],
+                    [
+                        400,
+                        2900
+                    ]
+                ],
+                "room_id": 2
+            },
+            "nodes": {
+                "Pickup (Dream Breaker)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3500.0,
+                        "y": 4950.0,
+                        "z": -49.9999
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 501
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 2,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Door to Dream Breaker Access": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Sunsetter",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AirKick",
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Dream Breaker Exit (North)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Dream Breaker Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 100.0,
+                        "y": 1150.0,
+                        "z": 200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1719
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Dream Breaker Access",
+                        "node": "Door to Dream Breaker Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Dream Breaker)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Dream Breaker Exit (South)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Dream Breaker Exit (North)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3150.0,
+                        "y": 2350.0,
+                        "z": -100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 241
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Dream Breaker Exit",
+                        "node": "Door to Dream Breaker Room (North)"
+                    },
+                    "default_dock_weakness": "Breakable Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Dream Breaker)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Dream Breaker Exit (South)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 500.0,
+                        "y": 1600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 240
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Dream Breaker Exit",
+                        "node": "Door to Dream Breaker Room (South)"
+                    },
+                    "default_dock_weakness": "Breakable Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Dream Breaker Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Dream Breaker Exit": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 500,
+                    "x2": 3525,
+                    "y1": 1325,
+                    "y2": 2425
+                },
+                "polygon": [
+                    [
+                        500,
+                        1325
+                    ],
+                    [
+                        3525,
+                        1325
+                    ],
+                    [
+                        3525,
+                        2425
+                    ],
+                    [
+                        2800,
+                        2425
+                    ],
+                    [
+                        2800,
+                        1850
+                    ],
+                    [
+                        500,
+                        1875
+                    ]
+                ],
+                "room_id": 3
+            },
+            "nodes": {
+                "Door to Dream Breaker Room (North)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3200.0,
+                        "y": 2425.0,
+                        "z": -100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 241
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Dream Breaker Room",
+                        "node": "Door to Dream Breaker Exit (North)"
+                    },
+                    "default_dock_weakness": "Breakable Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Dream Breaker Room (South)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Dream Breaker Room (South)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 500.0,
+                        "y": 1600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 240
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Dream Breaker Room",
+                        "node": "Door to Dream Breaker Exit (South)"
+                    },
+                    "default_dock_weakness": "Breakable Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Dream Breaker Room (North)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "First Save Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -3325,
+                    "x2": -150,
+                    "y1": -3825,
+                    "y2": -1050
+                },
+                "polygon": [
+                    [
+                        -3325,
+                        -3825
+                    ],
+                    [
+                        -3325,
+                        -1050
+                    ],
+                    [
+                        -150,
+                        -1050
+                    ],
+                    [
+                        -150,
+                        -3825
+                    ]
+                ],
+                "room_id": 4
+            },
+            "nodes": {
+                "Save Crystal": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": -550.0,
+                        "y": -3450.0,
+                        "z": 400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 440,
+                        "start_tag": "dungeonlowestSave"
+                    },
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Dream Breaker Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Parkour Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Dream Breaker Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -550.0,
+                        "y": -1050.0,
+                        "z": 500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 238
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Dream Breaker Access",
+                        "node": "Door to First Save Room"
+                    },
+                    "default_dock_weakness": "Breakable Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Parkour Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3325.0,
+                        "y": -2425.0,
+                        "z": 800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1795
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Parkour Room",
+                        "node": "Door to First Save Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Parkour Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -7425,
+                    "x2": -3325,
+                    "y1": -4425,
+                    "y2": -1900
+                },
+                "polygon": [
+                    [
+                        -7425,
+                        -4425
+                    ],
+                    [
+                        -7425,
+                        -1900
+                    ],
+                    [
+                        -3325,
+                        -1900
+                    ],
+                    [
+                        -3325,
+                        -4425
+                    ]
+                ],
+                "room_id": 5
+            },
+            "nodes": {
+                "Event - Cut and Drop Platform": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6550.0,
+                        "y": -2800.0,
+                        "z": 2000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 248
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "DilapidatedDungeon_ParkourRoom_CutandDropPlatform",
+                    "connections": {
+                        "Door to First Save Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to First Save Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3325.0,
+                        "y": -2425.0,
+                        "z": 800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1795
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "First Save Room",
+                        "node": "Door to Parkour Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Event - Cut and Drop Platform": {
+                            "type": "template",
+                            "data": "Can Do Damage"
+                        },
+                        "Door to Rock Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Rock Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7425.0,
+                        "y": -2375.0,
+                        "z": 2000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 239
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Rock Room",
+                        "node": "Door to Parkour Room"
+                    },
+                    "default_dock_weakness": "Breakable Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to First Save Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Rock Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -12625,
+                    "x2": -7450,
+                    "y1": -3000,
+                    "y2": -1300
+                },
+                "polygon": [
+                    [
+                        -12625,
+                        -3000
+                    ],
+                    [
+                        -12625,
+                        -1300
+                    ],
+                    [
+                        -7450,
+                        -1300
+                    ],
+                    [
+                        -7450,
+                        -3000
+                    ]
+                ],
+                "room_id": 6
+            },
+            "nodes": {
+                "Door to Parkour Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7450.0,
+                        "y": -2375.0,
+                        "z": 2000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 239
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Parkour Room",
+                        "node": "Door to Rock Room"
+                    },
+                    "default_dock_weakness": "Breakable Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Cave Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Second Save Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Cave Entrance": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9150.0,
+                        "y": -3000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 237
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Cave Entrance",
+                        "node": "Door to Rock Room"
+                    },
+                    "default_dock_weakness": "Breakable Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Parkour Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Second Save Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12300.0,
+                        "y": -1300.0,
+                        "z": 2600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Second Save Room",
+                        "node": "Door to Rock Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Parkour Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Second Save Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -13675,
+                    "x2": -11750,
+                    "y1": -1300,
+                    "y2": 1425
+                },
+                "polygon": [
+                    [
+                        -13675,
+                        -1300
+                    ],
+                    [
+                        -13675,
+                        1425
+                    ],
+                    [
+                        -11750,
+                        1425
+                    ],
+                    [
+                        -11750,
+                        -1300
+                    ]
+                ],
+                "room_id": 7
+            },
+            "nodes": {
+                "Save Crystal": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": -13186.327,
+                        "y": 706.2833,
+                        "z": 2600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 439,
+                        "start_tag": "dungeonWestSave"
+                    },
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Rock Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Slide Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Prison Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Rock Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12300.0,
+                        "y": -1300.0,
+                        "z": 2600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Rock Room",
+                        "node": "Door to Second Save Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Slide Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13675.0,
+                        "y": -50.0,
+                        "z": 2600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1452
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Slide Hub",
+                        "node": "Door to Second Save Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Prison Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11750.0,
+                        "y": 900.0,
+                        "z": 2925.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Prison Access",
+                        "node": "Tunnel to Second Save Room"
+                    },
+                    "default_dock_weakness": "Slide Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Slide Hub": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -15700,
+                    "x2": -13675,
+                    "y1": -775,
+                    "y2": 525
+                },
+                "polygon": [
+                    [
+                        -15700,
+                        -775
+                    ],
+                    [
+                        -15700,
+                        525
+                    ],
+                    [
+                        -13675,
+                        525
+                    ],
+                    [
+                        -13675,
+                        -775
+                    ]
+                ],
+                "room_id": 8
+            },
+            "nodes": {
+                "Door to Second Save Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13675.0,
+                        "y": -50.0,
+                        "z": 2600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1452
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Second Save Room",
+                        "node": "Door to Slide Hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Slide Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Slide Exit": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Slide Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -15700.0,
+                        "y": -50.0,
+                        "z": 2700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1386
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Slide Room",
+                        "node": "Door to Slide Hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Second Save Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Slide Exit": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -14400.0,
+                        "y": -775.0,
+                        "z": 2550.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Slide Exit",
+                        "node": "Tunnel to Slide Hub"
+                    },
+                    "default_dock_weakness": "Slide Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Second Save Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Slide Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -17475,
+                    "x2": -15700,
+                    "y1": -775,
+                    "y2": 2975
+                },
+                "polygon": [
+                    [
+                        -17475,
+                        -775
+                    ],
+                    [
+                        -17475,
+                        2975
+                    ],
+                    [
+                        -15700,
+                        2975
+                    ],
+                    [
+                        -15700,
+                        -775
+                    ]
+                ],
+                "room_id": 9
+            },
+            "nodes": {
+                "Pickup (Slide)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -16650.0,
+                        "y": 2600.0,
+                        "z": 2350.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 502
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 4,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Door to Slide Hub": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Sunsetter",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "AirKick",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Cling",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Slide Exit": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Slide Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -15700.0,
+                        "y": -50.0,
+                        "z": 2700.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1386
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Slide Hub",
+                        "node": "Door to Slide Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Slide)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Slide Exit": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -16625.0,
+                        "y": -775.0,
+                        "z": 1800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Slide Exit",
+                        "node": "Door to Slide Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Slide)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Slide Exit": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -17200,
+                    "x2": -13775,
+                    "y1": -4275,
+                    "y2": -775
+                },
+                "polygon": [
+                    [
+                        -17200,
+                        -4275
+                    ],
+                    [
+                        -17200,
+                        -775
+                    ],
+                    [
+                        -13775,
+                        -775
+                    ],
+                    [
+                        -13775,
+                        -4275
+                    ]
+                ],
+                "room_id": 10
+            },
+            "nodes": {
+                "Tunnel to Slide Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -14400.0,
+                        "y": -775.0,
+                        "z": 2550.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Slide Hub",
+                        "node": "Tunnel to Slide Exit"
+                    },
+                    "default_dock_weakness": "Slide Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Slide Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Slide Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -16625.0,
+                        "y": -775.0,
+                        "z": 1800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Slide Room",
+                        "node": "Door to Slide Exit"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Tunnel to Slide Hub": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Slide",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Cling",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AirKick",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Prison Access": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -11750,
+                    "x2": -9100,
+                    "y1": 475,
+                    "y2": 1625
+                },
+                "polygon": [
+                    [
+                        -11750,
+                        475
+                    ],
+                    [
+                        -11750,
+                        1625
+                    ],
+                    [
+                        -9100,
+                        1625
+                    ],
+                    [
+                        -9100,
+                        475
+                    ]
+                ],
+                "room_id": 11
+            },
+            "nodes": {
+                "Tunnel to Second Save Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11750.0,
+                        "y": 900.0,
+                        "z": 2925.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Second Save Room",
+                        "node": "Tunnel to Prison Access"
+                    },
+                    "default_dock_weakness": "Slide Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Goatling Prison": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Goatling Prison": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9100.0,
+                        "y": 1300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1779
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Goatling Prison",
+                        "node": "Door to Prison Access"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Tunnel to Second Save Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Goatling Prison": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -9100,
+                    "x2": -6025,
+                    "y1": 275,
+                    "y2": 2325
+                },
+                "polygon": [
+                    [
+                        -9100,
+                        275
+                    ],
+                    [
+                        -9100,
+                        2325
+                    ],
+                    [
+                        -6025,
+                        2325
+                    ],
+                    [
+                        -6025,
+                        275
+                    ]
+                ],
+                "room_id": 12
+            },
+            "nodes": {
+                "Pickup (Small Key)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7487.2715,
+                        "y": 1406.7506,
+                        "z": 4250.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 255
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 6,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Door to Key Door Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Prison Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9100.0,
+                        "y": 1300.0,
+                        "z": 3100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1779
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Prison Access",
+                        "node": "Door to Goatling Prison"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Key Door Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Prison Challenge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Key Door Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6025.0,
+                        "y": 1300.0,
+                        "z": 3100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1800
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Key Door Room",
+                        "node": "Door to Goatling Prison"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Small Key)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Bounce Off Torch"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "AirKick",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Cling",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Long Jump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "AirKick",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Cling",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "AirKick",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "AirKick",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Sunsetter",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Prison Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Prison Challenge": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7500.0,
+                        "y": 2325.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1796
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Prison Challenge",
+                        "node": "Door to Goatling Prison"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Prison Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Key Door Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -6025,
+                    "x2": -225,
+                    "y1": -525,
+                    "y2": 4625
+                },
+                "polygon": [
+                    [
+                        -6025,
+                        2000
+                    ],
+                    [
+                        -3400,
+                        2000
+                    ],
+                    [
+                        -3375,
+                        3350
+                    ],
+                    [
+                        -3375,
+                        4625
+                    ],
+                    [
+                        -1425,
+                        4625
+                    ],
+                    [
+                        -225,
+                        4625
+                    ],
+                    [
+                        -250,
+                        3925
+                    ],
+                    [
+                        -450,
+                        3925
+                    ],
+                    [
+                        -450,
+                        2700
+                    ],
+                    [
+                        -2000,
+                        2700
+                    ],
+                    [
+                        -2000,
+                        -525
+                    ],
+                    [
+                        -6025,
+                        -525
+                    ]
+                ],
+                "room_id": 13
+            },
+            "nodes": {
+                "Save Crystal": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": -2700.0,
+                        "y": 1600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 441,
+                        "start_tag": "dungeonSaveNearBoss"
+                    },
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Event - Hit Switch": {
+                            "type": "template",
+                            "data": "Can Do Damage"
+                        },
+                        "Door to Goatling Prison": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "DilapidatedDungeon_KeyDoorRoom_HitSwitch",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AirKick",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Cling",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Sunsetter",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SolarWind",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Strong Eyes Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Above Dream Breaker Access (Key)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Hit Switch": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3200.0,
+                        "y": 2100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 286
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "DilapidatedDungeon_KeyDoorRoom_HitSwitch",
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Goatling Prison": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6025.0,
+                        "y": 1300.0,
+                        "z": 3100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1800
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Goatling Prison",
+                        "node": "Door to Key Door Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Strong Eyes Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -825.0,
+                        "y": 4625.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1580
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Strong Eyes Arena",
+                        "node": "Door to Key Door Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Above Dream Breaker Access (Out of Bounds)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Ascendant Light"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Cling",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Sunsetter",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "AirKick",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Above Dream Breaker Access (Key)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2125.0,
+                        "y": 50.0,
+                        "z": 3100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 368
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Above Dream Breaker Access",
+                        "node": "Door to Key Door Room (Key)"
+                    },
+                    "default_dock_weakness": "Small Key Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Save Crystal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Above Dream Breaker Access (Out of Bounds)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -825.0,
+                        "y": 2700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 242
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Above Dream Breaker Access",
+                        "node": "Door to Key Door Room (Out of Bounds)"
+                    },
+                    "default_dock_weakness": "Breakable Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Strong Eyes Arena": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -2325,
+                    "x2": 850,
+                    "y1": 4625,
+                    "y2": 9775
+                },
+                "polygon": [
+                    [
+                        -2325,
+                        4625
+                    ],
+                    [
+                        -2325,
+                        9775
+                    ],
+                    [
+                        850,
+                        9775
+                    ],
+                    [
+                        850,
+                        4625
+                    ]
+                ],
+                "room_id": 14
+            },
+            "nodes": {
+                "Event - Defeat Strong Eyes": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -736.1168,
+                        "y": 7938.522,
+                        "z": 2618.5764
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1080
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "DilapidatedDungeon_StrongEyesArena_DefeatStrongEyes",
+                    "connections": {
+                        "Door to Key Door Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Small Key)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -750.0,
+                        "y": 8850.0,
+                        "z": 2725.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 254
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 8,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Door to Key Door Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Key Door Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -825.0,
+                        "y": 4625.0,
+                        "z": 2800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1580
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Key Door Room",
+                        "node": "Door to Strong Eyes Arena"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Event - Defeat Strong Eyes": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: Fight without Dream Breaker",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "DreamBreaker",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Small Key)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "DilapidatedDungeon_StrongEyesArena_DefeatStrongEyes",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Above Dream Breaker Access": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": 4350,
+                    "x2": 9850,
+                    "y1": -525,
+                    "y2": 550
+                },
+                "polygon": [
+                    [
+                        4350,
+                        -525
+                    ],
+                    [
+                        4350,
+                        550
+                    ],
+                    [
+                        9850,
+                        550
+                    ],
+                    [
+                        9850,
+                        -525
+                    ]
+                ],
+                "room_id": 15
+            },
+            "nodes": {
+                "Door to Key Door Room (Key)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4425.0,
+                        "y": 25.0,
+                        "z": 3100.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 368
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Key Door Room",
+                        "node": "Door to Above Dream Breaker Access (Key)"
+                    },
+                    "default_dock_weakness": "Small Key Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Key Door Room (Out of Bounds)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Sunsetter",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Cling",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Dream Breaker Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Transition to Castle Sansa": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Key Door Room (Out of Bounds)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5600.0,
+                        "y": 550.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 243
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Key Door Room",
+                        "node": "Door to Above Dream Breaker Access (Out of Bounds)"
+                    },
+                    "default_dock_weakness": "Breakable Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Key Door Room (Key)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Dream Breaker Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6300.0,
+                        "y": 50.0,
+                        "z": 2800.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Dream Breaker Access",
+                        "node": "Door to Above Dream Breaker Access"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Transition to Castle Sansa": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9550.0,
+                        "y": 50.000004,
+                        "z": 4000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 487,
+                        "transition_tag": "dungeon1",
+                        "start_tag": "lower1"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Castle Sansa",
+                        "area": "Transition to Dilapidated Dungeon",
+                        "node": "Transition to Dilapidated Dungeon"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Key Door Room (Key)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Prison Challenge": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -9350,
+                    "x2": -5500,
+                    "y1": 2325,
+                    "y2": 9200
+                },
+                "polygon": [
+                    [
+                        -9350,
+                        2325
+                    ],
+                    [
+                        -9350,
+                        9200
+                    ],
+                    [
+                        -5500,
+                        9200
+                    ],
+                    [
+                        -5500,
+                        2325
+                    ]
+                ],
+                "room_id": 16
+            },
+            "nodes": {
+                "Pickup (Health Piece)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6800.0,
+                        "y": 8900.0,
+                        "z": 3850.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 284
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 7,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Event - Hit Switch": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Sunsetter",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Cling",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Do Damage"
+                                    }
+                                ]
+                            }
+                        },
+                        "Challenge Start": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "DilapidatedDungeon_PrisonChallenge_HitSwitch",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "AirKick",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Cling",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Cling",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Hit Switch": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7600.0,
+                        "y": 8700.0,
+                        "z": 4400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 285
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "DilapidatedDungeon_PrisonChallenge_HitSwitch",
+                    "connections": {
+                        "Pickup (Health Piece)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Goatling Prison": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7500.0,
+                        "y": 2325.0,
+                        "z": 3000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 1796
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Goatling Prison",
+                        "node": "Door to Prison Challenge"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Challenge Start": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Sunsetter",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AirKick",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Challenge Start": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8200.0,
+                        "y": 4250.0,
+                        "z": 3400.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Health Piece)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Cling",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AirKick",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Goatling Prison": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Cave Entrance": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -11300,
+                    "x2": -8575,
+                    "y1": -8500,
+                    "y2": -3000
+                },
+                "polygon": [
+                    [
+                        -11300,
+                        -8500
+                    ],
+                    [
+                        -11300,
+                        -3000
+                    ],
+                    [
+                        -8575,
+                        -3000
+                    ],
+                    [
+                        -8575,
+                        -8500
+                    ]
+                ],
+                "room_id": 17
+            },
+            "nodes": {
+                "Door to Rock Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9150.0,
+                        "y": -3000.0,
+                        "z": 2000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 237
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Rock Room",
+                        "node": "Door to Cave Entrance"
+                    },
+                    "default_dock_weakness": "Breakable Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Cave Hub": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: Dark logic",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AscendantLight",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Cave Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11300.0,
+                        "y": -8100.0,
+                        "z": 1900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Cave Hub",
+                        "node": "Door to Cave Entrance"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Rock Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: Dark logic",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AscendantLight",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Cave Hub": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -13475,
+                    "x2": -11300,
+                    "y1": -10150,
+                    "y2": -7075
+                },
+                "polygon": [
+                    [
+                        -13475,
+                        -10150
+                    ],
+                    [
+                        -13475,
+                        -7075
+                    ],
+                    [
+                        -11300,
+                        -7075
+                    ],
+                    [
+                        -11300,
+                        -10150
+                    ]
+                ],
+                "room_id": 18
+            },
+            "nodes": {
+                "Door to Cave Entrance": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11300.0,
+                        "y": -8100.0,
+                        "z": 1900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Cave Entrance",
+                        "node": "Door to Cave Hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Cave Hallway": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: Dark logic",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AscendantLight",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Good Graces Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: Dark logic",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AscendantLight",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Cave Hallway": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12400.0,
+                        "y": -10150.0,
+                        "z": 2200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Cave Hallway",
+                        "node": "Door to Cave Hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Cave Entrance": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: Dark logic",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AscendantLight",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Good Graces Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13475.0,
+                        "y": -7400.0,
+                        "z": 2500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Good Graces Room",
+                        "node": "Door to Cave Hub"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Cave Entrance": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: Dark logic",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AscendantLight",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Cave Hallway": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -12725,
+                    "x2": -11725,
+                    "y1": -12725,
+                    "y2": -10150
+                },
+                "polygon": [
+                    [
+                        -12725,
+                        -12725
+                    ],
+                    [
+                        -12725,
+                        -10150
+                    ],
+                    [
+                        -11725,
+                        -10150
+                    ],
+                    [
+                        -11725,
+                        -12725
+                    ]
+                ],
+                "room_id": 19
+            },
+            "nodes": {
+                "Door to Cave Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12400.0,
+                        "y": -10150.0,
+                        "z": 2200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Cave Hub",
+                        "node": "Door to Cave Hallway"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Transition to The Underbelly": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: Dark logic",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AscendantLight",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Transition to The Underbelly": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12450.0,
+                        "y": -12725.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Transition to The Underbelly",
+                        "node": "Door to Cave Hallway"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Cave Hub": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: Dark logic",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AscendantLight",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Transition to The Underbelly": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -13100,
+                    "x2": -9700,
+                    "y1": -14600,
+                    "y2": -12725
+                },
+                "polygon": [
+                    [
+                        -13100,
+                        -14600
+                    ],
+                    [
+                        -13100,
+                        -12725
+                    ],
+                    [
+                        -9700,
+                        -12725
+                    ],
+                    [
+                        -9700,
+                        -14600
+                    ]
+                ],
+                "room_id": 20
+            },
+            "nodes": {
+                "Door to Cave Hallway": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12450.0,
+                        "y": -12725.0,
+                        "z": 2600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Cave Hallway",
+                        "node": "Door to Transition to The Underbelly"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Transition to The Underbelly": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: Dark logic",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AscendantLight",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Transition to The Underbelly": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9900.0,
+                        "y": -14300.0,
+                        "z": 2900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 488,
+                        "transition_tag": "cavesWest",
+                        "start_tag": "dungeonWest"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "The Underbelly",
+                        "area": "Transition to Dilapidated Dungeon",
+                        "node": "Transition to Dilapidated Dungeon"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Cave Hallway": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: Dark logic",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AscendantLight",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Good Graces Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -18700,
+                    "x2": -13475,
+                    "y1": -11025,
+                    "y2": -7000
+                },
+                "polygon": [
+                    [
+                        -13475,
+                        -7000
+                    ],
+                    [
+                        -15150,
+                        -7000
+                    ],
+                    [
+                        -15150,
+                        -9450
+                    ],
+                    [
+                        -18700,
+                        -9450
+                    ],
+                    [
+                        -18700,
+                        -11025
+                    ],
+                    [
+                        -13475,
+                        -11025
+                    ]
+                ],
+                "room_id": 21
+            },
+            "nodes": {
+                "Pickup (Good Graces)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -18250.0,
+                        "y": -9750.0,
+                        "z": 4200.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 504
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 5,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Door to Cave Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "TODO: Dark logic",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AscendantLight",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Cling",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Cave Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13475.0,
+                        "y": -7400.0,
+                        "z": 2500.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Cave Hub",
+                        "node": "Door to Good Graces Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Good Graces)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "TODO: Dark logic",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AscendantLight",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Cling",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Mushroom Platform Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: Dark logic",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AscendantLight",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Mushroom Platform Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -14850.0,
+                        "y": -7000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Mushroom Platform Room",
+                        "node": "Door to Good Graces Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Cave Hub": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: Dark logic",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AscendantLight",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Mushroom Platform Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -18350,
+                    "x2": -14625,
+                    "y1": -8150,
+                    "y2": -4900
+                },
+                "polygon": [
+                    [
+                        -14625,
+                        -7000
+                    ],
+                    [
+                        -14625,
+                        -4900
+                    ],
+                    [
+                        -18350,
+                        -4900
+                    ],
+                    [
+                        -18350,
+                        -8150
+                    ],
+                    [
+                        -15300,
+                        -8150
+                    ],
+                    [
+                        -15300,
+                        -7000
+                    ]
+                ],
+                "room_id": 22
+            },
+            "nodes": {
+                "Door to Good Graces Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -14850.0,
+                        "y": -7000.0,
+                        "z": 2900.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Good Graces Room",
+                        "node": "Door to Mushroom Platform Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Transition to Twilight Theatre": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "TODO: Dark logic",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AscendantLight",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Bounce Off Torch"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "AirKick",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Sunsetter",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Cling",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Transition to Twilight Theatre": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -18075.0,
+                        "y": -4900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Transition to Twilight Theatre",
+                        "node": "Door to Mushroom Platform Room"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Good Graces Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: Dark logic",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AscendantLight",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Transition to Twilight Theatre": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "total_boundings": {
+                    "x1": -21575,
+                    "x2": -17825,
+                    "y1": -6350,
+                    "y2": -4150
+                },
+                "polygon": [
+                    [
+                        -17825,
+                        -4900
+                    ],
+                    [
+                        -18975,
+                        -4900
+                    ],
+                    [
+                        -18975,
+                        -6350
+                    ],
+                    [
+                        -21575,
+                        -6350
+                    ],
+                    [
+                        -21575,
+                        -4150
+                    ],
+                    [
+                        -17825,
+                        -4150
+                    ]
+                ],
+                "room_id": 23
+            },
+            "nodes": {
+                "Door to Mushroom Platform Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -18075.0,
+                        "y": -4900.0,
+                        "z": 3600.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Dilapidated Dungeon",
+                        "area": "Mushroom Platform Room",
+                        "node": "Door to Transition to Twilight Theatre"
+                    },
+                    "default_dock_weakness": "No Wall",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Transition to Twilight Theatre": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: Dark logic",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AscendantLight",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Transition to Twilight Theatre": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -21250.0,
+                        "y": -5900.0,
+                        "z": 4000.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_index": 489,
+                        "transition_tag": "theatreNorthEastLower",
+                        "start_tag": "dungeonNorth"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Twilight Theatre",
+                        "area": "Transition to Dilapidated Dungeon",
+                        "node": "Transition to Dilapidated Dungeon"
+                    },
+                    "default_dock_weakness": "Transition",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Mushroom Platform Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: Dark logic",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AscendantLight",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
