@@ -57,7 +57,7 @@ class DictAdapter(construct.Adapter):
         return list(obj.items())
 
 
-class ConstructTypedStruct(construct.Adapter, typing.Generic[T]):
+class ConstructTypedStruct[T](construct.Adapter):
     def __init__(self, cls: type[T], field_types: dict[str, type]):
         self.cls = cls
         self.field_types = field_types
@@ -253,6 +253,6 @@ def encode(obj: T, type_: type[T] | None = None) -> bytes:
     return compiled_construct_for_type(t).build(obj)
 
 
-def decode(data: bytes, type_: type[T]) -> T:
+def decode[T](data: bytes, type_: type[T]) -> T:
     t: type = type_
     return construct_for_type(t).parse(data)

@@ -17,6 +17,9 @@ from randovania.games.fusion.generator.hint_distributor import FusionHintDistrib
         ("Gravity Suit", 0, {"suit", "life_support"}, True),
         ("Infant Metroid 1", 0, {"key"}, False),
         ("Energy Tank", 0, {"energy_tank"}, True),
+        ("Level 1 Keycard", 0, set(), True),
+        ("Level 2 Keycard", 0, set(), False),
+        ("Level 2 Keycard", 1, set(), True),
     ],
 )
 def test_fusion_interesting_pickups(

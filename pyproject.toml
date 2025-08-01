@@ -22,12 +22,12 @@ classifiers = [
     "Environment :: Win32 (MS Windows)",
     "Environment :: X11 Applications :: Qt",
     "Intended Audience :: End Users/Desktop",
-    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.12",
     "Topic :: Games/Entertainment",
 ]
 requires-python = ">=3.12"
+license = "GPL-3.0-or-later"
 dynamic = ["version"]
 
 dependencies = [
@@ -86,10 +86,10 @@ exporters = [
     "factorio-randovania-mod>=0.8.0",
 
     # Metroid Dread
-    "open-dread-rando>=2.16.0",
+    "open-dread-rando>=2.17.0",
 
     # Metroid fusion
-    "mars-patcher>=0.5.0",
+    "mars-patcher>=0.6.2",
 
     # Metroid Planets
     "planets-yapr>=1.0.0",
@@ -107,7 +107,7 @@ exporters = [
     "mp2hudcolor>=1.0.10",
 
     # Metroid: Samus Returns
-    "open-samus-returns-rando>=3.2.0",
+    "open-samus-returns-rando>=3.2.1",
 ]
 
 gui = [
@@ -204,7 +204,6 @@ git_describe_command = [
 
 [tool.ruff]
 line-length = 120
-target-version = "py311"
 
 [tool.ruff.lint]
 select = [
@@ -230,6 +229,8 @@ extend-ignore = [
     "ISC001",  # may cause conflicts with formatter
     "PLW0603",  # we use some globals here and there
     "PLW2901",  # TODO: should actually fix these
+    "PLC0415",  # we explicitly use the import within a function to postpone the loading of a module
+    
 ]
 
 [tool.ruff.lint.isort]

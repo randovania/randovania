@@ -9,16 +9,16 @@ import aiofiles
 if TYPE_CHECKING:
     from collections.abc import Hashable
     from pathlib import Path
-    from typing import Any, TypeAlias
+    from typing import Any
 
-_JsonPrimitive: TypeAlias = str | int | float | bool | None
+type _JsonPrimitive = str | int | float | bool | None
 
-JsonObject_RO: TypeAlias = Mapping[str, "JsonType_RO"]
-JsonType_RO: TypeAlias = JsonObject_RO | Sequence["JsonType_RO"] | _JsonPrimitive
+type JsonObject_RO = Mapping[str, "JsonType_RO"]
+type JsonType_RO = JsonObject_RO | Sequence["JsonType_RO"] | _JsonPrimitive
 """Covariant type alias useful when accepting read-only input."""
 
-JsonObject: TypeAlias = dict[str, "JsonType"]
-JsonType: TypeAlias = JsonObject | list["JsonType"] | _JsonPrimitive
+type JsonObject = dict[str, "JsonType"]
+type JsonType = JsonObject | list["JsonType"] | _JsonPrimitive
 """Invariant and mutable type alias. Use `typing.cast()` or a type guard if more specificity is needed."""
 
 
