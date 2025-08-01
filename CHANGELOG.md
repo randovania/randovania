@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: It is now logical to get back to the lower door in Grapple Beam Room without Grapple Beam, making it logical to escape without Grapple Beam when doors are randomized.
 
+##### Burenia
+
+- Added: The pseudo to break the blob in the Hub to Darion now has a video.
+
 ## [10.0.0] - 2025-08-0?
 
 - **Major** - Added: Metroid Fusion has been added with full single player support. Includes random starting locations, some toggleable patches, and more.
