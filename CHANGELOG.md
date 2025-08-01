@@ -5,7 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.0.0] - 2025-08-0?
+## [10.1.0] - 2025-09-0?
+
+### Metroid Prime 2 Echoes
+
+#### Logic Database
+
+##### Dark Agon Wastes
+
+- Changed: Minor adjustment aimed at making Amorbis safer for the generator, no changes to requirements in practice.
+
+## [10.0.0] - 2025-08-01
 
 - **Major** - Added: Metroid Fusion has been added with full single player support. Includes random starting locations, some toggleable patches, and more.
 - Added: 10 more joke hints.
