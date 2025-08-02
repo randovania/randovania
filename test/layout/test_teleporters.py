@@ -98,12 +98,12 @@ def _g(
         _g(
             b"\xd8\x12",
             16,
-            "One-way, with replacement; excluded 1 elevators",
-            40,
+            "One-way, with replacement; excluded 2 elevators",
+            38,
             mode="one-way-teleporter-replacement",
             excluded_teleporters=[
                 _a("Area 1", "Transport to Surface and Area 2", "Elevator to Surface East"),
-                _a("Area 4 Crystal Mines", "Transport to Area 4", "Elevator to Central Caves"),
+                _a("Area 4 Crystal Mines", "Transport to Central Caves", "Elevator to Area 4 Central Caves"),
             ],
         ),
     ],
@@ -134,6 +134,7 @@ def test_generic_data(request):
             b"\xc81d",
             22,
             "One-way, with cycles; excluded 1 elevators",
+            num_valid_targets=21,
             mode="one-way-teleporter",
             excluded_teleporters=[_a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple")],
         ),
@@ -141,7 +142,7 @@ def test_generic_data(request):
             b"\xe4\x033\x90",
             28,
             "One-way, anywhere; excluded 1 targets",
-            num_valid_targets=255,
+            num_valid_targets=254,
             mode="one-way-anything",
             excluded_targets=[_a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple")],
         ),
@@ -167,13 +168,12 @@ def test_echoes_data(request):
 
 
 def test_valid_targets_echoes(test_echoes_data):
-    game = RandovaniaGame.METROID_PRIME_ECHOES
     config = PrimeTrilogyTeleporterConfiguration(
         mode=test_echoes_data.expected.mode,
         skip_final_bosses=False,
         allow_unvisited_room_names=False,
-        excluded_teleporters=TeleporterList((), game),
-        excluded_targets=TeleporterTargetList((), game),
+        excluded_teleporters=test_echoes_data.expected.excluded_teleporters,
+        excluded_targets=test_echoes_data.expected.excluded_targets,
     )
 
     valid_targets = config.valid_targets
@@ -181,11 +181,10 @@ def test_valid_targets_echoes(test_echoes_data):
 
 
 def test_valid_targets_msr(test_generic_data):
-    game = RandovaniaGame.METROID_SAMUS_RETURNS
     config = TeleporterConfiguration(
         mode=TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT,
-        excluded_teleporters=TeleporterList((), game),
-        excluded_targets=TeleporterTargetList((), game),
+        excluded_teleporters=test_generic_data.expected.excluded_teleporters,
+        excluded_targets=test_generic_data.expected.excluded_targets,
     )
 
     valid_targets = config.valid_targets
