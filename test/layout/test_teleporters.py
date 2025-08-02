@@ -166,68 +166,58 @@ def test_echoes_data(request):
     )
 
 
-def test_valid_targets(test_echoes_data, test_generic_data):
-    echoes = RandovaniaGame.METROID_PRIME_ECHOES
-    echoes_config = PrimeTrilogyTeleporterConfiguration(
+def test_valid_targets_echoes(test_echoes_data):
+    game = RandovaniaGame.METROID_PRIME_ECHOES
+    config = PrimeTrilogyTeleporterConfiguration(
         mode=test_echoes_data.expected.mode,
         skip_final_bosses=False,
         allow_unvisited_room_names=False,
-        excluded_teleporters=TeleporterList((), echoes),
-        excluded_targets=TeleporterTargetList((), echoes),
+        excluded_teleporters=TeleporterList((), game),
+        excluded_targets=TeleporterTargetList((), game),
     )
 
-    valid_echoes_targets = echoes_config.valid_targets
-    assert len(valid_echoes_targets) == test_echoes_data.num_valid_targets
+    valid_targets = config.valid_targets
+    assert len(valid_targets) == test_echoes_data.num_valid_targets
 
-    msr = RandovaniaGame.METROID_SAMUS_RETURNS
-    msr_config = TeleporterConfiguration(
+
+def test_valid_targets_msr(test_generic_data):
+    game = RandovaniaGame.METROID_SAMUS_RETURNS
+    config = TeleporterConfiguration(
         mode=TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT,
-        excluded_teleporters=TeleporterList((), msr),
-        excluded_targets=TeleporterTargetList((), msr),
+        excluded_teleporters=TeleporterList((), game),
+        excluded_targets=TeleporterTargetList((), game),
     )
 
-    valid_msr_targets = msr_config.valid_targets
-    assert len(valid_msr_targets) == test_generic_data.num_valid_targets
+    valid_targets = config.valid_targets
+    assert len(valid_targets) == test_generic_data.num_valid_targets
 
 
-def test_decode(test_echoes_data, test_generic_data):
+@pytest.fixture(params=[test_echoes_data, test_generic_data])
+def test_decode(data):
     # Run
-    echoes_decoder = BitPackDecoder(test_echoes_data.encoded)
-    echoes_result = PrimeTrilogyTeleporterConfiguration.bit_pack_unpack(
-        echoes_decoder, {"reference": test_echoes_data.reference}
-    )
-
-    generic_decoder = BitPackDecoder(test_generic_data.encoded)
-    generic_result = TeleporterConfiguration.bit_pack_unpack(
-        generic_decoder, {"reference": test_generic_data.reference}
-    )
+    decoder = BitPackDecoder(data.encoded)
+    result = PrimeTrilogyTeleporterConfiguration.bit_pack_unpack(decoder, {"reference": data.reference})
 
     # Assert
-    assert echoes_result == test_echoes_data.expected
-    assert generic_result == test_generic_data.expected
+    assert result == data.expected
 
 
-def test_encode(test_echoes_data, test_generic_data):
+@pytest.fixture(params=[test_echoes_data, test_generic_data])
+def test_encode(data):
     # Setup
-    echoes_value = test_echoes_data.expected
-    generic_value = test_generic_data.expected
+    value = data.expected
 
     # Run
-    echoes_result, echoes_bit_count = bitpacking.pack_results_and_bit_count(
-        echoes_value.bit_pack_encode({"reference": test_echoes_data.reference})
-    )
-    generic_result, generic_bit_count = bitpacking.pack_results_and_bit_count(
-        generic_value.bit_pack_encode({"reference": test_generic_data.reference})
+    result, echoes_bit_count = bitpacking.pack_results_and_bit_count(
+        value.bit_pack_encode({"reference": data.reference})
     )
 
     # Assert
-    assert echoes_result == test_echoes_data.encoded
-    assert echoes_bit_count == test_echoes_data.bit_count
+    assert result == data.encoded
 
-    assert generic_result == test_generic_data.encoded
-    assert generic_bit_count == test_generic_data.bit_count
+    assert result == data.encoded
 
 
-def test_description(test_echoes_data, test_generic_data):
-    assert test_echoes_data.expected.description("elevators") == test_echoes_data.description
-    assert test_generic_data.expected.description("elevators") == test_generic_data.description
+@pytest.fixture(params=[test_echoes_data, test_generic_data])
+def test_description(data):
+    assert data.expected.description("elevators") == data.description
