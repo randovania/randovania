@@ -127,8 +127,8 @@ def test_generic_data(request):
 
 @pytest.fixture(
     params=[
-        _m(b"\x08", 5, "Original connections"),
-        _m(b"\x18", 5, "Original connections", skip_final_bosses=True),
+        _m(b"\x08", 5, "Original connections", num_valid_targets=0),
+        _m(b"\x18", 5, "Original connections", num_valid_targets=0, skip_final_bosses=True),
         _m(b"\xc1", 8, "One-way, with cycles", mode="one-way-teleporter"),
         _m(
             b"\xc81d",
@@ -141,6 +141,7 @@ def test_generic_data(request):
             b"\xe4\x033\x90",
             28,
             "One-way, anywhere; excluded 1 targets",
+            num_valid_targets=255,
             mode="one-way-anything",
             excluded_targets=[_a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple")],
         ),
@@ -168,7 +169,7 @@ def test_echoes_data(request):
 def test_valid_targets(test_echoes_data, test_generic_data):
     echoes = RandovaniaGame.METROID_PRIME_ECHOES
     echoes_config = PrimeTrilogyTeleporterConfiguration(
-        mode=TeleporterShuffleMode.ONE_WAY_TELEPORTER,
+        mode=test_echoes_data.expected.mode,
         skip_final_bosses=False,
         allow_unvisited_room_names=False,
         excluded_teleporters=TeleporterList((), echoes),
