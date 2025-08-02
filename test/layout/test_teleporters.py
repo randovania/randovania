@@ -192,11 +192,13 @@ def test_valid_targets_msr(test_generic_data):
     assert len(valid_targets) == test_generic_data.num_valid_targets
 
 
-@pytest.fixture(params=[test_echoes_data, test_generic_data])
-def test_decode(data):
+@pytest.fixture(
+    params=[(test_echoes_data, PrimeTrilogyTeleporterConfiguration), (test_generic_data, TeleporterConfiguration)]
+)
+def test_decode(data, configuration):
     # Run
     decoder = BitPackDecoder(data.encoded)
-    result = PrimeTrilogyTeleporterConfiguration.bit_pack_unpack(decoder, {"reference": data.reference})
+    result = configuration.bit_pack_unpack(decoder, {"reference": data.reference})
 
     # Assert
     assert result == data.expected
@@ -213,8 +215,6 @@ def test_encode(data):
     )
 
     # Assert
-    assert result == data.encoded
-
     assert result == data.encoded
 
 
