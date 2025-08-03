@@ -1,7 +1,8 @@
 import datetime
 
 import humanize
-from PySide6 import QtCore, QtWidgets
+from pynput import keyboard
+from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
 
 from randovania.gui import game_specific_gui
@@ -32,6 +33,8 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
     preset: VersionedPreset
     _leaderboard_dialog: AsyncRaceLeaderboardDialog | None = None
     _audit_log_dialog: QtWidgets.QDialog | None = None
+
+    keyboard_listener: keyboard.Listener | None = None
 
     def __init__(
         self,
@@ -79,6 +82,13 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
         self.ui.forfeit_button.clicked.connect(self._on_forfeit)
         self.ui.submit_proof_button.clicked.connect(self._on_submit_proof)
         self.on_room_details(room)
+
+        self.add_keyboard_listener()
+
+    def closeEvent(self, event: QtGui.QCloseEvent) -> None:
+        if self.keyboard_listener:
+            self.keyboard_listener.stop()
+        super().closeEvent(event)
 
     def on_room_details(self, room: AsyncRaceRoomEntry) -> None:
         self.room = room
@@ -416,3 +426,40 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
         Requests new room data from the server, then updates the UI.
         """
         self.on_room_details(await self._network_client.async_race_refresh_room(self.room))
+
+    def add_keyboard_listener(self) -> None:
+        def start_finish_func() -> None:
+            if self.ui.finish_button.isEnabled() and self.room.self_status != AsyncRaceRoomUserStatus.FINISHED:
+                self.ui.finish_button.click()
+            elif self.ui.start_button.isEnabled() and self.room.self_status != AsyncRaceRoomUserStatus.STARTED:
+                self.ui.start_button.click()
+
+        def pause_func() -> None:
+            if self.ui.pause_button.isEnabled() and self.ui.pause_button.isVisible():
+                self.ui.pause_button.click()
+
+        def on_press(key: keyboard.Key | keyboard.KeyCode | None) -> None:
+            start_finish_hotkey = self._options.hotkeys.start_finish_hotkey
+            pause_hotkey = self._options.hotkeys.pause_hotkey
+
+            if isinstance(key, keyboard.Key):
+                if start_finish_hotkey and start_finish_hotkey.name_or_vk == key.name:
+                    start_finish_func()
+                if pause_hotkey and pause_hotkey.name_or_vk == key.name:
+                    pause_func()
+            if isinstance(key, keyboard.KeyCode):
+                # key.vk is always set when sent from an event
+                if key.vk:
+                    if start_finish_hotkey:
+                        as_int = start_finish_hotkey.as_int()
+                        if as_int and as_int == key.vk:
+                            start_finish_func()
+                    if pause_hotkey:
+                        as_int = pause_hotkey.as_int()
+                        if pause_hotkey and as_int == key.vk:
+                            pause_func()
+
+        self.keyboard_listener = keyboard.Listener(
+            on_press=on_press,
+        )
+        self.keyboard_listener.start()
