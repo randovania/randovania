@@ -98,12 +98,12 @@ def _g(
         _g(
             b"\xd8\x12",
             16,
-            "One-way, with replacement; excluded 1 elevators",
-            40,
+            "One-way, with replacement; excluded 2 elevators",
+            38,
             mode="one-way-teleporter-replacement",
             excluded_teleporters=[
                 _a("Area 1", "Transport to Surface and Area 2", "Elevator to Surface East"),
-                _a("Area 4 Crystal Mines", "Transport to Area 4", "Elevator to Central Caves"),
+                _a("Area 4 Crystal Mines", "Transport to Central Caves", "Elevator to Area 4 Central Caves"),
             ],
         ),
     ],
@@ -127,13 +127,14 @@ def test_generic_data(request):
 
 @pytest.fixture(
     params=[
-        _m(b"\x08", 5, "Original connections"),
-        _m(b"\x18", 5, "Original connections", skip_final_bosses=True),
+        _m(b"\x08", 5, "Original connections", num_valid_targets=0),
+        _m(b"\x18", 5, "Original connections", num_valid_targets=0, skip_final_bosses=True),
         _m(b"\xc1", 8, "One-way, with cycles", mode="one-way-teleporter"),
         _m(
             b"\xc81d",
             22,
             "One-way, with cycles; excluded 1 elevators",
+            num_valid_targets=21,
             mode="one-way-teleporter",
             excluded_teleporters=[_a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple")],
         ),
@@ -141,6 +142,7 @@ def test_generic_data(request):
             b"\xe4\x033\x90",
             28,
             "One-way, anywhere; excluded 1 targets",
+            num_valid_targets=254,
             mode="one-way-anything",
             excluded_targets=[_a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple")],
         ),
@@ -165,68 +167,56 @@ def test_echoes_data(request):
     )
 
 
-def test_valid_targets(test_echoes_data, test_generic_data):
-    echoes = RandovaniaGame.METROID_PRIME_ECHOES
-    echoes_config = PrimeTrilogyTeleporterConfiguration(
-        mode=TeleporterShuffleMode.ONE_WAY_TELEPORTER,
+def test_valid_targets_echoes(test_echoes_data):
+    config = PrimeTrilogyTeleporterConfiguration(
+        mode=test_echoes_data.expected.mode,
         skip_final_bosses=False,
         allow_unvisited_room_names=False,
-        excluded_teleporters=TeleporterList((), echoes),
-        excluded_targets=TeleporterTargetList((), echoes),
+        excluded_teleporters=test_echoes_data.expected.excluded_teleporters,
+        excluded_targets=test_echoes_data.expected.excluded_targets,
     )
 
-    valid_echoes_targets = echoes_config.valid_targets
-    assert len(valid_echoes_targets) == test_echoes_data.num_valid_targets
+    valid_targets = config.valid_targets
+    assert len(valid_targets) == test_echoes_data.num_valid_targets
 
-    msr = RandovaniaGame.METROID_SAMUS_RETURNS
-    msr_config = TeleporterConfiguration(
+
+def test_valid_targets_msr(test_generic_data):
+    config = TeleporterConfiguration(
         mode=TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT,
-        excluded_teleporters=TeleporterList((), msr),
-        excluded_targets=TeleporterTargetList((), msr),
+        excluded_teleporters=test_generic_data.expected.excluded_teleporters,
+        excluded_targets=test_generic_data.expected.excluded_targets,
     )
 
-    valid_msr_targets = msr_config.valid_targets
-    assert len(valid_msr_targets) == test_generic_data.num_valid_targets
+    valid_targets = config.valid_targets
+    assert len(valid_targets) == test_generic_data.num_valid_targets
 
 
-def test_decode(test_echoes_data, test_generic_data):
+@pytest.fixture(
+    params=[(test_echoes_data, PrimeTrilogyTeleporterConfiguration), (test_generic_data, TeleporterConfiguration)]
+)
+def test_decode(data, configuration):
     # Run
-    echoes_decoder = BitPackDecoder(test_echoes_data.encoded)
-    echoes_result = PrimeTrilogyTeleporterConfiguration.bit_pack_unpack(
-        echoes_decoder, {"reference": test_echoes_data.reference}
-    )
-
-    generic_decoder = BitPackDecoder(test_generic_data.encoded)
-    generic_result = TeleporterConfiguration.bit_pack_unpack(
-        generic_decoder, {"reference": test_generic_data.reference}
-    )
+    decoder = BitPackDecoder(data.encoded)
+    result = configuration.bit_pack_unpack(decoder, {"reference": data.reference})
 
     # Assert
-    assert echoes_result == test_echoes_data.expected
-    assert generic_result == test_generic_data.expected
+    assert result == data.expected
 
 
-def test_encode(test_echoes_data, test_generic_data):
+@pytest.fixture(params=[test_echoes_data, test_generic_data])
+def test_encode(data):
     # Setup
-    echoes_value = test_echoes_data.expected
-    generic_value = test_generic_data.expected
+    value = data.expected
 
     # Run
-    echoes_result, echoes_bit_count = bitpacking.pack_results_and_bit_count(
-        echoes_value.bit_pack_encode({"reference": test_echoes_data.reference})
-    )
-    generic_result, generic_bit_count = bitpacking.pack_results_and_bit_count(
-        generic_value.bit_pack_encode({"reference": test_generic_data.reference})
+    result, echoes_bit_count = bitpacking.pack_results_and_bit_count(
+        value.bit_pack_encode({"reference": data.reference})
     )
 
     # Assert
-    assert echoes_result == test_echoes_data.encoded
-    assert echoes_bit_count == test_echoes_data.bit_count
-
-    assert generic_result == test_generic_data.encoded
-    assert generic_bit_count == test_generic_data.bit_count
+    assert result == data.encoded
 
 
-def test_description(test_echoes_data, test_generic_data):
-    assert test_echoes_data.expected.description("elevators") == test_echoes_data.description
-    assert test_generic_data.expected.description("elevators") == test_generic_data.description
+@pytest.fixture(params=[test_echoes_data, test_generic_data])
+def test_description(data):
+    assert data.expected.description("elevators") == data.description
