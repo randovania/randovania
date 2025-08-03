@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.1.0] - 2025-09-0?
 
+### Generator
+
+- Fixed: Random transports in mode "One-way, anywhere", only supported in Metroid Prime and Metroid Prime 2 Echoes, being unable to generate.
+
 ### Metroid Dread
 
 #### Logic Database
