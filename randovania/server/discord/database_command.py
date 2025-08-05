@@ -181,7 +181,9 @@ _GameChoices = discord.Option(
     str,
     description="The game's database to check.",
     choices=[
-        discord.OptionChoice(name=game.long_name, value=game.value) for game in enum_lib.iterate_enum(RandovaniaGame)
+        discord.OptionChoice(name=game.long_name, value=game.value)
+        for game in enum_lib.iterate_enum(RandovaniaGame)
+        if game.data.development_state.can_view(from_bot=True)
     ],
 )
 _GameChoices.converter = EnumConverter()
@@ -228,7 +230,7 @@ class SelectNodesItem(discord.ui.Select):
 
             node_bodies = []
 
-            for target_node, requirement in db.region_list.area_connections_from(node):
+            for target_node, requirement in self.area.area.connections[node].items():
                 if target_node.is_derived_node:
                     continue
 

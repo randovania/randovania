@@ -5,11 +5,55 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [9.3.0] - 2025-07-0?
+## [10.1.0] - 2025-09-0?
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Fixed: It is now logical to get back to the lower door in Grapple Beam Room without Grapple Beam, making it logical to escape without Grapple Beam when doors are randomized.
+
+## [10.0.1] - 2025-08-03
+
+### Generator
+
+- Fixed: Random transports in mode "One-way, anywhere", only supported in Metroid Prime and Metroid Prime 2 Echoes, being unable to generate.
+
+
+## [10.0.0] - 2025-08-01
+
+- **Major** - Added: Metroid Fusion has been added with full single player support. Includes random starting locations, some toggleable patches, and more.
+- Added: 10 more joke hints.
+- Changed: In the Multiworld Session window, renamed "Generate without spoiler" to "Generate for Race".
+- Fixed: An error when the computer shuts down unexpectedly or crashes during a multiworld that corrupts some files and prevents Randovania from starting.
+
+### Generator
+- Added: The generator will now check for the count of major pickups when major/minor split is enabled.
+
+### Metroid Dread
+- Fixed: A crash when attempting to fire Proto EMMI's Omega Blaster while having 0 maximum missiles.
+
+### Metroid: Samus Returns
+
+- Added: 10 more joke hints.
+- Fixed: Starting with extra Metroid DNA now counts toward the goal.
+- Fixed: Exported games will now take up to 80% less storage space when music shuffle is enabled.
+- Fixed: Shuffled music tracks now play at the correct volume in game.
+
+## [9.3.1] - 2025-07-05
+
+### AM2R
+
+- Fixed: Exporting games now work.
+
+## [9.3.0] - 2025-07-02
 
 ### Generator
 
 - Fixed: Some cases where weights from certain actions would not be calculated correctly.
+- Fixed: Pre placed pickups now avoid using locations configured as non-progression.
 
 ### Metroid Dread
 
@@ -20,6 +64,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Flipper Room: The Morph Ball Launcher now connects to the door to Navigation Station and is trivial, instead ot connecting to the door to Elun Transport Access and requiring that the Flipper has been rotated.
 - Changed: Flipper Room: Spinning the Flipper with the ledge warp from below now connects from the door to Elun Transport Access instead of from the Tunnel to Spider Magnet Elevator. It is now also logical to perform the ledge warp from below when Transport Randomizer is disabled.
 - Fixed: The door between EMMI Zone Exit Southeast and Blue EMMI Introduction is now considered as a Plasma Beam Door on both sides.
+
+### Metroid Prime
+
+- Added: Experimental option to pre-place Artifacts and/or Phazon Suit before generation.
+
+### Metroid Prime 2: Echoes
+
+- Added: "Captain" is now included as a possible word for the seed hash.
+
+#### Logic Database
+
+##### Agon Wastes
+
+- Added: In Transport Center, added an Instant Morph + Bomb Space Jump (Advanced) method of climbing the half-pipe.
 
 ## [9.2.0] - 2025-06-02
 
@@ -72,15 +130,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Display the number of remaining DNA in the DNA message before entering the final boss.
 - Fixed: If Metroid Queen is the final boss and you don't have all DNA, the DNA message now appears.
 - Fixed: For tanks with non required main option, the jingle of the tank item is played instead of the jingle of the main object.
-
-## [9.1.1] - 2025-05-03
-
-- Fixed: Duplicating a session now also duplicates the admin settings for Co-op and "Everyone can claim worlds".
-
-### Cave Story
-
-- Fixed: A regression introduced in 9.1.0 that made all received pickups in multiworld behave as Nothings.
-
 
 ## [9.1.1] - 2025-05-03
 

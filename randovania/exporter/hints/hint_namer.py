@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import TYPE_CHECKING, Generic, NamedTuple, TypeVar
+from typing import TYPE_CHECKING, NamedTuple, TypeVar
 
 from randovania.game_description import default_database
 from randovania.game_description.hint import SpecificHintPrecision
@@ -28,7 +28,7 @@ class PickupLocation(NamedTuple):
 ColorT = TypeVar("ColorT")
 
 
-class HintNamer(Generic[ColorT]):
+class HintNamer[ColorT]:
     location_formatters: dict[HintLocationPrecision | HintFeature, LocationFormatter]
 
     def __init__(self, all_patches: dict[int, GamePatches], players_config: PlayersConfiguration):

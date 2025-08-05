@@ -47,8 +47,8 @@ import typing
 from operator import attrgetter
 
 SeedData = typing.TypeVar("SeedData")
-Fitness: typing.TypeAlias = float
-Genes: typing.TypeAlias = list[int]
+type Fitness = float
+type Genes = list[int]
 
 
 class Chromosome:
