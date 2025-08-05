@@ -28,6 +28,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Security Access - Fixed a trick video appearing incorrectly on the website.
 
+### Metroid Prime
+
+#### Logic Database
+
+##### Tallon Overworld
+
+- Changed: Climbing Reactor Core with Bomb Jumps is now classified as Complex Bomb Jump(s) (Ludicrous).
+
 ## [10.0.1] - 2025-08-03
 
 ### Generator
