@@ -268,7 +268,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             new_ip = await MSRConnectorPromptDialog.prompt(
                 parent=self,
                 is_modal=True,
-                title="Select Citra or Luma3DS to connect to",
+                title="Select Azahar or Luma3DS to connect to",
                 description="Enter the IP address of your 3DS. It can be found in the system settings.",
             )
             if new_ip is None:
