@@ -15,6 +15,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: It is now logical to get back to the lower door in Grapple Beam Room without Grapple Beam, making it logical to escape without Grapple Beam when doors are randomized.
 
+### Metroid Fusion
+
+#### Logic Database
+
+##### Sector 4 (AQA)
+
+- Fixed: Security Access - Fixed a trick video appearing incorrectly on the website.
+
 ## [10.0.1] - 2025-08-03
 
 ### Generator
