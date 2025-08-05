@@ -37,14 +37,14 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options, PerGameOptions
 
 
-def get_path_to_citra(title_id: str) -> Path:
+def get_path_to_azahar(title_id: str) -> Path:
     if platform.system() == "Windows":
-        return windows_lib.get_appdata().joinpath("Citra", "load", "mods", title_id)
+        return windows_lib.get_appdata().joinpath("Azahar", "load", "mods", title_id)
 
     raise ValueError("Unsupported platform")
 
 
-def supports_citra() -> bool:
+def supports_azahar() -> bool:
     return platform.system() in {"Windows"}
 
 
@@ -101,10 +101,10 @@ class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDi
         if per_game.target_platform == MSRModPlatform.LUMA:
             self.luma_radio.setChecked(True)
         else:
-            self.citra_radio.setChecked(True)
+            self.azahar_radio.setChecked(True)
 
         self.luma_radio.toggled.connect(self._on_update_target_platform)
-        self.citra_radio.toggled.connect(self._on_update_target_platform)
+        self.azahar_radio.toggled.connect(self._on_update_target_platform)
         self._on_update_target_platform()
 
         # Output to SD
@@ -146,13 +146,13 @@ class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDi
         update_validation(self.ftp_ip_edit)
         self.ftp_on_anonymous_check()
 
-        # Output to Citra
-        self._citra_label_placeholder = self.citra_label.text()
-        self.tab_citra.serialize_options = dict
-        self.tab_citra.restore_options = lambda p: None
-        self.tab_citra.is_valid = lambda: True
+        # Output to Azahar
+        self._azahar_label_placeholder = self.azahar_label.text()
+        self.tab_azahar.serialize_options = dict
+        self.tab_azahar.restore_options = lambda p: None
+        self.tab_azahar.is_valid = lambda: True
 
-        self.update_citra_ui()
+        self.update_azahar_ui()
 
         # Output to Custom
         self.custom_path_edit.textChanged.connect(self._on_custom_path_change)
@@ -166,7 +166,7 @@ class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDi
         self._output_tab_by_name = {
             "sd": self.tab_sd_card,
             "ftp": self.tab_ftp,
-            "citra": self.tab_citra,
+            "azahar": self.tab_azahar,
             "custom": self.tab_custom_path,
         }
 
@@ -230,8 +230,8 @@ class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDi
             self.output_tab_widget.indexOf(self.tab_ftp), target_platform == MSRModPlatform.LUMA
         )
         self.output_tab_widget.setTabVisible(
-            self.output_tab_widget.indexOf(self.tab_citra),
-            target_platform == MSRModPlatform.CITRA and supports_citra(),
+            self.output_tab_widget.indexOf(self.tab_azahar),
+            target_platform == MSRModPlatform.AZAHAR and supports_azahar(),
         )
 
         visible_tabs = [i for i in range(self.output_tab_widget.count()) if self.output_tab_widget.isTabVisible(i)]
@@ -256,7 +256,7 @@ class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDi
         if self.luma_radio.isChecked():
             return MSRModPlatform.LUMA
         else:
-            return MSRModPlatform.CITRA
+            return MSRModPlatform.AZAHAR
 
     # Input file
     def rom_validation(self, line: QtWidgets.QLineEdit) -> bool:
@@ -287,11 +287,11 @@ class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDi
 
     def _on_input_file_change(self) -> None:
         self._validate_input_file()
-        self.update_citra_ui()
+        self.update_azahar_ui()
         self.update_accept_validation()
 
     def _on_input_file_button(self) -> None:
-        input_file = prompt_for_input_file(self, self.input_file_edit, ["3ds", "cia", "cxi", "app"])
+        input_file = prompt_for_input_file(self, self.input_file_edit, ["3ds", "cci", "cia", "cxi", "app"])
         if input_file is not None:
             self.input_file_edit.setText(str(input_file.absolute()))
 
@@ -328,12 +328,12 @@ class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDi
                 self.sd_combo.setCurrentIndex(item_index)
                 break
 
-    # Citra
-    def update_citra_ui(self) -> None:
-        if supports_citra():
-            self.citra_label.setText(
-                self._citra_label_placeholder.format(
-                    mod_path=get_path_to_citra(self.title_id),
+    # Azahar
+    def update_azahar_ui(self) -> None:
+        if supports_azahar():
+            self.azahar_label.setText(
+                self._azahar_label_placeholder.format(
+                    mod_path=get_path_to_azahar(self.title_id),
                 )
             )
 
@@ -411,8 +411,8 @@ class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDi
             output_path = path_in_edit(self.custom_path_edit)
             post_export = None
 
-        elif output_tab is self.tab_citra:
-            output_path = get_path_to_citra(self.title_id)
+        elif output_tab is self.tab_azahar:
+            output_path = get_path_to_azahar(self.title_id)
             post_export = None
 
         elif output_tab is self.tab_ftp:
