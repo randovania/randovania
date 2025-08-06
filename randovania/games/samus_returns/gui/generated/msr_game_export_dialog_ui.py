@@ -69,11 +69,11 @@ class Ui_MSRGameExportDialog(object):
 
         self.target_platform_layout.addWidget(self.luma_radio)
 
-        self.citra_radio = QRadioButton(MSRGameExportDialog)
-        self.platform_btn_group.addButton(self.citra_radio)
-        self.citra_radio.setObjectName(u"citra_radio")
+        self.azahar_radio = QRadioButton(MSRGameExportDialog)
+        self.platform_btn_group.addButton(self.azahar_radio)
+        self.azahar_radio.setObjectName(u"azahar_radio")
 
-        self.target_platform_layout.addWidget(self.citra_radio)
+        self.target_platform_layout.addWidget(self.azahar_radio)
 
 
         self.root_layout.addLayout(self.target_platform_layout, 7, 0, 1, 3)
@@ -164,13 +164,13 @@ class Ui_MSRGameExportDialog(object):
         self.tab_ftp_layout.addWidget(self.ftp_test_button, 2, 3, 1, 1)
 
         self.output_tab_widget.addTab(self.tab_ftp, "")
-        self.tab_citra = QWidget()
-        self.tab_citra.setObjectName(u"tab_citra")
-        self.citra_label = QLabel(self.tab_citra)
-        self.citra_label.setObjectName(u"citra_label")
-        self.citra_label.setGeometry(QRect(0, 0, 473, 171))
-        self.citra_label.setWordWrap(True)
-        self.output_tab_widget.addTab(self.tab_citra, "")
+        self.tab_azahar = QWidget()
+        self.tab_azahar.setObjectName(u"tab_azahar")
+        self.azahar_label = QLabel(self.tab_azahar)
+        self.azahar_label.setObjectName(u"azahar_label")
+        self.azahar_label.setGeometry(QRect(0, 0, 473, 171))
+        self.azahar_label.setWordWrap(True)
+        self.output_tab_widget.addTab(self.tab_azahar, "")
         self.tab_custom_path = QWidget()
         self.tab_custom_path.setObjectName(u"tab_custom_path")
         self.gridLayout_3 = QGridLayout(self.tab_custom_path)
@@ -242,16 +242,16 @@ class Ui_MSRGameExportDialog(object):
 
     def retranslateUi(self, MSRGameExportDialog):
         MSRGameExportDialog.setWindowTitle(QCoreApplication.translate("MSRGameExportDialog", u"Game Patching", None))
-        self.input_file_label.setText(QCoreApplication.translate("MSRGameExportDialog", u"<html><head/><body><p>Input File (A decrypted 3ds, cia, cxi or app Samus Returns rom file)</p></body></html>", None))
+        self.input_file_label.setText(QCoreApplication.translate("MSRGameExportDialog", u"<html><head/><body><p>Input File (A decrypted 3ds, cci, cia, cxi or app Samus Returns rom file)</p></body></html>", None))
         self.input_file_button.setText(QCoreApplication.translate("MSRGameExportDialog", u"Select File", None))
         self.input_file_edit.setPlaceholderText(QCoreApplication.translate("MSRGameExportDialog", u"Path to vanilla rom file", None))
         self.accept_button.setText(QCoreApplication.translate("MSRGameExportDialog", u"Accept", None))
         self.target_platform_label.setText(QCoreApplication.translate("MSRGameExportDialog", u"Target Platform", None))
         self.luma_radio.setText(QCoreApplication.translate("MSRGameExportDialog", u"Luma3DS", None))
 #if QT_CONFIG(tooltip)
-        self.citra_radio.setToolTip("")
+        self.azahar_radio.setToolTip("")
 #endif // QT_CONFIG(tooltip)
-        self.citra_radio.setText(QCoreApplication.translate("MSRGameExportDialog", u"Citra", None))
+        self.azahar_radio.setText(QCoreApplication.translate("MSRGameExportDialog", u"Azahar", None))
         self.sd_label.setText(QCoreApplication.translate("MSRGameExportDialog", u"Select the drive letter for your SD Card", None))
         self.sd_combo.setItemText(0, QCoreApplication.translate("MSRGameExportDialog", u"D:", None))
 
@@ -270,8 +270,8 @@ class Ui_MSRGameExportDialog(object):
         self.ftp_port_edit.setPlaceholderText(QCoreApplication.translate("MSRGameExportDialog", u"Port", None))
         self.ftp_test_button.setText(QCoreApplication.translate("MSRGameExportDialog", u"Test connection", None))
         self.output_tab_widget.setTabText(self.output_tab_widget.indexOf(self.tab_ftp), QCoreApplication.translate("MSRGameExportDialog", u"Upload via FTP", None))
-        self.citra_label.setText(QCoreApplication.translate("MSRGameExportDialog", u"<html><head/><body><p>The game will be exported directly to Citra's mod folder for Metroid: Samus Returns.</p><p>Path to be used:<br/><span style=\" font-size:8pt;\">{mod_path}</span></p><p>Please make sure Citra is closed before exporting a game.</p></body></html>", None))
-        self.output_tab_widget.setTabText(self.output_tab_widget.indexOf(self.tab_citra), QCoreApplication.translate("MSRGameExportDialog", u"Citra", None))
+        self.azahar_label.setText(QCoreApplication.translate("MSRGameExportDialog", u"<html><head/><body><p>The game will be exported directly to Azahar's mod folder for Metroid: Samus Returns.</p><p>Path to be used:<br/><span style=\" font-size:8pt;\">{mod_path}</span></p><p>Please make sure Azahar is closed before exporting a game.</p></body></html>", None))
+        self.output_tab_widget.setTabText(self.output_tab_widget.indexOf(self.tab_azahar), QCoreApplication.translate("MSRGameExportDialog", u"Azahar", None))
         self.custom_path_edit.setPlaceholderText(QCoreApplication.translate("MSRGameExportDialog", u"Path where to place randomized game", None))
         self.custom_path_button.setText(QCoreApplication.translate("MSRGameExportDialog", u"Select Folder", None))
         self.custom_path_label.setText(QCoreApplication.translate("MSRGameExportDialog", u"<html><head/><body><p>Saves the mod to a path or your choosing, leaving the responsibility of placing the files in the correct location to you.</p><p>This path and input path are not allowed to contain the other.</p><p>It's recommended to use one of the other options.</p></body></html>", None))

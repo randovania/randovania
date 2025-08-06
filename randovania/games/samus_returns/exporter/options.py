@@ -12,7 +12,7 @@ from randovania.interface_common.options import PerGameOptions, decode_if_not_no
 @dataclasses.dataclass(frozen=True)
 class MSRPerGameOptions(PerGameOptions):
     input_file: Path | None = None
-    target_platform: MSRModPlatform = MSRModPlatform.CITRA
+    target_platform: MSRModPlatform = MSRModPlatform.AZAHAR
     output_preference: str | None = None
 
     @property

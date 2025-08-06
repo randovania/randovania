@@ -185,7 +185,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
             "A new goal has been added (DNA Hunt)",
         ],
         need_to_play=[
-            "A modded 3DS with Luma3DS, or Citra",
+            "A modded 3DS with Luma3DS, or Azahar",
             "A decrypted copy of your original game. Currently, only the NA and EU versions are supported.",
         ],
     ),
