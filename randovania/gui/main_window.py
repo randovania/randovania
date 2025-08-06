@@ -96,6 +96,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     about_window: QtWidgets.QMainWindow | None = None
     dependencies_window: QtWidgets.QMainWindow | None = None
     reporting_widget: QtWidgets.QWidget | None = None
+    hotkeys_widget: QtWidgets.QDialog | None = None
     all_change_logs: dict[str, str] | None = None
     changelog_tab: QtWidgets.QWidget | None = None
     changelog_window: QtWidgets.QMainWindow | None = None
@@ -313,6 +314,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_about.triggered.connect(self._on_menu_action_about)
         self.menu_action_dependencies.triggered.connect(self._on_menu_action_dependencies)
         self.menu_action_automatic_reporting.triggered.connect(self._on_menu_action_automatic_reporting)
+        self.menu_action_hotkeys.triggered.connect(self._on_menu_action_hotkeys)
 
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
@@ -938,6 +940,15 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         assert isinstance(self.reporting_widget, ReportingOptOutWidget)
         self.reporting_widget.on_options_changed(self._options)
         self.reporting_widget.show()
+
+    def _on_menu_action_hotkeys(self):
+        from randovania.gui.widgets.hotkeys_widget import HotkeysWidget
+
+        if self.hotkeys_widget is None:
+            self.hotkeys_widget = HotkeysWidget(self._options)
+
+        assert isinstance(self.hotkeys_widget, HotkeysWidget)
+        self.hotkeys_widget.show()
 
     def open_app_navigation_link(self, link: str):
         match = re.match(r"^([^:]+)://(.+)$", link)
