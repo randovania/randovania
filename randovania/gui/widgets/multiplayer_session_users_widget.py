@@ -192,6 +192,22 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         await self._session_api.unclaim_world(world_uid, owner)
 
     @asyncSlot()
+    async def _world_abandon(self, world_uid: uuid.UUID, owner: int):
+        user_response = await async_dialog.message_box(
+            None,
+            QtWidgets.QMessageBox.Icon.Warning,
+            "Are you sure you want to abandon?",
+            (
+                f"Please confirm that you want to abandon the world {self._session.get_world(world_uid).name}."
+                "This will release all items in the world to the other worlds and should only be used as a last resort."
+            ),
+            QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
+            QtWidgets.QMessageBox.StandardButton.No,
+        )
+        if user_response == QtWidgets.QMessageBox.StandardButton.Yes:
+            await self._session_api.abandon_world(world_uid, owner)
+
+    @asyncSlot()
     async def _kick_player(self, kick_id: int):
         await self._session_api.kick_player(kick_id)
 
@@ -396,6 +412,11 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             def create_unclaim_entry(menu_caption: str) -> None:
                 connect_to(world_menu.addAction(menu_caption), self._world_unclaim, world_id, owner)
 
+            def create_abandon_entry() -> None:
+                abandon_action = world_menu.addAction("Abandon World")
+                abandon_action.setEnabled(not can_change_preset)
+                connect_to(abandon_action, self._world_abandon, world_id, owner)
+
             if not is_valid_owner(owner) and (self.is_admin() or self._session.allow_everyone_claim_world):
                 if self._session.users[self.your_id].worlds.get(world_id):
                     world_menu.addSeparator()
@@ -426,6 +447,8 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             delete_action = world_menu.addAction("Delete")
             delete_action.setEnabled(can_change_preset)
             connect_to(delete_action, self._world_delete, world_id)
+            world_menu.addSeparator()
+            create_abandon_entry()
 
         if is_valid_owner(owner):
             world_menu.addSeparator()

@@ -5,6 +5,7 @@ import peewee
 
 import randovania
 from randovania import monitoring
+from randovania.game_description import default_database
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import InvalidLayoutDescription, LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
@@ -24,6 +25,7 @@ from randovania.server.database import (
 )
 from randovania.server.lib import logger
 from randovania.server.multiplayer import session_common
+from randovania.server.multiplayer.world_api import collect_locations
 from randovania.server.server_app import ServerApp
 
 
@@ -570,6 +572,17 @@ def _set_allow_coop(sa: ServerApp, session: MultiplayerSession, new_state: bool)
         session.save()
 
 
+def _abandon_world(sa: ServerApp, session: MultiplayerSession, world_uid: uuid.UUID):
+    world = World.get_by_uuid(world_uid)
+
+    logger().info(f"{session_common.describe_session(session, world)} abandoned!")
+    session_common.add_audit_entry(sa, session, f"{world.name} has been abandoned.")
+
+    db = default_database.game_description_for(VersionedPreset.from_str(world.preset).game)
+    num_pickups = tuple(i for i in range(db.region_list.num_pickup_nodes))
+    collect_locations(sa, world, num_pickups)
+
+
 def _create_patcher_file(sa: ServerApp, session: MultiplayerSession, world_uid: str, cosmetic_json: dict):
     player_names = {}
     uuids = {}
@@ -637,8 +650,7 @@ def admin_player(sa: ServerApp, session_id: int, user_id: int, action: str, *arg
         _switch_ready(sa, session, membership)
 
     elif action == SessionAdminUserAction.ABANDON:
-        # FIXME
-        raise error.InvalidActionError("Abandon is NYI")
+        _abandon_world(sa, session, *args)
 
     session_common.emit_session_meta_update(session)
 

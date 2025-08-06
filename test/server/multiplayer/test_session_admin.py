@@ -216,6 +216,30 @@ def test_admin_player_switch_admin(flask_app, two_player_session, mock_audit, mo
     mock_emit_session_update.assert_called_once_with(two_player_session)
 
 
+def test_admin_player_abandon_world(flask_app, solo_two_world_session, mock_audit, mock_emit_session_update):
+    sa = MagicMock()
+    sa.get_current_user.return_value = database.User.get_by_id(1234)
+
+    worldActions: list[database.WorldAction] = list(database.WorldAction.select())
+    # there is one entry for an item from Player 2 to Player 1 in solo_two_world_session
+    assert len(worldActions) == 1
+
+    with flask_app.test_request_context():
+        session_admin.admin_player(
+            sa, 1, 1234, SessionAdminUserAction.ABANDON.value, "1179c986-758a-4170-9b07-fe4541d78db0"
+        )
+
+    worldActions = list(database.WorldAction.select())
+    # 51 items are for Player 2 in Player 1's world
+    assert len(worldActions) == 52
+    mock_audit.assert_has_calls(
+        [
+            call(sa, solo_two_world_session, "World 1 has been abandoned."),
+        ]
+    )
+    mock_emit_session_update.assert_called_once_with(solo_two_world_session)
+
+
 def test_admin_session_patcher_file(flask_app, mock_audit, mocker, two_player_session):
     sa = MagicMock()
     sa.get_current_user.return_value = database.User.get_by_id(1235)

@@ -263,6 +263,26 @@ async def test_unclaim_world(session_api, caplog):
     ]
 
 
+async def test_abandon_world(session_api, caplog):
+    uid = uuid.UUID("487fd145-d590-4984-b761-056974ce7d6d")
+
+    # Run
+    await session_api.abandon_world(uid, 20)
+
+    # Assert
+    session_api.network_client.server_call.assert_called_once_with(
+        "multiplayer_admin_player",
+        [1234, 20, admin_actions.SessionAdminUserAction.ABANDON.value, "487fd145-d590-4984-b761-056974ce7d6d"],
+    )
+    assert caplog.record_tuples == [
+        (
+            "MultiplayerSessionApi",
+            logging.INFO,
+            "[Session 1234] Abandon World 487fd145-d590-4984-b761-056974ce7d6d from 20",
+        )
+    ]
+
+
 async def test_rename_world(session_api, caplog):
     uid = uuid.UUID("487fd145-d590-4984-b761-056974ce7d6d")
 
