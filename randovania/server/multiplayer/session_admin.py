@@ -572,7 +572,7 @@ def _set_allow_coop(sa: ServerApp, session: MultiplayerSession, new_state: bool)
         session.save()
 
 
-def _abandon_world(sa: ServerApp, session: MultiplayerSession, world_uid: uuid.UUID):
+def _abandon_world(sa: ServerApp, session: MultiplayerSession, world_uid: uuid.UUID) -> None:
     world = World.get_by_uuid(world_uid)
 
     logger().info(f"{session_common.describe_session(session, world)} abandoned!")

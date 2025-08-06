@@ -192,7 +192,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         await self._session_api.unclaim_world(world_uid, owner)
 
     @asyncSlot()
-    async def _world_abandon(self, world_uid: uuid.UUID, owner: int):
+    async def _world_abandon(self, world_uid: uuid.UUID, owner: int) -> None:
         user_response = await async_dialog.message_box(
             None,
             QtWidgets.QMessageBox.Icon.Warning,
