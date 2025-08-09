@@ -56,4 +56,4 @@ class PrimeTrilogyTeleporterConfiguration(TeleporterConfiguration):
                     result.append(NodeIdentifier.create("Impact Crater", "Subchamber Five", "Dock to Subchamber Four"))
             return result
         else:
-            return []
+            return original
