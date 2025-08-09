@@ -15,6 +15,8 @@ import discord
 from discord.ui import Button
 
 import randovania
+from randovania.discord_bot.bot import RandovaniaBot
+from randovania.discord_bot.randovania_cog import RandovaniaCog
 from randovania.generator import generator
 from randovania.layout import layout_description, preset_describer
 from randovania.layout.generator_parameters import GeneratorParameters
@@ -24,8 +26,6 @@ from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib.migration_lib import UnsupportedVersion
 from randovania.resolver.exceptions import GenerationFailure
-from randovania.server.discord.bot import RandovaniaBot
-from randovania.server.discord.randovania_cog import RandovaniaCog
 
 possible_links_re = re.compile(r"([A-Za-z0-9-_]{8,})")
 _MAXIMUM_PRESETS_FOR_GENERATION = 4

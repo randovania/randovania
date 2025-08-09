@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from unittest.mock import ANY, AsyncMock, MagicMock
 
+from randovania.discord_bot.faq_command import FaqCommandCog, GameFaqMessage
 from randovania.game.game_enum import RandovaniaGame
-from randovania.server.discord.faq_command import FaqCommandCog, GameFaqMessage
 
 
 async def test_add_commands():

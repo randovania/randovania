@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from unittest.mock import AsyncMock, MagicMock
 
-from randovania.server.discord import bot
+from randovania.discord_bot import bot
 
 
 async def test_on_ready():
@@ -29,7 +29,7 @@ def test_run(mocker):
             "discord_bot": config,
         },
     )
-    mock_bot_class = mocker.patch("randovania.server.discord.bot.RandovaniaBot")
+    mock_bot_class = mocker.patch("randovania.discord_bot.bot.RandovaniaBot")
 
     # Run
     bot.run()
