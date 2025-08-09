@@ -5,14 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [9.4.0] - 2025-08-0?
+## [10.1.0] - 2025-09-0?
 
-- Added: 10 more joke hints.
-- Changed: In the Multiworld Session window, renamed "Generate without spoiler" to "Generate for Race".
-- Fixed: An error when the computer shuts down unexpectedly or crashes during a multiworld that corrupts some files and prevents Randovania from starting.
+### Metroid Dread
 
-### Generator
-- Added: The generator will now check for the count of major pickups when major/minor split is enabled.
+#### Logic Database
+
+##### Artaria
+
+- Fixed: It is now logical to get back to the lower door in Grapple Beam Room without Grapple Beam, making it logical to escape without Grapple Beam when doors are randomized.
+
+##### Burenia
+
+- Added: A video for breaking the uppermost blob in Burenia Hub to Dairon with a pseudo-wave.
+
+##### Ghavoran
+
+- Changed: Flipper Room: The Morph Ball Launcher now connects to the door to Navigation Station and is trivial, instead ot connecting to the door to Elun Transport Access and requiring that the Flipper has been rotated.
+- Changed: Flipper Room: Spinning the Flipper with the ledge warp from below now connects from the door to Elun Transport Access instead of from the Tunnel to Spider Magnet Elevator. It is now also logical to perform the ledge warp from below when Transport Randomizer is disabled.
+
+### Metroid Fusion
+
+#### Logic Database
+
+##### Sector 4 (AQA)
+
+- Fixed: Security Access - Fixed a trick video appearing incorrectly on the website.
+
+### Metroid Prime
+
+#### Logic Database
+
+##### Tallon Overworld
+
+- Changed: Climbing Reactor Core with Bomb Jumps is now classified as Complex Bomb Jump(s) (Ludicrous).
 
 ### Metroid Prime 2: Echoes
 
@@ -21,6 +47,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Sanctuary Fortress
 
 - Changed: Minor adjustment aimed at making Aerie safer for the generator, no changes to requirements in practice.
+
+## [10.0.1] - 2025-08-03
+
+### Generator
+
+- Fixed: Random transports in mode "One-way, anywhere", only supported in Metroid Prime and Metroid Prime 2 Echoes, being unable to generate.
+
+## [10.0.0] - 2025-08-01
+
+- **Major** - Added: Metroid Fusion has been added with full single player support. Includes random starting locations, some toggleable patches, and more.
+- Added: 10 more joke hints.
+- Changed: In the Multiworld Session window, renamed "Generate without spoiler" to "Generate for Race".
+- Fixed: An error when the computer shuts down unexpectedly or crashes during a multiworld that corrupts some files and prevents Randovania from starting.
+
+### Generator
+- Added: The generator will now check for the count of major pickups when major/minor split is enabled.
+
+### Metroid Dread
+- Fixed: A crash when attempting to fire Proto EMMI's Omega Blaster while having 0 maximum missiles.
 
 ### Metroid: Samus Returns
 

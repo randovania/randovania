@@ -242,6 +242,15 @@ Installing your patcher as editable:
 uv pip install -e ..\factorio-randovania-mod\
 ```
 
+## UI Files
+
+The python files associated with the Qt Creator's UI files are created with the `tools/uic_wrapper.py` script.
+It is called automatically when commiting via `pre-commit`, but you can run it manually via:
+
+```
+uvx pre-commit run qtui -a
+```
+
 # Documentation
 
 - Unfamiliar with a term? Check the [glossary](docs/Glossary.md).

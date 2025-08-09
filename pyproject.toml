@@ -2,11 +2,9 @@
 requires = [
     "setuptools>=64",
     "setuptools_scm>=8",
-    "pyqt-distutils>=0.7.3",
     "wheel>=0.37.0",
     "dulwich",
     "randovania-scm-version-schema",
-    "PySide6-Essentials>=6.5",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -86,7 +84,7 @@ exporters = [
     "factorio-randovania-mod>=0.8.0",
 
     # Metroid Dread
-    "open-dread-rando>=2.16.0",
+    "open-dread-rando>=2.17.0",
 
     # Metroid fusion
     "mars-patcher>=0.6.2",
@@ -204,6 +202,10 @@ git_describe_command = [
 
 [tool.ruff]
 line-length = 120
+
+extend-exclude = [
+    "*_ui.py",
+]
 
 [tool.ruff.lint]
 select = [
