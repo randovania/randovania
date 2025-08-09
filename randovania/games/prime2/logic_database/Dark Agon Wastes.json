@@ -8302,12 +8302,20 @@
                             }
                         },
                         "Event - Amorbis": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Event86",
-                                "amount": 1,
-                                "negate": false
+                                "comment": "Having a connection back the event node lets the genrator know when this sequence is safe.",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event86",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Amorbis Trigger": {
