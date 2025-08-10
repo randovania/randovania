@@ -106,6 +106,9 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
         self.button_box.rejected.connect(self.button_box_close)
 
         if trick_level.minimal_logic:
+            self.area_list_label.setText(
+                "This preset uses minimal logic, meaning all possible tricks may potentially be required."
+            )
             return
 
         # Update
@@ -122,6 +125,8 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
                 used_tricks = _check_used_tricks(area, trick_resources, context)
                 if used_tricks:
                     lines.append(data_editor_href(region, area) + f"<br />{'<br />'.join(used_tricks)}</p>")
+        if not lines:
+            lines.append("This is a trickless preset and thus, no tricks were listed.")
 
         self.area_list_label.setText("".join(lines))
 
