@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-import collections
 import dataclasses
-import re
 import typing
 
 from randovania.game_description import default_database
@@ -34,8 +32,8 @@ def _pickup_assignment_to_item_locations(
     region_list: RegionList,
     pickup_assignment: PickupAssignment,
     num_players: int,
-) -> dict[str, dict[str, str]]:
-    items_locations: collections.defaultdict[str, dict[str, str]] = collections.defaultdict(dict)
+) -> list[dict]:
+    items_locations = []
 
     for region, area, node in region_list.all_regions_areas_nodes:
         if not node.is_resource_node or not isinstance(node, PickupNode):
@@ -43,17 +41,25 @@ def _pickup_assignment_to_item_locations(
 
         if node.pickup_index in pickup_assignment:
             target = pickup_assignment[node.pickup_index]
+            item_name = target.pickup.name
             if num_players > 1:
-                item_name = f"{target.pickup.name} for Player {target.player + 1}"
+                owner = target.player
             else:
-                item_name = f"{target.pickup.name}"
+                owner = 0
         else:
             item_name = _NOTHING_PICKUP_NAME
+            owner = 0
 
-        # Not using `node.full_name` as this is not a user-facing string and needs to be consistent
-        items_locations[region.name][f"{node.identifier.area}/{node.identifier.node}"] = item_name
+        items_locations.append(
+            {
+                "node_identifier": node.identifier.as_json,
+                "index": node.pickup_index.index,
+                "pickup": item_name,
+                "owner": owner,
+            }
+        )
 
-    return {region: dict(sorted(items_locations[region].items())) for region in sorted(items_locations.keys())}
+    return items_locations
 
 
 def _find_area_with_teleporter(region_list: RegionList, teleporter: NodeIdentifier) -> Area:
@@ -104,9 +110,7 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
             }
             for dock, weakness in patches.all_dock_weaknesses()
         },
-        "locations": dict(
-            _pickup_assignment_to_item_locations(region_list, patches.pickup_assignment, num_players).items()
-        ),
+        "locations": _pickup_assignment_to_item_locations(region_list, patches.pickup_assignment, num_players),
         "hints": {identifier.as_string: hint.as_json for identifier, hint in patches.hints.items()},
         "game_specific": patches.game_specific,
     }
@@ -139,41 +143,33 @@ def _decode_pickup_assignment(
     locations: dict,
 ) -> PickupAssignment:
     """Decodes the `locations` key."""
-    target_name_re = re.compile(r"(.*) for Player (\d+)")
-
     pickup_assignment: PickupAssignment = {}
 
     initial_pickup_assignment = all_pools[player_index].assignment
 
-    for world_name, world_data in locations.items():
-        for area_node_name, target_name in typing.cast("dict[str, str]", world_data).items():
-            if target_name == _NOTHING_PICKUP_NAME:
-                continue
+    for location in locations:
+        pickup_name = location["pickup"]
+        if pickup_name == _NOTHING_PICKUP_NAME:
+            continue
 
-            pickup_name_match = target_name_re.match(target_name)
-            if pickup_name_match is not None:
-                pickup_name = pickup_name_match.group(1)
-                target_player = int(pickup_name_match.group(2)) - 1
-            else:
-                pickup_name = target_name
-                target_player = 0
+        target_player = location["owner"]
 
-            node_identifier = NodeIdentifier.create(world_name, *area_node_name.split("/", 1))
-            node = region_list.typed_node_by_identifier(node_identifier, PickupNode)
-            pickup: PickupEntry | None
+        node_identifier = NodeIdentifier.from_json(location["node_identifier"])
+        node = region_list.typed_node_by_identifier(node_identifier, PickupNode)
+        pickup: PickupEntry | None
 
-            if node.pickup_index in initial_pickup_assignment:
-                pickup = initial_pickup_assignment[node.pickup_index]
-                if (pickup_name, target_player) != (pickup.name, player_index):
-                    raise ValueError(f"{area_node_name} should be vanilla based on configuration")
+        if node.pickup_index in initial_pickup_assignment:
+            pickup = initial_pickup_assignment[node.pickup_index]
+            if (pickup_name, target_player) != (pickup.name, player_index):
+                raise ValueError(f"{node_identifier.as_string} should be vanilla based on configuration")
 
-            elif pickup_name != _NOTHING_PICKUP_NAME:
-                pickup = _get_pickup_from_pool(all_pools[target_player].to_place, pickup_name)
-            else:
-                pickup = None
+        elif pickup_name != _NOTHING_PICKUP_NAME:
+            pickup = _get_pickup_from_pool(all_pools[target_player].to_place, pickup_name)
+        else:
+            pickup = None
 
-            if pickup is not None:
-                pickup_assignment[node.pickup_index] = PickupTarget(pickup, target_player)
+        if pickup is not None:
+            pickup_assignment[node.pickup_index] = PickupTarget(pickup, target_player)
 
     return pickup_assignment
 
