@@ -82,6 +82,8 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
         trick_level = preset.configuration.trick_level
         if trick_level.minimal_logic:
             trick_usage_description = "Minimal Logic"
+        elif not trick_level.specific_levels:
+            trick_usage_description = "None"
         else:
             trick_usage_description = ", ".join(
                 sorted(
