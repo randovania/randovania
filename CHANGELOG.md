@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.1.0] - 2025-09-0?
 
+### AM2R
+
+- Changed: Renamed the "Misc" pickup category to "Bonus Upgrade".
+- Changed: Health Drops, Speed Booster Upgrades, Flashlight and Blindfolds are not hinted as an Expansion anymore.
+- Removed: Removed the "Key", "Energy Tank", "Morph Ball Related", "Beam Related" and "Missile Related" pickup categories from being hinted.
+
 ### Metroid Dread
 
 #### Logic Database

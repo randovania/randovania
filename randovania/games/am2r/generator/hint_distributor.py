@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 
 class AM2RHintDistributor(HintDistributor):
-    # Makes DNA less likely to be hinted since gaurunteed hints already exist on Wisdom Septoggs
+    # Makes DNA less likely to be hinted since guaranteed hints already exist on Wisdom Septoggs
     @override
     def is_pickup_interesting(self, target: PickupTarget, player_id: int, hint_node: HintNode) -> bool:
         return not target.pickup.has_hint_feature("dna")
