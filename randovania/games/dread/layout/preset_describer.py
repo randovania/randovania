@@ -85,9 +85,9 @@ class DreadPresetDescriber(GamePresetDescriber):
             "Game Changes": [
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
-                    {
-                        "Power Bomb needs Main": "Power Bomb Expansion",
-                    },
+                    [
+                        ("Power Bombs need Main", "Power Bomb Tank", False),
+                    ],
                 ),
                 {
                     "Open Hanubia Shortcut": configuration.hanubia_shortcut_no_grapple,

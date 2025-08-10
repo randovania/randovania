@@ -130,11 +130,11 @@ class MSRPresetDescriber(GamePresetDescriber):
             "Game Changes": [
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
-                    {
-                        "Missile needs Launcher": "Missile Tank",
-                        "Super Missile needs Launcher": "Super Missile Tank",
-                        "Power Bomb needs Launcher": "Power Bomb Tank",
-                    },
+                    [
+                        ("Missile needs Launcher", "Missile Tank", False),
+                        ("Super Missile needs Launcher", "Super Missile Tank", False),
+                        ("Power Bomb needs Launcher", "Power Bomb Tank", False),
+                    ],
                 ),
                 {
                     "Charge Beam Door Buff": configuration.charge_door_buff,

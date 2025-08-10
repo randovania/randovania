@@ -63,11 +63,11 @@ class AM2RPresetDescriber(GamePresetDescriber):
             "Game Changes": [
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
-                    {
-                        "Missiles need Launcher": "Missile Tank",
-                        "Super Missiles need Launcher": "Super Missile Tank",
-                        "Power Bombs need Launcher": "Power Bomb Tank",
-                    },
+                    [
+                        ("Missiles need Launcher", "Missile Tank", False),
+                        ("Super Missiles need Launcher", "Super Missile Tank", False),
+                        ("Power Bombs need Launcher", "Power Bomb Tank", False),
+                    ],
                 ),
                 {f"Energy per Tank: {configuration.energy_per_tank}": configuration.energy_per_tank != 100},
                 {f"First Suit Damage Reduction {configuration.first_suit_dr}%": configuration.first_suit_dr != 50},
