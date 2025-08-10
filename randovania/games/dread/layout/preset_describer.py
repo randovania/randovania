@@ -86,7 +86,7 @@ class DreadPresetDescriber(GamePresetDescriber):
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
                     [
-                        ("Power Bombs need Main", "Power Bomb Tank", False),
+                        ("Power Bombs do not need Main", "Power Bomb Tank", True),
                     ],
                 ),
                 {
