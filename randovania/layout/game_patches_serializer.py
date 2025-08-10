@@ -59,7 +59,13 @@ def _pickup_assignment_to_item_locations(
             }
         )
 
-    return items_locations
+    return sorted(
+        items_locations,
+        key=lambda d: (
+            d["node_identifier"]["region"],
+            f"{d['node_identifier']['area']}/{d['node_identifier']['node']}",
+        ),
+    )
 
 
 def _find_area_with_teleporter(region_list: RegionList, teleporter: NodeIdentifier) -> Area:
