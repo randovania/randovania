@@ -87,6 +87,7 @@ class DreadPresetDescriber(GamePresetDescriber):
                     configuration.ammo_pickup_configuration,
                     [
                         ("Power Bombs do not need Main", "Power Bomb Tank", True),
+                        ("Flash Shift does not need Main", "Flash Shift Upgrade", True),
                     ],
                 ),
                 {
