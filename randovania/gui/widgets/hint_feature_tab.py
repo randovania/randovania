@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 from PySide6.QtWidgets import QLabel, QSizePolicy, QSpacerItem, QVBoxLayout, QWidget
 
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
 from randovania.gui.generated.hint_feature_tab_ui import Ui_HintFeatureTab
 from randovania.gui.lib.data_editor_links import (
     data_editor_href,
@@ -167,7 +168,18 @@ class PickupHintFeatureTab(HintFeatureTab):
                 continue
 
             def pickups_with_feature(group: dict[str, BasePickupDefinition]) -> Iterable[str]:
-                yield from (name for name, pickup in group.items() if feature in pickup.hint_features)
+                yield from (
+                    name
+                    for name, pickup in group.items()
+                    # Pickup has to have the feature and has to show in the GUI. Only StandardPickups have the GUI flag.
+                    if (
+                        feature in pickup.hint_features
+                        and (
+                            not isinstance(pickup, StandardPickupDefinition)
+                            or (isinstance(pickup, StandardPickupDefinition) and not pickup.hide_from_gui)
+                        )
+                    )
+                )
 
             pickup_names: list[str] = []
             pickup_names.extend(pickups_with_feature(pickup_db.generated_pickups))

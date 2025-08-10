@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.1.0] - 2025-09-0?
 
+
+- Fixed: Hidden Pickups are not shown anymore in the "Pickup Hint Features" tab of a game.
+
 ### AM2R
 
 - Fixed: Joke hints are now always surrounded by asterisks.
