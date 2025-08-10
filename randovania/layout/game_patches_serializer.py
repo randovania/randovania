@@ -32,8 +32,8 @@ def _pickup_assignment_to_item_locations(
     region_list: RegionList,
     pickup_assignment: PickupAssignment,
     num_players: int,
-) -> list[dict]:
-    items_locations = []
+) -> dict[int, dict]:
+    items_locations = {}
 
     for region, area, node in region_list.all_regions_areas_nodes:
         if not node.is_resource_node or not isinstance(node, PickupNode):
@@ -50,22 +50,17 @@ def _pickup_assignment_to_item_locations(
             item_name = _NOTHING_PICKUP_NAME
             owner = 0
 
-        items_locations.append(
-            {
-                "node_identifier": node.identifier.as_json,
-                "index": node.pickup_index.index,
-                "pickup": item_name,
-                "owner": owner,
-            }
-        )
+        items_locations[node.pickup_index.index] = {
+            "node_identifier": node.identifier.as_json,
+            "pickup": item_name,
+            "owner": owner,
+        }
 
-    return sorted(
-        items_locations,
-        key=lambda d: (
-            d["node_identifier"]["region"],
-            f"{d['node_identifier']['area']}/{d['node_identifier']['node']}",
-        ),
-    )
+    def sorting_func(input: tuple) -> tuple[str, str]:
+        identifier = input[1]["node_identifier"]
+        return (identifier["region"], f"{identifier['area']}/{identifier['node']}")
+
+    return dict(sorted(items_locations.items(), key=sorting_func))
 
 
 def _find_area_with_teleporter(region_list: RegionList, teleporter: NodeIdentifier) -> Area:
@@ -153,7 +148,7 @@ def _decode_pickup_assignment(
 
     initial_pickup_assignment = all_pools[player_index].assignment
 
-    for location in locations:
+    for pickup_index, location in locations.items():
         pickup_name = location["pickup"]
         if pickup_name == _NOTHING_PICKUP_NAME:
             continue

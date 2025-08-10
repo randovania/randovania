@@ -728,7 +728,7 @@ def _migrate_v37(data: dict) -> None:
     assignment_re = re.compile(r"(.*) for Player (\d+)")
 
     for game in data["game_modifications"]:
-        new_locations = []
+        new_locations = {}
         pickup_to_node = migration_data.get_raw_data(RandovaniaGame(game["game"]))["pickup_index_to_node"]
         for region, assignments in game["locations"].items():
             for location, assignment in assignments.items():
@@ -760,14 +760,11 @@ def _migrate_v37(data: dict) -> None:
                 assert pickup_index is not None, f"Unknown pickup index for {node_identifier}"
 
                 r, a, n = node_identifier.split("/")
-                new_locations.append(
-                    {
-                        "node_identifier": {"region": r, "area": a, "node": n},
-                        "index": int(pickup_index),
-                        "pickup": pickup,
-                        "owner": owner,
-                    }
-                )
+                new_locations[int(pickup_index)] = {
+                    "node_identifier": {"region": r, "area": a, "node": n},
+                    "pickup": pickup,
+                    "owner": owner,
+                }
 
         game["locations"] = new_locations
 
