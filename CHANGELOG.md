@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: The preset summary now lists when Flash Shift can be used with Flash Shift Upgrades can be used without the Main Flash Shift.
 - Changed: The preset summary now lists when Main Power Bomb is not required to use Power Bombs instead of the opposite.
+- Changed: The preset summary lists when Power Bomb limitations is disabled instead of when it's enabled.
 
 #### Logic Database
 
