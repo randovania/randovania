@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
-- Added: The preset summary now lists when Flash Shift can be used with Flash Shift Upgrades can be used without the Main Flash Shift.
+- Added: The preset summary now lists when Flash Shift can be used without Main Flash Shift when having Flash Shift Upgrades.
 - Changed: The preset summary now lists when Main Power Bomb is not required to use Power Bombs instead of the opposite.
 - Changed: The preset summary lists when Power Bomb limitations is disabled instead of when it's enabled.
 
