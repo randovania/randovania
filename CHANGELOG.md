@@ -38,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Sector 1 (SRX)
 
 - Fixed: Atmospheric Stabilizer Northeast - Fixed an edge case where a Shinespark trick from another room could be required even with obtaining Speedbooster in the same room
-- Changed: Atmospheric Stabilizer Northeast - Changed the Shinespark trick from advanced to expert
+- Changed: Atmospheric Stabilizer Northeast - Changed the Shinespark trick from Advanced to Expert
 
 ##### Sector 4 (AQA)
 
