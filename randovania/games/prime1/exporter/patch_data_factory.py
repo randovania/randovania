@@ -673,18 +673,6 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         db = self.game
         namer = PrimeHintNamer(self.description.all_patches, self.players_config)
 
-        ammo_with_mains = [
-            ammo.name
-            for ammo, state in self.configuration.ammo_pickup_configuration.pickups_state.items()
-            if state.requires_main_item
-        ]
-        if ammo_with_mains:
-            raise ValueError(
-                "Preset has {} with required mains enabled. This is currently not supported.".format(
-                    " and ".join(ammo_with_mains)
-                )
-            )
-
         scan_visor = self.game.resource_database.get_item_by_display_name("Scan Visor")
         pickup_list = self.export_pickup_list()
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
