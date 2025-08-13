@@ -33,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Ferenia
 
-- Fixed: Updated logic from Underwater Bottom in Space Jump Room to include more ways to reach Space Jump Room Access.
+- Added: More ways to reach Space Jump Room Access from Underwater Bottom in Space Jump Room.
 
 ### Metroid Fusion
 
