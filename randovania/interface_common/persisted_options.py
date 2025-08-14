@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from typing import TYPE_CHECKING
 
 from randovania.lib import json_lib, migration_lib
@@ -154,6 +155,23 @@ def _msr_enable_remote_lua(options: dict) -> None:
         options["game_samus_returns"]["cosmetic_patches"].pop("enable_remote_lua", None)
 
 
+def _msr_citra_to_azahar(options: dict) -> None:
+    if "target_platform" in options.get("game_samus_returns", {}):
+        if options["game_samus_returns"]["target_platform"] == "citra":
+            options["game_samus_returns"]["target_platform"] = "azahar"
+
+    if "output_preference" in options.get("game_samus_returns", {}):
+        as_dict: dict = json.loads(options["game_samus_returns"]["output_preference"])
+        if as_dict.get("selected_tab", "") == "citra":
+            as_dict["selected_tab"] = "azahar"
+        # dirty replacement: replaces the platform and the field name for the always empty dict tab options
+        tab_options = as_dict.get("tab_options", None)
+        if tab_options:
+            tab_options["azahar"] = {}
+            tab_options.pop("citra", None)
+        options["game_samus_returns"]["output_preference"] = json_lib.dumps_small(as_dict)
+
+
 _CONVERTER_FOR_VERSION = [
     None,
     None,
@@ -194,6 +212,7 @@ _CONVERTER_FOR_VERSION = [
     _remove_msr_fields,  # removes MSR's exheader and input field
     _only_new_fields,  # added last_changelog_displayed_dev
     _msr_enable_remote_lua,  # removes enable_remote_lua as it'll always be enabled
+    _msr_citra_to_azahar,  # migrate from citra to azahar
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 
