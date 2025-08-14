@@ -95,20 +95,23 @@ def patches_with_data(request, echoes_game_description, echoes_game_patches, ech
             f"{sf}/Aerie/Elevator to Aerie Transport Station": f"{sf}/Aerie Transport Station/Elevator to Aerie",
         },
         "dock_weakness": {},
-        "locations": {},
+        "locations": [],
         "hints": {},
         "game_specific": {},
     }
     patches = dataclasses.replace(echoes_game_patches, player_index=0)
 
-    locations = {}
+    locations = []
     for region, area, node in game.region_list.all_regions_areas_nodes:
         if node.is_resource_node and isinstance(node, PickupNode):
-            locations[node.pickup_index.index] = {
-                "node_identifier": node.identifier.as_json,
-                "pickup": game_patches_serializer._NOTHING_PICKUP_NAME,
-                "owner": 0,
-            }
+            locations.append(
+                {
+                    "node_identifier": node.identifier.as_json,
+                    "index": node.pickup_index.index,
+                    "pickup": game_patches_serializer._NOTHING_PICKUP_NAME,
+                    "owner": 0,
+                }
+            )
 
     data["locations"] = locations
 
@@ -147,7 +150,7 @@ def patches_with_data(request, echoes_game_description, echoes_game_patches, ech
         pickup = create_pickup(pickup_name)
 
         patches = patches.assign_new_pickups([(PickupIndex(5), PickupTarget(pickup, 0))])
-        data["locations"][5]["pickup"] = pickup_name
+        data["locations"][4]["pickup"] = pickup_name
 
     if request.param.get("hint"):
         identifier, hint = request.param.get("hint")
@@ -167,7 +170,7 @@ def test_encode(patches_with_data):
     encoded = game_patches_serializer.serialize_single(0, 1, patches)
 
     # Assert
-    for index, element in expected["locations"].items():
+    for index, element in enumerate(expected["locations"]):
         assert encoded["locations"][index] == element
     assert encoded == expected
 
