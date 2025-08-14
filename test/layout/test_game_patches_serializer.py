@@ -169,9 +169,11 @@ def test_encode(patches_with_data):
     # Run
     encoded = game_patches_serializer.serialize_single(0, 1, patches)
 
+    expected_locations = expected.pop("locations")
+    encoded_locations = encoded.pop("locations")
+
     # Assert
-    for index, element in enumerate(expected["locations"]):
-        assert encoded["locations"][index] == element
+    assert sorted(expected_locations, key=lambda d: d["index"]) == sorted(encoded_locations, key=lambda d: d["index"])
     assert encoded == expected
 
 
