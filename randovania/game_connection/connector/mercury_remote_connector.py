@@ -119,7 +119,8 @@ class MercuryConnector(RemoteConnector):
     async def new_received_pickups_received(self, new_received_pickups: str) -> None:
         new_recv_as_int = int(new_received_pickups)
         self.logger.debug("Received Pickups: %s", new_received_pickups)
-        self.in_cooldown = False
+        if self.current_region is not None:
+            self.in_cooldown = False
         self.received_pickups = new_recv_as_int
         await self.receive_remote_pickups()
 
