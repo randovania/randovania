@@ -53,4 +53,9 @@ FUSION_JOKE_HINTS = GENERIC_JOKE_HINTS + [
     "Don't know what to do? Zeela vie.",
     "If something gets in your way, Choot it!",
     "Sometimes, it may not be possible to collect Evir-thing",
+    "You humans have some funny little brains. How do you get around in those things?",
+    "This hint isn't useful enough for you? Well, excuuuuuse me, princess!",
+    "Lady, I love space. What's your favorite thing about space? Mine is space.",
+    "The X are coming. With all their glory. And all their horror.",
+    "Blue X move in mesmerizing ARCs.",
 ]

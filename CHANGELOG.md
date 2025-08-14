@@ -7,11 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.1.0] - 2025-09-0?
 
-
+- Added: 7 Joke hints.
 - Fixed: Hidden Pickups are not shown anymore in the "Pickup Hint Features" tab of a game.
 
 ### AM2R
 
+- Added: 2 Joke hints.
 - Fixed: Joke hints are now always surrounded by asterisks.
 
 ### Metroid Dread
@@ -33,6 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
+- Added: 5 joke hints.
+
 #### Logic Database
 
 ##### Sector 1 (SRX)
@@ -51,6 +54,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Tallon Overworld
 
 - Changed: Climbing Reactor Core with Bomb Jumps is now classified as Complex Bomb Jump(s) (Ludicrous).
+
+### Metroid Prime 2: Echoes
+
+- Added: 14 joke hints.
 
 ## [10.0.1] - 2025-08-03
 
