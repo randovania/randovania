@@ -35,6 +35,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+##### Main Deck:
+
+- Changed: Yakuza Arena: Going up to the exit now requires either Yakuza to be killed or Beginner Knowledge.
+
 ##### Sector 1 (SRX)
 
 - Fixed: Atmospheric Stabilizer Northeast - Fixed an edge case where a Shinespark trick from another room could be required even with obtaining Speedbooster in the same room
@@ -43,6 +47,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Sector 4 (AQA)
 
 - Fixed: Security Access - Fixed a trick video appearing incorrectly on the website.
+
+##### Sector 6 (NOC)
+
+- Changed: Geron's Crossing: Going through the Super Missile Geron after defeating Varia Core-X now additionally requires Intermediate Knowledge.
+- Changed: Clogged Cavern: Going through the Speed Booster Blocks after defeating Varia Core-X now additionally requires Intermediate Knowledge.
 
 ### Metroid Prime
 
