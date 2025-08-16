@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 import tenacity
 
 from randovania.game_description.assignment import PickupTarget, PickupTargetAssociation
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.generator import dock_weakness_distributor, hint_distributor
 from randovania.generator.filler.filler_configuration import FillerResults, PlayerPool
@@ -26,8 +27,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable
     from random import Random
 
-    from randovania.game_description.db.pickup_node import PickupNode
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.layout.base.base_configuration import BaseConfiguration
@@ -37,14 +37,27 @@ if TYPE_CHECKING:
 DEFAULT_ATTEMPTS = 15
 
 
+def count_pickup_nodes(game: GameDatabaseView) -> int:
+    """
+    Count how many PickupNodes shows up in a given GameDatabaseView
+    """
+    return sum(1 for _, _, node in game.node_iterator() if isinstance(node, PickupNode))
+
+
 def _validate_pickup_pool_size(
-    item_pool: list[PickupEntry], game: GameDescription, configuration: BaseConfiguration
+    item_pool: list[PickupEntry], game: GameDatabaseView, configuration: BaseConfiguration
 ) -> None:
+    """
+    Checks if the given game has enough pickup nodes for the given item pool, plus minimum/starting pickups.
+    Raises exceptions on failure.
+    """
+    num_pickup_nodes = count_pickup_nodes(game)
     min_starting_pickups = configuration.standard_pickup_configuration.minimum_random_starting_pickups
-    if len(item_pool) > game.region_list.num_pickup_nodes + min_starting_pickups:
+
+    if len(item_pool) > num_pickup_nodes + min_starting_pickups:
         raise InvalidConfiguration(
             f"Item pool has {len(item_pool)} items, "
-            f"which is more than {game.region_list.num_pickup_nodes} (game) "
+            f"which is more than {num_pickup_nodes} (game) "
             f"+ {min_starting_pickups} (minimum starting items)"
         )
 
@@ -94,7 +107,7 @@ async def create_player_pool(
     for i in range(10):
         status_update(f"Attempt {i + 1} for initial state for world '{world_name}'")
         patches = game_generator.base_patches_factory.create_base_patches(
-            configuration, rng, game, num_players > 1, player_index=player_index, rng_required=True
+            configuration, rng, game, num_players > 1, player_index=player_index
         )
         patches = dock_weakness_distributor.distribute_pre_fill_weaknesses(patches, rng)
         patches = await game.game.hints.hint_distributor.assign_pre_filler_hints(
@@ -105,7 +118,6 @@ async def create_player_pool(
                 game,
                 num_players > 1,
             ),
-            rng_required=True,
         )
 
         pool_results = pool_creator.calculate_pool_results(configuration, game)

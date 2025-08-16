@@ -203,7 +203,7 @@ class HintDistributor(ABC):
     def get_generic_hint_nodes(self, prefill: PreFillParams) -> list[NodeIdentifier]:
         return [
             node.identifier
-            for node in prefill.game.region_list.iterate_nodes_of_type(HintNode)
+            for _, _, node in prefill.game.iterate_nodes_of_type(HintNode)
             if node.kind == HintNodeKind.GENERIC
         ]
 
@@ -214,8 +214,7 @@ class HintDistributor(ABC):
     async def assign_specific_location_hints(self, patches: GamePatches, prefill: PreFillParams) -> GamePatches:
         specific_location_precisions = await self.get_specific_pickup_precision_pairs()
 
-        wl = prefill.game.region_list
-        for node in wl.iterate_nodes_of_type(HintNode):
+        for _, _, node in prefill.game.iterate_nodes_of_type(HintNode):
             if node.kind == HintNodeKind.SPECIFIC_LOCATION:
                 identifier = node.identifier
                 patches = patches.assign_hint(

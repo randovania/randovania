@@ -7,7 +7,6 @@ AM2R_JOKE_HINTS = GENERIC_JOKE_HINTS + [
     "How many Ridley's have you found so far in this game?",
     "Movement in Morph Ball is faster than unmorphed, except for Speedboosting.",
     "Samus Aran... You must exterminate the Metroids once and for all!",
-    "Posture check! Stretch your wrists, flex your fingers, and straighten your back.",
     "Ma'am, thou'rt mistaken, I'm not a pet, I'm a Septogg and master bug eater.",
     "Why so Serris?",
     "Adam has not yet authorized the use of this hint.",
@@ -32,6 +31,8 @@ AM2R_JOKE_HINTS = GENERIC_JOKE_HINTS + [
     "Ash was here! Gary is a Looser!",
     "Don't worry, one Metroid kill doesn't make you a serial killer.",
     "A Controller is recommended",
+    "The Omega Metroids aren't even in their final form!",
+    "I'm not plundering Chozo Artifacts. I PREFER the term 'treasure hunter'!",
     # Multi line hints here, for easier viewing
     (
         "According to all known laws of aviation, there is no way that a Septogg should be able to fly. "

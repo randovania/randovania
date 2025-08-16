@@ -89,7 +89,7 @@ def victory_condition_for_pickup_placement(
         return game.victory_condition
 
     add_all_pickups = placement_config is LogicalPickupPlacementConfiguration.ALL
-    resources = ResourceCollection.with_database(game.resource_database)
+    resources = game.create_resource_collection()
 
     for pickup in pickups:
         if pickup.generator_params.preferred_location_category is LocationCategory.MAJOR or add_all_pickups:
@@ -285,7 +285,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
                 starting_state.resources, game, configuration.standard_pickup_configuration
             )
 
-        static_resources = ResourceCollection.with_database(game.resource_database)
+        static_resources = game.create_resource_collection()
         static_resources.add_resource_gain(
             self.trick_resources_for_configuration(configuration.trick_level, game.resource_database)
         )

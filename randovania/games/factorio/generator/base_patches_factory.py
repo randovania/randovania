@@ -3,7 +3,6 @@ from __future__ import annotations
 import typing
 from typing import TYPE_CHECKING
 
-from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.games.factorio.data_importer import data_parser
 from randovania.games.factorio.generator import recipes
 from randovania.games.factorio.generator.item_cost import BASIC_RESOURCES, cost_calculator
@@ -44,7 +43,7 @@ class FactorioBasePatchesFactory(BasePatchesFactory[FactorioConfiguration]):
         item_cost["rocket-part"].material /= 5
 
         # Get all tech that are present in the preset
-        collection = ResourceCollection.with_database(game.resource_database)
+        collection = game.create_resource_collection()
         for pickup in pool_creator.calculate_pool_results(configuration, game).all_pickups():
             collection.add_resource_gain(pickup.resource_gain(collection))
 

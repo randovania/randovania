@@ -7,11 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.1.0] - 2025-09-0?
 
-
+- Added: 7 Joke hints.
 - Fixed: Hidden Pickups are not shown anymore in the "Pickup Hint Features" tab of a game.
 
 ### AM2R
 
+- Added: 2 Joke hints.
 - Fixed: Joke hints are now always surrounded by asterisks.
 
 ### Metroid Dread
@@ -33,13 +34,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Flipper Room: The Morph Ball Launcher now connects to the door to Navigation Station and is trivial, instead ot connecting to the door to Elun Transport Access and requiring that the Flipper has been rotated.
 - Changed: Flipper Room: Spinning the Flipper with the ledge warp from below now connects from the door to Elun Transport Access instead of from the Tunnel to Spider Magnet Elevator. It is now also logical to perform the ledge warp from below when Transport Randomizer is disabled.
 
+##### Ferenia
+
+- Added: More ways to reach Space Jump Room Access from Underwater Bottom in Space Jump Room.
+
 ### Metroid: Samus Returns
 
 - Changed: In Multiworld, don't send items to the game while it's not in-game.
 
 ### Metroid Fusion
 
+- Added: 5 joke hints.
+
 #### Logic Database
+
+##### Main Deck:
+
+- Changed: Yakuza Arena: Going up to the exit now requires either Yakuza to be killed or Beginner Knowledge.
 
 ##### Sector 1 (SRX)
 
@@ -49,6 +60,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Sector 4 (AQA)
 
 - Fixed: Security Access - Fixed a trick video appearing incorrectly on the website.
+- Added: Breeding Tank - Added an Advanced Movement trick with Space Jump to cross the tank
+- Added: Breeding Tank - Added the Underwater Wall Jump trick videos
+
+##### Sector 6 (NOC)
+
+- Changed: Geron's Crossing: Going through the Super Missile Geron after defeating Varia Core-X now additionally requires Intermediate Knowledge.
+- Changed: Clogged Cavern: Going through the Speed Booster Blocks after defeating Varia Core-X now additionally requires Intermediate Knowledge.
 
 ### Metroid Prime
 
@@ -57,6 +75,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Tallon Overworld
 
 - Changed: Climbing Reactor Core with Bomb Jumps is now classified as Complex Bomb Jump(s) (Ludicrous).
+
+### Metroid Prime 2: Echoes
+
+- Added: 14 joke hints.
 
 ## [10.0.1] - 2025-08-03
 

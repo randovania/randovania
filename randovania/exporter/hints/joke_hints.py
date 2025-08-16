@@ -26,4 +26,11 @@ GENERIC_JOKE_HINTS = [
     "Are you enjoying your playthrough thus far?",
     "Maybe the true hints were the friends we made along the way.",
     "If you were hoping for a useful hint, then you got the short end of the stick.",
+    "You were expecting a useful hint, but it was me, a joke hint!",
+    "I wish you luck!",
+    "Posture check! Stretch your wrists, flex your fingers, and straighten your back.",
+    "It's fine to not finish all of your games. After all, if they're not fun, why bother?",
+    "By the time you finished reading this hint, you already could have been further ahead.",
+    "What is a hint? A miserable little pile of secrets!",
+    "They say that not all hints are useful.",
 ]
