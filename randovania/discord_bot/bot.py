@@ -3,7 +3,7 @@ import logging
 import discord
 
 import randovania
-from randovania.server.discord.randovania_cog import RandovaniaCog
+from randovania.discord_bot.randovania_cog import RandovaniaCog
 
 
 async def application_command_error(ctx: discord.ApplicationContext, error: discord.DiscordException):
@@ -29,9 +29,9 @@ class RandovaniaBot(discord.Bot):
 
         self.configuration = configuration
         self.add_listener(application_command_error, "on_application_command_error")
-        self.load_extension("randovania.server.discord.preset_lookup")
-        self.load_extension("randovania.server.discord.database_command")
-        self.load_extension("randovania.server.discord.faq_command")
+        self.load_extension("randovania.discord_bot.preset_lookup")
+        self.load_extension("randovania.discord_bot.database_command")
+        self.load_extension("randovania.discord_bot.faq_command")
 
     async def on_ready(self):
         for cog in self.cogs.values():
