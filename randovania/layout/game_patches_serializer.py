@@ -162,10 +162,17 @@ def _decode_pickup_assignment(
 
         node_identifier = NodeIdentifier.from_json(location["node_identifier"])
         node = region_list.typed_node_by_identifier(node_identifier, PickupNode)
+        pickup_index = PickupIndex(location["index"])
+        if node.pickup_index != pickup_index:
+            raise ValueError(
+                f"The location {node_identifier.as_string} is specified to have "
+                f"index {pickup_index} but it should instead be index {node.pickup_index}."
+            )
+
         pickup: PickupEntry | None
 
-        if node.pickup_index in initial_pickup_assignment:
-            pickup = initial_pickup_assignment[node.pickup_index]
+        if pickup_index in initial_pickup_assignment:
+            pickup = initial_pickup_assignment[pickup_index]
             if (pickup_name, target_player) != (pickup.name, player_index):
                 raise ValueError(f"{node_identifier.as_string} should be vanilla based on configuration")
 
@@ -175,7 +182,7 @@ def _decode_pickup_assignment(
             pickup = None
 
         if pickup is not None:
-            pickup_assignment[node.pickup_index] = PickupTarget(pickup, target_player)
+            pickup_assignment[pickup_index] = PickupTarget(pickup, target_player)
 
     return pickup_assignment
 
