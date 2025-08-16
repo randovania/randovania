@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.generator_reach import GeneratorReach
-    from randovania.resolver.state import State
+    from randovania.graph.state import State
 
     NodeT = typing.TypeVar("NodeT", bound=Node)
     ResourceNodeT = typing.TypeVar("ResourceNodeT", bound=ResourceNode)

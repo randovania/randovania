@@ -21,7 +21,8 @@ def test_possible_actions_no_resources():
     node_b = MagicMock(name="node_b")
     node_b.should_collect.return_value = False
     logic = MagicMock()
-    logic.game.region_list.all_nodes = [node_a, node_b]
+    logic.all_nodes = [node_a, node_b]
+    logic.graph = None
     node_a.node_index = 0
     node_b.node_index = 1
 
@@ -41,6 +42,7 @@ def test_possible_actions_no_resources():
 
 def test_possible_actions_with_event():
     logic = MagicMock()
+    logic.graph = None
     state = MagicMock()
 
     event = MagicMock(spec=EventNode, name="event node")
@@ -48,7 +50,7 @@ def test_possible_actions_with_event():
     type(event).is_resource_node = prop = PropertyMock(return_value=True)
     event.should_collect.return_value = True
 
-    logic.game.region_list.all_nodes = [event]
+    logic.all_nodes = [event]
     damage_state = MagicMock()
 
     # Run
