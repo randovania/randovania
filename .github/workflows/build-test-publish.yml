@@ -240,7 +240,7 @@ jobs:
         run: dist/randovania/randovania --version
 
       - name: executable test
-        run: dist/randovania/randovania --pytest --skip-gui-tests --skip-echo-tool --skip-resolver-tests --durations=100 --ignore=test/server --ignore=test/cli/commands/test_website.py --ignore=test/cli/commands/test_export_videos.py
+        run: dist/randovania/randovania --pytest --skip-gui-tests --skip-echo-tool --skip-resolver-tests --durations=100 --ignore=test/server --ignore=test/discord_bot --ignore=test/cli/commands/test_website.py --ignore=test/cli/commands/test_export_videos.py
 
 # TODO: this causes CI to hang
 #      - name: executable startup check
