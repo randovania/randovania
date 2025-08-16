@@ -20440,21 +20440,17 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "LedgeWarp",
-                                            "amount": 2,
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Lay Any Bomb"
-                                    },
-                                    {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Varia",
+                                            "type": "events",
+                                            "name": "CatarisLedgeWarpSetupOutsideDiffusionRoom",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -23355,6 +23351,27 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Ledge Warp Setup": {
+                            "type": "and",
+                            "data": {
+                                "comment": "https://youtu.be/Y3wgVEtidi0",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "LedgeWarp",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -24091,6 +24108,31 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Event - Ledge Warp Setup": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9607.69,
+                        "y": -4925.11,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "CatarisLedgeWarpSetupOutsideDiffusionRoom",
+                    "connections": {
+                        "Tunnel to Diffusion Beam Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
