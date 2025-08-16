@@ -17,7 +17,6 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.layout.layout_description import LayoutDescription
 from randovania.network_common import error, remote_inventory, signals
@@ -91,9 +90,11 @@ def _add_pickup_to_inventory(inventory: bytes, pickup: PickupEntry, game: Randov
     if isinstance(decoded_or_err, construct.ConstructError):
         return inventory
 
-    db = default_database.resource_database_for(game)
-    collection = ResourceCollection.with_database(db)
-    collection.add_resource_gain((db.get_item(name), quantity) for name, quantity in decoded_or_err.items())
+    game_view = game.game_description
+    collection = game_view.create_resource_collection()
+    collection.add_resource_gain(
+        (game_view.get_resource_database_view().get_item(name), quantity) for name, quantity in decoded_or_err.items()
+    )
     collection.add_resource_gain(pickup.resource_gain(collection))
 
     return remote_inventory.inventory_to_encoded_remote(Inventory.from_collection(collection))

@@ -216,7 +216,7 @@ def decode_single(
     starting_equipment: StartingEquipment
     if "items" in game_modifications["starting_equipment"]:
         starting_equipment = ResourceCollection.from_dict(
-            game.resource_database,
+            game,
             {
                 find_resource_info_with_long_name(game.resource_database.item, resource_name): quantity
                 for resource_name, quantity in game_modifications["starting_equipment"]["items"].items()
