@@ -94,8 +94,8 @@ class ResourceCollection:
             self.resource_bitmask -= mask
 
     @classmethod
-    def from_dict(cls, game: GameDatabaseView, resources: dict[ResourceInfo, int]) -> ResourceCollection:
-        result = game.create_resource_collection()
+    def from_dict(cls, view: GameDatabaseView, resources: dict[ResourceInfo, int]) -> ResourceCollection:
+        result = view.create_resource_collection()
         result.add_resource_gain(resources.items())
         return result
 
