@@ -27,6 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: A video for breaking the uppermost blob in Burenia Hub to Dairon with a pseudo-wave.
 
+##### Cataris
+
+- Fixed: An oversight where one would be expected to Ledge Warp out of the Diffusion Beam Room after collecting the Diffusion Beam, but in order to do so, one would need any bombs. And that bomb would be in that room.
+
 ##### Ghavoran
 
 - Changed: Flipper Room: The Morph Ball Launcher now connects to the door to Navigation Station and is trivial, instead ot connecting to the door to Elun Transport Access and requiring that the Flipper has been rotated.
