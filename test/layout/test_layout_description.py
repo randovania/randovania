@@ -33,11 +33,21 @@ def test_load_multiworld(multiworld_rdvgame: dict) -> None:
     result = LayoutDescription.from_json_dict(input_data)
     input_data["schema_version"] = description_migration.CURRENT_VERSION
 
-    # Assert
     as_json = result.as_json()
     del input_data["info"]
     del as_json["info"]
 
+    input_layouts = []
+    for mods in input_data["game_modifications"]:
+        input_layouts.append(mods.pop("locations"))
+    json_layouts = []
+    for mods in as_json["game_modifications"]:
+        json_layouts.append(mods.pop("locations"))
+
+    # Assert
+    assert len(input_layouts) == len(json_layouts)
+    for i in range(len(input_layouts)):
+        assert sorted(input_layouts[i], key=lambda d: d["index"]) == sorted(json_layouts[i], key=lambda d: d["index"])
     assert as_json == input_data
 
 

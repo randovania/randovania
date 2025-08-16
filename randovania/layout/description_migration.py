@@ -724,6 +724,54 @@ def _migrate_v36(data: dict) -> None:
         pickups.append("Arm Cannon")
 
 
+def _migrate_v37(data: dict) -> None:
+    assignment_re = re.compile(r"(.*) for Player (\d+)")
+
+    for game in data["game_modifications"]:
+        new_locations = []
+        pickup_to_node = migration_data.get_raw_data(RandovaniaGame(game["game"]))["pickup_index_to_node"]
+        for region, assignments in game["locations"].items():
+            for location, assignment in assignments.items():
+                assignment_match = assignment_re.match(assignment)
+                if assignment_match is not None:
+                    pickup = assignment_match.group(1)
+                    owner = int(assignment_match.group(2)) - 1
+                else:
+                    pickup = assignment
+                    owner = 0
+
+                node_identifier = f"{region}/{location}"
+
+                pickup_index = None
+                for index, region_and_area in pickup_to_node.items():
+                    if region_and_area["region"] == region and region_and_area["area_and_node"] == location:
+                        pickup_index = index
+                        break
+
+                # Samus Returns had one pickup naming migration after, and I didn't want to create
+                # a whole new migration field just because of that
+                if (
+                    game["game"] == "samus_returns"
+                    and region == "Area 4 Crystal Mines"
+                    and location == "Gamma+ Arena/Pickup (DNA)"
+                ):
+                    pickup_index = 198
+
+                assert pickup_index is not None, f"Unknown pickup index for {node_identifier}"
+
+                r, a, n = node_identifier.split("/")
+                new_locations.append(
+                    {
+                        "node_identifier": {"region": r, "area": a, "node": n},
+                        "index": int(pickup_index),
+                        "pickup": pickup,
+                        "owner": owner,
+                    }
+                )
+
+        game["locations"] = new_locations
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -761,6 +809,7 @@ _MIGRATIONS = [
     _migrate_v34,  # removal of in_dark_aether
     _migrate_v35,  # rename ETMs to Nothing
     _migrate_v36,  # am2r: repurpose power beam to arm cannon
+    _migrate_v37,  # Refactor how the "locations" field is saved.
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
