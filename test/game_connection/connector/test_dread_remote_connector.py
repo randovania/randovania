@@ -9,6 +9,7 @@ from randovania.game_connection.connector.dread_remote_connector import DreadRem
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
 from randovania.game_connection.executor.dread_executor import DreadExecutor
 from randovania.game_connection.executor.executor_to_connector_signals import ExecutorToConnectorSignals
+from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.network_common.remote_pickup import RemotePickup
@@ -93,6 +94,7 @@ async def test_new_inventory_received(connector: DreadRemoteConnector):
 async def test_new_received_pickups_received(connector: DreadRemoteConnector):
     connector.receive_remote_pickups = AsyncMock()
     connector.in_cooldown = True
+    connector.current_region = default_database.game_description_for(RandovaniaGame("dread")).region_list.regions[0]
 
     await connector.new_received_pickups_received("6")
     assert connector.received_pickups == 6
