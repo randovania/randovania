@@ -31,7 +31,8 @@ _NOTHING_PICKUP_NAME = "Nothing"
 def _pickup_assignment_to_pickup_locations(
     region_list: RegionList,
     pickup_assignment: PickupAssignment,
-    num_players: int,
+    current_world: int,
+    num_worlds: int,
 ) -> list[dict]:
     pickup_locations = []
 
@@ -42,13 +43,13 @@ def _pickup_assignment_to_pickup_locations(
         if node.pickup_index in pickup_assignment:
             target = pickup_assignment[node.pickup_index]
             item_name = target.pickup.name
-            if num_players > 1:
+            if num_worlds > 1:
                 target_world = target.player
             else:
                 target_world = 0
         else:
             item_name = _NOTHING_PICKUP_NAME
-            target_world = 0
+            target_world = current_world
 
         pickup_locations.append(
             {
@@ -72,11 +73,11 @@ def _find_area_with_teleporter(region_list: RegionList, teleporter: NodeIdentifi
     return region_list.area_by_area_location(teleporter.area_identifier)
 
 
-def serialize_single(player_index: int, num_players: int, patches: GamePatches) -> dict:
+def serialize_single(world_index: int, num_worlds: int, patches: GamePatches) -> dict:
     """
     Encodes a given GamePatches into a JSON-serializable dict.
-    :param player_index:
-    :param num_players:
+    :param world_index:
+    :param num_worlds:
     :param patches:
     :return:
     """
@@ -116,7 +117,9 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
             }
             for dock, weakness in patches.all_dock_weaknesses()
         },
-        "locations": _pickup_assignment_to_pickup_locations(region_list, patches.pickup_assignment, num_players),
+        "locations": _pickup_assignment_to_pickup_locations(
+            region_list, patches.pickup_assignment, world_index, num_worlds
+        ),
         "hints": {identifier.as_string: hint.as_json for identifier, hint in patches.hints.items()},
         "game_specific": patches.game_specific,
     }

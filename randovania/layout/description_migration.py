@@ -727,7 +727,7 @@ def _migrate_v36(data: dict) -> None:
 def _migrate_v37(data: dict) -> None:
     assignment_re = re.compile(r"(.*) for Player (\d+)")
 
-    for game in data["game_modifications"]:
+    for world, game in enumerate(data["game_modifications"]):
         new_locations = []
         pickup_to_node = migration_data.get_raw_data(RandovaniaGame(game["game"]))["pickup_index_to_node"]
         for region, assignments in game["locations"].items():
@@ -738,7 +738,7 @@ def _migrate_v37(data: dict) -> None:
                     owner = int(assignment_match.group(2)) - 1
                 else:
                     pickup = assignment
-                    owner = 0
+                    owner = world
 
                 node_identifier = f"{region}/{location}"
 
