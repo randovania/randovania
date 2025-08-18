@@ -2048,12 +2048,12 @@
                     }
                 }
             },
-            "Destroy Central Unit": {
-                "display_name": "Destroy Central Unit",
+            "Destroy Artaria Central Unit": {
+                "display_name": "Destroy Artaria Central Unit",
                 "requirement": {
                     "type": "and",
                     "data": {
-                        "comment": "TODO: Not enough space for Speed Booster without short charges - account for this",
+                        "comment": null,
                         "items": [
                             {
                                 "type": "or",
@@ -2067,6 +2067,49 @@
                                         {
                                             "type": "template",
                                             "data": "Shoot Missile"
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": "Shinespark",
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Speed",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": "SB Upgrade or Turnaround to charge: https://youtu.be/YVUiMU-zJ_s",
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "SpeedBoostUpgrade",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "Movement",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
                                         }
                                     ]
                                 }
@@ -2097,7 +2140,7 @@
                                                     {
                                                         "type": "or",
                                                         "data": {
-                                                            "comment": null,
+                                                            "comment": "Core bobs up and down slightly, good movement can hit with only Screw Attack",
                                                             "items": [
                                                                 {
                                                                     "type": "template",
@@ -2106,6 +2149,959 @@
                                                                 {
                                                                     "type": "template",
                                                                     "data": "Simple IBJ"
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "Combat",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Missile"
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": "Shinespark: https://youtu.be/YVUiMU-zJ_s",
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Speed",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "SpeedBoostUpgrade",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "Movement",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Destroy Cataris/Dairon Central Unit": {
+                "display_name": "Destroy Cataris/Dairon Central Unit",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": "Requirement for destroying the shell",
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Charge Beam"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Missile"
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": "Shinespark",
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Speed",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": "Requirement for destroying the core",
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Beam"
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Screw",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": "Core bobs up and down slightly, good movement can hit with only Screw Attack",
+                                                            "items": [
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Use Spin Boost"
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Simple IBJ"
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "Combat",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Missile"
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": "Shinespark: https://youtu.be/YVUiMU-zJ_s",
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Speed",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "Movement",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "SpeedBoostUpgrade",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Destroy Ghavoran Central Unit": {
+                "display_name": "Destroy Ghavoran Central Unit",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": "Requirement for destroying the shell",
+                                    "items": [
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Charge",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Beam Damage 75"
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Combat",
+                                                                                    "amount": 1,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Beam Damage 120"
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Shoot Missile"
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "Combat",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Shoot Super Missile"
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Shoot Ice Missile"
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Shoot Storm Missile"
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": "Shinespark",
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Speed",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": "Requirement for destroying the core",
+                                    "items": [
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Shoot Beam"
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "Combat",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Beam Damage 75"
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Screw",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": "Core bobs up and down slightly, good movement can hit with only Screw Attack",
+                                                            "items": [
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Use Spin Boost"
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Simple IBJ"
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "Combat",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Shoot Missile"
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "Combat",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Shoot Super Missile"
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Shoot Ice Missile"
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Shoot Storm Missile"
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": "Shinespark: https://youtu.be/YVUiMU-zJ_s",
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Speed",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "Movement",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "SpeedBoostUpgrade",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Destroy Ferenia Central Unit": {
+                "display_name": "Destroy Ferenia Central Unit",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": "Requirement for destroying the shell",
+                                    "items": [
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Charge",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Beam Damage 75"
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Combat",
+                                                                                    "amount": 2,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Beam Damage 120"
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Combat",
+                                                                                    "amount": 1,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Beam Damage 240"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "Combat",
+                                                                        "amount": 3,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Shoot Missile"
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "Combat",
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Shoot Super Missile"
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Combat",
+                                                                                    "amount": 1,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Shoot Ice Missile"
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Combat",
+                                                                                    "amount": 1,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Shoot Storm Missile"
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Shoot Super Ice Missile"
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": "Shinespark",
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Speed",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": "Requirement for destroying the core",
+                                    "items": [
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Shoot Beam"
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Combat",
+                                                                                    "amount": 3,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Combat",
+                                                                                    "amount": 2,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Beam Damage 75"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Combat",
+                                                                                    "amount": 1,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Beam Damage 120"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Beam Damage 240"
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Screw",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": "Core bobs up and down slightly, good movement can hit with only Screw Attack",
+                                                            "items": [
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Use Spin Boost"
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Simple IBJ"
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "Combat",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Shoot Missile"
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "Combat",
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Shoot Super Missile"
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Combat",
+                                                                                    "amount": 1,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Shoot Ice Missile"
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Combat",
+                                                                                    "amount": 1,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Shoot Storm Missile"
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Shoot Super Ice Missile"
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": "Shinespark: https://youtu.be/YVUiMU-zJ_s",
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Speed",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "Movement",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "SpeedBoostUpgrade",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
                                                                 }
                                                             ]
                                                         }
@@ -6895,143 +7891,7 @@
         }
     },
     "hint_feature_database": {},
-    "used_trick_levels": {
-        "Knowledge": [
-            1,
-            2,
-            3
-        ],
-        "FlashSkip": [
-            1,
-            2
-        ],
-        "IBJ": [
-            1,
-            2,
-            3,
-            4,
-            5
-        ],
-        "Pseudo": [
-            1,
-            2,
-            3
-        ],
-        "Speedbooster": [
-            1,
-            2,
-            3,
-            4
-        ],
-        "FrozenEnemy": [
-            1,
-            2,
-            3,
-            4
-        ],
-        "DBoost": [
-            1,
-            2,
-            3
-        ],
-        "TunnelSlope": [
-            1,
-            2,
-            3,
-            4
-        ],
-        "GrappleMovement": [
-            1,
-            2,
-            3
-        ],
-        "Walljump": [
-            1,
-            2,
-            3
-        ],
-        "SWJ": [
-            2,
-            3,
-            4
-        ],
-        "Movement": [
-            1,
-            2,
-            3,
-            5
-        ],
-        "Slide": [
-            1,
-            2,
-            3
-        ],
-        "SlopeClimb": [
-            1,
-            2,
-            3,
-            4
-        ],
-        "DBJ": [
-            1,
-            2,
-            3,
-            4,
-            5
-        ],
-        "Combat": [
-            1,
-            2,
-            3,
-            4,
-            5
-        ],
-        "Suitless": [
-            1,
-            2,
-            3
-        ],
-        "WBJ": [
-            1,
-            2
-        ],
-        "DiffusionAbuse": [
-            1,
-            2,
-            3,
-            5
-        ],
-        "ShortBoost": [
-            2,
-            4
-        ],
-        "WSJ": [
-            1,
-            2,
-            3
-        ],
-        "RGrapple": [
-            1
-        ],
-        "CrossSkip": [
-            2,
-            3,
-            4
-        ],
-        "CBL": [
-            1,
-            2,
-            3
-        ],
-        "LedgeWarp": [
-            2
-        ],
-        "FloorClip": [
-            2,
-            3,
-            4
-        ]
-    },
+    "used_trick_levels": null,
     "flatten_to_set_on_patch": false,
     "regions": [
         "Artaria.json",
