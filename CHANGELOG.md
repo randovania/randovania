@@ -77,7 +77,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Climbing Reactor Core with Bomb Jumps is now classified as Complex Bomb Jump(s) (Ludicrous).
 
-### Metroid Prime 2 Echoes
+### Metroid Prime 2: Echoes
 
 - Added: 14 joke hints.
 
