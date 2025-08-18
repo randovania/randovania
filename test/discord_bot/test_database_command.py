@@ -7,8 +7,7 @@ from unittest.mock import ANY, AsyncMock, MagicMock, call
 
 import discord
 
-from randovania.game.game_enum import RandovaniaGame
-from randovania.server.discord.database_command import (
+from randovania.discord_bot.database_command import (
     AreaWidget,
     DatabaseCommandCog,
     SelectAreaItem,
@@ -16,6 +15,7 @@ from randovania.server.discord.database_command import (
     SelectSplitRegionItem,
     SplitRegion,
 )
+from randovania.game.game_enum import RandovaniaGame
 
 
 async def test_add_commands():

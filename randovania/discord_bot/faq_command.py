@@ -1,9 +1,9 @@
 import discord
 
+from randovania.discord_bot.bot import RandovaniaBot
+from randovania.discord_bot.randovania_cog import RandovaniaCog
 from randovania.game.game_enum import RandovaniaGame
 from randovania.lib import enum_lib
-from randovania.server.discord.bot import RandovaniaBot
-from randovania.server.discord.randovania_cog import RandovaniaCog
 
 
 async def game_faq_entry(context: discord.ApplicationContext, question):

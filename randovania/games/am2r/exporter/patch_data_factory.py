@@ -403,7 +403,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
             if not shuffled_hints:
                 joke = rng.choice(joke_hints)
                 joke_hints.remove(joke)
-                shuffled_hints = [hint_namer.format_joke(joke, True)]
+                shuffled_hints = [hint_namer.format_joke(f"*{joke}*", True)]
             septogg_hints[f"septogg_a{i}"] = gm_newline.join(sorted(shuffled_hints, key=_sort_list_by_region))
 
         ice_hint = {}
