@@ -28,12 +28,12 @@ if typing.TYPE_CHECKING:
 _NOTHING_PICKUP_NAME = "Nothing"
 
 
-def _pickup_assignment_to_item_locations(
+def _pickup_assignment_to_pickup_locations(
     region_list: RegionList,
     pickup_assignment: PickupAssignment,
     num_players: int,
 ) -> list[dict]:
-    items_locations = []
+    pickup_locations = []
 
     for region, area, node in region_list.all_regions_areas_nodes:
         if not node.is_resource_node or not isinstance(node, PickupNode):
@@ -43,24 +43,24 @@ def _pickup_assignment_to_item_locations(
             target = pickup_assignment[node.pickup_index]
             item_name = target.pickup.name
             if num_players > 1:
-                owner = target.player
+                target_world = target.player
             else:
-                owner = 0
+                target_world = 0
         else:
             item_name = _NOTHING_PICKUP_NAME
-            owner = 0
+            target_world = 0
 
-        items_locations.append(
+        pickup_locations.append(
             {
                 "node_identifier": node.identifier.as_json,
                 "index": node.pickup_index.index,
                 "pickup": item_name,
-                "owner": owner,
+                "owner": target_world,
             }
         )
 
     return sorted(
-        items_locations,
+        pickup_locations,
         key=lambda d: (
             d["node_identifier"]["region"],
             f"{d['node_identifier']['area']}/{d['node_identifier']['node']}",
@@ -116,7 +116,7 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
             }
             for dock, weakness in patches.all_dock_weaknesses()
         },
-        "locations": _pickup_assignment_to_item_locations(region_list, patches.pickup_assignment, num_players),
+        "locations": _pickup_assignment_to_pickup_locations(region_list, patches.pickup_assignment, num_players),
         "hints": {identifier.as_string: hint.as_json for identifier, hint in patches.hints.items()},
         "game_specific": patches.game_specific,
     }
@@ -158,14 +158,13 @@ def _decode_pickup_assignment(
         if pickup_name == _NOTHING_PICKUP_NAME:
             continue
 
-        target_player = location["owner"]
+        target_world = location["owner"]
 
-        node_identifier = NodeIdentifier.from_json(location["node_identifier"])
-        node = region_list.typed_node_by_identifier(node_identifier, PickupNode)
         pickup_index = PickupIndex(location["index"])
-        if node.pickup_index != pickup_index:
+        node = region_list.node_from_pickup_index(pickup_index)
+        if node.identifier.as_json != location["node_identifier"]:
             raise ValueError(
-                f"The location {node_identifier.as_string} is specified to have "
+                f"The location {node.identifier.as_string} is specified to have "
                 f"index {pickup_index} but it should instead be index {node.pickup_index}."
             )
 
@@ -173,16 +172,18 @@ def _decode_pickup_assignment(
 
         if pickup_index in initial_pickup_assignment:
             pickup = initial_pickup_assignment[pickup_index]
-            if (pickup_name, target_player) != (pickup.name, player_index):
-                raise ValueError(f"{node_identifier.as_string} should be vanilla based on configuration")
+            if (pickup_name, target_world) != (pickup.name, player_index):
+                raise ValueError(f"{node.identifier.as_string} should be vanilla based on configuration")
 
         elif pickup_name != _NOTHING_PICKUP_NAME:
-            pickup = _get_pickup_from_pool(all_pools[target_player].to_place, pickup_name)
+            pickup = _get_pickup_from_pool(all_pools[target_world].to_place, pickup_name)
         else:
             pickup = None
 
         if pickup is not None:
-            pickup_assignment[pickup_index] = PickupTarget(pickup, target_player)
+            if pickup_index in pickup_assignment:
+                raise ValueError(f"Duplicate entries for pickup index {pickup_index.index}.")
+            pickup_assignment[pickup_index] = PickupTarget(pickup, target_world)
 
     return pickup_assignment
 
