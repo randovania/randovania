@@ -37,7 +37,7 @@ class Ui_PresetFusionPatches(object):
         self.scroll_area.setWidgetResizable(True)
         self.scroll_contents = QWidget()
         self.scroll_contents.setObjectName(u"scroll_contents")
-        self.scroll_contents.setGeometry(QRect(0, 0, 709, 422))
+        self.scroll_contents.setGeometry(QRect(0, 0, 709, 703))
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -75,7 +75,7 @@ class Ui_PresetFusionPatches(object):
         self.etank_layout.setContentsMargins(-1, 0, -1, -1)
         self.etank_capacity_label = QLabel(self.energy_group)
         self.etank_capacity_label.setObjectName(u"etank_capacity_label")
-        self.etank_capacity_label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.etank_capacity_label.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter)
 
         self.etank_layout.addWidget(self.etank_capacity_label)
 
@@ -176,8 +176,26 @@ class Ui_PresetFusionPatches(object):
 "While logic will respect this value, only the original value (100) has been tested.", None))
         self.etank_capacity_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Energy per tank:", None))
         self.room_group.setTitle(QCoreApplication.translate("PresetFusionPatches", u"Room Design", None))
-        self.anti_softlock_check.setText(QCoreApplication.translate("PresetFusionPatches", u"Enable Anti-Softlock Room Edits", None))
-        self.anti_softlock_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Enabling this will modify certain rooms to prevent potential softlocks for the player.", None))
+        self.anti_softlock_check.setText(QCoreApplication.translate("PresetFusionPatches", u"Enable Room Edits", None))
+        self.anti_softlock_label.setText(QCoreApplication.translate("PresetFusionPatches", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Noto Sans'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Enabling this will modify the following rooms to allow the player to leave more easily and give more diverse seed generation.<br /><br />Sector 2:</p>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\">\n"
+"<li style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Ripper Towe"
+                        "r: The crumble block in the drop-down tunnel is raised one block.</li>\n"
+"<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Cultivation Station: The bomb block above the item changed to a shot block.</li>\n"
+"<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Crumble City: The leftmost shot block in the morph tunnel was changed to a crumble block.</li></ul>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br />Sector 4:</p>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\">\n"
+"<li style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Security Bypass: A bomb block at the bottom of the room was changed to a non-reforming shot block, preventing you from entering a morph "
+                        "tunnel without bombs to get back out.</li></ul>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.gameplay_group.setTitle(QCoreApplication.translate("PresetFusionPatches", u"Other", None))
         self.instant_transitions_check.setText(QCoreApplication.translate("PresetFusionPatches", u"Enable Instant Hatch Transitions", None))
         self.instant_transitions_label.setText(QCoreApplication.translate("PresetFusionPatches", u"<html><head/><body><p>Enabling this will skip the transition animation for hatches.</p></body></html>", None))
