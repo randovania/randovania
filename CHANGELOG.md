@@ -46,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Fusion
 
 - Added: 5 joke hints.
+- Changed: Anti-Softlock option under the Game Modifications -> Gameplay tab in the preset settings was changed to "Room Edits" and now includes an explanation and list of changes the option provides.
 
 #### Logic Database
 
