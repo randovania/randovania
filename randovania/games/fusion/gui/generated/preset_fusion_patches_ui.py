@@ -37,7 +37,7 @@ class Ui_PresetFusionPatches(object):
         self.scroll_area.setWidgetResizable(True)
         self.scroll_contents = QWidget()
         self.scroll_contents.setObjectName(u"scroll_contents")
-        self.scroll_contents.setGeometry(QRect(0, 0, 709, 703))
+        self.scroll_contents.setGeometry(QRect(0, 0, 709, 667))
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -193,9 +193,7 @@ class Ui_PresetFusionPatches(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br />Sector 4:</p>\n"
 "<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\">\n"
 "<li style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Security Bypass: A bomb block at the bottom of the room was changed to a non-reforming shot block, preventing you from entering a morph "
-                        "tunnel without bombs to get back out.</li></ul>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+                        "tunnel without bombs to get back out.</li></ul></body></html>", None))
         self.gameplay_group.setTitle(QCoreApplication.translate("PresetFusionPatches", u"Other", None))
         self.instant_transitions_check.setText(QCoreApplication.translate("PresetFusionPatches", u"Enable Instant Hatch Transitions", None))
         self.instant_transitions_label.setText(QCoreApplication.translate("PresetFusionPatches", u"<html><head/><body><p>Enabling this will skip the transition animation for hatches.</p></body></html>", None))
