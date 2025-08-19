@@ -2,11 +2,9 @@
 requires = [
     "setuptools>=64",
     "setuptools_scm>=8",
-    "pyqt-distutils>=0.7.3",
     "wheel>=0.37.0",
     "dulwich",
     "randovania-scm-version-schema",
-    "PySide6-Essentials>=6.5",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -22,12 +20,12 @@ classifiers = [
     "Environment :: Win32 (MS Windows)",
     "Environment :: X11 Applications :: Qt",
     "Intended Audience :: End Users/Desktop",
-    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.12",
     "Topic :: Games/Entertainment",
 ]
 requires-python = ">=3.12"
+license = "GPL-3.0-or-later"
 dynamic = ["version"]
 
 dependencies = [
@@ -76,7 +74,7 @@ dependencies = [
 [project.optional-dependencies]
 exporters = [
     # AM2R
-    "am2r-yams>=2.8.1",
+    "am2r-yams>=2.8.2",
 
     # Cave Story
     "cave-story-randomizer>=2.4.2",
@@ -86,10 +84,10 @@ exporters = [
     "factorio-randovania-mod>=0.8.0",
 
     # Metroid Dread
-    "open-dread-rando>=2.16.0",
+    "open-dread-rando>=2.17.0",
 
     # Metroid fusion
-    "mars-patcher>=0.5.0",
+    "mars-patcher>=0.6.2",
 
     # Metroid Planets
     "planets-yapr>=1.0.0",
@@ -107,7 +105,7 @@ exporters = [
     "mp2hudcolor>=1.0.10",
 
     # Metroid: Samus Returns
-    "open-samus-returns-rando>=3.2.0",
+    "open-samus-returns-rando>=3.2.1",
 ]
 
 gui = [
@@ -137,10 +135,10 @@ server = [
     "requests-oauthlib",
     "cachetools",  # for TTLCache
 
-    "py-cord>=2.3.1",  # for randovania/server/discord; 2.3.1+ is needed for Python 3.11
+    "py-cord>=2.3.1",  # for randovania/discord_bot; 2.3.1+ is needed for Python 3.11
     "audioop-lts; python_version>='3.13'",  # for py-cord
-    "Pillow>=9.0.0",  # for randovania/server/discord/database_command
-    "graphviz",  # for randovania/server/discord/database_command
+    "Pillow>=9.0.0",  # for randovania/discord_bot/database_command
+    "graphviz",  # for randovania/discord_bot/database_command
 ]
 
 test = [
@@ -204,7 +202,10 @@ git_describe_command = [
 
 [tool.ruff]
 line-length = 120
-target-version = "py311"
+
+extend-exclude = [
+    "*_ui.py",
+]
 
 [tool.ruff.lint]
 select = [
@@ -230,6 +231,8 @@ extend-ignore = [
     "ISC001",  # may cause conflicts with formatter
     "PLW0603",  # we use some globals here and there
     "PLW2901",  # TODO: should actually fix these
+    "PLC0415",  # we explicitly use the import within a function to postpone the loading of a module
+    
 ]
 
 [tool.ruff.lint.isort]

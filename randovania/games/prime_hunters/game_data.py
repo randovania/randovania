@@ -35,7 +35,7 @@ def _gui() -> randovania.game.gui.GameGui:
         cosmetic_dialog=gui.HuntersCosmeticPatchesDialog,
         export_dialog=gui.HuntersGameExportDialog,
         progressive_item_gui_tuples=(),
-        spoiler_visualizer=(HintDetailsTab,),
+        spoiler_visualizer=(HintDetailsTab, gui.HuntersTeleporterDetailsTab),
     )
 
 

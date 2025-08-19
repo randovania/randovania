@@ -15,8 +15,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.dock import DockType
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
-    from randovania.game_description.db.region_list import RegionList
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import TeleporterConnection
 
 
@@ -154,32 +153,31 @@ def one_way_teleporter_connections(
 
 
 def create_teleporter_database(
-    region_list: RegionList, all_teleporters: list[NodeIdentifier], allowed_dock_types: list[DockType]
+    view: GameDatabaseView, all_teleporters: list[NodeIdentifier], allowed_dock_types: list[DockType]
 ) -> tuple[TeleporterHelper, ...]:
     """
     Creates a tuple of Teleporter objects, exclude those that belongs to one of the areas provided.
-    :param region_list:
+    :param view:
     :param all_teleporters: Set of teleporters to use
+    :param allowed_dock_types:
     :return:
     """
     all_helpers = [
         TeleporterHelper(node.identifier, node.default_connection)
-        for region, area, node in region_list.all_regions_areas_nodes
-        if isinstance(node, DockNode) and node.dock_type in allowed_dock_types
+        for region, area, node in view.iterate_nodes_of_type(DockNode)
+        if node.dock_type in allowed_dock_types
     ]
     return tuple(helper for helper in all_helpers if helper.teleporter in all_teleporters)
 
 
 def get_dock_connections_assignment_for_teleporter(
-    teleporters: TeleporterConfiguration, game: GameDescription, teleporter_connection: TeleporterConnection
+    teleporters: TeleporterConfiguration, game: GameDatabaseView, teleporter_connection: TeleporterConnection
 ) -> list[tuple[DockNode, Node]]:
-    region_list = game.region_list
-
     for teleporter, destination in teleporters.static_teleporters.items():
         teleporter_connection[teleporter] = destination
 
     assignment = [
-        (region_list.typed_node_by_identifier(identifier, DockNode), region_list.node_by_identifier(target))
+        (game.typed_node_by_identifier(identifier, DockNode), game.node_by_identifier(target))
         for identifier, target in teleporter_connection.items()
     ]
 
@@ -187,17 +185,18 @@ def get_dock_connections_assignment_for_teleporter(
 
 
 def get_teleporter_connections(
-    teleporters: TeleporterConfiguration, game: GameDescription, rng: Random
+    teleporters: TeleporterConfiguration, game: GameDatabaseView, rng: Random
 ) -> TeleporterConnection:
-    region_list = game.region_list
     teleporter_connection: TeleporterConnection = {}
 
     if not teleporters.is_vanilla:
         if rng is None:
             raise MissingRng("Teleporter")
 
-        teleporter_dock_types = game.dock_weakness_database.all_teleporter_dock_types
-        teleporter_db = create_teleporter_database(region_list, teleporters.editable_teleporters, teleporter_dock_types)
+        teleporter_dock_types = [
+            dock_type for dock_type in game.get_dock_types() if dock_type.extra.get("is_teleporter", False)
+        ]
+        teleporter_db = create_teleporter_database(game, teleporters.editable_teleporters, teleporter_dock_types)
 
         # TODO: Error on unsupported modes
         if teleporters.mode in {TeleporterShuffleMode.TWO_WAY_RANDOMIZED, TeleporterShuffleMode.TWO_WAY_UNCHECKED}:

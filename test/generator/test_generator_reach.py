@@ -216,9 +216,10 @@ def test_database_collectable(
 
 @pytest.mark.parametrize("has_translator", [False, True])
 def test_basic_search_with_translator_gate(
-    has_translator: bool, echoes_resource_database, echoes_game_patches, default_filler_config
+    has_translator: bool, echoes_game_description, echoes_game_patches, default_filler_config
 ):
     # Setup
+    echoes_resource_database = echoes_game_description.resource_database
     scan_visor = echoes_resource_database.get_item("DarkVisor")
     nc = functools.partial(NodeIdentifier.create, "Test World", "Test Area A")
 
@@ -275,17 +276,18 @@ def test_basic_search_with_translator_gate(
     region_list.configurable_nodes[translator_identif] = ResourceRequirement.simple(scan_visor)
 
     initial_state = State(
-        ResourceCollection.from_dict(echoes_resource_database, {scan_visor: 1 if has_translator else 0}),
+        ResourceCollection.from_dict(echoes_game_description, {scan_visor: 1 if has_translator else 0}),
         (),
         EnergyTankDamageState(
             99,
             100,
-            game.resource_database,
-            game.region_list,
+            game.resource_database.get_item("EnergyTank"),
         ),
         node_a,
         echoes_game_patches,
         None,
+        game.resource_database,
+        game.region_list,
     )
 
     # Run

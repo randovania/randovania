@@ -5,7 +5,125 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [9.3.0] - 2025-07-0?
+## [10.1.0] - 2025-09-0?
+
+- Added: 7 Joke hints.
+- Fixed: Hidden Pickups are not shown anymore in the "Pickup Hint Features" tab of a game.
+
+### AM2R
+
+- Added: 2 Joke hints.
+- Fixed: Joke hints are now always surrounded by asterisks.
+- Changed: Renamed the "Misc" pickup category to "Bonus Upgrade".
+- Changed: Health Drops, Speed Booster Upgrades, Flashlight and Blindfolds are not hinted as an Expansion anymore.
+- Removed: Removed the "Key", "Energy Tank", "Morph Ball Related", "Beam Related" and "Missile Related" pickup categories from being hinted.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Fixed: It is now logical to get back to the lower door in Grapple Beam Room without Grapple Beam, making it logical to escape without Grapple Beam when doors are randomized.
+
+##### Burenia
+
+- Added: A video for breaking the uppermost blob in Burenia Hub to Dairon with a pseudo-wave.
+
+##### Cataris
+
+- Fixed: An oversight where one would be expected to Ledge Warp out of the Diffusion Beam Room after collecting the Diffusion Beam, but in order to do so, one would need any bombs. And that bomb would be in that room.
+
+##### Ghavoran
+
+- Changed: Flipper Room: The Morph Ball Launcher now connects to the door to Navigation Station and is trivial, instead ot connecting to the door to Elun Transport Access and requiring that the Flipper has been rotated.
+- Changed: Flipper Room: Spinning the Flipper with the ledge warp from below now connects from the door to Elun Transport Access instead of from the Tunnel to Spider Magnet Elevator. It is now also logical to perform the ledge warp from below when Transport Randomizer is disabled.
+
+##### Ferenia
+
+- Added: More ways to reach Space Jump Room Access from Underwater Bottom in Space Jump Room.
+
+### Metroid Fusion
+
+- Added: 5 joke hints.
+
+#### Logic Database
+
+##### Main Deck:
+
+- Changed: Yakuza Arena: Going up to the exit now requires either Yakuza to be killed or Beginner Knowledge.
+
+##### Sector 1 (SRX)
+
+- Fixed: Atmospheric Stabilizer Northeast - Fixed an edge case where a Shinespark trick from another room could be required even with obtaining Speedbooster in the same room
+- Changed: Atmospheric Stabilizer Northeast - Changed the Shinespark trick from Advanced to Expert
+
+##### Sector 4 (AQA)
+
+- Fixed: Security Access - Fixed a trick video appearing incorrectly on the website.
+- Added: Breeding Tank - Added an Advanced Movement trick with Space Jump to cross the tank
+- Added: Breeding Tank - Added the Underwater Wall Jump trick videos
+
+##### Sector 6 (NOC)
+
+- Changed: Geron's Crossing: Going through the Super Missile Geron after defeating Varia Core-X now additionally requires Intermediate Knowledge.
+- Changed: Clogged Cavern: Going through the Speed Booster Blocks after defeating Varia Core-X now additionally requires Intermediate Knowledge.
+
+### Metroid Prime
+
+#### Logic Database
+
+##### Tallon Overworld
+
+- Changed: Climbing Reactor Core with Bomb Jumps is now classified as Complex Bomb Jump(s) (Ludicrous).
+
+### Metroid Prime 2: Echoes
+
+- Added: 14 joke hints.
+
+#### Logic Database
+
+##### Dark Agon Wastes
+
+- Changed: Minor adjustment aimed at making Amorbis safer for the generator, no changes to requirements in practice.
+
+##### Sanctuary Fortress
+
+- Changed: Minor adjustment aimed at making Aerie safer for the generator, no changes to requirements in practice.
+
+## [10.0.1] - 2025-08-03
+
+### Generator
+
+- Fixed: Random transports in mode "One-way, anywhere", only supported in Metroid Prime and Metroid Prime 2 Echoes, being unable to generate.
+
+## [10.0.0] - 2025-08-01
+
+- **Major** - Added: Metroid Fusion has been added with full single player support. Includes random starting locations, some toggleable patches, and more.
+- Added: 10 more joke hints.
+- Changed: In the Multiworld Session window, renamed "Generate without spoiler" to "Generate for Race".
+- Fixed: An error when the computer shuts down unexpectedly or crashes during a multiworld that corrupts some files and prevents Randovania from starting.
+
+### Generator
+- Added: The generator will now check for the count of major pickups when major/minor split is enabled.
+
+### Metroid Dread
+- Fixed: A crash when attempting to fire Proto EMMI's Omega Blaster while having 0 maximum missiles.
+
+### Metroid: Samus Returns
+
+- Added: 10 more joke hints.
+- Fixed: Starting with extra Metroid DNA now counts toward the goal.
+- Fixed: Exported games will now take up to 80% less storage space when music shuffle is enabled.
+- Fixed: Shuffled music tracks now play at the correct volume in game.
+
+## [9.3.1] - 2025-07-05
+
+### AM2R
+
+- Fixed: Exporting games now work.
+
+## [9.3.0] - 2025-07-02
 
 ### Generator
 
@@ -27,6 +145,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Added: "Captain" is now included as a possible word for the seed hash.
+
+#### Logic Database
+
+##### Agon Wastes
+
+- Added: In Transport Center, added an Instant Morph + Bomb Space Jump (Advanced) method of climbing the half-pipe.
 
 ## [9.2.0] - 2025-06-02
 
