@@ -12,10 +12,20 @@
             "label": "Regenerate UI",
             "type": "shell",
             "linux": {
-                "command": "${command:python.interpreterPath} '${workspaceFolder}/tools/uic_wrapper.py' '${workspaceFolder}' --all-ui-files"
+                "command": "${command:python.interpreterPath} '${workspaceFolder}/tools/uic_wrapper.py' '${workspaceFolder}' --all-ui-files",
+                "options": {
+                    "env": {
+                        "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+                    }
+                }
             },
             "windows": {
-                "command": "& '${command:python.interpreterPath}' '${workspaceFolder}/tools/uic_wrapper.py' '${workspaceFolder}' --all-ui-files"
+                "command": "& '${command:python.interpreterPath}' '${workspaceFolder}/tools/uic_wrapper.py' '${workspaceFolder}' --all-ui-files",
+                "options": {
+                    "env": {
+                        "PATH": "${workspaceFolder}/.venv/Scripts;${env:PATH}"
+                    }
+                }
             }
         },
         {

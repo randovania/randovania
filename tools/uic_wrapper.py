@@ -11,7 +11,7 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--git-add", action="store_true")
     parser.add_argument("--all-ui-files", action="store_true")
@@ -32,7 +32,7 @@ def main():
 
     try:
 
-        def process_file(path: Path):
+        def process_file(path: Path) -> None:
             new_file = os.fspath(path.parents[1].joinpath("generated").joinpath(path.stem + "_ui.py"))
             new_paths.append(new_file)
             subprocess.check_call(
@@ -47,7 +47,7 @@ def main():
 
         with ThreadPoolExecutor() as executor:
             for path_to_process in paths:
-                executor.submit(process_file, path_to_process)
+                executor.submit(process_file, path_to_process).add_done_callback(lambda f: f.result())
 
         if args.git_add:
             subprocess.check_call(
