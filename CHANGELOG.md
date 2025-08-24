@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: 7 Joke hints.
 - Fixed: Hidden Pickups are not shown anymore in the "Pickup Hint Features" tab of a game.
+- Fixed: A crash in Flatpak, should the default language not be set up correctly.
 
 ### AM2R
 
