@@ -327,7 +327,10 @@ def _on_application_state_changed(new_state: QtCore.Qt.ApplicationState) -> None
 
 
 def run(args: argparse.Namespace) -> None:
-    locale.setlocale(locale.LC_ALL, "")  # use system's default locale
+    try:
+        locale.setlocale(locale.LC_ALL, "")  # Use system's default locale
+    except locale.Error:
+        locale.setlocale(locale.LC_ALL, "C")  # Flatpak can fail the above if not setup correctly
     QtWidgets.QApplication.setAttribute(QtCore.Qt.ApplicationAttribute.AA_EnableHighDpiScaling, True)
 
     is_preview = args.preview
