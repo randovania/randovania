@@ -37,7 +37,7 @@ class Ui_PresetFusionPatches(object):
         self.scroll_area.setWidgetResizable(True)
         self.scroll_contents = QWidget()
         self.scroll_contents.setObjectName(u"scroll_contents")
-        self.scroll_contents.setGeometry(QRect(0, 0, 709, 422))
+        self.scroll_contents.setGeometry(QRect(0, 0, 725, 408))
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -75,7 +75,7 @@ class Ui_PresetFusionPatches(object):
         self.etank_layout.setContentsMargins(-1, 0, -1, -1)
         self.etank_capacity_label = QLabel(self.energy_group)
         self.etank_capacity_label.setObjectName(u"etank_capacity_label")
-        self.etank_capacity_label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.etank_capacity_label.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter)
 
         self.etank_layout.addWidget(self.etank_capacity_label)
 
@@ -96,28 +96,6 @@ class Ui_PresetFusionPatches(object):
 
 
         self.scroll_layout.addWidget(self.energy_group)
-
-        self.room_group = QGroupBox(self.scroll_contents)
-        self.room_group.setObjectName(u"room_group")
-        self.unlock_layout = QVBoxLayout(self.room_group)
-        self.unlock_layout.setSpacing(6)
-        self.unlock_layout.setContentsMargins(11, 11, 11, 11)
-        self.unlock_layout.setObjectName(u"unlock_layout")
-        self.anti_softlock_check = QCheckBox(self.room_group)
-        self.anti_softlock_check.setObjectName(u"anti_softlock_check")
-
-        self.unlock_layout.addWidget(self.anti_softlock_check)
-
-        self.anti_softlock_label = QLabel(self.room_group)
-        self.anti_softlock_label.setObjectName(u"anti_softlock_label")
-        sizePolicy1.setHeightForWidth(self.anti_softlock_label.sizePolicy().hasHeightForWidth())
-        self.anti_softlock_label.setSizePolicy(sizePolicy1)
-        self.anti_softlock_label.setWordWrap(True)
-
-        self.unlock_layout.addWidget(self.anti_softlock_label)
-
-
-        self.scroll_layout.addWidget(self.room_group)
 
         self.gameplay_group = QGroupBox(self.scroll_contents)
         self.gameplay_group.setObjectName(u"gameplay_group")
@@ -175,9 +153,6 @@ class Ui_PresetFusionPatches(object):
         self.etank_description_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Configure how much energy each Energy Tank you collect will provide. Your base energy is always this quantity, minus 1.\n"
 "While logic will respect this value, only the original value (100) has been tested.", None))
         self.etank_capacity_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Energy per tank:", None))
-        self.room_group.setTitle(QCoreApplication.translate("PresetFusionPatches", u"Room Design", None))
-        self.anti_softlock_check.setText(QCoreApplication.translate("PresetFusionPatches", u"Enable Anti-Softlock Room Edits", None))
-        self.anti_softlock_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Enabling this will modify certain rooms to prevent potential softlocks for the player.", None))
         self.gameplay_group.setTitle(QCoreApplication.translate("PresetFusionPatches", u"Other", None))
         self.instant_transitions_check.setText(QCoreApplication.translate("PresetFusionPatches", u"Enable Instant Hatch Transitions", None))
         self.instant_transitions_label.setText(QCoreApplication.translate("PresetFusionPatches", u"<html><head/><body><p>Enabling this will skip the transition animation for hatches.</p></body></html>", None))

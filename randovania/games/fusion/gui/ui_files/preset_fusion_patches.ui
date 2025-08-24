@@ -43,8 +43,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>709</width>
-         <height>422</height>
+         <width>725</width>
+         <height>408</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -69,10 +69,10 @@
         <item>
          <spacer name="top_spacer">
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Orientation::Vertical</enum>
           </property>
           <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
+           <enum>QSizePolicy::Policy::Fixed</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -116,7 +116,7 @@ While logic will respect this value, only the original value (100) has been test
                 <string>Energy per tank:</string>
                </property>
                <property name="alignment">
-                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                </property>
               </widget>
              </item>
@@ -137,38 +137,6 @@ While logic will respect this value, only the original value (100) has been test
               </widget>
              </item>
             </layout>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="room_group">
-          <property name="title">
-           <string>Room Design</string>
-          </property>
-          <layout class="QVBoxLayout" name="unlock_layout">
-           <item>
-            <widget class="QCheckBox" name="anti_softlock_check">
-             <property name="text">
-              <string>Enable Anti-Softlock Room Edits</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="anti_softlock_label">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Enabling this will modify certain rooms to prevent potential softlocks for the player.</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
            </item>
           </layout>
          </widget>
@@ -231,7 +199,7 @@ While logic will respect this value, only the original value (100) has been test
         <item>
          <spacer name="verticalSpacer">
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Orientation::Vertical</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>

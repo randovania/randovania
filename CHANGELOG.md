@@ -47,6 +47,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Fusion
 
 - Added: 5 joke hints.
+- Removed: The "Anti-Softlock" option and instead made the following permanent changes:
+  - Sector 2 Ripper Tower: The Crumble Block is moved one tile up to make it easier to Screw Attack the Bomb Block.
+  - Sector 2 Crumble City: On the far left of the tunnel, the Shot Block has been changed into a Crumble Block.
+  - Sector 2 Cultivation Station: The Bomb Block leading into the space with the Zoros has been changed into a Shot Block.
+  - Sector 4 Reservoir East: The initial Bomb Block and the Shot Blocks leading up to the lower Pickup now never respawn.
+  - Sector 4 Security Bypass: Collision in the dead-end puzzles has been changed to allow not softlocking when exploring without Bombs or Power Bombs.
+  - Sector 6 Zozoro Wine Cellar: The Bomb Block that guards the item always respawns.
 
 #### Logic Database
 
@@ -59,8 +66,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Atmospheric Stabilizer Northeast - Fixed an edge case where a Shinespark trick from another room could be required even with obtaining Speedbooster in the same room
 - Changed: Atmospheric Stabilizer Northeast - Changed the Shinespark trick from Advanced to Expert
 
+##### Sector 2 (TRO)
+
+- Changed: Ripper Tower: Due to removal of the "Anti-Softlock" option, breaking the block with Screw Attack now requires Beginner Knowledge instead of Intermediate.
+
 ##### Sector 4 (AQA)
 
+- Changed: Reservoir East: Due to removal of the "Anti-Softlock" option, collecting the Pickup with only Power Bombs now always requires 2 Power Bombs.
 - Fixed: Security Access - Fixed a trick video appearing incorrectly on the website.
 - Added: Breeding Tank - Added an Advanced Movement trick with Space Jump to cross the tank
 - Added: Breeding Tank - Added the Underwater Wall Jump trick videos
