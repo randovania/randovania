@@ -6,6 +6,7 @@ import typing
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+import randovania
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.lib import json_lib
 
@@ -51,9 +52,20 @@ class FusionGameExporter(GameExporter[FusionGameExportParams]):
         randovania_meta: PatcherDataMeta,
     ) -> None:
         from mars_patcher import patcher
+        from mars_patcher.version import version as mars_patcher_version
+
+        # Add rdv and patcher version to patch data
+        text = [
+            f"Randovania  : {randovania.VERSION}",
+            f"MARS Patcher: {mars_patcher_version}",
+        ]
+        for index, line in enumerate(text):
+            if len(line) > 30:
+                text[index] = f"{line[0:27]}..."
+
+        patch_data["TitleText"] = [{"LineNum": index, "Text": line} for index, line in enumerate(text)]
 
         patcher.validate_patch_data(patch_data)
-
         try:
             patcher.patch(
                 os.fspath(export_params.input_path),

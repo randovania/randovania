@@ -5,7 +5,6 @@ import typing
 from collections import defaultdict
 from typing import TYPE_CHECKING, override
 
-import randovania
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
@@ -383,12 +382,6 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 )
         return elements
 
-    def _create_title_screen_text(self) -> list:
-        text = f"Randovania: {randovania.VERSION}"
-        if len(text) > 30:
-            text = f"{text[0:27]}..."
-        return [{"LineNum": 1, "Text": text}]
-
     def _create_credits_text(self) -> list:
         credits_array = []
         spoiler_dict = self._credits_elements()
@@ -484,7 +477,6 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "Palettes": self._create_palette(),
             "NavigationText": self._create_nav_text(),
             "NavStationLocks": self._create_nav_locks(),
-            "TitleText": self._create_title_screen_text(),
             "CreditsText": self._create_credits_text(),
             "DisableDemos": True,
             "RoomNames": self._create_room_names(),
