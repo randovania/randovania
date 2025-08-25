@@ -46,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
+- Added: The title screen will now display the Randovania and patcher version.
 - Added: 5 joke hints.
 - Removed: The "Anti-Softlock" option and instead made the following permanent changes:
   - Sector 2 Ripper Tower: The Crumble Block is moved one tile up to make it easier to Screw Attack the Bomb Block.
