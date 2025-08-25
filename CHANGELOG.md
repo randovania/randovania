@@ -78,6 +78,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Climbing Reactor Core with Bomb Jumps is now classified as Complex Bomb Jump(s) (Ludicrous).
 
+##### Magmoor Caverns
+
+- Changed: Twin Fires Tunnels - removed the L-Jump requirement for the Expert Bomb Jump towards Twin Fires.
+- Fixed: Twin Fire Tunnels - corrected the damage required to escape the lava with Bombs only towards Tallon Transport West from 60 to 110.
+
+
 ### Metroid Prime 2: Echoes
 
 - Added: 14 joke hints.
