@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Changed: In Multiworld, don't send items to the game while it's not in-game.
+
 #### Logic Database
 
 ##### Artaria
@@ -43,6 +45,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Ferenia
 
 - Added: More ways to reach Space Jump Room Access from Underwater Bottom in Space Jump Room.
+
+### Metroid: Samus Returns
+
+- Changed: In Multiworld, don't send items to the game while it's not in-game.
 
 ### Metroid Fusion
 
