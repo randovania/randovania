@@ -129,10 +129,10 @@ class PrimePresetDescriber(GamePresetDescriber):
             "Game Changes": [
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
-                    {
-                        "Missiles needs Launcher": "Missile Expansion",
-                        "Power Bomb needs Main": "Power Bomb Expansion",
-                    },
+                    [
+                        ("Missiles needs Launcher", "Missile Expansion", False),
+                        ("Power Bomb needs Main", "Power Bomb Expansion", False),
+                    ],
                 ),
                 {
                     "Warp to start": configuration.warp_to_start,

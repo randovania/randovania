@@ -224,22 +224,27 @@ class GamePresetDescriber:
         return ()
 
 
-def _require_majors_check(ammo_configuration: AmmoPickupConfiguration, ammo_names: list[str]) -> list[bool]:
-    result = [False] * len(ammo_names)
+def _require_majors_check(
+    ammo_configuration: AmmoPickupConfiguration, ammo_item_default_main_required: list[tuple[str, bool]]
+) -> list[bool]:
+    result = [False] * len(ammo_item_default_main_required)
 
-    name_index_mapping = {name: i for i, name in enumerate(ammo_names)}
+    name_index_mapping = {name: i for i, (name, default_required) in enumerate(ammo_item_default_main_required)}
 
     for ammo, state in ammo_configuration.pickups_state.items():
         if ammo.name in name_index_mapping:
-            result[name_index_mapping[ammo.name]] = state.requires_main_item
+            index = name_index_mapping[ammo.name]
+            result[index] = ammo_item_default_main_required[index][1] != state.requires_main_item
 
     return result
 
 
-def message_for_required_mains(ammo_configuration: AmmoPickupConfiguration, message_to_item: dict[str, str]) -> dict:
-    item_names = list(message_to_item.values())
-    main_required = _require_majors_check(ammo_configuration, item_names)
-    return dict(zip(message_to_item.keys(), main_required))
+def message_for_required_mains(
+    ammo_configuration: AmmoPickupConfiguration, item_main_required_mapping: list[tuple[str, str, bool]]
+) -> dict:
+    ammo_item_names = [(ammo_item, default_required) for _, ammo_item, default_required in item_main_required_mapping]
+    main_required = _require_majors_check(ammo_configuration, ammo_item_names)
+    return dict(zip((message for message, _, _ in item_main_required_mapping), main_required))
 
 
 def has_shuffled_item(configuration: StandardPickupConfiguration, item_name: str) -> bool:

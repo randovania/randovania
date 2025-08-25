@@ -42,9 +42,7 @@ class PlanetsZebethPresetDescriber(GamePresetDescriber):
             "Game Changes": [
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
-                    {
-                        "Missiles need Launcher": "Missile Expansion",
-                    },
+                    [("Missiles need Launcher", "Missile Expansion", False)],
                 ),
                 {f"Energy per Tank: {configuration.energy_per_tank}": configuration.energy_per_tank != 100},
             ],
