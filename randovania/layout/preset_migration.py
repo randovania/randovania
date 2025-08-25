@@ -1196,6 +1196,11 @@ def _migrate_v106(preset: dict, game: RandovaniaGame) -> None:
         preset["configuration"]["pre_place_phazon"] = False
 
 
+def _migrate_v107(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.FUSION:
+        preset["configuration"].pop("anti_softlock")
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1303,6 +1308,7 @@ _MIGRATIONS = [
     _migrate_v104,  # am2r add metroid lures
     _migrate_v105,  # am2r add arm cannon
     _migrate_v106,  # add pre-placement to prime
+    _migrate_v107,  # fusion remove anti-softlock
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
