@@ -352,7 +352,9 @@ def create_report(
         "item_order": {
             "average": {name: statistics.mean(orders) for name, orders in item_order.items()},
             "median": {name: int(statistics.median(orders)) for name, orders in item_order.items()},
-            "stdev": {name: statistics.stdev(orders) for name, orders in item_order.items()},
+            "stdev": {
+                name: statistics.stdev(orders) if len(orders) > 1 else None for name, orders in item_order.items()
+            },
             "orders": {
                 name: {element: orders.count(element) for element in set(orders)} for name, orders in item_order.items()
             },
