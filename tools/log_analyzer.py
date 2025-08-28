@@ -251,7 +251,12 @@ def create_report(
 
         count = 0
         for item in locations[location]:
-            if (item in progression_items) and ("artifact" not in item.lower()) and ("key" not in item.lower()):
+            item_without_owner = item.split("'s ")[-1]
+            if (
+                (item_without_owner in progression_items)
+                and ("artifact" not in item_without_owner.lower())
+                and ("key" not in item_without_owner.lower())
+            ):
                 count = count + locations[location][item]
         total_progression_item_count += count
         regions[region] += count
