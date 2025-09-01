@@ -49,4 +49,14 @@ MSR_JOKE_HINTS = GENERIC_JOKE_HINTS + [
         "Great!! You fulfiled your mission. It will revive peace in space.\n"
         "But, it may be invaded by the X-Parasites. Pray for a true peace in space!"
     ),
+    "Technically, SR-388 is a kingdom.",
+    "The Chozo will keep an Aeion you.",
+    "The Golden Temple is great for relaxation and contains many meditation rooms.",
+    "Chute-Leech Casserole and Paraby Pudding are only some examples of the cuisine this planet has to offer.",
+    "I am dearly missing my pet Flitts. Please report any knowledge of their whereabouts to me.",
+    "Please make sure to wear safety clothing when using teleporters.",
+    "Elevators are not equipped with music. You need to bring your own.",
+    "You can sometimes see creatures observing you from the background.",
+    "Have you paid a visit to Callisto the Mining Robot? Robots can get lonely too!",
+    "Samus Returns released on June 15th in 2017 for the Nintendo 3DS.",
 ]

@@ -31,6 +31,7 @@ if TYPE_CHECKING:
 
 class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeticPatches]):
     _placeholder_metroid_message = "placeholder metroid text"
+    _metroid_message_id = 56
     _lang_list = ["JapaneseKanji", "JapaneseHiragana", "English", "German", "French", "Italian", "Spanish"]
     _easter_egg_bob = 64
     _easter_egg_shiny = 1024
@@ -50,20 +51,25 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         for pickup in pickup_list:
             node = self.game.region_list.node_from_pickup_index(pickup.index)
             is_major = False
+            jingle = "Minor"
             if "source" in node.extra:
                 is_major = True
             if not pickup.is_for_remote_player and pickup.conditional_resources[0].resources:
-                resource = pickup.conditional_resources[0].resources[-1][0].extra["item"]
+                conditional_extras = pickup.conditional_resources[0].resources[-1][0].extra
+                resource = conditional_extras["item"]
+                jingle = conditional_extras.get("Jingle", "Minor")
             else:
                 resource = "None"
 
             text = pickup.collection_text[0]
             sprite = pickup.model.name
 
-            custom_message = {}
-            # Special case where we ignore metroid dna right now, because that needs more patcher work.
-            if text != self._placeholder_metroid_message:
-                custom_message = {"Languages": dict.fromkeys(self._lang_list, text), "Kind": "CustomMessage"}
+            item_message = {}
+            # Handles special case for infant metroids which use ASM to automatically determine message via a MessageID
+            if text == self._placeholder_metroid_message:
+                item_message = {"Kind": "MessageID", "MessageID": self._metroid_message_id}
+            else:
+                item_message = {"Kind": "CustomMessage", "Languages": dict.fromkeys(self._lang_list, text)}
 
             # Shiny easter eggs
             if (
@@ -76,14 +82,14 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     and self.rng.randint(0, self._easter_egg_bob) == 0
                 ):
                     sprite = "ShinyMissileTank"
-                    custom_message = {
+                    item_message = {
                         "Languages": dict.fromkeys(self._lang_list, "Bob acquired.\nHe says hi to you."),
                         "Kind": "CustomMessage",
                     }
 
                 if resource == "PowerBombTank" and self.rng.randint(0, self._easter_egg_shiny) == 0:
                     sprite = "ShinyPowerBombTank"
-                    custom_message = {
+                    item_message = {
                         "Languages": dict.fromkeys(self._lang_list, "Shiny Power Bomb Tank acquired."),
                         "Kind": "CustomMessage",
                     }
@@ -92,9 +98,10 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 major_pickup = {
                     "Source": node.extra["source"],
                     "Item": resource,
+                    "Jingle": jingle,
                 }
-                if custom_message:
-                    major_pickup["ItemMessages"] = custom_message
+                if item_message:
+                    major_pickup["ItemMessages"] = item_message
                 major_pickup_list.append(major_pickup)
             else:
                 minor_pickup = {
@@ -104,9 +111,10 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     "BlockY": node.extra["blocky"],
                     "Item": resource,
                     "ItemSprite": sprite,
+                    "Jingle": jingle,
                 }
-                if custom_message:
-                    minor_pickup["ItemMessages"] = custom_message
+                if item_message:
+                    minor_pickup["ItemMessages"] = item_message
                 minor_pickup_list.append(minor_pickup)
         pickup_map_dict = {"MajorLocations": major_pickup_list, "MinorLocations": minor_pickup_list}
         return pickup_map_dict
@@ -127,26 +135,18 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "Abilities": [],
             "SecurityLevels": [],
             "DownloadedMaps": [0, 1, 2, 3, 4, 5, 6],
+            "Missiles": 0,
+            "PowerBombs": 0,
         }
-        missile_launcher = next(
-            state
-            for defi, state in self.configuration.standard_pickup_configuration.pickups_state.items()
-            if defi.name == "Missile Launcher Data"
-        )
-        # Fusion always starts with launchers ammo, even if launcher is not a starting item
-        starting_dict["Missiles"] = missile_launcher.included_ammo[0]
-
-        pb_launcher = next(
-            state
-            for defi, state in self.configuration.standard_pickup_configuration.pickups_state.items()
-            if defi.name == "Power Bomb Data"
-        )
-        starting_dict["PowerBombs"] = pb_launcher.included_ammo[0]
 
         for item, quantity in self.patches.starting_resources().as_resource_gain():
             match item.extra["StartingItemCategory"]:
-                case "Missiles" | "PowerBombs" | "Metroids":
+                case "Metroids":
                     continue
+                case "Missiles":
+                    starting_dict["Missiles"] += quantity
+                case "PowerBombs":
+                    starting_dict["PowerBombs"] += quantity
                 case "Energy":
                     starting_dict["Energy"] += self.configuration.energy_per_tank * quantity
                 case "SecurityLevels":
@@ -160,9 +160,14 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
 
     def _create_tank_increments(self) -> dict:
         tank_dict = {}
-        for definition, state in self.patches.configuration.ammo_pickup_configuration.pickups_state.items():
-            tank_dict[definition.extra["TankIncrementName"]] = state.ammo_count[0]
+        for ammo_definition, ammo_state in self.patches.configuration.ammo_pickup_configuration.pickups_state.items():
+            tank_dict[ammo_definition.extra["TankIncrementName"]] = ammo_state.ammo_count[0]
         tank_dict["EnergyTank"] = self.configuration.energy_per_tank
+
+        for stand_definition, stand_state in self.configuration.standard_pickup_configuration.pickups_state.items():
+            if "LauncherIncrementName" in stand_definition.extra:
+                tank_dict[stand_definition.extra["LauncherIncrementName"]] = stand_state.included_ammo[0]
+
         return tank_dict
 
     def _create_door_locks(self) -> list[dict]:
@@ -195,10 +200,18 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     "HueMin": getattr(cosmetics, f"{attr_name}_hue_min"),
                     "HueMax": getattr(cosmetics, f"{attr_name}_hue_max"),
                 }
+            if getattr(cosmetics, f"enable_{attr_name}_palette") and getattr(
+                cosmetics, f"enable_{attr_name}_palette_override"
+            ):
+                palettes[palettes_key] = {
+                    "HueMin": getattr(cosmetics, f"{attr_name}_hue_override_min"),
+                    "HueMax": getattr(cosmetics, f"{attr_name}_hue_override_max"),
+                }
         palette_dict = {
             "Seed": self.description.get_seed_for_world(self.players_config.player_index),
             "Randomize": palettes,
             "ColorSpace": cosmetics.color_space.long_name,
+            "Symmetric": getattr(cosmetics, "enable_symmetric"),
         }
         return palette_dict
 
@@ -232,17 +245,67 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             )
 
         hints = {}
+        restricted_hint = ""
+        operations_hint = ""
+        artifact_locations = guaranteed_item_hint.find_locations_that_gives_items(
+            artifacts, self.description.all_patches, self.players_config.player_index
+        )
+        fusion_bosses = [
+            "Arachnus",
+            "Yakuza",
+            "Ridley",
+            "ChargeCoreX",
+            "Zazabi",
+            "Nettori",
+            "WideCoreX",
+            "Serris",
+            "Nightmare",
+            "MegaX",
+            "WaveCoreX",
+        ]
+        artifacts_on_bosses = [
+            resource
+            for resource, resource_locations in artifact_locations.items()
+            for _, resource_location in resource_locations
+            if self.game.region_list.node_from_pickup_index(resource_location.location).extra.get("source")
+            in fusion_bosses
+        ]
+
+        if metroid_precision != SpecificPickupHintMode.DISABLED:
+            # loop through all metroids and place ones on bosses on Operations Deck and the rest on Restricted Area
+            for metroid_resource, text in metroid_hint_mapping.items():
+                if "has no need to be located" in text:
+                    continue
+                if metroid_resource in artifacts_on_bosses:
+                    operations_hint = operations_hint + text + " "
+                else:
+                    restricted_hint = restricted_hint + text + " "
+            restricted_hint = restricted_hint.rstrip()
+            operations_hint = operations_hint.rstrip()
+
+            no_metroids_hint = "This terminal was unable to scan for any [COLOR=3]Metroids[/COLOR]."
+            # special handling when there's no Metroids to hint on either terminal
+            if not operations_hint:
+                operations_hint = no_metroids_hint
+            if not restricted_hint:
+                restricted_hint = no_metroids_hint
 
         for node in self.game.region_list.iterate_nodes_of_type(HintNode):
             hint_location = node.extra["hint_name"]
             if hint_location == "AuxiliaryPower" and charge_precision != SpecificPickupHintMode.DISABLED:
                 hints[hint_location] = " ".join([text for _, text in charge_hint_mapping.items()])
             elif hint_location == "RestrictedLabs" and metroid_precision != SpecificPickupHintMode.DISABLED:
-                hints[hint_location] = " ".join(
-                    [text for _, text in metroid_hint_mapping.items() if "has no need to be located" not in text]
+                hints[hint_location] = (
+                    restricted_hint
+                    if self.configuration.artifacts.placed_artifacts
+                    else "The Metroids are in captivity, there is no need to locate them."
                 )
-                if not self.configuration.artifacts.placed_artifacts:
-                    hints[hint_location] = "The Metroids are in captivity, there is no need to locate them."
+            elif hint_location == "OperationsDeck" and metroid_precision != SpecificPickupHintMode.DISABLED:
+                hints[hint_location] = (
+                    operations_hint
+                    if self.configuration.artifacts.placed_artifacts
+                    else "The Metroids are in captivity, there is no need to locate them."
+                )
             else:
                 hints[hint_location] = exporter.create_message_for_hint(
                     self.patches.hints[node.identifier],
@@ -265,7 +328,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             f"has discovered and destroyed a top secret {colorize_text(FusionColor.YELLOW, 'Metroid', True)} "
             f"breeding facility. It released {self.configuration.artifacts.placed_artifacts} "
             "infant Metroids into the station. "
-            f"Initial scans indicate that they are hiding around the B.S.L.. "
+            f"Initial scans indicate that they are hiding around the B.S.L. "
             f"Find and capture {self.configuration.artifacts.required_artifacts} of them, "
             "to lure out the SA-X. "
             "Then initiate the station's self-destruct sequence. "
@@ -342,7 +405,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         locks = {
             "MainDeckWest": "RED",
             "MainDeckEast": "BLUE",
-            "OperationsDeck": "GREY",
+            "OperationsDeck": "BLUE",
             "Sector1Entrance": "GREEN",
             "Sector2Entrance": "GREEN",
             "Sector3Entrance": "YELLOW",
@@ -350,7 +413,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "Sector5Entrance": "RED",
             "Sector6Entrance": "RED",
             "AuxiliaryPower": "OPEN",
-            "RestrictedLabs": "OPEN",
+            "RestrictedLabs": "RED",
         }
         return locks
 
@@ -387,7 +450,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
     def create_useless_pickup(self) -> PickupEntry:
         """Used for any location with no PickupEntry assigned to it."""
         return pickup_creator.create_nothing_pickup(
-            self.game.resource_database,
+            self.game.get_resource_database_view(),
             model_name="Empty",
         )
 
@@ -414,7 +477,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "CreditsText": self._create_credits_text(),
             "DisableDemos": True,
             "RoomNames": self._create_room_names(),
-            "AntiSoftlockRoomEdits": self.configuration.anti_softlock,
+            "AccessibilityPatches": True,
             "PowerBombsWithoutBombs": True,
             "SkipDoorTransitions": self.configuration.instant_transitions,
             "UnexploredMap": self.cosmetic_patches.starting_map,

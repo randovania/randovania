@@ -88,6 +88,8 @@ class PrimeConfiguration(BaseConfiguration):
     artifact_target: LayoutArtifactMode
     artifact_required: LayoutArtifactMode
     artifact_minimum_progression: int = dataclasses.field(metadata={"min": 0, "max": 99})
+    pre_place_artifact: bool
+    pre_place_phazon: bool
     heat_damage: float = dataclasses.field(metadata={"min": 0.1, "max": 99.9, "precision": 3.0})
     warp_to_start: bool
     damage_reduction: DamageReduction

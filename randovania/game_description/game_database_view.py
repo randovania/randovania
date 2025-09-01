@@ -41,6 +41,14 @@ class ResourceDatabaseView(ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def get_item_by_display_name(self, name: str) -> ItemResourceInfo:
+        """
+        Gets a ItemResourceInfo, using display name
+        Raises KeyError if it doesn't exist.
+        """
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def get_event(self, short_name: str) -> SimpleResourceInfo:
         """
         Gets a ResourceInfo of type EVENT, using internal name
@@ -121,6 +129,10 @@ class ResourceDatabaseViewProxy(ResourceDatabaseView):
     @override
     def get_item(self, short_name: str) -> ItemResourceInfo:
         return self._original.get_item(short_name)
+
+    @override
+    def get_item_by_display_name(self, name: str) -> ItemResourceInfo:
+        return self._original.get_item_by_display_name(name)
 
     @override
     def get_event(self, short_name: str) -> SimpleResourceInfo:
@@ -219,6 +231,16 @@ class GameDatabaseView(ABC):
         """
         List all available DockTypes
         """
+
+    @final
+    def find_dock_type_by_short_name(self, name: str) -> DockType:
+        """
+        Returns a DockType with the given short name, or raises KeyError if not found.
+        """
+        for dock_type in self.get_dock_types():
+            if dock_type.short_name == name:
+                return dock_type
+        raise KeyError(name)
 
     @abc.abstractmethod
     def get_dock_weakness(self, dock_type_name: str, weakness_name: str) -> DockWeakness:
