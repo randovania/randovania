@@ -36,9 +36,14 @@ def is_fusion_validator(path: Path | None) -> bool:
     if is_file_validator(path):
         return True
     assert path is not None
-    with path.open("rb") as file:
-        data = file.read()
-        md5_returned = hashlib.md5(data).hexdigest()
+    try:
+        with path.open("rb") as file:
+            data = file.read()
+            md5_returned = hashlib.md5(data).hexdigest()
+    except Exception:
+        # If any error during opening happens, suppress that and pretend its invalid,
+        # as otherwise it would cause the dialog to be inaccessible.
+        return True
     if md5_expected == md5_returned:
         return False
     else:
