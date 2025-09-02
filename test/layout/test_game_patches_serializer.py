@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import collections
 import dataclasses
 import typing
 import uuid
@@ -96,20 +95,25 @@ def patches_with_data(request, echoes_game_description, echoes_game_patches, ech
             f"{sf}/Aerie/Elevator to Aerie Transport Station": f"{sf}/Aerie Transport Station/Elevator to Aerie",
         },
         "dock_weakness": {},
-        "locations": {},
+        "locations": [],
         "hints": {},
         "game_specific": {},
     }
     patches = dataclasses.replace(echoes_game_patches, player_index=0)
 
-    locations = collections.defaultdict(dict)
+    locations = []
     for region, area, node in game.region_list.all_regions_areas_nodes:
         if node.is_resource_node and isinstance(node, PickupNode):
-            locations[region.name][f"{node.identifier.area}/{node.identifier.node}"] = (
-                game_patches_serializer._NOTHING_PICKUP_NAME
+            locations.append(
+                {
+                    "node_identifier": node.identifier.as_json,
+                    "index": node.pickup_index.index,
+                    "pickup": game_patches_serializer._NOTHING_PICKUP_NAME,
+                    "owner": 0,
+                }
             )
 
-    data["locations"] = {region: dict(sorted(locations[region].items())) for region in sorted(locations.keys())}
+    data["locations"] = locations
 
     def create_pickup(name, percentage=True):
         return pickup_creator.create_standard_pickup(
@@ -146,7 +150,7 @@ def patches_with_data(request, echoes_game_description, echoes_game_patches, ech
         pickup = create_pickup(pickup_name)
 
         patches = patches.assign_new_pickups([(PickupIndex(5), PickupTarget(pickup, 0))])
-        data["locations"]["Temple Grounds"]["Transport to Agon Wastes/Pickup (Missile)"] = pickup_name
+        data["locations"][4]["pickup"] = pickup_name
 
     if request.param.get("hint"):
         identifier, hint = request.param.get("hint")
@@ -165,9 +169,11 @@ def test_encode(patches_with_data):
     # Run
     encoded = game_patches_serializer.serialize_single(0, 1, patches)
 
+    expected_locations = expected.pop("locations")
+    encoded_locations = encoded.pop("locations")
+
     # Assert
-    for key, value in expected["locations"].items():
-        assert encoded["locations"][key] == value
+    assert sorted(expected_locations, key=lambda d: d["index"]) == sorted(encoded_locations, key=lambda d: d["index"])
     assert encoded == expected
 
 

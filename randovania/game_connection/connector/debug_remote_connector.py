@@ -3,15 +3,14 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.game_connection.connector.remote_connector import RemoteConnector
-from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory
-from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.lib.signal import RdvSignal
 
 if TYPE_CHECKING:
     import uuid
 
     from randovania.game.game_enum import RandovaniaGame
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.network_common.remote_pickup import RemotePickup
 
 
@@ -31,7 +30,7 @@ class DebugRemoteConnector(RemoteConnector):
         self._last_inventory_event = Inventory({})
 
         self.messages = []
-        self.item_collection = ResourceCollection.with_database(default_database.resource_database_for(game))
+        self.item_collection = game.game_description.create_resource_collection()
         self._last_remote_pickup = 0
 
     @property

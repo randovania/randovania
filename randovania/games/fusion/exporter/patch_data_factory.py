@@ -31,6 +31,7 @@ if TYPE_CHECKING:
 
 class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeticPatches]):
     _placeholder_metroid_message = "placeholder metroid text"
+    _metroid_message_id = 56
     _lang_list = ["JapaneseKanji", "JapaneseHiragana", "English", "German", "French", "Italian", "Spanish"]
     _easter_egg_bob = 64
     _easter_egg_shiny = 1024
@@ -51,14 +52,12 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             node = self.game.region_list.node_from_pickup_index(pickup.index)
             is_major = False
             jingle = "Minor"
-            message_id = None
             if "source" in node.extra:
                 is_major = True
             if not pickup.is_for_remote_player and pickup.conditional_resources[0].resources:
                 conditional_extras = pickup.conditional_resources[0].resources[-1][0].extra
                 resource = conditional_extras["item"]
                 jingle = conditional_extras.get("Jingle", "Minor")
-                message_id = conditional_extras.get("MessageID", None)
             else:
                 resource = "None"
 
@@ -67,12 +66,10 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
 
             item_message = {}
             # Handles special case for infant metroids which use ASM to automatically determine message via a MessageID
-            if text != self._placeholder_metroid_message:
-                item_message = {"Languages": dict.fromkeys(self._lang_list, text), "Kind": "CustomMessage"}
+            if text == self._placeholder_metroid_message:
+                item_message = {"Kind": "MessageID", "MessageID": self._metroid_message_id}
             else:
-                if message_id is None:
-                    raise ValueError("Suppossed to use a message id but none given?")
-                item_message = {"Kind": "MessageID", "MessageID": message_id}
+                item_message = {"Kind": "CustomMessage", "Languages": dict.fromkeys(self._lang_list, text)}
 
             # Shiny easter eggs
             if (
@@ -404,6 +401,13 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
 
         return credits_array
 
+    def _create_title_text(self) -> list:
+        elements = []
+        for line, word in enumerate(self.description.shareable_word_hash.split(), 12):
+            final_word = word if len(word) <= 30 else f"{word[0:27]}..."
+            elements.append({"LineNum": line, "Text": final_word.center(30)})
+        return elements
+
     def _create_nav_locks(self) -> dict:
         locks = {
             "MainDeckWest": "RED",
@@ -477,11 +481,11 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "Palettes": self._create_palette(),
             "NavigationText": self._create_nav_text(),
             "NavStationLocks": self._create_nav_locks(),
+            "TitleText": self._create_title_text(),
             "CreditsText": self._create_credits_text(),
             "DisableDemos": True,
             "RoomNames": self._create_room_names(),
             "AccessibilityPatches": True,
-            "AntiSoftlockRoomEdits": self.configuration.anti_softlock,
             "PowerBombsWithoutBombs": True,
             "SkipDoorTransitions": self.configuration.instant_transitions,
             "UnexploredMap": self.cosmetic_patches.starting_map,

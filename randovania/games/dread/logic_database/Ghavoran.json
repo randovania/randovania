@@ -2721,7 +2721,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Guarding against the generator taking this connection and being stuck when no items would help.",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2786,7 +2786,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Taking the Spider Elevator could be the required path to the Super Missile Area. Doing the Ledge Warp cuts off that path permantently.",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2862,7 +2862,7 @@
                         "Tunnel to Spider Magnet Elevator": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "This connection would always lead to an incompletable game in non Transport Randomizer.",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2880,6 +2880,87 @@
                                             "name": "Teleporters",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Super Missile Rotatable with Ledge Warp": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "LedgeWarp",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "This connection is required to start in Elun when not using Transport Randomizer.",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "Teleporters",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Taking the Spider Elevator could be the required path to the Super Missile Area. Doing the Ledge Warp cuts off that path permantently.",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "GhavoranSupersAreaAccess",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "HighDanger",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -3008,13 +3089,11 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elun Transport Access": {
-                            "type": "resource",
+                        "Door to Navigation Station": {
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "GhavoranSupersRotatable",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -3049,7 +3128,7 @@
                         "Door to Elun Transport Access": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "When not using Transport Randomizer it is not relevant to go back.",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -3101,68 +3180,20 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "events",
-                                                        "name": "GhavoranSupersRotatable",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Super Missile Rotatable with Ledge Warp": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "LedgeWarp",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Knowledge",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "GhavoranSupersAreaAccess",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "HighDanger",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "Having a connection back to the Event Node after taking the event makes the event less dangerous",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "GhavoranSupersRotatable",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]

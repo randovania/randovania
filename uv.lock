@@ -1,5 +1,5 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = ">=3.12"
 resolution-markers = [
     "python_full_version >= '3.13'",
@@ -1006,15 +1006,16 @@ wheels = [
 
 [[package]]
 name = "mars-patcher"
-version = "0.6.2"
+version = "0.7.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "frozendict" },
     { name = "jsonschema" },
+    { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/10/07/9ddaa02033674fb4d4bdf1e904a70fac6aae79c14b9a7f92a00ffc5d5872/mars_patcher-0.6.2.tar.gz", hash = "sha256:ad78230af0914ce99ecaa118cce7417df196d410c5673f66eb99214aca80293e", size = 291693, upload-time = "2025-07-15T23:39:59.331Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ed/85/1fb0ca6a8deec3a2d9bc49074effe6cdac56537f18d130a3ce3759a9d453/mars_patcher-0.7.3.tar.gz", hash = "sha256:eed60375813a79f714ff46b1393497087eb64ab715df104597924651cd729bc1", size = 292619, upload-time = "2025-08-29T11:23:58.3Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/61/fe/077c4862c2b82154519489e578424ee393c977f7925ae0c833c7bdf746dd/mars_patcher-0.6.2-py3-none-any.whl", hash = "sha256:14bde9111cb39bc167b8196e40a565a66430938026c22204cfba3c23068f1ff1", size = 285102, upload-time = "2025-07-15T23:39:57.564Z" },
+    { url = "https://files.pythonhosted.org/packages/49/51/167c8984cd8e425a5a672991da476283d35989d1d98fc27b3c6dbc08d0af/mars_patcher-0.7.3-py3-none-any.whl", hash = "sha256:bfc768c80e8b262c08521211069981c9055d28311f3aaf799fe035d37dde5deb", size = 286495, upload-time = "2025-08-29T11:23:56.886Z" },
 ]
 
 [[package]]
@@ -2052,7 +2053,7 @@ requires-dist = [
     { name = "humanize", marker = "extra == 'gui'" },
     { name = "json-delta" },
     { name = "markdown", marker = "extra == 'gui'" },
-    { name = "mars-patcher", marker = "extra == 'exporters'", specifier = ">=0.6.2" },
+    { name = "mars-patcher", marker = "extra == 'exporters'", specifier = ">=0.7.1" },
     { name = "matplotlib", marker = "extra == 'gui'", specifier = ">=3.6.2" },
     { name = "mp2hudcolor", marker = "extra == 'exporters'", specifier = ">=1.0.10" },
     { name = "natsort", marker = "extra == 'gui'" },
