@@ -401,6 +401,13 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
 
         return credits_array
 
+    def _create_title_text(self) -> list:
+        elements = []
+        for line, word in enumerate(self.description.shareable_word_hash.split(), 12):
+            final_word = word if len(word) <= 30 else f"{word[0:27]}..."
+            elements.append({"LineNum": line, "Text": final_word.center(30)})
+        return elements
+
     def _create_nav_locks(self) -> dict:
         locks = {
             "MainDeckWest": "RED",
@@ -474,6 +481,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "Palettes": self._create_palette(),
             "NavigationText": self._create_nav_text(),
             "NavStationLocks": self._create_nav_locks(),
+            "TitleText": self._create_title_text(),
             "CreditsText": self._create_credits_text(),
             "DisableDemos": True,
             "RoomNames": self._create_room_names(),

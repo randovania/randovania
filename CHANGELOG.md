@@ -52,7 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
-- Added: The title screen will now display the Randovania and patcher version.
+- Added: The title screen will now display the Randovania and patcher version, as well as the Seed Hash.
 - Added: 5 joke hints.
 - Added: Racetime integration with category https://racetime.gg/mfr-rdv
 - Fixed: Incorrect exporting behaviour, if the option to hide text of pickups was enabled.
