@@ -33,8 +33,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Changed: Reworked Central Unit combat logic to reflect the increasing difficulty of later areas.
-
 ##### Artaria
 
 - Fixed: It is now logical to get back to the lower door in Grapple Beam Room without Grapple Beam, making it logical to escape without Grapple Beam when doors are randomized.
