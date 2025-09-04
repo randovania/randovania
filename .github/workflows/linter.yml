@@ -25,7 +25,7 @@ jobs:
           enable-cache: true
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
 
       - name: Install Python packages
         run: uv sync --frozen --all-extras --group typing
@@ -53,7 +53,7 @@ jobs:
           enable-cache: true
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
 
       - name: Install Python packages
         run: uv sync --frozen --all-extras --group typing
