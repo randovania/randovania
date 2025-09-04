@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Health Drops, Speed Booster Upgrades, Flashlight and Blindfolds are not hinted as an Expansion anymore.
 - Removed: Removed the "Key", "Energy Tank", "Morph Ball Related", "Beam Related" and "Missile Related" pickup categories from being hinted.
 
+- Added: A Hotkey feature for Start/Finish and Pause/Unpause in Async Race Rooms.
+
 ### Metroid Dread
 
 - Changed: In Multiworld, don't send items to the game while it's not in-game.
