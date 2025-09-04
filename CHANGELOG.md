@@ -5,10 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.1.0] - 2025-09-0?
+## [10.2.0] - 2025-10-??
+
+## [10.1.0] - 2025-09-02
 
 - Added: 7 Joke hints.
 - Fixed: Hidden Pickups are not shown anymore in the "Pickup Hint Features" tab of a game.
+- Fixed: A crash in Flatpak, should the default language not be set up correctly.
 
 ### AM2R
 
@@ -19,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed: Removed the "Key", "Energy Tank", "Morph Ball Related", "Beam Related" and "Missile Related" pickup categories from being hinted.
 
 ### Metroid Dread
+
+- Changed: In Multiworld, don't send items to the game while it's not in-game.
 
 #### Logic Database
 
@@ -45,9 +50,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: More ways to reach Space Jump Room Access from Underwater Bottom in Space Jump Room.
 
+### Metroid: Samus Returns
+
+- Changed: In Multiworld, don't send items to the game while it's not in-game.
+
 ### Metroid Fusion
 
+- Added: The title screen will now display the Randovania and patcher version, as well as the Seed Hash.
 - Added: 5 joke hints.
+- Added: Racetime integration with category https://racetime.gg/mfr-rdv
+- Fixed: Incorrect exporting behaviour, if the option to hide text of pickups was enabled.
+- Fixed: Unable to export a randomized game, in case the input file could not be read.
+- Removed: The "Anti-Softlock" option and instead made the following permanent changes:
+  - Sector 2 Ripper Tower: The Crumble Block is moved one tile up to make it easier to Screw Attack the Bomb Block.
+  - Sector 2 Crumble City: On the far left of the tunnel, the Shot Block has been changed into a Crumble Block.
+  - Sector 2 Cultivation Station: The Bomb Block leading into the space with the Zoros has been changed into a Shot Block.
+  - Sector 4 Reservoir East: The initial Bomb Block and the Shot Blocks leading up to the lower Pickup now never respawn.
+  - Sector 4 Security Bypass: Collision in the dead-end puzzles has been changed to allow not softlocking when exploring without Bombs or Power Bombs.
+  - Sector 6 Zozoro Wine Cellar: The Bomb Block that guards the item always respawns.
 
 #### Logic Database
 
@@ -60,8 +80,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Atmospheric Stabilizer Northeast - Fixed an edge case where a Shinespark trick from another room could be required even with obtaining Speedbooster in the same room
 - Changed: Atmospheric Stabilizer Northeast - Changed the Shinespark trick from Advanced to Expert
 
+##### Sector 2 (TRO)
+
+- Changed: Ripper Tower: Due to removal of the "Anti-Softlock" option, breaking the block with Screw Attack now requires Beginner Knowledge instead of Intermediate.
+
 ##### Sector 4 (AQA)
 
+- Changed: Reservoir East: Due to removal of the "Anti-Softlock" option, collecting the Pickup with only Power Bombs now always requires 2 Power Bombs.
 - Fixed: Security Access - Fixed a trick video appearing incorrectly on the website.
 - Added: Breeding Tank - Added an Advanced Movement trick with Space Jump to cross the tank
 - Added: Breeding Tank - Added the Underwater Wall Jump trick videos
@@ -79,9 +104,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Climbing Reactor Core with Bomb Jumps is now classified as Complex Bomb Jump(s) (Ludicrous).
 
+##### Magmoor Caverns
+
+- Changed: Twin Fires Tunnels - removed the L-Jump requirement for the Expert Bomb Jump towards Twin Fires.
+- Fixed: Twin Fire Tunnels - corrected the damage required to escape the lava with Bombs only towards Tallon Transport West from 60 to 110.
+
+
 ### Metroid Prime 2: Echoes
 
 - Added: 14 joke hints.
+
+#### Logic Database
+
+##### Dark Agon Wastes
+
+- Changed: Minor adjustment aimed at making Amorbis safer for the generator, no changes to requirements in practice.
+
+##### Sanctuary Fortress
+
+- Changed: Minor adjustment aimed at making Aerie safer for the generator, no changes to requirements in practice.
 
 ## [10.0.1] - 2025-08-03
 
