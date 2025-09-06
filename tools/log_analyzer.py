@@ -91,19 +91,25 @@ def _filter_item_name(name: str) -> str:
 
 
 def accumulate_results(
+    is_multi: bool,
+    world_index: int,
     game_modifications: dict,
     items: dict[str, dict[str, int]],
     locations: dict[str, dict[str, int]],
     major_progression_items_only: bool,
 ):
-    for world_name, world_data in game_modifications["locations"].items():
-        for area_name, item_name in world_data.items():
-            area_name = f"{world_name}/{area_name}"
-            item_name = _filter_item_name(item_name)
-            if major_progression_items_only and is_non_major_progression(item_name):
-                continue
-            items[item_name][area_name] += 1
-            locations[area_name][item_name] += 1
+    for modification in game_modifications["locations"]:
+        node_identifier = modification["node_identifier"]
+        pickup: str = modification["pickup"]
+        owner: int = modification["owner"]
+        world_prefix = f"World {world_index}'s " if is_multi else ""
+        area_name = f"{world_prefix}{node_identifier['region']}/{node_identifier['area']}/{node_identifier['node']}"
+        owner_prefix = f"World {owner}'s " if is_multi else ""
+        item_name = _filter_item_name(f"{owner_prefix}{pickup}")
+        if major_progression_items_only and is_non_major_progression(item_name):
+            continue
+        items[item_name][area_name] += 1
+        locations[area_name][item_name] += 1
 
 
 def sort_by_count(d: dict[str, int]) -> dict[str, int]:
@@ -194,11 +200,12 @@ def create_report(
         except json.JSONDecodeError:
             continue
 
+        is_multi = len(seed_data["game_modifications"]) > 1
         for i, game_modification in enumerate(seed_data["game_modifications"]):
             if len(starting_locations) <= i:
                 starting_locations.append(collections.defaultdict(int))
 
-            accumulate_results(game_modification, items, locations, major_progression_items_only)
+            accumulate_results(is_multi, i, game_modification, items, locations, major_progression_items_only)
             starting_locations[i][game_modification["starting_location"]] += 1
 
         if seed_count == 0:
@@ -244,7 +251,12 @@ def create_report(
 
         count = 0
         for item in locations[location]:
-            if (item in progression_items) and ("artifact" not in item.lower()) and ("key" not in item.lower()):
+            item_without_owner = item.split("'s ")[-1]
+            if (
+                (item_without_owner in progression_items)
+                and ("artifact" not in item_without_owner.lower())
+                and ("key" not in item_without_owner.lower())
+            ):
                 count = count + locations[location][item]
         total_progression_item_count += count
         regions[region] += count
@@ -340,7 +352,9 @@ def create_report(
         "item_order": {
             "average": {name: statistics.mean(orders) for name, orders in item_order.items()},
             "median": {name: int(statistics.median(orders)) for name, orders in item_order.items()},
-            "stdev": {name: statistics.stdev(orders) for name, orders in item_order.items()},
+            "stdev": {
+                name: statistics.stdev(orders) if len(orders) > 1 else None for name, orders in item_order.items()
+            },
             "orders": {
                 name: {element: orders.count(element) for element in set(orders)} for name, orders in item_order.items()
             },
