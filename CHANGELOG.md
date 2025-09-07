@@ -5,7 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.1.0] - 2025-09-0?
+## [10.2.0] - 2025-10-??
+
+### Metroid Dread
+
+#### Logic Database
+
+- Changed: Reworked Central Unit combat logic to reflect the increasing difficulty of later areas.
+-
+##### Elun
+
+- Changed: Minor adjustment aimed at releasing the X parasites safer for the generator, no changes to requirements in practice.
+
+## [10.1.0] - 2025-09-02
 
 - Added: 7 Joke hints.
 - Fixed: Hidden Pickups are not shown anymore in the "Pickup Hint Features" tab of a game.
@@ -52,8 +64,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
-- Added: The title screen will now display the Randovania and patcher version.
+- Added: The title screen will now display the Randovania and patcher version, as well as the Seed Hash.
 - Added: 5 joke hints.
+- Added: Racetime integration with category https://racetime.gg/mfr-rdv
+- Fixed: Incorrect exporting behaviour, if the option to hide text of pickups was enabled.
+- Fixed: Unable to export a randomized game, in case the input file could not be read.
 - Removed: The "Anti-Softlock" option and instead made the following permanent changes:
   - Sector 2 Ripper Tower: The Crumble Block is moved one tile up to make it easier to Screw Attack the Bomb Block.
   - Sector 2 Crumble City: On the far left of the tunnel, the Shot Block has been changed into a Crumble Block.
