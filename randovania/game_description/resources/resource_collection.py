@@ -4,7 +4,7 @@ import copy
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
 
 
@@ -30,9 +30,9 @@ class ResourceCollection:
         self._damage_reduction_cache = None
 
     @classmethod
-    def with_database(cls, database: ResourceDatabase) -> ResourceCollection:
+    def with_resource_count(cls, count: int) -> ResourceCollection:
         result = cls()
-        result._resource_array = [0] * len(database.resource_by_index)
+        result._resource_array = [0] * count
         return result
 
     def _resize_array_to(self, size: int) -> None:
@@ -52,6 +52,9 @@ class ResourceCollection:
     @property
     def _comparison_tuple(self) -> tuple[ResourceGainTuple, bool]:
         return tuple(self.as_resource_gain()), self.add_self_as_requirement_to_resources
+
+    def __hash__(self) -> int:
+        return hash(self._comparison_tuple)
 
     def __eq__(self, other: object) -> bool:
         return isinstance(other, ResourceCollection) and (self._comparison_tuple == other._comparison_tuple)
@@ -91,14 +94,14 @@ class ResourceCollection:
             self.resource_bitmask -= mask
 
     @classmethod
-    def from_dict(cls, db: ResourceDatabase, resources: dict[ResourceInfo, int]) -> ResourceCollection:
-        result = cls.with_database(db)
+    def from_dict(cls, view: GameDatabaseView, resources: dict[ResourceInfo, int]) -> ResourceCollection:
+        result = view.create_resource_collection()
         result.add_resource_gain(resources.items())
         return result
 
     @classmethod
-    def from_resource_gain(cls, db: ResourceDatabase, resource_gain: ResourceGain) -> ResourceCollection:
-        result = cls.with_database(db)
+    def from_resource_gain(cls, game: GameDatabaseView, resource_gain: ResourceGain) -> ResourceCollection:
+        result = game.create_resource_collection()
         result.add_resource_gain(resource_gain)
         return result
 

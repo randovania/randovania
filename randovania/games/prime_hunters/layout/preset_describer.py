@@ -44,6 +44,11 @@ class HuntersPresetDescriber(GamePresetDescriber):
             "Item Pool": [],
             "Gameplay": [
                 {f"Force Fields: {configuration.force_field_configuration.description()}": True},
+                {
+                    f"Portals: {configuration.teleporters.description('portals')}": (
+                        not configuration.teleporters.is_vanilla
+                    )
+                },
             ],
             "Goal": describe_objective(configuration.octoliths),
             "Game Changes": [],

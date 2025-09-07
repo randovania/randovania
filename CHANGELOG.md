@@ -5,11 +5,167 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [9.3.0] - 2025-07-0?
+## [10.2.0] - 2025-10-??
+
+### Metroid Dread
+
+#### Logic Database
+
+- Changed: Reworked Central Unit combat logic to reflect the increasing difficulty of later areas.
+
+## [10.1.0] - 2025-09-02
+
+- Added: 7 Joke hints.
+- Fixed: Hidden Pickups are not shown anymore in the "Pickup Hint Features" tab of a game.
+- Fixed: A crash in Flatpak, should the default language not be set up correctly.
+
+### AM2R
+
+- Added: 2 Joke hints.
+- Fixed: Joke hints are now always surrounded by asterisks.
+- Changed: Renamed the "Misc" pickup category to "Bonus Upgrade".
+- Changed: Health Drops, Speed Booster Upgrades, Flashlight and Blindfolds are not hinted as an Expansion anymore.
+- Removed: Removed the "Key", "Energy Tank", "Morph Ball Related", "Beam Related" and "Missile Related" pickup categories from being hinted.
+
+### Metroid Dread
+
+- Changed: In Multiworld, don't send items to the game while it's not in-game.
+
+#### Logic Database
+
+##### Artaria
+
+- Fixed: It is now logical to get back to the lower door in Grapple Beam Room without Grapple Beam, making it logical to escape without Grapple Beam when doors are randomized.
+
+##### Burenia
+
+- Added: A video for breaking the uppermost blob in Burenia Hub to Dairon with a pseudo-wave.
+
+##### Cataris
+
+- Fixed: An oversight where one would be expected to Ledge Warp out of the Diffusion Beam Room after collecting the Diffusion Beam, but in order to do so, one would need any bombs. And that bomb would be in that room.
+
+##### Ghavoran
+
+- Changed: Flipper Room: The Morph Ball Launcher now connects to the door to Navigation Station and is trivial, instead ot connecting to the door to Elun Transport Access and requiring that the Flipper has been rotated.
+- Changed: Flipper Room: Spinning the Flipper with the ledge warp from below now connects from the door to Elun Transport Access instead of from the Tunnel to Spider Magnet Elevator. It is now also logical to perform the ledge warp from below when Transport Randomizer is disabled.
+
+##### Ferenia
+
+- Added: More ways to reach Space Jump Room Access from Underwater Bottom in Space Jump Room.
+
+### Metroid: Samus Returns
+
+- Changed: In Multiworld, don't send items to the game while it's not in-game.
+
+### Metroid Fusion
+
+- Added: The title screen will now display the Randovania and patcher version, as well as the Seed Hash.
+- Added: 5 joke hints.
+- Added: Racetime integration with category https://racetime.gg/mfr-rdv
+- Fixed: Incorrect exporting behaviour, if the option to hide text of pickups was enabled.
+- Fixed: Unable to export a randomized game, in case the input file could not be read.
+- Removed: The "Anti-Softlock" option and instead made the following permanent changes:
+  - Sector 2 Ripper Tower: The Crumble Block is moved one tile up to make it easier to Screw Attack the Bomb Block.
+  - Sector 2 Crumble City: On the far left of the tunnel, the Shot Block has been changed into a Crumble Block.
+  - Sector 2 Cultivation Station: The Bomb Block leading into the space with the Zoros has been changed into a Shot Block.
+  - Sector 4 Reservoir East: The initial Bomb Block and the Shot Blocks leading up to the lower Pickup now never respawn.
+  - Sector 4 Security Bypass: Collision in the dead-end puzzles has been changed to allow not softlocking when exploring without Bombs or Power Bombs.
+  - Sector 6 Zozoro Wine Cellar: The Bomb Block that guards the item always respawns.
+
+#### Logic Database
+
+##### Main Deck:
+
+- Changed: Yakuza Arena: Going up to the exit now requires either Yakuza to be killed or Beginner Knowledge.
+
+##### Sector 1 (SRX)
+
+- Fixed: Atmospheric Stabilizer Northeast - Fixed an edge case where a Shinespark trick from another room could be required even with obtaining Speedbooster in the same room
+- Changed: Atmospheric Stabilizer Northeast - Changed the Shinespark trick from Advanced to Expert
+
+##### Sector 2 (TRO)
+
+- Changed: Ripper Tower: Due to removal of the "Anti-Softlock" option, breaking the block with Screw Attack now requires Beginner Knowledge instead of Intermediate.
+
+##### Sector 4 (AQA)
+
+- Changed: Reservoir East: Due to removal of the "Anti-Softlock" option, collecting the Pickup with only Power Bombs now always requires 2 Power Bombs.
+- Fixed: Security Access - Fixed a trick video appearing incorrectly on the website.
+- Added: Breeding Tank - Added an Advanced Movement trick with Space Jump to cross the tank
+- Added: Breeding Tank - Added the Underwater Wall Jump trick videos
+
+##### Sector 6 (NOC)
+
+- Changed: Geron's Crossing: Going through the Super Missile Geron after defeating Varia Core-X now additionally requires Intermediate Knowledge.
+- Changed: Clogged Cavern: Going through the Speed Booster Blocks after defeating Varia Core-X now additionally requires Intermediate Knowledge.
+
+### Metroid Prime
+
+#### Logic Database
+
+##### Tallon Overworld
+
+- Changed: Climbing Reactor Core with Bomb Jumps is now classified as Complex Bomb Jump(s) (Ludicrous).
+
+##### Magmoor Caverns
+
+- Changed: Twin Fires Tunnels - removed the L-Jump requirement for the Expert Bomb Jump towards Twin Fires.
+- Fixed: Twin Fire Tunnels - corrected the damage required to escape the lava with Bombs only towards Tallon Transport West from 60 to 110.
+
+
+### Metroid Prime 2: Echoes
+
+- Added: 14 joke hints.
+
+#### Logic Database
+
+##### Dark Agon Wastes
+
+- Changed: Minor adjustment aimed at making Amorbis safer for the generator, no changes to requirements in practice.
+
+##### Sanctuary Fortress
+
+- Changed: Minor adjustment aimed at making Aerie safer for the generator, no changes to requirements in practice.
+
+## [10.0.1] - 2025-08-03
+
+### Generator
+
+- Fixed: Random transports in mode "One-way, anywhere", only supported in Metroid Prime and Metroid Prime 2 Echoes, being unable to generate.
+
+## [10.0.0] - 2025-08-01
+
+- **Major** - Added: Metroid Fusion has been added with full single player support. Includes random starting locations, some toggleable patches, and more.
+- Added: 10 more joke hints.
+- Changed: In the Multiworld Session window, renamed "Generate without spoiler" to "Generate for Race".
+- Fixed: An error when the computer shuts down unexpectedly or crashes during a multiworld that corrupts some files and prevents Randovania from starting.
+
+### Generator
+- Added: The generator will now check for the count of major pickups when major/minor split is enabled.
+
+### Metroid Dread
+- Fixed: A crash when attempting to fire Proto EMMI's Omega Blaster while having 0 maximum missiles.
+
+### Metroid: Samus Returns
+
+- Added: 10 more joke hints.
+- Fixed: Starting with extra Metroid DNA now counts toward the goal.
+- Fixed: Exported games will now take up to 80% less storage space when music shuffle is enabled.
+- Fixed: Shuffled music tracks now play at the correct volume in game.
+
+## [9.3.1] - 2025-07-05
+
+### AM2R
+
+- Fixed: Exporting games now work.
+
+## [9.3.0] - 2025-07-02
 
 ### Generator
 
 - Fixed: Some cases where weights from certain actions would not be calculated correctly.
+- Fixed: Pre placed pickups now avoid using locations configured as non-progression.
 
 ### Metroid Dread
 
@@ -23,9 +179,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: The door between EMMI Zone Exit Southeast and Blue EMMI Introduction is now considered as a Plasma Beam Door on both sides.
 
+### Metroid Prime
+
+- Added: Experimental option to pre-place Artifacts and/or Phazon Suit before generation.
+
 ### Metroid Prime 2: Echoes
 
 - Added: "Captain" is now included as a possible word for the seed hash.
+
+#### Logic Database
+
+##### Agon Wastes
+
+- Added: In Transport Center, added an Instant Morph + Bomb Space Jump (Advanced) method of climbing the half-pipe.
 
 ## [9.2.0] - 2025-06-02
 
@@ -78,15 +244,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Display the number of remaining DNA in the DNA message before entering the final boss.
 - Fixed: If Metroid Queen is the final boss and you don't have all DNA, the DNA message now appears.
 - Fixed: For tanks with non required main option, the jingle of the tank item is played instead of the jingle of the main object.
-
-## [9.1.1] - 2025-05-03
-
-- Fixed: Duplicating a session now also duplicates the admin settings for Co-op and "Everyone can claim worlds".
-
-### Cave Story
-
-- Fixed: A regression introduced in 9.1.0 that made all received pickups in multiworld behave as Nothings.
-
 
 ## [9.1.1] - 2025-05-03
 

@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import json
 import typing
 from random import Random
 from typing import TYPE_CHECKING
 
 import json_delta
+import sentry_sdk
 
 from randovania.exporter import pickup_exporter
 from randovania.exporter.hints.hint_exporter import HintExporter
@@ -90,6 +92,14 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
         :return: The patcher data, with the randovania metadata included, as a dict.
         """
 
+        with sentry_sdk.isolation_scope() as scope:
+            scope.add_attachment(
+                json.dumps(self.description.as_json(force_spoiler=True)).encode("utf-8"),
+                filename="rdvgame.json",
+                content_type="application/json",
+                add_to_transactions=True,
+            )
+
         randovania_meta = custom_metadata or self.create_default_patcher_data_meta()
 
         game_data = self.create_game_specific_data(randovania_meta)
@@ -103,7 +113,7 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
 
     def create_useless_pickup(self) -> PickupEntry:
         """Used for any location with no PickupEntry assigned to it."""
-        return pickup_creator.create_nothing_pickup(self.game.resource_database)
+        return pickup_creator.create_nothing_pickup(self.game.get_resource_database_view())
 
     def create_visual_nothing(self) -> PickupEntry:
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""

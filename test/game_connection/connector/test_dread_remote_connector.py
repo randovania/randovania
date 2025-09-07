@@ -9,6 +9,7 @@ from randovania.game_connection.connector.dread_remote_connector import DreadRem
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
 from randovania.game_connection.executor.dread_executor import DreadExecutor
 from randovania.game_connection.executor.executor_to_connector_signals import ExecutorToConnectorSignals
+from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.network_common.remote_pickup import RemotePickup
@@ -76,15 +77,15 @@ async def test_new_inventory_received(connector: DreadRemoteConnector):
     assert connector.inventory_index == 69
 
     # check wide beam
-    wide_beam = connector.game.resource_database.get_item_by_name("Wide Beam")
+    wide_beam = connector.game.resource_database.get_item_by_display_name("Wide Beam")
     assert connector.last_inventory[wide_beam].capacity == 1
 
     # check plasma beam
-    plasma_beam = connector.game.resource_database.get_item_by_name("Plasma Beam")
+    plasma_beam = connector.game.resource_database.get_item_by_display_name("Plasma Beam")
     assert connector.last_inventory[plasma_beam].capacity == 0
 
     # check wave beam
-    wave_beam = connector.game.resource_database.get_item_by_name("Wave Beam")
+    wave_beam = connector.game.resource_database.get_item_by_display_name("Wave Beam")
     assert connector.last_inventory.get(wave_beam) == InventoryItem(0, 0)
 
     inventory_updated.assert_called_once()
@@ -93,6 +94,7 @@ async def test_new_inventory_received(connector: DreadRemoteConnector):
 async def test_new_received_pickups_received(connector: DreadRemoteConnector):
     connector.receive_remote_pickups = AsyncMock()
     connector.in_cooldown = True
+    connector.current_region = default_database.game_description_for(RandovaniaGame("dread")).region_list.regions[0]
 
     await connector.new_received_pickups_received("6")
     assert connector.received_pickups == 6

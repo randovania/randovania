@@ -9,6 +9,7 @@ from randovania.game_connection.connector.msr_remote_connector import MSRRemoteC
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
 from randovania.game_connection.executor.executor_to_connector_signals import ExecutorToConnectorSignals
 from randovania.game_connection.executor.msr_executor import MSRExecutor
+from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.network_common.remote_pickup import RemotePickup
@@ -75,19 +76,19 @@ async def test_new_inventory_received(connector: MSRRemoteConnector):
     assert connector.inventory_index == 69
 
     # check ice beam
-    ice_beam = connector.game.resource_database.get_item_by_name("Ice Beam")
+    ice_beam = connector.game.resource_database.get_item_by_display_name("Ice Beam")
     assert connector.last_inventory[ice_beam].capacity == 1
 
     # check wave beam
-    wave_beam = connector.game.resource_database.get_item_by_name("Wave Beam")
+    wave_beam = connector.game.resource_database.get_item_by_display_name("Wave Beam")
     assert connector.last_inventory[wave_beam].capacity == 0
 
     # check spazer beam
-    spazer_beam = connector.game.resource_database.get_item_by_name("Spazer Beam")
+    spazer_beam = connector.game.resource_database.get_item_by_display_name("Spazer Beam")
     assert connector.last_inventory[spazer_beam].capacity == 1
 
     # check rounding floats to ints via plasma beam item
-    plasma_beam = connector.game.resource_database.get_item_by_name("Plasma Beam")
+    plasma_beam = connector.game.resource_database.get_item_by_display_name("Plasma Beam")
     assert connector.last_inventory[plasma_beam].capacity == 275
 
     inventory_updated.assert_called_once()
@@ -96,6 +97,9 @@ async def test_new_inventory_received(connector: MSRRemoteConnector):
 async def test_new_received_pickups_received(connector: MSRRemoteConnector):
     connector.receive_remote_pickups = AsyncMock()
     connector.in_cooldown = True
+    connector.current_region = default_database.game_description_for(
+        RandovaniaGame("samus_returns")
+    ).region_list.regions[0]
 
     await connector.new_received_pickups_received("6")
     assert connector.received_pickups == 6

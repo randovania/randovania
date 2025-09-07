@@ -15,7 +15,6 @@ from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.resource_collection import ResourceCollection
 
 if TYPE_CHECKING:
     from collections.abc import Iterator, Mapping
@@ -38,7 +37,7 @@ layer_name_re = re.compile(r"[a-zA-Z0-9 _-]+")
 def _create_node_context(game: GameDescription) -> NodeContext:
     return NodeContext(
         patches=GamePatches.create_from_game(game, 0, typing.cast("BaseConfiguration", None)),
-        current_resources=ResourceCollection.with_database(game.resource_database),
+        current_resources=game.create_resource_collection(),
         database=game.resource_database,
         node_provider=game.region_list,
     )
@@ -179,7 +178,7 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
         # FIXME: cannot implement this for PickupNodes because their resource gain depends on GamePatches
         if isinstance(node, EventNode):
             # if this node would satisfy the victory condition, it does not need outgoing connections
-            current = ResourceCollection.with_database(game.resource_database)
+            current = game.create_resource_collection()
             current.set_resource(node.event, 1)
             if game.victory_condition.satisfied(game.create_node_context(current), 0):
                 continue
@@ -398,6 +397,8 @@ def get_videos(req: Requirement, node: Node, target: Node) -> Iterator[str]:
     if isinstance(req, RequirementArrayBase):
         if req.comment is not None:
             for word in req.comment.split(" "):
+                if "discord" in word:
+                    yield f"Discord media linked in {node.identifier.as_string} -> {target.name}."
                 if "youtu" not in word:
                     continue
                 if "&list" in word:

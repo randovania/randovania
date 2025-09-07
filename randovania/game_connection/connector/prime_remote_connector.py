@@ -23,7 +23,6 @@ from randovania.game_connection.executor.memory_operation import (
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.lib.infinite_timer import InfiniteTimer
 
@@ -34,6 +33,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.network_common.remote_pickup import RemotePickup
 
     PatchInstructions = list[assembler.BaseInstruction]
@@ -259,7 +259,7 @@ class PrimeRemoteConnector(RemoteConnector):
         pickup: PickupEntry,
         inventory: Inventory,
     ) -> tuple[str, ResourceCollection]:
-        inventory_resources = ResourceCollection.with_database(self.game.resource_database)
+        inventory_resources = self.game.create_resource_collection()
         inventory_resources.add_resource_gain(inventory.as_resource_gain())
         conditional = pickup.conditional_for_resources(inventory_resources)
         if conditional.name is not None:
@@ -267,7 +267,7 @@ class PrimeRemoteConnector(RemoteConnector):
         else:
             item_name = pickup.name
 
-        resources_to_give = ResourceCollection.with_database(self.game.resource_database)
+        resources_to_give = self.game.create_resource_collection()
 
         if (
             pickup.respects_lock
