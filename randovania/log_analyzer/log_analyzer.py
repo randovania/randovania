@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import argparse
 import collections
 import copy
 import csv
@@ -8,15 +7,17 @@ import json
 import math
 import re
 import statistics
-from pathlib import Path
 from statistics import stdev
 from typing import TYPE_CHECKING
 
-from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.layout_description import InvalidLayoutDescription, LayoutDescription
 from randovania.lib import json_lib
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
+    from pathlib import Path
+
+    from randovania.game_description.game_patches import GamePatches
 
 # This is not a serious file
 # ruff: noqa: C901
@@ -93,17 +94,17 @@ def _filter_item_name(name: str) -> str:
 def accumulate_results(
     is_multi: bool,
     world_index: int,
-    game_modifications: dict,
+    patches: GamePatches,
     items: dict[str, dict[str, int]],
     locations: dict[str, dict[str, int]],
     major_progression_items_only: bool,
 ):
-    for modification in game_modifications["locations"]:
-        node_identifier = modification["node_identifier"]
-        pickup: str = modification["pickup"]
-        owner: int = modification["owner"]
-        world_prefix = f"World {world_index}'s " if is_multi else ""
-        area_name = f"{world_prefix}{node_identifier['region']}/{node_identifier['area']}/{node_identifier['node']}"
+    for pickup_index, pickup_target in patches.pickup_assignment.items():
+        pickup_node = patches.game.region_list.node_from_pickup_index(pickup_index)
+        pickup: str = pickup_target.pickup.name
+        owner: int = pickup_target.player + 1
+        world_prefix = f"World {world_index + 1}'s " if is_multi else ""
+        area_name = f"{world_prefix}{pickup_node.identifier.as_string}"
         owner_prefix = f"World {owner}'s " if is_multi else ""
         item_name = _filter_item_name(f"{owner_prefix}{pickup}")
         if major_progression_items_only and is_non_major_progression(item_name):
@@ -138,7 +139,7 @@ def first_key(d: dict):
 
 
 def get_items_order(
-    all_items: Iterable[str], item_order: list[str], major_progression_items_only: bool
+    all_items: Iterable[str], item_order: tuple[str, ...], major_progression_items_only: bool
 ) -> tuple[dict[str, int], set[str], set[str], set[str]]:
     locations = set()
     no_key = set()
@@ -193,26 +194,26 @@ def create_report(
     starting_locations = []
 
     seed_files = list(seeds_dir.glob(f"**/*.{LayoutDescription.file_extension()}"))
-    seed_files.extend(seeds_dir.glob("**/*.json"))
     for seed in iterate_with_log(seed_files):
         try:
-            seed_data = read_json(seed)
-        except json.JSONDecodeError:
+            layout = LayoutDescription.from_file(seed)
+        except InvalidLayoutDescription:
             continue
 
-        is_multi = len(seed_data["game_modifications"]) > 1
-        for i, game_modification in enumerate(seed_data["game_modifications"]):
+        is_multi = layout.world_count > 1
+
+        for i, patches in layout.all_patches.items():
             if len(starting_locations) <= i:
                 starting_locations.append(collections.defaultdict(int))
 
-            accumulate_results(is_multi, i, game_modification, items, locations, major_progression_items_only)
-            starting_locations[i][game_modification["starting_location"]] += 1
+            accumulate_results(is_multi, i, patches, items, locations, major_progression_items_only)
+            starting_locations[i][patches.starting_location.as_string] += 1
 
         if seed_count == 0:
             pickup_count = calculate_pickup_count(items)
 
         item_orders, locations_with_progression, no_key_progression, _progression_items = get_items_order(
-            list(items.keys()), seed_data["item_order"], major_progression_items_only
+            list(items.keys()), layout.item_order, major_progression_items_only
         )
         for item, order in item_orders.items():
             item_order[item].append(order)
@@ -393,18 +394,3 @@ def create_report(
                     writer.writerow(row_data)
 
     json_lib.write_path(output_file, final_results)
-
-
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--csv-dir", type=Path)
-    parser.add_argument("seeds_dir", type=Path)
-    parser.add_argument("output_file", type=Path)
-    parser.add_argument("--use-percentage", action="store_true")
-    parser.add_argument("--major-progression-only", action="store_true")
-    args = parser.parse_args()
-    create_report(args.seeds_dir, args.output_file, args.csv_dir, args.use_percentage, args.major_progression_only)
-
-
-if __name__ == "__main__":
-    main()
