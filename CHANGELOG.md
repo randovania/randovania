@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Changed: Reworked Central Unit combat logic to reflect the increasing difficulty of later areas.
+-
+##### Elun
+
+- Changed: Minor adjustment aimed at releasing the X parasites safer for the generator, no changes to requirements in practice.
 
 ## [10.1.0] - 2025-09-02
 
