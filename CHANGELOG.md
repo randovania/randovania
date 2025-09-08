@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Reworked Central Unit combat logic to reflect the increasing difficulty of later areas.
 -
+
+##### Burenia
+
+- Added: Underneath Drogyga: Cross the grapple blocks with a horizontal bomb jump (Expert Diagonal Bomb Jump)
+
 ##### Elun
 
 - Changed: Minor adjustment aimed at releasing the X parasites safer for the generator, no changes to requirements in practice.
