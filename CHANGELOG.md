@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.2.0] - 2025-10-??
 
+### Added
+
+- Added: Command line arguments for gathering statistics about a collection of generated games. These commands are intended for advanced uses only.
+
 ### Metroid Dread
 
 #### Logic Database

@@ -13,11 +13,12 @@ if typing.TYPE_CHECKING:
 
 
 def create_subparsers(root_parser: _SubParsersAction) -> None:
-    from randovania.cli import database, gui, layout
+    from randovania.cli import analyze, database, gui, layout
 
     layout.create_subparsers(root_parser)
     database.create_subparsers(root_parser)
     gui.create_subparsers(root_parser)
+    analyze.create_subparsers(root_parser)
     if not randovania.is_frozen():
         from randovania.cli import development, server
 
