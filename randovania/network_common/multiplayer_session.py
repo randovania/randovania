@@ -108,6 +108,7 @@ class MultiplayerSessionEntry(JsonDataclass):
     allowed_games: list[RandovaniaGame]
     allow_coop: bool
     allow_everyone_claim_world: bool
+    notification_webhook: str | None
 
     @property
     def users(self) -> dict[int, MultiplayerUser]:

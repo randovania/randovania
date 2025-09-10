@@ -435,6 +435,9 @@ def admin_session(sa: ServerApp, session_id: int, action: str, *args):
     elif action == SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM:
         _set_allow_everyone_claim(sa, session, *args)
 
+    elif action == SessionAdminGlobalAction.SET_NOTIFICATION_WEBHOOK:
+        _set_notification_webhook(sa, session, *args)
+
     session_common.emit_session_meta_update(session)
 
 
@@ -549,6 +552,23 @@ def _set_allow_everyone_claim(sa: ServerApp, session: MultiplayerSession, new_st
         session.allow_everyone_claim_world = new_state
         new_operation = "Allowing" if session.allow_everyone_claim_world else "Disallowing"
         session_common.add_audit_entry(sa, session, f"{new_operation} everyone to claim worlds.")
+        session.save()
+
+
+def _set_notification_webhook(sa: ServerApp, session: MultiplayerSession, new_state: str | None):
+    verify_has_admin(sa, session.id, None)
+
+    with database.db.atomic():
+        # TODO: Actually check the URL for validity
+
+        session.notification_webhook = new_state
+        if session.notification_webhook is not None:
+            session_common.add_audit_entry(
+                sa, session, f"Setting notification webhook to {session.notification_webhook}."
+            )
+        else:
+            session_common.add_audit_entry(sa, session, "Clearing notification webhook.")
+
         session.save()
 
 
