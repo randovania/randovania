@@ -279,21 +279,23 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 if "has no need to be located" in text:
                     continue
                 if metroid_resource in artifacts_on_bosses:
-                    operations_hint += f"{operations_hint_counter}. {text}[NEWLINE]"
+                    operations_hint += f"{operations_hint_counter}. [COLOR=1]{text}[/COLOR]\n"
                     operations_hint_counter += 1
                 else:
-                    restricted_hint += f"{restricted_hint_counter}. {text}[NEWLINE]"
+                    restricted_hint += f"{restricted_hint_counter}. {text}\n"
                     restricted_hint_counter += 1
 
-            metroid_hint_base = "[COLOR=3]Metroids[/COLOR] detected at the following locations:[NEXT]"
-            restricted_hint = metroid_hint_base + restricted_hint.rstrip("[NEWLINE]")
-            operations_hint = metroid_hint_base + operations_hint.rstrip("[NEWLINE]")
-
+            metroid_hint_base = "[COLOR=3]Metroids[/COLOR] detected at the following"
             no_metroids_hint = "This terminal was unable to scan for any [COLOR=3]Metroids[/COLOR]."
-            # special handling when there's no Metroids to hint on either terminal
-            if operations_hint == metroid_hint_base:
+
+            if operations_hint:
+                operations_hint = f"{metroid_hint_base} bosses:[NEXT]{operations_hint.rstrip('\n')}"
+            else:
                 operations_hint = no_metroids_hint
-            if restricted_hint == metroid_hint_base:
+
+            if restricted_hint:
+                restricted_hint = f"{metroid_hint_base} locations:[NEXT]{restricted_hint.rstrip('\n')}"
+            else:
                 restricted_hint = no_metroids_hint
 
         for node in self.game.region_list.iterate_nodes_of_type(HintNode):
