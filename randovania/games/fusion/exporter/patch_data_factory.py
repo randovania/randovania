@@ -282,7 +282,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     operations_hint += f"{operations_hint_counter}. {text}\n"
                     operations_hint_counter += 1
                 else:
-                    restricted_hint += f"{restricted_hint_counter}. {text}\n"
+                    restricted_hint += f"{restricted_hint_counter}. {text}[NEXT]"
                     restricted_hint_counter += 1
 
             metroid_hint_base = f"{FusionColor.YELLOW.value}Metroids{FusionColor.RESET.value} detected at the following"
@@ -296,7 +296,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 operations_hint = no_metroids_hint
 
             if restricted_hint:
-                restricted_hint = f"{metroid_hint_base} locations:[NEXT]{restricted_hint.rstrip('\n')}"
+                restricted_hint = f"{metroid_hint_base} locations:[NEXT]{restricted_hint.rstrip('[NEXT]')}"
             else:
                 restricted_hint = no_metroids_hint
 
