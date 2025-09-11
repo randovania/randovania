@@ -272,22 +272,32 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         ]
 
         if metroid_precision != SpecificPickupHintMode.DISABLED:
+            restricted_hint_counter = 1
+            operations_hint_counter = 1
             # loop through all metroids and place ones on bosses on Operations Deck and the rest on Restricted Area
-            for metroid_resource, text in metroid_hint_mapping.items():
+            for metroid_resource, text in sorted(metroid_hint_mapping.items(), key=lambda d: d[1]):
                 if "has no need to be located" in text:
                     continue
                 if metroid_resource in artifacts_on_bosses:
-                    operations_hint = operations_hint + text + " "
+                    operations_hint += f"{operations_hint_counter}. {text}\n"
+                    operations_hint_counter += 1
                 else:
-                    restricted_hint = restricted_hint + text + " "
-            restricted_hint = restricted_hint.rstrip()
-            operations_hint = operations_hint.rstrip()
+                    restricted_hint += f"{restricted_hint_counter}. {text}[NEXT]"
+                    restricted_hint_counter += 1
 
-            no_metroids_hint = "This terminal was unable to scan for any [COLOR=3]Metroids[/COLOR]."
-            # special handling when there's no Metroids to hint on either terminal
-            if not operations_hint:
+            metroid_hint_base = f"{FusionColor.YELLOW.value}Metroids{FusionColor.RESET.value} detected at the following"
+            no_metroids_hint = (
+                f"This terminal was unable to scan for any {FusionColor.YELLOW.value}Metroids{FusionColor.RESET.value}."
+            )
+
+            if operations_hint:
+                operations_hint = f"{metroid_hint_base} bosses:[NEXT]{operations_hint.rstrip('\n')}"
+            else:
                 operations_hint = no_metroids_hint
-            if not restricted_hint:
+
+            if restricted_hint:
+                restricted_hint = f"{metroid_hint_base} locations:[NEXT]{restricted_hint.rstrip('[NEXT]')}"
+            else:
                 restricted_hint = no_metroids_hint
 
         for node in self.game.region_list.iterate_nodes_of_type(HintNode):
