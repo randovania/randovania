@@ -106,7 +106,6 @@ class FusionHintNamer(HintNamer[FusionColor]):
     def color_location(self) -> FusionColor:
         return FusionColor.PINK
 
-    @override
     @property
     def color_boss(self) -> FusionColor:
         return FusionColor.RED

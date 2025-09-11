@@ -50,7 +50,7 @@ def test_guaranteed_resource(fusion_game_patches, default_fusion_configuration, 
     expected = (
         "[COLOR=3]Screw Attack[/COLOR] " if color else "Screw Attack ",
         "is located in ",
-        "[COLOR=1]Player1[/COLOR]'s " if color else "Player1's ",
+        "[COLOR=6]Player1[/COLOR]'s " if color else "Player1's ",
         "[COLOR=2]Sector 2 (TRO) - Level 1 Security Room[/COLOR]."
         if color
         else "Sector 2 (TRO) - Level 1 Security Room.",
@@ -76,7 +76,7 @@ def test_format_location_hint(fusion_game_patches, default_fusion_configuration,
     players = PlayersConfiguration(0, {0: "Player1"})
     namer = FusionHintNamer({0: fusion_game_patches}, players)
     expected = (
-        "[COLOR=1]" if color else "",
+        "[COLOR=6]" if color else "",
         "Player1",
         "[/COLOR]'s " if color else "'s ",
         "[COLOR=3]" if color else "",
@@ -145,7 +145,7 @@ def test_format_area(fusion_game_patches, default_fusion_configuration, with_reg
     ],
 )
 def test_format_player(fusion_game_patches, default_fusion_configuration, player: str, color: bool):
-    expected = f"[COLOR=1]{player}[/COLOR]" if color else f"{player}"
+    expected = f"[COLOR=6]{player}[/COLOR]" if color else f"{player}"
     players = PlayersConfiguration(0, {0: player})
     namer = FusionHintNamer({0: fusion_game_patches}, players)
     hint = namer.format_world(player, color)
