@@ -279,14 +279,16 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 if "has no need to be located" in text:
                     continue
                 if metroid_resource in artifacts_on_bosses:
-                    operations_hint += f"{operations_hint_counter}. [COLOR=1]{text}[/COLOR]\n"
+                    operations_hint += f"{operations_hint_counter}. {text}\n"
                     operations_hint_counter += 1
                 else:
                     restricted_hint += f"{restricted_hint_counter}. {text}\n"
                     restricted_hint_counter += 1
 
-            metroid_hint_base = "[COLOR=3]Metroids[/COLOR] detected at the following"
-            no_metroids_hint = "This terminal was unable to scan for any [COLOR=3]Metroids[/COLOR]."
+            metroid_hint_base = f"{FusionColor.YELLOW.value}Metroids{FusionColor.RESET.value} detected at the following"
+            no_metroids_hint = (
+                f"This terminal was unable to scan for any {FusionColor.YELLOW.value}Metroids{FusionColor.RESET.value}."
+            )
 
             if operations_hint:
                 operations_hint = f"{metroid_hint_base} bosses:[NEXT]{operations_hint.rstrip('\n')}"

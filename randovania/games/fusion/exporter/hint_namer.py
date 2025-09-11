@@ -69,7 +69,8 @@ class FusionHintNamer(HintNamer[FusionColor]):
         if resource.extra.get("item") == "InfantMetroid":
             region_list = default_database.game_description_for(location.game).region_list
             node = region_list.node_from_pickup_index(location.location)
-            location_name = node.extra.get("boss_hint_name", location_name)
+            if boss_name := node.extra.get("boss_hint_name"):
+                location_name = self.colorize_text(self.color_boss, boss_name, with_color)
             return f"{determiner}{location_name}."
 
         return fmt.format(
@@ -98,9 +99,14 @@ class FusionHintNamer(HintNamer[FusionColor]):
     @override
     @property
     def color_world(self) -> FusionColor:
-        return FusionColor.RED
+        return FusionColor.TEAL
 
     @override
     @property
     def color_location(self) -> FusionColor:
         return FusionColor.PINK
+
+    @override
+    @property
+    def color_boss(self) -> FusionColor:
+        return FusionColor.RED
