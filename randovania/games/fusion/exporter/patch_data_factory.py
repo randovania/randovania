@@ -279,10 +279,10 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 if "has no need to be located" in text:
                     continue
                 if metroid_resource in artifacts_on_bosses:
-                    operations_hint = operations_hint + str(operations_hint_counter) + ". " + text + "[NEWLINE]"
+                    operations_hint += f"{operations_hint_counter}. {text}[NEWLINE]"
                     operations_hint_counter += 1
                 else:
-                    restricted_hint = restricted_hint + str(restricted_hint_counter) + ". " + text + "[NEWLINE]"
+                    restricted_hint += f"{restricted_hint_counter}. {text}[NEWLINE]"
                     restricted_hint_counter += 1
 
             metroid_hint_base = "[COLOR=3]Metroids[/COLOR] detected at the following locations:[NEXT]"
