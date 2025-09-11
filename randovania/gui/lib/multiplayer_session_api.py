@@ -320,6 +320,11 @@ class MultiplayerSessionApi(QtCore.QObject):
         )
 
     @handle_network_errors
+    async def set_notification_webhook(self, url: str | None) -> None:
+        self.logger.info("Setting notification webhook to %s", url)
+        await self._session_admin_global(admin_actions.SessionAdminGlobalAction.SET_NOTIFICATION_WEBHOOK, url)
+
+    @handle_network_errors
     async def switch_readiness(self, user_id: int) -> None:
         self.logger.info("Switching ready-ness of %d", user_id)
         await self._session_admin_player(

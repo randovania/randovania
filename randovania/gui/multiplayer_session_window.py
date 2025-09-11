@@ -260,6 +260,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.view_game_details_button.clicked.connect(self.view_game_details)
         self.everyone_can_claim_check.clicked.connect(self._on_everyone_can_claim_check)
         self.allow_coop_check.clicked.connect(self._on_allow_coop_check)
+        self.notification_webhook_clear_button.clicked.connect(self.notification_webhook_clear_button_clicked)
+        self.notification_webhook_set_button.clicked.connect(self.notification_webhook_set_button_clicked)
 
         # Background Tasks
         self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
@@ -374,6 +376,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.allow_coop_check.setEnabled(self.users_widget.is_admin() and not_genned_yet)
         self.allow_coop_check.setText(
             "Enable Co-Op" + ("" if not_genned_yet else " (can only be changed before generation)")
+        )
+        self.notification_webhook_textbox.setText(
+            "" if session.notification_webhook is None else session.notification_webhook
         )
 
     @asyncSlot(MultiplayerSessionActions)
@@ -1009,6 +1014,20 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         common_qt_lib.set_clipboard(permalink_str)
         common_qt_lib.set_default_window_icon(dialog)
         await async_dialog.execute_dialog(dialog)
+
+    @asyncSlot()
+    @handle_network_errors
+    async def notification_webhook_set_button_clicked(self):
+        webhook_url: str = self.notification_webhook_textbox.text()
+        if webhook_url == "":
+            webhook_url = None
+        await self.game_session_api.set_notification_webhook(webhook_url)
+
+    @asyncSlot()
+    @handle_network_errors
+    async def notification_webhook_clear_button_clicked(self):
+        self.notification_webhook_textbox.clear()
+        await self.game_session_api.set_notification_webhook(None)
 
     @asyncSlot()
     @handle_network_errors

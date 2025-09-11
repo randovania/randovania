@@ -166,6 +166,7 @@ class MultiplayerSession(BaseModel):
     creation_date: str = peewee.DateTimeField(default=lib.datetime_now)
     generation_in_progress: User | None = peewee.ForeignKeyField(User, null=True)
     dev_features: str | None = peewee.CharField(null=True)
+    notification_webhook: str | None = peewee.CharField(null=True)
 
     allow_coop: bool = peewee.BooleanField(default=False)
     allow_everyone_claim_world: bool = peewee.BooleanField(default=False)
@@ -353,6 +354,7 @@ class MultiplayerSession(BaseModel):
             allowed_games=self.allowed_games,
             allow_coop=self.allow_coop,
             allow_everyone_claim_world=self.allow_everyone_claim_world,
+            notification_webhook=self.notification_webhook,
         )
 
     def get_audit_log(self) -> MultiplayerSessionAuditLog:
