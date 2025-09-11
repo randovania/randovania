@@ -21,6 +21,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Minor adjustment aimed at releasing the X parasites safer for the generator, no changes to requirements in practice.
 
+### Metroid Fusion
+
+- Changed: Infant Metroid hints have been reformatted for easier readability.
+
 ## [10.1.0] - 2025-09-02
 
 - Added: 7 Joke hints.
