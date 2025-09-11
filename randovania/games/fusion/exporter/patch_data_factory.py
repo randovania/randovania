@@ -272,22 +272,28 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         ]
 
         if metroid_precision != SpecificPickupHintMode.DISABLED:
+            restricted_hint_counter = 1
+            operations_hint_counter = 1
             # loop through all metroids and place ones on bosses on Operations Deck and the rest on Restricted Area
             for metroid_resource, text in metroid_hint_mapping.items():
                 if "has no need to be located" in text:
                     continue
                 if metroid_resource in artifacts_on_bosses:
-                    operations_hint = operations_hint + text + " "
+                    operations_hint = operations_hint + str(operations_hint_counter) + ". " + text + "[NEWLINE]"
+                    operations_hint_counter += 1
                 else:
-                    restricted_hint = restricted_hint + text + " "
-            restricted_hint = restricted_hint.rstrip()
-            operations_hint = operations_hint.rstrip()
+                    restricted_hint = restricted_hint + str(restricted_hint_counter) + ". " + text + "[NEWLINE]"
+                    restricted_hint_counter += 1
+
+            metroid_hint_base = "[COLOR=3]Metroids[/COLOR] detected at the following locations:[NEXT]"
+            restricted_hint = metroid_hint_base + restricted_hint.rstrip("[NEWLINE]")
+            operations_hint = metroid_hint_base + operations_hint.rstrip("[NEWLINE]")
 
             no_metroids_hint = "This terminal was unable to scan for any [COLOR=3]Metroids[/COLOR]."
             # special handling when there's no Metroids to hint on either terminal
-            if not operations_hint:
+            if operations_hint == metroid_hint_base:
                 operations_hint = no_metroids_hint
-            if not restricted_hint:
+            if restricted_hint == metroid_hint_base:
                 restricted_hint = no_metroids_hint
 
         for node in self.game.region_list.iterate_nodes_of_type(HintNode):

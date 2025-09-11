@@ -65,6 +65,9 @@ class FusionHintNamer(HintNamer[FusionColor]):
         fmt = "{} is located in {}{}."
         location_name = self.format_location(location, with_region=True, with_area=not hide_area, with_color=with_color)
 
+        if resource.extra.get("item") == "InfantMetroid":
+            return f"{determiner}{location_name}."
+
         return fmt.format(
             self.colorize_text(self.color_item, resource.long_name, with_color),
             determiner,
