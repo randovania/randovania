@@ -275,7 +275,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             restricted_hint_counter = 1
             operations_hint_counter = 1
             # loop through all metroids and place ones on bosses on Operations Deck and the rest on Restricted Area
-            for metroid_resource, text in metroid_hint_mapping.items():
+            for metroid_resource, text in sorted(metroid_hint_mapping.items(), key=lambda d: d[1]):
                 if "has no need to be located" in text:
                     continue
                 if metroid_resource in artifacts_on_bosses:
