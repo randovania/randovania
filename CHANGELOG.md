@@ -25,6 +25,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Infant Metroid hints have been reformatted for easier readability.
 
+### Metroid Fusion
+
+#### Logic Database
+
+##### Main Deck:
+
+- Added: Operations Deck: Ludicrous JBJ to reach Operations Room using only Morph and Bombs.
+
+##### Sector 1 (SRX)
+
+- Added: Ridley Arena: Ludicrous JBJ to escape, having no Space Jump.
+
+##### Sector 2 (TRO)
+
+- Changed: Zoro Zig-Zag: Ludicrous JBJ from bottom door to break bomb blocks reduced to Expert.
+- Changed: Cultivation Station: Advanced JBJ to bomb top floor blocks from beneath reduced to Intermediate.
+- Changed: Puyo Corridor: Expert JBJ from right to left reduced to Advanced.
+- Changed: Cathedral: Ludicrous JBJ to escape from bottom to top section reduced to Expert, accompanying ttv clip replaced by YouTube link having better input display.
+- Changed: Data Courtyard: Advanced JBJ to break left block from beneath reduced to Intermediate.
+- Added: Zazabi Arena: Ludicrous JBJ to escape, having no jump upgrades (besides bombs).
+
+##### Sector 3 (PYR)
+
+- Changed: Namihe's Lair: Expert JBJs, to both get the item and escape, reduced to Advanced.
+- Changed: Processing Access: Expert JBJ off sova to top door reduced to Advanced.
+- Changed: Glass Tube to Sector 5: Expert JBJ to break block reduced to Intermediate, via easier method.
+
+##### Sector 4 (AQA)
+
+- Changed: Security Bypass: Expert JBJ to break top floor bomb blocks from beneath reduced to Advanced.
+- Added: Security Bypass: Expert JBJ to race to the top floor before bomb blocks reform.
+
+##### Sector 5 (ARC)
+
+- Changed: Crow's Nest: Ludicrous JBJ to break 2 reforming bomb blocks and jump through reduced to Expert.
+
+##### Sector 6 (NOC)
+
+- Changed: Entrance Lobby: Expert JBJ to bomb floor from beneath reduced to Advanced.
+- Changed: Zozoro Wine Cellar: Expert JBJ to item reduced to Advanced.
+- Changed: Twin Caverns West: Expert JBJ to tunnel reduced to Advanced.
+
 ## [10.1.0] - 2025-09-02
 
 - Added: 7 Joke hints.
