@@ -23,7 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
+- Added: 5 more joke hints.
 - Changed: Infant Metroid hints have been reformatted for easier readability.
+- Fixed: Typo in a joke hint.
 
 ### Metroid Fusion
 
