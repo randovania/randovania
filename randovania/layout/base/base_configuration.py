@@ -92,7 +92,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
             result.append("Considering possible unsafe resources will increase generation time.")
 
         if self.logical_pickup_placement == LogicalPickupPlacementConfiguration.ALL:
-            result.append("Requiring every pickup in the preset to be obtainable causes increased generation failures.")
+            result.append("Requiring every pickup in the preset to be obtainable causes increased chance of generation failures.")
 
         return result
 
