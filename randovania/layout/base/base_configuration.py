@@ -91,6 +91,9 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
         if self.consider_possible_unsafe_resources:
             result.append("Considering possible unsafe resources will increase generation time.")
 
+        if self.logical_pickup_placement == LogicalPickupPlacementConfiguration.ALL:
+            result.append("Requiring every pickup in the preset to be obtainable causes increased generation failures.")
+
         return result
 
     def settings_incompatible_with_multiworld(self) -> list[str]:
