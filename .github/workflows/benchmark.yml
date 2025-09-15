@@ -37,5 +37,6 @@ jobs:
       - name: run pytest (benchmark)
         uses: CodSpeedHQ/action@v4
         with:
-          run: uv run pytest -n auto --codspeed --codspeed-mode=walltime --codspeed-max-rounds=1 --skip-gui-tests
+          run: uv run pytest -n auto --codspeed --codspeed-max-rounds=1 --skip-gui-tests
+          mode: walltime
           token: ${{ secrets.CODSPEED_TOKEN }}
