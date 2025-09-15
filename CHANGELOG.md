@@ -7,8 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.2.0] - 2025-10-??
 
-### Added
-
+- Added: A warning when trying to generate a Multiworld game if a preset requires all Pickups to be obtainable.
 - Added: Command line arguments for gathering statistics about a collection of generated games. These commands are intended for advanced uses only.
 
 ### Metroid Dread
