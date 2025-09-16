@@ -71,6 +71,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 ##### Chozo Ruins 
+
 - Changed: Hall of the Elders: The Bomb Jump to skip Spider Ball and Space Jump is now Expert instead of Ludicrous. 
 - Changed: Save Station 3: The Wall Boost to skip Morph Ball Bombs is now Expert instead of Ludicrous. 
 - Changed: Sunchamber: Fighting Flaahgra using Wavebuster instead of Morph Ball Bombs is now Combat Intermediate instead of Advanced.
