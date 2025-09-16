@@ -369,22 +369,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Fix the Door Lock Rando misc resource being called Dock Rando.
 
-##### Chozo Ruins
-
-- Changed: Hall of the Elders: The Bomb Jump to skip Spider Ball and Space Jump is now Expert instead of Ludicrous.
-- Changed: Save Station 3: The Wall Boost to skip Morph Ball Bombs is now Expert instead of Ludicrous.
-- Changed: Sunchamber: Fighting Flaahgra using Wavebuster instead of Morph Ball Bombs is now Combat Intermediate instead of Advanced.
-
 ##### Phendrana Drifts
 
-- Removed: Frozen Pike: Logic for scaling the room from Pike Access to Transport Access without Morph Ball has been removed.
 - Fixed: Observatory: Logic will now properly reflect the fact that you can activate the Observatory even after collecting the item in Research Core.
-- Changed: Phendrana Canyon: The Combat Dash to obtain the item without Space Jump, Scan Visor, and Boost Ball no longer requires Damage Boosting and the Combat/Scan Dash has been changed from Advanced to Expert.
-- Changed: Qurantine Cave: The Grapple Beam escape from the bottom of the room without Space Jump is now intermediate instead of advanced. With Space Jump it is now beginner instead of trickless.
-
-##### Tallon Overworld
-
-- Changed: Life Grove Tunnel: The Complex Bomb Jump to escape the half-pipe without Boost Ball is now Expert instead of Ludicrous.
 
 ### Metroid Prime 2: Echoes
 
