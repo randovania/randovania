@@ -7,6 +7,7 @@ from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime_hunters.layout.force_field_configuration import ForceFieldConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 
 @dataclasses.dataclass(frozen=True)
@@ -19,6 +20,7 @@ class HuntersOctolithConfig(BitPackDataclass, JsonDataclass):
 class HuntersConfiguration(BaseConfiguration):
     octoliths: HuntersOctolithConfig
     force_field_configuration: ForceFieldConfiguration
+    teleporters: TeleporterConfiguration
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

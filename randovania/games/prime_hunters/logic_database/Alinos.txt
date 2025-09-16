@@ -337,6 +337,7 @@ Extra - entity_file: Unit1_C3_Ent.bin
 Magma Drop
 Extra - room_id: 30
 Extra - entity_file: Unit1_C4_Ent.bin
+Extra - portal_filename: unit1_C4_Ent
 > Player Spawn; Heals? False; Default Node
   * Layers: default
   * Extra - entity_id: 0
@@ -349,7 +350,7 @@ Extra - entity_file: Unit1_C4_Ent.bin
 
 > Portal to High Ground; Heals? False
   * Layers: default
-  * Portal to High Ground/Portal from Magma Drop
+  * Portal to High Ground/Portal from Magma Drop; Custom name: Alinos - Magma Drop (High Ground Exit Portal)
   * Extra - entity_id: 28
   * Extra - position: frozendict.frozendict({'x': 0.900146484375, 'y': 116.433349609375, 'z': 5.60546875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -358,7 +359,7 @@ Extra - entity_file: Unit1_C4_Ent.bin
 
 > Portal from High Ground; Heals? False
   * Layers: default
-  * No Return Portal to High Ground/Portal to Magma Drop
+  * No Return Portal to High Ground/Portal to Magma Drop; Custom name: Alinos - Magma Drop (High Ground Entrance Portal)
   * Extra - entity_id: 29
   * Extra - position: frozendict.frozendict({'x': 0.99169921875, 'y': 114.47216796875, 'z': -15.309814453125})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': -0.999755859375, 'z': 0.0})
@@ -404,7 +405,7 @@ Extra - entity_file: Unit1_C5_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 1, 'connector_id': 5, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 11, 'out_loader_id': 117, 'entity_filename': 'unit1_RM5_Ent.b', 'room_name': 'unit1_RM5_Ent.b'})
   > Player Spawn
       Trivial
-  > Pickup (Binary Subcripture)
+  > Pickup (Binary Subcripture Artifact)
       Trivial
 
 > Morph Ball Door to Processor Core (Exit); Heals? False
@@ -415,10 +416,10 @@ Extra - entity_file: Unit1_C5_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 1, 'connector_id': 7, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 12, 'out_loader_id': 117, 'entity_filename': 'unit1_RM5_Ent.b', 'room_name': 'unit1_RM5_Ent.b'})
-  > Pickup (Binary Subcripture)
+  > Pickup (Binary Subcripture Artifact)
       Trivial
 
-> Pickup (Binary Subcripture); Heals? False
+> Pickup (Binary Subcripture Artifact); Heals? False
   * Layers: default
   * Pickup 6; Category? Major
   * Extra - entity_id: 38
@@ -435,6 +436,7 @@ Extra - entity_file: Unit1_C5_Ent.bin
 Alinos Gateway
 Extra - room_id: 27
 Extra - entity_file: Unit1_Land_Ent.bin
+Extra - portal_filename: unit1_Land_Ent
 > Door to Echo Hall; Heals? False
   * Layers: default
   * Normal Door to Echo Hall/Door to Alinos Gateway
@@ -476,7 +478,7 @@ Extra - entity_file: Unit1_Land_Ent.bin
 
 > Portal to Council Chamber; Heals? False
   * Layers: default
-  * Portal to Council Chamber/Portal to Alinos Gateway
+  * Portal to Council Chamber/Portal to Alinos Gateway; Custom name: Alinos - Alinos Gateway (Council Chamber Portal)
   * Extra - entity_id: 24
   * Extra - position: frozendict.frozendict({'x': 14.37890625, 'y': 14.46875, 'z': -11.133544921875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -487,7 +489,7 @@ Extra - entity_file: Unit1_Land_Ent.bin
 
 > Portal to Elder Passage; Heals? False
   * Layers: default
-  * Portal to Elder Passage/Portal to Alinos Gateway
+  * Portal to Elder Passage/Portal to Alinos Gateway; Custom name: Alinos - Alinos Gateway (Elder Passage Portal)
   * Extra - entity_id: 25
   * Extra - position: frozendict.frozendict({'x': 14.37890625, 'y': 14.46875, 'z': 11.133544921875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -500,6 +502,7 @@ Extra - entity_file: Unit1_Land_Ent.bin
 High Ground
 Extra - room_id: 29
 Extra - entity_file: unit1_RM1_Ent.bin
+Extra - portal_filename: unit1_RM1_Ent
 > Player Spawn; Heals? False; Default Node
   * Layers: default
   * Extra - entity_id: 0
@@ -645,7 +648,7 @@ Extra - entity_file: unit1_RM1_Ent.bin
 
 > Portal to Magma Drop; Heals? False
   * Layers: default
-  * Portal to Magma Drop/Portal from High Ground
+  * Portal to Magma Drop/Portal from High Ground; Custom name: Alinos - High Ground (Magma Drop Entrance Portal)
   * Extra - entity_id: 57
   * Extra - position: frozendict.frozendict({'x': -13.34130859375, 'y': -2.190673828125, 'z': 11.0625})
   * Extra - up_vector: frozendict.frozendict({'x': 0.005859375, 'y': 0.999755859375, 'z': 0.0})
@@ -656,7 +659,7 @@ Extra - entity_file: unit1_RM1_Ent.bin
 
 > Portal from Magma Drop; Heals? False
   * Layers: default
-  * No Return Portal to Magma Drop/Portal to High Ground
+  * No Return Portal to Magma Drop/Portal to High Ground; Custom name: Alinos - High Ground (Magma Drop Exit Portal)
   * Extra - entity_id: 58
   * Extra - position: frozendict.frozendict({'x': -9.540283203125, 'y': 0.78955078125, 'z': 4.26025390625})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -721,7 +724,7 @@ Extra - entity_file: unit1_RM1_Ent.bin
   * Extra - facing_vector: frozendict.frozendict({'x': -0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 3, 'connector_id': 22, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 12, 'out_loader_id': 117, 'entity_filename': 'unit1_RM6_Ent.b', 'room_name': 'unit1_RM6_Ent.b'})
   > Door to Alimbic Gardens
-      Missile ≥ 3 and Missile Jump (Intermediate)
+      Missiles ≥ 3 and Missile Jump (Intermediate)
   > Upper Level
       Trivial
 
@@ -786,6 +789,9 @@ Extra - entity_file: unit1_RM1_Ent.bin
       Trivial
   > Volt Driver Force Field (Upper)
       Trivial
+  > Portal to Magma Drop
+      # Clip through the wall with Boost Ball and hold backwards to enter the portal: https://youtu.be/tKfqR1rLSQM
+      Movement (Advanced) and Wall Clip (Advanced)
   > Judicator Force Field (Upper)
       Trivial
   > Pickup (Missile Expansion)
@@ -917,7 +923,7 @@ Extra - entity_file: unit1_RM2_Ent.bin
 > Room Center; Heals? False
   * Layers: default
   > Door to Crash Site (Upper)
-      After Alinos - Alinos Perch Entrance Platforms Moved and After Alinos - Alinos Perch Security System Deactivate
+      After Alinos - Alinos Perch Entrance Platforms Moved and After Alinos - Alinos Perch Security System Deactivated
   > Door to Thermal Vast
       Trivial
   > Door to Council Chamber
@@ -929,10 +935,10 @@ Extra - entity_file: unit1_RM2_Ent.bin
           Bomb Jump (Beginner)
           All of the following:
               Missile Jump (Beginner)
-              Magmaul or Missile ≥ 3
+              Magmaul or Missiles ≥ 3
   > Event - Guardian Defeated
       Trivial
-  > Event - Security System Disabled
+  > Event - Security System Deactivated
       After Alinos - Alinos Perch Force Field Platform Moved
   > Event - Entrance Platforms Moved
       Trivial
@@ -949,9 +955,9 @@ Extra - entity_file: unit1_RM2_Ent.bin
   > Magmaul Force Field
       Trivial
 
-> Event - Security System Disabled; Heals? False
+> Event - Security System Deactivated; Heals? False
   * Layers: default
-  * Event Alinos - Alinos Perch Security System Deactivate
+  * Event Alinos - Alinos Perch Security System Deactivated
   > Room Center
       Trivial
 
@@ -965,6 +971,7 @@ Extra - entity_file: unit1_RM2_Ent.bin
 Council Chamber
 Extra - room_id: 40
 Extra - entity_file: unit1_rm3_Ent.bin
+Extra - portal_filename: unit1_RM3_Ent
 > Player Spawn; Heals? False; Default Node
   * Layers: default
   * Extra - entity_id: 72
@@ -1174,6 +1181,7 @@ Extra - entity_file: unit1_rm4_Ent.bin
 Processor Core
 Extra - room_id: 41
 Extra - entity_file: unit1_rm5_Ent.bin
+Extra - portal_filename: unit1_RM5_Ent
 > Player Spawn; Heals? False; Default Node
   * Layers: default
   * Extra - entity_id: 17
@@ -1249,6 +1257,7 @@ Extra - entity_file: unit1_rm5_Ent.bin
 Elder Passage
 Extra - room_id: 31
 Extra - entity_file: unit1_RM6_Ent.bin
+Extra - portal_filename: unit1_RM6_Ent
 > Door to High Ground (Bottom); Heals? False
   * Layers: default
   * Normal Door to High Ground/Door to Elder Passage (Bottom)
@@ -1270,8 +1279,6 @@ Extra - entity_file: unit1_RM6_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 3, 'connector_id': 23, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 12, 'out_loader_id': 117, 'entity_filename': 'unit1_RM1_Ent.b', 'room_name': 'unit1_RM1_Ent.b'})
   > Player Spawn
       Trivial
-  > Portal to Alinos Gateway
-      After Alinos - Elder Passage Ship Deck Portal Unlocked
   > Event - Ship Deck Portal Unlocked
       Trivial
   > Next to Stronghold Portal
@@ -1279,7 +1286,7 @@ Extra - entity_file: unit1_RM6_Ent.bin
 
 > Portal to Stronghold Void B; Heals? False
   * Layers: default
-  * Portal to Stronghold Void B/Portal to Elder Passage
+  * Portal to Stronghold Void B/Portal to Elder Passage; Custom name: Alinos - Elder Passage (Stronghold Void B Portal)
   * Extra - entity_id: 2
   * Extra - position: frozendict.frozendict({'x': 22.7255859375, 'y': 17.335693359375, 'z': 0.04833984375})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -1311,13 +1318,13 @@ Extra - entity_file: unit1_RM6_Ent.bin
 
 > Portal to Alinos Gateway; Heals? False
   * Layers: default
-  * Portal to Alinos Gateway/Portal to Elder Passage
+  * Portal to Alinos Gateway/Portal to Elder Passage; Custom name: Alinos - Elder Passage (Alinos Gateway Portal)
   * Extra - entity_id: 19
   * Extra - position: frozendict.frozendict({'x': 23.944091796875, 'y': 17.335693359375, 'z': 9.141357421875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.302734375, 'y': 0.0, 'z': -0.952880859375})
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 20, 'target_index': 20, 'artifact_id': 8, 'active': False, 'invisible': False, 'entity_filename': 'unit1_Land_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
-  > Door to High Ground (Top)
+  > Next to Stronghold Portal
       Trivial
 
 > Event - Spire Encounter; Heals? False
@@ -1347,6 +1354,8 @@ Extra - entity_file: unit1_RM6_Ent.bin
       After Alinos - High Ground Spire Defeated
   > Portal to Stronghold Void B
       Alinos Attameter Artifact 1 and Alinos Binary Subscripture Artifact 1 and Alinos Cartograph Artifact 1
+  > Portal to Alinos Gateway
+      After Alinos - Elder Passage Ship Deck Portal Unlocked
   > Small Arena
       Trivial
 
@@ -1354,6 +1363,7 @@ Extra - entity_file: unit1_RM6_Ent.bin
 Stronghold Void B
 Extra - room_id: 34
 Extra - entity_file: Unit1_TP1_Ent.bin
+Extra - portal_filename: Unit1_TP1_Ent
 > Player Spawn; Heals? False; Default Node
   * Layers: default
   * Extra - entity_id: 0
@@ -1392,6 +1402,7 @@ Extra - entity_file: Unit1_TP1_Ent.bin
 Stronghold Void A
 Extra - room_id: 43
 Extra - entity_file: Unit1_TP2_Ent.bin
+Extra - portal_filename: Unit1_TP2_Ent
 > Player Spawn; Heals? False; Default Node
   * Layers: default
   * Extra - entity_id: 0

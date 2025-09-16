@@ -5,7 +5,7 @@
             "long_name": "Beams",
             "hint_details": [
                 "a ",
-                "beam"
+                "beam upgrade"
             ]
         },
         "missile": {
@@ -43,27 +43,6 @@
                 "Energy Tank"
             ]
         },
-        "morph_ball_related": {
-            "long_name": "Morph Ball Related",
-            "hint_details": [
-                "a ",
-                "morph ball-related upgrade"
-            ]
-        },
-        "beam_related": {
-            "long_name": "Beam Related",
-            "hint_details": [
-                "a ",
-                "beam-related upgrade"
-            ]
-        },
-        "missile_related": {
-            "long_name": "Missile Related",
-            "hint_details": [
-                "a ",
-                "missile-related upgrade"
-            ]
-        },
         "life_support": {
             "long_name": "Life Support",
             "hint_details": [
@@ -71,11 +50,11 @@
                 "life support system"
             ]
         },
-        "misc": {
-            "long_name": "Miscellaneous",
+        "bonus": {
+            "long_name": "Bonus Upgrades",
             "hint_details": [
                 "a ",
-                "miscellaneous system"
+                "bonus upgrade"
             ]
         },
         "dna": {
@@ -98,13 +77,6 @@
                 "an ",
                 "expansion"
             ]
-        },
-        "key": {
-            "long_name": "Key",
-            "hint_details": [
-                "a ",
-                "key"
-            ]
         }
     },
     "generated_pickups": {
@@ -112,8 +84,7 @@
             "name_template": "Metroid DNA {i}",
             "gui_category": "dna",
             "hint_features": [
-                "dna",
-                "key"
+                "dna"
             ],
             "model_name": "sItemDNA",
             "offworld_models": {
@@ -132,7 +103,6 @@
             "gui_category": "beam",
             "hint_features": [
                 "beam",
-                "beam_related",
                 "major"
             ],
             "model_name": "sItemNothing",
@@ -148,8 +118,7 @@
             "gui_category": "morph_ball",
             "hint_features": [
                 "major",
-                "morph_ball",
-                "morph_ball_related"
+                "morph_ball"
             ],
             "model_name": "sItemBomb",
             "offworld_models": {
@@ -412,7 +381,6 @@
             "gui_category": "beam",
             "hint_features": [
                 "beam",
-                "beam_related",
                 "major"
             ],
             "model_name": "sItemChargeBeam",
@@ -435,7 +403,6 @@
             "gui_category": "beam",
             "hint_features": [
                 "beam",
-                "beam_related",
                 "major"
             ],
             "model_name": "sItemIceBeam",
@@ -457,7 +424,6 @@
             "gui_category": "beam",
             "hint_features": [
                 "beam",
-                "beam_related",
                 "major"
             ],
             "model_name": "sItemWaveBeam",
@@ -479,7 +445,6 @@
             "gui_category": "beam",
             "hint_features": [
                 "beam",
-                "beam_related",
                 "major"
             ],
             "model_name": "sItemSpazerBeam",
@@ -501,7 +466,6 @@
             "gui_category": "beam",
             "hint_features": [
                 "beam",
-                "beam_related",
                 "major"
             ],
             "model_name": "sItemPlasmaBeam",
@@ -523,8 +487,7 @@
             "gui_category": "morph_ball",
             "hint_features": [
                 "major",
-                "morph_ball",
-                "morph_ball_related"
+                "morph_ball"
             ],
             "model_name": "sItemMorphBall",
             "offworld_models": {
@@ -542,8 +505,7 @@
             "gui_category": "missile",
             "hint_features": [
                 "major",
-                "missile",
-                "missile_related"
+                "missile"
             ],
             "model_name": "sItemMissileLauncher",
             "offworld_models": {
@@ -566,8 +528,7 @@
             "gui_category": "missile",
             "hint_features": [
                 "major",
-                "missile",
-                "missile_related"
+                "missile"
             ],
             "model_name": "sItemSMissileLauncher",
             "offworld_models": {
@@ -593,8 +554,7 @@
             "gui_category": "morph_ball",
             "hint_features": [
                 "major",
-                "morph_ball",
-                "morph_ball_related"
+                "morph_ball"
             ],
             "model_name": "sItemPBombLauncher",
             "offworld_models": {
@@ -619,7 +579,6 @@
         "Energy Tank": {
             "gui_category": "energy_tank",
             "hint_features": [
-                "energy_tank",
                 "life_support",
                 "major"
             ],
@@ -639,11 +598,11 @@
             "custom_count_for_shuffled_case": 10
         },
         "Long Beam": {
-            "gui_category": "misc",
+            "gui_category": "bonus",
             "hint_features": [
-                "beam_related",
+                "beam",
                 "major",
-                "misc"
+                "bonus"
             ],
             "model_name": "sItemLongBeam",
             "offworld_models": {
@@ -657,11 +616,12 @@
             "expected_case_for_describer": "starting_item"
         },
         "Infinite Bomb Propulsion": {
-            "gui_category": "misc",
+            "gui_category": "bonus",
             "hint_features": [
                 "major",
-                "misc",
-                "morph_ball_related"
+                "bonus",
+                "morph_ball",
+                "movement"
             ],
             "model_name": "sItemIBJ",
             "offworld_models": {},
@@ -673,10 +633,10 @@
             "expected_case_for_describer": "starting_item"
         },
         "Walljump Boots": {
-            "gui_category": "misc",
+            "gui_category": "bonus",
             "hint_features": [
                 "major",
-                "misc",
+                "bonus",
                 "movement"
             ],
             "model_name": "sItemWallJump",
@@ -687,14 +647,93 @@
                 "Walljump Boots"
             ],
             "expected_case_for_describer": "starting_item"
+        },
+        "Arm Cannon": {
+            "gui_category": "bonus",
+            "hint_features": [
+                "beam",
+                "major"
+            ],
+            "model_name": "sItemArmCannon",
+            "offworld_models": {},
+            "preferred_location_category": "major",
+            "progression": [
+                "Arm Cannon"
+            ],
+            "expected_case_for_describer": "starting_item",
+            "description": "A custom item. Required to shoot Beams or Missiles.",
+            "hide_from_gui": true
+        },
+        "Alpha Metroid Lure": {
+            "gui_category": "bonus",
+            "hint_features": [
+                "major",
+                "bonus"
+            ],
+            "model_name": "sItemShinyNothing",
+            "offworld_models": {},
+            "preferred_location_category": "major",
+            "description": "A custom item. Makes Alpha Metroids appear.",
+            "progression": [
+                "Alpha Metroid Lure"
+            ],
+            "expected_case_for_describer": "starting_item",
+            "hide_from_gui": true
+        },
+        "Gamma Metroid Lure": {
+            "gui_category": "bonus",
+            "hint_features": [
+                "major",
+                "bonus"
+            ],
+            "model_name": "sItemShinyNothing",
+            "offworld_models": {},
+            "preferred_location_category": "major",
+            "description": "A custom item. Makes Gamma Metroids appear.",
+            "progression": [
+                "Gamma Metroid Lure"
+            ],
+            "expected_case_for_describer": "starting_item",
+            "hide_from_gui": true
+        },
+        "Zeta Metroid Lure": {
+            "gui_category": "bonus",
+            "hint_features": [
+                "major",
+                "bonus"
+            ],
+            "model_name": "sItemShinyNothing",
+            "offworld_models": {},
+            "preferred_location_category": "major",
+            "description": "A custom item. Makes Zeta Metroids appear.",
+            "progression": [
+                "Zeta Metroid Lure"
+            ],
+            "expected_case_for_describer": "starting_item",
+            "hide_from_gui": true
+        },
+        "Omega Metroid Lure": {
+            "gui_category": "bonus",
+            "hint_features": [
+                "major",
+                "bonus"
+            ],
+            "model_name": "sItemShinyNothing",
+            "offworld_models": {},
+            "preferred_location_category": "major",
+            "description": "A custom item. Makes Omega Metroids appear.",
+            "progression": [
+                "Omega Metroid Lure"
+            ],
+            "expected_case_for_describer": "starting_item",
+            "hide_from_gui": true
         }
     },
     "ammo_pickups": {
         "Missile Tank": {
             "gui_category": "missile",
             "hint_features": [
-                "expansion",
-                "missile_related"
+                "expansion"
             ],
             "model_name": "sItemMissile",
             "offworld_models": {
@@ -714,8 +753,7 @@
         "Super Missile Tank": {
             "gui_category": "missile",
             "hint_features": [
-                "expansion",
-                "missile_related"
+                "expansion"
             ],
             "model_name": "sItemSuperMissile",
             "offworld_models": {
@@ -735,8 +773,7 @@
         "Power Bomb Tank": {
             "gui_category": "morph_ball",
             "hint_features": [
-                "expansion",
-                "morph_ball_related"
+                "expansion"
             ],
             "model_name": "sItemPowerBomb",
             "offworld_models": {
@@ -754,10 +791,9 @@
             "allows_negative": true
         },
         "Small Health Drop": {
-            "gui_category": "misc",
+            "gui_category": "bonus",
             "hint_features": [
-                "expansion",
-                "misc"
+                "bonus"
             ],
             "model_name": "sItemSmallHealthDrop",
             "offworld_models": {},
@@ -772,10 +808,9 @@
             "mention_limit": false
         },
         "Big Health Drop": {
-            "gui_category": "misc",
+            "gui_category": "bonus",
             "hint_features": [
-                "expansion",
-                "misc"
+                "bonus"
             ],
             "model_name": "sItemBigHealthDrop",
             "offworld_models": {},
@@ -790,10 +825,9 @@
             "mention_limit": false
         },
         "Missile Drop": {
-            "gui_category": "misc",
+            "gui_category": "bonus",
             "hint_features": [
-                "expansion",
-                "misc"
+                "bonus"
             ],
             "model_name": "sItemMissileDrop",
             "offworld_models": {},
@@ -808,10 +842,9 @@
             "mention_limit": false
         },
         "Super Missile Drop": {
-            "gui_category": "misc",
+            "gui_category": "bonus",
             "hint_features": [
-                "expansion",
-                "misc"
+                "bonus"
             ],
             "model_name": "sItemSMissileDrop",
             "offworld_models": {},
@@ -826,10 +859,9 @@
             "mention_limit": false
         },
         "Power Bomb Drop": {
-            "gui_category": "misc",
+            "gui_category": "bonus",
             "hint_features": [
-                "expansion",
-                "misc"
+                "bonus"
             ],
             "model_name": "sItemPBombDrop",
             "offworld_models": {},
@@ -844,10 +876,9 @@
             "mention_limit": false
         },
         "Speed Booster Upgrade": {
-            "gui_category": "misc",
+            "gui_category": "bonus",
             "hint_features": [
-                "expansion",
-                "misc"
+                "bonus"
             ],
             "model_name": "sItemSpeedBoosterUpgrade",
             "offworld_models": {
@@ -862,10 +893,9 @@
             "explain_other_sources": false
         },
         "Flashlight": {
-            "gui_category": "misc",
+            "gui_category": "bonus",
             "hint_features": [
-                "expansion",
-                "misc"
+                "bonus"
             ],
             "model_name": "sItemFlashlight",
             "offworld_models": {},
@@ -878,10 +908,9 @@
             "explain_other_sources": false
         },
         "Blindfold": {
-            "gui_category": "misc",
+            "gui_category": "bonus",
             "hint_features": [
-                "expansion",
-                "misc"
+                "bonus"
             ],
             "model_name": "sItemBlindfold",
             "offworld_models": {},

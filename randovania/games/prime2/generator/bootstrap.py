@@ -18,6 +18,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -36,19 +37,18 @@ def is_boss_location(node: PickupNode, config: EchoesConfiguration) -> bool:
     return False
 
 
-class EchoesBootstrap(Bootstrap):
-    def create_damage_state(self, game: GameDescription, configuration: EchoesConfiguration) -> DamageState:
+class EchoesBootstrap(Bootstrap[EchoesConfiguration]):
+    def create_damage_state(self, game: GameDatabaseView, configuration: EchoesConfiguration) -> DamageState:
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
-            game.resource_database,
-            game.region_list,
+            game.get_resource_database_view().get_item("EnergyTank"),
         )
 
     def event_resources_for_configuration(
         self,
         configuration: EchoesConfiguration,
-        resource_database: ResourceDatabase,
+        resource_database: ResourceDatabaseView,
     ) -> ResourceGain:
         yield resource_database.get_event("Event2"), 1  # Hive Tunnel Web
         yield resource_database.get_event("Event4"), 1  # Command Chamber Gate
@@ -61,7 +61,7 @@ class EchoesBootstrap(Bootstrap):
             yield resource_database.get_event("Event20"), 1  # Security Station B DS Appearance
 
     def _get_enabled_misc_resources(
-        self, configuration: EchoesConfiguration, resource_database: ResourceDatabase
+        self, configuration: EchoesConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         enabled_resources = set()
         allow_vanilla = {
@@ -94,8 +94,8 @@ class EchoesBootstrap(Bootstrap):
         damage_reductions = copy.copy(db.damage_reductions)
         damage_reductions[db.get_damage("DarkWorld1")] = [
             DamageReduction(None, configuration.varia_suit_damage / 6.0),
-            DamageReduction(db.get_item_by_name("Dark Suit"), configuration.dark_suit_damage / 6.0),
-            DamageReduction(db.get_item_by_name("Light Suit"), 0.0),
+            DamageReduction(db.get_item_by_display_name("Dark Suit"), configuration.dark_suit_damage / 6.0),
+            DamageReduction(db.get_item_by_display_name("Light Suit"), 0.0),
         ]
         return dataclasses.replace(db, damage_reductions=damage_reductions)
 
@@ -105,8 +105,11 @@ class EchoesBootstrap(Bootstrap):
         mode = configuration.sky_temple_keys
 
         if mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
+            pickups_to_preplace = [
+                pickup for pickup in list(pool_results.to_place) if pickup.gui_category.name == "sky_temple_key"
+            ]
             locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_boss_location)
-            self.pre_place_pickups(rng, locations, pool_results, "sky_temple_key", patches.game.game)
+            self.pre_place_pickups(rng, pickups_to_preplace, locations, pool_results, patches.game.game)
 
         return super().assign_pool_results(rng, configuration, patches, pool_results)
 
@@ -118,7 +121,7 @@ class EchoesBootstrap(Bootstrap):
 
         translator_gates = patches.game_specific["translator_gates"]
 
-        for node in game.region_list.iterate_nodes_of_type(ConfigurableNode):
+        for _, _, node in game.iterate_nodes_of_type(ConfigurableNode):
             requirement = LayoutTranslatorRequirement(translator_gates[node.identifier.as_string])
             translator = game.resource_database.get_item(requirement.item_name)
             game.region_list.configurable_nodes[node.identifier] = RequirementAnd(

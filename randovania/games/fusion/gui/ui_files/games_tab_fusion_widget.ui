@@ -33,7 +33,7 @@
       <item>
        <widget class="QLabel" name="intro_label">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;Explore the B.S.L Station, collect the escaped Infant Metroids, all while gearing up to fight the SA-X before destroying the station.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;The Operations Controls will only be unlocked once all the Metroids are collected.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;To aid Samus on her journey, ADAM now provides hints at Navigation Stations, this is explained further on the &lt;a href=&quot;tab://Hints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Hints&lt;/span&gt;&lt;/a&gt; Tabs.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;For more details, checkout the &lt;a href=&quot;tab://FAQ&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;FAQ&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;tab://Differences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Differences&lt;/span&gt;&lt;/a&gt; tabs.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;To get started, use the Quick Generate button to generate a game using the default settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;Explore the B.S.L Station, collect the escaped Infant Metroids, all while gearing up to fight the SA-X before destroying the station!&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;To aid Samus on her journey, ADAM now provides hints at Navigation Stations, this is explained further on the &lt;a href=&quot;tab://Hints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Hints&lt;/span&gt;&lt;/a&gt; Tabs.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;For more details, checkout the &lt;a href=&quot;tab://FAQ&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;FAQ&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;tab://Differences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Differences&lt;/span&gt;&lt;/a&gt; tabs.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;To get started, use the Quick Generate button to generate a game using the default and recommended settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
@@ -134,18 +134,28 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
+         <y>-616</y>
          <width>664</width>
-         <height>631</height>
+         <height>1021</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <widget class="QLabel" name="differences_label">
           <property name="text">
-           <string>Randovania and the MARS patcher make some changes to the original game in order to improve the game experience or to simply fix bugs in the original game. Key differences are: 
+           <string>Randovania and the MARS patcher make some changes to the original game in order to improve the randomizer experience or to simply fix bugs in the original game. Key differences are: 
 
 ### Gameplay
+
+- Added Pickups to the following Areas:
+    - Main Deck - Habitation Deck (Save the Animals)
+    - Main Deck - Auxiliary Power
+    - Main Deck - Sub-Zero Containment (near Ridley statue)
+    - Main Deck - Quarantine Bay
+    - Sector 1 (SRX) - Atmospheric Stabilizer Northeast
+    - Sector 3 (PYR) - Main Boiler Control Room
+
+- Security Keycards are now shuffleable items and Security Rooms are viable pickup locations.
 
 - The vanilla event system has been replaced with a non-linear one.
 
@@ -163,15 +173,27 @@
 
 ### Room Changes
 
-- Main Deck Operations Room - is now a grey Level 0 hatch, this means the Level 4 Keycard is not hard required to beat the game.
+- Main Deck - Operations Room - now a grey Level 0 hatch, this means the Level 4 Keycard may not be required to beat the game.
 
-- Main Deck - now has a connection between Crew Quarters East/West.
+- Main Deck - Operations Ventilation - repaired the connection between Crew Quarters East and West.
 
-- Main Deck Central Reactor Core - now has a platform near the top to make traversal still possible after the vines have been removed.
+- Main Deck - Silo Entry - the Zoro cocoon is moved to allow traversal.
 
-- The destruction of Sector 5 has been changed to always be consistent. Everything in West Sector 5 will always be undamaged, while everything East will be destroyed.
+- Main Deck - Central Reactor Core - now has a platform near the top to make traversal still possible after the vines have been removed.
 
-- Sector 5 - The red Level 4 hatch between Arctic Containment and Crows Nest has been changed to a yellow Level 3 hatch.
+- Sector 2 - Ripper Tower - now always has an open hatch.
+
+- Sector 2 - Overgrown Spire - added blocks to the climb to allow traversal after the vines are removed, which are speed blocks to maintain vanilla room strategies.
+
+- Sector 5 - The destruction of Sector 5 has been changed to always be consistent. Everything in West Sector 5 will always be undamaged, while everything East will be destroyed.
+
+- Sector 5 - Arctic Containment - The red Level 4 hatch between Arctic Containment and Crows Nest has been changed to a yellow Level 3 hatch.
+
+- Sector 5 - Ripper Road - now always has an open hatch.
+
+- Sector 6 - Weapons Testing Grounds - The Power Bomb wall that the SA-X destroys is permanently destroyed.
+
+- Made several enemy spawns consistent.
 
 ### Quality of Life
 
@@ -179,7 +201,13 @@
 
 - On the inventory screen, you can now enable/disable acquired powerups. Infant Metroid count is also displayed.
 
-- On the map screen, you can now cycle the Sectors on the map by pressing SELECT and show the current room name by pressing A. In-game Time (IGT) and Level 0 security status is also displayed.</string>
+- On the map screen, you can now cycle the Sectors on the map by pressing SELECT and show the current room name by pressing A. In-game Time (IGT) and Level 0 security status is also displayed.
+
+- The minimap has various bugfixes and new sector indicators are added to the sector transitions.
+
+- A cosmetic setting has been added to reveal all hidden blocks and pillars.
+
+- Some sprite variants have been modified for accessibility purposes.</string>
           </property>
           <property name="textFormat">
            <enum>Qt::MarkdownText</enum>
@@ -235,7 +263,7 @@
          <x>0</x>
          <y>0</y>
          <width>682</width>
-         <height>669</height>
+         <height>685</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -266,7 +294,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In Metroid Fusion, players can find hints at the various Navigation Terminals spread throught the B.S.L. There are three main types of hints: &lt;/p&gt;&lt;p&gt;1) &lt;span style=&quot; font-weight:700;&quot;&gt;Infant Metroids&lt;/span&gt;: The Restricted Navigation Room gives a hint where all Infant Metroids can be found. This Navigation Terminal is always unlocked. &lt;/p&gt;&lt;p&gt;2) &lt;span style=&quot; font-weight:700;&quot;&gt;Charge Beam&lt;/span&gt;: The Auxiliary Navigation Terminal gives a hint where the Charge Beam can be found. This Navigation Terminal is always unlocked &lt;/p&gt;&lt;p&gt;3) &lt;span style=&quot; font-weight:700;&quot;&gt;Regular: &lt;/span&gt;The remaining Navigation Terminals give hints to random pickups with varying precision. Activating these Navigation Terminals require a specific Keycard to be acquired, and will prevent interaction before then.&lt;/p&gt;&lt;p&gt;The table below summarizes the above:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In Metroid Fusion, players can find hints at the various Navigation Terminals spread throught the B.S.L. The Navigation Terminals are unlocked by the various Keycard pickups, and the graphics on the terminal can be used to identify which is needed in-game. There are three main types of hints: &lt;/p&gt;&lt;p&gt;1) &lt;span style=&quot; font-weight:700;&quot;&gt;Infant Metroids&lt;/span&gt;: The Restricted Labs and Operations Deck Navigation Rooms give a hint where the Infant Metroids can be found. Metroids on Bosses will be hinted on Operations Deck, and any remaining Metroids around the station will be hinted on Restricted Labs.&lt;/p&gt;&lt;p&gt;2) &lt;span style=&quot; font-weight:700;&quot;&gt;Charge Beam&lt;/span&gt;: The Auxiliary Navigation Terminal always gives a hint where the Charge Beam can be found. &lt;/p&gt;&lt;p&gt;3) &lt;span style=&quot; font-weight:700;&quot;&gt;Regular: &lt;/span&gt;The remaining Navigation Terminals give hints to random pickups with varying precision. One of these hints will randomly be replaced by a joke hint, which will have green text and a funny message to the player.&lt;/p&gt;&lt;p&gt;The table below summarizes the above:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="textFormat">
            <enum>Qt::MarkdownText</enum>
@@ -488,12 +516,12 @@
           </item>
           <item row="3" column="2">
            <property name="text">
-            <string>Level 0 Keycard (GREY)</string>
+            <string>Level 1 Keycard (BLUE)</string>
            </property>
           </item>
           <item row="3" column="3">
            <property name="text">
-            <string>Regular Hint, Featural</string>
+            <string>Specific Infant Metroids, Configurable Precision</string>
            </property>
           </item>
           <item row="4" column="0">
@@ -508,7 +536,7 @@
           </item>
           <item row="4" column="2">
            <property name="text">
-            <string>Unlocked</string>
+            <string>Level 4 Keycard (RED)</string>
            </property>
           </item>
           <item row="4" column="3">

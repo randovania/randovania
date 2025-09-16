@@ -44,7 +44,7 @@ class LayoutForceFieldRequirement(BitPackEnum, Enum):
 ITEM_NAMES = {
     LayoutForceFieldRequirement.POWER_BEAM: "PowerBeam",
     LayoutForceFieldRequirement.VOLT_DRIVER: "VoltDriver",
-    LayoutForceFieldRequirement.MISSILE: "Missile",
+    LayoutForceFieldRequirement.MISSILE: "MissileAmmo",
     LayoutForceFieldRequirement.BATTLEHAMMER: "Battlehammer",
     LayoutForceFieldRequirement.IMPERIALIST: "Imperialist",
     LayoutForceFieldRequirement.JUDICATOR: "Judicator",
@@ -56,7 +56,7 @@ enum_lib.add_long_name(
     {
         LayoutForceFieldRequirement.POWER_BEAM: "Power Beam",
         LayoutForceFieldRequirement.VOLT_DRIVER: "Volt Driver",
-        LayoutForceFieldRequirement.MISSILE: "Missile",
+        LayoutForceFieldRequirement.MISSILE: "MissileAmmo",
         LayoutForceFieldRequirement.BATTLEHAMMER: "Battlehammer",
         LayoutForceFieldRequirement.IMPERIALIST: "Imperialist",
         LayoutForceFieldRequirement.JUDICATOR: "Judicator",

@@ -58,9 +58,12 @@ def _empty_context():
 
 
 def _ctx_for(db: ResourceDatabase, *args: ResourceInfo):
+    collection = ResourceCollection.with_resource_count(len(db.resource_by_index))
+    collection.add_resource_gain((it, 1) for it in args)
+
     return NodeContext(
         MagicMock(),
-        ResourceCollection.from_dict(db, dict.fromkeys(args, 1)),
+        collection,
         db,
         MagicMock(),
     )
@@ -107,7 +110,10 @@ def test_simplify_requirement_set_static(blank_game_description, blank_game_patc
 
     def ctx(resources):
         return NodeContext(
-            blank_game_patches, ResourceCollection.from_dict(db, resources), db, blank_game_description.region_list
+            blank_game_patches,
+            ResourceCollection.from_dict(blank_game_description, resources),
+            db,
+            blank_game_description.region_list,
         )
 
     simple_1 = the_set.patch_requirements(1.0, ctx({res_a: 0, res_b: 0}))
@@ -749,14 +755,13 @@ def _arr_req(req_type: str, items: list):
         (100, ["LightSuit"], _arr_req("and", [_json_req(100), _json_req(100, "DarkWorld1")])),
     ],
 )
-def test_requirement_damage(damage, items, requirement, echoes_resource_database):
-    req = data_reader.read_requirement(requirement, echoes_resource_database)
+def test_requirement_damage(damage, items, requirement, echoes_game_description):
+    rdb = echoes_game_description.resource_database
+    req = data_reader.read_requirement(requirement, rdb)
 
-    collection = ResourceCollection.from_dict(
-        echoes_resource_database, {echoes_resource_database.get_item(item): 1 for item in items}
-    )
+    collection = ResourceCollection.from_dict(echoes_game_description, {rdb.get_item(item): 1 for item in items})
 
-    assert req.damage(NodeContext(MagicMock(), collection, echoes_resource_database, MagicMock())) == damage
+    assert req.damage(NodeContext(MagicMock(), collection, rdb, MagicMock())) == damage
 
 
 def test_simple_echoes_damage(echoes_resource_database):
@@ -766,8 +771,8 @@ def test_simple_echoes_damage(echoes_resource_database):
         50,
         False,
     )
-    d_suit = db.get_item_by_name("Dark Suit")
-    l_suit = db.get_item_by_name("Light Suit")
+    d_suit = db.get_item_by_display_name("Dark Suit")
+    l_suit = db.get_item_by_display_name("Light Suit")
 
     assert req.damage(_ctx_for(db)) == 50
     assert req.damage(_ctx_for(db, d_suit)) == 11
@@ -795,7 +800,7 @@ def test_requirement_list_constructor(echoes_resource_database):
 
 
 def test_requirement_set_constructor(echoes_resource_database):
-    item = echoes_resource_database.get_item_by_name
+    item = echoes_resource_database.get_item_by_display_name
 
     req_set = RequirementSet(
         [
@@ -862,7 +867,7 @@ def test_set_as_str_trivial():
 
 
 def test_set_as_str_things(echoes_resource_database):
-    item = echoes_resource_database.get_item_by_name
+    item = echoes_resource_database.get_item_by_display_name
 
     req_set = RequirementSet(
         [
@@ -888,7 +893,7 @@ def test_set_hash(echoes_resource_database):
         [
             RequirementList(
                 [
-                    ResourceRequirement.simple(echoes_resource_database.get_item_by_name("Power Bomb")),
+                    ResourceRequirement.simple(echoes_resource_database.get_item_by_display_name("Power Bomb")),
                 ]
             ),
         ]
@@ -897,7 +902,7 @@ def test_set_hash(echoes_resource_database):
         [
             RequirementList(
                 [
-                    ResourceRequirement.simple(echoes_resource_database.get_item_by_name("Power Bomb")),
+                    ResourceRequirement.simple(echoes_resource_database.get_item_by_display_name("Power Bomb")),
                 ]
             ),
         ]

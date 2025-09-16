@@ -2,6 +2,7 @@
 Entrance Lobby
 Extra - map_name: Sector 50
 Extra - room_id: [0]
+Extra - minimap_coordinates: [{'x': 4, 'y': 2}, {'x': 4, 'y': 3}, {'x': 4, 'y': 4}, {'x': 5, 'y': 2}, {'x': 5, 'y': 3}]
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Lobby
@@ -38,6 +39,7 @@ Extra - room_id: [0]
 Entrance Save Room
 Extra - map_name: Sector 51
 Extra - room_id: [1]
+Extra - minimap_coordinates: [{'x': 2, 'y': 2}]
 Extra - unlocked_save_recharge_station: True
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
@@ -66,6 +68,7 @@ Extra - unlocked_save_recharge_station: True
 Entrance Navigation Room
 Extra - map_name: Sector 52
 Extra - room_id: [2]
+Extra - minimap_coordinates: [{'x': 1, 'y': 2}]
 > Door to Entrance Save Room; Heals? False
   * Layers: default
   * Open Hatch to Entrance Save Room/Door to Entrance Navigation Room
@@ -95,6 +98,7 @@ Extra - room_id: [2]
 Training Grounds
 Extra - map_name: Sector 53
 Extra - room_id: [3, 6]
+Extra - minimap_coordinates: [{'x': 6, 'y': 1}, {'x': 6, 'y': 2}, {'x': 6, 'y': 3}, {'x': 6, 'y': 4}, {'x': 7, 'y': 1}, {'x': 7, 'y': 2}, {'x': 7, 'y': 3}, {'x': 7, 'y': 4}, {'x': 8, 'y': 1}, {'x': 8, 'y': 2}, {'x': 8, 'y': 3}, {'x': 8, 'y': 4}]
 > Door to Gerubus Gully; Heals? False
   * Layers: default
   * L3 Hatch to Gerubus Gully/Door to Training Grounds
@@ -145,6 +149,7 @@ Extra - room_id: [3, 6]
 Training Aerie
 Extra - map_name: Sector 54
 Extra - room_id: [4]
+Extra - minimap_coordinates: [{'x': 4, 'y': 1}, {'x': 5, 'y': 1}]
 Hint Features - Multiple Pickups
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
@@ -153,6 +158,7 @@ Hint Features - Multiple Pickups
   * Extra - room: 4
   * Extra - blockx: 5
   * Extra - blocky: 5
+  * Extra - infant_weight: 0.34
   > Door to Training Grounds
       Trivial
 
@@ -163,6 +169,7 @@ Hint Features - Multiple Pickups
   * Extra - room: 4
   * Extra - blockx: 20
   * Extra - blocky: 8
+  * Extra - infant_weight: 0.34
   > Door to Training Grounds
       Trivial
 
@@ -180,6 +187,7 @@ Hint Features - Multiple Pickups
 Arctic Containment
 Extra - map_name: Sector 57
 Extra - room_id: [7, 15]
+Extra - minimap_coordinates: [{'x': 9, 'y': 4}, {'x': 9, 'y': 5}, {'x': 9, 'y': 6}, {'x': 9, 'y': 7}, {'x': 9, 'y': 8}, {'x': 10, 'y': 4}, {'x': 10, 'y': 5}, {'x': 10, 'y': 6}, {'x': 10, 'y': 7}, {'x': 10, 'y': 8}]
 > Door to Training Grounds; Heals? False
   * Layers: default
   * L0 Hatch to Training Grounds/Door to Arctic Containment
@@ -249,7 +257,8 @@ Extra - room_id: [7, 15]
 
 > Door to Ripper Road; Heals? False
   * Layers: default
-  * Open Hatch to Ripper Road/Door to Arctic Containment
+  * Open Hatch to Ripper Road/Door to Arctic Containment; Excluded from Dock Lock Rando
+  * excluded from DLR due to hatch limitations
   * Extra - door_idx: (56,)
   > Door to Data Checkpoint
       All of the following:
@@ -302,6 +311,7 @@ Extra - room_id: [7, 15]
 Zeela Checkpoint
 Extra - map_name: Sector 58
 Extra - room_id: [8]
+Extra - minimap_coordinates: [{'x': 7, 'y': 6}, {'x': 8, 'y': 6}]
 > Door to Arctic Containment; Heals? False
   * Layers: default
   * L0 Hatch to Arctic Containment/Door to Zeela Checkpoint
@@ -328,6 +338,7 @@ Extra - room_id: [8]
 Security Shaft West
 Extra - map_name: Sector 59
 Extra - room_id: [9]
+Extra - minimap_coordinates: [{'x': 5, 'y': 6}, {'x': 5, 'y': 7}, {'x': 5, 'y': 8}, {'x': 5, 'y': 9}, {'x': 5, 'y': 10}]
 > Door to Security Save Room; Heals? False
   * Layers: default
   * L3 Hatch to Security Save Room/Door to Security Shaft West
@@ -364,6 +375,7 @@ Extra - room_id: [9]
 Level 3 Security Room
 Extra - map_name: Sector 510
 Extra - room_id: [10]
+Extra - minimap_coordinates: [{'x': 6, 'y': 10}]
 Hint Features - Security Room
 > Door to Security Shaft West; Heals? False
   * Layers: default
@@ -387,6 +399,7 @@ Hint Features - Security Room
   * Extra - area: 5
   * Extra - room: 10
   * Extra - source: Level3
+  * Extra - infant_weight: 0.34
   > Door to Security Shaft East
       Trivial
 
@@ -394,6 +407,7 @@ Hint Features - Security Room
 Waver Ward
 Extra - map_name: Sector 511
 Extra - room_id: [11]
+Extra - minimap_coordinates: [{'x': 11, 'y': 8}]
 > Door to Arctic Containment; Heals? False
   * Layers: default
   * L0 Hatch to Arctic Containment/Door to Waver Ward
@@ -422,6 +436,7 @@ Extra - room_id: [11]
 E-Tank Mimic Den
 Extra - map_name: Sector 512
 Extra - room_id: [12]
+Extra - minimap_coordinates: [{'x': 12, 'y': 7}]
 > Pickup (Hidden Energy Tank); Heals? False
   * Layers: default
   * Pickup 75; Category? Major
@@ -429,6 +444,7 @@ Extra - room_id: [12]
   * Extra - room: 12
   * Extra - blockx: 3
   * Extra - blocky: 10
+  * Extra - infant_weight: 0.34
   > Door to Frozen Tower
       Can Bounce in Ball
 
@@ -443,6 +459,7 @@ Extra - room_id: [12]
 Frozen Tower
 Extra - map_name: Sector 513
 Extra - room_id: [13]
+Extra - minimap_coordinates: [{'x': 13, 'y': 5}, {'x': 13, 'y': 6}, {'x': 13, 'y': 7}, {'x': 13, 'y': 8}, {'x': 13, 'y': 9}, {'x': 13, 'y': 10}]
 > Door to E-Tank Mimic Den; Heals? False
   * Layers: default
   * L0 Hatch to E-Tank Mimic Den/Door to Frozen Tower
@@ -528,6 +545,7 @@ Extra - room_id: [13]
 Mini-Fridge
 Extra - map_name: Sector 514
 Extra - room_id: [14]
+Extra - minimap_coordinates: [{'x': 15, 'y': 7}]
 Hint Features - Pillar
 > Pickup (Energy Tank); Heals? False
   * Layers: default
@@ -536,6 +554,7 @@ Hint Features - Pillar
   * Extra - room: 14
   * Extra - blockx: 13
   * Extra - blocky: 3
+  * Extra - infant_weight: 0.34
   > Other to Flooded Tower
       Trivial
 
@@ -559,6 +578,7 @@ Hint Features - Pillar
 Data Room
 Extra - map_name: Sector 516
 Extra - room_id: [16]
+Extra - minimap_coordinates: [{'x': 12, 'y': 4}, {'x': 12, 'y': 5}]
 Hint Features - Data Room
 > Other to Crow's Nest; Heals? False
   * Layers: default
@@ -589,6 +609,7 @@ Hint Features - Data Room
   * Extra - area: 5
   * Extra - room: 5
   * Extra - source: ArcData1
+  * Extra - infant_weight: 0.34
   > Door to Data Checkpoint
       Trivial
 
@@ -603,6 +624,7 @@ Hint Features - Data Room
 Ruined Corridor
 Extra - map_name: Sector 517
 Extra - room_id: [17]
+Extra - minimap_coordinates: [{'x': 13, 'y': 4}, {'x': 14, 'y': 4}, {'x': 14, 'y': 5}, {'x': 15, 'y': 5}]
 > Other to Data Room; Heals? False
   * Layers: default
   * Destroyed Door to Data Room/Other to Ruined Corridor
@@ -621,6 +643,7 @@ Extra - room_id: [17]
 Nightmare Hub
 Extra - map_name: Sector 518
 Extra - room_id: [18]
+Extra - minimap_coordinates: [{'x': 18, 'y': 4}, {'x': 18, 'y': 5}, {'x': 18, 'y': 6}, {'x': 19, 'y': 4}, {'x': 19, 'y': 5}, {'x': 19, 'y': 6}]
 > Pickup (Hidden Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 77; Category? Minor
@@ -628,6 +651,7 @@ Extra - room_id: [18]
   * Extra - room: 18
   * Extra - blockx: 3
   * Extra - blocky: 3
+  * Extra - infant_weight: 0.34
   > Door to Nightmare Recharge Room
       Trivial
 
@@ -698,6 +722,7 @@ Extra - room_id: [18]
 Nightmare Upper Access
 Extra - map_name: Sector 519
 Extra - room_id: [19]
+Extra - minimap_coordinates: [{'x': 20, 'y': 5}, {'x': 21, 'y': 4}, {'x': 21, 'y': 5}]
 > Other to Nightmare Hub; Heals? False
   * Layers: default
   * Destroyed Door to Nightmare Hub/Other to Nightmare Upper Access
@@ -721,6 +746,7 @@ Extra - room_id: [19]
 Nightmare Arena
 Extra - map_name: Sector 520
 Extra - room_id: [20]
+Extra - minimap_coordinates: [{'x': 22, 'y': 5}, {'x': 22, 'y': 6}, {'x': 23, 'y': 5}, {'x': 23, 'y': 6}]
 Hint Features - Boss, Climbable Surface
 > Door to Nightmare Lower Access; Heals? False
   * Layers: default
@@ -791,6 +817,8 @@ Hint Features - Boss, Climbable Surface
   * Extra - area: 5
   * Extra - room: 20
   * Extra - source: Nightmare
+  * Extra - boss_hint_name: Nightmare
+  * Extra - infant_weight: 3.5
   > Arena
       Trivial
 
@@ -798,6 +826,7 @@ Hint Features - Boss, Climbable Surface
 Security Shaft East
 Extra - map_name: Sector 522
 Extra - room_id: [22, 21]
+Extra - minimap_coordinates: [{'x': 7, 'y': 7}, {'x': 7, 'y': 8}, {'x': 7, 'y': 9}, {'x': 7, 'y': 10}, {'x': 7, 'y': 11}]
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 78; Category? Minor
@@ -805,6 +834,7 @@ Extra - room_id: [22, 21]
   * Extra - room: 22
   * Extra - blockx: 3
   * Extra - blocky: 48
+  * Extra - infant_weight: 0.34
   > Door to Subway
       Trivial
 
@@ -889,6 +919,7 @@ Extra - room_id: [22, 21]
 Ripper's Treasure
 Extra - map_name: Sector 523
 Extra - room_id: [23]
+Extra - minimap_coordinates: [{'x': 8, 'y': 7}]
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 79; Category? Minor
@@ -896,6 +927,7 @@ Extra - room_id: [23]
   * Extra - room: 23
   * Extra - blockx: 14
   * Extra - blocky: 6
+  * Extra - infant_weight: 0.34
   > Door to Security Shaft East
       Trivial
 
@@ -910,6 +942,7 @@ Extra - room_id: [23]
 Cellar
 Extra - map_name: Sector 524
 Extra - room_id: [24]
+Extra - minimap_coordinates: [{'x': 12, 'y': 8}, {'x': 12, 'y': 9}, {'x': 12, 'y': 10}, {'x': 12, 'y': 11}]
 > Door to Waver Ward; Heals? False
   * Layers: default
   * L0 Hatch to Waver Ward/Door to Cellar
@@ -957,6 +990,7 @@ Extra - room_id: [24]
 Elevator to Main Deck
 Extra - map_name: Sector 525
 Extra - room_id: [25]
+Extra - minimap_coordinates: [{'x': 0, 'y': 1}, {'x': 0, 'y': 2}]
 > Elevator to Main Deck; Heals? False
   * Layers: default
   * Elevator to Elevator to Sector 5 (ARC)/Elevator to Sector 5 (ARC)
@@ -975,6 +1009,7 @@ Extra - room_id: [25]
 Ripper Road
 Extra - map_name: Sector 526
 Extra - room_id: [26]
+Extra - minimap_coordinates: [{'x': 6, 'y': 5}, {'x': 7, 'y': 5}, {'x': 8, 'y': 5}]
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 80; Category? Minor
@@ -982,12 +1017,14 @@ Extra - room_id: [26]
   * Extra - room: 26
   * Extra - blockx: 4
   * Extra - blocky: 6
+  * Extra - infant_weight: 0.34
   > Door to Arctic Containment
       Trivial
 
 > Door to Arctic Containment; Heals? False
   * Layers: default
-  * Open Hatch to Arctic Containment/Door to Ripper Road
+  * Open Hatch to Arctic Containment/Door to Ripper Road; Excluded from Dock Lock Rando
+  * excluded from DLR due to hatch limitations
   * Extra - door_idx: (55,)
   > Pickup (Power Bomb Tank)
       All of the following:
@@ -1012,6 +1049,7 @@ Extra - room_id: [26]
 Nightmare Lower Access
 Extra - map_name: Sector 527
 Extra - room_id: [27]
+Extra - minimap_coordinates: [{'x': 20, 'y': 6}, {'x': 21, 'y': 6}]
 > Door to Nightmare Arena; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Arena/Door to Nightmare Lower Access
@@ -1032,6 +1070,7 @@ Extra - room_id: [27]
 Flooded Access
 Extra - map_name: Sector 528
 Extra - room_id: [28]
+Extra - minimap_coordinates: [{'x': 17, 'y': 6}, {'x': 17, 'y': 7}]
 > Door to Nightmare Hub; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Hub/Door to Flooded Access
@@ -1058,6 +1097,7 @@ Extra - room_id: [28]
 Security Save Room
 Extra - map_name: Sector 529
 Extra - room_id: [29]
+Extra - minimap_coordinates: [{'x': 6, 'y': 6}]
 Extra - unlocked_save_recharge_station: True
 > Door to Security Shaft West; Heals? False
   * Layers: default
@@ -1086,6 +1126,7 @@ Extra - unlocked_save_recharge_station: True
 Magic Box
 Extra - map_name: Sector 530
 Extra - room_id: [30]
+Extra - minimap_coordinates: [{'x': 2, 'y': 4}, {'x': 3, 'y': 4}]
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 81; Category? Minor
@@ -1093,6 +1134,7 @@ Extra - room_id: [30]
   * Extra - room: 30
   * Extra - blockx: 23
   * Extra - blocky: 7
+  * Extra - infant_weight: 0.34
   > Door to Entrance Lobby
       Trivial
 
@@ -1116,6 +1158,7 @@ Extra - room_id: [30]
 Glass Tube to Sector 6 (NOC)
 Extra - map_name: Sector 531
 Extra - room_id: [31]
+Extra - minimap_coordinates: [{'x': 1, 'y': 4}]
 > Area Transition to Sector 6 (NOC); Heals? False
   * Layers: default
   * Open Passage to Glass Tube to Sector 5 (ARC)/Area Transition to Sector 5 (ARC)
@@ -1134,6 +1177,7 @@ Extra - room_id: [31]
 Entrance Recharge Room
 Extra - map_name: Sector 532
 Extra - room_id: [32]
+Extra - minimap_coordinates: [{'x': 3, 'y': 2}]
 Extra - unlocked_save_recharge_station: True
 > Door to Entrance Save Room; Heals? False
   * Layers: default
@@ -1160,6 +1204,7 @@ Extra - unlocked_save_recharge_station: True
 Gerubus Gully
 Extra - map_name: Sector 533
 Extra - room_id: [33]
+Extra - minimap_coordinates: [{'x': 5, 'y': 4}]
 > Pickup (Hidden Missile Tank); Heals? False
   * Layers: default
   * Pickup 82; Category? Minor
@@ -1167,6 +1212,7 @@ Extra - room_id: [33]
   * Extra - room: 33
   * Extra - blockx: 14
   * Extra - blocky: 3
+  * Extra - infant_weight: 0.34
   > Door to Entrance Lobby
       Trivial
 
@@ -1203,6 +1249,7 @@ Extra - room_id: [33]
 Nightmare Nook
 Extra - map_name: Sector 534
 Extra - room_id: [34]
+Extra - minimap_coordinates: [{'x': 22, 'y': 4}]
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 83; Category? Major
@@ -1210,6 +1257,7 @@ Extra - room_id: [34]
   * Extra - room: 34
   * Extra - blockx: 14
   * Extra - blocky: 8
+  * Extra - infant_weight: 0.34
   > Other to Nightmare Arena
       Trivial
   > Door to Nightmare Upper Access
@@ -1243,6 +1291,7 @@ Extra - room_id: [34]
 Data Checkpoint
 Extra - map_name: Sector 535
 Extra - room_id: [35]
+Extra - minimap_coordinates: [{'x': 11, 'y': 5}]
 > Door to Arctic Containment; Heals? False
   * Layers: default
   * L0 Hatch to Arctic Containment/Door to Data Checkpoint
@@ -1261,6 +1310,7 @@ Extra - room_id: [35]
 Crow's Nest
 Extra - map_name: Sector 536
 Extra - room_id: [36]
+Extra - minimap_coordinates: [{'x': 11, 'y': 1}, {'x': 11, 'y': 2}, {'x': 11, 'y': 3}, {'x': 11, 'y': 4}]
 Hint Features - 1-way Shutter
 > Pickup (Hidden Power Bomb Tank); Heals? False
   * Layers: default
@@ -1269,6 +1319,7 @@ Hint Features - 1-way Shutter
   * Extra - room: 36
   * Extra - blockx: 8
   * Extra - blocky: 8
+  * Extra - infant_weight: 0.34
   > Door to Glass Tube to Sector 3 (PYR)
       Can Break Single Bomb Blocks
 
@@ -1293,7 +1344,7 @@ Hint Features - 1-way Shutter
               # Shinespark from sector shortcuts: https://youtu.be/JChKb_XpMlw
               Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
               # Get second JBJ before first block reforms: https://youtu.be/154gQQseqvk
-              Hi-Jump and Jump Bombjump (Ludicrous) and Can Use Bombs and Can Use Springball
+              Hi-Jump and Jump Bombjump (Expert) and Can Use Bombs and Can Use Springball
           Any of the following:
               # Get past pirates
               Can Kill Tough Beam-Resistant Enemy
@@ -1331,6 +1382,7 @@ Hint Features - 1-way Shutter
 Glass Tube to Sector 3 (PYR)
 Extra - map_name: Sector 537
 Extra - room_id: [37]
+Extra - minimap_coordinates: [{'x': 12, 'y': 3}]
 > Door to Crow's Nest; Heals? False
   * Layers: default
   * L0 Hatch to Crow's Nest/Door to Glass Tube to Sector 3 (PYR)
@@ -1349,6 +1401,7 @@ Extra - room_id: [37]
 Cellar Save Room
 Extra - map_name: Sector 538
 Extra - room_id: [38]
+Extra - minimap_coordinates: [{'x': 11, 'y': 10}]
 Extra - unlocked_save_recharge_station: True
 > Door to Kago Roadblock; Heals? False
   * Layers: default
@@ -1377,6 +1430,7 @@ Extra - unlocked_save_recharge_station: True
 Kago Roadblock
 Extra - map_name: Sector 539
 Extra - room_id: [39]
+Extra - minimap_coordinates: [{'x': 8, 'y': 10}, {'x': 9, 'y': 10}, {'x': 10, 'y': 10}]
 > Door to Security Shaft East; Heals? False
   * Layers: default
   * L0 Hatch to Security Shaft East/Door to Kago Roadblock
@@ -1395,6 +1449,7 @@ Extra - room_id: [39]
 Kago Speedway
 Extra - map_name: Sector 541
 Extra - room_id: [41]
+Extra - minimap_coordinates: [{'x': 10, 'y': 9}, {'x': 11, 'y': 9}]
 > Door to Arctic Underside; Heals? False
   * Layers: default
   * L0 Hatch to Arctic Underside/Door to Kago Speedway
@@ -1413,6 +1468,7 @@ Extra - room_id: [41]
 Arctic Underside
 Extra - map_name: Sector 542
 Extra - room_id: [42]
+Extra - minimap_coordinates: [{'x': 8, 'y': 8}, {'x': 8, 'y': 9}, {'x': 9, 'y': 9}]
 > Door to Arctic Containment; Heals? False
   * Layers: default
   * L3 Hatch to Arctic Containment/Door to Arctic Underside
@@ -1438,6 +1494,7 @@ Extra - room_id: [42]
 Subway
 Extra - map_name: Sector 543
 Extra - room_id: [43]
+Extra - minimap_coordinates: [{'x': 8, 'y': 11}, {'x': 9, 'y': 11}, {'x': 10, 'y': 11}, {'x': 11, 'y': 11}]
 > Door to Cellar; Heals? False
   * Layers: default
   * L0 Hatch to Cellar/Door to Subway
@@ -1462,6 +1519,7 @@ Extra - room_id: [43]
 Flooded Tower
 Extra - map_name: Sector 545
 Extra - room_id: [45]
+Extra - minimap_coordinates: [{'x': 16, 'y': 5}, {'x': 16, 'y': 6}, {'x': 16, 'y': 7}, {'x': 16, 'y': 8}]
 > Other to Ruined Corridor; Heals? False
   * Layers: default
   * Destroyed Door to Ruined Corridor/Other to Flooded Tower
@@ -1519,6 +1577,7 @@ Extra - room_id: [45]
 Zebesian Waters
 Extra - map_name: Sector 546
 Extra - room_id: [46]
+Extra - minimap_coordinates: [{'x': 17, 'y': 8}, {'x': 18, 'y': 7}, {'x': 18, 'y': 8}, {'x': 19, 'y': 7}, {'x': 19, 'y': 8}]
 > Door to Flooded Tower; Heals? False
   * Layers: default
   * L0 Hatch to Flooded Tower/Door to Zebesian Waters
@@ -1577,6 +1636,7 @@ Extra - room_id: [46]
 Ruined Break Room
 Extra - map_name: Sector 547
 Extra - room_id: [47]
+Extra - minimap_coordinates: [{'x': 17, 'y': 5}]
 > Pickup (Hidden Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 85; Category? Minor
@@ -1584,6 +1644,7 @@ Extra - room_id: [47]
   * Extra - room: 47
   * Extra - blockx: 4
   * Extra - blocky: 10
+  * Extra - infant_weight: 0.34
   > Other to Nightmare Hub
       Trivial
 
@@ -1598,6 +1659,7 @@ Extra - room_id: [47]
 Nightmare Recharge Room
 Extra - map_name: Sector 548
 Extra - room_id: [48]
+Extra - minimap_coordinates: [{'x': 17, 'y': 4}]
 Extra - unlocked_save_recharge_station: True
 > Door to Nightmare Hub; Heals? False
   * Layers: default
@@ -1615,6 +1677,7 @@ Extra - unlocked_save_recharge_station: True
 Nightmare Save Room
 Extra - map_name: Sector 549
 Extra - room_id: [49]
+Extra - minimap_coordinates: [{'x': 20, 'y': 4}]
 Extra - unlocked_save_recharge_station: True
 > Door to Nightmare Hub; Heals? False
   * Layers: default
@@ -1634,6 +1697,7 @@ Extra - unlocked_save_recharge_station: True
 Flooded Airlock to Sector 4 (AQA)
 Extra - map_name: Sector 550
 Extra - room_id: [50]
+Extra - minimap_coordinates: [{'x': 20, 'y': 7}, {'x': 20, 'y': 8}, {'x': 21, 'y': 7}, {'x': 21, 'y': 8}]
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 86; Category? Minor
@@ -1641,6 +1705,7 @@ Extra - room_id: [50]
   * Extra - room: 50
   * Extra - blockx: 13
   * Extra - blocky: 8
+  * Extra - infant_weight: 0.34
   > Door to Zebesian Waters
       Trivial
 
@@ -1673,6 +1738,7 @@ Extra - room_id: [50]
 Transmutation Trial
 Extra - map_name: Sector 551
 Extra - room_id: [51]
+Extra - minimap_coordinates: [{'x': 14, 'y': 8}, {'x': 14, 'y': 9}, {'x': 14, 'y': 10}]
 > Pickup (Hidden Missile Tank); Heals? False
   * Layers: default
   * Pickup 87; Category? Minor
@@ -1680,6 +1746,7 @@ Extra - room_id: [51]
   * Extra - room: 51
   * Extra - blockx: 11
   * Extra - blocky: 3
+  * Extra - infant_weight: 0.34
   > Other to Frozen Tower
       Trivial
 

@@ -14,6 +14,9 @@ use_templates_over_items = {
     "Power Bombs": "Can Use Power Bombs",
     "Walljump Boots": "Can Walljump",
     "Infinite Bomb Propulsion": "Can IBJ",
+    "Missiles": "Can Shoot Missiles",
+    "Super Missiles": "Can Shoot Super Missiles",
+    "Arm Cannon": "Can Shoot",
 }
 
 # short name resource -> Tuple(short name resources)
@@ -27,7 +30,14 @@ combined_resources = {
     "DiagonalIBJ": ("Infinite Bomb Propulsion", "Bombs", "Morph Ball"),
     "Zip": ("Walljump Boots",),
     "ChargedBombJump": ("Charge Beam", "Bombs", "Morph Ball"),
-    "MissileLessMetroids": ("Charge Beam",),
+    "MissileLessMetroids": ("Charge Beam", "Arm Cannon"),
+    "Charge Beam": ("Arm Cannon",),
+    "Ice Beam": ("Arm Cannon",),
+    "Wave Beam": ("Arm Cannon",),
+    "Spazer Beam": ("Arm Cannon",),
+    "Plasma Beam": ("Arm Cannon",),
+    "Missiles": ("Arm Cannon",),
+    "Super Missiles": ("Arm Cannon",),
 }
 
 

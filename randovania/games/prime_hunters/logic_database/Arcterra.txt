@@ -225,6 +225,7 @@ Extra - entity_file: unit4_C1_Ent.bin
 Arcterra Gateway
 Extra - room_id: 77
 Extra - entity_file: unit4_Land_Ent.bin
+Extra - portal_filename: unit4_Land_Ent
 > Ship; Heals? False; Default Node
   * Layers: default
   * Teleporter Network (Unlocked by Trivial)
@@ -253,7 +254,7 @@ Extra - entity_file: unit4_Land_Ent.bin
 
 > Portal to Ice Hive; Heals? False
   * Layers: default
-  * Portal to Ice Hive/Portal to Arcterra Gateway
+  * Portal to Ice Hive/Portal to Arcterra Gateway; Custom name: Arcterra - Arcterra Gateway (Ice Hive Portal)
   * Extra - entity_id: 4
   * Extra - position: frozendict.frozendict({'x': -4.44189453125, 'y': 31.87109375, 'z': -5.018798828125})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -264,7 +265,7 @@ Extra - entity_file: unit4_Land_Ent.bin
 
 > Portal to Fault Line; Heals? False
   * Layers: default
-  * Portal to Fault Line/Portal to Arcterra Gateway
+  * Portal to Fault Line/Portal to Arcterra Gateway; Custom name: Arcterra - Arcterra Gateway (Fault Line Portal)
   * Extra - entity_id: 38
   * Extra - position: frozendict.frozendict({'x': 5.830322265625, 'y': 31.87109375, 'z': 5.312744140625})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -277,6 +278,7 @@ Extra - entity_file: unit4_Land_Ent.bin
 Ice Hive
 Extra - room_id: 78
 Extra - entity_file: Unit4_RM1_Ent.bin
+Extra - portal_filename: unit4_RM1_Ent
 > Door to Sic Transit; Heals? False
   * Layers: default
   * Normal Door to Sic Transit/Door to Ice Hive
@@ -294,7 +296,7 @@ Extra - entity_file: Unit4_RM1_Ent.bin
 
 > Portal to Stronghold Void A; Heals? False
   * Layers: default
-  * Portal to Stronghold Void A/Portal to Ice Hive
+  * Portal to Stronghold Void A/Portal to Ice Hive; Custom name: Arcterra - Ice Hive (Stronghold Void A Portal)
   * Extra - entity_id: 20
   * Extra - position: frozendict.frozendict({'x': -14.984619140625, 'y': 30.419921875, 'z': -21.7490234375})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -415,7 +417,7 @@ Extra - entity_file: Unit4_RM1_Ent.bin
 
 > Portal to Arcterra Gateway; Heals? False
   * Layers: default
-  * Portal to Arcterra Gateway/Portal to Ice Hive
+  * Portal to Arcterra Gateway/Portal to Ice Hive; Custom name: Arcterra - Ice Hive (Arcterra Gateway Portal)
   * Extra - entity_id: 162
   * Extra - position: frozendict.frozendict({'x': -11.10595703125, 'y': 26.87841796875, 'z': -12.2939453125})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -806,9 +808,10 @@ Extra - entity_file: unit4_rm4_Ent.bin
 Fault Line
 Extra - room_id: 86
 Extra - entity_file: Unit4_RM5_Ent.bin
+Extra - portal_filename: unit4_RM5_Ent
 > Door to Sic Transit; Heals? False
   * Layers: default
-  * Normal Door to Sic Transit/Door to Fault Line
+  * Magmaul Blast Shield to Sic Transit/Door to Fault Line
   * Extra - entity_id: 31
   * Extra - position: frozendict.frozendict({'x': -68.635009765625, 'y': 0.0, 'z': -0.87841796875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -867,7 +870,7 @@ Extra - entity_file: Unit4_RM5_Ent.bin
 
 > Portal to Stronghold Void B; Heals? False
   * Layers: default
-  * Portal to Stronghold Void B/Portal to Fault Line
+  * Portal to Stronghold Void B/Portal to Fault Line; Custom name: Arcterra - Fault Line (Stronghold Void B Portal)
   * Extra - entity_id: 39
   * Extra - position: frozendict.frozendict({'x': -58.685791015625, 'y': 14.5, 'z': -11.09228515625})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -878,7 +881,7 @@ Extra - entity_file: Unit4_RM5_Ent.bin
 
 > Portal to Arcterra Gateway; Heals? False
   * Layers: default
-  * Portal to Arcterra Gateway/Portal to Fault Line
+  * Portal to Arcterra Gateway/Portal to Fault Line; Custom name: Arcterra - Fault Line (Arcterra Gateway Portal)
   * Extra - entity_id: 71
   * Extra - position: frozendict.frozendict({'x': 6.345703125, 'y': 11.6484375, 'z': -10.521484375})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -960,7 +963,7 @@ Extra - entity_file: Unit4_RM5_Ent.bin
   > Event - Artifact Force Field Disabled
       Trivial
   > Event - Pillar Destroyed
-      Missile
+      Missiles
 
 > Event - Artifact Force Field Disabled; Heals? False
   * Layers: default
@@ -1001,6 +1004,7 @@ Extra - entity_file: Unit4_RM5_Ent.bin
 Stronghold Void A
 Extra - room_id: 81
 Extra - entity_file: Unit4_TP1_Ent.bin
+Extra - portal_filename: Unit4_TP1_Ent
 > Player Spawn; Heals? False; Default Node
   * Layers: default
   * Extra - entity_id: 0
@@ -1039,6 +1043,7 @@ Extra - entity_file: Unit4_TP1_Ent.bin
 Stronghold Void B
 Extra - room_id: 87
 Extra - entity_file: Unit4_TP2_Ent.bin
+Extra - portal_filename: Unit4_TP2_Ent
 > Player Spawn; Heals? False; Default Node
   * Layers: default
   * Extra - entity_id: 0

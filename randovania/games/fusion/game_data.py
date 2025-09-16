@@ -8,6 +8,7 @@ import randovania.game.generator
 import randovania.game.gui
 import randovania.game.hints
 import randovania.game.layout
+import randovania.game.web_info
 from randovania.games.fusion import layout
 from randovania.games.fusion.db_integrity import find_fusion_db_errors
 from randovania.games.fusion.layout.preset_describer import FusionPresetDescriber
@@ -46,7 +47,7 @@ def _generator() -> randovania.game.generator.GameGenerator:
         pickup_pool_creator=generator.pool_creator,
         bootstrap=generator.FusionBootstrap(),
         base_patches_factory=generator.FusionBasePatchesFactory(),
-        action_weights=ActionWeights(events_weight=0.75, hints_weight=0.5),
+        action_weights=ActionWeights(events_weight=0.75, hints_weight=0.25),
     )
 
 
@@ -89,10 +90,10 @@ def _hash_words() -> list[str]:
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Fusion",
     long_name="Metroid Fusion",
-    development_state=randovania.game.development_state.DevelopmentState.STAGING,
+    development_state=randovania.game.development_state.DevelopmentState.STABLE,
     presets=[
-        {"path": "starter_preset.rdvpreset"},
         {"path": "open_sector_hub.rdvpreset"},
+        {"path": "vanilla_start.rdvpreset"},
     ],
     faq=[
         (
@@ -128,13 +129,33 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
         (
             "How do the Beam Upgrades interact?",
             "The beam upgrades have been split, allowing unique combinations of effects and damage.\n"
-            "- Charge Beam - Adds the ability to charge Samus' beam and a minor damage increase\n"
-            "- Wide Beam - Makes the beam fire 3 projectiles and a major increase to damage\n"
-            "- Plasma Beam - Adds the ability to penetrate enemies and a minor damage increase\n"
-            "- Wave Beam - Makes the beam fire 2 projectiles and a major damage increase\n"
-            "- Ice Beam - Adds the ability to freeze enemies with the beam and a minor damage increase",
+            "- Charge Beam - Adds the ability to charge Samus' beam\n"
+            "- Wide Beam - Makes the beam fire 3 projectiles\n"
+            "- Plasma Beam - Adds the ability to penetrate enemies\n"
+            "- Wave Beam - Adds the ability to penetrate walls and makes the beam fire at least 2 projectiles\n"
+            "- Ice Beam - Adds the ability to freeze enemies\n\n"
+            "Each beam collected adds to the total damage dealt per projectile.",
+        ),
+        (
+            "How do the Suit Upgrades interact?",
+            "The suit upgrades have been split, allowing unique combinations of effects and damage reduction.\n"
+            "- Varia Suit - Adds protection from heated and cold rooms, and the ability to absorb Blue-X\n"
+            "- Gravity Suit - Adds the ability to freely move in liquids\n\n"
+            "Each suit collected provides additional damage reduction (amount depending on enemy type).\n"
+            "Both suits are required for immunity to lava.",
         ),
     ],
+    web_info=randovania.game.web_info.GameWebInfo(
+        what_can_randomize=[
+            "All items including Security Keycards",
+            "Starting locations",
+            "A new goal has been added (Infant Metroid Hunt)",
+        ],
+        need_to_play=[
+            "A ROM of Metroid Fusion (USA)",
+            "A Gameboy Advance Emulator (recommended mGBA or Bizhawk)",
+        ],
+    ),
     hash_words=_hash_words(),
     layout=randovania.game.layout.GameLayout(
         configuration=layout.FusionConfiguration,

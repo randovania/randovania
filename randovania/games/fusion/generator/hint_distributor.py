@@ -33,7 +33,10 @@ class FusionHintDistributor(HintDistributor):
         for feature in non_interesting_features:
             if target.pickup.has_hint_feature(feature):
                 return False
-        return True
+        if target.player == player_id and ("Keycard" in target.pickup.name):
+            # don't place a keycard hint on a navigation pad locked by itself
+            return target.pickup.name not in str(hint_node.requirement_to_collect())
+        return super().is_pickup_interesting(target, player_id, hint_node)
 
     # Set default precision for hints
     @override
@@ -48,6 +51,7 @@ class FusionHintDistributor(HintDistributor):
         fake_hints = [
             ("Main Deck", "Auxiliary Navigation Room", "Navigation Terminal"),
             ("Main Deck", "Restricted Navigation Room", "Navigation Terminal"),
+            ("Main Deck", "Operations Deck Navigation Room", "Navigation Terminal"),
         ]
         for region, area, node in fake_hints:
             patches = patches.assign_hint(NodeIdentifier.create(region, area, node), JokeHint())

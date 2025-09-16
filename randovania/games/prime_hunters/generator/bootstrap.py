@@ -13,6 +13,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.generator.pickup_pool import PoolResults
@@ -28,19 +29,21 @@ def is_boss_location(node: PickupNode, config: HuntersConfiguration) -> bool:
 
 
 class HuntersBootstrap(Bootstrap[HuntersConfiguration]):
-    def create_damage_state(self, game: GameDescription, configuration: HuntersConfiguration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: HuntersConfiguration) -> DamageState:
         return EnergyTankDamageState(
             99,
             100,
-            game.resource_database,
-            game.region_list,
+            game.get_resource_database_view().get_item("EnergyTank"),
         )
 
     def assign_pool_results(
         self, rng: Random, configuration: HuntersConfiguration, patches: GamePatches, pool_results: PoolResults
     ) -> GamePatches:
+        pickups_to_preplace = [
+            pickup for pickup in list(pool_results.to_place) if pickup.gui_category.name == "octolith"
+        ]
         locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_boss_location)
-        self.pre_place_pickups(rng, locations, pool_results, "octolith", patches.game.game)
+        self.pre_place_pickups(rng, pickups_to_preplace, locations, pool_results, patches.game.game)
 
         return super().assign_pool_results(rng, configuration, patches, pool_results)
 

@@ -10,15 +10,12 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 
 @dataclasses.dataclass(frozen=True)
 class FusionArtifactConfig(BitPackDataclass, JsonDataclass):
-    prefer_bosses: bool
-    prefer_anywhere: bool
     required_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 20, "precision": 1})
     placed_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 20, "precision": 1})
 
 
 @dataclasses.dataclass(frozen=True)
 class FusionConfiguration(BaseConfiguration):
-    anti_softlock: bool
     instant_transitions: bool
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     artifacts: FusionArtifactConfig

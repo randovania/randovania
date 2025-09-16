@@ -172,6 +172,7 @@ Templates
 
 * Defeat non-dodging Alpha:
       All of the following:
+          Alpha Metroid Lure and Can Shoot
           Any of the following:
               # Item requirements
               Missiles ≥ 7 or Super Missiles ≥ 2
@@ -186,6 +187,7 @@ Templates
 
 * Defeat dodging Alpha:
       All of the following:
+          Alpha Metroid Lure and Can Shoot
           Any of the following:
               # Item requirements
               Missiles ≥ 7 or Super Missiles ≥ 2
@@ -200,6 +202,7 @@ Templates
 
 * Defeat Dual Alphas:
       All of the following:
+          Alpha Metroid Lure and Can Shoot
           Any of the following:
               # Item requirements
               Missiles ≥ 15 or Super Missiles ≥ 5
@@ -214,6 +217,7 @@ Templates
 
 * Defeat Alpha Squad:
       All of the following:
+          Alpha Metroid Lure and Can Shoot
           Any of the following:
               Missiles ≥ 35 or Super Missiles ≥ 10
               # Charge-Only
@@ -229,6 +233,7 @@ Templates
 
 * Defeat dodging Gamma:
       All of the following:
+          Gamma Metroid Lure and Can Shoot
           Any of the following:
               # Item requirements
               Missiles ≥ 15 or Super Missiles ≥ 3
@@ -243,6 +248,7 @@ Templates
 
 * Defeat Dual Gammas:
       All of the following:
+          Gamma Metroid Lure and Can Shoot
           Any of the following:
               # Ammo Requirements
               Missiles ≥ 30 or Super Missiles ≥ 6
@@ -271,6 +277,7 @@ Templates
 
 * Defeat Zeta:
       All of the following:
+          Zeta Metroid Lure and Can Shoot
           Any of the following:
               # Item requirements
               Super Missiles ≥ 6
@@ -296,6 +303,7 @@ Templates
 
 * Defeat Omega:
       All of the following:
+          Omega Metroid Lure and Can Shoot
           Any of the following:
               # Item requirements
               Super Missiles ≥ 7
@@ -329,11 +337,15 @@ Templates
       Gravity Suit or Damage Boost (Beginner)
 
 * Destroy Turbine:
-      Missiles ≥ 3 or Super Missiles or Can Use Any Bombs
+      Any of the following:
+          Can Use Any Bombs
+          All of the following:
+              Can Shoot
+              Missiles ≥ 3 or Super Missiles
 
 * Destroy Ice Barrier:
       All of the following:
-          Ice Beam
+          Can Shoot Ice Beam
           Missiles or Super Missiles
 
 * Zip From Destroyable Object:
@@ -343,16 +355,14 @@ Templates
           # Via PBs
           Zip Trick (Ludicrous) and Can Use Power Bombs and Can Walljump
           # Via Missiles
-          Missiles and Zip Trick (Expert) and Can Walljump
+          Missiles and Zip Trick (Expert) and Can Shoot and Can Walljump
 
 * Can Use Charged Bomb Jump:
-      All of the following:
-          Charge Beam and Can Use Bombs
-          Ice Beam or Plasma Beam or Power Beam or Spazer Beam or Wave Beam
+      Charge Beam and Can Shoot and Can Use Bombs
 
 * Defeat Larva:
       All of the following:
-          Ice Beam
+          Can Shoot Ice Beam
           # Kill them while frozen
           Missiles ≥ 5 or Super Missiles
           # Get rid of them if they're draining you
@@ -371,6 +381,33 @@ Templates
       # TODO: remove "can use bombs" from all places where this template is used to avoid redudancy
       Infinite Bomb Propulsion and Can Use Bombs
 
+* Can Shoot:
+      Arm Cannon
+
+* Can Shoot Ice Beam:
+      Ice Beam and Can Shoot
+
+* Can Shoot Wave Beam:
+      Wave Beam and Can Shoot
+
+* Can Shoot Charge Beam:
+      Charge Beam and Can Shoot
+
+* Can Shoot Spazer Beam:
+      Spazer Beam and Can Shoot
+
+* Can Shoot Plasma Beam:
+      Plasma Beam and Can Shoot
+
+* Can Shoot Super Missile:
+      Super Missiles and Can Shoot
+
+* Can Shoot Missile:
+      Missiles and Can Shoot
+
+* Can Destroy Shot Block:
+      Can Shoot or Can Use Any Bombs
+
 ====================
 Dock Weaknesses
 
@@ -384,14 +421,14 @@ Dock Weaknesses
 
   * Normal Door
       Open:
-          Trivial
+          Can Destroy Shot Block
       No lock
 
 
   * Normal Door (Forced)
       Extra - door_name: Normal Door
       Open:
-          Trivial
+          Can Destroy Shot Block
       No lock
 
 
@@ -400,15 +437,15 @@ Dock Weaknesses
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
           Any of the following:
-              Missiles
-              Super Missiles and Enabled Supers On Missile Doors
+              Can Shoot Missile
+              Enabled Supers On Missile Doors and Can Shoot Super Missile
 
 
   * Super Missile Door
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
-          Super Missiles
+          Can Shoot Super Missile
 
 
   * Power Bomb Door
@@ -433,140 +470,140 @@ Dock Weaknesses
 
   * Guardian-Locked Door
       Open:
-          After Boss - Guardian Defeated
+          After Boss - Guardian Defeated and Can Destroy Shot Block
       No lock
 
 
   * Arachnus-Locked Door
       Open:
-          After Boss - Arachnus Defeated
+          After Boss - Arachnus Defeated and Can Destroy Shot Block
       No lock
 
 
   * Torizo-Locked Door
       Open:
-          After Boss - Torizo Defeated
+          After Boss - Torizo Defeated and Can Destroy Shot Block
       No lock
 
 
   * Tester-Locked Door
       Open:
-          After Boss - Tester Defeated
+          After Boss - Tester Defeated and Can Destroy Shot Block
       No lock
 
 
   * Serris-Locked Door
       Open:
-          After Boss - Serris Defeated
+          After Boss - Serris Defeated and Can Destroy Shot Block
       No lock
 
 
   * Genesis-Locked Door
       Open:
-          After Boss - Genesis Defeated
+          After Boss - Genesis Defeated and Can Destroy Shot Block
       No lock
 
 
   * Queen Metroid-Locked Door
       Extra - door_name: Queen-Locked Door
       Open:
-          After Boss - Queen Defeated
+          After Boss - Queen Defeated and Can Destroy Shot Block
       No lock
 
 
   * Tower Energy Restored Door
       Open:
-          After Area 4 - Tower Energy Activated
+          After Area 4 - Tower Energy Activated and Can Destroy Shot Block
       No lock
 
 
   * Distribution Center Energy Restored Door
       Open:
-          After Area 5 - Distribution Center Energy Activated
+          After Area 5 - Distribution Center Energy Activated and Can Destroy Shot Block
       No lock
 
 
   * Golden Temple EMP Door
       Open:
-          After EMP - Golden Temple
+          After EMP - Golden Temple and Can Destroy Shot Block
       No lock
 
 
   * Hydro Station EMP Door
       Open:
-          After EMP - Hydro Station
+          After EMP - Hydro Station and Can Destroy Shot Block
       No lock
 
 
   * Industrial Complex EMP Door
       Open:
-          After EMP - Industrial Complex
+          After EMP - Industrial Complex and Can Destroy Shot Block
       No lock
 
 
   * Distribution Center EMP Ball Introduction EMP Door
       Open:
-          After EMP - Area 5 EMP Ball Introduction
+          After EMP - Area 5 EMP Ball Introduction and Can Destroy Shot Block
       No lock
 
 
   * Distribution Center Robot Home EMP Door
       Open:
-          After EMP - Area 5 Robot Home
+          After EMP - Area 5 Robot Home and Can Destroy Shot Block
       No lock
 
 
   * Distribution Center Energy Distribution Tower East EMP Door
       Open:
-          After EMP - Area 5 Energy Distribution Tower East
+          After EMP - Area 5 Energy Distribution Tower East and Can Destroy Shot Block
       No lock
 
 
   * Distribution Center Bullet Hell Room Access EMP Door
       Open:
-          After EMP - Area 5 Bullet Hell Room Access
+          After EMP - Area 5 Bullet Hell Room Access and Can Destroy Shot Block
       No lock
 
 
   * Distribution Center Pipe Hub Access EMP Door
       Open:
-          After EMP - Area 5 Pipe Hub Access
+          After EMP - Area 5 Pipe Hub Access and Can Destroy Shot Block
       No lock
 
 
   * Distribution Center Exterior East Access EMP Door
       Open:
-          After EMP - Area 5 Exterior East Access
+          After EMP - Area 5 Exterior East Access and Can Destroy Shot Block
       No lock
 
 
   * Charge Beam Door
       Open:
-          Charge Beam
+          Can Shoot Charge Beam
       No lock
 
 
   * Wave Beam Door
       Open:
-          Wave Beam
+          Can Shoot Wave Beam
       No lock
 
 
   * Spazer Beam Door
       Open:
-          Spazer Beam
+          Can Shoot Spazer Beam
       No lock
 
 
   * Plasma Beam Door
       Open:
-          Plasma Beam
+          Can Shoot Plasma Beam
       No lock
 
 
   * Ice Beam Door
       Open:
-          Ice Beam
+          Can Shoot Ice Beam
       No lock
 
 
@@ -595,7 +632,7 @@ Dock Weaknesses
           Trivial
 
   > Dock Rando:
-      Unlocked: Normal Door
+      Unlocked: Research Site Open Hatch
       Locked: Locked Door
       Change from:
           Distribution Center Bullet Hell Room Access EMP Door

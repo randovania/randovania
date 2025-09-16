@@ -783,6 +783,13 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "100990": "oHornoad",
+                    "100991": "oHornoad",
+                    "100992": "oYumbo",
+                    "100993": "oYumbo",
+                    "100994": "oYumbo"
                 }
             },
             "nodes": {
@@ -819,10 +826,15 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Bottom": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -869,6 +881,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
                                     }
                                 ]
                             }
@@ -898,6 +914,10 @@
                                     {
                                         "type": "template",
                                         "data": "Power Grip Wall"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
                                     }
                                 ]
                             }
@@ -915,6 +935,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
                                     }
                                 ]
                             }
@@ -950,6 +974,14 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "101111": "oTsumuri",
+                    "101112": "oTsumuri",
+                    "101113": "oTsumuri",
+                    "101114": "oTsumuri",
+                    "101115": "oTsumuri",
+                    "101116": "oYumbo"
                 }
             },
             "nodes": {
@@ -986,10 +1018,6 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Power Grip Wall"
-                                    },
-                                    {
                                         "type": "and",
                                         "data": {
                                             "comment": "Shinespark from below room: https://www.youtube.com/watch?v=uFXTtaebs48",
@@ -1020,6 +1048,22 @@
                                                         "amount": 1,
                                                         "negate": true
                                                     }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Get up and break blocks",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Power Grip Wall"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Destroy Shot Block"
                                                 }
                                             ]
                                         }
@@ -1059,10 +1103,15 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Vertical Dock to Cavern Crossroads": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1504,6 +1553,13 @@
                     "liquid_type": 0,
                     "liquid_level": 896,
                     "should_move_horizontally": true
+                },
+                "enemy_data": {
+                    "101433": "oTsumuri",
+                    "101434": "oTsumuri",
+                    "101435": "oTsumuri",
+                    "101436": "oTsumuri",
+                    "101437": "oTsumuri"
                 }
             },
             "nodes": {
@@ -1615,6 +1671,11 @@
                     "liquid_type": 0,
                     "liquid_level": 200,
                     "should_move_horizontally": true
+                },
+                "enemy_data": {
+                    "101565": "oHornoad",
+                    "101566": "oHornoad",
+                    "101567": "oHornoad"
                 }
             },
             "nodes": {
@@ -2159,6 +2220,22 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "102007": "oSeerook",
+                    "102008": "oSeerook",
+                    "102009": "oSeerook",
+                    "102010": "oSeerook",
+                    "102172": "oCaveNest",
+                    "102173": "oCaveNest",
+                    "102174": "oCaveNest",
+                    "102175": "oCaveNest",
+                    "102011": "oMoheek",
+                    "102012": "oMoheek",
+                    "102013": "oMoheek",
+                    "102014": "oMoheek",
+                    "102015": "oMoheek",
+                    "102016": "oMoheek"
                 }
             },
             "nodes": {
@@ -2248,42 +2325,6 @@
                 "map_name": "rm_a0h07",
                 "minimap_data": [
                     {
-                        "x": 38,
-                        "y": 13
-                    },
-                    {
-                        "x": 39,
-                        "y": 13
-                    },
-                    {
-                        "x": 40,
-                        "y": 13
-                    },
-                    {
-                        "x": 40,
-                        "y": 14
-                    },
-                    {
-                        "x": 40,
-                        "y": 15
-                    },
-                    {
-                        "x": 41,
-                        "y": 13
-                    },
-                    {
-                        "x": 41,
-                        "y": 14
-                    },
-                    {
-                        "x": 41,
-                        "y": 15
-                    },
-                    {
-                        "x": 42,
-                        "y": 15
-                    },
-                    {
                         "x": 43,
                         "y": 15
                     },
@@ -2356,6 +2397,28 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "102278": "oSeerook",
+                    "102279": "oSeerook",
+                    "102280": "oSeerook",
+                    "102281": "oSeerook",
+                    "102282": "oSeerook",
+                    "102283": "oSeerook",
+                    "102602": "oCaveNest",
+                    "102603": "oCaveNest",
+                    "102604": "oCaveNest",
+                    "102605": "oCaveNest",
+                    "102606": "oCaveNest",
+                    "102607": "oCaveNest",
+                    "102608": "oCaveNest",
+                    "102609": "oCaveNest",
+                    "102272": "oMoheek",
+                    "102273": "oMoheek",
+                    "102274": "oMoheek",
+                    "102275": "oMoheek",
+                    "102276": "oMoheek",
+                    "102277": "oMoheek"
                 }
             },
             "nodes": {
@@ -3245,6 +3308,19 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "102671": "oChuteLeech",
+                    "102672": "oChuteLeech",
+                    "102673": "oChuteLeech",
+                    "102674": "oChuteLeech",
+                    "102675": "oChuteLeech",
+                    "102676": "oChuteLeech",
+                    "102705": "oMumbo",
+                    "102706": "oMumbo",
+                    "102707": "oMumbo",
+                    "102708": "oMumbo",
+                    "102709": "oMumbo"
                 }
             },
             "nodes": {
@@ -4599,6 +4675,10 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "103847": "oCaveNest",
+                    "103848": "oCaveNest"
                 }
             },
             "nodes": {
@@ -4699,13 +4779,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Shoot Super Missile"
                                     }
                                 ]
                             }
@@ -4892,13 +4967,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Shoot Super Missile"
                                     }
                                 ]
                             }
@@ -5075,6 +5145,11 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "104116": "oSkorp",
+                    "104415": "oCaveNest",
+                    "104416": "oCaveNest"
                 }
             },
             "nodes": {
@@ -5433,6 +5508,11 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "104679": "oSkorp",
+                    "104680": "oSkorp",
+                    "104681": "oSkorp"
                 }
             },
             "nodes": {
@@ -5813,6 +5893,14 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "104968": "oSkorp",
+                    "104969": "oSkorp",
+                    "104970": "oSkorp",
+                    "104971": "oSkorp",
+                    "104972": "oMoto",
+                    "104977": "oMoto"
                 }
             },
             "nodes": {
@@ -6115,13 +6203,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Wave Beam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Shoot Wave Beam"
                                                 }
                                             ]
                                         }
@@ -6371,6 +6454,11 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "105391": "oSkorp",
+                    "105392": "oSkorp",
+                    "105393": "oSkorp"
                 }
             },
             "nodes": {
@@ -6829,6 +6917,13 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "105735": "oPincherFly",
+                    "105736": "oPincherFly",
+                    "105737": "oPincherFly",
+                    "105738": "oPincherFly",
+                    "105739": "oPincherFly"
                 }
             },
             "nodes": {
@@ -7124,6 +7219,15 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "106163": "oHalzyn",
+                    "106164": "oSkreekSpawner",
+                    "106165": "oSkreekSpawner",
+                    "106166": "oSkreekSpawner",
+                    "106167": "oSkreekSpawner",
+                    "106168": "oSkreekSpawner",
+                    "106169": "oHalzyn"
                 }
             },
             "nodes": {
@@ -7299,6 +7403,10 @@
                                                         "amount": 3,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot Super Missile"
                                                 }
                                             ]
                                         }
@@ -7382,6 +7490,10 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot Super Missile"
                                                 }
                                             ]
                                         }
@@ -7482,27 +7594,33 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
                                             "name": "Speed Booster",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot Missile"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot Super Missile"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -7572,27 +7690,33 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
                                             "name": "Speed Booster",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot Missile"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot Super Missile"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -8450,6 +8574,10 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "107264": "oHalzyn",
+                    "107265": "oHalzyn"
                 }
             },
             "nodes": {
@@ -8567,6 +8695,16 @@
                 "liquid_info": {
                     "liquid_type": 1,
                     "liquid_level": 201
+                },
+                "enemy_data": {
+                    "107619": "oDrivel",
+                    "107620": "oDrivel",
+                    "107621": "oDrivel",
+                    "107622": "oDrivel",
+                    "107623": "oMoto",
+                    "107624": "oMoto",
+                    "107625": "oMoto",
+                    "107626": "oMoto"
                 }
             },
             "nodes": {
@@ -8900,6 +9038,14 @@
                 "liquid_info": {
                     "liquid_type": 1,
                     "liquid_level": 192
+                },
+                "enemy_data": {
+                    "122612": "oOctroll",
+                    "122613": "oOctroll",
+                    "122614": "oOctroll",
+                    "122615": "oOctroll",
+                    "122616": "oOctroll",
+                    "122617": "oOctroll"
                 }
             },
             "nodes": {
@@ -10163,6 +10309,10 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "123499": "oMoto",
+                    "123500": "oMoto"
                 }
             },
             "nodes": {
@@ -10384,6 +10534,13 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "123671": "oMoto",
+                    "123672": "oMoto",
+                    "123673": "oMoto",
+                    "123674": "oMoto",
+                    "123675": "oMoto"
                 }
             },
             "nodes": {
@@ -10484,6 +10641,11 @@
                 "liquid_info": {
                     "liquid_type": 0,
                     "liquid_level": 0
+                },
+                "enemy_data": {
+                    "123690": "oPincherFly",
+                    "123691": "oPincherFly",
+                    "123692": "oPincherFly"
                 }
             },
             "nodes": {
@@ -10515,10 +10677,15 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Drill Excavation": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Destroy Shot Block"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -10577,13 +10744,62 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Shoot"
                                                 }
                                             ]
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Hijump Wall"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Hijump Wall"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Shoot"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Power Bombs"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "IBJ",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can IBJ"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -10722,13 +10938,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Shoot Super Missile"
                                     },
                                     {
                                         "type": "or",
@@ -10853,13 +11064,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Super Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Shoot Super Missile"
                                     }
                                 ]
                             }
@@ -11308,6 +11514,13 @@
                 "liquid_info": {
                     "liquid_type": 1,
                     "liquid_level": 176
+                },
+                "enemy_data": {
+                    "124399": "oFlitt",
+                    "124400": "oFlitt",
+                    "124401": "oFlitt",
+                    "124402": "oFlitt",
+                    "124403": "oFlitt"
                 }
             },
             "nodes": {
@@ -11982,6 +12195,14 @@
                 "liquid_info": {
                     "liquid_type": 1,
                     "liquid_level": 184
+                },
+                "enemy_data": {
+                    "124947": "oFlitt",
+                    "124948": "oFlitt",
+                    "124949": "oFlitt",
+                    "124950": "oFlitt",
+                    "124951": "oFlitt",
+                    "124952": "oFlitt"
                 }
             },
             "nodes": {
@@ -12399,6 +12620,15 @@
                 "liquid_info": {
                     "liquid_type": 1,
                     "liquid_level": 672
+                },
+                "enemy_data": {
+                    "125237": "oFlitt",
+                    "125238": "oFlitt",
+                    "125239": "oFlitt",
+                    "125240": "oFlitt",
+                    "125241": "oFlitt",
+                    "125242": "oFlitt",
+                    "125243": "oFlitt"
                 }
             },
             "nodes": {

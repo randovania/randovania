@@ -10,9 +10,8 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
     from randovania.resolver.damage_state import DamageState
@@ -36,16 +35,15 @@ def is_dna_node(node: PickupNode, config: DreadConfiguration) -> bool:
 
 
 class DreadBootstrap(Bootstrap[DreadConfiguration]):
-    def create_damage_state(self, game: GameDescription, configuration: DreadConfiguration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: DreadConfiguration) -> DamageState:
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
-            game.resource_database,
-            game.region_list,
+            game.get_resource_database_view().get_item("ETank"),
         )
 
     def _get_enabled_misc_resources(
-        self, configuration: DreadConfiguration, resource_database: ResourceDatabase
+        self, configuration: DreadConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         enabled_resources = {"SeparateBeams", "SeparateMissiles"}
 
@@ -68,7 +66,7 @@ class DreadBootstrap(Bootstrap[DreadConfiguration]):
     def event_resources_for_configuration(
         self,
         configuration: DreadConfiguration,
-        resource_database: ResourceDatabase,
+        resource_database: ResourceDatabaseView,
     ) -> ResourceGain:
         if configuration.hanubia_shortcut_no_grapple:
             for name in ["s080_shipyard:default:grapplepulloff1x2_000", "s080_shipyard:default:grapplepulloff1x2"]:
@@ -83,6 +81,7 @@ class DreadBootstrap(Bootstrap[DreadConfiguration]):
     def assign_pool_results(
         self, rng: Random, configuration: DreadConfiguration, patches: GamePatches, pool_results: PoolResults
     ) -> GamePatches:
+        pickups_to_preplace = [pickup for pickup in list(pool_results.to_place) if pickup.gui_category.name == "dna"]
         locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_dna_node)
-        self.pre_place_pickups(rng, locations, pool_results, "dna", patches.game.game)
+        self.pre_place_pickups(rng, pickups_to_preplace, locations, pool_results, patches.game.game)
         return super().assign_pool_results(rng, configuration, patches, pool_results)

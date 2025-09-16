@@ -3,6 +3,13 @@
     "game": "prime_hunters",
     "resource_database": {
         "items": {
+            "Nothing": {
+                "long_name": "Nothing",
+                "max_capacity": 1,
+                "extra": {
+                    "item_type": 21
+                }
+            },
             "PowerBeam": {
                 "long_name": "Power Beam",
                 "max_capacity": 1,
@@ -25,9 +32,9 @@
                     "weapon_id": 1
                 }
             },
-            "Missile": {
-                "long_name": "Missile",
-                "max_capacity": 95,
+            "MissileLauncher": {
+                "long_name": "Missile Launcher",
+                "max_capacity": 1,
                 "extra": {
                     "item_type": 6,
                     "weapon_id": 2
@@ -71,6 +78,22 @@
                 "extra": {
                     "item_type": 11,
                     "weapon_id": 7
+                }
+            },
+            "MissileAmmo": {
+                "long_name": "Missiles",
+                "max_capacity": 99,
+                "extra": {
+                    "item_type": 6,
+                    "weapon_id": 2
+                }
+            },
+            "MissileLocked": {
+                "long_name": "MissileLocked",
+                "max_capacity": 99,
+                "extra": {
+                    "item_type": 6,
+                    "weapon_id": 2
                 }
             },
             "UAExpansion": {
@@ -415,7 +438,7 @@
                 "extra": {}
             },
             "AlinosAlinosPerchSecuritySystem": {
-                "long_name": "Alinos - Alinos Perch Security System Deactivate",
+                "long_name": "Alinos - Alinos Perch Security System Deactivated",
                 "extra": {}
             },
             "AlinosAlinosPerchForceFieldPlatform": {
@@ -597,13 +620,21 @@
             "VDOStasisBunkerDoors": {
                 "long_name": "VDO - Stasis Bunker Unlock Doors",
                 "extra": {}
+            },
+            "CAIncubationVault02Guardians": {
+                "long_name": "CA - Incubation Vault 02 Guardians Defeated",
+                "extra": {}
+            },
+            "CAIncubationVault03Guardians": {
+                "long_name": "CA - Incubation Vault 03 Guardians Defeated",
+                "extra": {}
             }
         },
         "tricks": {
             "BombJump": {
                 "long_name": "Bomb Jump",
                 "description": "By performing a Bomb Jump in certain locations, it is possible to reach areas otherwise inaccessible.",
-                "require_documentation_above": 0,
+                "require_documentation_above": 1,
                 "extra": {}
             },
             "StandableTerrain": {
@@ -615,7 +646,7 @@
             "Combat": {
                 "long_name": "Combat",
                 "description": "If this trick is enabled, the player may be expected to defeat enemies and bosses with fewer items and less health.",
-                "require_documentation_above": 0,
+                "require_documentation_above": 5,
                 "extra": {}
             },
             "MissileJump": {
@@ -661,7 +692,7 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "Missile",
+                                    "name": "MissileAmmo",
                                     "amount": 1,
                                     "negate": false
                                 }
@@ -690,7 +721,7 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "Missile",
+                                    "name": "MissileAmmo",
                                     "amount": 3,
                                     "negate": false
                                 }
@@ -757,7 +788,7 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "Missile",
+                                    "name": "MissileAmmo",
                                     "amount": 1,
                                     "negate": false
                                 }
@@ -932,7 +963,7 @@
             "Portal": {
                 "name": "Portal",
                 "extra": {
-                    "is_Portal": true,
+                    "is_teleporter": true,
                     "ignore_for_hints": true
                 },
                 "items": {
@@ -1023,11 +1054,12 @@
             2,
             3
         ],
-        "WallClip": [
-            2
-        ],
         "Movement": [
             1,
+            3
+        ],
+        "WallClip": [
+            2,
             3
         ]
     },

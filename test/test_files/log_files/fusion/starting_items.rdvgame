@@ -1,0 +1,968 @@
+{
+    "schema_version": 36,
+    "info": {
+        "randovania_version": "9.2.0.dev96",
+        "randovania_version_git": "6190902e",
+        "permalink": "DbI35R1f-WGQkC4ZYAqWtNTOgKBG-Hb7y92-Sd60dujdtJ6b4jYj",
+        "has_spoiler": true,
+        "seed": 696269622,
+        "hash": "G7SR2X7Z",
+        "word_hash": "Containment Etecoon Main",
+        "presets": [
+            {
+                "schema_version": 104,
+                "base_preset_uuid": null,
+                "name": "Starting Items",
+                "uuid": "a0d65ad1-6210-46ff-99fc-602171abf05e",
+                "description": "A copy version of Starter Preset.",
+                "game": "fusion",
+                "configuration": {
+                    "trick_level": {
+                        "minimal_logic": false,
+                        "specific_levels": {
+                            "Combat": "beginner",
+                            "Knowledge": "beginner",
+                            "MidAirMorph": "beginner",
+                            "Movement": "beginner",
+                            "ShinesparkTrick": "beginner",
+                            "StandOnFrozenEnemies": "beginner",
+                            "WallJump": "beginner"
+                        }
+                    },
+                    "starting_location": [
+                        {
+                            "region": "Main Deck",
+                            "area": "Docking Bay Hangar",
+                            "node": "Ship"
+                        }
+                    ],
+                    "available_locations": {
+                        "randomization_mode": "full",
+                        "excluded_indices": []
+                    },
+                    "standard_pickup_configuration": {
+                        "pickups_state": {
+                            "Charge Beam": {
+                                "num_included_in_starting_pickups": 1
+                            },
+                            "Wide Beam": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Plasma Beam": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Wave Beam": {
+                                "num_included_in_starting_pickups": 1
+                            },
+                            "Ice Beam": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Missile Launcher Data": {
+                                "num_included_in_starting_pickups": 1,
+                                "included_ammo": [
+                                    10
+                                ]
+                            },
+                            "Super Missile Data": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Ice Missile Data": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Diffusion Missile Data": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Morph Ball": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Morph Ball Bomb Data": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Power Bomb Data": {
+                                "num_included_in_starting_pickups": 1,
+                                "included_ammo": [
+                                    10
+                                ]
+                            },
+                            "Hi-Jump": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Space Jump": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Speed Booster": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Screw Attack": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Varia Suit": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Gravity Suit": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Energy Tank": {
+                                "num_shuffled_pickups": 20,
+                                "num_included_in_starting_pickups": 1
+                            },
+                            "Level 0 Keycard": {
+                                "num_included_in_starting_pickups": 1
+                            },
+                            "Level 1 Keycard": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Level 2 Keycard": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Level 3 Keycard": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Level 4 Keycard": {
+                                "num_shuffled_pickups": 1
+                            }
+                        },
+                        "default_pickups": {},
+                        "minimum_random_starting_pickups": 2,
+                        "maximum_random_starting_pickups": 2
+                    },
+                    "ammo_pickup_configuration": {
+                        "pickups_state": {
+                            "Missile Tank": {
+                                "ammo_count": [
+                                    5
+                                ],
+                                "pickup_count": 49,
+                                "requires_main_item": true
+                            },
+                            "Power Bomb Tank": {
+                                "ammo_count": [
+                                    2
+                                ],
+                                "pickup_count": 26,
+                                "requires_main_item": true
+                            }
+                        }
+                    },
+                    "damage_strictness": 1.5,
+                    "pickup_model_style": "all-visible",
+                    "pickup_model_data_source": "etm",
+                    "logical_resource_action": "randomly",
+                    "first_progression_must_be_local": false,
+                    "two_sided_door_lock_search": false,
+                    "dock_rando": {
+                        "mode": "vanilla",
+                        "types_state": {
+                            "Door": {
+                                "can_change_from": [
+                                    "L0 Hatch",
+                                    "L1 Hatch",
+                                    "L2 Hatch",
+                                    "L3 Hatch",
+                                    "L4 Hatch"
+                                ],
+                                "can_change_to": [
+                                    "L0 Hatch",
+                                    "L1 Hatch",
+                                    "L2 Hatch",
+                                    "L3 Hatch",
+                                    "L4 Hatch",
+                                    "Open Hatch"
+                                ]
+                            }
+                        }
+                    },
+                    "single_set_for_pickups_that_solve": true,
+                    "staggered_multi_pickup_placement": true,
+                    "check_if_beatable_after_base_patches": false,
+                    "logical_pickup_placement": "minimal",
+                    "consider_possible_unsafe_resources": false,
+                    "hints": {
+                        "enable_random_hints": true,
+                        "enable_specific_location_hints": true,
+                        "specific_pickup_hints": {
+                            "artifacts": "precise",
+                            "charge_beam": "hide-area"
+                        },
+                        "minimum_available_locations_for_hint_placement": 5,
+                        "minimum_location_weight_for_hint_placement": 0.1,
+                        "use_resolver_hints": false
+                    },
+                    "anti_softlock": true,
+                    "instant_transitions": true,
+                    "energy_per_tank": 100,
+                    "artifacts": {
+                        "required_artifacts": 0,
+                        "placed_artifacts": 0
+                    },
+                    "open_save_recharge_hatches": true,
+                    "unlock_sector_hub": true,
+                    "short_intro_text": true
+                }
+            }
+        ]
+    },
+    "game_modifications": [
+        {
+            "game": "fusion",
+            "starting_equipment": {
+                "pickups": [
+                    "Charge Beam",
+                    "Wave Beam",
+                    "Missile Launcher Data",
+                    "Missile Tank",
+                    "Power Bomb Data",
+                    "Power Bomb Tank",
+                    "Energy Tank",
+                    "Level 0 Keycard",
+                    "Infant Metroid 1",
+                    "Infant Metroid 2",
+                    "Infant Metroid 3",
+                    "Infant Metroid 4",
+                    "Infant Metroid 5",
+                    "Infant Metroid 6",
+                    "Infant Metroid 7",
+                    "Infant Metroid 8",
+                    "Infant Metroid 9",
+                    "Infant Metroid 10",
+                    "Infant Metroid 11",
+                    "Infant Metroid 12",
+                    "Infant Metroid 13",
+                    "Infant Metroid 14",
+                    "Infant Metroid 15",
+                    "Infant Metroid 16",
+                    "Infant Metroid 17",
+                    "Infant Metroid 18",
+                    "Infant Metroid 19",
+                    "Infant Metroid 20"
+                ]
+            },
+            "starting_location": "Main Deck/Docking Bay Hangar/Ship",
+            "dock_connections": {},
+            "dock_weakness": {
+                "Main Deck/Concourse Recharge Room/Door to Concourse": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Crew Quarters East/Door to Crew Quarters Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Habitation Deck Save Room/Door to Elevator to Central Nexus": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Operations Deck/Door to Operations Deck Recharge Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Concourse/Door to Concourse Recharge Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Concourse/Door to Concourse Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Sector Hub/Door to Elevator to Sector 2 (TRO)": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Sector Hub/Door to Elevator to Sector 1 (SRX)": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Elevator to Sector 2 (TRO)/Door to Sector Hub": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Elevator to Sector 2 (TRO)/Door to Elevator to Sector 4 (AQA)": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Elevator to Sector 4 (AQA)/Door to Elevator to Sector 2 (TRO)": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Elevator to Sector 4 (AQA)/Door to Elevator to Sector 6 (NOC)": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Elevator to Sector 6 (NOC)/Door to Elevator to Sector 4 (AQA)": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Elevator to Sector 1 (SRX)/Door to Sector Hub": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Elevator to Sector 1 (SRX)/Door to Elevator to Sector 3 (PYR)": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Elevator to Sector 3 (PYR)/Door to Elevator to Sector 1 (SRX)": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Elevator to Sector 3 (PYR)/Door to Elevator to Sector 5 (ARC)": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Elevator to Sector 5 (ARC)/Door to Elevator to Sector 3 (PYR)": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Concourse Save Room/Door to Hornoad Hallway": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Concourse Save Room/Door to Concourse": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Crew Quarters Save Room/Door to Crew Quarters East": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Operations Deck Save Room/Door to Operations Deck Recharge Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Back Door to Sector 6 (NOC)/Door to Restricted Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Restricted Save Room/Door to Back Door to Sector 6 (NOC)": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Restricted Save Room/Door to Restricted Corridor": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Restricted Corridor/Door to Restricted Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Hornoad Hallway/Door to Concourse Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Elevator to Central Nexus/Door to Habitation Deck Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Operations Deck Recharge Room/Door to Operations Deck": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Main Deck/Operations Deck Recharge Room/Door to Operations Deck Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 1 (SRX)/Entrance Lobby/Door to Entrance Recharge Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 1 (SRX)/Entrance Save Room/Door to Entrance Recharge Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 1 (SRX)/Entrance Save Room/Door to Entrance Navigation Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 1 (SRX)/Entrance Navigation Room/Door to Entrance Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 1 (SRX)/Entrance Recharge Room/Door to Entrance Lobby": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 1 (SRX)/Entrance Recharge Room/Door to Entrance Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 1 (SRX)/Tourian Save Room East/Door to Tourian Eastern Hub": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 1 (SRX)/Tourian Eastern Hub/Door to Tourian Save Room East": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 1 (SRX)/Tourian Western Hub/Door to Tourian Save Room West": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 1 (SRX)/Tourian Save Room West/Door to Tourian Western Hub": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 1 (SRX)/Twin Junctions East/Door to Twin Junctions Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 1 (SRX)/Twin Junctions Save Room/Door to Twin Junctions East": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 1 (SRX)/Central Save Room/Door to Hornoad Housing": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 1 (SRX)/Hornoad Housing/Door to Central Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 2 (TRO)/Entrance Lobby/Door to Entrance Recharge Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 2 (TRO)/Entrance Save Room/Door to Entrance Recharge Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 2 (TRO)/Entrance Save Room/Door to Entrance Navigation Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 2 (TRO)/Entrance Navigation Room/Door to Entrance Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 2 (TRO)/Cathedral Save Access/Door to Cathedral Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 2 (TRO)/Cathedral Save Room/Door to Cathedral Save Access": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 2 (TRO)/Cloister/Door to Zazabi Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 2 (TRO)/Data Courtyard/Door to Courtyard Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 2 (TRO)/Entrance Recharge Room/Door to Entrance Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 2 (TRO)/Entrance Recharge Room/Door to Entrance Lobby": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 2 (TRO)/Courtyard Save Room/Door to Data Courtyard": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 2 (TRO)/Owtch Office/Door to Zazabi Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 2 (TRO)/Zazabi Save Room/Door to Cloister": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 2 (TRO)/Zazabi Save Room/Door to Owtch Office": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 3 (PYR)/Entrance Lobby/Door to Entrance Recharge Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 3 (PYR)/Entrance Save Room/Door to Entrance Recharge Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 3 (PYR)/Entrance Save Room/Door to Entrance Navigation Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 3 (PYR)/Entrance Navigation Room/Door to Entrance Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 3 (PYR)/B.O.X. Arena Access/Door to Data Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 3 (PYR)/Entrance Recharge Room/Door to Entrance Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 3 (PYR)/Entrance Recharge Room/Door to Entrance Lobby": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 3 (PYR)/Data Recharge Room/Door to Data Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 3 (PYR)/Data Recharge Room/Door to Geron's Treasure": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 3 (PYR)/Data Save Room/Door to B.O.X. Arena Access": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 3 (PYR)/Data Save Room/Door to Data Recharge Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 3 (PYR)/Geron's Treasure/Door to Data Recharge Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 4 (AQA)/Entrance Lobby/Door to Entrance Recharge Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 4 (AQA)/Entrance Save Room/Door to Entrance Recharge Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 4 (AQA)/Entrance Save Room/Door to Entrance Navigation Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 4 (AQA)/Entrance Navigation Room/Door to Entrance Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 4 (AQA)/Bridge Access/Door to Bridge Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 4 (AQA)/Reservoir Save Room/Door to Reservoir Vault": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 4 (AQA)/Reservoir Vault/Door to Reservoir Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 4 (AQA)/Aquarium Shaft/Door to Aquarium Save Room West": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 4 (AQA)/Aquarium Hub/Door to Aquarium Save Room East": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 4 (AQA)/Pump Control Access/Door to Pump Control Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 4 (AQA)/Pump Control Save Room/Door to Pump Control Access": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 4 (AQA)/Entrance Recharge Room/Door to Entrance Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 4 (AQA)/Entrance Recharge Room/Door to Entrance Lobby": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 4 (AQA)/Bridge Save Room/Door to Bridge Access": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 4 (AQA)/Aquarium Save Room West/Door to Aquarium Shaft": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 4 (AQA)/Aquarium Save Room East/Door to Aquarium Hub": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 5 (ARC)/Entrance Lobby/Door to Entrance Recharge Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 5 (ARC)/Entrance Save Room/Door to Entrance Recharge Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 5 (ARC)/Entrance Save Room/Door to Entrance Navigation Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 5 (ARC)/Entrance Navigation Room/Door to Entrance Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 5 (ARC)/Zeela Checkpoint/Door to Security Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 5 (ARC)/Security Shaft West/Door to Security Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 5 (ARC)/Nightmare Hub/Door to Nightmare Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 5 (ARC)/Nightmare Hub/Door to Nightmare Recharge Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 5 (ARC)/Cellar/Door to Cellar Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 5 (ARC)/Security Save Room/Door to Security Shaft West": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 5 (ARC)/Security Save Room/Door to Zeela Checkpoint": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 5 (ARC)/Entrance Recharge Room/Door to Entrance Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 5 (ARC)/Entrance Recharge Room/Door to Entrance Lobby": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 5 (ARC)/Cellar Save Room/Door to Kago Roadblock": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 5 (ARC)/Cellar Save Room/Door to Cellar": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 5 (ARC)/Kago Roadblock/Door to Cellar Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 5 (ARC)/Nightmare Recharge Room/Door to Nightmare Hub": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 5 (ARC)/Nightmare Save Room/Door to Nightmare Hub": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 6 (NOC)/Entrance Lobby/Door to Entrance Recharge Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 6 (NOC)/Entrance Save Room/Door to Entrance Recharge Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 6 (NOC)/Entrance Save Room/Door to Entrance Navigation Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 6 (NOC)/Entrance Navigation Room/Door to Entrance Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 6 (NOC)/Warehouse/Door to Data Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 6 (NOC)/Data Save Room/Door to Warehouse": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 6 (NOC)/Neglected Shaft/Door to Neglected Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 6 (NOC)/Neglected Save Room/Door to Neglected Shaft": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 6 (NOC)/Cavern Save Room/Door to Cavern Save Access": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 6 (NOC)/Entrance Recharge Room/Door to Entrance Lobby": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 6 (NOC)/Entrance Recharge Room/Door to Entrance Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 6 (NOC)/Twin Caverns East/Door to Twin Cavern Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 6 (NOC)/Twin Cavern Save Room/Door to Twin Caverns East": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                },
+                "Sector 6 (NOC)/Cavern Save Access/Door to Cavern Save Room": {
+                    "type": "Door",
+                    "name": "Open Hatch"
+                }
+            },
+            "locations": {
+                "Main Deck": {
+                    "Arachnus Arena/Pickup (Energy Tank)": "Nothing",
+                    "Arachnus Arena/Pickup (Morph Ball)": "Missile Tank",
+                    "Attic/Pickup (Energy Tank)": "Nothing",
+                    "Cubby Hole/Pickup (Missile Tank)": "Power Bomb Tank",
+                    "Genesis Speedway/Pickup (Hidden Power Bomb Tank)": "Missile Tank",
+                    "Habitation Deck/Pickup (Missile Tank)": "Energy Tank",
+                    "Main Elevator Cache/Pickup (Missile Tank)": "Missile Tank",
+                    "Nexus Storage/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Operations Deck Data Room/Pickup (Missile Launcher)": "Missile Tank",
+                    "Operations Ventilation Storage/Pickup (Hidden Missile Tank)": "Morph Ball",
+                    "Operations Ventilation/Pickup (Missile Tank)": "Energy Tank",
+                    "Restricted Airlock/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Silo Catwalk/Pickup (Energy Tank)": "Energy Tank",
+                    "Silo Scaffolding/Pickup (Missile Tank)": "Hi-Jump",
+                    "Station Entrance/Pickup (Hidden Missile Tank)": "Level 1 Keycard",
+                    "Yakuza Arena/Pickup (Space Jump)": "Energy Tank"
+                },
+                "Sector 1 (SRX)": {
+                    "Animorphs Cache/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Antechamber/Pickup (Power Bomb Tank)": "Super Missile Data",
+                    "Charge Core Arena/Pickup (Charge Beam)": "Missile Tank",
+                    "Charge Core Arena/Pickup (Energy Tank)": "Missile Tank",
+                    "Crab Rave/Pickup (Missile Tank)": "Power Bomb Tank",
+                    "Hornoad Hole/Pickup (Energy Tank)": "Power Bomb Tank",
+                    "Lava Lake/Pickup (Missile Tank in Lava)": "Energy Tank",
+                    "Lava Lake/Pickup (Missile Tank on Cliffside)": "Missile Tank",
+                    "Lava Lake/Pickup (Missile Tank on Platform)": "Energy Tank",
+                    "Ridley Arena/Pickup (Screw Attack)": "Missile Tank",
+                    "Ripper Maze/Pickup (Hidden Energy Tank)": "Power Bomb Tank",
+                    "Stabilizer Storage/Pickup (Missile Tank)": "Power Bomb Tank",
+                    "Wall Jump Tutorial/Pickup (Missile Tank)": "Missile Tank",
+                    "Watering Hole/Pickup (Hidden Power Bomb Tank)": "Nothing"
+                },
+                "Sector 2 (TRO)": {
+                    "Crumble City/Pickup (Energy Tank)": "Power Bomb Tank",
+                    "Crumble City/Pickup (Power Bomb Tank)": "Energy Tank",
+                    "Cultivation Station/Pickup (Missile Tank)": "Power Bomb Tank",
+                    "Data Courtyard/Pickup (Missile Tank)": "Energy Tank",
+                    "Data Room/Pickup (Morph Ball Bombs)": "Power Bomb Tank",
+                    "Dessgeega Dorm/Pickup (Missile Tank)": "Power Bomb Tank",
+                    "Kago Room/Pickup (Missile Tank)": "Missile Tank",
+                    "Level 1 Security Room/Pickup (L1 Locks)": "Missile Tank",
+                    "Lobby Cache/Pickup (Missile Tank)": "Power Bomb Tank",
+                    "Nettori Arena/Pickup (Plasma Beam)": "Power Bomb Tank",
+                    "Oasis Storage/Pickup (Missile Tank)": "Nothing",
+                    "Oasis/Pickup (Missile Tank)": "Energy Tank",
+                    "Overgrown Cache/Pickup (Hidden Energy Tank)": "Missile Tank",
+                    "Puyo Palace/Pickup (Power Bomb Tank)": "Energy Tank",
+                    "Ripper Tower/Pickup (Hidden Power Bomb Tank)": "Energy Tank",
+                    "Ripper Tower/Pickup (Power Bomb Tank)": "Level 3 Keycard",
+                    "Zazabi Arena Access/Pickup (Energy Tank)": "Diffusion Missile Data",
+                    "Zazabi Arena/Pickup (High Jump)": "Ice Beam",
+                    "Zazabi Speedway/Pickup (Hidden Missile Tank)": "Missile Tank",
+                    "Zazabi Speedway/Pickup (Power Bomb Tank)": "Energy Tank",
+                    "Zoro Zig-Zag/Pickup (Missile Tank)": "Nothing"
+                },
+                "Sector 3 (PYR)": {
+                    "Alcove/Pickup (Hidden Energy Tank)": "Power Bomb Tank",
+                    "Alcove/Pickup (Power Bomb Tank)": "Space Jump",
+                    "Bob's Abode/Pickup (Missile Tank)": "Gravity Suit",
+                    "Data Room/Pickup (Super Missiles)": "Missile Tank",
+                    "Deserted Runway/Pickup (Missile Tank)": "Power Bomb Tank",
+                    "Fiery Storage/Pickup (Energy Tank)": "Missile Tank",
+                    "Fiery Storage/Pickup (Missile Tank)": "Energy Tank",
+                    "Garbage Chute/Pickup (Power Bomb Tank in Cave)": "Missile Tank",
+                    "Garbage Chute/Pickup (Power Bomb Tank in Shaft)": "Missile Tank",
+                    "Geron's Treasure/Pickup (Missile Tank)": "Missile Tank",
+                    "Glass Tube to Sector 5 (ARC)/Pickup (Hidden Power Bomb Tank)": "Missile Tank",
+                    "Lava Maze/Pickup (Power Bomb Tank)": "Power Bomb Tank",
+                    "Level 2 Security Room/Pickup (L2 Locks)": "Nothing",
+                    "Main Boiler Control Room/Pickup (Wide Beam)": "Missile Tank",
+                    "Namihe's Lair/Pickup (Power Bomb Tank)": "Level 2 Keycard",
+                    "Processing Access/Pickup (Hidden Missile Tank)": "Power Bomb Tank",
+                    "Security Access/Pickup (Hidden Missile Tank)": "Energy Tank",
+                    "Sova Processing/Pickup (Energy Tank)": "Missile Tank",
+                    "Sova Processing/Pickup (Missile Tank)": "Missile Tank"
+                },
+                "Sector 4 (AQA)": {
+                    "Aquarium Kago Storage/Pickup (Missile Tank)": "Missile Tank",
+                    "Aquarium Kago Storage/Pickup (Power Bomb Tank)": "Level 4 Keycard",
+                    "Aquarium Pirate Tank/Pickup (Missile Tank)": "Power Bomb Tank",
+                    "Broken Bridge/Pickup (Energy Tank)": "Missile Tank",
+                    "C-Cache/Pickup (Underwater Missile Tank)": "Power Bomb Tank",
+                    "Cargo Hold to Sector 5 (ARC)/Pickup (Power Bomb Tank)": "Power Bomb Tank",
+                    "Cheddar Bay/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Data Room/Pickup (Diffusion Missiles)": "Screw Attack",
+                    "Drain Pipe/Pickup (Hidden Missile Tank)": "Power Bomb Tank",
+                    "Level 4 Security Room/Pickup (L4 Locks)": "Missile Tank",
+                    "Pump Control Unit/Pickup (Missile Tank)": "Wide Beam",
+                    "Reservoir East/Pickup (Hidden Power Bomb Tank)": "Power Bomb Tank",
+                    "Reservoir Vault/Pickup (Lower Missile Tank)": "Morph Ball Bomb Data",
+                    "Reservoir Vault/Pickup (Upper Missile Tank)": "Energy Tank",
+                    "Sanctuary Cache/Pickup (Hidden Energy Tank)": "Missile Tank",
+                    "Serris Arena/Pickup (Speed Booster)": "Nothing",
+                    "Waterway/Pickup (Underwater Missile Tank)": "Missile Tank",
+                    "Yard Firing Range/Pickup (Missile Tank)": "Energy Tank"
+                },
+                "Sector 5 (ARC)": {
+                    "Crow's Nest/Pickup (Hidden Power Bomb Tank)": "Power Bomb Tank",
+                    "Data Room/Pickup (Power Bomb Data)": "Nothing",
+                    "E-Tank Mimic Den/Pickup (Hidden Energy Tank)": "Missile Tank",
+                    "Flooded Airlock to Sector 4 (AQA)/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Gerubus Gully/Pickup (Hidden Missile Tank)": "Missile Tank",
+                    "Level 3 Security Room/Pickup (L3 Locks)": "Missile Tank",
+                    "Magic Box/Pickup (Missile Tank)": "Energy Tank",
+                    "Mini-Fridge/Pickup (Energy Tank)": "Missile Tank",
+                    "Nightmare Arena/Pickup (Gravity Suit)": "Missile Tank",
+                    "Nightmare Hub/Pickup (Hidden Power Bomb Tank)": "Power Bomb Tank",
+                    "Nightmare Nook/Pickup (Energy Tank)": "Missile Tank",
+                    "Ripper Road/Pickup (Power Bomb Tank)": "Power Bomb Tank",
+                    "Ripper's Treasure/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Ruined Break Room/Pickup (Hidden Power Bomb Tank)": "Energy Tank",
+                    "Security Shaft East/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Training Aerie/Pickup (Missile Tank)": "Missile Tank",
+                    "Training Aerie/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Transmutation Trial/Pickup (Hidden Missile Tank)": "Plasma Beam"
+                },
+                "Sector 6 (NOC)": {
+                    "Catacombs/Pickup (Energy Tank)": "Missile Tank",
+                    "Entrance Lobby/Pickup (Missile Tank)": "Missile Tank",
+                    "Missile Mimic Lodge/Pickup (Missile Tank)": "Missile Tank",
+                    "Pillar Highway/Pickup (Energy Tank)": "Missile Tank",
+                    "Spaceboost Alley/Pickup (Power Bomb Tank 2)": "Power Bomb Tank",
+                    "Spaceboost Alley/Pickup (Power Bomb Tank)": "Nothing",
+                    "Twin Caverns West/Pickup (Hidden Missile Tank)": "Varia Suit",
+                    "Twin Caverns West/Pickup (Missile Tank)": "Energy Tank",
+                    "Varia Core-X Arena/Pickup (Varia Suit)": "Power Bomb Tank",
+                    "Vault/Pickup (Energy Tank)": "Speed Booster",
+                    "X-B.O.X. Arena/Pickup (Wave Beam)": "Missile Tank",
+                    "X-B.O.X. Garage/Pickup (Hidden Power Bomb Tank)": "Energy Tank",
+                    "X-B.O.X. Garage/Pickup (Missile Tank)": "Missile Tank",
+                    "Zozoro Wine Cellar/Pickup (Hidden Missile Tank)": "Ice Missile Data"
+                }
+            },
+            "hints": {
+                "Main Deck/Auxiliary Navigation Room/Navigation Terminal": {
+                    "hint_type": "joke"
+                },
+                "Main Deck/Restricted Navigation Room/Navigation Terminal": {
+                    "hint_type": "joke"
+                },
+                "Sector 2 (TRO)/Entrance Navigation Room/Navigation Terminal": {
+                    "hint_type": "joke"
+                },
+                "Main Deck/Nexus Navigation Room/Navigation Terminal": {
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": false,
+                        "relative": null
+                    },
+                    "target": 18,
+                    "hint_type": "location"
+                },
+                "Sector 5 (ARC)/Entrance Navigation Room/Navigation Terminal": {
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": false,
+                        "relative": null
+                    },
+                    "target": 103,
+                    "hint_type": "location"
+                },
+                "Sector 6 (NOC)/Entrance Navigation Room/Navigation Terminal": {
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": false,
+                        "relative": null
+                    },
+                    "target": 87,
+                    "hint_type": "location"
+                },
+                "Main Deck/Crew Quarters Navigation Room/Navigation Terminal": {
+                    "precision": {
+                        "location": "region-only",
+                        "include_owner": false,
+                        "relative": null,
+                        "item_feature": "suit"
+                    },
+                    "target": 95,
+                    "hint_type": "location"
+                },
+                "Sector 3 (PYR)/Entrance Navigation Room/Navigation Terminal": {
+                    "precision": {
+                        "item": "detailed",
+                        "include_owner": false,
+                        "relative": null,
+                        "location_feature": "climbable"
+                    },
+                    "target": 67,
+                    "hint_type": "location"
+                },
+                "Sector 4 (AQA)/Entrance Navigation Room/Navigation Terminal": {
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": false,
+                        "relative": null
+                    },
+                    "target": 69,
+                    "hint_type": "location"
+                },
+                "Sector 1 (SRX)/Entrance Navigation Room/Navigation Terminal": {
+                    "precision": {
+                        "include_owner": false,
+                        "relative": null,
+                        "location_feature": "boss",
+                        "item_feature": "beam"
+                    },
+                    "target": 107,
+                    "hint_type": "location"
+                },
+                "Main Deck/Operations Deck Navigation Room/Navigation Terminal": {
+                    "precision": {
+                        "location": "region-only",
+                        "include_owner": false,
+                        "relative": null,
+                        "item_feature": "suit"
+                    },
+                    "target": 43,
+                    "hint_type": "location"
+                }
+            },
+            "game_specific": {}
+        }
+    ],
+    "item_order": [
+        "Morph Ball at Main Deck/Operations Ventilation Storage/Pickup (Hidden Missile Tank)",
+        "Energy Tank at Sector 1 (SRX)/Lava Lake/Pickup (Missile Tank on Platform)",
+        "Hi-Jump at Main Deck/Silo Scaffolding/Pickup (Missile Tank)",
+        "Energy Tank at Sector 2 (TRO)/Oasis/Pickup (Missile Tank)",
+        "Speed Booster at Sector 6 (NOC)/Vault/Pickup (Energy Tank)",
+        "Gravity Suit at Sector 3 (PYR)/Bob's Abode/Pickup (Missile Tank)",
+        "Level 2 Keycard at Sector 3 (PYR)/Namihe's Lair/Pickup (Power Bomb Tank)",
+        "Morph Ball Bomb Data at Sector 4 (AQA)/Reservoir Vault/Pickup (Lower Missile Tank)",
+        "Space Jump at Sector 3 (PYR)/Alcove/Pickup (Power Bomb Tank)",
+        "Ice Beam at Sector 2 (TRO)/Zazabi Arena/Pickup (High Jump)",
+        "Level 3 Keycard at Sector 2 (TRO)/Ripper Tower/Pickup (Power Bomb Tank)",
+        "Level 1 Keycard at Main Deck/Station Entrance/Pickup (Hidden Missile Tank)",
+        "Varia Suit at Sector 6 (NOC)/Twin Caverns West/Pickup (Hidden Missile Tank)",
+        "Energy Tank at Sector 3 (PYR)/Fiery Storage/Pickup (Missile Tank)",
+        "Level 4 Keycard at Sector 4 (AQA)/Aquarium Kago Storage/Pickup (Power Bomb Tank)",
+        "Screw Attack at Sector 4 (AQA)/Data Room/Pickup (Diffusion Missiles)",
+        "Plasma Beam at Sector 5 (ARC)/Transmutation Trial/Pickup (Hidden Missile Tank)",
+        "Wide Beam at Sector 4 (AQA)/Pump Control Unit/Pickup (Missile Tank)",
+        "Super Missile Data at Sector 1 (SRX)/Antechamber/Pickup (Power Bomb Tank)"
+    ],
+    "checksum": "84a541e6e63372e4d51e37b470bb69ef24fdfbcf9fe4e18b2b382375663b70f3e65214ca42a281a218f3f8178d028c6873bbd8a5804c004f325cf386c2a0d849"
+}

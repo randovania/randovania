@@ -626,7 +626,8 @@
             "hint_features": [],
             "extra": {
                 "room_id": 72,
-                "entity_file": "unit3_C1_Ent.bin"
+                "entity_file": "unit3_C1_Ent.bin",
+                "portal_filename": "unit3_C1_Ent"
             },
             "nodes": {
                 "Player Spawn": {
@@ -940,7 +941,7 @@
             }
         },
         "Cortex CPU": {
-            "default_node": "Player Spawn",
+            "default_node": "CPU Chamber",
             "hint_features": [],
             "extra": {
                 "room_id": 67,
@@ -1154,7 +1155,7 @@
                                 "items": []
                             }
                         },
-                        "Player Spawn": {
+                        "CPU Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1212,7 +1213,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Battlehammer Force Field": {
+                        "CPU Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1325,14 +1326,7 @@
                                 "items": []
                             }
                         },
-                        "Pickup (Battlehammer)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Player Spawn": {
+                        "CPU Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1341,12 +1335,12 @@
                         }
                     }
                 },
-                "Player Spawn": {
+                "CPU Chamber": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 16.519619440526704,
-                        "y": 26.088576967803053,
+                        "x": 16.52,
+                        "y": 26.09,
                         "z": 0.0
                     },
                     "description": "",
@@ -1400,7 +1394,8 @@
             "hint_features": [],
             "extra": {
                 "room_id": 65,
-                "entity_file": "unit3_Land_Ent.bin"
+                "entity_file": "unit3_Land_Ent.bin",
+                "portal_filename": "unit3_Land_Ent"
             },
             "nodes": {
                 "Ship": {
@@ -1618,7 +1613,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
+                    "ui_custom_name": "Vesper Defense Outpost - VDO Gateway (Ascension Portal)",
                     "connections": {
                         "Ship": {
                             "type": "or",
@@ -1695,7 +1690,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
+                    "ui_custom_name": "Vesper Defense Outpost - VDO Gateway (Weapons Complex Portal)",
                     "connections": {
                         "Ship": {
                             "type": "or",
@@ -1723,7 +1718,8 @@
             "hint_features": [],
             "extra": {
                 "room_id": 68,
-                "entity_file": "Unit3_RM1_Ent.bin"
+                "entity_file": "Unit3_RM1_Ent.bin",
+                "portal_filename": "unit3_RM1_Ent"
             },
             "nodes": {
                 "Door to Bioweaponry Lab": {
@@ -1791,7 +1787,7 @@
                         }
                     }
                 },
-                "Pickup (VDO Cartograph Artifact 1)": {
+                "Pickup (Cartograph Artifact)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -1930,7 +1926,7 @@
                         }
                     }
                 },
-                "Pickup (VDO Attameter Artifact 1)": {
+                "Pickup (Attameter Artifact)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -2251,7 +2247,7 @@
                                 "items": []
                             }
                         },
-                        "Pickup (VDO Attameter Artifact 1)": {
+                        "Pickup (Attameter Artifact)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2492,7 +2488,7 @@
                     "valid_starting_location": false,
                     "event_name": "VDOWeaponsComplexSylux",
                     "connections": {
-                        "Pickup (VDO Cartograph Artifact 1)": {
+                        "Pickup (Cartograph Artifact)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2619,7 +2615,7 @@
                                 "items": []
                             }
                         },
-                        "Pickup (VDO Binary Subscripture Artifact 2)": {
+                        "Pickup (Binary Subscripture Artifact)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2635,7 +2631,7 @@
                         }
                     }
                 },
-                "Pickup (VDO Binary Subscripture Artifact 2)": {
+                "Pickup (Binary Subscripture Artifact)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -2757,7 +2753,8 @@
             "hint_features": [],
             "extra": {
                 "room_id": 74,
-                "entity_file": "Unit3_RM3_Ent.bin"
+                "entity_file": "Unit3_RM3_Ent.bin",
+                "portal_filename": "unit3_RM3_Ent"
             },
             "nodes": {
                 "Portal to Stronghold Void B": {
@@ -2827,7 +2824,7 @@
                         }
                     }
                 },
-                "Pickup (VDO Cartograph Artifact 2)": {
+                "Pickup (Cartograph Artifact)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -3059,7 +3056,7 @@
                         }
                     }
                 },
-                "Pickup (VDO Attameter Artifact 2)": {
+                "Pickup (Attameter Artifact)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -3324,7 +3321,7 @@
                     "valid_starting_location": false,
                     "event_name": "VDOStasisBunkerGuardians",
                     "connections": {
-                        "Pickup (VDO Cartograph Artifact 2)": {
+                        "Pickup (Cartograph Artifact)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3349,7 +3346,7 @@
                     "valid_starting_location": false,
                     "event_name": "VDOStasisBunkerDoors",
                     "connections": {
-                        "Pickup (VDO Attameter Artifact 2)": {
+                        "Pickup (Attameter Artifact)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3365,7 +3362,8 @@
             "hint_features": [],
             "extra": {
                 "room_id": 69,
-                "entity_file": "unit3_rm4_Ent.bin"
+                "entity_file": "unit3_rm4_Ent.bin",
+                "portal_filename": "unit3_RM4_Ent"
             },
             "nodes": {
                 "Portal to Stronghold Void A": {
@@ -3592,7 +3590,7 @@
                         }
                     }
                 },
-                "Pickup (VDO Binary Subscripture Artifact 1)": {
+                "Pickup (Binary Subscripture Artifact)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -3982,7 +3980,7 @@
                                 ]
                             }
                         },
-                        "Pickup (VDO Binary Subscripture Artifact 1)": {
+                        "Pickup (Binary Subscripture Artifact)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3998,7 +3996,8 @@
             "hint_features": [],
             "extra": {
                 "room_id": 70,
-                "entity_file": "Unit3_TP1_Ent.bin"
+                "entity_file": "Unit3_TP1_Ent.bin",
+                "portal_filename": "Unit3_TP1_Ent"
             },
             "nodes": {
                 "Player Spawn": {
@@ -4192,7 +4191,8 @@
             "hint_features": [],
             "extra": {
                 "room_id": 75,
-                "entity_file": "Unit3_TP2_Ent.bin"
+                "entity_file": "Unit3_TP2_Ent.bin",
+                "portal_filename": "Unit3_TP2_Ent"
             },
             "nodes": {
                 "Player Spawn": {

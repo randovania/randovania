@@ -1,0 +1,967 @@
+{
+    "schema_version": 38,
+    "info": {
+        "randovania_version": "10.1.0.dev64-dirty",
+        "randovania_version_git": "b785fb0e",
+        "permalink": "Dd6_vhrS3reF-w4LkiyWNIREtvHV32YAAIWP",
+        "has_spoiler": true,
+        "seed": 471805739,
+        "hash": "X67BVUW6",
+        "word_hash": "Vast Head Drip",
+        "presets": [
+            {
+                "schema_version": 107,
+                "base_preset_uuid": null,
+                "name": "Starter Preset Copy",
+                "uuid": "03000452-0be1-48df-ae48-365dcea6b9d2",
+                "description": "A copy version of Starter Preset.",
+                "game": "prime_hunters",
+                "configuration": {
+                    "trick_level": {
+                        "minimal_logic": false,
+                        "specific_levels": {}
+                    },
+                    "starting_location": [
+                        {
+                            "region": "Celestial Archives",
+                            "area": "Celestial Gateway",
+                            "node": "Ship"
+                        }
+                    ],
+                    "available_locations": {
+                        "randomization_mode": "full",
+                        "excluded_indices": []
+                    },
+                    "standard_pickup_configuration": {
+                        "pickups_state": {
+                            "Power Beam": {},
+                            "Missile Launcher": {
+                                "num_shuffled_pickups": 1,
+                                "included_ammo": [
+                                    10
+                                ]
+                            },
+                            "Volt Driver": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Battlehammer": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Imperialist": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Judicator": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Magmaul": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Shock Coil": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Energy Tank": {
+                                "num_shuffled_pickups": 7
+                            }
+                        },
+                        "default_pickups": {},
+                        "minimum_random_starting_pickups": 2,
+                        "maximum_random_starting_pickups": 2
+                    },
+                    "ammo_pickup_configuration": {
+                        "pickups_state": {
+                            "Missile Expansion": {
+                                "ammo_count": [
+                                    10
+                                ],
+                                "pickup_count": 8,
+                                "requires_main_item": true
+                            },
+                            "UA Expansion": {
+                                "ammo_count": [
+                                    30
+                                ],
+                                "pickup_count": 12,
+                                "requires_main_item": true
+                            }
+                        }
+                    },
+                    "damage_strictness": 1.5,
+                    "pickup_model_style": "all-visible",
+                    "pickup_model_data_source": "etm",
+                    "logical_resource_action": "randomly",
+                    "first_progression_must_be_local": false,
+                    "two_sided_door_lock_search": false,
+                    "dock_rando": {
+                        "mode": "vanilla",
+                        "types_state": {
+                            "Door": {
+                                "can_change_from": [],
+                                "can_change_to": []
+                            },
+                            "Other": {
+                                "can_change_from": [],
+                                "can_change_to": []
+                            }
+                        }
+                    },
+                    "single_set_for_pickups_that_solve": true,
+                    "staggered_multi_pickup_placement": true,
+                    "check_if_beatable_after_base_patches": false,
+                    "logical_pickup_placement": "minimal",
+                    "consider_possible_unsafe_resources": false,
+                    "hints": {
+                        "enable_random_hints": true,
+                        "enable_specific_location_hints": true,
+                        "specific_pickup_hints": {},
+                        "minimum_available_locations_for_hint_placement": 0,
+                        "minimum_location_weight_for_hint_placement": 0.0,
+                        "use_resolver_hints": false
+                    },
+                    "octoliths": {
+                        "prefer_bosses": true,
+                        "placed_octoliths": 3
+                    },
+                    "force_field_configuration": {
+                        "force_field_requirement": {
+                            "Celestial Archives/Synergy Core/Volt Driver Force Field": "volt-driver",
+                            "Celestial Archives/Celestial Gateway/Battlehammer Force Field": "battlehammer",
+                            "Celestial Archives/Incubation Vault 01/Shock Coil Force Field": "shock-coil",
+                            "Celestial Archives/Incubation Vault 02/Shock Coil Force Field": "shock-coil",
+                            "Celestial Archives/Incubation Vault 03/Shock Coil Force Field (Upper)": "shock-coil",
+                            "Celestial Archives/Incubation Vault 03/Shock Coil Force Field (Lower)": "shock-coil",
+                            "Alinos/High Ground/Volt Driver Force Field (Upper)": "volt-driver",
+                            "Alinos/High Ground/Volt Driver Force Field (East)": "volt-driver",
+                            "Alinos/High Ground/Volt Driver Force Field (South)": "volt-driver",
+                            "Alinos/High Ground/Volt Driver Force Field (North)": "volt-driver",
+                            "Alinos/High Ground/Judicator Force Field (Upper)": "judicator",
+                            "Alinos/High Ground/Judicator Force Field (Lower)": "judicator",
+                            "Alinos/Alinos Perch/Magmaul Force Field": "magmaul",
+                            "Alinos/Council Chamber/Magmaul Force Field (Upper)": "magmaul",
+                            "Alinos/Council Chamber/Magmaul Force Field (Jump Pad)": "magmaul",
+                            "Alinos/Council Chamber/Magmaul Force Field (Entrance)": "magmaul",
+                            "Arcterra/Ice Hive/Judicator Force Field (Entrance)": "judicator",
+                            "Arcterra/Ice Hive/Judicator Force Field (Bridge)": "judicator",
+                            "Arcterra/Ice Hive/Judicator Force Field (Alcove)": "judicator",
+                            "Arcterra/Ice Hive/Judicator Force Field (War Wasps)": "judicator",
+                            "Arcterra/Ice Hive/Judicator Force Field (Judicator Room)": "judicator",
+                            "Vesper Defense Outpost/Cortex CPU/Battlehammer Force Field": "battlehammer",
+                            "Vesper Defense Outpost/Weapons Complex/Battlehammer Force Field": "battlehammer",
+                            "Vesper Defense Outpost/Compression Chamber/Battlehammer Force Field (Left)": "battlehammer",
+                            "Vesper Defense Outpost/Compression Chamber/Battlehammer Force Field (Right)": "battlehammer"
+                        }
+                    },
+                    "teleporters": {
+                        "mode": "vanilla",
+                        "excluded_teleporters": [],
+                        "excluded_targets": []
+                    }
+                }
+            }
+        ]
+    },
+    "game_modifications": [
+        {
+            "game": "prime_hunters",
+            "starting_equipment": {
+                "pickups": [
+                    "Octolith 4",
+                    "Octolith 5",
+                    "Octolith 6",
+                    "Octolith 7",
+                    "Octolith 8",
+                    "Battlehammer",
+                    "Judicator"
+                ]
+            },
+            "starting_location": "Celestial Archives/Celestial Gateway/Ship",
+            "dock_connections": {
+                "Celestial Archives/Synergy Core/Portal to Stronghold Void A": "Celestial Archives/Stronghold Void A/Portal to Synergy Core",
+                "Celestial Archives/Synergy Core/Portal to Transfer Lock": "Celestial Archives/Transfer Lock/Portal to Synergy Core",
+                "Celestial Archives/Synergy Core/Portal to Celestial Gateway": "Celestial Archives/Celestial Gateway/Portal to Synergy Core",
+                "Celestial Archives/Tetra Vista/Portal to Incubation Vault 03": "Celestial Archives/Incubation Vault 03/Portal to Tetra Vista",
+                "Celestial Archives/New Arrival Registration/Portal to Stronghold Void B": "Celestial Archives/Stronghold Void B/Portal to New Arrival Registration",
+                "Celestial Archives/New Arrival Registration/Portal to Celestial Gateway": "Celestial Archives/Celestial Gateway/Portal to New Arrival Registration",
+                "Celestial Archives/Celestial Gateway/Portal to Synergy Core": "Celestial Archives/Synergy Core/Portal to Celestial Gateway",
+                "Celestial Archives/Celestial Gateway/Portal to New Arrival Registration": "Celestial Archives/New Arrival Registration/Portal to Celestial Gateway",
+                "Celestial Archives/Transfer Lock/Portal to Synergy Core": "Celestial Archives/Synergy Core/Portal to Transfer Lock",
+                "Celestial Archives/Transfer Lock/Portal to Docking Bay": "Celestial Archives/Docking Bay/Portal to Transfer Lock",
+                "Celestial Archives/Incubation Vault 01/Portal to Docking Bay (Lower Level)": "Celestial Archives/Docking Bay/Portal from Incubation Vault 01",
+                "Celestial Archives/Incubation Vault 01/Portal to Incubation Vault 02 (Bridge)": "Celestial Archives/Incubation Vault 02/Portal to Incubation Vault 01 (Upper Level)",
+                "Celestial Archives/Incubation Vault 01/Portal to Incubation Vault 01 (Behind Force Field)": "Celestial Archives/Incubation Vault 01/Portal to Incubation Vault 01 (Lower Level)",
+                "Celestial Archives/Incubation Vault 01/Portal to Incubation Vault 01 (Lower Level)": "Celestial Archives/Incubation Vault 01/Portal to Incubation Vault 01 (Behind Force Field)",
+                "Celestial Archives/Incubation Vault 01/Portal to Incubation Vault 02 (Artifact Shield)": "Celestial Archives/Incubation Vault 02/Portal to Incubation Vault 01 (Lower Level)",
+                "Celestial Archives/Incubation Vault 01/Portal to Docking Bay (Behind Force Field)": "Celestial Archives/Docking Bay/Portal to Incubation Vault 01",
+                "Celestial Archives/Incubation Vault 02/Portal to Docking Bay": "Celestial Archives/Docking Bay/Portal to Incubation Vault 02",
+                "Celestial Archives/Incubation Vault 02/Portal to Incubation Vault 01 (Upper Level)": "Celestial Archives/Incubation Vault 01/Portal to Incubation Vault 02 (Bridge)",
+                "Celestial Archives/Incubation Vault 02/Portal to Incubation Vault 03": "Celestial Archives/Incubation Vault 03/Portal to Incubation Vault 02",
+                "Celestial Archives/Incubation Vault 02/Portal to Incubation Vault 01 (Lower Level)": "Celestial Archives/Incubation Vault 01/Portal to Incubation Vault 02 (Artifact Shield)",
+                "Celestial Archives/Incubation Vault 03/Portal to Tetra Vista": "Celestial Archives/Tetra Vista/Portal to Incubation Vault 03",
+                "Celestial Archives/Incubation Vault 03/Portal to Incubation Vault 02": "Celestial Archives/Incubation Vault 02/Portal to Incubation Vault 03",
+                "Celestial Archives/Incubation Vault 03/Portal to Docking Bay (Main)": "Celestial Archives/Docking Bay/Portal from Incubation Vault 03",
+                "Celestial Archives/Incubation Vault 03/Portal to Docking Bay (Return)": "Celestial Archives/Docking Bay/Portal to Incubation Vault 03",
+                "Celestial Archives/Docking Bay/Portal to Incubation Vault 01": "Celestial Archives/Incubation Vault 01/Portal to Docking Bay (Behind Force Field)",
+                "Celestial Archives/Docking Bay/Portal to Incubation Vault 03": "Celestial Archives/Incubation Vault 03/Portal to Docking Bay (Return)",
+                "Celestial Archives/Docking Bay/Portal to Incubation Vault 02": "Celestial Archives/Incubation Vault 02/Portal to Docking Bay",
+                "Celestial Archives/Docking Bay/Portal to Transfer Lock": "Celestial Archives/Transfer Lock/Portal to Docking Bay",
+                "Celestial Archives/Docking Bay/Portal from Incubation Vault 01": "Celestial Archives/Incubation Vault 01/Portal to Docking Bay (Lower Level)",
+                "Celestial Archives/Docking Bay/Portal from Incubation Vault 03": "Celestial Archives/Incubation Vault 03/Portal to Docking Bay (Main)",
+                "Celestial Archives/Stronghold Void A/Portal to Synergy Core": "Celestial Archives/Synergy Core/Portal to Stronghold Void A",
+                "Celestial Archives/Stronghold Void B/Portal to New Arrival Registration": "Celestial Archives/New Arrival Registration/Portal to Stronghold Void B",
+                "Alinos/Magma Drop/Portal to High Ground": "Alinos/High Ground/Portal from Magma Drop",
+                "Alinos/Magma Drop/Portal from High Ground": "Alinos/High Ground/Portal to Magma Drop",
+                "Alinos/Alinos Gateway/Portal to Council Chamber": "Alinos/Council Chamber/Portal to Alinos Gateway",
+                "Alinos/Alinos Gateway/Portal to Elder Passage": "Alinos/Elder Passage/Portal to Alinos Gateway",
+                "Alinos/High Ground/Portal to Magma Drop": "Alinos/Magma Drop/Portal from High Ground",
+                "Alinos/High Ground/Portal from Magma Drop": "Alinos/Magma Drop/Portal to High Ground",
+                "Alinos/Council Chamber/Portal to Alinos Gateway": "Alinos/Alinos Gateway/Portal to Council Chamber",
+                "Alinos/Processor Core/Portal to Stronghold Void A": "Alinos/Stronghold Void A/Portal to Processor Core",
+                "Alinos/Elder Passage/Portal to Stronghold Void B": "Alinos/Stronghold Void B/Portal to Elder Passage",
+                "Alinos/Elder Passage/Portal to Alinos Gateway": "Alinos/Alinos Gateway/Portal to Elder Passage",
+                "Alinos/Stronghold Void B/Portal to Elder Passage": "Alinos/Elder Passage/Portal to Stronghold Void B",
+                "Alinos/Stronghold Void A/Portal to Processor Core": "Alinos/Processor Core/Portal to Stronghold Void A",
+                "Arcterra/Arcterra Gateway/Portal to Ice Hive": "Arcterra/Ice Hive/Portal to Arcterra Gateway",
+                "Arcterra/Arcterra Gateway/Portal to Fault Line": "Arcterra/Fault Line/Portal to Arcterra Gateway",
+                "Arcterra/Ice Hive/Portal to Stronghold Void A": "Arcterra/Stronghold Void A/Portal to Ice Hive",
+                "Arcterra/Ice Hive/Portal to Arcterra Gateway": "Arcterra/Arcterra Gateway/Portal to Ice Hive",
+                "Arcterra/Fault Line/Portal to Stronghold Void B": "Arcterra/Stronghold Void B/Portal to Fault Line",
+                "Arcterra/Fault Line/Portal to Arcterra Gateway": "Arcterra/Arcterra Gateway/Portal to Fault Line",
+                "Arcterra/Stronghold Void A/Portal to Ice Hive": "Arcterra/Ice Hive/Portal to Stronghold Void A",
+                "Arcterra/Stronghold Void B/Portal to Fault Line": "Arcterra/Fault Line/Portal to Stronghold Void B",
+                "Vesper Defense Outpost/Ascension/Portal to VDO Gateway": "Vesper Defense Outpost/VDO Gateway/Portal to Ascension",
+                "Vesper Defense Outpost/VDO Gateway/Portal to Ascension": "Vesper Defense Outpost/Ascension/Portal to VDO Gateway",
+                "Vesper Defense Outpost/VDO Gateway/Portal to Weapons Complex": "Vesper Defense Outpost/Weapons Complex/Portal to VDO Gateway",
+                "Vesper Defense Outpost/Weapons Complex/Portal to VDO Gateway": "Vesper Defense Outpost/VDO Gateway/Portal to Weapons Complex",
+                "Vesper Defense Outpost/Stasis Bunker/Portal to Stronghold Void B": "Vesper Defense Outpost/Stronghold Void B/Portal to Stasis Bunker",
+                "Vesper Defense Outpost/Compression Chamber/Portal to Stronghold Void A": "Vesper Defense Outpost/Stronghold Void A/Portal to Compression Chamber",
+                "Vesper Defense Outpost/Stronghold Void A/Portal to Compression Chamber": "Vesper Defense Outpost/Compression Chamber/Portal to Stronghold Void A",
+                "Vesper Defense Outpost/Stronghold Void B/Portal to Stasis Bunker": "Vesper Defense Outpost/Stasis Bunker/Portal to Stronghold Void B",
+                "Oubliette/Oubliette Gateway/Portal to Oubliette Storage": "Oubliette/Oubliette Storage/Portal to Oubliette Gateway",
+                "Oubliette/Oubliette Gateway/Portal to Oubliette Gateway (Elevator Room)": "Oubliette/Oubliette Gateway/Portal to Oubliette Gateway (Lookout Room)",
+                "Oubliette/Oubliette Gateway/Portal to Oubliette Gateway (Lookout Room)": "Oubliette/Oubliette Gateway/Portal to Oubliette Gateway (Elevator Room)",
+                "Oubliette/Oubliette Storage/Portal to Oubliette Gateway": "Oubliette/Oubliette Gateway/Portal to Oubliette Storage"
+            },
+            "dock_weakness": {},
+            "locations": [
+                {
+                    "node_identifier": {
+                        "region": "Alinos",
+                        "area": "Alinos Gateway",
+                        "node": "Pickup (Missile Expansion)"
+                    },
+                    "index": 7,
+                    "pickup": "Missile Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Alinos",
+                        "area": "Alinos Perch",
+                        "node": "Pickup (Missile Expansion)"
+                    },
+                    "index": 10,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Alinos",
+                        "area": "Biodefense Chamber A",
+                        "node": "Pickup (Octolith)"
+                    },
+                    "index": 1,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Alinos",
+                        "area": "Biodefense Chamber B",
+                        "node": "Pickup (Octolith)"
+                    },
+                    "index": 0,
+                    "pickup": "Octolith 3",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Alinos",
+                        "area": "Council Chamber",
+                        "node": "Pickup (Attameter Artifact)"
+                    },
+                    "index": 12,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Alinos",
+                        "area": "Council Chamber",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 11,
+                    "pickup": "Alinos Binary Subscripture Artifact 1",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Alinos",
+                        "area": "Council Chamber",
+                        "node": "Pickup (Magmaul)"
+                    },
+                    "index": 13,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Alinos",
+                        "area": "Crash Site",
+                        "node": "Pickup (Cartograph Artifact)"
+                    },
+                    "index": 4,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Alinos",
+                        "area": "Echo Hall",
+                        "node": "Pickup (Cartograph Artifact)"
+                    },
+                    "index": 2,
+                    "pickup": "Celestial Binary Subscripture Artifact 2",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Alinos",
+                        "area": "Echo Hall",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 3,
+                    "pickup": "Arcterra Attameter Artifact 1",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Alinos",
+                        "area": "Elder Passage",
+                        "node": "Pickup (Attameter Artifact)"
+                    },
+                    "index": 15,
+                    "pickup": "Volt Driver",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Alinos",
+                        "area": "High Ground",
+                        "node": "Pickup (Binary Subscripture Artifact)"
+                    },
+                    "index": 8,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Alinos",
+                        "area": "High Ground",
+                        "node": "Pickup (Missile Expansion)"
+                    },
+                    "index": 9,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Alinos",
+                        "area": "Magma Drop",
+                        "node": "Pickup (UA Expansion)"
+                    },
+                    "index": 5,
+                    "pickup": "Missile Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Alinos",
+                        "area": "Piston Cave",
+                        "node": "Pickup (Binary Subcripture Artifact)"
+                    },
+                    "index": 6,
+                    "pickup": "UA Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Alinos",
+                        "area": "Processor Core",
+                        "node": "Pickup (Binary Subscripture Artifact)"
+                    },
+                    "index": 14,
+                    "pickup": "UA Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Arcterra",
+                        "area": "Biodefense Chamber A",
+                        "node": "Pickup (Octolith)"
+                    },
+                    "index": 45,
+                    "pickup": "Celestial Cartograph Artifact 1",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Arcterra",
+                        "area": "Biodefense Chamber B",
+                        "node": "Pickup (Octolith)"
+                    },
+                    "index": 46,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Arcterra",
+                        "area": "Drip Moat",
+                        "node": "Pickup (UA Expansion)"
+                    },
+                    "index": 49,
+                    "pickup": "Alinos Cartograph Artifact 1",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Arcterra",
+                        "area": "Fault Line",
+                        "node": "Pickup (Attameter Artifact)"
+                    },
+                    "index": 62,
+                    "pickup": "UA Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Arcterra",
+                        "area": "Fault Line",
+                        "node": "Pickup (Imperialist)"
+                    },
+                    "index": 61,
+                    "pickup": "Missile Launcher",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Arcterra",
+                        "area": "Frost Labyrinth",
+                        "node": "Pickup (Binary Subscripture Artifact)"
+                    },
+                    "index": 47,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Arcterra",
+                        "area": "Frost Labyrinth",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 48,
+                    "pickup": "VDO Binary Subscripture Artifact 1",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Arcterra",
+                        "area": "Ice Hive",
+                        "node": "Pickup (Cartograph Artifact)"
+                    },
+                    "index": 50,
+                    "pickup": "Magmaul",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Arcterra",
+                        "area": "Ice Hive",
+                        "node": "Pickup (Judicator)"
+                    },
+                    "index": 53,
+                    "pickup": "Alinos Attameter Artifact 2",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Arcterra",
+                        "area": "Ice Hive",
+                        "node": "Pickup (Missile Expansion)"
+                    },
+                    "index": 51,
+                    "pickup": "VDO Cartograph Artifact 1",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Arcterra",
+                        "area": "Ice Hive",
+                        "node": "Pickup (UA Expansion - Alcove)"
+                    },
+                    "index": 54,
+                    "pickup": "UA Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Arcterra",
+                        "area": "Ice Hive",
+                        "node": "Pickup (UA Expansion - War Wasps)"
+                    },
+                    "index": 52,
+                    "pickup": "Alinos Cartograph Artifact 2",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Arcterra",
+                        "area": "Sanctorus",
+                        "node": "Pickup (Binary Subscripture Artifact)"
+                    },
+                    "index": 59,
+                    "pickup": "Missile Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Arcterra",
+                        "area": "Sanctorus",
+                        "node": "Pickup (UA Expansion)"
+                    },
+                    "index": 60,
+                    "pickup": "VDO Binary Subscripture Artifact 2",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Arcterra",
+                        "area": "Sic Transit",
+                        "node": "Pickup (Attameter Artifact)"
+                    },
+                    "index": 58,
+                    "pickup": "Alinos Attameter Artifact 1",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Arcterra",
+                        "area": "Sic Transit",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 57,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Arcterra",
+                        "area": "Subterranean",
+                        "node": "Pickup (Cartograph Artifact)"
+                    },
+                    "index": 55,
+                    "pickup": "Celestial Attameter Artifact 1",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Arcterra",
+                        "area": "Subterranean",
+                        "node": "Pickup (Missile Expansion)"
+                    },
+                    "index": 56,
+                    "pickup": "Arcterra Binary Subscripture Artifact 1",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Celestial Archives",
+                        "area": "Biodefense Chamber A",
+                        "node": "Pickup (Octolith)"
+                    },
+                    "index": 16,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Celestial Archives",
+                        "area": "Biodefense Chamber B",
+                        "node": "Pickup (Octolith)"
+                    },
+                    "index": 17,
+                    "pickup": "Octolith 1",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Celestial Archives",
+                        "area": "Celestial Gateway",
+                        "node": "Pickup (UA Expansion)"
+                    },
+                    "index": 21,
+                    "pickup": "UA Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Celestial Archives",
+                        "area": "Data Shrine 01",
+                        "node": "Pickup (Cartograph Artifact)"
+                    },
+                    "index": 22,
+                    "pickup": "Missile Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Celestial Archives",
+                        "area": "Data Shrine 01",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 23,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Celestial Archives",
+                        "area": "Data Shrine 02",
+                        "node": "Pickup (Missile Expansion)"
+                    },
+                    "index": 25,
+                    "pickup": "UA Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Celestial Archives",
+                        "area": "Data Shrine 02",
+                        "node": "Pickup (UA Expansion)"
+                    },
+                    "index": 26,
+                    "pickup": "Arcterra Cartograph Artifact 2",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Celestial Archives",
+                        "area": "Data Shrine 02",
+                        "node": "Pickup (Volt Driver)"
+                    },
+                    "index": 24,
+                    "pickup": "Imperialist",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Celestial Archives",
+                        "area": "Data Shrine 03",
+                        "node": "Pickup (Attameter Artifact)"
+                    },
+                    "index": 27,
+                    "pickup": "Celestial Cartograph Artifact 2",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Celestial Archives",
+                        "area": "Docking Bay",
+                        "node": "Pickup (Cartograph Artifact)"
+                    },
+                    "index": 31,
+                    "pickup": "UA Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Celestial Archives",
+                        "area": "Docking Bay",
+                        "node": "Pickup (UA Expansion)"
+                    },
+                    "index": 32,
+                    "pickup": "Shock Coil",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Celestial Archives",
+                        "area": "Incubation Vault 01",
+                        "node": "Pickup (Attameter Artifact)"
+                    },
+                    "index": 28,
+                    "pickup": "UA Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Celestial Archives",
+                        "area": "Incubation Vault 02",
+                        "node": "Pickup (Shock Coil)"
+                    },
+                    "index": 29,
+                    "pickup": "VDO Cartograph Artifact 2",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Celestial Archives",
+                        "area": "Incubation Vault 03",
+                        "node": "Pickup (Missile Expansion)"
+                    },
+                    "index": 30,
+                    "pickup": "Arcterra Cartograph Artifact 1",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Celestial Archives",
+                        "area": "New Arrival Registration",
+                        "node": "Pickup (Binary Subscripture Artifact)"
+                    },
+                    "index": 19,
+                    "pickup": "Celestial Binary Subscripture Artifact 1",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Celestial Archives",
+                        "area": "New Arrival Registration",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 20,
+                    "pickup": "Missile Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Celestial Archives",
+                        "area": "Synergy Core",
+                        "node": "Pickup (Binary Subscripture Artifact)"
+                    },
+                    "index": 18,
+                    "pickup": "UA Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Celestial Archives",
+                        "area": "Transfer Lock",
+                        "node": "Pickup (UA Expansion)"
+                    },
+                    "index": 63,
+                    "pickup": "VDO Attameter Artifact 1",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Oubliette",
+                        "area": "Oubliette Storage",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 64,
+                    "pickup": "UA Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Biodefense Chamber A",
+                        "node": "Pickup (Octolith)"
+                    },
+                    "index": 33,
+                    "pickup": "Octolith 2",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Biodefense Chamber B",
+                        "node": "Pickup (Octolith)"
+                    },
+                    "index": 34,
+                    "pickup": "Arcterra Attameter Artifact 2",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Compression Chamber",
+                        "node": "Pickup (Binary Subscripture Artifact)"
+                    },
+                    "index": 43,
+                    "pickup": "Celestial Attameter Artifact 2",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Compression Chamber",
+                        "node": "Pickup (UA Expansion)"
+                    },
+                    "index": 44,
+                    "pickup": "Missile Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Cortex CPU",
+                        "node": "Pickup (Battlehammer)"
+                    },
+                    "index": 35,
+                    "pickup": "Alinos Binary Subscripture Artifact 2",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Cortex CPU",
+                        "node": "Pickup (Missile Expansion)"
+                    },
+                    "index": 36,
+                    "pickup": "VDO Attameter Artifact 2",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Fuel Stack",
+                        "node": "Pickup (Binary Subscripture Artifact)"
+                    },
+                    "index": 39,
+                    "pickup": "Missile Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Fuel Stack",
+                        "node": "Pickup (Missile Expansion)"
+                    },
+                    "index": 40,
+                    "pickup": "Arcterra Binary Subscripture Artifact 2",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Stasis Bunker",
+                        "node": "Pickup (Attameter Artifact)"
+                    },
+                    "index": 42,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Stasis Bunker",
+                        "node": "Pickup (Cartograph Artifact)"
+                    },
+                    "index": 41,
+                    "pickup": "Missile Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Stasis Bunker",
+                        "node": "Pickup (UA Expansion)"
+                    },
+                    "index": 65,
+                    "pickup": "UA Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Weapons Complex",
+                        "node": "Pickup (Attameter Artifact)"
+                    },
+                    "index": 38,
+                    "pickup": "UA Expansion",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Vesper Defense Outpost",
+                        "area": "Weapons Complex",
+                        "node": "Pickup (Cartograph Artifact)"
+                    },
+                    "index": 37,
+                    "pickup": "Nothing",
+                    "owner": 0
+                }
+            ],
+            "hints": {},
+            "game_specific": {
+                "force_fields": {
+                    "Celestial Archives/Synergy Core/Volt Driver Force Field": "volt-driver",
+                    "Celestial Archives/Celestial Gateway/Battlehammer Force Field": "battlehammer",
+                    "Celestial Archives/Incubation Vault 01/Shock Coil Force Field": "shock-coil",
+                    "Celestial Archives/Incubation Vault 02/Shock Coil Force Field": "shock-coil",
+                    "Celestial Archives/Incubation Vault 03/Shock Coil Force Field (Upper)": "shock-coil",
+                    "Celestial Archives/Incubation Vault 03/Shock Coil Force Field (Lower)": "shock-coil",
+                    "Alinos/High Ground/Volt Driver Force Field (Upper)": "volt-driver",
+                    "Alinos/High Ground/Volt Driver Force Field (East)": "volt-driver",
+                    "Alinos/High Ground/Volt Driver Force Field (South)": "volt-driver",
+                    "Alinos/High Ground/Volt Driver Force Field (North)": "volt-driver",
+                    "Alinos/High Ground/Judicator Force Field (Upper)": "judicator",
+                    "Alinos/High Ground/Judicator Force Field (Lower)": "judicator",
+                    "Alinos/Alinos Perch/Magmaul Force Field": "magmaul",
+                    "Alinos/Council Chamber/Magmaul Force Field (Upper)": "magmaul",
+                    "Alinos/Council Chamber/Magmaul Force Field (Jump Pad)": "magmaul",
+                    "Alinos/Council Chamber/Magmaul Force Field (Entrance)": "magmaul",
+                    "Arcterra/Ice Hive/Judicator Force Field (Entrance)": "judicator",
+                    "Arcterra/Ice Hive/Judicator Force Field (Bridge)": "judicator",
+                    "Arcterra/Ice Hive/Judicator Force Field (Alcove)": "judicator",
+                    "Arcterra/Ice Hive/Judicator Force Field (War Wasps)": "judicator",
+                    "Arcterra/Ice Hive/Judicator Force Field (Judicator Room)": "judicator",
+                    "Vesper Defense Outpost/Cortex CPU/Battlehammer Force Field": "battlehammer",
+                    "Vesper Defense Outpost/Weapons Complex/Battlehammer Force Field": "battlehammer",
+                    "Vesper Defense Outpost/Compression Chamber/Battlehammer Force Field (Left)": "battlehammer",
+                    "Vesper Defense Outpost/Compression Chamber/Battlehammer Force Field (Right)": "battlehammer"
+                }
+            }
+        }
+    ],
+    "item_order": [
+        "Battlehammer as starting item",
+        "Judicator as starting item",
+        "VDO Cartograph Artifact 1 at Arcterra/Ice Hive/Pickup (Missile Expansion)",
+        "Arcterra Attameter Artifact 1 at Alinos/Echo Hall/Pickup (Energy Tank)",
+        "Magmaul at Arcterra/Ice Hive/Pickup (Cartograph Artifact)",
+        "Missile Launcher at Arcterra/Fault Line/Pickup (Imperialist)",
+        "Imperialist at Celestial Archives/Data Shrine 02/Pickup (Volt Driver)",
+        "Alinos Binary Subscripture Artifact 1 at Alinos/Council Chamber/Pickup (Energy Tank)",
+        "Arcterra Binary Subscripture Artifact 2 at Vesper Defense Outpost/Fuel Stack/Pickup (Missile Expansion)",
+        "Arcterra Binary Subscripture Artifact 1 at Arcterra/Subterranean/Pickup (Missile Expansion)",
+        "Arcterra Cartograph Artifact 2 at Celestial Archives/Data Shrine 02/Pickup (UA Expansion)",
+        "VDO Binary Subscripture Artifact 2 at Arcterra/Sanctorus/Pickup (UA Expansion)",
+        "VDO Attameter Artifact 2 at Vesper Defense Outpost/Cortex CPU/Pickup (Missile Expansion)",
+        "Volt Driver at Alinos/Elder Passage/Pickup (Attameter Artifact)",
+        "Shock Coil at Celestial Archives/Docking Bay/Pickup (UA Expansion)",
+        "VDO Cartograph Artifact 2 at Celestial Archives/Incubation Vault 02/Pickup (Shock Coil)",
+        "Arcterra Attameter Artifact 2 at Vesper Defense Outpost/Biodefense Chamber B/Pickup (Octolith)",
+        "Celestial Binary Subscripture Artifact 1 at Celestial Archives/New Arrival Registration/Pickup (Binary Subscripture Artifact)",
+        "VDO Binary Subscripture Artifact 1 at Arcterra/Frost Labyrinth/Pickup (Energy Tank)",
+        "Alinos Cartograph Artifact 1 at Arcterra/Drip Moat/Pickup (UA Expansion)",
+        "Alinos Cartograph Artifact 2 at Arcterra/Ice Hive/Pickup (UA Expansion - War Wasps)",
+        "Alinos Attameter Artifact 1 at Arcterra/Sic Transit/Pickup (Attameter Artifact)",
+        "Celestial Attameter Artifact 2 at Vesper Defense Outpost/Compression Chamber/Pickup (Binary Subscripture Artifact)",
+        "VDO Attameter Artifact 1 at Celestial Archives/Transfer Lock/Pickup (UA Expansion)",
+        "Celestial Cartograph Artifact 2 at Celestial Archives/Data Shrine 03/Pickup (Attameter Artifact)",
+        "Celestial Binary Subscripture Artifact 2 at Alinos/Echo Hall/Pickup (Cartograph Artifact)"
+    ],
+    "checksum": "3133408772e54f9389b53a2de45da790af6bc3c5400e0c8dde8f95ef8af224a0c5c103744394fedabf8aca4eda57409620f11ffb76e48f3085e6afc8990529e3"
+}

@@ -1820,19 +1820,43 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Morph",
+                                            "type": "events",
+                                            "name": "s010_cave:default:PRP_DB_CV_014",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "events",
-                                            "name": "s010_cave:default:PRP_DB_CV_014",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Although, not technically possible, the purpose of this option is to open a path back, <br> into the area with the pickup after leaving it.<br>Without this the generator prioritizes placing Morph Ball to leave safely after collecting the pickup.<br>This logic is safe because once you have been in there and gone out,<br>there's no reason to go back in before obtaining the Morph Ball.",
+                                                        "items": [
+                                                            {
+                                                                "type": "node",
+                                                                "data": {
+                                                                    "region": "Artaria",
+                                                                    "area": "Melee Tutorial Room",
+                                                                    "node": "Pickup (Missile Tank 2)"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2809,7 +2833,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "SWJ",
-                                                        "amount": 2,
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -3199,7 +3223,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "SWJ",
-                                                        "amount": 2,
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -3567,7 +3591,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "SWJ",
-                                                        "amount": 2,
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -3653,7 +3677,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "SWJ",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }
@@ -5620,7 +5644,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "SWJ",
-                                                        "amount": 3,
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 },
@@ -6132,7 +6156,7 @@
                                                                                         "data": {
                                                                                             "type": "tricks",
                                                                                             "name": "SWJ",
-                                                                                            "amount": 3,
+                                                                                            "amount": 4,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
@@ -7828,7 +7852,7 @@
                                                                             "data": {
                                                                                 "type": "tricks",
                                                                                 "name": "SWJ",
-                                                                                "amount": 2,
+                                                                                "amount": 3,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -10681,7 +10705,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "SWJ",
-                                                        "amount": 2,
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -10885,7 +10909,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "SWJ",
-                                                        "amount": 2,
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -16141,12 +16165,10 @@
                             }
                         },
                         "Door from Grapple Beam Tutorial": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Grapple",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Pickup (Grapple Beam)": {
@@ -16765,7 +16787,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "SWJ",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }
@@ -17728,7 +17750,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "SWJ",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }
@@ -18461,7 +18483,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "SWJ",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }
@@ -18556,7 +18578,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "SWJ",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }
@@ -23651,7 +23673,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "SWJ",
-                                                        "amount": 2,
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -23755,7 +23777,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "SWJ",
-                                                        "amount": 2,
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -25199,7 +25221,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "SWJ",
-                                                                    "amount": 1,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -30020,7 +30042,7 @@
                     "connections": {
                         "Event - Artaria Central Unit": {
                             "type": "template",
-                            "data": "Destroy Central Unit"
+                            "data": "Destroy Artaria Central Unit"
                         },
                         "Dock to Central Unit Access": {
                             "type": "resource",

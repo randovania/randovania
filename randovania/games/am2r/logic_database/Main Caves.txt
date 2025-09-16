@@ -70,6 +70,7 @@ Extra - map_name: rm_a0h02
 Extra - minimap_data: [{'x': 30, 'y': 7}, {'x': 31, 'y': 7}, {'x': 32, 'y': 7}, {'x': 33, 'y': 7}, {'x': 33, 'y': 8}, {'x': 34, 'y': 8}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
+Extra - enemy_data: {'100990': 'oHornoad', '100991': 'oHornoad', '100992': 'oYumbo', '100993': 'oYumbo', '100994': 'oYumbo'}
 > Door to Landing Site; Heals? False
   * Layers: default
   * Open Transition to Landing Site/Door to Hornoad Hallway
@@ -78,21 +79,21 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Extra - x: 0
   * Extra - y: 96
   > Bottom
-      Trivial
+      Can Destroy Shot Block
 
 > Horizontal Dock to Tsumuri Tunnel; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Tsumuri Tunnel/Horizontal Dock to Hornoad Hallway
   * Extra - ignore_for_er: True
   > Bottom
-      Morph Ball
+      Morph Ball and Can Destroy Shot Block
 
 > Bottom; Heals? False
   * Layers: default
   > Door to Landing Site
-      Power Grip Wall
+      Can Destroy Shot Block or Power Grip Wall
   > Horizontal Dock to Tsumuri Tunnel
-      Morph Ball
+      Morph Ball and Can Destroy Shot Block
 
 ----------------
 Tsumuri Tunnel
@@ -100,21 +101,23 @@ Extra - map_name: rm_a0h02a
 Extra - minimap_data: [{'x': 35, 'y': 8}, {'x': 35, 'y': 9}, {'x': 35, 'y': 10}, {'x': 35, 'y': 11}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
+Extra - enemy_data: {'101111': 'oTsumuri', '101112': 'oTsumuri', '101113': 'oTsumuri', '101114': 'oTsumuri', '101115': 'oTsumuri', '101116': 'oYumbo'}
 > Vertical Dock to Cavern Crossroads; Heals? False
   * Layers: default
   * 4-Tiles Wide Dock to Cavern Crossroads/Vertical Dock to Tsumuri Tunnel
   > Horizontal Dock to Hornoad Hallway
       Any of the following:
-          Power Grip Wall
           # Shinespark from below room: https://www.youtube.com/watch?v=uFXTtaebs48
           Speed Booster and Shinesparking Tricks (Intermediate) and Disabled Entrance Rando
+          # Get up and break blocks
+          Can Destroy Shot Block and Power Grip Wall
 
 > Horizontal Dock to Hornoad Hallway; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Hornoad Hallway/Horizontal Dock to Tsumuri Tunnel
   * Extra - ignore_for_er: True
   > Vertical Dock to Cavern Crossroads
-      Trivial
+      Can Destroy Shot Block
 
 ----------------
 Cavern Crossroads
@@ -217,6 +220,7 @@ Extra - map_name: rm_a0h04
 Extra - minimap_data: [{'x': 30, 'y': 12}, {'x': 30, 'y': 13}, {'x': 30, 'y': 14}, {'x': 30, 'y': 15}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 896, 'should_move_horizontally': True}
+Extra - enemy_data: {'101433': 'oTsumuri', '101434': 'oTsumuri', '101435': 'oTsumuri', '101436': 'oTsumuri', '101437': 'oTsumuri'}
 > Door to Surface Pond; Heals? False
   * Layers: default
   * Open Transition to Surface Pond/Door to Surface Pond Access
@@ -243,6 +247,7 @@ Extra - map_name: rm_a0h04b
 Extra - minimap_data: [{'x': 27, 'y': 15}, {'x': 28, 'y': 15}, {'x': 29, 'y': 15}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 200, 'should_move_horizontally': True}
+Extra - enemy_data: {'101565': 'oHornoad', '101566': 'oHornoad', '101567': 'oHornoad'}
 > Door to Surface Pond Access; Heals? False
   * Layers: default
   * Open Transition to Surface Pond Access/Door to Surface Pond
@@ -360,6 +365,7 @@ Extra - map_name: rm_a0h06
 Extra - minimap_data: [{'x': 38, 'y': 13}, {'x': 39, 'y': 13}, {'x': 40, 'y': 13}, {'x': 40, 'y': 14}, {'x': 40, 'y': 15}, {'x': 41, 'y': 13}, {'x': 41, 'y': 14}, {'x': 41, 'y': 15}, {'x': 42, 'y': 15}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
+Extra - enemy_data: {'102007': 'oSeerook', '102008': 'oSeerook', '102009': 'oSeerook', '102010': 'oSeerook', '102172': 'oCaveNest', '102173': 'oCaveNest', '102174': 'oCaveNest', '102175': 'oCaveNest', '102011': 'oMoheek', '102012': 'oMoheek', '102013': 'oMoheek', '102014': 'oMoheek', '102015': 'oMoheek', '102016': 'oMoheek'}
 > Door to Surface Cave Save Station; Heals? False
   * Layers: default
   * Open Transition to Surface Cave Save Station/Door to Twisty Tunnel
@@ -379,9 +385,10 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 ----------------
 Grave Grotto
 Extra - map_name: rm_a0h07
-Extra - minimap_data: [{'x': 38, 'y': 13}, {'x': 39, 'y': 13}, {'x': 40, 'y': 13}, {'x': 40, 'y': 14}, {'x': 40, 'y': 15}, {'x': 41, 'y': 13}, {'x': 41, 'y': 14}, {'x': 41, 'y': 15}, {'x': 42, 'y': 15}, {'x': 43, 'y': 15}, {'x': 44, 'y': 15}, {'x': 44, 'y': 16}, {'x': 45, 'y': 15}, {'x': 45, 'y': 16}, {'x': 45, 'y': 17}, {'x': 45, 'y': 18}, {'x': 45, 'y': 19}, {'x': 45, 'y': 20}, {'x': 45, 'y': 21}, {'x': 46, 'y': 15}, {'x': 46, 'y': 16}, {'x': 46, 'y': 17}, {'x': 46, 'y': 18}, {'x': 46, 'y': 19}, {'x': 46, 'y': 20}, {'x': 46, 'y': 21}]
+Extra - minimap_data: [{'x': 43, 'y': 15}, {'x': 44, 'y': 15}, {'x': 44, 'y': 16}, {'x': 45, 'y': 15}, {'x': 45, 'y': 16}, {'x': 45, 'y': 17}, {'x': 45, 'y': 18}, {'x': 45, 'y': 19}, {'x': 45, 'y': 20}, {'x': 45, 'y': 21}, {'x': 46, 'y': 15}, {'x': 46, 'y': 16}, {'x': 46, 'y': 17}, {'x': 46, 'y': 18}, {'x': 46, 'y': 19}, {'x': 46, 'y': 20}, {'x': 46, 'y': 21}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
+Extra - enemy_data: {'102278': 'oSeerook', '102279': 'oSeerook', '102280': 'oSeerook', '102281': 'oSeerook', '102282': 'oSeerook', '102283': 'oSeerook', '102602': 'oCaveNest', '102603': 'oCaveNest', '102604': 'oCaveNest', '102605': 'oCaveNest', '102606': 'oCaveNest', '102607': 'oCaveNest', '102608': 'oCaveNest', '102609': 'oCaveNest', '102272': 'oMoheek', '102273': 'oMoheek', '102274': 'oMoheek', '102275': 'oMoheek', '102276': 'oMoheek', '102277': 'oMoheek'}
 > Horizontal Dock to Twisty Tunnel; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Twisty Tunnel/Horizontal Dock to Grave Grotto
@@ -510,6 +517,7 @@ Extra - map_name: rm_a0h08
 Extra - minimap_data: [{'x': 47, 'y': 15}, {'x': 48, 'y': 15}, {'x': 49, 'y': 15}, {'x': 50, 'y': 13}, {'x': 50, 'y': 14}, {'x': 50, 'y': 15}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
+Extra - enemy_data: {'102671': 'oChuteLeech', '102672': 'oChuteLeech', '102673': 'oChuteLeech', '102674': 'oChuteLeech', '102675': 'oChuteLeech', '102676': 'oChuteLeech', '102705': 'oMumbo', '102706': 'oMumbo', '102707': 'oMumbo', '102708': 'oMumbo', '102709': 'oMumbo'}
 > Horizontal Dock to Golden Temple; Heals? False
   * Layers: default
   * 5-Tiles High Dock to Guardian Arena/Horizontal Dock to Main Caves
@@ -702,6 +710,7 @@ Extra - map_name: rm_a0h10a
 Extra - minimap_data: [{'x': 50, 'y': 24}, {'x': 50, 'y': 25}, {'x': 50, 'y': 26}, {'x': 51, 'y': 24}, {'x': 51, 'y': 25}, {'x': 51, 'y': 26}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
+Extra - enemy_data: {'103847': 'oCaveNest', '103848': 'oCaveNest'}
 > Door to Spike Maze; Heals? False
   * Layers: default
   * Open Transition to Spike Maze/Door to Eastern Cave Intersection
@@ -723,7 +732,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   > Bottom
       After Surface - Mines Entrance Crystal Destroyed
   > Event - Crystal
-      Super Missiles
+      Can Shoot Super Missile
 
 > Horizontal Dock to Industrial Complex; Heals? False
   * Layers: default
@@ -758,7 +767,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   > Middle
       Hijump Wall
   > Event - Crystal
-      Super Missiles
+      Can Shoot Super Missile
 
 > Event - Crystal; Heals? False
   * Layers: default
@@ -790,6 +799,7 @@ Extra - map_name: rm_a0h11
 Extra - minimap_data: [{'x': 46, 'y': 23}, {'x': 46, 'y': 24}, {'x': 46, 'y': 25}, {'x': 46, 'y': 26}, {'x': 46, 'y': 27}, {'x': 46, 'y': 28}, {'x': 47, 'y': 25}, {'x': 47, 'y': 26}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
+Extra - enemy_data: {'104116': 'oSkorp', '104415': 'oCaveNest', '104416': 'oCaveNest'}
 > Horizontal Dock to Surface Gunzoo Room; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Surface Gunzoo Room/Horizontal Dock to Bend Chasm
@@ -846,6 +856,7 @@ Extra - map_name: rm_a0h24
 Extra - minimap_data: [{'x': 44, 'y': 28}, {'x': 44, 'y': 29}, {'x': 44, 'y': 30}, {'x': 45, 'y': 28}, {'x': 45, 'y': 29}, {'x': 45, 'y': 30}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
+Extra - enemy_data: {'104679': 'oSkorp', '104680': 'oSkorp', '104681': 'oSkorp'}
 > Door to Bend Chasm; Heals? False
   * Layers: default
   * Open Transition to Bend Chasm/Door to Western Cave Entrance
@@ -901,6 +912,7 @@ Extra - map_name: rm_a0h25
 Extra - minimap_data: [{'x': 43, 'y': 30}, {'x': 43, 'y': 31}, {'x': 43, 'y': 32}, {'x': 43, 'y': 33}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
+Extra - enemy_data: {'104968': 'oSkorp', '104969': 'oSkorp', '104970': 'oSkorp', '104971': 'oSkorp', '104972': 'oMoto', '104977': 'oMoto'}
 > Door to Western Cave Entrance; Heals? False
   * Layers: default
   * Open Transition to Western Cave Entrance/Door to Western Cave Shaft
@@ -945,7 +957,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
       All of the following:
           Power Grip Wall
           # Avoiding Skorps
-          Screw Attack or Wave Beam or Combat (Intermediate) or Normal Damage ≥ 100
+          Screw Attack or Combat (Intermediate) or Normal Damage ≥ 100 or Can Shoot Wave Beam
 
 > Top; Heals? False
   * Layers: default
@@ -987,6 +999,7 @@ Extra - map_name: rm_a0h27
 Extra - minimap_data: [{'x': 44, 'y': 33}, {'x': 44, 'y': 34}, {'x': 44, 'y': 35}, {'x': 44, 'y': 36}, {'x': 45, 'y': 36}, {'x': 45, 'y': 37}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
+Extra - enemy_data: {'105391': 'oSkorp', '105392': 'oSkorp', '105393': 'oSkorp'}
 > Horizontal Dock to Western Cave Shaft; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Western Cave Shaft/Horizontal Dock to Snaky Skorp Cavern
@@ -1045,6 +1058,7 @@ Extra - map_name: rm_a0h29
 Extra - minimap_data: [{'x': 44, 'y': 40}, {'x': 44, 'y': 41}, {'x': 45, 'y': 40}, {'x': 45, 'y': 41}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
+Extra - enemy_data: {'105735': 'oPincherFly', '105736': 'oPincherFly', '105737': 'oPincherFly', '105738': 'oPincherFly', '105739': 'oPincherFly'}
 > Horizontal Dock to The Pit; Heals? False
   * Layers: default
   * 3-Tiles High Dock to The Pit/Horizontal Dock to Fat Crocomire Room
@@ -1080,6 +1094,7 @@ Extra - map_name: rm_a0h30
 Extra - minimap_data: [{'x': 40, 'y': 41}, {'x': 41, 'y': 41}, {'x': 41, 'y': 42}, {'x': 41, 'y': 43}, {'x': 41, 'y': 44}, {'x': 42, 'y': 41}, {'x': 42, 'y': 42}, {'x': 42, 'y': 43}, {'x': 42, 'y': 44}, {'x': 43, 'y': 41}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
+Extra - enemy_data: {'106163': 'oHalzyn', '106164': 'oSkreekSpawner', '106165': 'oSkreekSpawner', '106166': 'oSkreekSpawner', '106167': 'oSkreekSpawner', '106168': 'oSkreekSpawner', '106169': 'oHalzyn'}
 > Door to Tower East Exterior Access; Heals? False
   * Layers: default
   * Open Transition to Tower East Exterior Access/Door to Skreek Street
@@ -1109,7 +1124,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
       Any of the following:
           Can Use Power Bombs and Power Grip Wall
           # Blocks do not show up by bombing: https://youtu.be/4Fmq3-tIOLU&t=21
-          Super Missiles ≥ 2 and Knowledge (Advanced) and Power Grip Climb and Space Jump Wall
+          Super Missiles ≥ 2 and Knowledge (Advanced) and Can Shoot Super Missile and Power Grip Climb and Space Jump Wall
 
 > Near hidden wall; Heals? False
   * Layers: default
@@ -1119,7 +1134,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
       Any of the following:
           Can Use Power Bombs
           # Blocks do not show up by bombing: https://www.youtube.com/watch?v=4Fmq3-tIOLU
-          Super Missiles ≥ 2 and Knowledge (Advanced) and Low Mid-Air Morph Tunnel Climb
+          Super Missiles ≥ 2 and Knowledge (Advanced) and Can Shoot Super Missile and Low Mid-Air Morph Tunnel Climb
 
 ----------------
 Tower East Exterior Access
@@ -1138,7 +1153,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   > Door to Skreek Street
       After Surface - Rock Entrance To The Tower and Power Grip Wall
   > Event - Rocks
-      Missiles or Speed Booster or Super Missiles or Can Use Any Bombs
+      Speed Booster or Can Shoot Missile or Can Shoot Super Missile or Can Use Any Bombs
 
 > Door to Skreek Street; Heals? False
   * Layers: default
@@ -1150,7 +1165,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   > Door to The Tower
       After Surface - Rock Entrance To The Tower
   > Event - Rocks
-      Missiles or Speed Booster or Super Missiles or Can Use Any Bombs
+      Speed Booster or Can Shoot Missile or Can Shoot Super Missile or Can Use Any Bombs
 
 > Event - Rocks; Heals? False
   * Layers: default
@@ -1300,6 +1315,7 @@ Extra - map_name: rm_a0h34
 Extra - minimap_data: [{'x': 41, 'y': 52}, {'x': 41, 'y': 53}, {'x': 42, 'y': 51}, {'x': 42, 'y': 52}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
+Extra - enemy_data: {'107264': 'oHalzyn', '107265': 'oHalzyn'}
 > Horizontal Dock to Southern Cave Save Station; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Southern Cave Save Station/Horizontal Dock to Halzyn Hallway
@@ -1322,6 +1338,7 @@ Extra - map_name: rm_a0h35
 Extra - minimap_data: [{'x': 35, 'y': 53}, {'x': 36, 'y': 53}, {'x': 37, 'y': 53}, {'x': 38, 'y': 53}, {'x': 39, 'y': 53}, {'x': 40, 'y': 53}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 1, 'liquid_level': 201}
+Extra - enemy_data: {'107619': 'oDrivel', '107620': 'oDrivel', '107621': 'oDrivel', '107622': 'oDrivel', '107623': 'oMoto', '107624': 'oMoto', '107625': 'oMoto', '107626': 'oMoto'}
 > Horizontal Dock to The Depths; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Hideout Entrance/Horizontal Dock to Main Caves
@@ -1377,6 +1394,7 @@ Extra - map_name: rm_a0h12
 Extra - minimap_data: [{'x': 42, 'y': 26}, {'x': 43, 'y': 26}, {'x': 44, 'y': 26}, {'x': 45, 'y': 26}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 1, 'liquid_level': 192}
+Extra - enemy_data: {'122612': 'oOctroll', '122613': 'oOctroll', '122614': 'oOctroll', '122615': 'oOctroll', '122616': 'oOctroll', '122617': 'oOctroll'}
 > Horizontal Dock to Bend Chasm; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Bend Chasm/Horizontal Dock to Octroll Lava Pool
@@ -1593,6 +1611,7 @@ Extra - map_name: rm_a0h17a
 Extra - minimap_data: [{'x': 52, 'y': 32}, {'x': 53, 'y': 32}, {'x': 54, 'y': 32}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
+Extra - enemy_data: {'123499': 'oMoto', '123500': 'oMoto'}
 > Horizontal Dock to Mining Facility O-Shape Shaft; Heals? False
   * Layers: default
   * 5-Tiles High Dock to Mining Facility O-Shape Shaft/Horizontal Dock to Moto Miners
@@ -1629,6 +1648,7 @@ Extra - map_name: rm_a0h17c
 Extra - minimap_data: [{'x': 48, 'y': 34}, {'x': 49, 'y': 33}, {'x': 49, 'y': 34}, {'x': 50, 'y': 33}, {'x': 51, 'y': 33}, {'x': 52, 'y': 33}, {'x': 53, 'y': 33}, {'x': 54, 'y': 33}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
+Extra - enemy_data: {'123671': 'oMoto', '123672': 'oMoto', '123673': 'oMoto', '123674': 'oMoto', '123675': 'oMoto'}
 > Horizontal Dock to Drill Excavation Access; Heals? False
   * Layers: default
   * 5-Tiles High Dock to Drill Excavation Access/Horizontal Dock to Moto Mania
@@ -1647,11 +1667,12 @@ Extra - map_name: rm_a0h17d
 Extra - minimap_data: [{'x': 47, 'y': 34}, {'x': 47, 'y': 35}, {'x': 48, 'y': 35}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
+Extra - enemy_data: {'123690': 'oPincherFly', '123691': 'oPincherFly', '123692': 'oPincherFly'}
 > Horizontal Dock to Moto Mania; Heals? False
   * Layers: default
   * 5-Tiles High Dock to Moto Mania/Horizontal Dock to Drill Excavation Access
   > Door to Drill Excavation
-      Trivial
+      Can Destroy Shot Block
 
 > Door to Drill Excavation; Heals? False
   * Layers: default
@@ -1662,9 +1683,13 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Extra - y: 416
   > Horizontal Dock to Moto Mania
       Any of the following:
-          Hijump Wall
           # Stand in between shoot blocks
-          Movement (Beginner) and Power Grip Wall
+          Movement (Beginner) and Can Shoot and Power Grip Wall
+          All of the following:
+              Hijump Wall
+              Any of the following:
+                  Can Shoot or Can Use Power Bombs
+                  Infinite Bomb Jumping (Intermediate) and Can IBJ
 
 ----------------
 Drill Excavation
@@ -1693,7 +1718,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
       After Surface - Mines Drill Crystal Destroyed
   > Event - Drill Crystal from Left
       All of the following:
-          Super Missiles
+          Can Shoot Super Missile
           Any of the following:
               Enabled Skip cutscenes
               Can Use Any Bombs and Tunnel Climb
@@ -1708,7 +1733,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   > Door to Drill Excavation Access
       After Surface - Mines Drill Crystal Destroyed
   > Event - Drill Crystal from Right
-      Super Missiles
+      Can Shoot Super Missile
 
 > Event - Drill Crystal from Left; Heals? False
   * Layers: default
@@ -1790,6 +1815,7 @@ Extra - map_name: rm_a0h20
 Extra - minimap_data: [{'x': 50, 'y': 36}, {'x': 51, 'y': 36}, {'x': 52, 'y': 36}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 1, 'liquid_level': 176}
+Extra - enemy_data: {'124399': 'oFlitt', '124400': 'oFlitt', '124401': 'oFlitt', '124402': 'oFlitt', '124403': 'oFlitt'}
 > Horizontal Dock to Mining Facility Intersection; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Mining Facility Intersection/Horizontal Dock to Mining Facility Alpha Nest Access
@@ -1870,6 +1896,7 @@ Extra - map_name: rm_a0h22
 Extra - minimap_data: [{'x': 55, 'y': 37}, {'x': 55, 'y': 38}, {'x': 56, 'y': 37}, {'x': 56, 'y': 38}, {'x': 57, 'y': 37}, {'x': 57, 'y': 38}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 1, 'liquid_level': 184}
+Extra - enemy_data: {'124947': 'oFlitt', '124948': 'oFlitt', '124949': 'oFlitt', '124950': 'oFlitt', '124951': 'oFlitt', '124952': 'oFlitt'}
 > Horizontal Dock to Mining Facility Intersection; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Mining Facility Intersection/Horizontal Dock to Mining Facility Gamma Nest Access
@@ -1912,6 +1939,7 @@ Extra - map_name: rm_a0h23
 Extra - minimap_data: [{'x': 58, 'y': 37}, {'x': 58, 'y': 38}, {'x': 58, 'y': 39}, {'x': 59, 'y': 38}, {'x': 59, 'y': 39}]
 Extra - light_level: 0
 Extra - liquid_info: {'liquid_type': 1, 'liquid_level': 672}
+Extra - enemy_data: {'125237': 'oFlitt', '125238': 'oFlitt', '125239': 'oFlitt', '125240': 'oFlitt', '125241': 'oFlitt', '125242': 'oFlitt', '125243': 'oFlitt'}
 > Horizontal Dock to Mining Facility Gamma Nest Access; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Mining Facility Gamma Nest Access/Horizontal Dock to Mining Facility Gamma Nest

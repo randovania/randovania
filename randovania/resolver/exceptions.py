@@ -19,6 +19,9 @@ class GenerationFailure(Exception):
     def __reduce__(self):
         return GenerationFailure, (super().__str__(), self.generator_params, self.source)
 
+    def __hash__(self) -> int:
+        return hash(self.generator_params)
+
     def __eq__(self, other):
         if not isinstance(other, GenerationFailure):
             return False
@@ -36,6 +39,9 @@ class ImpossibleForSolver(GenerationFailure):
 
     def __reduce__(self):
         return ImpossibleForSolver, (super().__str__(), self.generator_params, self.layout)
+
+    def __hash__(self) -> int:
+        return self.layout.__hash__()
 
     def __eq__(self, other):
         if not isinstance(other, ImpossibleForSolver):

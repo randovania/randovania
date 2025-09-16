@@ -17,14 +17,19 @@ if TYPE_CHECKING:
 
 
 def describe_objective(octoliths: HuntersOctolithConfig) -> list[dict[str, bool]]:
-    return [
-        {
-            f"{octoliths.placed_octoliths} Octoliths": True,
-        },
-        {
-            "Prefers Bosses": octoliths.prefer_bosses,
-        },
-    ]
+    has_octoliths = octoliths.placed_octoliths > 0
+    if has_octoliths:
+        return [
+            {
+                f"{octoliths.placed_octoliths} Octoliths": True,
+            },
+        ]
+    else:
+        return [
+            {
+                "Defeat Gorea 1": True,
+            }
+        ]
 
 
 class HuntersPresetDescriber(GamePresetDescriber):
@@ -39,6 +44,11 @@ class HuntersPresetDescriber(GamePresetDescriber):
             "Item Pool": [],
             "Gameplay": [
                 {f"Force Fields: {configuration.force_field_configuration.description()}": True},
+                {
+                    f"Portals: {configuration.teleporters.description('portals')}": (
+                        not configuration.teleporters.is_vanilla
+                    )
+                },
             ],
             "Goal": describe_objective(configuration.octoliths),
             "Game Changes": [],

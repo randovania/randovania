@@ -13,7 +13,6 @@ from randovania.game_description.requirements.requirement_list import Requiremen
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
-from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.generator import generator, reach_lib
 from randovania.generator.filler import pickup_list
 from randovania.generator.pickup_pool import pickup_creator
@@ -126,7 +125,7 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
         "randovania.generator.filler.pickup_list._requirement_lists_without_satisfied_resources"
     )
 
-    collection = ResourceCollection.with_database(echoes_game_description.resource_database)
+    collection = echoes_game_description.create_resource_collection()
     pickups_left: list[PickupEntry] = []
     reach = MagicMock()
     reach.state.node_context.return_value = NodeContext(
@@ -194,7 +193,7 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
         ]
     )
 
-    resources = ResourceCollection.with_database(db)
+    resources = echoes_game_description.create_resource_collection()
     resources.set_resource(db.get_item("MissileLauncher"), 1)
     resources.set_resource(db.get_item("Missile"), 5)
 
@@ -204,12 +203,13 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
         EnergyTankDamageState(
             99,
             100,
-            db,
-            echoes_game_description.region_list,
+            db.get_item("EnergyTank"),
         ),
         MagicMock(),
         echoes_game_patches,
         None,
+        db,
+        echoes_game_description.region_list,
     )
 
     # Run

@@ -124,7 +124,6 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
                 for location in self.excluded_targets.nodes_list(self.game)
                 if location not in self.excluded_targets.locations
             ]
-
         elif self.mode in {
             TeleporterShuffleMode.ONE_WAY_TELEPORTER,
             TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT,
@@ -137,16 +136,7 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
             for identifier in self.editable_teleporters:
                 node = region_list.node_by_identifier(identifier)
                 if isinstance(node, DockNode) and node.dock_type in teleporter_dock_types:
-                    # Valid destinations must be valid starting areas
-                    area = region_list.nodes_to_area(node)
-                    if area.has_start_node():
-                        result.append(identifier)
-                    # Hack for Metroid Prime 1, where the scripting for Metroid Prime Lair is dependent
-                    # on the previous room
-                    elif area.name == "Metroid Prime Lair":
-                        result.append(
-                            NodeIdentifier.create("Impact Crater", "Subchamber Five", "Dock to Subchamber Four")
-                        )
+                    result.append(identifier)
             return result
         else:
             return []

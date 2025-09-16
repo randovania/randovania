@@ -10,6 +10,7 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_collection import ResourceCollection
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.pickup_pool.pickup_creator import create_ammo_pickup, create_standard_pickup
 from randovania.generator.pickup_pool.standard_pickup import find_ammo_for
 from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
@@ -23,6 +24,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game.game_enum import RandovaniaGame
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -87,7 +89,7 @@ def victory_condition_for_pickup_placement(
         return game.victory_condition
 
     add_all_pickups = placement_config is LogicalPickupPlacementConfiguration.ALL
-    resources = ResourceCollection.with_database(game.resource_database)
+    resources = game.create_resource_collection()
 
     for pickup in pickups:
         if pickup.generator_params.preferred_location_category is LocationCategory.MAJOR or add_all_pickups:
@@ -111,7 +113,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
     def trick_resources_for_configuration(
         self,
         configuration: TrickLevelConfiguration,
-        resource_database: ResourceDatabase,
+        resource_database: ResourceDatabaseView,
     ) -> ResourceGain:
         """
         :param configuration:
@@ -121,7 +123,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
 
         static_resources = {}
 
-        for trick in resource_database.trick:
+        for trick in resource_database.get_all_tricks():
             if configuration.minimal_logic:
                 level = LayoutTrickLevel.maximum()
             else:
@@ -134,14 +136,14 @@ class Bootstrap[Configuration: BaseConfiguration]:
     def event_resources_for_configuration(
         self,
         configuration: Configuration,
-        resource_database: ResourceDatabase,
+        resource_database: ResourceDatabaseView,
     ) -> ResourceGain:
         yield from []
 
     def _add_minimal_logic_initial_resources(
         self,
         resources: ResourceCollection,
-        game: GameDescription,
+        game: GameDatabaseView,
         standard_pickups: StandardPickupConfiguration,
     ) -> None:
         resource_database = game.resource_database
@@ -172,7 +174,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
             ]
         )
 
-    def create_damage_state(self, game: GameDescription, configuration: Configuration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: Configuration) -> DamageState:
         """
         Creates a DamageState for the given configuration.
         :param game:
@@ -210,6 +212,8 @@ class Bootstrap[Configuration: BaseConfiguration]:
             starting_node,
             patches,
             None,
+            game.resource_database,
+            game.region_list,
         )
 
         # Being present with value 0 is troublesome since this dict is used for a simplify_requirements later on
@@ -220,18 +224,18 @@ class Bootstrap[Configuration: BaseConfiguration]:
         return starting_state
 
     def version_resources_for_game(
-        self, configuration: Configuration, resource_database: ResourceDatabase
+        self, configuration: Configuration, resource_database: ResourceDatabaseView
     ) -> ResourceGain:
         """
         Determines which Version resources should be enabled, according to the configuration.
         Override as needed.
         """
         # Only enable one specific version
-        for resource in resource_database.version:
+        for resource in resource_database.get_all_resources_of_type(ResourceType.VERSION):
             yield resource, 1 if resource.long_name == "NTSC" else 0
 
     def _get_enabled_misc_resources(
-        self, configuration: Configuration, resource_database: ResourceDatabase
+        self, configuration: Configuration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         """
         Returns a set of strings corresponding to Misc resource short names which should be enabled.
@@ -240,13 +244,13 @@ class Bootstrap[Configuration: BaseConfiguration]:
         return set()
 
     def misc_resources_for_configuration(
-        self, configuration: Configuration, resource_database: ResourceDatabase
+        self, configuration: Configuration, resource_database: ResourceDatabaseView
     ) -> ResourceGain:
         """
         Determines which Misc resources should be enabled, according to the configuration.
         """
         enabled_resources = self._get_enabled_misc_resources(configuration, resource_database)
-        for resource in resource_database.misc:
+        for resource in resource_database.get_all_resources_of_type(ResourceType.MISC):
             yield resource, 1 if resource.short_name in enabled_resources else 0
 
     def patch_resource_database(self, db: ResourceDatabase, configuration: Configuration) -> ResourceDatabase:
@@ -281,7 +285,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
                 starting_state.resources, game, configuration.standard_pickup_configuration
             )
 
-        static_resources = ResourceCollection.with_database(game.resource_database)
+        static_resources = game.create_resource_collection()
         static_resources.add_resource_gain(
             self.trick_resources_for_configuration(configuration.trick_level, game.resource_database)
         )
@@ -318,14 +322,17 @@ class Bootstrap[Configuration: BaseConfiguration]:
 
     def all_preplaced_pickup_locations(
         self,
-        game: GameDescription,
+        game: GameDatabaseView,
         config: Configuration,
         game_specific_check: Callable[[PickupNode, Configuration], bool],
     ) -> list[PickupNode]:
         locations = []
 
-        for node in game.region_list.all_nodes:
-            if isinstance(node, PickupNode) and game_specific_check(node, config):
+        for _, _, node in game.iterate_nodes_of_type(PickupNode):
+            if (
+                game_specific_check(node, config)
+                and node.pickup_index not in config.available_locations.excluded_indices
+            ):
                 locations.append(node)
 
         return locations
@@ -333,13 +340,13 @@ class Bootstrap[Configuration: BaseConfiguration]:
     def pre_place_pickups_weighted(
         self,
         rng: Random,
+        pickups_to_place: list[PickupEntry],
         locations: dict[PickupNode, float],
         pool_results: PoolResults,
-        item_category: str,
         game: RandovaniaGame,
     ) -> None:
         """
-        Pre-places all pickups of item_category from a set of weighted PickupNodes.
+        Pre-places a list of PickupEntry(s) from a set of weighted PickupNodes.
         """
         pre_placed_indices = list(pool_results.assignment.keys())
         reduced_locations = {loc: v for loc, v in locations.items() if loc.pickup_index not in pre_placed_indices}
@@ -351,27 +358,23 @@ class Bootstrap[Configuration: BaseConfiguration]:
             weighted_locations.append(loc)
             reduced_locations.pop(loc)
 
-        pickup_database = default_database.pickup_database_for_game(game)
-        category = pickup_database.pickup_categories[item_category]
-
-        all_artifacts = [pickup for pickup in list(pool_results.to_place) if pickup.gui_category is category]
-        if len(all_artifacts) > len(weighted_locations):
+        if len(pickups_to_place) > len(weighted_locations):
             raise InvalidConfiguration(
-                f"Has {len(all_artifacts)} {category.long_name} in the pool, "
+                f"Has {len(pickups_to_place)} pre-placed pickups in the pool, "
                 f"but only {len(weighted_locations)} valid locations."
             )
 
-        # places an artifact in the next location of weighted_locations until all_artifacts is exhausted
-        for artifact, location in zip(all_artifacts, weighted_locations, strict=False):
-            pool_results.to_place.remove(artifact)
-            pool_results.assignment[location.pickup_index] = artifact
+        # places a pickup in the next location of weighted_locations until pickups_to_place is exhausted
+        for pickup, location in zip(pickups_to_place, weighted_locations, strict=False):
+            pool_results.to_place.remove(pickup)
+            pool_results.assignment[location.pickup_index] = pickup
 
     def pre_place_pickups(
         self,
         rng: Random,
+        pickups_to_place: list[PickupEntry],
         locations: list[PickupNode],
         pool_results: PoolResults,
-        item_category: str,
         game: RandovaniaGame,
     ) -> None:
         """
@@ -379,8 +382,8 @@ class Bootstrap[Configuration: BaseConfiguration]:
         """
         self.pre_place_pickups_weighted(
             rng,
+            pickups_to_place,
             dict.fromkeys(locations, 1.0),
             pool_results,
-            item_category,
             game,
         )

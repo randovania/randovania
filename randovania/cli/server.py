@@ -42,7 +42,7 @@ def bot_command_logic(args: Namespace) -> None:
 
     randovania.monitoring.bot_init()
 
-    from randovania.server.discord import bot
+    from randovania.discord_bot import bot
 
     bot.run()
 

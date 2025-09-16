@@ -712,6 +712,101 @@ def _migrate_v35(data: dict) -> None:
                     game_modifications[index]["locations"][region].update({location: "Nothing"})
 
 
+def _migrate_v36(data: dict) -> None:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        game_name = game["game"]
+        if game_name != "am2r":
+            continue
+        pickups = game["starting_equipment"]["pickups"]
+        pickups.remove("Power Beam")
+        pickups.append("Arm Cannon")
+
+
+def _migrate_v37(data: dict) -> None:
+    assignment_re = re.compile(r"(.*) for Player (\d+)")
+
+    for world, game in enumerate(data["game_modifications"]):
+        new_locations = []
+        pickup_to_node = migration_data.get_raw_data(RandovaniaGame(game["game"]))["pickup_index_to_node"]
+        for region, assignments in game["locations"].items():
+            for location, assignment in assignments.items():
+                assignment_match = assignment_re.match(assignment)
+                if assignment_match is not None:
+                    pickup = assignment_match.group(1)
+                    owner = int(assignment_match.group(2)) - 1
+                else:
+                    pickup = assignment
+                    owner = world
+
+                node_identifier = f"{region}/{location}"
+
+                pickup_index = None
+                for index, region_and_area in pickup_to_node.items():
+                    if region_and_area["region"] == region and region_and_area["area_and_node"] == location:
+                        pickup_index = index
+                        break
+
+                # Samus Returns had one pickup naming migration after, and I didn't want to create
+                # a whole new migration field just because of that
+                if (
+                    game["game"] == "samus_returns"
+                    and region == "Area 4 Crystal Mines"
+                    and location == "Gamma+ Arena/Pickup (DNA)"
+                ):
+                    pickup_index = 198
+
+                assert pickup_index is not None, f"Unknown pickup index for {node_identifier}"
+
+                r, a, n = node_identifier.split("/")
+                new_locations.append(
+                    {
+                        "node_identifier": {"region": r, "area": a, "node": n},
+                        "index": int(pickup_index),
+                        "pickup": pickup,
+                        "owner": owner,
+                    }
+                )
+
+        game["locations"] = new_locations
+
+
+def _migrate_v38(data: dict) -> None:
+    replacement_features = {
+        "morph_ball_related": "morph_ball",
+        "beam_related": "beam",
+        "missile_related": "missile",
+        "misc": "bonus",
+        "key": "dna",
+    }
+
+    am2r_worlds = [world_index for world_index, game in enumerate(data["game_modifications"]) if game["game"] == "am2r"]
+    for world_index, game_mod in enumerate(data["game_modifications"]):
+        for hint in game_mod["hints"].values():
+            if hint["hint_type"] != "location":
+                continue
+
+            precision = hint["precision"]
+            if not (feature := precision.get("item_feature")):
+                continue
+            if feature not in replacement_features:
+                continue
+
+            # Check now if it's hinting an am2r world and if yes change the feature
+            pickup_index = hint["target"]
+            is_for_am2r = False
+            for location in game_mod["locations"]:
+                if location["index"] != pickup_index:
+                    continue
+
+                is_for_am2r = location["owner"] in am2r_worlds
+                break
+
+            if is_for_am2r:
+                hint["precision"]["item_feature"] = replacement_features[feature]
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -748,6 +843,9 @@ _MIGRATIONS = [
     _migrate_v33,
     _migrate_v34,  # removal of in_dark_aether
     _migrate_v35,  # rename ETMs to Nothing
+    _migrate_v36,  # am2r: repurpose power beam to arm cannon
+    _migrate_v37,  # Refactor how the "locations" field is saved.
+    _migrate_v38,  # Redo am2r pickup features
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

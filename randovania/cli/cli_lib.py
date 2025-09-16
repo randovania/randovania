@@ -47,7 +47,7 @@ class EnumAction(argparse.Action):
 
 
 def add_debug_argument(parser: ArgumentParser) -> None:
-    parser.add_argument("--debug", choices=range(4), type=int, default=0, help="The level of debug logging to print.")
+    parser.add_argument("--debug", choices=range(5), type=int, default=0, help="The level of debug logging to print.")
 
 
 def add_validate_argument(parser: ArgumentParser) -> None:

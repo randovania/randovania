@@ -250,7 +250,18 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
 
     def _create_starting_items_dict(self) -> dict:
         starting_resources = self.patches.starting_resources()
-        return {resource.long_name: quantity for resource, quantity in starting_resources.as_resource_gain()}
+        starting_dict = {resource.long_name: quantity for resource, quantity in starting_resources.as_resource_gain()}
+        # FIXME: remove this when updating to new minor patcher version
+        to_remove = [
+            "Arm Cannon",
+            "Alpha Metroid Lure",
+            "Gamma Metroid Lure",
+            "Zeta Metroid Lure",
+            "Omega Metroid Lure",
+        ]
+        for item in to_remove:
+            starting_dict.pop(item, None)
+        return starting_dict
 
     def _create_starting_location(self) -> dict:
         return {
@@ -392,7 +403,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
             if not shuffled_hints:
                 joke = rng.choice(joke_hints)
                 joke_hints.remove(joke)
-                shuffled_hints = [hint_namer.format_joke(joke, True)]
+                shuffled_hints = [hint_namer.format_joke(f"*{joke}*", True)]
             septogg_hints[f"septogg_a{i}"] = gm_newline.join(sorted(shuffled_hints, key=_sort_list_by_region))
 
         ice_hint = {}
@@ -493,7 +504,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
     def create_useless_pickup(self) -> PickupEntry:
         """Used for any location with no PickupEntry assigned to it."""
         return pickup_creator.create_nothing_pickup(
-            self.game.resource_database,
+            self.game.get_resource_database_view(),
             model_name="sItemNothing",
         )
 

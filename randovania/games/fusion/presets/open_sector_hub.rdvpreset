@@ -3,7 +3,7 @@
     "base_preset_uuid": null,
     "name": "Open Sector Hub",
     "uuid": "680739a2-cbd8-4c3c-89e7-87ac171cbbb2",
-    "description": "A proposal for a new Starter Preset. Starts in the Sector Hub with 1 random starting item, and unlocks the doors in Sector Hub. This should significantly increase seed variety while remaining trickless.",
+    "description": "This preset is designed to offer the most optimal randomizer experience. Start in the Sector Hub with 1 random starting item, 1 E-Tank, and the hatches in sector hub unlocked. This allows for maximum exploration and diversity while still being accessible to beginner players and remaining trickless.",
     "game": "fusion",
     "configuration": {
         "trick_level": {
@@ -84,7 +84,8 @@
                     "num_shuffled_pickups": 1
                 },
                 "Energy Tank": {
-                    "num_shuffled_pickups": 20
+                    "num_shuffled_pickups": 19,
+                    "num_included_in_starting_pickups": 1
                 },
                 "Level 0 Keycard": {
                     "num_included_in_starting_pickups": 1
@@ -119,7 +120,7 @@
                     "ammo_count": [
                         2
                     ],
-                    "pickup_count": 25,
+                    "pickup_count": 32,
                     "requires_main_item": true
                 }
             }
@@ -164,17 +165,15 @@
                 "artifacts": "precise",
                 "charge_beam": "hide-area"
             },
-            "minimum_available_locations_for_hint_placement": 5,
-            "minimum_location_weight_for_hint_placement": 0.1,
+            "minimum_available_locations_for_hint_placement": 0,
+            "minimum_location_weight_for_hint_placement": 0.0,
             "use_resolver_hints": false
         },
         "anti_softlock": true,
         "instant_transitions": false,
         "energy_per_tank": 100,
         "artifacts": {
-            "prefer_bosses": true,
-            "prefer_anywhere": false,
-            "required_artifacts": 4,
+            "required_artifacts": 5,
             "placed_artifacts": 5
         },
         "open_save_recharge_hatches": false,

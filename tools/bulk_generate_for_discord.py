@@ -82,7 +82,9 @@ def main():
     subprocess.run(
         [
             sys.executable,
-            os.fspath(this_dir.joinpath("log_analyzer.py")),
+            "-m",
+            "randovania",
+            "analyze",
             rdvgame_path,
             report_path,
         ],
