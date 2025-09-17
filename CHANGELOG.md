@@ -22,7 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
+- Added: 5 more joke hints.
 - Changed: Infant Metroid hints have been reformatted for easier readability.
+- Fixed: Typo in a joke hint.
 
 ### Metroid Fusion
 
@@ -81,6 +83,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Adjusted fit of main menu text to accommodate larger seed hashes
 - Changed: Adjusted fit of DLR Blast Shields over doors
 - Changed: Research Core cutscene camera angle will now be consistent regardless of the height of the placed pickup
+
+#### Logic Database
+
+##### Chozo Ruins 
+
+- Changed: Hall of the Elders: The Bomb Jump to skip Spider Ball and Space Jump is now Expert instead of Ludicrous. 
+- Changed: Save Station 3: The Wall Boost to skip Morph Ball Bombs is now Expert instead of Ludicrous. 
+- Changed: Sunchamber: Fighting Flaahgra using Wavebuster instead of Morph Ball Bombs is now Combat Intermediate instead of Advanced.
+
+##### Phendrana Drifts 
+
+- Removed: Frozen Pike: Logic for scaling the room from Pike Access to Transport Access without Morph Ball has been removed.
+- Changed: Phendrana Canyon: The Combat Dash to obtain the item without Space Jump, Scan Visor, and Boost Ball no longer requires Damage Boosting and the Combat/Scan Dash has been changed from Advanced to Expert. 
+- Changed: Qurantine Cave: The Grapple Beam escape from the bottom of the room without Space Jump is now intermediate instead of advanced. With Space Jump it is now beginner instead of trickless. 
+
+##### Tallon Overworld 
+
+- Changed: Life Grove Tunnel: The Complex Bomb Jump to escape the half-pipe without Boost Ball is now Expert instead of Ludicrous.
 
 ## [10.1.0] - 2025-09-02
 
