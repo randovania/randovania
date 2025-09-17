@@ -66,6 +66,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Zozoro Wine Cellar: Expert JBJ to item reduced to Advanced.
 - Changed: Twin Caverns West: Expert JBJ to tunnel reduced to Advanced.
 
+### Metroid Prime
+
+- Fixed: Crash when entering Metroid Prime Lair while in Scan Visor
+- Fixed: Rare crash that can happen in any room
+- Fixed: Sheegoth intro cutscene not repositioning the player at the end if cutscene was not skipped in Chapel of the Elders
+- Fixed: Artifact Temple totem hitbox persisting after Meta Ridley death cutscene
+- Fixed: Sun Tower Access boxes being reloaded after performing Early Wild (inconsistent with vanilla)
+- Fixed: Incorrect Energy Core platform behavior if cutscene skipped on wrong frame
+- Fixed: Chozo music stopping upon entering Training Chamber
+- Changed: Charge and Charge Combo projectiles reflected from DLR doors no longer hurt the player
+- Changed: Adjusted Power Bomb Expansion Jingle and HUDMemo timing
+- Changed: Adjusted fit of main menu text to accommodate larger seed hashes
+- Changed: Adjusted fit of DLR Blast Shields over doors
+- Changed: Research Core cutscene camera angle will now be consistent regardless of the height of the placed pickup
+
 ## [10.1.0] - 2025-09-02
 
 - Added: 7 Joke hints.
