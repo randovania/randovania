@@ -752,12 +752,17 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
 
         # Remove Bars in Great Tree Hall
         if self.configuration.remove_bars_great_tree_hall:
-            level_data["Tallon Overworld"]["rooms"]["Great Tree Hall"]["deleteIds"] = [
-                2359733,  # 0x002401B5 - bar
-                2359744,  # 0x002401C0 - spinner auto-enable timer
-                2359830,  # 0x00240216 - scan front
-                2359829,  # 0x00240215 - scan back
-            ]
+            room: dict = level_data["Tallon Overworld"]["rooms"]["Great Tree Hall"]
+            room.setdefault("setMemoryRelays", []).append(2360008)
+            room.setdefault("layers", {})["2"] = False
+            room.setdefault("addConnections", []).append(
+                {
+                    "senderId": 2360008,
+                    "state": "ACTIVE",
+                    "targetId": 2359798,
+                    "message": "ACTIVATE",
+                }
+            )
 
         # serialize room modifications
         if self.configuration.superheated_probability != 0:
