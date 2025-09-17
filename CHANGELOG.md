@@ -75,6 +75,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Sun Tower Access boxes being reloaded after performing Early Wild (inconsistent with vanilla)
 - Fixed: Incorrect Energy Core platform behavior if cutscene skipped on wrong frame
 - Fixed: Chozo music stopping upon entering Training Chamber
+- Fixed: Appearance of "Remove Bars in Great Tree Hall" patch
 - Changed: Charge and Charge Combo projectiles reflected from DLR doors no longer hurt the player
 - Changed: Adjusted Power Bomb Expansion Jingle and HUDMemo timing
 - Changed: Adjusted fit of main menu text to accommodate larger seed hashes
