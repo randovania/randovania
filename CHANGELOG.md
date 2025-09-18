@@ -24,9 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: 5 more joke hints.
 - Changed: Infant Metroid hints have been reformatted for easier readability.
+- Changed: "guarded by a boss" feature hint has been reworked to "on a Core-x Parasite" for more clarity
 - Fixed: Typo in a joke hint.
-
-### Metroid Fusion
 
 #### Logic Database
 

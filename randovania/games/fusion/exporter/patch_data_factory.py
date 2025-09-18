@@ -291,7 +291,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             )
 
             if operations_hint:
-                operations_hint = f"{metroid_hint_base} bosses:[NEXT]{operations_hint.rstrip('\n')}"
+                operations_hint = f"{metroid_hint_base} Core-X parasites:[NEXT]{operations_hint.rstrip('\n')}"
             else:
                 operations_hint = no_metroids_hint
 
