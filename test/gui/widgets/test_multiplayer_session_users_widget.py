@@ -31,11 +31,13 @@ def test_widgets_in_normal_session(skip_qtbot, preset_manager):
                 preset_raw=json.dumps(
                     preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
                 ),
+                has_been_beaten=False,
             ),
             MultiplayerWorld(
                 name="W2",
                 id=u2,
                 preset_raw=json.dumps(preset_manager.default_preset.as_json),
+                has_been_beaten=False,
             ),
             MultiplayerWorld(
                 name="W3",
@@ -43,6 +45,7 @@ def test_widgets_in_normal_session(skip_qtbot, preset_manager):
                 preset_raw=json.dumps(
                     preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
                 ),
+                has_been_beaten=False,
             ),
         ],
         users_list=[
@@ -145,11 +148,13 @@ def test_widgets_in_coop_session(skip_qtbot, preset_manager):
                 preset_raw=json.dumps(
                     preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
                 ),
+                has_been_beaten=False,
             ),
             MultiplayerWorld(
                 name="W2",
                 id=u2,
                 preset_raw=json.dumps(preset_manager.default_preset.as_json),
+                has_been_beaten=False,
             ),
             MultiplayerWorld(
                 name="W3",
@@ -157,6 +162,7 @@ def test_widgets_in_coop_session(skip_qtbot, preset_manager):
                 preset_raw=json.dumps(
                     preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
                 ),
+                has_been_beaten=False,
             ),
         ],
         users_list=[

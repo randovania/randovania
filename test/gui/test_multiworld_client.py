@@ -311,7 +311,7 @@ async def test_on_session_meta_update_not_logged_in(client: MultiworldClient):
     uid_2 = uuid.UUID("11111111-0000-0000-0000-111111111111")
 
     entry = MagicMock()
-    entry.worlds = [MultiplayerWorld(id=uid_1, name="Names", preset_raw="{}")]
+    entry.worlds = [MultiplayerWorld(id=uid_1, name="Names", preset_raw="{}", has_been_beaten=False)]
     client.network_client.current_user = None
     client._world_sync_errors[uid_1] = error.WorldDoesNotExistError()
     client._world_sync_errors[uid_2] = error.WorldNotAssociatedError()
@@ -327,7 +327,7 @@ async def test_on_session_meta_update_not_in_session(client: MultiworldClient):
     uid_1 = uuid.UUID("11111111-0000-0000-0000-000000000000")
 
     entry = MagicMock()
-    entry.worlds = [MultiplayerWorld(id=uid_1, name="Names", preset_raw="{}")]
+    entry.worlds = [MultiplayerWorld(id=uid_1, name="Names", preset_raw="{}", has_been_beaten=False)]
     entry.users = {}
     client._world_sync_errors[uid_1] = error.WorldNotAssociatedError()
 

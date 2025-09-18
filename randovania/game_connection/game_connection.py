@@ -33,6 +33,7 @@ class ConnectedGameState:
     status: GameConnectionStatus
     current_inventory: Inventory = dataclasses.field(default_factory=Inventory.empty)
     collected_indices: set[PickupIndex] = dataclasses.field(default_factory=set)
+    has_been_beaten: bool = False
 
 
 class GameConnection(QObject):
@@ -76,15 +77,21 @@ class GameConnection(QObject):
             if builder not in self.connection_builders:
                 await connector.force_finish()
 
+            # Intentionally suppresses the warning right now. TODO: remove once our games have it all implemented.
+            try:
+                did_beat = connector.has_been_beaten()
+            except NotImplementedError:
+                did_beat = False
+
+            if did_beat:
+                state = self.connected_states[connector]
+                state.has_been_beaten = True
+                self.GameStateUpdated.emit(state)
+
             if connector.is_disconnected():
                 await connector.force_finish()
                 del self.remote_connectors[builder]
                 self._handle_connector_removed(connector)
-
-            if connector.has_been_beaten():
-                state = self.connected_states[connector]
-                state.status = GameConnectionStatus.Beaten
-                self.GameStateUpdated.emit(state)
 
         async def try_build_connector(build: ConnectorBuilder) -> None:
             c = await build.build_connector()

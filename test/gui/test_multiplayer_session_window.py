@@ -77,11 +77,13 @@ def sample_session(preset_manager: PresetManager) -> MultiplayerSessionEntry:
                 preset_raw=json.dumps(
                     preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
                 ),
+                has_been_beaten=False,
             ),
             MultiplayerWorld(
                 name="W2",
                 id=u2,
                 preset_raw=json.dumps(preset_manager.default_preset.as_json),
+                has_been_beaten=False,
             ),
             MultiplayerWorld(
                 name="W3",
@@ -89,6 +91,7 @@ def sample_session(preset_manager: PresetManager) -> MultiplayerSessionEntry:
                 preset_raw=json.dumps(
                     preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
                 ),
+                has_been_beaten=False,
             ),
         ],
         users_list=[
@@ -202,6 +205,7 @@ async def test_on_session_meta_update(
                 preset_raw=json.dumps(
                     preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
                 ),
+                has_been_beaten=False,
             ),
         ],
         users_list=[
@@ -519,8 +523,18 @@ async def test_generate_game(
     session = MagicMock()
     session.users = {1: MultiplayerUser(1, "You", False, is_ready, {})}
     session.worlds = [
-        MultiplayerWorld(id=uuid.uuid4(), name="W1", preset_raw=json.dumps(preset_manager.default_preset.as_json)),
-        MultiplayerWorld(id=uuid.uuid4(), name="W2", preset_raw=json.dumps(preset_manager.default_preset.as_json)),
+        MultiplayerWorld(
+            id=uuid.uuid4(),
+            name="W1",
+            preset_raw=json.dumps(preset_manager.default_preset.as_json),
+            has_been_beaten=False,
+        ),
+        MultiplayerWorld(
+            id=uuid.uuid4(),
+            name="W2",
+            preset_raw=json.dumps(preset_manager.default_preset.as_json),
+            has_been_beaten=False,
+        ),
     ]
 
     window._session = session
@@ -970,6 +984,7 @@ async def test_game_export_listener(
         id=uuid.uuid4(),
         name="W1",
         preset_raw=json.dumps(preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json),
+        has_been_beaten=False,
     )
     window._session.get_world.return_value = world
     window._session.worlds = [world]

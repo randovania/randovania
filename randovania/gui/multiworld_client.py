@@ -99,6 +99,7 @@ class MultiworldClient(QtCore.QObject):
                 collected_locations=self.database.get_locations_to_upload(state.id),
                 inventory=inventory,
                 request_details=state.id not in self._worlds_with_details,
+                has_been_beaten=state.has_been_beaten,
             )
 
         # Check for all games that were connected at some point, and upload any pending location from them.
@@ -145,7 +146,11 @@ class MultiworldClient(QtCore.QObject):
 
             for uid, world_request in request.worlds.items():
                 self.logger.debug(
-                    "Syncing %s: State %s, collected %s", uid, world_request.status, world_request.collected_locations
+                    "Syncing %s: State %s, collected %s, beaten %s",
+                    uid,
+                    world_request.status,
+                    world_request.collected_locations,
+                    world_request.has_been_beaten,
                 )
 
             try:

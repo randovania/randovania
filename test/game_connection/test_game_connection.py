@@ -134,6 +134,7 @@ async def test_auto_update_remove_connector(connection, qapp):
     connector = MagicMock()
     connector.force_finish = AsyncMock()
     connector.is_disconnected.return_value = True
+    connector.has_been_beaten.return_value = False
     connection.remote_connectors[builder] = connector
 
     # Run

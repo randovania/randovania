@@ -273,6 +273,12 @@ def sync_one_world(
         association.last_activity = datetime.datetime.now(datetime.UTC)
         association.save()
 
+    if world_request.has_been_beaten and not world.beaten:
+        logger().info("Session %d, World %s has been beaten", world.session_id, world.name)
+        world.beaten = True
+        world.save()
+        worlds_to_update.add(world)
+
     return response, session_id_to_return, worlds_to_update
 
 
