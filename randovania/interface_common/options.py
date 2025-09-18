@@ -11,6 +11,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
 from randovania.interface_common import persisted_options
 from randovania.lib import migration_lib, version_lib
+from randovania.lib.hotkeys import HotkeysOption
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -137,6 +138,7 @@ _SERIALIZER_FOR_FIELD = {
     "auto_save_spoiler": Serializer(identity, bool),
     "dark_mode": Serializer(identity, bool),
     "show_multiworld_banner": Serializer(identity, bool),
+    "hotkeys": Serializer(lambda obj: obj.as_json, lambda obj: HotkeysOption.from_json(obj)),
     "experimental_settings": Serializer(identity, bool),
     "audible_generation_alert": Serializer(identity, bool),
     "visual_generation_alert": Serializer(identity, bool),
@@ -219,6 +221,7 @@ class Options:
     _parent_for_presets: dict[uuid.UUID, uuid.UUID] | None = None
     _tracker_default_game: RandovaniaGame | None = None
     _connector_builders: list[ConnectorBuilderOption] | None = None
+    _hotkeys: HotkeysOption | None = None
 
     def __init__(self, data_dir: Path, user_dir: Path | None = None):
         self._data_dir = data_dir
@@ -434,6 +437,14 @@ class Options:
     @show_multiworld_banner.setter
     def show_multiworld_banner(self, value: bool) -> None:
         self._edit_field("show_multiworld_banner", value)
+
+    @property
+    def hotkeys(self) -> HotkeysOption:
+        return _return_with_default(self._hotkeys, lambda: HotkeysOption(start_finish_hotkey=None, pause_hotkey=None))
+
+    @hotkeys.setter
+    def hotkeys(self, value: HotkeysOption) -> None:
+        self._edit_field("hotkeys", value)
 
     @property
     def experimental_settings(self) -> bool:

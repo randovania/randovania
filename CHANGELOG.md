@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: A warning when trying to generate a Multiworld game if a preset requires all Pickups to be obtainable.
 - Added: Command line arguments for gathering statistics about a collection of generated games. These commands are intended for advanced uses only.
 
+- Added: A Hotkey feature for Start/Finish and Pause/Unpause in Async Race Rooms.
+
 ### Metroid Dread
 
 #### Logic Database
