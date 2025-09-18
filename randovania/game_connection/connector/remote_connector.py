@@ -93,5 +93,9 @@ class RemoteConnector:
         """When True, this connector has lost connection with the game and must be discarded."""
         raise NotImplementedError
 
+    def has_been_beaten(self) -> bool:
+        """When True, indicates that the player has beaten the game."""
+        raise NotImplementedError
+
     def inform_connected_tracker(self, tracker_details: dict | None) -> None:
         """Called when an AutoTracker is created using this connector."""

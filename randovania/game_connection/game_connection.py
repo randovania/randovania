@@ -81,6 +81,11 @@ class GameConnection(QObject):
                 del self.remote_connectors[builder]
                 self._handle_connector_removed(connector)
 
+            if connector.has_been_beaten():
+                state = self.connected_states[connector]
+                state.status = GameConnectionStatus.Beaten
+                self.GameStateUpdated.emit(state)
+
         async def try_build_connector(build: ConnectorBuilder) -> None:
             c = await build.build_connector()
             if c is not None:
