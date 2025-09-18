@@ -88,6 +88,7 @@ class DreadPresetDescriber(GamePresetDescriber):
                     {
                         "Power Bomb needs Main": "Power Bomb Expansion",
                     },
+                    False,
                 ),
                 {
                     "Open Hanubia Shortcut": configuration.hanubia_shortcut_no_grapple,
