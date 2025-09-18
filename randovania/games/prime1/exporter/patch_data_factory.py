@@ -753,13 +753,13 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         # Remove Bars in Great Tree Hall
         if self.configuration.remove_bars_great_tree_hall:
             room: dict = level_data["Tallon Overworld"]["rooms"]["Great Tree Hall"]
-            room.setdefault("setMemoryRelays", []).append(2360008)
-            room.setdefault("layers", {})["2"] = False
+            room.setdefault("setMemoryRelays", []).append(2360008)  # 0x2402c8: Memory Relay - keep POIs deactive
+            room.setdefault("layers", {})["2"] = False  # Layer 2: Gate Unsolved
             room.setdefault("addConnections", []).append(
                 {
-                    "senderId": 2360008,
+                    "senderId": 2360008,  # 0x2402c8: Memory Relay - keep POIs deactive
                     "state": "ACTIVE",
-                    "targetId": 2359798,
+                    "targetId": 2359798,  # 0x2401f6: Platform - Bars Solved
                     "message": "ACTIVATE",
                 }
             )
