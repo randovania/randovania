@@ -45,14 +45,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Cathedral: Ludicrous JBJ to escape from bottom to top section reduced to Expert, accompanying ttv clip replaced by YouTube link having better input display.
 - Changed: Data Courtyard: Advanced JBJ to break left block from beneath reduced to Intermediate.
 - Added: Zazabi Arena: Ludicrous JBJ to escape, having no jump upgrades (besides bombs).
-- Removed: Zazabi speedway: Location removed from feature hint "guarded by a boss" due to Core-X parasite feature hint rework
 
 ##### Sector 3 (PYR)
 
 - Changed: Namihe's Lair: Expert JBJs, to both get the item and escape, reduced to Advanced.
 - Changed: Processing Access: Expert JBJ off sova to top door reduced to Advanced.
 - Changed: Glass Tube to Sector 5: Expert JBJ to break block reduced to Intermediate, via easier method.
-- Removed: Data Room : Location removed from feature hint "guarded by a boss" due to Core-X parasite feature hint rework
 
 ##### Sector 4 (AQA)
 
@@ -68,7 +66,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Entrance Lobby: Expert JBJ to bomb floor from beneath reduced to Advanced.
 - Changed: Zozoro Wine Cellar: Expert JBJ to item reduced to Advanced.
 - Changed: Twin Caverns West: Expert JBJ to tunnel reduced to Advanced.
-- Removed: X-B.O.X. Garage: Location removed from feature hint "guarded by a boss" due to Core-X parasite feature hint rework
 
 ## [10.1.0] - 2025-09-02
 
