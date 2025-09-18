@@ -66,5 +66,4 @@ def _get_expected_game_changes_text(rb_damage_mode: DreadRavenBeakDamageMode):
         result.append("Raven Beak Damage: Unmodified")
     elif rb_damage_mode == DreadRavenBeakDamageMode.CONSISTENT_HIGH:
         result.append("Raven Beak Damage: Consistent, without damage reduction")
-    result.append("Power Bomb Limitations")
     return result
