@@ -70,6 +70,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Fixed: Crash when entering Metroid Prime Lair while in Scan Visor
+- Fixed: Rare crash that can happen in any room
+- Fixed: Sheegoth intro cutscene not repositioning the player at the end if cutscene was not skipped in Chapel of the Elders
+- Fixed: Artifact Temple totem hitbox persisting after Meta Ridley death cutscene
+- Fixed: Sun Tower Access boxes being reloaded after performing Early Wild (inconsistent with vanilla)
+- Fixed: Incorrect Energy Core platform behavior if cutscene skipped on wrong frame
+- Fixed: Chozo music stopping upon entering Training Chamber
+- Fixed: Appearance of "Remove Bars in Great Tree Hall" patch
+- Changed: Charge and Charge Combo projectiles reflected from DLR doors no longer hurt the player
+- Changed: Adjusted timing of the jingle and text after acquiring the item at each of the 4 vanilla Power Bomb Expansion locations
+- Changed: Adjusted fit of main menu text to accommodate larger seed hashes
+- Changed: Adjusted fit of DLR Blast Shields over doors
+- Changed: Research Core cutscene camera angle will now be consistent regardless of the height of the placed pickup
+
 #### Logic Database
 
 ##### Chozo Ruins 
