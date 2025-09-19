@@ -110,6 +110,7 @@ class MultiworldClient(QtCore.QObject):
                     collected_locations=locations,
                     inventory=None,
                     request_details=False,
+                    has_been_beaten=False,
                 )
 
         for uid, old_status in self._last_reported_status.items():
@@ -119,6 +120,7 @@ class MultiworldClient(QtCore.QObject):
                     collected_locations=self.database.get_locations_to_upload(uid),
                     inventory=None,
                     request_details=False,
+                    has_been_beaten=False,
                 )
 
         for uid in set(sync_requests.keys()) & set(self._world_sync_errors.keys()):

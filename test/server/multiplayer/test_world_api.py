@@ -312,18 +312,21 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
                     collected_locations=(5,),
                     inventory=b"foo",
                     request_details=True,
+                    has_been_beaten=False,
                 ),
                 w2.uuid: ServerWorldSync(
                     status=GameConnectionStatus.Disconnected,
                     collected_locations=(15,),
                     inventory=None,
                     request_details=False,
+                    has_been_beaten=False,
                 ),
                 uuid.UUID("a0cf12f7-8a0e-47ed-9a82-cabfc8b912c2"): ServerWorldSync(
                     status=GameConnectionStatus.TitleScreen,
                     collected_locations=(60,),
                     inventory=None,
                     request_details=False,
+                    has_been_beaten=False,
                 ),
             }
         )

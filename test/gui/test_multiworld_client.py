@@ -161,6 +161,7 @@ def test_create_new_sync_request(client, has_old_pending, has_last_status):
         collected_locations=(5,),
         inventory=b"\x00",
         request_details=True,
+        has_been_beaten=False,
     )
 
     if has_old_pending:
@@ -173,6 +174,7 @@ def test_create_new_sync_request(client, has_old_pending, has_last_status):
             collected_locations=(10,),
             inventory=None,
             request_details=False,
+            has_been_beaten=False,
         )
 
     if has_last_status:
@@ -183,6 +185,7 @@ def test_create_new_sync_request(client, has_old_pending, has_last_status):
             collected_locations=(),
             inventory=None,
             request_details=False,
+            has_been_beaten=False,
         )
 
     # Run
@@ -222,18 +225,21 @@ async def test_server_sync(client, mocker: MockerFixture):
                     collected_locations=(5,),
                     inventory=b"foo",
                     request_details=True,
+                    has_been_beaten=False,
                 ),
                 uid_2: ServerWorldSync(
                     status=GameConnectionStatus.TitleScreen,
                     collected_locations=(),
                     inventory=b"bar",
                     request_details=False,
+                    has_been_beaten=False,
                 ),
                 uid_3: ServerWorldSync(
                     status=GameConnectionStatus.Disconnected,
                     collected_locations=(15, 20),
                     inventory=None,
                     request_details=False,
+                    has_been_beaten=False,
                 ),
             }
         )
