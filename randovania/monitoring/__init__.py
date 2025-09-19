@@ -96,9 +96,11 @@ def _init(include_flask: bool, url_key: str, sampling_rate: float = 1.0, exclude
         return
 
     from sentry_sdk.integrations.aiohttp import AioHttpIntegration
+    from sentry_sdk.integrations.logging import LoggingIntegration
 
     integrations = [
         AioHttpIntegration(),
+        LoggingIntegration(),
     ]
 
     profiles_sample_rate = sampling_rate
@@ -138,6 +140,8 @@ def _init(include_flask: bool, url_key: str, sampling_rate: float = 1.0, exclude
         event_scrubber=HomeEventScrubber(),
         before_breadcrumb=before_breadcrumb,
         before_send=before_send,
+        enable_logs=True,
+        # before_send_log=before_send_log,  # If we need to explicitly filter user data
     )
     sentry_sdk.Scope.get_global_scope().set_context(
         "os",
