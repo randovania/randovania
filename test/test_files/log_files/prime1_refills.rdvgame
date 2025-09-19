@@ -10,7 +10,7 @@
         "word_hash": "Shriekbat Ice Glider",
         "presets": [
             {
-                "schema_version": 93,
+                "schema_version": 108,
                 "base_preset_uuid": null,
                 "name": "Starter Preset Copy",
                 "uuid": "822da6c2-65ad-4da5-a9ce-11a70a80f994",
@@ -55,6 +55,9 @@
                                     5
                                 ]
                             },
+                            "Unlimited Missiles": {
+                                "num_shuffled_pickups": 1
+                            },
                             "Grapple Beam": {
                                 "num_shuffled_pickups": 1
                             },
@@ -94,6 +97,9 @@
                                     4
                                 ]
                             },
+                            "Unlimited Power Bombs": {
+                                "num_shuffled_pickups": 1
+                            },
                             "Power Suit": {
                                 "num_included_in_starting_pickups": 1
                             },
@@ -130,14 +136,14 @@
                                     5
                                 ],
                                 "pickup_count": 41,
-                                "requires_main_item": false
+                                "requires_main_item": true
                             },
                             "Power Bomb Expansion": {
                                 "ammo_count": [
                                     1
                                 ],
                                 "pickup_count": 4,
-                                "requires_main_item": false
+                                "requires_main_item": true
                             },
                             "Energy Refill": {
                                 "ammo_count": [
@@ -168,15 +174,13 @@
                     "logical_resource_action": "randomly",
                     "first_progression_must_be_local": false,
                     "two_sided_door_lock_search": false,
-                    "minimum_available_locations_for_hint_placement": 0,
-                    "minimum_location_weight_for_hint_placement": 0.0,
                     "dock_rando": {
                         "mode": "vanilla",
                         "types_state": {
                             "door": {
                                 "can_change_from": [
                                     "Ice Door",
-                                    "Missile Blast Shield",
+                                    "Missile Blast Shield (randomprime)",
                                     "Normal Door",
                                     "Plasma Door",
                                     "Wave Door"
@@ -195,6 +199,19 @@
                     "single_set_for_pickups_that_solve": true,
                     "staggered_multi_pickup_placement": true,
                     "check_if_beatable_after_base_patches": false,
+                    "logical_pickup_placement": "minimal",
+                    "consider_possible_unsafe_resources": false,
+                    "hints": {
+                        "enable_random_hints": true,
+                        "enable_specific_location_hints": true,
+                        "specific_pickup_hints": {
+                            "artifacts": "precise",
+                            "phazon_suit": "hide-area"
+                        },
+                        "minimum_available_locations_for_hint_placement": 0,
+                        "minimum_location_weight_for_hint_placement": 0.0,
+                        "use_resolver_hints": false
+                    },
                     "teleporters": {
                         "mode": "vanilla",
                         "excluded_teleporters": [
@@ -223,14 +240,12 @@
                         "skip_final_bosses": false,
                         "allow_unvisited_room_names": true
                     },
-                    "hints": {
-                        "artifacts": "precise",
-                        "phazon_suit": "hide-area"
-                    },
                     "energy_per_tank": 100,
                     "artifact_target": 2,
                     "artifact_required": 1,
                     "artifact_minimum_progression": 6,
+                    "pre_place_artifact": false,
+                    "pre_place_phazon": false,
                     "heat_damage": 10.0,
                     "warp_to_start": true,
                     "damage_reduction": "Progressive",
@@ -256,6 +271,7 @@
                     "legacy_mode": false,
                     "qol_cutscenes": "Skippable",
                     "ingame_difficulty": "Normal",
+                    "blast_shield_lockon": false,
                     "enemy_attributes": null
                 }
             }
@@ -487,7 +503,7 @@
                     "Gravity Chamber/Pickup (Missile)": "Missile Expansion",
                     "Ice Ruins East/Pickup (Missile Expansion Behind Ice)": "Missile Expansion",
                     "Ice Ruins East/Pickup (Spider Track Missile Expansion)": "Power Bomb Refill",
-                    "Ice Ruins West/Pickup (Power Bomb)": "Energy Transfer Module",
+                    "Ice Ruins West/Pickup (Power Bomb)": "Unlimited Missiles",
                     "Observatory/Pickup (Super Missile)": "Missile Expansion",
                     "Phendrana Canyon/Pickup (Boost Ball)": "Ice Spreader",
                     "Phendrana Shorelines/Pickup (Missile Behind Ice)": "Missile Expansion",
@@ -514,7 +530,7 @@
                     "Hydro Access Tunnel/Pickup (Energy Tank)": "Missile Expansion",
                     "Landing Site/Pickup (Missile Expansion)": "Power Bomb",
                     "Life Grove Tunnel/Pickup (Missile Expansion)": "Thermal Visor",
-                    "Life Grove/Pickup (Artifact of Chozo)": "Energy Transfer Module",
+                    "Life Grove/Pickup (Artifact of Chozo)": "Unlimited Power Bombs",
                     "Life Grove/Pickup (X-Ray Visor)": "Power Bomb Refill",
                     "Overgrown Cavern/Pickup (Missile Expansion)": "Power Bomb Refill",
                     "Root Cave/Pickup (Missile Expansion)": "Artifact of Strength",

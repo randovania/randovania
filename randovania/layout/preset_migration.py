@@ -1201,6 +1201,13 @@ def _migrate_v107(preset: dict, game: RandovaniaGame) -> None:
         preset["configuration"].pop("anti_softlock")
 
 
+def _migrate_v108(preset: dict, game: RandovaniaGame) -> None:
+    if preset["game"] == "prime1":
+        items = ["Unlimited Missiles", "Unlimited Power Bombs"]
+        for i in items:
+            preset["configuration"]["standard_pickup_configuration"]["pickups_state"][i] = {}
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1309,6 +1316,7 @@ _MIGRATIONS = [
     _migrate_v105,  # am2r add arm cannon
     _migrate_v106,  # add pre-placement to prime
     _migrate_v107,  # fusion remove anti-softlock
+    _migrate_v108,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
