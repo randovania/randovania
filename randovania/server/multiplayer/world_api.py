@@ -218,6 +218,7 @@ def sync_one_world(
     sentry_sdk.set_tag("world_uuid", str(uid))
     world = World.get_by_uuid(uid)
     sentry_sdk.set_tag("session_id", world.session_id)
+    session = MultiplayerSession.get_by_id(world.session_id)
 
     association = _check_user_is_associated(user, world)
     should_update_activity = False
@@ -277,6 +278,7 @@ def sync_one_world(
         logger().info("Session %d, World %s has been beaten", world.session_id, world.name)
         world.beaten = True
         world.save()
+        session_common.add_audit_entry(sa, session, f"World {world.name} has been beaten.")
         worlds_to_update.add(world)
 
     return response, session_id_to_return, worlds_to_update
