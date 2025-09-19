@@ -107,18 +107,15 @@ class MultiworldClient(QtCore.QObject):
         for uid in self.database.all_known_data():
             if uid not in sync_requests:
                 upload_data = self.database.get_data_to_upload(uid, provide_even_on_no_change=False)
-                if not upload_data:
-                    continue
-
-                sync_requests[uid] = upload_data
+                if upload_data:
+                    sync_requests[uid] = upload_data
 
         # Check for games that got disconnected and upload to server to notify of that.
         for uid, old_status in self._last_reported_status.items():
             if old_status != GameConnectionStatus.Disconnected and uid not in sync_requests:
                 upload_data = self.database.get_data_to_upload(uid, provide_even_on_no_change=True)
-                if not upload_data:
-                    continue
-                sync_requests[uid] = upload_data
+                if upload_data:
+                    sync_requests[uid] = upload_data
 
         for uid in set(sync_requests.keys()) & set(self._world_sync_errors.keys()):
             if isinstance(self._world_sync_errors[uid], _ERRORS_THAT_STOP_SYNC):
