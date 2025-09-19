@@ -4,14 +4,14 @@ import playhouse.migrate
 from randovania.server import database
 
 
-def add_ready_field(migrator: playhouse.migrate.SqliteMigrator):
+def add_ready_field(migrator: playhouse.migrate.SqliteMigrator) -> None:
     with database.db.atomic():
         playhouse.migrate.migrate(
             migrator.add_column("multiplayer_membership", "ready", database.MultiplayerMembership.ready),
         )
 
 
-def rename_state_to_visibility(migrator: playhouse.migrate.SqliteMigrator):
+def rename_state_to_visibility(migrator: playhouse.migrate.SqliteMigrator) -> None:
     with database.db.atomic():
         database.db.execute(
             migrator._alter_table(migrator.make_context(), "multiplayer_session")
@@ -26,7 +26,7 @@ def rename_state_to_visibility(migrator: playhouse.migrate.SqliteMigrator):
         database.db.execute_sql("UPDATE multiplayer_session SET visibility='hidden' WHERE visibility='finished'")
 
 
-def add_game_beaten_field(migrator: playhouse.migrate.SqliteMigrator):
+def add_game_beaten_field(migrator: playhouse.migrate.SqliteMigrator) -> None:
     with database.db.atomic():
         database.db.execute(
             migrator._alter_table(migrator.make_context(), "world")
