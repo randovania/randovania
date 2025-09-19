@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 import construct
 import flask_socketio
 import peewee
+import requests
 import sentry_sdk
 from frozendict import frozendict
 
@@ -162,6 +163,25 @@ def _collect_location(
             emit_inventory_update(sa, target_world, assoc.user_id, new_inventory)
 
     log("It's a %s for %s.", pickup_target.pickup.name, target_world.name)
+
+    if session.notification_webhook is not None:
+        associations: Iterable[WorldUserAssociation] = WorldUserAssociation.select().where(
+            WorldUserAssociation.world == target_world,
+        )
+        mentions = " ".join(
+            [
+                (f"@{str(assoc.user.discord_id)}>" if assoc.user.discord_id is not None else assoc.user.name)
+                for assoc in associations
+            ]
+        )
+        message = (
+            f"{mentions}{', your ' if mentions != '' else ''}{pickup_target.pickup.name} "
+            "was collected in {session.name} - {target_world.name}!"
+        )
+        data = {"content": message}
+
+        requests.post(session.notification_webhook, json=data)
+
     return target_world
 
 

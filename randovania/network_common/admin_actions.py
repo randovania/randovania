@@ -22,6 +22,7 @@ class SessionAdminGlobalAction(Enum):
     REQUEST_PERMALINK = "request_permalink"
     SET_ALLOW_COOP = "set_allow_coop"
     SET_ALLOW_EVERYONE_CLAIM = "set_allow_everyone_claim"
+    SET_NOTIFICATION_WEBHOOK = "set_notification_webhook"
 
 
 class SessionAdminUserAction(Enum):

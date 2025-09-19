@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'multiplayer_session.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+## Created by: Qt User Interface Compiler version 6.9.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -142,6 +142,37 @@ class Ui_MultiplayerSessionWindow(object):
 
         self.session_admin_layout.addWidget(self.allow_coop_check, 3, 0, 1, 1)
 
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setSpacing(6)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.notification_webhook_textbox = QLineEdit(self.session_admin_group)
+        self.notification_webhook_textbox.setObjectName(u"notification_webhook_textbox")
+        sizePolicy1.setHeightForWidth(self.notification_webhook_textbox.sizePolicy().hasHeightForWidth())
+        self.notification_webhook_textbox.setSizePolicy(sizePolicy1)
+        self.notification_webhook_textbox.setMaximumSize(QSize(450, 24))
+
+        self.horizontalLayout.addWidget(self.notification_webhook_textbox)
+
+        self.notification_webhook_set_button = QPushButton(self.session_admin_group)
+        self.notification_webhook_set_button.setObjectName(u"notification_webhook_set_button")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.notification_webhook_set_button.sizePolicy().hasHeightForWidth())
+        self.notification_webhook_set_button.setSizePolicy(sizePolicy2)
+
+        self.horizontalLayout.addWidget(self.notification_webhook_set_button)
+
+        self.notification_webhook_clear_button = QPushButton(self.session_admin_group)
+        self.notification_webhook_clear_button.setObjectName(u"notification_webhook_clear_button")
+        sizePolicy2.setHeightForWidth(self.notification_webhook_clear_button.sizePolicy().hasHeightForWidth())
+        self.notification_webhook_clear_button.setSizePolicy(sizePolicy2)
+
+        self.horizontalLayout.addWidget(self.notification_webhook_clear_button)
+
+
+        self.session_admin_layout.addLayout(self.horizontalLayout, 2, 1, 1, 1)
+
 
         self.session_tab_layout.addWidget(self.session_admin_group, 0, 0, 1, 2)
 
@@ -230,11 +261,11 @@ class Ui_MultiplayerSessionWindow(object):
 
         self.progress_label = QLabel(self.central_widget)
         self.progress_label.setObjectName(u"progress_label")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.progress_label.sizePolicy().hasHeightForWidth())
-        self.progress_label.setSizePolicy(sizePolicy2)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.progress_label.sizePolicy().hasHeightForWidth())
+        self.progress_label.setSizePolicy(sizePolicy3)
         self.progress_label.setTextFormat(Qt.TextFormat.MarkdownText)
         self.progress_label.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter)
         self.progress_label.setWordWrap(True)
@@ -264,12 +295,12 @@ class Ui_MultiplayerSessionWindow(object):
         MultiplayerSessionWindow.setCentralWidget(self.central_widget)
         self.menu_bar = QMenuBar(MultiplayerSessionWindow)
         self.menu_bar.setObjectName(u"menu_bar")
-        self.menu_bar.setGeometry(QRect(0, 0, 773, 23))
+        self.menu_bar.setGeometry(QRect(0, 0, 773, 21))
         MultiplayerSessionWindow.setMenuBar(self.menu_bar)
 
         self.retranslateUi(MultiplayerSessionWindow)
 
-        self.tab_widget.setCurrentIndex(0)
+        self.tab_widget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MultiplayerSessionWindow)
@@ -296,6 +327,13 @@ class Ui_MultiplayerSessionWindow(object):
         self.view_game_details_button.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"View Spoiler", None))
         self.everyone_can_claim_check.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Everyone can claim worlds", None))
         self.allow_coop_check.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Enable Co-Op", None))
+#if QT_CONFIG(tooltip)
+        self.notification_webhook_textbox.setToolTip(QCoreApplication.translate("MultiplayerSessionWindow", u"<html><head/><body><p>Discord webhook URL</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.notification_webhook_textbox.setText("")
+        self.notification_webhook_textbox.setPlaceholderText(QCoreApplication.translate("MultiplayerSessionWindow", u"Discord webhook URL", None))
+        self.notification_webhook_set_button.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Set", None))
+        self.notification_webhook_clear_button.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Clear", None))
         self.connectivity_group.setTitle(QCoreApplication.translate("MultiplayerSessionWindow", u"Connectivity", None))
         self.server_connection_button.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Connect to Server", None))
         self.edit_game_connections_button.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Edit Game Connections", None))
