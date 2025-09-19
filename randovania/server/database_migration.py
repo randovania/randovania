@@ -32,7 +32,7 @@ def add_game_beaten_field(migrator: playhouse.migrate.SqliteMigrator):
             migrator._alter_table(migrator.make_context(), "world")
             .literal(" ADD ")
             .sql(peewee.Entity("beaten"))
-            .literal(" BOOL NOT NULL DEFAULT(0)")
+            .literal(" INTEGER NOT NULL DEFAULT(0)")  # SQLite saves boolean values as integers
         )
 
 

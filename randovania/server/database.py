@@ -286,7 +286,10 @@ class MultiplayerSession(BaseModel):
         # Get the worlds explicitly, as we return them and would also need for the user assocations
         worlds = {
             world.id: MultiplayerWorld(
-                id=world.uuid, name=world.name, preset_raw=world.preset, has_been_beaten=world.beaten
+                id=world.uuid,
+                name=world.name,
+                preset_raw=world.preset,
+                has_been_beaten=world.beaten,
             )
             for world in self.worlds
         }
