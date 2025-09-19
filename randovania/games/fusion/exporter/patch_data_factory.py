@@ -22,7 +22,7 @@ from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.lib import json_lib
 
 if TYPE_CHECKING:
-    from mars_patcher.auto_generated_types import MarsschemaStartingitems
+    from mars_patcher.mf.auto_generated_types import MarsschemamfStartingitems
 
     from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
@@ -129,8 +129,8 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         }
         return starting_location_dict
 
-    def _create_starting_items(self) -> MarsschemaStartingitems:
-        starting_dict: MarsschemaStartingitems = {
+    def _create_starting_items(self) -> MarsschemamfStartingitems:
+        starting_dict: MarsschemamfStartingitems = {
             "Energy": self.configuration.energy_per_tank - 1,
             "Abilities": [],
             "SecurityLevels": [],

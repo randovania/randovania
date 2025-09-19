@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import dataclasses
 import os
-import typing
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -67,12 +66,12 @@ class FusionGameExporter(GameExporter[FusionGameExportParams]):
             "TitleText"
         ]
 
-        patcher.validate_patch_data(patch_data)
+        patcher.validate_patch_data_mf(patch_data)
         try:
             patcher.patch(
                 os.fspath(export_params.input_path),
                 os.fspath(export_params.output_path),
-                typing.cast("patcher.MarsSchema", patch_data),
+                patch_data,
                 progress_update,
             )
         finally:
