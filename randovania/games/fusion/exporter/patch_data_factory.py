@@ -401,6 +401,8 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         def sort_pickup(p: str) -> tuple[int | float, str]:
             return major_pickup_name_order.get(p, math.inf), p
 
+        credits_array.append({"LineType": "White2", "Text": "Item Locations", "BlankLines": 2})
+
         for pickup in sorted(spoiler_dict.keys(), key=sort_pickup):
             credits_array.append({"LineType": "Red", "Text": pickup, "BlankLines": 1})
             for location in spoiler_dict[pickup]:
@@ -408,6 +410,13 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     credits_array.append({"LineType": "Blue", "Text": location["World"], "BlankLines": 0})
                 credits_array.append({"LineType": "White1", "Text": location["Region"], "BlankLines": 0})
                 credits_array.append({"LineType": "White1", "Text": location["Area"], "BlankLines": 1})
+
+        # Have last item give more space
+        credits_array[-1]["BlankLines"] = 3
+
+        # Self plug, for streaming/showcasing.
+        credits_array.append({"LineType": "Blue", "Text": "Play this Randomizer at", "BlankLines": 0})
+        credits_array.append({"LineType": "White1", "Text": "randovania.org", "BlankLines": 3})
 
         return credits_array
 

@@ -27,8 +27,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Fusion
 
 - Added: 5 more joke hints.
+- Added: A reference on where to play the randomizer in the credits.
 - Changed: Infant Metroid hints have been reformatted for easier readability.
-- Changed: "guarded by a boss" feature hint has been reworked to "on a Core-x Parasite" for more clarity
+- Changed: "guarded by a boss" feature hint has been reworked to "on a Core-x Parasite" for more clarity.
+- Changed: Adjusted Credits to have the patching, Randovania and original team separated more clearly.
+- Changed: B.O.X has been moved slightly to the left to avoid bumping immediately into him in a future setting.
+- Changed: Main Deck Central Reactor Core: Moved the Door leading to Silo Tunnel back by a tile to prevent getting stuck in a future setting.
+- Changed: Sector 1 Charge Core Upper Access: Moved the Door leading to Crab Rave back by a tile to prevent getting stuck in a future setting.
+- Changed: Sectpr 1 Tourian Eastern Hub: Removed the shot blocks and remodelled the space leading to Animorphs to prevent getting stuck in a future setting.
+- Changed: Sector 1 Twin Junctions Save Room: Moved the Door leading to Walljump Tutorial back by a tile to prevent getting stuck in a future setting.
+- Changed: Sector 3 Security Access: Moved the Door leading to the Security Room back by a tile to prevent getting stuck in a future setting.
+- Changed: Sector 4 Pump Control Save Room: Moved the Door leading to Breeding Tank Acecss back by a tile to prevent getting stuck in a future setting.
+- Changed: Flooded Tower: Moved the Door leading to Mini-Fridge back by a tile to prevent getting stuck in a future setting.
+- Changed: Geron's Crossing: Moved the Doors leading to the bottom side of Entrance Lobby and Vault back by a tile to prevent getting stuck in a future setting.
+- Changed: Warehouse: Moved the Door leading to Zozoro's Wine Cellar back by a tile to prevent getting stuck in a future setting.
 - Fixed: Typo in a joke hint.
 
 #### Logic Database
