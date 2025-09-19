@@ -274,6 +274,7 @@ def sync_one_world(
         association.last_activity = datetime.datetime.now(datetime.UTC)
         association.save()
 
+    # User has beaten game, so toggle it. The Beat-Game status can not be disabled.
     if world_request.has_been_beaten and not world.beaten:
         logger().info("Session %d, World %s has been beaten", world.session_id, world.name)
         world.beaten = True

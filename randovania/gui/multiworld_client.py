@@ -102,26 +102,23 @@ class MultiworldClient(QtCore.QObject):
                 has_been_beaten=state.has_been_beaten,
             )
 
-        # Check for all games that were connected at some point, and upload any pending location from them.
+        # Check for all games that were connected at some point, and upload any pending
+        # location or game beaten status from them.
         for uid in self.database.all_known_data():
-            if uid not in sync_requests and (locations := self.database.get_locations_to_upload(uid)):
-                sync_requests[uid] = ServerWorldSync(
-                    status=GameConnectionStatus.Disconnected,
-                    collected_locations=locations,
-                    inventory=None,
-                    request_details=False,
-                    has_been_beaten=False,
-                )
+            if uid not in sync_requests:
+                upload_data = self.database.get_data_to_upload(uid, provide_even_on_no_change=False)
+                if not upload_data:
+                    continue
 
+                sync_requests[uid] = upload_data
+
+        # Check for games that got disconnected and upload to server to notify of that.
         for uid, old_status in self._last_reported_status.items():
             if old_status != GameConnectionStatus.Disconnected and uid not in sync_requests:
-                sync_requests[uid] = ServerWorldSync(
-                    status=GameConnectionStatus.Disconnected,
-                    collected_locations=self.database.get_locations_to_upload(uid),
-                    inventory=None,
-                    request_details=False,
-                    has_been_beaten=False,
-                )
+                upload_data = self.database.get_data_to_upload(uid, provide_even_on_no_change=True)
+                if not upload_data:
+                    continue
+                sync_requests[uid] = upload_data
 
         for uid in set(sync_requests.keys()) & set(self._world_sync_errors.keys()):
             if isinstance(self._world_sync_errors[uid], _ERRORS_THAT_STOP_SYNC):
@@ -192,6 +189,9 @@ class MultiworldClient(QtCore.QObject):
                 self._world_sync_errors.pop(uid, None)
                 if world.collected_locations:
                     modified_data[uid] = get_data(uid).extend_uploaded_locations(world.collected_locations)
+
+                if world.has_been_beaten:
+                    modified_data[uid] = get_data(uid).extend_with_game_beaten_uploaded()
 
             for uid, world in result.worlds.items():
                 modified_data[uid] = dataclasses.replace(
