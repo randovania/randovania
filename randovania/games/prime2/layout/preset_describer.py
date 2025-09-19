@@ -146,6 +146,7 @@ class EchoesPresetDescriber(GamePresetDescriber):
                         "Missiles needs Launcher": "Missile Expansion",
                         "Power Bomb needs Main": "Power Bomb Expansion",
                     },
+                    mains_are_default_required=False,
                 ),
                 {
                     "Warp to start": configuration.warp_to_start,

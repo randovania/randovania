@@ -135,6 +135,7 @@ class MSRPresetDescriber(GamePresetDescriber):
                         "Super Missile needs Launcher": "Super Missile Tank",
                         "Power Bomb needs Launcher": "Power Bomb Tank",
                     },
+                    mains_are_default_required=False,
                 ),
                 {
                     "Charge Beam Door Buff": configuration.charge_door_buff,

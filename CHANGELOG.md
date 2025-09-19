@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Added: The preset summary now lists when Flash Shift can be used without Main Flash Shift when having Flash Shift Upgrades.
+- Added: The preset summary now lists when Power Bombs can be used without the Main Power Bomb when having Power Bomb Tanks.
+- Changed: The preset summary lists when Power Bomb limitations is disabled instead of when it's enabled.
+
 #### Logic Database
 
 - Changed: Reworked Central Unit combat logic to reflect the increasing difficulty of later areas.
@@ -85,19 +89,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-##### Chozo Ruins 
+##### Chozo Ruins
 
-- Changed: Hall of the Elders: The Bomb Jump to skip Spider Ball and Space Jump is now Expert instead of Ludicrous. 
-- Changed: Save Station 3: The Wall Boost to skip Morph Ball Bombs is now Expert instead of Ludicrous. 
+- Changed: Hall of the Elders: The Bomb Jump to skip Spider Ball and Space Jump is now Expert instead of Ludicrous.
+- Changed: Save Station 3: The Wall Boost to skip Morph Ball Bombs is now Expert instead of Ludicrous.
 - Changed: Sunchamber: Fighting Flaahgra using Wavebuster instead of Morph Ball Bombs is now Combat Intermediate instead of Advanced.
 
-##### Phendrana Drifts 
+##### Phendrana Drifts
 
 - Removed: Frozen Pike: Logic for scaling the room from Pike Access to Transport Access without Morph Ball has been removed.
-- Changed: Phendrana Canyon: The Combat Dash to obtain the item without Space Jump, Scan Visor, and Boost Ball no longer requires Damage Boosting and the Combat/Scan Dash has been changed from Advanced to Expert. 
-- Changed: Qurantine Cave: The Grapple Beam escape from the bottom of the room without Space Jump is now intermediate instead of advanced. With Space Jump it is now beginner instead of trickless. 
+- Changed: Phendrana Canyon: The Combat Dash to obtain the item without Space Jump, Scan Visor, and Boost Ball no longer requires Damage Boosting and the Combat/Scan Dash has been changed from Advanced to Expert.
+- Changed: Qurantine Cave: The Grapple Beam escape from the bottom of the room without Space Jump is now intermediate instead of advanced. With Space Jump it is now beginner instead of trickless.
 
-##### Tallon Overworld 
+##### Tallon Overworld
 
 - Changed: Life Grove Tunnel: The Complex Bomb Jump to escape the half-pipe without Boost Ball is now Expert instead of Ludicrous.
 
