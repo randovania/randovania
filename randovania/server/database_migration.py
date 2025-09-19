@@ -28,8 +28,11 @@ def rename_state_to_visibility(migrator: playhouse.migrate.SqliteMigrator):
 
 def add_game_beaten_field(migrator: playhouse.migrate.SqliteMigrator):
     with database.db.atomic():
-        playhouse.migrate.migrate(
-            migrator.add_column("world", "beaten", database.World.beaten),
+        database.db.execute(
+            migrator._alter_table(migrator.make_context(), "world")
+            .literal(" ADD ")
+            .sql(peewee.Entity("beaten"))
+            .literal(" BOOL NOT NULL DEFAULT(0)")
         )
 
 
