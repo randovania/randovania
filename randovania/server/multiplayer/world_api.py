@@ -222,7 +222,7 @@ def sync_one_world(
 
     association = _check_user_is_associated(user, world)
     should_update_activity = False
-    worlds_to_update = set()
+    worlds_to_emit_update = set()
     session_id_to_return = None
     response = None
 
@@ -231,7 +231,7 @@ def sync_one_world(
         flask_socketio.leave_room(_get_world_room(world))
     else:
         if sa.ensure_in_room(_get_world_room(world)):
-            worlds_to_update.add(world)
+            worlds_to_emit_update.add(world)
             sa.store_world_in_session(world)
 
     # Update association connection state
@@ -266,13 +266,8 @@ def sync_one_world(
 
     # Do this last, as it fails if session is in setup
     if world_request.collected_locations:
-        worlds_to_update.update(collect_locations(sa, world, world_request.collected_locations))
+        worlds_to_emit_update.update(collect_locations(sa, world, world_request.collected_locations))
         should_update_activity = True
-
-    # User did something, so update activity
-    if should_update_activity:
-        association.last_activity = datetime.datetime.now(datetime.UTC)
-        association.save()
 
     # User has beaten game, so toggle it. The Beat-Game status can not be disabled.
     if world_request.has_been_beaten and not world.beaten:
@@ -280,9 +275,15 @@ def sync_one_world(
         world.beaten = True
         world.save()
         session_common.add_audit_entry(sa, session, f"World {world.name} has been beaten.")
-        worlds_to_update.add(world)
+        worlds_to_emit_update.add(world)
+        should_update_activity = True
 
-    return response, session_id_to_return, worlds_to_update
+    # User did something, so update activity
+    if should_update_activity:
+        association.last_activity = datetime.datetime.now(datetime.UTC)
+        association.save()
+
+    return response, session_id_to_return, worlds_to_emit_update
 
 
 def world_sync(sa: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse:
@@ -291,13 +292,13 @@ def world_sync(sa: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse:
     world_details = {}
     failed_syncs = {}
 
-    worlds_to_update = set()
+    worlds_to_emit_update = set()
     sessions_to_update_actions = set()
     sessions_to_update_meta = set()
 
     for uid, world_request in request.worlds.items():
         try:
-            response, session_id, new_worlds_to_update = sync_one_world(sa, user, uid, world_request)
+            response, session_id, new_worlds_to_emit_update = sync_one_world(sa, user, uid, world_request)
 
             if response is not None:
                 world_details[uid] = response
@@ -305,7 +306,7 @@ def world_sync(sa: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse:
             if session_id is not None:
                 sessions_to_update_meta.add(session_id)
 
-            worlds_to_update.update(new_worlds_to_update)
+            worlds_to_emit_update.update(new_worlds_to_emit_update)
 
         except error.BaseNetworkError as e:
             logger().info("[%s] Refused sync for %s: %s", user.name, uid, e)
@@ -315,7 +316,7 @@ def world_sync(sa: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse:
             logger().exception("[%s] Failed sync for %s: %s", user.name, uid, e)
             failed_syncs[uid] = error.ServerError()
 
-    for world in worlds_to_update:
+    for world in worlds_to_emit_update:
         emit_world_pickups_update(sa, world)
         sessions_to_update_actions.add(world.session.id)
 
