@@ -78,8 +78,8 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     long_name="Metroid Planets (Zebeth)",
     development_state=randovania.game.development_state.DevelopmentState.SOURCE_ONLY,
     presets=[
-        {"path": "starter_preset.rdvpreset"},
-        {"path": "starter_preset_shuffle_keys.rdvpreset"},
+        "starter_preset.rdvpreset",
+        "starter_preset_shuffle_keys.rdvpreset",
     ],
     faq=[
         (
