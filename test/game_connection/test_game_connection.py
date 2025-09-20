@@ -166,8 +166,10 @@ async def test_connector_state_update(connection, qapp, blank_resource_db):
     connector = connection.get_connector_for_builder(builder)
     assert isinstance(connector, DebugRemoteConnector)
 
-    def make(status: GameConnectionStatus, inv: dict[ItemResourceInfo, InventoryItem], indices: set):
-        return ConnectedGameState(debug_connector_uuid, connector, status, Inventory(inv), indices)
+    def make(status: GameConnectionStatus, inv: dict[ItemResourceInfo, InventoryItem], indices: set, *, beaten=False):
+        return ConnectedGameState(
+            debug_connector_uuid, connector, status, Inventory(inv), indices, has_been_beaten=beaten
+        )
 
     assert (
         connection.get_backend_choice_for_state(
@@ -190,4 +192,9 @@ async def test_connector_state_update(connection, qapp, blank_resource_db):
     connector.InventoryUpdated.emit(Inventory({item: InventoryItem(2, 4)}))
     game_state_updated.assert_called_with(
         make(GameConnectionStatus.InGame, {item: InventoryItem(2, 4)}, {PickupIndex(1)})
+    )
+
+    connector.GameHasBeenBeaten.emit()
+    game_state_updated.assert_called_with(
+        make(GameConnectionStatus.InGame, {item: InventoryItem(2, 4)}, {PickupIndex(1)}, beaten=True)
     )

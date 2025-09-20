@@ -295,6 +295,9 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
     mock_emit_pickups = mocker.patch("randovania.server.multiplayer.world_api.emit_world_pickups_update")
     mock_emit_actions = mocker.patch("randovania.server.multiplayer.session_common.emit_session_actions_update")
     mock_emit_inventory = mocker.patch("randovania.server.multiplayer.world_api.emit_inventory_update")
+    mock_emit_session_audit_update = mocker.patch(
+        "randovania.server.multiplayer.session_common.emit_session_audit_update"
+    )
 
     sa = MagicMock()
     user = database.User.get_by_id(1234)
@@ -312,14 +315,14 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
                     collected_locations=(5,),
                     inventory=b"foo",
                     request_details=True,
-                    has_been_beaten=False,
+                    has_been_beaten=True,
                 ),
                 w2.uuid: ServerWorldSync(
                     status=GameConnectionStatus.Disconnected,
                     collected_locations=(15,),
                     inventory=None,
                     request_details=False,
-                    has_been_beaten=False,
+                    has_been_beaten=True,
                 ),
                 uuid.UUID("a0cf12f7-8a0e-47ed-9a82-cabfc8b912c2"): ServerWorldSync(
                     status=GameConnectionStatus.TitleScreen,
@@ -368,6 +371,7 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
     mock_emit_session_update.assert_called_once_with(session)
     mock_emit_actions.assert_called_once_with(session)
     mock_emit_inventory.assert_called_once_with(sa, w1, 1234, b"foo")
+    mock_emit_session_audit_update(session)
     mock_emit.assert_not_called()
 
 
