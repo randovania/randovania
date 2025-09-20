@@ -63,7 +63,7 @@ def test_exporter(game_enum):
 def test_presets():
     from randovania.interface_common.preset_manager import PresetManager
 
-    games_preset_count = defaultdict(int)
+    games_preset_count: dict[RandovaniaGame, int] = defaultdict(int)
 
     # Ensure that we can parse all the games' presets
     manager = PresetManager(None)
