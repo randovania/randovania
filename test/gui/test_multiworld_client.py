@@ -172,17 +172,24 @@ def test_create_new_sync_request(client, has_old_pending, has_last_status):
     if has_old_pending != "no":
         if has_old_pending == "yes":
             uploaded_locs = (15,)
+            synced_beaten = False
             sync_requests[uid_2] = ServerWorldSync(
                 status=GameConnectionStatus.Disconnected,
                 collected_locations=(10,),
                 inventory=None,
                 request_details=False,
-                has_been_beaten=False,
+                has_been_beaten=True,
             )
         elif has_old_pending == "synced":
             uploaded_locs = (10, 15)
+            synced_beaten = True
 
-        client.database._all_data[uid_2] = WorldData(collected_locations=(10, 15), uploaded_locations=uploaded_locs)
+        client.database._all_data[uid_2] = WorldData(
+            collected_locations=(10, 15),
+            uploaded_locations=uploaded_locs,
+            was_game_beaten=True,
+            was_game_beaten_uploaded=synced_beaten,
+        )
 
     if has_last_status:
         client._last_reported_status[uid_1] = GameConnectionStatus.TitleScreen
