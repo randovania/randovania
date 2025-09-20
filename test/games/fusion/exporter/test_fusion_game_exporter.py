@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 def test_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
     # Setup
     def validate_schema(input_path: Path, output_path: Path, configuration: dict, status_update):
-        mars_patcher.patcher.validate_patch_data(configuration)
+        mars_patcher.patcher.validate_patch_data_mf(configuration)
         status_update("Finished", 1.0)
 
     mock_patch: MagicMock = mocker.patch("mars_patcher.patcher.patch", side_effect=validate_schema)
