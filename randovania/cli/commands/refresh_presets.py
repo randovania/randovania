@@ -18,7 +18,7 @@ def refresh_presets_command_logic(args: ArgumentParser) -> None:
         base_path = game.data_path.joinpath("presets")
 
         for preset_relative_path in game.data.presets:
-            preset_path = base_path.joinpath(preset_relative_path["path"])
+            preset_path = base_path.joinpath(preset_relative_path)
             preset = VersionedPreset[BaseConfiguration].from_file_sync(preset_path)
             preset.ensure_converted()
             preset.save_to_file(preset_path)

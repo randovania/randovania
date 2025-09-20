@@ -83,7 +83,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     long_name="Metroid Prime Hunters",
     development_state=randovania.game.development_state.DevelopmentState.SOURCE_ONLY,
     presets=[
-        {"path": "starter_preset.rdvpreset"},
+        "starter_preset.rdvpreset",
     ],
     faq=[],
     web_info=randovania.game.web_info.GameWebInfo(

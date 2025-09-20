@@ -91,7 +91,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     long_name="Another Metroid 2 Remake",
     development_state=randovania.game.development_state.DevelopmentState.STABLE,
     presets=[
-        {"path": "starter_preset.rdvpreset"},
+        "starter_preset.rdvpreset",
     ],
     faq=[
         (
