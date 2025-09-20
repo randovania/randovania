@@ -43,10 +43,19 @@ def solo_two_world_session(clean_database, test_files_dir):
     session.layout_description = description
     session.save()
     w1 = database.World.create_for(
-        session=session, name="World 1", preset=preset_0, order=0, uid=uuid.UUID("1179c986-758a-4170-9b07-fe4541d78db0")
+        session=session,
+        name="World 1",
+        preset=preset_0,
+        order=0,
+        uid=uuid.UUID("1179c986-758a-4170-9b07-fe4541d78db0"),
     )
     w2 = database.World.create_for(
-        session=session, name="World 2", preset=preset_1, order=1, uid=uuid.UUID("6b5ac1a1-d250-4f05-a5fb-ae37e8a92165")
+        session=session,
+        name="World 2",
+        preset=preset_1,
+        order=1,
+        uid=uuid.UUID("6b5ac1a1-d250-4f05-a5fb-ae37e8a92165"),
+        beaten=True,
     )
 
     database.MultiplayerMembership.create(user=user1, session=session, admin=False)

@@ -93,6 +93,9 @@ class WorldWidgetEntry:
                 QtCore.QDateTime.fromSecsSinceEpoch(int(detail.last_activity.timestamp())),
             )
 
+        if world_details.has_been_beaten:
+            self.item.setText(6, "Beaten")
+
 
 class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     GameExportRequested = Signal(uuid.UUID, dict)
@@ -115,6 +118,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         self.headerItem().setText(3, "")
         self.headerItem().setText(4, "")
         self.headerItem().setText(5, "")
+        self.headerItem().setText(6, "")
         self.header().setVisible(False)
         self.header().setSectionsMovable(False)
         self.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)

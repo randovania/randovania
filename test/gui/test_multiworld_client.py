@@ -71,9 +71,13 @@ async def test_start_server_sync_task(client):
 
 
 @pytest.mark.parametrize("exists", [False, True, "invalid"])
-async def test_on_game_state_updated(client: MultiworldClient, tmp_path, exists):
+@pytest.mark.parametrize("game_beaten", [False, True])
+async def test_on_game_state_updated(client: MultiworldClient, tmp_path, exists, game_beaten):
     the_id = INVALID_UUID if exists == "invalid" else uuid.UUID("00000000-0000-0000-1111-000000000000")
-    data = WorldData(collected_locations=(10, 15) if exists else (10,))
+    data = WorldData(
+        collected_locations=(10, 15) if exists else (10,),
+        was_game_beaten=True if game_beaten else False,
+    )
     if exists == "invalid":
         client._all_data = {}
     else:
@@ -99,6 +103,7 @@ async def test_on_game_state_updated(client: MultiworldClient, tmp_path, exists)
         client.start_server_sync_task.assert_not_called()
     else:
         assert client.database.get_data_for(the_id).collected_locations == (10, 15)
+        assert client.database.get_data_for(the_id).was_game_beaten == game_beaten
         state.source.set_remote_pickups.assert_awaited_once_with(remote_game.pickups)
         client.start_server_sync_task.assert_called_once_with()
 
@@ -116,7 +121,7 @@ async def test_on_network_game_updated(client):
 
 
 @pytest.mark.parametrize("has_last_status", [False, True])
-@pytest.mark.parametrize("has_old_pending", [False, True])
+@pytest.mark.parametrize("has_old_pending", ["no", "yes", "synced"])
 def test_create_new_sync_request(client, has_old_pending, has_last_status):
     sync_requests = {}
 
@@ -161,18 +166,29 @@ def test_create_new_sync_request(client, has_old_pending, has_last_status):
         collected_locations=(5,),
         inventory=b"\x00",
         request_details=True,
+        has_been_beaten=False,
     )
 
-    if has_old_pending:
+    if has_old_pending != "no":
+        if has_old_pending == "yes":
+            uploaded_locs = (15,)
+            synced_beaten = False
+            sync_requests[uid_2] = ServerWorldSync(
+                status=GameConnectionStatus.Disconnected,
+                collected_locations=(10,),
+                inventory=None,
+                request_details=False,
+                has_been_beaten=True,
+            )
+        elif has_old_pending == "synced":
+            uploaded_locs = (10, 15)
+            synced_beaten = True
+
         client.database._all_data[uid_2] = WorldData(
             collected_locations=(10, 15),
-            uploaded_locations=(15,),
-        )
-        sync_requests[uid_2] = ServerWorldSync(
-            status=GameConnectionStatus.Disconnected,
-            collected_locations=(10,),
-            inventory=None,
-            request_details=False,
+            uploaded_locations=uploaded_locs,
+            was_game_beaten=True,
+            was_game_beaten_uploaded=synced_beaten,
         )
 
     if has_last_status:
@@ -183,6 +199,7 @@ def test_create_new_sync_request(client, has_old_pending, has_last_status):
             collected_locations=(),
             inventory=None,
             request_details=False,
+            has_been_beaten=False,
         )
 
     # Run
@@ -222,18 +239,21 @@ async def test_server_sync(client, mocker: MockerFixture):
                     collected_locations=(5,),
                     inventory=b"foo",
                     request_details=True,
+                    has_been_beaten=True,
                 ),
                 uid_2: ServerWorldSync(
                     status=GameConnectionStatus.TitleScreen,
                     collected_locations=(),
                     inventory=b"bar",
                     request_details=False,
+                    has_been_beaten=False,
                 ),
                 uid_3: ServerWorldSync(
                     status=GameConnectionStatus.Disconnected,
                     collected_locations=(15, 20),
                     inventory=None,
                     request_details=False,
+                    has_been_beaten=False,
                 ),
             }
         )
@@ -295,6 +315,7 @@ async def test_server_sync(client, mocker: MockerFixture):
 
     assert client.database.get_data_for(uid_1) == WorldData(
         uploaded_locations=(5,),
+        was_game_beaten_uploaded=True,
         server_data=WorldServerData(
             world_name="World 1",
             session_id=567,
@@ -311,7 +332,7 @@ async def test_on_session_meta_update_not_logged_in(client: MultiworldClient):
     uid_2 = uuid.UUID("11111111-0000-0000-0000-111111111111")
 
     entry = MagicMock()
-    entry.worlds = [MultiplayerWorld(id=uid_1, name="Names", preset_raw="{}")]
+    entry.worlds = [MultiplayerWorld(id=uid_1, name="Names", preset_raw="{}", has_been_beaten=False)]
     client.network_client.current_user = None
     client._world_sync_errors[uid_1] = error.WorldDoesNotExistError()
     client._world_sync_errors[uid_2] = error.WorldNotAssociatedError()
@@ -327,7 +348,7 @@ async def test_on_session_meta_update_not_in_session(client: MultiworldClient):
     uid_1 = uuid.UUID("11111111-0000-0000-0000-000000000000")
 
     entry = MagicMock()
-    entry.worlds = [MultiplayerWorld(id=uid_1, name="Names", preset_raw="{}")]
+    entry.worlds = [MultiplayerWorld(id=uid_1, name="Names", preset_raw="{}", has_been_beaten=False)]
     entry.users = {}
     client._world_sync_errors[uid_1] = error.WorldNotAssociatedError()
 
