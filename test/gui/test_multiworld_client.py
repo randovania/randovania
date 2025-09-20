@@ -239,7 +239,7 @@ async def test_server_sync(client, mocker: MockerFixture):
                     collected_locations=(5,),
                     inventory=b"foo",
                     request_details=True,
-                    has_been_beaten=False,
+                    has_been_beaten=True,
                 ),
                 uid_2: ServerWorldSync(
                     status=GameConnectionStatus.TitleScreen,
@@ -315,6 +315,7 @@ async def test_server_sync(client, mocker: MockerFixture):
 
     assert client.database.get_data_for(uid_1) == WorldData(
         uploaded_locations=(5,),
+        was_game_beaten_uploaded=True,
         server_data=WorldServerData(
             world_name="World 1",
             session_id=567,
