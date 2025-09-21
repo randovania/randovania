@@ -1,3 +1,6 @@
+# mypy: disable-error-code="union-attr"
+# FIXME: fix logic in regard to None values in None-ables
+
 from __future__ import annotations
 
 import asyncio
@@ -69,7 +72,7 @@ class HistoryItemModel(QtCore.QAbstractTableModel):
         self.session_window = parent
         self.actions = actions
 
-    def headerData(self, section: int, orientation: QtCore.Qt.Orientation, role: int = ...) -> Any:
+    def headerData(self, section: int, orientation: QtCore.Qt.Orientation, role: int = ...) -> Any:  # type: ignore [assignment]
         if role != QtCore.Qt.ItemDataRole.DisplayRole:
             return None
 
@@ -78,13 +81,13 @@ class HistoryItemModel(QtCore.QAbstractTableModel):
         else:
             return section
 
-    def rowCount(self, parent: QtCore.QModelIndex | QtCore.QPersistentModelIndex = ...) -> int:
+    def rowCount(self, parent: QtCore.QModelIndex | QtCore.QPersistentModelIndex = ...) -> int:  # type: ignore [assignment]
         return len(self.actions.actions)
 
-    def columnCount(self, parent: QtCore.QModelIndex | QtCore.QPersistentModelIndex = ...) -> int:
+    def columnCount(self, parent: QtCore.QModelIndex | QtCore.QPersistentModelIndex = ...) -> int:  # type: ignore [assignment]
         return 5
 
-    def data(self, index: QtCore.QModelIndex | QtCore.QPersistentModelIndex, role: int = ...) -> Any:
+    def data(self, index: QtCore.QModelIndex | QtCore.QPersistentModelIndex, role: int = ...) -> Any:  # type: ignore [assignment]
         if role != QtCore.Qt.ItemDataRole.DisplayRole:
             return None
 
@@ -767,7 +770,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                     layout.save_to_file(last_multiplayer)
 
                 self.update_progress("Finished generating, uploading...", 100)
-                await uploader(layout)
+                # FIXME: Fix decorator typing
+                await uploader(layout)  # type: ignore [operator]
                 self.update_progress("Uploaded!", 100)
                 common_qt_lib.alert_user_on_generation(self, self._options)
 
@@ -893,7 +897,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         if await self._should_overwrite_presets(layout.generator_parameters, permalink_source=False):
             async with self.game_session_api.prepare_to_upload_layout(self._get_world_order()) as uploader:
-                await uploader(layout)
+                # FIXME: fix decorator typing
+                await uploader(layout)  # type: ignore [operator]
 
     @asyncSlot()
     @handle_network_errors
