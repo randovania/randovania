@@ -189,7 +189,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.users_widget.setSizePolicy(
             QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Expanding)
         )
-        self.worlds_layout.insertWidget(0, self.users_widget)
+        self.user_widget_layout.insertWidget(0, self.users_widget)
         self.tab_widget.setCurrentIndex(0)
         self._all_locations = set()
         self._all_pickups = set()
@@ -236,6 +236,13 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.generate_game_button.setMenu(self.generate_game_menu)
 
         self.export_game_menu = QtWidgets.QMenu(self.export_game_button)
+
+        self.progress_bar.setVisible(False)
+        self.background_process_button.setVisible(False)
+
+        self.status_bar.addWidget(self.progress_label)
+        self.status_bar.addPermanentWidget(self.progress_bar)
+        self.status_bar.addPermanentWidget(self.background_process_button)
 
         self.tracker_windows = {}
 
@@ -426,8 +433,6 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         elif self.has_background_process:
             if self._generating_game or session.game_details is None:
                 self.stop_background_process()
-        else:
-            self.progress_label.setText("")
 
     def update_game_tab(self) -> None:
         session = self._session
@@ -448,12 +453,12 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         self.copy_permalink_button.setEnabled(session.game_details is not None)
         if session.game_details is None:
-            self.generate_game_label.setText("<Game not generated>")
+            self.seed_hash_label.setText("Seed Hash: <Game not generated>")
             self.view_game_details_button.setEnabled(False)
             self.export_game_button.setEnabled(False)
         else:
             game_details = session.game_details
-            self.generate_game_label.setText(f"Seed hash: {game_details.word_hash} ({game_details.seed_hash})")
+            self.seed_hash_label.setText(f"Seed Hash: {game_details.word_hash} ({game_details.seed_hash})")
             self.view_game_details_button.setEnabled(game_details.spoiler)
             if len(own_entry.worlds) > 1:
                 self.export_game_button.setEnabled(True)
@@ -1027,14 +1032,14 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
     def update_generate_game_button(self) -> None:
         is_enabled = self.current_player_membership.admin
+        text = "Generate game"
         has_menu = False
 
         if self._session.game_details is not None:
             text = "Clear generated game"
         elif self._session.generation_in_progress is not None:
-            text = "Abort generation"
+            is_enabled = False
         else:
-            text = "Generate game"
             has_menu = True
 
         self.generate_game_button.setEnabled(is_enabled)
@@ -1046,12 +1051,13 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
     def update_background_process_button(self) -> None:
         self.background_process_button.setEnabled(self.has_background_process and self._can_stop_background_process)
-        self.background_process_button.setText("Stop")
+        self.background_process_button.setVisible(self.progress_bar.isVisible())
 
     def enable_buttons_with_background_tasks(self, value: bool) -> None:
         self.update_background_process_button()
 
     def update_progress(self, message: str, percentage: float) -> None:
+        self.progress_bar.setVisible(True)
         self.progress_label.setText(message)
         if "Aborted" in message:
             percentage = 0

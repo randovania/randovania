@@ -110,9 +110,9 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     long_name="Metroid Prime",
     development_state=randovania.game.development_state.DevelopmentState.STABLE,
     presets=[
-        {"path": "starter_preset.rdvpreset"},
-        {"path": "moderate_challenge.rdvpreset"},
-        {"path": "april_fools_2022.rdvpreset"},
+        "starter_preset.rdvpreset",
+        "moderate_challenge.rdvpreset",
+        "april_fools_2022.rdvpreset",
     ],
     faq=[
         (

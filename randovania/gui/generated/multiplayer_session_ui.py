@@ -17,10 +17,11 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
 from PySide6.QtWidgets import (QAbstractItemView, QApplication, QCheckBox, QComboBox,
-    QGridLayout, QGroupBox, QHBoxLayout, QHeaderView,
-    QLabel, QLineEdit, QMainWindow, QMenuBar,
+    QFrame, QGridLayout, QGroupBox, QHBoxLayout,
+    QHeaderView, QLabel, QLineEdit, QMainWindow,
     QProgressBar, QPushButton, QSizePolicy, QSpacerItem,
-    QTabWidget, QTableView, QVBoxLayout, QWidget)
+    QStatusBar, QTabWidget, QTableView, QVBoxLayout,
+    QWidget)
 
 class Ui_MultiplayerSessionWindow(object):
     def setupUi(self, MultiplayerSessionWindow):
@@ -49,6 +50,7 @@ class Ui_MultiplayerSessionWindow(object):
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.tab_widget = QTabWidget(self.central_widget)
         self.tab_widget.setObjectName(u"tab_widget")
         self.tab_worlds = QWidget()
@@ -57,28 +59,45 @@ class Ui_MultiplayerSessionWindow(object):
         self.worlds_layout.setSpacing(6)
         self.worlds_layout.setContentsMargins(11, 11, 11, 11)
         self.worlds_layout.setObjectName(u"worlds_layout")
-        self.worlds_layout.setContentsMargins(0, 0, 0, -1)
+        self.worlds_layout.setContentsMargins(0, 0, 0, 0)
+        self.user_widget_layout = QVBoxLayout()
+        self.user_widget_layout.setSpacing(0)
+        self.user_widget_layout.setObjectName(u"user_widget_layout")
+        self.bottom_border_of_mw_user_widget = QFrame(self.tab_worlds)
+        self.bottom_border_of_mw_user_widget.setObjectName(u"bottom_border_of_mw_user_widget")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.bottom_border_of_mw_user_widget.sizePolicy().hasHeightForWidth())
+        self.bottom_border_of_mw_user_widget.setSizePolicy(sizePolicy)
+        self.bottom_border_of_mw_user_widget.setFrameShadow(QFrame.Shadow.Sunken)
+        self.bottom_border_of_mw_user_widget.setFrameShape(QFrame.Shape.HLine)
+
+        self.user_widget_layout.addWidget(self.bottom_border_of_mw_user_widget)
+
+
+        self.worlds_layout.addLayout(self.user_widget_layout)
+
+        self.user_and_worlds_bottom_layout = QVBoxLayout()
+        self.user_and_worlds_bottom_layout.setSpacing(9)
+        self.user_and_worlds_bottom_layout.setObjectName(u"user_and_worlds_bottom_layout")
+        self.user_and_worlds_bottom_layout.setContentsMargins(6, -1, 6, 6)
         self.not_connected_warning_label = QLabel(self.tab_worlds)
         self.not_connected_warning_label.setObjectName(u"not_connected_warning_label")
         self.not_connected_warning_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.not_connected_warning_label.setWordWrap(True)
 
-        self.worlds_layout.addWidget(self.not_connected_warning_label)
+        self.user_and_worlds_bottom_layout.addWidget(self.not_connected_warning_label)
 
-        self.generate_game_label = QLabel(self.tab_worlds)
-        self.generate_game_label.setObjectName(u"generate_game_label")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.generate_game_label.sizePolicy().hasHeightForWidth())
-        self.generate_game_label.setSizePolicy(sizePolicy)
-        self.generate_game_label.setTextInteractionFlags(Qt.TextInteractionFlag.LinksAccessibleByMouse|Qt.TextInteractionFlag.TextSelectableByMouse)
+        self.seed_hash_label = QLabel(self.tab_worlds)
+        self.seed_hash_label.setObjectName(u"seed_hash_label")
 
-        self.worlds_layout.addWidget(self.generate_game_label)
+        self.user_and_worlds_bottom_layout.addWidget(self.seed_hash_label)
 
         self.generate_game_layout = QHBoxLayout()
         self.generate_game_layout.setSpacing(6)
         self.generate_game_layout.setObjectName(u"generate_game_layout")
+        self.generate_game_layout.setContentsMargins(-1, 0, 0, -1)
         self.generate_game_button = QPushButton(self.tab_worlds)
         self.generate_game_button.setObjectName(u"generate_game_button")
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
@@ -91,11 +110,17 @@ class Ui_MultiplayerSessionWindow(object):
 
         self.export_game_button = QPushButton(self.tab_worlds)
         self.export_game_button.setObjectName(u"export_game_button")
+        sizePolicy1.setHeightForWidth(self.export_game_button.sizePolicy().hasHeightForWidth())
+        self.export_game_button.setSizePolicy(sizePolicy1)
+        self.export_game_button.setSizeIncrement(QSize(0, 0))
 
         self.generate_game_layout.addWidget(self.export_game_button)
 
 
-        self.worlds_layout.addLayout(self.generate_game_layout)
+        self.user_and_worlds_bottom_layout.addLayout(self.generate_game_layout)
+
+
+        self.worlds_layout.addLayout(self.user_and_worlds_bottom_layout)
 
         self.tab_widget.addTab(self.tab_worlds, "")
         self.tab_session = QWidget()
@@ -228,13 +253,37 @@ class Ui_MultiplayerSessionWindow(object):
 
         self.verticalLayout.addWidget(self.tab_widget)
 
+        self.background_process_button = QPushButton(self.central_widget)
+        self.background_process_button.setObjectName(u"background_process_button")
+        sizePolicy1.setHeightForWidth(self.background_process_button.sizePolicy().hasHeightForWidth())
+        self.background_process_button.setSizePolicy(sizePolicy1)
+        self.background_process_button.setMinimumSize(QSize(0, 0))
+        font = QFont()
+        font.setPointSize(8)
+        self.background_process_button.setFont(font)
+        self.background_process_button.setText(u"\ud83d\udec7 Stop")
+
+        self.verticalLayout.addWidget(self.background_process_button)
+
+        self.progress_bar = QProgressBar(self.central_widget)
+        self.progress_bar.setObjectName(u"progress_bar")
+        sizePolicy.setHeightForWidth(self.progress_bar.sizePolicy().hasHeightForWidth())
+        self.progress_bar.setSizePolicy(sizePolicy)
+        self.progress_bar.setMinimumSize(QSize(150, 0))
+        self.progress_bar.setMaximumSize(QSize(150, 16777215))
+        self.progress_bar.setValue(0)
+        self.progress_bar.setInvertedAppearance(False)
+
+        self.verticalLayout.addWidget(self.progress_bar)
+
         self.progress_label = QLabel(self.central_widget)
         self.progress_label.setObjectName(u"progress_label")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Maximum)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.progress_label.sizePolicy().hasHeightForWidth())
         self.progress_label.setSizePolicy(sizePolicy2)
+        self.progress_label.setFont(font)
         self.progress_label.setTextFormat(Qt.TextFormat.MarkdownText)
         self.progress_label.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter)
         self.progress_label.setWordWrap(True)
@@ -242,30 +291,10 @@ class Ui_MultiplayerSessionWindow(object):
 
         self.verticalLayout.addWidget(self.progress_label)
 
-        self.background_process_layout = QHBoxLayout()
-        self.background_process_layout.setSpacing(6)
-        self.background_process_layout.setObjectName(u"background_process_layout")
-        self.background_process_button = QPushButton(self.central_widget)
-        self.background_process_button.setObjectName(u"background_process_button")
-        self.background_process_button.setMinimumSize(QSize(140, 0))
-
-        self.background_process_layout.addWidget(self.background_process_button)
-
-        self.progress_bar = QProgressBar(self.central_widget)
-        self.progress_bar.setObjectName(u"progress_bar")
-        self.progress_bar.setValue(0)
-        self.progress_bar.setInvertedAppearance(False)
-
-        self.background_process_layout.addWidget(self.progress_bar)
-
-
-        self.verticalLayout.addLayout(self.background_process_layout)
-
         MultiplayerSessionWindow.setCentralWidget(self.central_widget)
-        self.menu_bar = QMenuBar(MultiplayerSessionWindow)
-        self.menu_bar.setObjectName(u"menu_bar")
-        self.menu_bar.setGeometry(QRect(0, 0, 773, 23))
-        MultiplayerSessionWindow.setMenuBar(self.menu_bar)
+        self.status_bar = QStatusBar(MultiplayerSessionWindow)
+        self.status_bar.setObjectName(u"status_bar")
+        MultiplayerSessionWindow.setStatusBar(self.status_bar)
 
         self.retranslateUi(MultiplayerSessionWindow)
 
@@ -284,8 +313,8 @@ class Ui_MultiplayerSessionWindow(object):
         self.delete_session_action.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Delete session", None))
         self.actionbar.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"bar", None))
         self.actionasdf.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"asdf", None))
-        self.not_connected_warning_label.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"TextLabel", None))
-        self.generate_game_label.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"<Game not generated>", None))
+        self.not_connected_warning_label.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"You're not connected to any games", None))
+        self.seed_hash_label.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Seed Hash: ", None))
         self.generate_game_button.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Generate Game", None))
         self.export_game_button.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Export Game", None))
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_worlds), QCoreApplication.translate("MultiplayerSessionWindow", u"Users and Worlds", None))
@@ -309,7 +338,7 @@ class Ui_MultiplayerSessionWindow(object):
         self.history_filter_edit.setPlaceholderText(QCoreApplication.translate("MultiplayerSessionWindow", u"Filter by pickup or location", None))
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_history), QCoreApplication.translate("MultiplayerSessionWindow", u"History", None))
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_audit), QCoreApplication.translate("MultiplayerSessionWindow", u"Audit Log", None))
+        self.progress_bar.setFormat(QCoreApplication.translate("MultiplayerSessionWindow", u"%p%", None))
         self.progress_label.setText("")
-        self.background_process_button.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Stop", None))
     # retranslateUi
 
