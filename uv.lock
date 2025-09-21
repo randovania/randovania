@@ -2060,7 +2060,7 @@ requires-dist = [
     { name = "networkx" },
     { name = "nod", marker = "extra == 'gui'", specifier = ">=1.9" },
     { name = "open-dread-rando", marker = "extra == 'exporters'", specifier = ">=2.17.0" },
-    { name = "open-prime-rando", marker = "extra == 'exporters'", specifier = ">=0.13.0,<0.16" },
+    { name = "open-prime-rando", marker = "extra == 'exporters'", specifier = ">=0.13.0" },
     { name = "open-samus-returns-rando", marker = "extra == 'exporters'", specifier = ">=3.2.1" },
     { name = "packaging" },
     { name = "peewee", marker = "extra == 'server'" },
@@ -2087,7 +2087,7 @@ requires-dist = [
     { name = "qrcode", extras = ["pil"], marker = "extra == 'gui'", specifier = ">=8.0" },
     { name = "random-enemy-attributes", marker = "extra == 'exporters'", specifier = ">=1.0.3" },
     { name = "requests-oauthlib", marker = "extra == 'server'" },
-    { name = "retro-data-structures", marker = "extra == 'exporters'", specifier = ">=0.24.0,<0.29" },
+    { name = "retro-data-structures", marker = "extra == 'exporters'", specifier = ">=0.32,<0.33" },
     { name = "ruamel-yaml", marker = "extra == 'website'" },
     { name = "sentry-sdk" },
     { name = "sentry-sdk", extras = ["flask"], marker = "extra == 'server'", specifier = ">=2.35.0" },
@@ -2167,17 +2167,18 @@ wheels = [
 
 [[package]]
 name = "retro-data-structures"
-version = "0.28.0"
+version = "0.32.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "construct" },
     { name = "lzokay" },
+    { name = "ppc-asm" },
     { name = "pycryptodome" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/1c/f0/ef02d5e08c39c7dcbbdbe0f3cbedf3cb530e80fab38dbd32ecd62e1b8fd0/retro_data_structures-0.28.0.tar.gz", hash = "sha256:7541862ef9e649d2ce0b99261f196e4f0c2e47668f7907e76d289d0ae6933bf3", size = 2708170, upload-time = "2024-10-11T22:39:41.31Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/0e/38/6d0fb6ef99bae522977d696dac1ff85f8440d8327b5e45e00ce348efb2f2/retro_data_structures-0.32.0.tar.gz", hash = "sha256:b234380c025e1a078bf6d48553ee702b9f7c95e5b80ed6352edb64bb3bf181a2", size = 2749647, upload-time = "2025-09-21T13:38:32.388Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/85/eb/a61bb537ecff3a3faef5f8b22f0173da0685326d034cc1ae86c4bbce0e9a/retro_data_structures-0.28.0-py3-none-any.whl", hash = "sha256:b837a6e81765a48b188fdd505a9d4f6ae19877ffb415f0bb7029a61db53935e1", size = 5402194, upload-time = "2024-10-11T22:39:38.998Z" },
+    { url = "https://files.pythonhosted.org/packages/5c/7d/517c3bb0ff7fa466205fcecb0e73f055cdc26a5ce88fd943e7e85cfa5418/retro_data_structures-0.32.0-py3-none-any.whl", hash = "sha256:b7656ece8e6b6490a5631d3e992458800ed36d719b3f60b098d471d938aefa3a", size = 4005700, upload-time = "2025-09-21T13:38:30.68Z" },
 ]
 
 [[package]]
