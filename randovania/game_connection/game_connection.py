@@ -37,7 +37,7 @@ class ConnectedGameState:
 class GameConnection:
     BuildersChanged = RdvSignal()
     BuildersUpdated = RdvSignal()
-    GameStateUpdated = RdvSignal[ConnectedGameState]()
+    GameStateUpdated = RdvSignal[[ConnectedGameState]]()
 
     connection_builders: list[ConnectorBuilder]
     remote_connectors: dict[ConnectorBuilder, RemoteConnector]
@@ -119,7 +119,7 @@ class GameConnection:
             ]
         self.BuildersChanged.emit()
 
-    def _on_builder_status_update(self) -> None:
+    def _on_builder_status_update(self, status_message: str) -> None:
         self.BuildersUpdated.emit()
 
     def _handle_new_connector(self, connector: RemoteConnector) -> None:

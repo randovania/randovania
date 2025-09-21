@@ -34,7 +34,7 @@ if TYPE_CHECKING:
     import uuid
 
     from randovania.game_connection.builder.connector_builder import ConnectorBuilder
-    from randovania.game_connection.game_connection import GameConnection
+    from randovania.game_connection.game_connection import ConnectedGameState, GameConnection
     from randovania.gui.main_window import MainWindow
     from randovania.gui.multiworld_client import MultiworldClient
     from randovania.interface_common.options import Options
@@ -192,7 +192,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         self.help_label.linkActivated.connect(self.window_manager.open_app_navigation_link)
         self.game_connection.BuildersChanged.connect(self.setup_builder_ui)
         self.game_connection.BuildersUpdated.connect(self.update_builder_ui)
-        self.game_connection.GameStateUpdated.connect(self.update_builder_ui)
+        self.game_connection.GameStateUpdated.connect(self._on_game_state_updated)
         self.world_database.WorldDataUpdate.connect(self.update_builder_ui)
         self.window_manager.multiworld_client.SyncFailure.connect(self.update_builder_ui)
         self.setup_builder_ui()
@@ -331,6 +331,9 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         if server_data is not None:
             return server_data.session_id
         return None
+
+    def _on_game_state_updated(self, game_state: ConnectedGameState) -> None:
+        self.update_builder_ui()
 
     def update_builder_ui(self) -> None:
         for builder, ui in self.ui_for_builder.items():
