@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 
 
 class ConnectorBuilder:
-    StatusUpdate = RdvSignal[str]()
+    StatusUpdate = RdvSignal[[str]]()
 
     @property
     def pretty_text(self) -> str:
