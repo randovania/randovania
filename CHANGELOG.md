@@ -387,6 +387,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Added: Require Main Item option for Missiles and Power Bombs
+- Added: "Unlimited Power Bombs" Item
+- Added: "Unlimited Missiles" Item
+
 #### Logic Database
 
 - Fixed: Fix the Door Lock Rando misc resource being called Dock Rando.

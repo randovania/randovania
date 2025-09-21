@@ -44,9 +44,13 @@ _STARTING_ITEM_NAME_TO_INDEX = {
     "wave": "Wave",
     "plasma": "Plasma",
     "missiles": "Missile",
+    "missileLauncher": "MissileLauncher",
+    "unlimitedMissiles": "UnlimitedMissiles",
     "scanVisor": "Scan",
     "bombs": "Bombs",
     "powerBombs": "PowerBomb",
+    "powerBombLauncher": "MainPB",
+    "unlimitedPowerBombs": "UnlimitedPowerBombs",
     "flamethrower": "Flamethrower",
     "thermalVisor": "Thermal",
     "charge": "Charge",
@@ -109,7 +113,7 @@ def prime1_pickup_details_to_patcher(
     original_model = detail.original_model.as_json
 
     name = detail.name
-    collection_text = detail.collection_text[0]
+    collection_text = detail.collection_text[-1]
     pickup_type = "Nothing"
     count = 0
     max_count = 0
@@ -119,19 +123,21 @@ def prime1_pickup_details_to_patcher(
         count = detail.index.index + 1
         max_count = count
     else:
-        for resource, quantity in detail.conditional_resources[0].resources:
+        for resource, quantity in detail.conditional_resources[-1].resources:
             # Refill items
             if resource.extra.get("is_refill"):
                 pickup_type = resource.extra.get("pickup_type", resource.long_name)
                 count = quantity
                 max_count = 0
                 break
+            elif resource.extra.get("unk2_bitmask_value"):
+                pickup_type = resource.long_name
+                break
             # Regular items
             elif resource.extra["item_id"] < 1000:
                 pickup_type = resource.long_name
                 count = quantity
                 max_count = count
-                break
 
     if (
         model["name"] == "Missile"
@@ -143,6 +149,8 @@ def prime1_pickup_details_to_patcher(
         collection_text = collection_text.replace("Missile Expansion", "Shiny Missile Expansion")
         name = name.replace("Missile Expansion", "Shiny Missile Expansion")
         original_model = model
+
+    # TODO: Model for custom items.
 
     result = {
         "type": pickup_type,
@@ -665,18 +673,6 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         db = self.game
         namer = PrimeHintNamer(self.description.all_patches, self.players_config)
 
-        ammo_with_mains = [
-            ammo.name
-            for ammo, state in self.configuration.ammo_pickup_configuration.pickups_state.items()
-            if state.requires_main_item
-        ]
-        if ammo_with_mains:
-            raise ValueError(
-                "Preset has {} with required mains enabled. This is currently not supported.".format(
-                    " and ".join(ammo_with_mains)
-                )
-            )
-
         scan_visor = self.game.resource_database.get_item_by_display_name("Scan Visor")
         pickup_list = self.export_pickup_list()
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
@@ -934,6 +930,13 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
             name: _starting_items_value_for(db.resource_database, starting_resources, index)
             for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
         }
+
+        # Check if mains are required. If not, force the respective main to be a starting item.
+        for ammo, state in self.configuration.ammo_pickup_configuration.pickups_state.items():
+            if ammo.name == "Missile Expansion" and not state.requires_main_item:
+                starting_items["missileLauncher"] = True
+            elif ammo.name == "Power Bomb Expansion" and not state.requires_main_item:
+                starting_items["powerBombLauncher"] = True
 
         if not self.configuration.legacy_mode:
             idrone_config = {

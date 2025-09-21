@@ -9,7 +9,6 @@ from PySide6 import QtCore, QtWidgets
 
 import randovania.gui.lib.signal_handling
 from randovania.exporter import item_names
-from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.pickup_pool import pool_creator
@@ -26,6 +25,7 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.exceptions import InvalidConfiguration
 
 if TYPE_CHECKING:
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.pickup.pickup_database import PickupDatabase
@@ -169,8 +169,6 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
             if widgets.require_main_item_check is not None:
                 widgets.require_main_item_check.setChecked(state.requires_main_item)
-                if self.game == RandovaniaGame.METROID_PRIME:
-                    widgets.require_main_item_check.setChecked(False)
 
             self_counts = []
             for ammo_index, count in enumerate(state.ammo_count):
