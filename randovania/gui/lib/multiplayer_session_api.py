@@ -32,7 +32,7 @@ def handle_network_errors[T, **P](
     fn: Callable[P, Coroutine[Any, Any, T]],
 ) -> Callable[P, Coroutine[Any, Any, T | None]]:
     @functools.wraps(fn)
-    async def wrapper(self, *args: P.args, **kwargs: P.kwargs) -> T | None:
+    async def wrapper(self: MultiplayerSessionApi, *args: P.args, **kwargs: P.kwargs) -> T | None:
         parent = self.widget_root
         try:
             return await fn(self, *args, **kwargs)
