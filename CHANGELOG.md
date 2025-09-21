@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
+- Added: Option that allows quick-morphing via the SELECT button.
 - Added: 5 more joke hints.
 - Added: A reference on where to play the randomizer in the credits.
 - Changed: Infant Metroid hints have been reformatted for easier readability.

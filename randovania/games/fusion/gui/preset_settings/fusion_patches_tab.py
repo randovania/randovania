@@ -16,10 +16,7 @@ if typing.TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-_FIELDS = [
-    "instant_transitions",
-    "short_intro_text",
-]
+_FIELDS = ["instant_transitions", "short_intro_text", "instant_morph"]
 
 
 class PresetFusionPatches(PresetTab, Ui_PresetFusionPatches):
