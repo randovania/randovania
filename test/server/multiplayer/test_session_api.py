@@ -171,7 +171,14 @@ def test_join_session(mock_emit_session_update: MagicMock, clean_database, defau
             {"admin": True, "ready": False, "id": 1235, "name": "Other Name", "worlds": {}},
             {"admin": False, "ready": False, "id": 1234, "name": "The Name", "worlds": {}},
         ],
-        "worlds": [{"id": "bc82b6cf-df76-4c3d-9ea0-0695c2f7e719", "name": "World 1", "preset_raw": "{}"}],
+        "worlds": [
+            {
+                "id": "bc82b6cf-df76-4c3d-9ea0-0695c2f7e719",
+                "name": "World 1",
+                "preset_raw": "{}",
+                "has_been_beaten": False,
+            }
+        ],
         "game_details": None,
         "generation_in_progress": None,
         "allowed_games": default_game_list,

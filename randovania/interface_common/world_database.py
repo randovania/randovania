@@ -13,6 +13,8 @@ from PySide6.QtCore import QObject, Signal
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.lib import json_lib, migration_lib
+from randovania.network_common.game_connection_status import GameConnectionStatus
+from randovania.network_common.world_sync import ServerWorldSync
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -46,6 +48,8 @@ def _combine_tuples(existing: tuple[int, ...], new_indices: Iterable[int]) -> tu
 class WorldData(JsonDataclass):
     collected_locations: tuple[int, ...] = ()
     uploaded_locations: tuple[int, ...] = ()
+    was_game_beaten: bool = False
+    was_game_beaten_uploaded: bool = False
     latest_message_displayed: int = 0
     server_data: WorldServerData | None = None
 
@@ -60,6 +64,9 @@ class WorldData(JsonDataclass):
             self,
             uploaded_locations=_combine_tuples(self.uploaded_locations, new_indices),
         )
+
+    def extend_with_game_beaten_uploaded(self) -> Self:
+        return dataclasses.replace(self, was_game_beaten_uploaded=True)
 
 
 class WorldDatabase(QObject):
@@ -135,6 +142,27 @@ class WorldDatabase(QObject):
     def get_locations_to_upload(self, uid: uuid.UUID) -> tuple[int, ...]:
         data = self.get_data_for(uid)
         return tuple(i for i in sorted(data.collected_locations) if i not in data.uploaded_locations)
+
+    def get_data_to_upload(self, uid: uuid.UUID, *, provide_even_on_no_change: bool) -> ServerWorldSync | None:
+        """
+        Returns a ServerWorldSync with what should be uploaded for a sync, or None if there is nothing to sync.
+        Will return None when the underlying data didn't change, unless provide_even_on_no_change is set.
+        """
+        data = self.get_data_for(uid)
+        locations_to_upload = self.get_locations_to_upload(uid)
+
+        should_upload_game_beat = data.was_game_beaten and not data.was_game_beaten_uploaded
+
+        if not (locations_to_upload or should_upload_game_beat) and not provide_even_on_no_change:
+            return None
+
+        return ServerWorldSync(
+            status=GameConnectionStatus.Disconnected,
+            collected_locations=locations_to_upload,
+            inventory=None,
+            request_details=False,
+            has_been_beaten=data.was_game_beaten,
+        )
 
     def all_known_data(self) -> Iterable[uuid.UUID]:
         yield from self._all_data.keys()

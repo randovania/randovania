@@ -55,8 +55,8 @@ def test_multiplayer_session_create_session_entry(clean_database, has_descriptio
             spoiler=True,
             word_hash="Some Words",
         )
-        worlds.append(MultiplayerWorld(id=w1.uuid, name="Prime 1", preset_raw=w1.preset))
-        worlds.append(MultiplayerWorld(id=w2.uuid, name="Prime 2", preset_raw=w2.preset))
+        worlds.append(MultiplayerWorld(id=w1.uuid, name="Prime 1", preset_raw=w1.preset, has_been_beaten=False))
+        worlds.append(MultiplayerWorld(id=w2.uuid, name="Prime 2", preset_raw=w2.preset, has_been_beaten=False))
         actions.append(
             MultiplayerSessionAction(
                 provider=w1.uuid, receiver=w2.uuid, pickup="Power Bomb Expansion", location=34, time=dt
