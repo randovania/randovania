@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: A warning when trying to generate a Multiworld game if a preset requires all Pickups to be obtainable.
 - Added: Command line arguments for gathering statistics about a collection of generated games. These commands are intended for advanced uses only.
+- Changed: Gave the window for viewing a Multiworld Session some slight visual readjustment
+- Changed: Slightly increased the font size used in the status bar.
+- Changed: Gave the "Stop" button in the status bar an icon.
+
 
 ### Metroid Dread
 
