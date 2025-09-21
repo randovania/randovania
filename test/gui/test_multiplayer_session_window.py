@@ -324,15 +324,15 @@ async def test_on_session_actions_update(window: MultiplayerSessionWindow, sampl
 
 
 @pytest.mark.parametrize(
-    ("generation_in_progress", "game_details", "expected_text"),
+    ("generation_in_progress", "game_details", "expected_text", "enabled"),
     [
-        (True, None, "Abort generation"),
-        (None, None, "Generate game"),
-        (None, True, "Clear generated game"),
+        (True, None, "Generate game", False),
+        (None, None, "Generate game", True),
+        (None, True, "Clear generated game", True),
     ],
 )
 async def test_update_generate_game_button(
-    window: MultiplayerSessionWindow, generation_in_progress, game_details, expected_text
+    window: MultiplayerSessionWindow, generation_in_progress, game_details, expected_text, enabled
 ):
     window._session = MagicMock()
     window._session.generation_in_progress = generation_in_progress
@@ -343,6 +343,7 @@ async def test_update_generate_game_button(
 
     # Assert
     assert window.generate_game_button.text() == expected_text
+    assert window.generate_game_button.isEnabled() == enabled
 
 
 async def test_sync_background_process_to_session_other_generation(

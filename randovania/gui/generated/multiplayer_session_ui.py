@@ -339,6 +339,6 @@ class Ui_MultiplayerSessionWindow(object):
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_history), QCoreApplication.translate("MultiplayerSessionWindow", u"History", None))
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_audit), QCoreApplication.translate("MultiplayerSessionWindow", u"Audit Log", None))
         self.progress_bar.setFormat(QCoreApplication.translate("MultiplayerSessionWindow", u"%p%", None))
-        self.progress_label.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"<Game not generated>", None))
+        self.progress_label.setText("")
     # retranslateUi
 
