@@ -74,7 +74,7 @@ class Ui_GameDetailsWindow(object):
         sizePolicy.setHeightForWidth(self.progress_label.sizePolicy().hasHeightForWidth())
         self.progress_label.setSizePolicy(sizePolicy)
         font = QFont()
-        font.setPointSize(7)
+        font.setPointSize(8)
         self.progress_label.setFont(font)
         self.progress_label.setTextFormat(Qt.TextFormat.MarkdownText)
         self.progress_label.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter)
@@ -119,6 +119,7 @@ class Ui_GameDetailsWindow(object):
         sizePolicy2.setHeightForWidth(self.stop_background_process_button.sizePolicy().hasHeightForWidth())
         self.stop_background_process_button.setSizePolicy(sizePolicy2)
         self.stop_background_process_button.setMaximumSize(QSize(75, 16777215))
+        self.stop_background_process_button.setText(u"\ud83d\udec7 Stop")
         self.stop_background_process_button.setCheckable(False)
         self.stop_background_process_button.setFlat(False)
 
@@ -156,7 +157,7 @@ class Ui_GameDetailsWindow(object):
         GameDetailsWindow.setStatusBar(self.status_bar)
         self.menuBar = QMenuBar(GameDetailsWindow)
         self.menuBar.setObjectName(u"menuBar")
-        self.menuBar.setGeometry(QRect(0, 0, 624, 17))
+        self.menuBar.setGeometry(QRect(0, 0, 624, 23))
         GameDetailsWindow.setMenuBar(self.menuBar)
 
         self.retranslateUi(GameDetailsWindow)
@@ -175,7 +176,6 @@ class Ui_GameDetailsWindow(object):
         self.layout_title_label.setText(QCoreApplication.translate("GameDetailsWindow", u"<html><head/><body><p>Seed Hash: ????<br/>Preset Name: ???</p></body></html>", None))
         self.tool_button.setText(QCoreApplication.translate("GameDetailsWindow", u"...", None))
         self.customize_user_preferences_button.setText(QCoreApplication.translate("GameDetailsWindow", u"Customize cosmetic options", None))
-        self.stop_background_process_button.setText(QCoreApplication.translate("GameDetailsWindow", u"Stop", None))
         self.layout_description_left_label.setText(QCoreApplication.translate("GameDetailsWindow", u"<html><head/><body><p>This content should have been replaced by code.</p></body></html>", None))
         self.export_log_button.setText(QCoreApplication.translate("GameDetailsWindow", u"Save Spoiler", None))
         self.export_iso_button.setText(QCoreApplication.translate("GameDetailsWindow", u"Export Game", None))
