@@ -10,6 +10,7 @@ from randovania.generator.teleporter_distributor import (
     get_dock_connections_assignment_for_teleporter,
     get_teleporter_connections,
 )
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -56,6 +57,17 @@ class PrimeBasePatchesFactory(BasePatchesFactory[PrimeConfiguration]):
         yield from super().dock_connections_assignment(configuration, game, rng)
 
         teleporter_connection = get_teleporter_connections(configuration.teleporters, game, rng)
+
+        if configuration.teleporters.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
+            credits_node = configuration.teleporters.get_credits_node()
+            if (
+                credits_node in configuration.teleporters.valid_targets
+                and credits_node not in teleporter_connection.values()
+            ):
+                # If nothing goes to credits, randomly assign one
+                random_key = rng.choice(list(teleporter_connection.keys()))
+                teleporter_connection[random_key] = credits_node
+
         dock_assignment = get_dock_connections_assignment_for_teleporter(
             configuration.teleporters, game, teleporter_connection
         )

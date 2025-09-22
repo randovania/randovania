@@ -90,6 +90,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Adjusted fit of main menu text to accommodate larger seed hashes
 - Changed: Adjusted fit of DLR Blast Shields over doors
 - Changed: Research Core cutscene camera angle will now be consistent regardless of the height of the placed pickup
+- Changed: Improved chance of successfully generating a game when shuffling everything on One-Way Anywhere elevator randomization.
+- Changed: Disallowed shuffling the Essence Dead cutscene elevator on One-Way with Cycles and with Replacement, unless Skip Final Bosses is enabled, as otherwise that would leave no path to the Credits.
 
 #### Logic Database
 
