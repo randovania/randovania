@@ -32,7 +32,7 @@ jobs:
         run: sudo apt-get -q update && sudo apt-get -y install $(cat .github/linux_apt_dependencies.txt)
 
       - name: Install Python packages
-        run: uv sync --frozen --extra exporters --extra gui --extra server --extra test
+        run: uv sync --locked --extra exporters --extra gui --extra server --extra test
 
       - name: run pytest (benchmark)
         uses: CodSpeedHQ/action@v4
