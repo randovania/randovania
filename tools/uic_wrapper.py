@@ -1,9 +1,3 @@
-# /// script
-# dependencies = [
-#   "PySide6-Essentials"
-# ]
-# ///
-
 import argparse
 import os
 import subprocess
