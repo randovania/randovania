@@ -40,7 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: B.O.X has been moved slightly to the left to avoid bumping immediately into him in a future setting.
 - Changed: Main Deck Central Reactor Core: Moved the Door leading to Silo Tunnel back by a tile to prevent getting stuck in a future setting.
 - Changed: Sector 1 Charge Core Upper Access: Moved the Door leading to Crab Rave back by a tile to prevent getting stuck in a future setting.
-- Changed: Sectpr 1 Tourian Eastern Hub: Removed the shot blocks and remodelled the space leading to Animorphs to prevent getting stuck in a future setting.
+- Changed: Sector 1 Tourian Eastern Hub: Removed the shot blocks and remodelled the space leading to Animorphs to prevent getting stuck in a future setting.
 - Changed: Sector 1 Twin Junctions Save Room: Moved the Door leading to Walljump Tutorial back by a tile to prevent getting stuck in a future setting.
 - Changed: Sector 3 Security Access: Moved the Door leading to the Security Room back by a tile to prevent getting stuck in a future setting.
 - Changed: Sector 4 Pump Control Save Room: Moved the Door leading to Breeding Tank Acecss back by a tile to prevent getting stuck in a future setting.
