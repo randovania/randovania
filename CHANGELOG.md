@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Command line arguments for gathering statistics about a collection of generated games. These commands are intended for advanced uses only.
 - Changed: Gave the window for viewing a Multiworld Session some slight visual readjustment
 - Changed: Slightly increased the font size used in the status bar.
+- Changed: Increased how long text in the status bar can be before it wraps.
 - Changed: Gave the "Stop" button in the status bar an icon.
 
 
