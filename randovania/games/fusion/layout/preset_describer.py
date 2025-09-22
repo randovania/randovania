@@ -38,7 +38,7 @@ class FusionPresetDescriber(GamePresetDescriber):
                 {f"Energy per Tank: {configuration.energy_per_tank}": configuration.energy_per_tank != 100},
                 {
                     "Instant Hatch Transitions": configuration.instant_transitions,
-                    "Instant Morph Button": configuration.instant_morph,
+                    "Instant Morph Button via SELECT button": configuration.instant_morph,
                 },
                 {"Unlocked hatches in Sector Hub": configuration.unlock_sector_hub},
                 {"Unlocked Save and Recharge Station hatches": configuration.open_save_recharge_hatches},
