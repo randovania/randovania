@@ -8,6 +8,8 @@ from randovania.games.prime_hunters.layout.prime_hunters_configuration import Hu
 from randovania.generator.hint_distributor import HintDistributor
 
 if TYPE_CHECKING:
+    from randovania.game_description.assignment import PickupTarget
+    from randovania.game_description.db.hint_node import HintNode
     from randovania.game_description.game_patches import GamePatches
     from randovania.generator.pre_fill_params import PreFillParams
 
@@ -22,6 +24,10 @@ class HuntersHintDistributor(HintDistributor):
     @property
     def default_precision_pair(self) -> PrecisionPair:
         return PrecisionPair.featural()
+
+    @override
+    def is_pickup_interesting(self, target: PickupTarget, player_id: int, hint_node: HintNode) -> bool:
+        return not target.pickup.has_hint_feature("octolith")
 
     @override
     async def assign_specific_location_hints(self, patches: GamePatches, prefill: PreFillParams) -> GamePatches:
