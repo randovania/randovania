@@ -391,7 +391,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         return elements
 
     @staticmethod
-    def _wrap_text_for_credits(text) -> list:
+    def _wrap_text_for_credits(text: str) -> list:
         return textwrap.wrap(text, width=30)
 
     def _create_credits_text(self) -> list:
