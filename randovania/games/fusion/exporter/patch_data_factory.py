@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+import textwrap
 import typing
 from collections import defaultdict
 from typing import TYPE_CHECKING, override
@@ -389,6 +390,10 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 )
         return elements
 
+    @staticmethod
+    def _wrap_text_for_credits(text: str) -> list[str]:
+        return textwrap.wrap(text, width=30)
+
     def _create_credits_text(self) -> list:
         credits_array = []
         spoiler_dict = self._credits_elements()
@@ -406,10 +411,17 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         for pickup in sorted(spoiler_dict.keys(), key=sort_pickup):
             credits_array.append({"LineType": "Red", "Text": pickup, "BlankLines": 1})
             for location in spoiler_dict[pickup]:
-                if location["World"] is not None:
-                    credits_array.append({"LineType": "Blue", "Text": location["World"], "BlankLines": 0})
-                credits_array.append({"LineType": "White1", "Text": location["Region"], "BlankLines": 0})
-                credits_array.append({"LineType": "White1", "Text": location["Area"], "BlankLines": 1})
+                region_lines = self._wrap_text_for_credits(location["Region"])
+                area_lines = self._wrap_text_for_credits(location["Area"])
+                world_name = location["World"] if location["World"] else ""
+                world_lines = self._wrap_text_for_credits(world_name)
+                for line in world_lines:
+                    credits_array.append({"LineType": "Blue", "Text": line, "BlankLines": 0})
+                for line in region_lines:
+                    credits_array.append({"LineType": "White1", "Text": line, "BlankLines": 0})
+                for line in area_lines:
+                    credits_array.append({"LineType": "White1", "Text": line, "BlankLines": 0})
+                credits_array.append({"LineType": "White1", "Text": "", "BlankLines": 0})
 
         # Have last item give more space
         credits_array[-1]["BlankLines"] = 3
