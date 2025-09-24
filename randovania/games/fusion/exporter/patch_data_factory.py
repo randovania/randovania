@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+import textwrap
 import typing
 from collections import defaultdict
 from typing import TYPE_CHECKING, override
@@ -406,10 +407,17 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         for pickup in sorted(spoiler_dict.keys(), key=sort_pickup):
             credits_array.append({"LineType": "Red", "Text": pickup, "BlankLines": 1})
             for location in spoiler_dict[pickup]:
+                region_text = textwrap.wrap(location["Region"], width=30)
+                area_text = textwrap.wrap(location["Area"], width=30)
                 if location["World"] is not None:
-                    credits_array.append({"LineType": "Blue", "Text": location["World"], "BlankLines": 0})
-                credits_array.append({"LineType": "White1", "Text": location["Region"], "BlankLines": 0})
-                credits_array.append({"LineType": "White1", "Text": location["Area"], "BlankLines": 1})
+                    world_text = textwrap.wrap(location["World"], width=30)
+                    for word in world_text:
+                        credits_array.append({"LineType": "Blue", "Text": word, "BlankLines": 0})
+                for word in region_text:
+                    credits_array.append({"LineType": "White1", "Text": word, "BlankLines": 0})
+                for word in area_text:
+                    credits_array.append({"LineType": "White1", "Text": word, "BlankLines": 0})
+            credits_array.append({"LineType": "White1", "Text": "", "BlankLines": 1})
 
         # Have last item give more space
         credits_array[-1]["BlankLines"] = 3

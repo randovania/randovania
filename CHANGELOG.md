@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: 5 more joke hints.
 - Added: A reference on where to play the randomizer in the credits.
 - Changed: Infant Metroid hints have been reformatted for easier readability.
+- Changed: Fixed formatting of locations in the credits that were incorrectly displayed if too long
 - Changed: "guarded by a boss" feature hint has been reworked to "on a Core-x Parasite" for more clarity.
 - Changed: Adjusted Credits to have the patching, Randovania and original team separated more clearly.
 - Changed: B.O.X has been moved slightly to the left to avoid bumping immediately into him in a future setting.
