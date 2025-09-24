@@ -7,6 +7,7 @@ from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.hints.joke_hints import GENERIC_JOKE_HINTS
 from randovania.exporter.patch_data_factory import PatchDataFactory, PatcherDataMeta
 from randovania.game.game_enum import RandovaniaGame
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
@@ -154,6 +155,27 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
 
         return force_fields
 
+    def _get_portals_for_area(self, area: Area) -> list:
+        portals = []
+
+        for node, connection in self.patches.all_dock_connections():
+            if (
+                isinstance(node, DockNode)
+                and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
+                and node in area.nodes
+            ):
+                portal: dict = {}
+
+                portal["entity_id"] = node.extra["entity_id"]
+                portal["target_index"] = connection.extra["entity_type_data"]["load_index"]
+                portal["entity_filename"] = self.game.region_list.area_by_area_location(
+                    connection.identifier.area_identifier
+                ).extra["portal_filename"]
+
+                portals.append(portal)
+
+        return portals
+
     def _entity_patching_per_area(self) -> dict:
         db = self.game
         regions = list(db.region_list.regions)
@@ -168,6 +190,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
                 level_data[region.name]["levels"][area.name] = {
                     "pickups": self._get_pickups_for_area(area),
                     "force_fields": self._get_force_fields_for_area(area, self.patches.game_specific["force_fields"]),
+                    "portals": self._get_portals_for_area(area),
                 }
 
         return level_data
@@ -236,6 +259,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
     def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
         return {
+            "configuration_id": self.description.get_seed_for_world(self.players_config.player_index),
             "starting_items": starting_items,
             "areas": self._entity_patching_per_area(),
             "hints": self._encode_hints(),
