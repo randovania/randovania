@@ -390,6 +390,10 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 )
         return elements
 
+    @staticmethod
+    def _wrap_text_for_credits(text) -> list:
+        return textwrap.wrap(text, width=30)
+
     def _create_credits_text(self) -> list:
         credits_array = []
         spoiler_dict = self._credits_elements()
@@ -407,16 +411,16 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         for pickup in sorted(spoiler_dict.keys(), key=sort_pickup):
             credits_array.append({"LineType": "Red", "Text": pickup, "BlankLines": 1})
             for location in spoiler_dict[pickup]:
-                region_text = textwrap.wrap(location["Region"], width=30)
-                area_text = textwrap.wrap(location["Area"], width=30)
+                region_line_list = self._wrap_text_for_credits(location["Region"])
+                area_line_list = self._wrap_text_for_credits(location["Area"])
                 if location["World"] is not None:
-                    world_text = textwrap.wrap(location["World"], width=30)
-                    for word in world_text:
-                        credits_array.append({"LineType": "Blue", "Text": word, "BlankLines": 0})
-                for word in region_text:
-                    credits_array.append({"LineType": "White1", "Text": word, "BlankLines": 0})
-                for word in area_text:
-                    credits_array.append({"LineType": "White1", "Text": word, "BlankLines": 0})
+                    world_line_list = self._wrap_text_for_credits(location["World"])
+                    for line in world_line_list:
+                        credits_array.append({"LineType": "Blue", "Text": line, "BlankLines": 0})
+                for line in region_line_list:
+                    credits_array.append({"LineType": "White1", "Text": line, "BlankLines": 0})
+                for line in area_line_list:
+                    credits_array.append({"LineType": "White1", "Text": line, "BlankLines": 0})
             credits_array.append({"LineType": "White1", "Text": "", "BlankLines": 1})
 
         # Have last item give more space
