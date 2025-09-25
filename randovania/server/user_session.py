@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 import base64
 import datetime
 import json
+import typing
 
 import cryptography.fernet
 import flask
@@ -12,9 +15,10 @@ from oauthlib.oauth2.rfc6749.errors import InvalidTokenError
 
 from randovania.network_common import error
 from randovania.server.database import User, UserAccessToken
-from randovania.server.lib import logger
 from randovania.server.multiplayer import session_common
-from randovania.server.server_app import ServerApp
+
+if typing.TYPE_CHECKING:
+    from randovania.server.server_app import ServerApp
 
 
 def _encrypt_session_for_user(sa: ServerApp, session: dict) -> bytes:
@@ -23,7 +27,7 @@ def _encrypt_session_for_user(sa: ServerApp, session: dict) -> bytes:
 
 
 def _create_client_side_session_raw(sa: ServerApp, user: User) -> dict:
-    logger().info(f"Client at {sa.current_client_ip()} is user {user.name} ({user.id}).")
+    sa.logger.info(f"Client at {sa.current_client_ip()} is user {user.name} ({user.id}).")
 
     return {
         "user": user.as_json,
@@ -37,7 +41,7 @@ def _create_client_side_session(sa: ServerApp, user: User | None, session: dict 
     :return:
     """
     if session is None:
-        session = sa.get_session()
+        session = sa.sio.get_session()
 
     if user is None:
         user = User.get_by_id(session["user-id"])
@@ -80,7 +84,7 @@ def _create_session_with_discord_token(sa: ServerApp, sid: str | None) -> User:
 
     if sa.enforce_role is not None:
         if not sa.enforce_role.verify_user(discord_user.id):
-            logger().info("User %s is not authorized for connecting to the server", discord_user.name)
+            sa.logger.info("User %s is not authorized for connecting to the server", discord_user.name)
             raise error.UserNotAuthorizedToUseServerError(discord_user.name)
 
     user = _create_user_from_discord(discord_user)
@@ -88,15 +92,15 @@ def _create_session_with_discord_token(sa: ServerApp, sid: str | None) -> User:
     if sid is None:
         return user
 
-    with sa.session(sid=sid) as session:
+    with sa.sio.session(sid=sid) as session:
         session["user-id"] = user.id
         session["discord-access-token"] = flask.session["DISCORD_OAUTH2_TOKEN"]
 
     return user
 
 
-def start_discord_login_flow(sa: ServerApp):
-    return flask.request.sid
+def start_discord_login_flow(sa: ServerApp, sid: str):
+    return sid
 
 
 def _get_now():
@@ -125,7 +129,7 @@ def login_with_guest(sa: ServerApp, encrypted_login_request: bytes):
 
     user: User = User.create(name=f"Guest: {name}")
 
-    with sa.session() as session:
+    with sa.sio.session() as session:
         session["user-id"] = user.id
 
     return _create_client_side_session(sa, user)
@@ -143,7 +147,7 @@ def restore_user_session(sa: ServerApp, encrypted_session: bytes, _old_session_i
             result = _create_client_side_session(sa, user)
         else:
             user = User.get_by_id(session["user-id"])
-            sa.save_session(session)
+            sa.sio.save_session(session)
 
             if "rdv-access-token" in session:
                 access_token = UserAccessToken.get(
@@ -161,27 +165,27 @@ def restore_user_session(sa: ServerApp, encrypted_session: bytes, _old_session_i
         return result
 
     except error.UserNotAuthorizedToUseServerError:
-        sa.save_session({})
+        sa.sio.save_session({})
         raise
 
     except (KeyError, peewee.DoesNotExist, json.JSONDecodeError, InvalidTokenError) as e:
         # InvalidTokenError: discord token expired and couldn't renew
-        sa.save_session({})
-        logger().info(
+        sa.sio.save_session({})
+        sa.logger.info(
             "Client at %s was unable to restore session: (%s) %s", sa.current_client_ip(), str(type(e)), str(e)
         )
         raise error.InvalidSessionError
 
     except Exception:
-        sa.save_session({})
-        logger().exception("Error decoding user session")
+        sa.sio.save_session({})
+        sa.logger.exception("Error decoding user session")
         raise error.InvalidSessionError
 
 
 def logout(sa: ServerApp):
     session_common.leave_all_rooms(sa)
     flask.session.pop("DISCORD_OAUTH2_TOKEN", None)
-    with sa.session() as session:
+    with sa.sio.session() as session:
         session.pop("discord-access-token", None)
         session.pop("user-id", None)
 
@@ -223,7 +227,7 @@ def browser_discord_login_callback(sa: ServerApp):
             return flask.redirect(flask.url_for("browser_me"))
         else:
             try:
-                session = sa.get_session(sid=sid)
+                session = sa.sio.get_session(sid=sid)
             except KeyError:
                 return (
                     flask.render_template(
@@ -270,9 +274,9 @@ def browser_discord_login_callback(sa: ServerApp):
 
     except oauthlib.oauth2.rfc6749.errors.OAuth2Error as err:
         if isinstance(err, oauthlib.oauth2.rfc6749.errors.InvalidGrantError):
-            logger().info("Invalid grant when finishing Discord login")
+            sa.logger.info("Invalid grant when finishing Discord login")
         else:
-            logger().exception("OAuth2Error when finishing Discord login")
+            sa.logger.exception("OAuth2Error when finishing Discord login")
 
         return (
             flask.render_template(

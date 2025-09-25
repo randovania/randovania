@@ -15,14 +15,31 @@ def flask_command_logic(args: Namespace) -> None:
 
     randovania.monitoring.server_init(sampling_rate=sampling_rate)
 
-    from randovania.server import app
+    from randovania.server.server_app import ServerApp
 
-    server_app = app.create_app()
-    server_app.sa.sio.run(server_app, host="0.0.0.0")
+    server_app = ServerApp(randovania.get_configuration())
+
+    if args.mode == "dev":
+        host = "127.0.0.1"
+    else:
+        if args.mode != "prod":
+            server_app.logger.warning(f"Unknown server mode '{args.mode}'. Running in prod mode.")
+        host = "0.0.0.0"
+
+    import uvicorn
+
+    uvicorn.run(server_app.app, host=host, port=5000)
 
 
 def add_flask_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser("flask", help="Hosts the flask server.")
+    parser.add_argument(
+        "--mode",
+        type=str,
+        choices=["dev", "prod"],
+        default="prod",
+        help="Whether to run in development or production mode.",
+    )
     parser.set_defaults(func=flask_command_logic)
 
 

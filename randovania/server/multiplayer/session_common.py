@@ -8,7 +8,6 @@ from randovania.bitpacking import construct_pack
 from randovania.network_common import error, signals
 from randovania.server import database
 from randovania.server.database import MultiplayerAuditEntry, MultiplayerSession, World
-from randovania.server.lib import logger
 from randovania.server.server_app import ServerApp
 
 
@@ -21,11 +20,12 @@ def emit_session_global_event(session: MultiplayerSession, name: str, data):
     flask_socketio.emit(name, data, room=room_name_for(session.id), namespace="/")
 
 
-def get_membership_for(
-    sio_or_user: ServerApp | database.User | int, session: int | database.MultiplayerSession
+async def get_membership_for(
+    sio_or_user: ServerApp | database.User | int, session: int | database.MultiplayerSession, sid: str | None = None
 ) -> database.MultiplayerMembership:
     if isinstance(sio_or_user, ServerApp):
-        user = sio_or_user.get_current_user()
+        assert sid is not None
+        user = await sio_or_user.get_current_user(sid)
     else:
         user = sio_or_user
 
@@ -42,17 +42,17 @@ def describe_session(session: MultiplayerSession, world: World | None = None) ->
         return f"Session {session.id} ({session.name})"
 
 
-def emit_session_meta_update(session: MultiplayerSession):
+def emit_session_meta_update(sa: ServerApp, session: MultiplayerSession):
     with sentry_sdk.start_span(op="emit", description="session_meta_update") as span:
         span.set_data("session.id", session.id)
         span.set_data("session.name", session.name)
-        logger().debug("multiplayer_session_meta_update for session %d (%s)", session.id, session.name)
+        sa.logger.debug("multiplayer_session_meta_update for session %d (%s)", session.id, session.name)
         emit_session_global_event(session, signals.SESSION_META_UPDATE, session.create_session_entry().as_json)
 
 
-def emit_session_actions_update(session: MultiplayerSession):
+def emit_session_actions_update(sa: ServerApp, session: MultiplayerSession):
     with sentry_sdk.start_span(op="emit", description="session_actions_update") as span:
-        logger().debug("multiplayer_session_actions_update for session %d (%s)", session.id, session.name)
+        sa.logger.debug("multiplayer_session_actions_update for session %d (%s)", session.id, session.name)
         actions = session.describe_actions()
 
         span.set_data("session.id", session.id)
@@ -61,9 +61,9 @@ def emit_session_actions_update(session: MultiplayerSession):
         emit_session_global_event(session, signals.SESSION_ACTIONS_UPDATE, construct_pack.encode(actions))
 
 
-def emit_session_audit_update(session: MultiplayerSession):
+def emit_session_audit_update(sa: ServerApp, session: MultiplayerSession):
     with sentry_sdk.start_span(op="emit", description="session_audit_update") as span:
-        logger().debug("multiplayer_session_audit_update for session %d (%s)", session.id, session.name)
+        sa.logger.debug("multiplayer_session_audit_update for session %d (%s)", session.id, session.name)
         log = session.get_audit_log()
 
         span.set_data("session.id", session.id)
@@ -85,7 +85,7 @@ def join_room(sa: ServerApp, session: MultiplayerSession):
     room_name = room_name_for(session.id)
     flask_socketio.join_room(room_name)
 
-    with sa.session() as sio_session:
+    with sa.sio.session() as sio_session:
         if "multiplayer_sessions" not in sio_session:
             sio_session["multiplayer_sessions"] = []
 
@@ -96,14 +96,14 @@ def join_room(sa: ServerApp, session: MultiplayerSession):
 def leave_room(sa: ServerApp, session_id: int):
     flask_socketio.leave_room(room_name_for(session_id))
 
-    with sa.session() as sio_session:
+    with sa.sio.session() as sio_session:
         if "multiplayer_sessions" in sio_session:
             if session_id in sio_session["multiplayer_sessions"]:
                 sio_session["multiplayer_sessions"].remove(session_id)
 
 
 def leave_all_rooms(sa: ServerApp):
-    with sa.session() as sio_session:
+    with sa.sio.session() as sio_session:
         multiplayer_sessions: list[int] = sio_session.pop("multiplayer_sessions", [])
 
     for session_id in multiplayer_sessions:

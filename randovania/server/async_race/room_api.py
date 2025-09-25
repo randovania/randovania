@@ -81,7 +81,7 @@ def list_rooms(sa: ServerApp, limit: int | None) -> JsonType:
         try:
             games = _fast_get_games_list_from_raw_layout(layout_description_json)
         except Exception:
-            lib.logger().exception("Unable to get list of games from room")
+            sa.logger.exception("Unable to get list of games from room")
 
         args["games"] = games
         args["creation_date"] = datetime.datetime.fromisoformat(args["creation_date"])

@@ -1,3 +1,5 @@
+# mypy: disable-error-code="assignment"
+
 from __future__ import annotations
 
 import collections
@@ -7,6 +9,8 @@ import json
 import typing
 import uuid
 import zlib
+from contextlib import asynccontextmanager
+from pathlib import Path
 from typing import TYPE_CHECKING, Any, Self
 from uuid import UUID
 
@@ -39,11 +43,9 @@ if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator, Sequence
 
     from randovania.lib.json_lib import JsonObject
-    from randovania.server.server_app import ServerApp
+    from randovania.server.server_app import RdvFastAPI, ServerApp
 
-    T = typing.TypeVar("T")
-
-    class TypedModelSelect(typing.Protocol[T]):
+    class TypedModelSelect[T](typing.Protocol):
         def where(self, *expressions: Any) -> Self: ...
 
         def order_by(self, *values: Any) -> Self: ...
@@ -56,7 +58,7 @@ if TYPE_CHECKING:
 
 
 class MonitoredDb(peewee.SqliteDatabase):
-    def execute_sql(self, sql, params=None, commit=peewee.SENTINEL):
+    def execute_sql(self, sql, params=None, commit=peewee.SENTINEL):  # type: ignore[no-untyped-def]
         with record_sql_queries(self.cursor, sql, params, paramstyle="format", executemany=False):
             return super().execute_sql(sql, params, commit)
 
@@ -64,7 +66,7 @@ class MonitoredDb(peewee.SqliteDatabase):
 db = MonitoredDb(None, pragmas={"foreign_keys": 1})
 
 
-def is_boolean(field: Any, value: bool):
+def is_boolean(field: Any, value: bool) -> bool:
     return field == value
 
 
@@ -143,7 +145,7 @@ class UserAccessToken(BaseModel):
 
 @cachetools.cached(cache=cachetools.TTLCache(maxsize=64, ttl=600))
 def _decode_layout_description(layout: bytes, presets: tuple[str, ...]) -> LayoutDescription:
-    preset_list = [VersionedPreset.from_str(preset) for preset in presets]
+    preset_list: list[VersionedPreset] = [VersionedPreset.from_str(preset) for preset in presets]
     if layout.startswith(b"RDVG"):
         return LayoutDescription.from_bytes(layout, presets=preset_list)
     else:
@@ -178,6 +180,7 @@ class MultiplayerSession(BaseModel):
         return self.layout_description_json is not None
 
     def _get_layout_description(self, ordered_worlds: list[World]) -> LayoutDescription:
+        assert self.layout_description_json is not None
         return _decode_layout_description(self.layout_description_json, tuple(world.preset for world in ordered_worlds))
 
     @property
@@ -188,7 +191,7 @@ class MultiplayerSession(BaseModel):
             return None
 
     @layout_description.setter
-    def layout_description(self, description: LayoutDescription | None):
+    def layout_description(self, description: LayoutDescription | None) -> None:
         if description is not None:
             encoded = description.as_binary(force_spoiler=True, include_presets=False)
             self.layout_description_json = encoded
@@ -213,7 +216,7 @@ class MultiplayerSession(BaseModel):
         return None
 
     def get_layout_description_as_binary(self) -> bytes | None:
-        if self.layout_description_json is not None:
+        if self.layout_description is not None:
             # TODO: just return layout_description_json directly!
             return self.layout_description.as_binary(include_presets=False, force_spoiler=True)
         else:
@@ -228,7 +231,7 @@ class MultiplayerSession(BaseModel):
     def creation_datetime(self) -> datetime.datetime:
         return datetime.datetime.fromisoformat(self.creation_date)
 
-    def is_user_in_session(self, user: User):
+    def is_user_in_session(self, user: User) -> bool:
         try:
             MultiplayerMembership.get_by_ids(user, self.id)
         except peewee.DoesNotExist:
@@ -245,9 +248,9 @@ class MultiplayerSession(BaseModel):
         ]
 
     def get_ordered_worlds(self) -> list[World]:
-        return list(World.select().where(World.session == self).order_by(World.order.asc()))
+        return list(World.select().where(World.session == self).order_by(World.order.asc()))  # type: ignore[union-attr]
 
-    def describe_actions(self):
+    def describe_actions(self) -> multiplayer_session.MultiplayerSessionActions:
         if not self.has_layout_description():
             return multiplayer_session.MultiplayerSessionActions(self.id, [])
 
@@ -760,3 +763,25 @@ all_classes = [
     AsyncRaceAuditEntry,
     PerformedDatabaseMigrations,
 ]
+
+
+@asynccontextmanager
+async def database_lifespan(_app: RdvFastAPI):
+    db_path = _app.sa.configuration["server_config"]["database_path"]
+    db_existed = Path(db_path).exists()
+
+    db.init(db_path)
+    db.connect(reuse_if_open=True)
+    db.create_tables(all_classes)
+
+    if not db_existed:
+        for entry in DatabaseMigrations:
+            PerformedDatabaseMigrations.create(migration=entry)
+
+    from randovania.server import database_migration
+
+    database_migration.apply_migrations()
+
+    yield db
+
+    db.close()

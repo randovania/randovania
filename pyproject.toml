@@ -31,42 +31,30 @@ dynamic = ["version"]
 dependencies = [
     # server communication, binary version of logic db
     "construct",
-
     # Default name for exporting presets
     "python-slugify",
-
     # permalinks
     "bitstruct",
-
     # obfuscator, guest login, server code
     "cryptography",
-
     # Generator
     "networkx",
     "tenacity>=7.0.0",
-
     # server communication
     "python-socketio[asyncio_client]",
     "aiohttp>=3.9.3",
-
     # nonblocking file IO
     "aiofiles",
-
     # Immutable dicts, used in many places
     "frozendict",
-
     # Versioning presets
     "dulwich>=0.20",
-
     # error reports
     "sentry-sdk",
-
     # Patch GamesPatches JSON from rdvgame
     "json-delta",
-
     # For the Version class
     "packaging",
-
     # For TypeVar default
     "typing-extensions>=4.4.0",
 ]
@@ -131,8 +119,8 @@ server = [
     # "flask-socketio",
     # "prometheus-flask-exporter",
     "sentry-sdk[fastapi]>=2.35.0",
-    "fastapi-discord",
-    "fastapi-socketio",
+    "fastapi-discord>=0.2.7",
+    "fastapi-socketio-handler>=0.4.0",
     "prometheus-fastapi-instrumentator",
     "eventlet",
     "peewee",
@@ -172,6 +160,7 @@ typing = [
     "types-aiofiles",
     "types-peewee",
     "types-qrcode>=8.0.0.20241004",
+    "python-socketio-stubs",
 ]
 
 [project.readme]
@@ -307,6 +296,7 @@ files = [
     "randovania/gui/widgets/node_selector_widget.py",
     "randovania/layout/",
     "randovania/lib/",
+    "randovania/server/",
     "test/bitpacking/",
     "test/game_connection",
     "test/game_description/",

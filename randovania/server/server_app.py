@@ -4,143 +4,156 @@ import base64
 import functools
 import inspect
 import json
+import logging
 import typing
-from typing import TYPE_CHECKING, TypeVar
+from collections.abc import AsyncGenerator
+from contextlib import asynccontextmanager
+from typing import TYPE_CHECKING, Concatenate, Self, TypeVar
 
-import flask
-import flask_discord
-import flask_socketio
+import fastapi
+
+# import flask
+# import flask_discord
+import fastapi_discord
 import peewee
-import requests
 import sentry_sdk
 from cryptography.fernet import Fernet
-from prometheus_flask_exporter import PrometheusMetrics
 
+# from prometheus_flask_exporter import PrometheusMetrics
+import randovania
 from randovania.bitpacking import construct_pack
 from randovania.network_common import connection_headers, error
 from randovania.server import client_check
-from randovania.server.custom_discord_oauth import CustomDiscordOAuth2Session
-from randovania.server.database import User, World
-from randovania.server.lib import logger
+from randovania.server.database import MonitoredDb, User, World, database_lifespan
+from randovania.server.discord_auth import EnforceDiscordRole, discord_oauth_lifespan
+from randovania.server.socketio import fastapi_socketio_lifespan
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Mapping
+    from collections.abc import Callable
 
-    import socketio.exceptions
+    from fastapi_discord import DiscordOAuthClient
+    from socketio import AsyncServer
+    from socketio_handler import SocketManager
+
+    from randovania.network_common.configuration import NetworkConfiguration
 
 T = TypeVar("T")
 R = TypeVar("R")
 
+type Lifespan[T] = AsyncGenerator[T, None, None]
 
-class EnforceDiscordRole:
-    guild_id: int
-    role_id: str
-    session: requests.Session
 
-    def __init__(self, config: dict):
-        self.guild_id = config["guild_id"]
-        self.role_id = str(config["role_id"])
-        self.session = requests.Session()
-        self.session.headers["Authorization"] = "Bot {}".format(config["token"])
-
-    def verify_user(self, user_id: int) -> bool:
-        r = self.session.get(f"https://discordapp.com/api/guilds/{self.guild_id}/members/{user_id}")
-        try:
-            result = r.json()
-            if r.ok:
-                return self.role_id in result["roles"]
-            else:
-                logger().warning("Unable to verify user %s: %s", user_id, r.text)
-                return False
-
-        except requests.RequestException as e:
-            logger().warning("Unable to verify user %s: %s / %s", user_id, r.text, str(e))
-            return True
+class RdvFastAPI(fastapi.FastAPI):
+    sa: ServerApp
 
 
 class ServerApp:
-    sio: flask_socketio.SocketIO
-    discord: CustomDiscordOAuth2Session
-    metrics: PrometheusMetrics
+    socket_manager: SocketManager
+    discord: DiscordOAuthClient
+    db: MonitoredDb
+    # metrics: PrometheusMetrics
     fernet_encrypt: Fernet
     guest_encrypt: Fernet | None = None
     enforce_role: EnforceDiscordRole | None = None
     expected_headers: dict[str, str]
 
-    def __init__(self, app: flask.Flask):
-        self.app = app
-        self.sio = flask_socketio.SocketIO(app)
-        self.discord = CustomDiscordOAuth2Session(app)
-        self.metrics = PrometheusMetrics(app)
-        self.fernet_encrypt = Fernet(app.config["FERNET_KEY"])
-        if app.config["GUEST_KEY"] is not None:
-            self.guest_encrypt = Fernet(app.config["GUEST_KEY"])
-        if app.config["ENFORCE_ROLE"] is not None:
-            self.enforce_role = EnforceDiscordRole(app.config["ENFORCE_ROLE"])
+    def __init__(self, configuration: NetworkConfiguration):
+        self.configuration = configuration
+
+        self.logger = logging.Logger("rdv-server")  # TODO
+        self.fernet_encrypt = Fernet(configuration["server_config"]["fernet_key"].encode("ascii"))
+        if configuration["guest_secret"] is not None:
+            self.guest_encrypt = Fernet(configuration["guest_secret"].encode("ascii"))
 
         self.expected_headers = connection_headers()
         self.expected_headers.pop("X-Randovania-Version")
 
-    def get_server(self) -> socketio.Server:
-        return self.sio.server
+        self.app = RdvFastAPI(lifespan=self._lifespan)
 
-    def get_environ(self) -> Mapping:
-        return self.get_server().get_environ(self.request_sid)
+        # self.metrics = PrometheusMetrics(app)
+
+    @asynccontextmanager
+    async def _lifespan(self, _app: RdvFastAPI):
+        self.logger.info("Lifespan start")
+        _app.sa = self
+
+        async with (
+            discord_oauth_lifespan(_app) as self.discord,
+            EnforceDiscordRole.lifespan(_app) as self.enforce_role,
+            fastapi_socketio_lifespan(_app) as self.socket_manager,
+            database_lifespan(_app) as self.db,
+        ):
+            await self._setup_routing()
+            yield
+
+        self.logger.info("Lifespan end")
+        del _app.sa
 
     @property
-    def request_sid(self):
+    def sio(self) -> AsyncServer:
+        return self.socket_manager.sio
+
+    async def _setup_routing(self):
+        from randovania.server import async_race, multiplayer, user_session
+
+        multiplayer.setup_app(self)
+        async_race.setup_app(self)
+        user_session.setup_app(self)
+
+        @self.app.get("/")
+        def index(request: fastapi.Request) -> str:
+            self.logger.info(
+                "Version checked by %s (%s)",
+                request.client.host,
+                request.headers.get("X-Forwarded-For"),
+            )
+            return randovania.VERSION
+
+    async def get_current_user(self, sid: str) -> User:
         try:
-            return getattr(flask.request, "sid")
-        except AttributeError:
-            return flask.session["sid"]
-
-    def save_session(self, session, namespace=None):
-        self.get_server().save_session(self.request_sid, session, namespace=namespace)
-
-    def get_session(self, *, sid=None, namespace=None) -> dict:
-        if sid is None:
-            sid = self.request_sid
-        return self.get_server().get_session(sid, namespace=namespace)
-
-    def session(self, *, sid=None, namespace=None):
-        if sid is None:
-            sid = self.request_sid
-        return self.get_server().session(sid, namespace=namespace)
-
-    def get_current_user(self) -> User:
-        try:
-            return User.get_by_id(self.get_session()["user-id"])
+            return User.get_by_id((await self.sio.get_session(sid))["user-id"])
         except KeyError:
             raise error.NotLoggedInError
         except peewee.DoesNotExist:
             raise error.InvalidSessionError
 
-    def store_world_in_session(self, world: World):
-        with self.session() as sio_session:
+    async def store_world_in_session(self, sid: str, world: World):
+        async with self.sio.session(sid) as sio_session:
             if "worlds" not in sio_session:
                 sio_session["worlds"] = []
 
             if world.id not in sio_session["worlds"]:
                 sio_session["worlds"].append(world.id)
 
-    def remove_world_from_session(self, world: World):
-        with self.session() as sio_session:
+    async def remove_world_from_session(self, sid: str, world: World):
+        async with self.sio.session(sid) as sio_session:
             if "worlds" in sio_session and world.id in sio_session["worlds"]:
                 sio_session["worlds"].remove(world.id)
 
-    def on(self, message: str, handler, namespace=None, *, with_header_check: bool = False):
+    def on[**P, T](
+        self,
+        message: str,
+        handler: Callable[Concatenate[Self, str, P], T],
+        namespace=None,
+        *,
+        with_header_check: bool = False,
+    ):
+        assert message != "connect"
+        assert message != "disconnect"
+        assert message != "message"
+
         @functools.wraps(handler)
-        def _handler(*args):
-            setattr(flask.request, "message", message)
+        async def _handler(sid: str, *args: P.args, **kwargs: P.kwargs):
+            # setattr(flask.request, "message", message)
 
             if len(args) == 1 and isinstance(args, tuple) and isinstance(args[0], list):
-                args = args[0]
-            logger().debug("Starting call with args %s", args)
+                args = args[0]  # ???
+            self.logger.debug("Starting call with args %s", args)
 
             with sentry_sdk.start_transaction(op="message", name=message) as span:
                 try:
-                    user = self.get_current_user()
-                    flask.request.current_user = user
+                    user = await self.get_current_user(sid)
+                    # flask.request.current_user = user
                     sentry_sdk.set_user(
                         {
                             "id": user.discord_id,
@@ -149,7 +162,7 @@ class ServerApp:
                         }
                     )
                 except (error.NotLoggedInError, error.InvalidSessionError):
-                    flask.request.current_user = None
+                    # flask.request.current_user = None
                     sentry_sdk.set_user(None)
 
                 if with_header_check:
@@ -160,7 +173,7 @@ class ServerApp:
                 try:
                     span.set_tag("message.error", 0)
                     return {
-                        "result": handler(self, *args),
+                        "result": handler(self, sid, *args),
                     }
 
                 except error.BaseNetworkError as err:
@@ -169,17 +182,18 @@ class ServerApp:
 
                 except (Exception, TypeError):
                     span.set_tag("message.error", error.ServerError.code())
-                    logger().exception(
+                    self.logger.exception(
                         f"Unhandled exception while processing request for message {message}. Args: {args}"
                     )
                     return error.ServerError().as_json
 
-        metric_wrapper = self.metrics.summary(f"socket_{message}", f"Socket.io messages of type {message}")
+        # metric_wrapper = self.metrics.summary(f"socket_{message}", f"Socket.io messages of type {message}")
+        # return self.get_server().on(message, namespace)(metric_wrapper(_handler))
 
-        return self.sio.on(message, namespace)(metric_wrapper(_handler))
+        return self.get_server().on(message, namespace)(_handler)
 
     def on_with_wrapper(self, message: str, handler: Callable[[ServerApp, T], R]):
-        types = typing.get_type_hints(handler)
+        types = typing.get_type_hints(handler, {"ServerApp": ServerApp})  # ???
         arg_spec = inspect.getfullargspec(handler)
 
         @functools.wraps(handler)
@@ -190,7 +204,8 @@ class ServerApp:
         return self.on(message, _handler, with_header_check=True)
 
     def route_path(self, route: str, target):
-        return self.app.add_url_rule(route, target.__name__, functools.partial(target, self))
+        return self.app.get(route, name=target.__name__)(functools.partial(target, self))
+        # return self.app.add_url_rule(route, target.__name__, functools.partial(target, self))
 
     def route_with_user(self, route: str, *, need_admin: bool = False, **kwargs):
         def decorator(handler):
@@ -208,39 +223,38 @@ class ServerApp:
 
                     return handler(user, **kwargs)
 
-                except flask_discord.exceptions.Unauthorized:
+                except fastapi_discord.exceptions.Unauthorized:
                     return "Unknown user", 404
 
             return _handler
 
         return decorator
 
-    def current_client_ip(self, sid=None) -> str:
+    def current_client_ip(self, sid: str) -> str:
         try:
-            environ = self.get_server().get_environ(sid or self.request_sid)
+            environ = self.sio.get_environ(sid)
             forwarded_for = environ.get("HTTP_X_FORWARDED_FOR")
             return f"{environ['REMOTE_ADDR']} ({forwarded_for})"
         except KeyError as e:
             return f"<unknown sid {e}>"
 
-    def check_client_headers(self):
-        environ = self.get_server().get_environ(self.request_sid)
+    def check_client_headers(self, sid: str):
+        environ = self.sio.get_environ(sid)
         return client_check.check_client_headers(
             self.expected_headers,
             environ,
         )
 
-    def ensure_in_room(self, room_name: str) -> bool:
+    async def ensure_in_room(self, sid: str, room_name: str) -> bool:
         """
         Ensures the client is connected to the given room, and returns if we had to join.
         """
-        sid = self.request_sid
-        all_rooms = self.get_server().rooms(sid, namespace="/")
-        self.get_server().enter_room(sid, room_name, namespace="/")
+        all_rooms = self.sio.rooms(sid, namespace="/")
+        await self.sio.enter_room(sid, room_name, namespace="/")
         return room_name not in all_rooms
 
     def is_room_not_empty(self, room_name: str, namespace: str = "/") -> bool:
-        for _ in self.get_server().manager.get_participants(namespace=namespace, room=room_name):
+        for _ in self.sio.manager.get_participants(namespace=namespace, room=room_name):
             return True
         return False
 

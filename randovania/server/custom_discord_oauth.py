@@ -1,3 +1,5 @@
+# type: ignore
+
 import flask_discord
 from flask_discord import types
 from requests_oauthlib import OAuth2Session

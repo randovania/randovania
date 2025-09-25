@@ -10,7 +10,7 @@ class ClientVersionCheck(Enum):
     IGNORE = "ignore"
 
 
-def check_client_version(version_checking: ClientVersionCheck, client_version: str, server_version: str):
+def check_client_version(version_checking: ClientVersionCheck, client_version: str, server_version: str) -> str | None:
     if version_checking == ClientVersionCheck.STRICT:
         if server_version != client_version:
             return f"Incompatible client version '{client_version}', expected '{server_version}'"
@@ -24,7 +24,7 @@ def check_client_version(version_checking: ClientVersionCheck, client_version: s
             return f"Incompatible client version '{shorter_client}', expected '{shorter_server}'"
 
 
-def check_client_headers(expected_headers: dict[str, str], environ: dict[str, str]):
+def check_client_headers(expected_headers: dict[str, str], environ: dict[str, str]) -> str | None:
     wrong_headers = {}
     for name, expected in expected_headers.items():
         value = environ.get("HTTP_{}".format(name.upper().replace("-", "_")))
