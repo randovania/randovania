@@ -120,6 +120,7 @@ class User(BaseModel):
     discord_id: int | None = peewee.IntegerField(index=True, null=True)
     name: str = peewee.CharField()
     admin: bool = peewee.BooleanField(default=False)
+    access_tokens: Iterable[UserAccessToken]
 
     @property
     def as_json(self) -> JsonObject:
@@ -137,7 +138,7 @@ class UserAccessToken(BaseModel):
     user = peewee.ForeignKeyField(User, backref="access_tokens")
     name = peewee.CharField()
     creation_date = peewee.DateTimeField(default=lib.datetime_now)
-    last_used = peewee.DateTimeField(default=lib.datetime_now)
+    last_used: datetime.datetime = peewee.DateTimeField(default=lib.datetime_now)
 
     class Meta:
         primary_key = peewee.CompositeKey("user", "name")

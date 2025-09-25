@@ -74,10 +74,15 @@ class ServerApp:
 
         self.app = RdvFastAPI(lifespan=self._lifespan)
         self.app.add_middleware(SessionMiddleware, secret_key=configuration["server_config"]["secret_key"])
+        self.app.state.session_requests = {}
 
         self.templates = Jinja2Templates(directory=Path(__file__).parent.joinpath("templates"))
 
         # self.metrics = PrometheusMetrics(app)
+
+    @property
+    def session_requests(self) -> dict[str, fastapi.Request]:
+        return self.app.state.session_requests
 
     @asynccontextmanager
     async def _lifespan(self, _app: RdvFastAPI):
@@ -206,26 +211,6 @@ class ServerApp:
 
         self.on(message, _handler, with_header_check=True)
 
-    async def _get_user(self, need_admin: bool) -> User:
-        try:
-            user: User
-            if not self.app.debug:
-                user = User.get(discord_id=self.discord.fetch_user().id)
-                if user is None or (need_admin and not user.admin):
-                    return "User not authorized", 403
-            else:
-                user = list(User.select().limit(1))[0]
-
-            return user
-
-        except fastapi_discord.exceptions.Unauthorized:
-            return "Unknown user", 404
-
-    async def get_user(self) -> User:
-        return await self._get_user(False)
-
-    async def get_admin(self) -> User:
-        return await self._get_user(True)
 
     def route_path(self, route: str, target):
         return self.app.get(route, name=target.__name__)(functools.partial(target, self))
@@ -298,3 +283,26 @@ async def server_app(request: fastapi.Request) -> ServerApp:
 
 
 ServerAppDep = Annotated[ServerApp, fastapi.Depends(server_app)]
+
+
+async def get_user(needs_admin: bool) -> AsyncCallable[[ServerAppDep, fastapi.Request], User]:
+    async def handler(sa: ServerAppDep, request: fastapi.Request) -> User:
+        try:
+            user: User
+            if not sa.app.debug:
+                discord_user = await sa.discord.user(request)
+                user = User.get(discord_id=int(discord_user.id))
+                if user is None or (needs_admin and not user.admin):
+                    raise fastapi.HTTPException(status_code=403, detail="User not authorized")
+            else:
+                user = list(User.select().limit(1))[0]
+
+            return user
+
+        except fastapi_discord.exceptions.Unauthorized:
+            raise fastapi.HTTPException(status_code=404, detail="Unknown user")
+
+    return handler
+
+UserDep = Annotated[User, fastapi.Depends(get_user(needs_admin=False))]
+AdminDep = Annotated[User, fastapi.Depends(get_user(needs_admin=True))]

@@ -13,14 +13,14 @@ import cryptography.fernet
 import fastapi_discord
 import oauthlib
 import peewee
-from fastapi import Request, Response
+from fastapi import Form, Request, Response
 from fastapi.responses import HTMLResponse, RedirectResponse
 from oauthlib.oauth2.rfc6749.errors import InvalidTokenError
 
 from randovania.network_common import error
 from randovania.server.database import User, UserAccessToken
 from randovania.server.multiplayer import session_common
-from randovania.server.server_app import ServerAppDep
+from randovania.server.server_app import ServerAppDep, UserDep
 
 if typing.TYPE_CHECKING:
     from randovania.server.server_app import ServerApp
@@ -101,19 +101,21 @@ async def _create_session_with_discord_token(sa: ServerApp, sid: str | None, req
         session["user-id"] = user.id
         session["discord-access-token"] = request.session["discord_oauth_token"]
 
+    sa.app.state.session_requests[sid] = request
+
     return user
 
 
-async def start_discord_login_flow(sa: ServerApp, sid: str):
+async def start_discord_login_flow(sa: ServerApp, sid: str) -> str:
     return sid
 
 
-def _get_now():
+def _get_now() -> datetime.datetime:
     # For mocking in tests
     return datetime.datetime.now(datetime.UTC)
 
 
-async def login_with_guest(sa: ServerApp, encrypted_login_request: bytes):
+async def login_with_guest(sa: ServerApp, sid: str, encrypted_login_request: bytes) -> dict:
     if sa.guest_encrypt is None:
         raise error.NotAuthorizedForActionError
 
@@ -134,25 +136,26 @@ async def login_with_guest(sa: ServerApp, encrypted_login_request: bytes):
 
     user: User = User.create(name=f"Guest: {name}")
 
-    with sa.sio.session() as session:
+    async with sa.sio.session(sid) as session:
         session["user-id"] = user.id
 
-    return _create_client_side_session(sa, user)
+    return await _create_client_side_session(sa, sid, user)
 
 
-async def restore_user_session(sa: ServerApp, encrypted_session: bytes, _old_session_id: None = None):
+async def restore_user_session(sa: ServerApp, sid: str, encrypted_session: bytes, _old_session_id: None = None) -> dict:
     # _old_session_id exists to keep compatibility with old dev build clients that try to connect
     try:
         decrypted_session: bytes = sa.fernet_encrypt.decrypt(encrypted_session)
         session = json.loads(decrypted_session.decode("utf-8"))
 
         if "discord-access-token" in session:
-            flask.session["DISCORD_OAUTH2_TOKEN"] = session["discord-access-token"]
-            user = _create_session_with_discord_token(sa, sa.request_sid)
-            result = _create_client_side_session(sa, user)
+            request = sa.session_requests[sid]
+            request.session["discord_oauth_token"] = session["discord-access-token"]
+            user = await _create_session_with_discord_token(sa, sid, request)
+            result = await _create_client_side_session(sa, sid, user)
         else:
             user = User.get_by_id(session["user-id"])
-            sa.sio.save_session(session)
+            await sa.sio.save_session(sid, session)
 
             if "rdv-access-token" in session:
                 access_token = UserAccessToken.get(
@@ -162,35 +165,35 @@ async def restore_user_session(sa: ServerApp, encrypted_session: bytes, _old_ses
                 access_token.last_used = datetime.datetime.now(datetime.UTC)
                 access_token.save()
 
-                result = _create_client_side_session_raw(sa, user)
+                result = _create_client_side_session_raw(sa, sid, user)
 
             else:
-                result = _create_client_side_session(sa, user)
+                result = await _create_client_side_session(sa, sid, user)
 
         return result
 
     except error.UserNotAuthorizedToUseServerError:
-        sa.sio.save_session({})
+        await sa.sio.save_session(sid, {})
         raise
 
     except (KeyError, peewee.DoesNotExist, json.JSONDecodeError, InvalidTokenError) as e:
         # InvalidTokenError: discord token expired and couldn't renew
-        sa.sio.save_session({})
+        await sa.sio.save_session(sid, {})
         sa.logger.info(
-            "Client at %s was unable to restore session: (%s) %s", sa.current_client_ip(), str(type(e)), str(e)
+            "Client at %s was unable to restore session: (%s) %s", sa.current_client_ip(sid), str(type(e)), str(e)
         )
         raise error.InvalidSessionError
 
     except Exception:
-        sa.sio.save_session({})
+        await sa.sio.save_session(sid, {})
         sa.logger.exception("Error decoding user session")
         raise error.InvalidSessionError
 
 
-async def logout(sa: ServerApp):
+async def logout(sa: ServerApp, sid: str) -> None:
     session_common.leave_all_rooms(sa)
-    flask.session.pop("DISCORD_OAUTH2_TOKEN", None)
-    with sa.sio.session() as session:
+    # flask.session.pop("DISCORD_OAUTH2_TOKEN", None) # TODO?
+    async with sa.sio.session(sid) as session:
         session.pop("discord-access-token", None)
         session.pop("user-id", None)
 
@@ -281,7 +284,7 @@ async def browser_discord_login_callback(
     return unable_to_login(sa, request, error_message, status_code)
 
 
-def setup_app(sa: ServerApp):
+def setup_app(sa: ServerApp) -> None:
     sa.on("start_discord_login_flow", start_discord_login_flow)
     sa.on("login_with_guest", login_with_guest)
     sa.on("restore_user_session", restore_user_session)
@@ -290,31 +293,30 @@ def setup_app(sa: ServerApp):
     sa.app.get("/login")(browser_login_with_discord)
     sa.app.get("/login_callback")(browser_discord_login_callback)
 
-    @sa.route_with_user("/me")
-    def browser_me(user: User):
+    @sa.app.get("/me", response_model=HTMLResponse)
+    def browser_me(request: Request, user: UserDep) -> str:
         result = f"Hello {user.name}. Admin? {user.admin}<br />Access Tokens:<ul>\n"
 
         for token in user.access_tokens:
-            delete = f' <a href="{flask.url_for("delete_token", token=token.name)}">Delete</a>'
+            delete = f' <a href="{request.url_for("/delete_token", token=token.name)}">Delete</a>'
             result += (
                 f"<li>{token.name} created at {token.creation_date}. Last used at {token.last_used}. {delete}</li>"
             )
 
-        result += f'<li><form class="form-inline" method="POST" action="{flask.url_for("create_token")}">'
+        result += f'<li><form class="form-inline" method="POST" action="{request.url_for("/create_token")}">'
         result += '<input id="name" placeholder="Access token name" name="name">'
         result += '<button type="submit">Create new</button></li></ul>'
 
         return result
 
-    @sa.route_with_user("/create_token", methods=["POST"])
-    def create_token(user: User):
-        token_name: str = flask.request.form["name"]
-        go_back = f'<a href="{flask.url_for("browser_me")}">Go back</a>'
+    @sa.app.post("/create_token", response_model=HTMLResponse)
+    def create_token(request: Request, user: UserDep, name: typing.Annotated[str, Form()]) -> str:
+        go_back = f'<a href="{request.url_for("/me")}">Go back</a>'
 
         try:
             token = UserAccessToken.create(
                 user=user,
-                name=token_name,
+                name=name,
             )
             session = _create_session_with_access_token(sa, token).decode("ascii")
             return f"Token: <pre>{session}</pre><br />{go_back}"
@@ -323,10 +325,9 @@ def setup_app(sa: ServerApp):
             return f"Unable to create token: {e}<br />{go_back}"
 
     @sa.route_with_user("/delete_token")
-    def delete_token(user: User):
-        token_name: str = flask.request.args["token"]
+    def delete_token(request: Request, user: UserDep, token: str) -> RedirectResponse:
         UserAccessToken.get(
             user=user,
-            name=token_name,
+            name=token,
         ).delete_instance()
-        return flask.redirect(flask.url_for("browser_me"))
+        return RedirectResponse(request.url_for("/me"))
