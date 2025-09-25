@@ -6,7 +6,7 @@ import inspect
 import json
 import logging
 import typing
-from collections.abc import AsyncGenerator
+from collections.abc import AsyncGenerator, Coroutine
 from contextlib import asynccontextmanager
 from typing import TYPE_CHECKING, Concatenate, Self, TypeVar
 
@@ -133,7 +133,7 @@ class ServerApp:
     def on[**P, T](
         self,
         message: str,
-        handler: Callable[Concatenate[Self, str, P], T],
+        handler: Callable[Concatenate[Self, str, P], Coroutine[None, None, T]],
         namespace=None,
         *,
         with_header_check: bool = False,
