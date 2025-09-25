@@ -19,9 +19,7 @@ class HuntersHintNamer(HintNamer[None]):
         super().__init__(all_patches, players_config)
 
         patches = all_patches[players_config.player_index]
-        location_hint_pickup = "{determiner.title}{pickup}".upper()
-        location_hint_node = "{node}".upper()
-        location_hint_template = f"{location_hint_pickup} can be found in {location_hint_node}."
+        location_hint_template = "{determiner.title.upper()}{pickup.upper()} can be found in {node.upper()}."
 
         self.location_formatters = basic_hint_formatters(
             self,
@@ -35,7 +33,7 @@ class HuntersHintNamer(HintNamer[None]):
     def format_resource_is_starting(self, resource: ItemResourceInfo, with_color: bool) -> str:
         """Used for when an item has a guaranteed hint, but is a starting item."""
         if resource.short_name.startswith("Octolith "):
-            return f"the HUNTER already started with {resource.long_name}."
+            return f"the HUNTER already started with {resource.long_name.upper()}."
 
         return super().format_resource_is_starting(resource, with_color)
 
