@@ -1,4 +1,5 @@
 import json
+import typing
 import uuid
 
 import peewee
@@ -22,23 +23,22 @@ from randovania.server.database import (
     WorldUserAssociation,
     is_boolean,
 )
-from randovania.server.lib import logger
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp
 
 
-def _check_user_associated_with(sa: ServerApp, world: World):
+async def _check_user_associated_with(sa: ServerApp, sid: str, world: World) -> None:
     try:
         WorldUserAssociation.get(
             WorldUserAssociation.world == world,
-            WorldUserAssociation.user == sa.get_current_user(),
+            WorldUserAssociation.user == await sa.get_current_user(sid),
         )
     except peewee.DoesNotExist:
         raise error.NotAuthorizedForActionError
 
 
-def verify_has_admin(
-    sa: ServerApp, session_id: int, admin_user_id: int | None, *, allow_when_no_admins: bool = False
+async def verify_has_admin(
+    sa: ServerApp, sid: str, session_id: int, admin_user_id: int | None, *, allow_when_no_admins: bool = False
 ) -> None:
     """
     Checks if the logged user can do admin operations to the given session,
@@ -48,8 +48,8 @@ def verify_has_admin(
     :param allow_when_no_admins: This action is authorized for non-admins if there are no admins.
     :return:
     """
-    current_user = sa.get_current_user()
-    current_membership = session_common.get_membership_for(current_user, session_id)
+    current_user = await sa.get_current_user(sid)
+    current_membership = await session_common.get_membership_for(current_user, session_id, sid)
 
     if not (current_membership.admin or (admin_user_id is not None and current_user.id == admin_user_id)):
         if (
@@ -63,37 +63,37 @@ def verify_has_admin(
         raise error.NotAuthorizedForActionError
 
 
-def verify_has_admin_or_claimed(sa: ServerApp, world: World) -> None:
+async def verify_has_admin_or_claimed(sa: ServerApp, sid: str, world: World) -> None:
     """
     Checks if the logged user can do admin operations to the given session,
     :param sa:
     :param world:
     :return:
     """
-    current_membership = session_common.get_membership_for(sa, world.session)
+    current_membership = await session_common.get_membership_for(sa, world.session, sid)
 
     if not current_membership.admin:
-        _check_user_associated_with(sa, world)
+        await _check_user_associated_with(sa, sid, world)
 
 
-def _verify_world_has_session(world: World, session: MultiplayerSession):
+def _verify_world_has_session(world: World, session: MultiplayerSession) -> None:
     if world.session_id != session.id:
         raise error.InvalidActionError("Wrong session")
 
 
-def _verify_no_layout_description(session: MultiplayerSession):
+def _verify_no_layout_description(session: MultiplayerSession) -> None:
     if session.layout_description_json is not None:
         raise error.InvalidActionError("Session has a generated game")
 
 
-def _verify_not_in_generation(session: MultiplayerSession):
+def _verify_not_in_generation(session: MultiplayerSession) -> None:
     if session.generation_in_progress is not None:
         raise error.InvalidActionError("Session game is being generated")
 
 
 def _get_preset(preset_bytes: bytes) -> VersionedPreset:
     try:
-        preset = VersionedPreset.from_bytes(preset_bytes)
+        preset: VersionedPreset = VersionedPreset.from_bytes(preset_bytes)
         preset.get_preset()  # test if valid
         return preset
     except Exception as e:
@@ -108,10 +108,10 @@ def _verify_preset_allowed_for(preset: VersionedPreset, session: MultiplayerSess
         raise error.InvalidActionError("Preset uses unsupported features.")
 
 
-def _create_world(
-    sa: ServerApp, session: MultiplayerSession, name: str, preset_bytes: bytes, for_user: int | None = None
-):
-    verify_has_admin(sa, session.id, for_user)
+async def _create_world(
+    sa: ServerApp, sid: str, session: MultiplayerSession, name: str, preset_bytes: bytes, *, for_user: int | None = None
+) -> World:
+    await verify_has_admin(sa, sid, session.id, for_user)
 
     _verify_no_layout_description(session)
     _verify_not_in_generation(session)
@@ -125,14 +125,16 @@ def _create_world(
     if any(name == world.name for world in session.worlds):
         raise error.InvalidActionError("World name already exists")
 
-    logger().info(f"{session_common.describe_session(session)}: Creating world {name}.")
+    sa.logger.info(f"{session_common.describe_session(session)}: Creating world {name}.")
 
     world = World.create_for(session=session, name=name, preset=preset)
     session_common.add_audit_entry(sa, session, f"Created new world {world.name}")
     return world
 
 
-def _change_world(sa: ServerApp, session: MultiplayerSession, world_uid: uuid.UUID, preset_bytes: bytes):
+async def _change_world(
+    sa: ServerApp, sid: str, session: MultiplayerSession, world_uid: uuid.UUID, preset_bytes: bytes
+) -> None:
     world = World.get_by_uuid(world_uid)
 
     _verify_no_layout_description(session)
@@ -140,14 +142,14 @@ def _change_world(sa: ServerApp, session: MultiplayerSession, world_uid: uuid.UU
     preset = _get_preset(preset_bytes)
 
     _verify_world_has_session(world, session)
-    verify_has_admin_or_claimed(sa, world)
+    await verify_has_admin_or_claimed(sa, sid, world)
 
     _verify_preset_allowed_for(preset, session)
 
     try:
         with database.db.atomic():
             world.preset = json.dumps(preset.as_json)
-            logger().info(f"{session_common.describe_session(session)}: Changing world {world_uid}.")
+            sa.logger.info(f"{session_common.describe_session(session)}: Changing world {world_uid}.")
             world.save()
             session_common.add_audit_entry(sa, session, f"Changing world {world.name}")
 
@@ -155,10 +157,12 @@ def _change_world(sa: ServerApp, session: MultiplayerSession, world_uid: uuid.UU
         raise error.InvalidActionError(f"invalid world: {world_uid}")
 
 
-def _rename_world(sa: ServerApp, session: MultiplayerSession, world_uid: uuid.UUID, new_name: str):
+async def _rename_world(
+    sa: ServerApp, sid: str, session: MultiplayerSession, world_uid: uuid.UUID, new_name: str
+) -> None:
     world = World.get_by_uuid(world_uid)
     _verify_world_has_session(world, session)
-    verify_has_admin_or_claimed(sa, world)
+    await verify_has_admin_or_claimed(sa, sid, world)
 
     if WORLD_NAME_RE.match(new_name) is None:
         raise error.InvalidActionError("Invalid world name")
@@ -167,30 +171,34 @@ def _rename_world(sa: ServerApp, session: MultiplayerSession, world_uid: uuid.UU
         raise error.InvalidActionError("World name already exists")
 
     with database.db.atomic():
-        logger().info(f"{session_common.describe_session(session)}: Renaming {world.name} ({world_uid}) to {new_name}.")
+        sa.logger.info(
+            f"{session_common.describe_session(session)}: Renaming {world.name} ({world_uid}) to {new_name}."
+        )
         session_common.add_audit_entry(sa, session, f"Renaming world {world.name} to {new_name}")
         world.name = new_name
         world.save()
 
 
-def _delete_world(sa: ServerApp, session: MultiplayerSession, world_uid: str):
+async def _delete_world(sa: ServerApp, sid: str, session: MultiplayerSession, world_uid: str) -> None:
     world = World.get_by_uuid(world_uid)
 
-    verify_has_admin_or_claimed(sa, world)
+    await verify_has_admin_or_claimed(sa, sid, world)
     _verify_world_has_session(world, session)
     _verify_no_layout_description(session)
     _verify_not_in_generation(session)
 
     world = World.get_by_uuid(world_uid)
     with database.db.atomic():
-        logger().info(f"{session_common.describe_session(session)}: Deleting {world.name} ({world_uid}).")
+        sa.logger.info(f"{session_common.describe_session(session)}: Deleting {world.name} ({world_uid}).")
         session_common.add_audit_entry(sa, session, f"Deleting world {world.name}")
         WorldUserAssociation.delete().where(WorldUserAssociation.world == world.id).execute()
         world.delete_instance()
 
 
-def _update_layout_generation(sa: ServerApp, session: MultiplayerSession, world_order: list[str]):
-    verify_has_admin(sa, session.id, None)
+async def _update_layout_generation(
+    sa: ServerApp, sid: str, session: MultiplayerSession, world_order: list[str]
+) -> None:
+    await verify_has_admin(sa, sid, session.id, None)
 
     world_objects: dict[str, World] = {str(world.uuid): world for world in session.worlds}
     if world_order:
@@ -209,7 +217,7 @@ def _update_layout_generation(sa: ServerApp, session: MultiplayerSession, world_
 
     with database.db.atomic():
         if world_order:
-            session.generation_in_progress = sa.get_current_user()
+            session.generation_in_progress = await sa.get_current_user(sid)
             objects_to_save = []
             for i, world_uuid in enumerate(world_order):
                 world_obj = world_objects[world_uuid]
@@ -221,7 +229,7 @@ def _update_layout_generation(sa: ServerApp, session: MultiplayerSession, world_
         else:
             session.generation_in_progress = None
 
-        logger().info(
+        sa.logger.info(
             "%s: Making generation in progress to %s",
             session_common.describe_session(session),
             str(session.generation_in_progress),
@@ -229,8 +237,10 @@ def _update_layout_generation(sa: ServerApp, session: MultiplayerSession, world_
         session.save()
 
 
-def _change_layout_description(sa: ServerApp, session: MultiplayerSession, description_bytes: bytes | None):
-    verify_has_admin(sa, session.id, None)
+async def _change_layout_description(
+    sa: ServerApp, sid: str, session: MultiplayerSession, description_bytes: bytes | None
+) -> None:
+    await verify_has_admin(sa, sid, session.id, None)
     worlds_to_update = []
 
     if description_bytes is None:
@@ -243,7 +253,7 @@ def _change_layout_description(sa: ServerApp, session: MultiplayerSession, descr
             worlds_to_update.append(world)
 
     else:
-        if session.generation_in_progress != sa.get_current_user():
+        if session.generation_in_progress != await sa.get_current_user(sid):
             if session.generation_in_progress is None:
                 raise error.InvalidActionError("Not waiting for a layout.")
             else:
@@ -276,7 +286,7 @@ def _change_layout_description(sa: ServerApp, session: MultiplayerSession, descr
         session.layout_description = description
         session.save()
 
-        session_common.emit_session_actions_update(session)
+        session_common.emit_session_actions_update(sa, session)
         session_common.add_audit_entry(
             sa,
             session,
@@ -284,59 +294,59 @@ def _change_layout_description(sa: ServerApp, session: MultiplayerSession, descr
         )
 
 
-def _download_layout_description(sa: ServerApp, session: MultiplayerSession) -> bytes:
+async def _download_layout_description(sa: ServerApp, sid: str, session: MultiplayerSession) -> bytes:
     # You must be a session member to do get the spoiler
-    session_common.get_membership_for(sa, session)
+    await session_common.get_membership_for(sa, session, sid)
 
     if not session.has_layout_description():
         raise error.InvalidActionError("Session does not contain a game")
 
-    if not session.game_details().spoiler:
+    if not session.game_details().spoiler:  # type: ignore[union-attr]
         raise error.InvalidActionError("Session does not contain a spoiler")
 
     session_common.add_audit_entry(sa, session, "Requested the spoiler log")
-    return session.get_layout_description_as_binary()
+    return session.get_layout_description_as_binary()  # type: ignore[return-value]
 
 
-def _change_visibility(sa: ServerApp, session: MultiplayerSession, new_visibility: str):
-    verify_has_admin(sa, session.id, None)
-    new_visibility = MultiplayerSessionVisibility(new_visibility)
+async def _change_visibility(sa: ServerApp, sid: str, session: MultiplayerSession, new_visibility: str) -> None:
+    await verify_has_admin(sa, sid, session.id, None)
+    new_visibility_ = MultiplayerSessionVisibility(new_visibility)
 
-    session.visibility = new_visibility
-    logger().info("%s: Changing visibility to %s.", session_common.describe_session(session), new_visibility)
+    session.visibility = new_visibility_
+    sa.logger.info("%s: Changing visibility to %s.", session_common.describe_session(session), new_visibility_)
     session.save()
-    session_common.add_audit_entry(sa, session, f"Changed visibility to {new_visibility.user_friendly_name}")
+    session_common.add_audit_entry(sa, session, f"Changed visibility to {new_visibility_.user_friendly_name}")
 
 
-def _change_password(sa: ServerApp, session: MultiplayerSession, password: str):
-    verify_has_admin(sa, session.id, None)
+async def _change_password(sa: ServerApp, sid: str, session: MultiplayerSession, password: str) -> None:
+    await verify_has_admin(sa, sid, session.id, None)
 
     session.password = session_common.hash_password(password)
-    logger().info(f"{session_common.describe_session(session)}: Changing password.")
+    sa.logger.info(f"{session_common.describe_session(session)}: Changing password.")
     session.save()
     session_common.add_audit_entry(sa, session, "Changed password")
 
 
-def _change_title(sa: ServerApp, session: MultiplayerSession, title: str):
-    verify_has_admin(sa, session.id, None)
+async def _change_title(sa: ServerApp, sid: str, session: MultiplayerSession, title: str) -> None:
+    await verify_has_admin(sa, sid, session.id, None)
 
     if not (0 < len(title) <= MAX_SESSION_NAME_LENGTH):
         raise error.InvalidActionError("Invalid session name length")
 
     old_name = session.name
     session.name = title
-    logger().info(f"{session_common.describe_session(session)}: Changed name from {old_name}.")
+    sa.logger.info(f"{session_common.describe_session(session)}: Changed name from {old_name}.")
     session.save()
     session_common.add_audit_entry(sa, session, f"Changed name from {old_name} to {title}")
 
 
-def _duplicate_session(sa: ServerApp, session: MultiplayerSession, new_title: str):
-    verify_has_admin(sa, session.id, None)
+async def _duplicate_session(sa: ServerApp, sid: str, session: MultiplayerSession, new_title: str) -> None:
+    await verify_has_admin(sa, sid, session.id, None)
 
     if not (0 < len(new_title) <= MAX_SESSION_NAME_LENGTH):
         raise error.InvalidActionError("Invalid session name length")
 
-    current_user = sa.get_current_user()
+    current_user = await sa.get_current_user(sid)
     session_common.add_audit_entry(sa, session, f"Duplicated session as {new_title}")
 
     with database.db.atomic():
@@ -370,79 +380,84 @@ def _duplicate_session(sa: ServerApp, session: MultiplayerSession, new_title: st
         )
 
 
-def _get_permalink(sa: ServerApp, session: MultiplayerSession) -> str:
-    verify_has_admin(sa, session.id, None)
+async def _get_permalink(sa: ServerApp, sid: str, session: MultiplayerSession) -> str:
+    await verify_has_admin(sa, sid, session.id, None)
 
     if not session.has_layout_description():
         raise error.InvalidActionError("Session does not contain a game")
+    assert session.layout_description is not None
 
     session_common.add_audit_entry(sa, session, "Requested permalink")
     return session.layout_description.permalink.as_base64_str
 
 
-def admin_session(sa: ServerApp, session_id: int, action: str, *args):
+async def admin_session(sa: ServerApp, sid: str, session_id: int, action: str, *args: typing.Any) -> typing.Any:
     monitoring.set_tag("action", action)
 
-    action: SessionAdminGlobalAction = SessionAdminGlobalAction(action)
+    action_ = SessionAdminGlobalAction(action)
     session: database.MultiplayerSession = database.MultiplayerSession.get_by_id(session_id)
 
-    if action == SessionAdminGlobalAction.CREATE_WORLD:
-        _create_world(sa, session, *args, for_user=None)
+    if action_ == SessionAdminGlobalAction.CREATE_WORLD:
+        await _create_world(sa, sid, session, *args, for_user=None)
 
-    elif action == SessionAdminGlobalAction.CHANGE_WORLD:
-        _change_world(sa, session, *args)
+    elif action_ == SessionAdminGlobalAction.CHANGE_WORLD:
+        await _change_world(sa, sid, session, *args)
 
-    elif action == SessionAdminGlobalAction.RENAME_WORLD:
-        _rename_world(sa, session, *args)
+    elif action_ == SessionAdminGlobalAction.RENAME_WORLD:
+        await _rename_world(sa, sid, session, *args)
 
-    elif action == SessionAdminGlobalAction.DELETE_WORLD:
-        _delete_world(sa, session, *args)
+    elif action_ == SessionAdminGlobalAction.DELETE_WORLD:
+        await _delete_world(sa, sid, session, *args)
 
-    elif action == SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION:
-        _update_layout_generation(sa, session, *args)
+    elif action_ == SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION:
+        await _update_layout_generation(sa, sid, session, *args)
 
-    elif action == SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION:
-        _change_layout_description(sa, session, *args)
+    elif action_ == SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION:
+        await _change_layout_description(sa, sid, session, *args)
 
-    elif action == SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION:
-        return _download_layout_description(sa, session)
+    elif action_ == SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION:
+        return await _download_layout_description(sa, sid, session)
 
-    elif action == SessionAdminGlobalAction.CHANGE_VISIBILITY:
-        _change_visibility(sa, session, *args)
+    elif action_ == SessionAdminGlobalAction.CHANGE_VISIBILITY:
+        await _change_visibility(sa, sid, session, *args)
 
-    elif action == SessionAdminGlobalAction.CHANGE_PASSWORD:
-        _change_password(sa, session, *args)
+    elif action_ == SessionAdminGlobalAction.CHANGE_PASSWORD:
+        await _change_password(sa, sid, session, *args)
 
-    elif action == SessionAdminGlobalAction.CHANGE_TITLE:
-        _change_title(sa, session, *args)
+    elif action_ == SessionAdminGlobalAction.CHANGE_TITLE:
+        await _change_title(sa, sid, session, *args)
 
-    elif action == SessionAdminGlobalAction.DUPLICATE_SESSION:
-        return _duplicate_session(sa, session, *args)
+    elif action_ == SessionAdminGlobalAction.DUPLICATE_SESSION:
+        return await _duplicate_session(sa, sid, session, *args)
 
-    elif action == SessionAdminGlobalAction.DELETE_SESSION:
-        logger().info(f"{session_common.describe_session(session)}: Deleting session.")
+    elif action_ == SessionAdminGlobalAction.DELETE_SESSION:
+        sa.logger.info(f"{session_common.describe_session(session)}: Deleting session.")
         session.delete_instance(recursive=True)
 
-    elif action == SessionAdminGlobalAction.REQUEST_PERMALINK:
-        return _get_permalink(sa, session)
+    elif action_ == SessionAdminGlobalAction.REQUEST_PERMALINK:
+        return await _get_permalink(sa, sid, session)
 
-    elif action == SessionAdminGlobalAction.CREATE_PATCHER_FILE:
-        return _create_patcher_file(sa, session, *args)
+    elif action_ == SessionAdminGlobalAction.CREATE_PATCHER_FILE:
+        return await _create_patcher_file(sa, sid, session, *args)
 
-    elif action == SessionAdminGlobalAction.SET_ALLOW_COOP:
-        _set_allow_coop(sa, session, *args)
+    elif action_ == SessionAdminGlobalAction.SET_ALLOW_COOP:
+        await _set_allow_coop(sa, sid, session, *args)
 
-    elif action == SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM:
-        _set_allow_everyone_claim(sa, session, *args)
+    elif action_ == SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM:
+        await _set_allow_everyone_claim(sa, sid, session, *args)
 
-    session_common.emit_session_meta_update(session)
+    session_common.emit_session_meta_update(sa, session)
 
 
-def _kick_user(sa: ServerApp, session: MultiplayerSession, membership: MultiplayerMembership, user_id: int):
+async def _kick_user(
+    sa: ServerApp, sid: str, session: MultiplayerSession, membership: MultiplayerMembership, user_id: int
+) -> None:
     session_common.add_audit_entry(
         sa,
         session,
-        f"Kicked {membership.effective_name}" if membership.user != sa.get_current_user() else "Left session",
+        f"Kicked {membership.effective_name}"
+        if membership.user != (await sa.get_current_user(sid))
+        else "Left session",
     )
 
     with database.db.atomic():
@@ -458,16 +473,21 @@ def _kick_user(sa: ServerApp, session: MultiplayerSession, membership: Multiplay
         membership.delete_instance()
         if not list(session.members):
             session.delete_instance(recursive=True)
-            logger().info(f"{session_common.describe_session(session)}. Kicking user {user_id} and deleting session.")
+            sa.logger.info(f"{session_common.describe_session(session)}. Kicking user {user_id} and deleting session.")
         else:
-            logger().info(f"{session_common.describe_session(session)}. Kicking user {user_id}.")
+            sa.logger.info(f"{session_common.describe_session(session)}. Kicking user {user_id}.")
 
 
-def _create_world_for(
-    sa: ServerApp, session: MultiplayerSession, membership: MultiplayerMembership, name: str, preset_bytes: bytes
-):
+async def _create_world_for(
+    sa: ServerApp,
+    sid: str,
+    session: MultiplayerSession,
+    membership: MultiplayerMembership,
+    name: str,
+    preset_bytes: bytes,
+) -> None:
     with database.db.atomic():
-        new_world = _create_world(sa, session, name, preset_bytes, membership.user.id)
+        new_world = await _create_world(sa, sid, session, name, preset_bytes, for_user=membership.user.id)
         WorldUserAssociation.create(
             world=new_world,
             user=membership.user,
@@ -475,9 +495,11 @@ def _create_world_for(
         session_common.add_audit_entry(sa, session, f"Associated new world {new_world.name} for {membership.user.name}")
 
 
-def _claim_world(sa: ServerApp, session: MultiplayerSession, user_id: int, world_uid: uuid.UUID):
+async def _claim_world(
+    sa: ServerApp, sid: str, session: MultiplayerSession, user_id: int, world_uid: uuid.UUID
+) -> None:
     if not session.allow_everyone_claim_world:
-        verify_has_admin(sa, session.id, None)
+        await verify_has_admin(sa, sid, session.id, None)
 
     world = World.get_by_uuid(world_uid)
 
@@ -494,9 +516,11 @@ def _claim_world(sa: ServerApp, session: MultiplayerSession, user_id: int, world
     )
 
 
-def _unclaim_world(sa: ServerApp, session: MultiplayerSession, user_id: int, world_uid: uuid.UUID):
-    if sa.get_current_user().id != user_id and not session.allow_everyone_claim_world:
-        verify_has_admin(sa, session.id, None)
+async def _unclaim_world(
+    sa: ServerApp, sid: str, session: MultiplayerSession, user_id: int, world_uid: uuid.UUID
+) -> None:
+    if (await sa.get_current_user(sid)).id != user_id and not session.allow_everyone_claim_world:
+        await verify_has_admin(sa, sid, session.id, None)
 
     world = World.get_by_uuid(world_uid)
     user = database.User.get_by_id(user_id)
@@ -510,11 +534,13 @@ def _unclaim_world(sa: ServerApp, session: MultiplayerSession, user_id: int, wor
     session_common.add_audit_entry(sa, session, f"Unassociated world {world.name} from {user.name}")
 
 
-def _switch_admin(sa: ServerApp, session: MultiplayerSession, membership: MultiplayerMembership):
+async def _switch_admin(
+    sa: ServerApp, sid: str, session: MultiplayerSession, membership: MultiplayerMembership
+) -> None:
     session_id = session.id
 
     # Must be admin for this
-    verify_has_admin(sa, session_id, None, allow_when_no_admins=True)
+    await verify_has_admin(sa, sid, session_id, None, allow_when_no_admins=True)
     num_admins = (
         MultiplayerMembership.select()
         .where(MultiplayerMembership.session == session_id, is_boolean(MultiplayerMembership.admin, True))
@@ -528,22 +554,24 @@ def _switch_admin(sa: ServerApp, session: MultiplayerSession, membership: Multip
     session_common.add_audit_entry(
         sa, session, f"Made {membership.effective_name} {'' if membership.admin else 'not '}an admin"
     )
-    logger().info(
+    sa.logger.info(
         f"{session_common.describe_session(session)}, User {membership.user.id}. Performing admin switch, "
         f"new status is {membership.admin}."
     )
     membership.save()
 
 
-def _switch_ready(sa: ServerApp, session: MultiplayerSession, membership: MultiplayerMembership):
+async def _switch_ready(
+    sa: ServerApp, sid: str, session: MultiplayerSession, membership: MultiplayerMembership
+) -> None:
     with database.db.atomic():
         membership.ready = not membership.ready
         membership.save()
-        logger().info(f"{session_common.describe_session(session)}. Switching ready-ness.")
+        sa.logger.info(f"{session_common.describe_session(session)}. Switching ready-ness.")
 
 
-def _set_allow_everyone_claim(sa: ServerApp, session: MultiplayerSession, new_state: bool):
-    verify_has_admin(sa, session.id, None)
+async def _set_allow_everyone_claim(sa: ServerApp, sid: str, session: MultiplayerSession, new_state: bool) -> None:
+    await verify_has_admin(sa, sid, session.id, None)
 
     with database.db.atomic():
         session.allow_everyone_claim_world = new_state
@@ -552,9 +580,9 @@ def _set_allow_everyone_claim(sa: ServerApp, session: MultiplayerSession, new_st
         session.save()
 
 
-def _set_allow_coop(sa: ServerApp, session: MultiplayerSession, new_state: bool) -> None:
+async def _set_allow_coop(sa: ServerApp, sid: str, session: MultiplayerSession, new_state: bool) -> None:
     """Sets the Co-Op state of the given session to the desired state."""
-    verify_has_admin(sa, session.id, None)
+    await verify_has_admin(sa, sid, session.id, None)
 
     if not new_state:
         for generic_world in session.worlds:
@@ -570,23 +598,27 @@ def _set_allow_coop(sa: ServerApp, session: MultiplayerSession, new_state: bool)
         session.save()
 
 
-def _create_patcher_file(sa: ServerApp, session: MultiplayerSession, world_uid: str, cosmetic_json: dict):
+async def _create_patcher_file(
+    sa: ServerApp, sid: str, session: MultiplayerSession, world_uid: str, cosmetic_json: dict
+) -> dict:
     player_names = {}
     uuids = {}
     player_index = None
-    world_uid = uuid.UUID(world_uid)
+    world_uuid = uuid.UUID(world_uid)
 
     for world in session.get_ordered_worlds():
+        assert world.order is not None
         player_names[world.order] = world.name
         uuids[world.order] = world.uuid
-        if world.uuid == world_uid:
+        if world.uuid == world_uuid:
             player_index = world.order
-            _check_user_associated_with(sa, world)
+            await _check_user_associated_with(sa, sid, world)
 
     if player_index is None:
         raise error.InvalidActionError("Unknown world uid for exporting")
 
     layout_description = session.layout_description
+    assert layout_description is not None
     players_config = PlayersConfiguration(
         player_index=player_index,
         player_names=player_names,
@@ -605,44 +637,44 @@ def _create_patcher_file(sa: ServerApp, session: MultiplayerSession, world_uid: 
     try:
         return data_factory.create_data()
     except Exception as e:
-        logger().exception("Error when creating patch data")
+        sa.logger.exception("Error when creating patch data")
         raise error.InvalidActionError(f"Unable to export game: {e}")
 
 
-def admin_player(sa: ServerApp, session_id: int, user_id: int, action: str, *args):
+async def admin_player(sa: ServerApp, sid: str, session_id: int, user_id: int, action: str, *args: typing.Any) -> None:
     monitoring.set_tag("action", action)
 
-    verify_has_admin(sa, session_id, user_id)
-    action: SessionAdminUserAction = SessionAdminUserAction(action)
+    await verify_has_admin(sa, sid, session_id, user_id)
+    action_ = SessionAdminUserAction(action)
 
     session: MultiplayerSession = database.MultiplayerSession.get_by_id(session_id)
-    membership = session_common.get_membership_for(user_id, session)
+    membership = await session_common.get_membership_for(user_id, session, sid)
 
-    if action == SessionAdminUserAction.KICK:
-        _kick_user(sa, session, membership, user_id)
+    if action_ == SessionAdminUserAction.KICK:
+        await _kick_user(sa, sid, session, membership, user_id)
 
-    elif action == SessionAdminUserAction.CREATE_WORLD_FOR:
-        _create_world_for(sa, session, membership, *args)
+    elif action_ == SessionAdminUserAction.CREATE_WORLD_FOR:
+        await _create_world_for(sa, sid, session, membership, *args)
 
-    elif action == SessionAdminUserAction.CLAIM:
-        _claim_world(sa, session, user_id, *args)
+    elif action_ == SessionAdminUserAction.CLAIM:
+        await _claim_world(sa, sid, session, user_id, *args)
 
-    elif action == SessionAdminUserAction.UNCLAIM:
-        _unclaim_world(sa, session, user_id, *args)
+    elif action_ == SessionAdminUserAction.UNCLAIM:
+        await _unclaim_world(sa, sid, session, user_id, *args)
 
-    elif action == SessionAdminUserAction.SWITCH_ADMIN:
-        _switch_admin(sa, session, membership)
+    elif action_ == SessionAdminUserAction.SWITCH_ADMIN:
+        await _switch_admin(sa, sid, session, membership)
 
-    elif action == SessionAdminUserAction.SWITCH_READY:
-        _switch_ready(sa, session, membership)
+    elif action_ == SessionAdminUserAction.SWITCH_READY:
+        await _switch_ready(sa, sid, session, membership)
 
-    elif action == SessionAdminUserAction.ABANDON:
+    elif action_ == SessionAdminUserAction.ABANDON:
         # FIXME
         raise error.InvalidActionError("Abandon is NYI")
 
-    session_common.emit_session_meta_update(session)
+    session_common.emit_session_meta_update(sa, session)
 
 
-def setup_app(sa: ServerApp):
+def setup_app(sa: ServerApp) -> None:
     sa.on("multiplayer_admin_session", admin_session)
     sa.on("multiplayer_admin_player", admin_player)
