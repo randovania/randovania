@@ -8,16 +8,19 @@ import logging
 import typing
 from collections.abc import AsyncGenerator, Coroutine
 from contextlib import asynccontextmanager
-from typing import TYPE_CHECKING, Concatenate, Literal, Self, TypeVar
+from pathlib import Path
+from typing import TYPE_CHECKING, Annotated, Concatenate, Literal, Self, TypeVar, cast
 
 import fastapi
-
-# import flask
-# import flask_discord
 import fastapi_discord
 import peewee
 import sentry_sdk
 from cryptography.fernet import Fernet
+
+# import flask
+# import flask_discord
+from fastapi.templating import Jinja2Templates
+from starlette.middleware.sessions import SessionMiddleware
 
 # from prometheus_flask_exporter import PrometheusMetrics
 import randovania
@@ -31,11 +34,11 @@ from randovania.server.socketio import fastapi_socketio_lifespan
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-    from fastapi_discord import DiscordOAuthClient
     from socketio import AsyncServer
     from socketio_handler import SocketManager
 
     from randovania.network_common.configuration import NetworkConfiguration
+    from randovania.server.discord_auth import CustomDiscordOAuthClient
 
 T = TypeVar("T")
 R = TypeVar("R")
@@ -50,7 +53,7 @@ class RdvFastAPI(fastapi.FastAPI):
 
 class ServerApp:
     socket_manager: SocketManager
-    discord: DiscordOAuthClient
+    discord: CustomDiscordOAuthClient
     db: MonitoredDb
     # metrics: PrometheusMetrics
     fernet_encrypt: Fernet
@@ -70,6 +73,9 @@ class ServerApp:
         self.expected_headers.pop("X-Randovania-Version")
 
         self.app = RdvFastAPI(lifespan=self._lifespan)
+        self.app.add_middleware(SessionMiddleware, secret_key=configuration["server_config"]["secret_key"])
+
+        self.templates = Jinja2Templates(directory=Path(__file__).parent.joinpath("templates"))
 
         # self.metrics = PrometheusMetrics(app)
 
@@ -163,7 +169,7 @@ class ServerApp:
                     sentry_sdk.set_user(None)
 
                 if with_header_check:
-                    error_msg = self.check_client_headers()
+                    error_msg = self.check_client_headers(sid)
                     if error_msg is not None:
                         return error.UnsupportedClientError(error_msg).as_json
 
@@ -199,6 +205,27 @@ class ServerApp:
             return construct_pack.encode(await handler(sa, sid, decoded_arg), types["return"])
 
         self.on(message, _handler, with_header_check=True)
+
+    async def _get_user(self, need_admin: bool) -> User:
+        try:
+            user: User
+            if not self.app.debug:
+                user = User.get(discord_id=self.discord.fetch_user().id)
+                if user is None or (need_admin and not user.admin):
+                    return "User not authorized", 403
+            else:
+                user = list(User.select().limit(1))[0]
+
+            return user
+
+        except fastapi_discord.exceptions.Unauthorized:
+            return "Unknown user", 404
+
+    async def get_user(self) -> User:
+        return await self._get_user(False)
+
+    async def get_admin(self) -> User:
+        return await self._get_user(True)
 
     def route_path(self, route: str, target):
         return self.app.get(route, name=target.__name__)(functools.partial(target, self))
@@ -263,3 +290,11 @@ class ServerApp:
         encrypted_session = base64.b85decode(data)
         json_string = self.fernet_encrypt.decrypt(encrypted_session).decode("utf-8")
         return json.loads(json_string)
+
+
+async def server_app(request: fastapi.Request) -> ServerApp:
+    app = cast("RdvFastAPI", request.app)
+    return app.sa
+
+
+ServerAppDep = Annotated[ServerApp, fastapi.Depends(server_app)]

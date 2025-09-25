@@ -114,14 +114,14 @@ gui = [
 ]
 
 server = [
-    # "sentry-sdk[flask]>=2.35.0",
-    # "flask-discord",
-    # "flask-socketio",
-    # "prometheus-flask-exporter",
     "sentry-sdk[fastapi]>=2.35.0",
     "fastapi-discord>=0.2.7",
     "fastapi-socketio-handler>=0.4.0",
     "prometheus-fastapi-instrumentator",
+    "fastapi",
+    "uvicorn",
+    "jinja2",
+    "itsdangerous",
     "eventlet",
     "peewee",
     "requests-oauthlib",

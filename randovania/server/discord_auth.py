@@ -4,12 +4,20 @@ from contextlib import asynccontextmanager
 from typing import TYPE_CHECKING, Self, TypedDict
 
 import aiohttp
-from fastapi_discord import DiscordOAuthClient
+from fastapi import Request
+from fastapi_discord import DiscordOAuthClient, Unauthorized
 
 import randovania
 
 if TYPE_CHECKING:
     from randovania.server.server_app import Lifespan, RdvFastAPI, ServerApp
+
+
+class CustomDiscordOAuthClient(DiscordOAuthClient):
+    def get_token(self, request: Request) -> str:
+        if "discord_oauth_token" not in request.session:
+            raise Unauthorized
+        return request.session["discord_oauth_token"]
 
 
 class EnforceRoleConfiguration(TypedDict, total=True):
@@ -57,7 +65,7 @@ class EnforceDiscordRole:
 
 
 @asynccontextmanager
-async def discord_oauth_lifespan(_app: RdvFastAPI) -> Lifespan[DiscordOAuthClient]:
+async def discord_oauth_lifespan(_app: RdvFastAPI) -> Lifespan[CustomDiscordOAuthClient]:
     config = randovania.get_configuration()
 
     client_id = config["discord_client_id"]
@@ -66,7 +74,7 @@ async def discord_oauth_lifespan(_app: RdvFastAPI) -> Lifespan[DiscordOAuthClien
 
     scopes = ("identify",)
 
-    discord = DiscordOAuthClient(client_id, client_secret, redirect_uri, scopes)
+    discord = CustomDiscordOAuthClient(client_id, client_secret, redirect_uri, scopes)
 
     await discord.init()
     # _app.sa.discord = discord

@@ -1,6 +1,6 @@
 import hashlib
 
-import flask_socketio
+# import flask_socketio
 import peewee
 import sentry_sdk
 

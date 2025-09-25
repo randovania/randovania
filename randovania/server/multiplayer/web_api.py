@@ -2,10 +2,10 @@ import html
 import json
 
 import construct
-import flask
-from flask.typing import ResponseReturnValue
-from playhouse import flask_utils
 
+# import flask
+# from flask.typing import ResponseReturnValue
+# from playhouse import flask_utils
 from randovania.game_description import default_database
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import json_lib
@@ -14,7 +14,7 @@ from randovania.server.database import MultiplayerMembership, MultiplayerSession
 from randovania.server.server_app import ServerApp
 
 
-def admin_sessions(user: User) -> ResponseReturnValue:
+def admin_sessions(user: User) -> "ResponseReturnValue":
     paginated_query = flask_utils.PaginatedQuery(
         MultiplayerSession.select().order_by(MultiplayerSession.creation_date.desc()),
         paginate_by=20,
@@ -65,7 +65,7 @@ def admin_sessions(user: User) -> ResponseReturnValue:
     )
 
 
-def admin_session(user: User, session_id: int) -> ResponseReturnValue:
+def admin_session(user: User, session_id: int) -> "ResponseReturnValue":
     try:
         session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
     except MultiplayerSession.DoesNotExist:
@@ -138,7 +138,7 @@ def admin_session(user: User, session_id: int) -> ResponseReturnValue:
     return "\n".join(entries)
 
 
-def download_session_spoiler(user: User, session_id: int) -> ResponseReturnValue:
+def download_session_spoiler(user: User, session_id: int) -> "ResponseReturnValue":
     try:
         session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
     except MultiplayerSession.DoesNotExist:
@@ -153,7 +153,7 @@ def download_session_spoiler(user: User, session_id: int) -> ResponseReturnValue
     return response
 
 
-def download_world_preset(user: User, world_id: int) -> ResponseReturnValue:
+def download_world_preset(user: User, world_id: int) -> "ResponseReturnValue":
     try:
         world = World.get_by_id(world_id)
     except World.DoesNotExist:
@@ -169,7 +169,7 @@ def download_world_preset(user: User, world_id: int) -> ResponseReturnValue:
     return response
 
 
-def delete_session(user: User, session_id: int) -> ResponseReturnValue:
+def delete_session(user: User, session_id: int) -> "ResponseReturnValue":
     if flask.request.method == "GET":
         return '<form method="POST"><input type="submit" value="Confirm delete"></form>'
 
