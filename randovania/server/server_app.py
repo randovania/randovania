@@ -8,7 +8,7 @@ import logging
 import typing
 from collections.abc import AsyncGenerator, Coroutine
 from contextlib import asynccontextmanager
-from typing import TYPE_CHECKING, Concatenate, Self, TypeVar
+from typing import TYPE_CHECKING, Concatenate, Literal, Self, TypeVar
 
 import fastapi
 
@@ -41,6 +41,7 @@ T = TypeVar("T")
 R = TypeVar("R")
 
 type Lifespan[T] = AsyncGenerator[T, None, None]
+type AsyncCallable[**P, T] = Callable[P, Coroutine[None, None, T]]
 
 
 class RdvFastAPI(fastapi.FastAPI):
@@ -133,17 +134,13 @@ class ServerApp:
     def on[**P, T](
         self,
         message: str,
-        handler: Callable[Concatenate[Self, str, P], Coroutine[None, None, T]],
+        handler: AsyncCallable[Concatenate[Self, str, P], T],
         namespace=None,
         *,
         with_header_check: bool = False,
-    ):
-        assert message != "connect"
-        assert message != "disconnect"
-        assert message != "message"
-
+    ) -> None:
         @functools.wraps(handler)
-        async def _handler(sid: str, *args: P.args, **kwargs: P.kwargs):
+        async def _handler(sid: str, *args: P.args, **kwargs: P.kwargs) -> dict | dict[Literal["result"], T]:
             # setattr(flask.request, "message", message)
 
             if len(args) == 1 and isinstance(args, tuple) and isinstance(args[0], list):
@@ -173,7 +170,7 @@ class ServerApp:
                 try:
                     span.set_tag("message.error", 0)
                     return {
-                        "result": handler(self, sid, *args),
+                        "result": await handler(self, sid, *args),
                     }
 
                 except error.BaseNetworkError as err:
@@ -190,18 +187,18 @@ class ServerApp:
         # metric_wrapper = self.metrics.summary(f"socket_{message}", f"Socket.io messages of type {message}")
         # return self.get_server().on(message, namespace)(metric_wrapper(_handler))
 
-        return self.get_server().on(message, namespace)(_handler)
+        self.sio.on(message, namespace)(_handler)
 
-    def on_with_wrapper(self, message: str, handler: Callable[[ServerApp, T], R]):
-        types = typing.get_type_hints(handler, {"ServerApp": ServerApp})  # ???
+    def on_with_wrapper(self, message: str, handler: AsyncCallable[[ServerApp, str, T], R]) -> None:
+        types = typing.get_type_hints(handler)
         arg_spec = inspect.getfullargspec(handler)
 
         @functools.wraps(handler)
-        def _handler(sa: ServerApp, arg: bytes) -> bytes:
-            decoded_arg = construct_pack.decode(arg, types[arg_spec.args[1]])
-            return construct_pack.encode(handler(sa, decoded_arg), types["return"])
+        async def _handler(sa: ServerApp, sid: str, arg: bytes) -> bytes:
+            decoded_arg = construct_pack.decode(arg, types[arg_spec.args[2]])
+            return construct_pack.encode(await handler(sa, sid, decoded_arg), types["return"])
 
-        return self.on(message, _handler, with_header_check=True)
+        self.on(message, _handler, with_header_check=True)
 
     def route_path(self, route: str, target):
         return self.app.get(route, name=target.__name__)(functools.partial(target, self))
