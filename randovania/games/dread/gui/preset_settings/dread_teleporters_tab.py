@@ -33,11 +33,11 @@ class PresetTeleportersDread(PresetTeleporterTab, Ui_PresetTeleportersDread, Nod
         TeleporterShuffleMode.VANILLA: "All transporters are connected to where they do in the original game.",
         TeleporterShuffleMode.TWO_WAY_RANDOMIZED: (
             "After taking a transporter, the transporter in the room you are in will bring you back to where you were. "
-            "An transporter will never connect to another in the same region. "
+            "A transporter will never connect to another in the same region. "
             "This is the only non-vanilla setting which guarantees that all regions are reachable."
         ),
         TeleporterShuffleMode.TWO_WAY_UNCHECKED: (
-            "After taking an transporter, the transporter in the room you are in will bring you back to where you were."
+            "After taking a transporter, the transporter in the room you are in will bring you back to where you were."
         ),
         TeleporterShuffleMode.ONE_WAY_TELEPORTER: (
             "All transporters bring you to an elevator room, but going backwards can go somewhere else. "

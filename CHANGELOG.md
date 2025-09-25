@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The preset summary now lists when Flash Shift can be used without Main Flash Shift when having Flash Shift Upgrades.
 - Added: The preset summary now lists when Power Bombs can be used without the Main Power Bomb when having Power Bomb Tanks.
 - Changed: The preset summary lists when Power Bomb limitations is disabled instead of when it's enabled.
+- Fixed: 2 Typos in the transporters preset page.
 
 #### Logic Database
 
