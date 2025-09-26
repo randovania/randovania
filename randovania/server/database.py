@@ -710,8 +710,8 @@ class AsyncRaceEntry(BaseModel):
 
 class AsyncRaceEntryPause(BaseModel):
     entry: AsyncRaceEntry = peewee.ForeignKeyField(AsyncRaceEntry, backref="pauses")
-    start = peewee.DateTimeField(default=lib.datetime_now)
-    end = peewee.DateTimeField(null=True)
+    start: datetime.datetime = peewee.DateTimeField(default=lib.datetime_now)
+    end: datetime.datetime = peewee.DateTimeField(null=True)
 
     @property
     def start_datetime(self) -> datetime.datetime:

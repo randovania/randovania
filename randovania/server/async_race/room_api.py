@@ -29,6 +29,7 @@ from randovania.server import database, lib
 from randovania.server.database import (
     AsyncRaceEntryPause,
     AsyncRaceRoom,
+    BaseModel,
     User,
 )
 from randovania.server.server_app import ServerApp
@@ -36,7 +37,7 @@ from randovania.server.server_app import ServerApp
 MAX_AUTH_TOKEN_LENGTH = 3600 * 24
 
 
-def _verify_authorization(sa: ServerApp, room: AsyncRaceRoom, auth_token: str) -> None:
+async def _verify_authorization(sa: ServerApp, sid: str, room: AsyncRaceRoom, auth_token: str) -> None:
     """
     Checks for room password, current user membership and if the given auth token is valid.
     :param sa:
@@ -45,7 +46,7 @@ def _verify_authorization(sa: ServerApp, room: AsyncRaceRoom, auth_token: str) -
     :return:
     """
     if room.password is not None:
-        if database.AsyncRaceEntry.entry_for(room, sa.get_current_user()) is not None:
+        if database.AsyncRaceEntry.entry_for(room, await sa.get_current_user(sid)) is not None:
             return
 
         try:
@@ -72,7 +73,7 @@ def _fast_get_games_list_from_raw_layout(layout_description_json: bytes) -> list
     return [g for g in RandovaniaGame.sorted_all_games() if g.value in present_games]
 
 
-def list_rooms(sa: ServerApp, limit: int | None) -> JsonType:
+async def list_rooms(sa: ServerApp, sid: str, limit: int | None) -> JsonType:
     now = lib.datetime_now()
 
     def construct_helper(**args: typing.Any) -> AsyncRaceRoomListEntry:
@@ -96,16 +97,16 @@ def list_rooms(sa: ServerApp, limit: int | None) -> JsonType:
             AsyncRaceRoom.id,
             AsyncRaceRoom.name,
             AsyncRaceRoom.layout_description_json,
-            Case(None, ((AsyncRaceRoom.password.is_null(), False),), True).alias("has_password"),
+            Case(None, ((AsyncRaceRoom.password.is_null(), False),), True).alias("has_password"), # type: ignore[union-attr]
             AsyncRaceRoom.visibility,
-            User.name.alias("creator"),
-            AsyncRaceRoom.start_date.alias("start_date"),
-            AsyncRaceRoom.end_date.alias("end_date"),
-            AsyncRaceRoom.creation_date.alias("creation_date"),
+            User.name.alias("creator"), # type: ignore[attr-defined]
+            AsyncRaceRoom.start_date.alias("start_date"), # type: ignore[attr-defined]
+            AsyncRaceRoom.end_date.alias("end_date"), # type: ignore[attr-defined]
+            AsyncRaceRoom.creation_date.alias("creation_date"), # type: ignore[attr-defined]
         )
         .join(User, on=AsyncRaceRoom.creator)
         .group_by(AsyncRaceRoom.id)
-        .order_by(AsyncRaceRoom.id.desc())
+        .order_by(AsyncRaceRoom.id.desc()) # type: ignore[attr-defined]
         .limit(limit)
         .objects(construct_helper)
     )
@@ -113,8 +114,8 @@ def list_rooms(sa: ServerApp, limit: int | None) -> JsonType:
     return [session.as_json for session in sessions]
 
 
-def create_room(sa: ServerApp, layout_bin: bytes, settings_json: JsonObject) -> JsonObject:
-    current_user = sa.get_current_user()
+async def create_room(sa: ServerApp, sid: str, layout_bin: bytes, settings_json: JsonObject) -> JsonObject:
+    current_user = await sa.get_current_user(sid)
 
     layout = LayoutDescription.from_bytes(layout_bin)
     settings = AsyncRaceSettings.from_json(settings_json)
@@ -142,7 +143,7 @@ def create_room(sa: ServerApp, layout_bin: bytes, settings_json: JsonObject) -> 
     return AsyncRaceRoom.get_by_id(new_room_id).create_session_entry(sa).as_json
 
 
-def change_room_settings(sa: ServerApp, room_id: int, settings_json: JsonObject) -> JsonObject:
+async def change_room_settings(sa: ServerApp, sid: str, room_id: int, settings_json: JsonObject) -> JsonObject:
     """
     Updates the settings for the given room
     :param sa:
@@ -150,7 +151,7 @@ def change_room_settings(sa: ServerApp, room_id: int, settings_json: JsonObject)
     :param settings_json:
     :return: A AsyncRaceRoomEntry, json encoded
     """
-    current_user = sa.get_current_user()
+    current_user = await sa.get_current_user(sid)
     settings = AsyncRaceSettings.from_json(settings_json)
 
     room = AsyncRaceRoom.get_by_id(room_id)
@@ -180,7 +181,7 @@ def change_room_settings(sa: ServerApp, room_id: int, settings_json: JsonObject)
     return AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa).as_json
 
 
-def get_room(sa: ServerApp, room_id: int, password: str | None) -> JsonType:
+async def get_room(sa: ServerApp, sid: str, room_id: int, password: str | None) -> JsonType:
     """
     Gets details about the given room id
     :param sa:
@@ -194,7 +195,7 @@ def get_room(sa: ServerApp, room_id: int, password: str | None) -> JsonType:
     return room.create_session_entry(sa).as_json
 
 
-def refresh_room(sa: ServerApp, room_id: int, auth_token: str) -> JsonType:
+async def refresh_room(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> JsonType:
     """
     Gets details about the given room id
     :param sa:
@@ -203,11 +204,11 @@ def refresh_room(sa: ServerApp, room_id: int, auth_token: str) -> JsonType:
     :return: A AsyncRaceRoomEntry, json encoded
     """
     room = AsyncRaceRoom.get_by_id(room_id)
-    _verify_authorization(sa, room, auth_token)
+    await _verify_authorization(sa, sid, room, auth_token)
     return room.create_session_entry(sa).as_json
 
 
-def get_leaderboard(sa: ServerApp, room_id: int, auth_token: str) -> JsonType:
+async def get_leaderboard(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> JsonType:
     """
     Gets the race results. Only accessible after the end time is reached.
     :param sa:
@@ -216,7 +217,7 @@ def get_leaderboard(sa: ServerApp, room_id: int, auth_token: str) -> JsonType:
     :return: A RaceRoomLeaderboard, json encoded
     """
     room = AsyncRaceRoom.get_by_id(room_id)
-    _verify_authorization(sa, room, auth_token)
+    await _verify_authorization(sa, sid, room, auth_token)
 
     if room.end_datetime > lib.datetime_now():
         raise error.NotAuthorizedForActionError
@@ -225,12 +226,17 @@ def get_leaderboard(sa: ServerApp, room_id: int, auth_token: str) -> JsonType:
     for entry in room.entries:
         match entry.user_status():
             case AsyncRaceRoomUserStatus.FINISHED:
+                assert entry.start_datetime is not None
+                assert entry.finish_datetime is not None
                 entries.append(
                     RaceRoomLeaderboardEntry(
                         user=entry.user.as_randovania_user(),
                         time=entry.finish_datetime
                         - entry.start_datetime
-                        - sum((pause.length for pause in entry.pauses), datetime.timedelta(seconds=0)),
+                        - sum(
+                            (pause.length for pause in entry.pauses if pause.length is not None),
+                            start=datetime.timedelta(seconds=0),
+                        ),
                     )
                 )
             case AsyncRaceRoomUserStatus.FORFEITED | AsyncRaceRoomUserStatus.STARTED:
@@ -246,7 +252,7 @@ def get_leaderboard(sa: ServerApp, room_id: int, auth_token: str) -> JsonType:
     return RaceRoomLeaderboard(entries).as_json
 
 
-def get_layout(sa: ServerApp, room_id: int, auth_token: str) -> bytes:
+async def get_layout(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> bytes:
     """
     Gets the layout description for the room, if it has finished
     :param sa:
@@ -255,7 +261,7 @@ def get_layout(sa: ServerApp, room_id: int, auth_token: str) -> bytes:
     :return: A LayoutDescription, byte-encoded
     """
     room = AsyncRaceRoom.get_by_id(room_id)
-    _verify_authorization(sa, room, auth_token)
+    await _verify_authorization(sa, sid, room, auth_token)
 
     if room.end_datetime > lib.datetime_now():
         raise error.NotAuthorizedForActionError
@@ -263,7 +269,7 @@ def get_layout(sa: ServerApp, room_id: int, auth_token: str) -> bytes:
     return room.layout_description_json
 
 
-def get_audit_log(sa: ServerApp, room_id: int, auth_token: str) -> JsonArray:
+async def get_audit_log(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> JsonArray:
     """
     Gets the audit log for the given room.
     :param sa:
@@ -272,19 +278,19 @@ def get_audit_log(sa: ServerApp, room_id: int, auth_token: str) -> JsonArray:
     :return: A list of json-encoded AuditEntry
     """
     room = AsyncRaceRoom.get_by_id(room_id)
-    _verify_authorization(sa, room, auth_token)
+    await _verify_authorization(sa, sid, room, auth_token)
 
     return [log.as_entry().as_json for log in room.audit_log]
 
 
-def admin_get_admin_data(sa: ServerApp, room_id: int) -> JsonType:
+async def admin_get_admin_data(sa: ServerApp, sid: str, room_id: int) -> JsonType:
     """
     Gets the all details of every user who has joined the room. Only accessible by admins.
     :param sa:
     :param room_id: The room to get details for
     :return: A AsyncRaceRoomAdminData, json encoded
     """
-    user = sa.get_current_user()
+    user = await sa.get_current_user(sid)
     room = AsyncRaceRoom.get_by_id(room_id)
     if room.creator != user:
         raise error.NotAuthorizedForActionError
@@ -294,7 +300,7 @@ def admin_get_admin_data(sa: ServerApp, room_id: int) -> JsonType:
     ).as_json
 
 
-def admin_update_entries(sa: ServerApp, room_id: int, raw_new_entries: JsonType) -> JsonType:
+async def admin_update_entries(sa: ServerApp, sid: str, room_id: int, raw_new_entries: list[JsonObject]) -> JsonObject:
     """
     Updates multiple entries for the given room, all at once.
     :param sa:
@@ -302,7 +308,7 @@ def admin_update_entries(sa: ServerApp, room_id: int, raw_new_entries: JsonType)
     :param raw_new_entries: The list of entries to modify.
     :return: A AsyncRaceRoomEntry, json encoded
     """
-    user = sa.get_current_user()
+    user = await sa.get_current_user(sid)
     room = AsyncRaceRoom.get_by_id(room_id)
     if room.creator != user:
         raise error.NotAuthorizedForActionError
@@ -321,6 +327,7 @@ def admin_update_entries(sa: ServerApp, room_id: int, raw_new_entries: JsonType)
                 raise error.InvalidActionError(f"Invalid dates for {modification.user.name}")
 
             entry = database.AsyncRaceEntry.entry_for(room, modification.user.id)
+            assert entry is not None
             entry.start_datetime = modification.start_date
             entry.finish_datetime = modification.finish_date
             entry.forfeit = modification.forfeit
@@ -330,14 +337,14 @@ def admin_update_entries(sa: ServerApp, room_id: int, raw_new_entries: JsonType)
 
         database.AsyncRaceAuditEntry.create(
             room=room,
-            user=sa.get_current_user(),
+            user=user,
             message=f"Modified entries for {[', '.join(mod.user.name for mod in new_entries)]}.",
         )
 
     return AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa).as_json
 
 
-def join_and_export(sa: ServerApp, room_id: int, auth_token: str, cosmetic_json: JsonType) -> JsonType:
+async def join_and_export(sa: ServerApp, sid: str, room_id: int, auth_token: str, cosmetic_json: JsonObject) -> JsonObject:
     """
 
     :param sa:
@@ -346,9 +353,9 @@ def join_and_export(sa: ServerApp, room_id: int, auth_token: str, cosmetic_json:
     :param cosmetic_json:
     :return:
     """
-    user = sa.get_current_user()
+    user = await sa.get_current_user(sid)
     room = AsyncRaceRoom.get_by_id(room_id)
-    _verify_authorization(sa, room, auth_token)
+    await _verify_authorization(sa, sid, room, auth_token)
 
     if room.get_race_status(lib.datetime_now()) != AsyncRaceRoomRaceStatus.ACTIVE:
         raise error.NotAuthorizedForActionError("Room is not active")
@@ -379,7 +386,7 @@ def join_and_export(sa: ServerApp, room_id: int, auth_token: str, cosmetic_json:
         raise error.InvalidActionError(f"Unable to export game: {e}")
 
 
-def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
+async def change_state(sa: ServerApp, sid: str, room_id: int, new_state: str) -> JsonType:
     """
     Adjusts the start date, finish date or forfeit flag of the user's entry based on the requested state.
     :param sa:
@@ -388,19 +395,19 @@ def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
     :return:
     """
     room = AsyncRaceRoom.get_by_id(room_id)
-    user = sa.get_current_user()
+    user = await sa.get_current_user(sid)
     entry = database.AsyncRaceEntry.entry_for(room, user)
     if entry is None:
         raise error.NotAuthorizedForActionError
 
     old_state = entry.user_status()
-    new_state = AsyncRaceRoomUserStatus(new_state)
+    new_state_ = AsyncRaceRoomUserStatus(new_state)
 
     now = lib.datetime_now()
 
-    things_to_save = [entry]
+    things_to_save: list[BaseModel] = [entry]
 
-    match (old_state, new_state):
+    match (old_state, new_state_):
         case (AsyncRaceRoomUserStatus.JOINED, AsyncRaceRoomUserStatus.STARTED):
             entry.start_datetime = now
             # FIXME: limit distance of start date from join date
@@ -420,6 +427,7 @@ def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
         case (AsyncRaceRoomUserStatus.PAUSED, AsyncRaceRoomUserStatus.STARTED):
             # Undoing pressing "Pause"
             pause = AsyncRaceEntryPause.active_pause(entry)
+            assert pause is not None
             pause.end = now
             things_to_save.append(pause)
             entry.paused = False
@@ -445,7 +453,7 @@ def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
 
     with database.db.atomic():
         database.AsyncRaceAuditEntry.create(
-            room=room, user=sa.get_current_user(), message=f"Changed state from {old_state.value} to {new_state.value}"
+            room=room, user=user, message=f"Changed state from {old_state.value} to {new_state_.value}"
         )
         for it in things_to_save:
             it.save()
@@ -453,12 +461,12 @@ def change_state(sa: ServerApp, room_id: int, new_state: str) -> JsonType:
     return room.create_session_entry(sa).as_json
 
 
-def get_own_proof(sa: ServerApp, room_id: int) -> tuple[str, str]:
+async def get_own_proof(sa: ServerApp, sid: str, room_id: int) -> tuple[str, str]:
     """
     This endpoint allows a user to request their own submission notes and proof url.
     """
     room = AsyncRaceRoom.get_by_id(room_id)
-    user = sa.get_current_user()
+    user = await sa.get_current_user(sid)
     entry = database.AsyncRaceEntry.entry_for(room, user)
     if entry is None:
         raise error.NotAuthorizedForActionError
@@ -467,18 +475,18 @@ def get_own_proof(sa: ServerApp, room_id: int) -> tuple[str, str]:
         raise error.InvalidActionError("Only possible to submit proof after finishing")
 
     database.AsyncRaceAuditEntry.create(
-        room=room, user=sa.get_current_user(), message="Requested own submission notes and proof."
+        room=room, user=user, message="Requested own submission notes and proof."
     )
 
     return entry.submission_notes, entry.proof_url
 
 
-def submit_proof(sa: ServerApp, room_id: int, submission_notes: str, proof_url: str) -> None:
+async def submit_proof(sa: ServerApp, sid: str, room_id: int, submission_notes: str, proof_url: str) -> None:
     """
     This endpoint allows a user to record submission notes and a link to proof for their run.
     """
     room = AsyncRaceRoom.get_by_id(room_id)
-    user = sa.get_current_user()
+    user = await sa.get_current_user(sid)
     entry = database.AsyncRaceEntry.entry_for(room, user)
     if entry is None:
         raise error.NotAuthorizedForActionError
@@ -487,7 +495,7 @@ def submit_proof(sa: ServerApp, room_id: int, submission_notes: str, proof_url: 
         raise error.InvalidActionError("Only possible to submit proof after finishing")
 
     database.AsyncRaceAuditEntry.create(
-        room=room, user=sa.get_current_user(), message="Updated submission notes and proof."
+        room=room, user=user, message="Updated submission notes and proof."
     )
 
     entry.submission_notes = submission_notes
