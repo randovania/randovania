@@ -6,7 +6,7 @@ import inspect
 import json
 import logging
 import typing
-from collections.abc import AsyncGenerator, Coroutine
+from collections.abc import AsyncGenerator, Coroutine, Sequence
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import TYPE_CHECKING, Annotated, Concatenate, Literal, Self, TypeVar, cast
@@ -25,11 +25,12 @@ from starlette.middleware.sessions import SessionMiddleware
 # from prometheus_flask_exporter import PrometheusMetrics
 import randovania
 from randovania.bitpacking import construct_pack
+from randovania.lib.json_lib import JsonObject_RO, JsonType_RO
 from randovania.network_common import connection_headers, error
 from randovania.server import client_check
 from randovania.server.database import MonitoredDb, User, World, database_lifespan
 from randovania.server.discord_auth import EnforceDiscordRole, discord_oauth_lifespan
-from randovania.server.socketio import fastapi_socketio_lifespan
+from randovania.server.socketio import EventHandlerReturnType, SioDataType, fastapi_socketio_lifespan
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -64,7 +65,7 @@ class ServerApp:
     def __init__(self, configuration: NetworkConfiguration):
         self.configuration = configuration
 
-        self.logger = logging.Logger("rdv-server")  # TODO
+        self.logger = logging.getLogger("uvicorn.asgi")  # TODO
         self.fernet_encrypt = Fernet(configuration["server_config"]["fernet_key"].encode("ascii"))
         if configuration["guest_secret"] is not None:
             self.guest_encrypt = Fernet(configuration["guest_secret"].encode("ascii"))
@@ -85,7 +86,7 @@ class ServerApp:
         return self.app.state.session_requests
 
     @asynccontextmanager
-    async def _lifespan(self, _app: RdvFastAPI):
+    async def _lifespan(self, _app: RdvFastAPI) -> Lifespan[None]:
         self.logger.info("Lifespan start")
         _app.sa = self
 
@@ -105,7 +106,7 @@ class ServerApp:
     def sio(self) -> AsyncServer:
         return self.socket_manager.sio
 
-    async def _setup_routing(self):
+    async def _setup_routing(self) -> None:
         from randovania.server import async_race, multiplayer, user_session
 
         multiplayer.setup_app(self)
@@ -114,9 +115,10 @@ class ServerApp:
 
         @self.app.get("/")
         def index(request: fastapi.Request) -> str:
+            host = request.client.host if request.client is not None else None
             self.logger.info(
                 "Version checked by %s (%s)",
-                request.client.host,
+                host,
                 request.headers.get("X-Forwarded-For"),
             )
             return randovania.VERSION
@@ -129,7 +131,7 @@ class ServerApp:
         except peewee.DoesNotExist:
             raise error.InvalidSessionError
 
-    async def store_world_in_session(self, sid: str, world: World):
+    async def store_world_in_session(self, sid: str, world: World) -> None:
         async with self.sio.session(sid) as sio_session:
             if "worlds" not in sio_session:
                 sio_session["worlds"] = []
@@ -137,25 +139,25 @@ class ServerApp:
             if world.id not in sio_session["worlds"]:
                 sio_session["worlds"].append(world.id)
 
-    async def remove_world_from_session(self, sid: str, world: World):
+    async def remove_world_from_session(self, sid: str, world: World) -> None:
         async with self.sio.session(sid) as sio_session:
             if "worlds" in sio_session and world.id in sio_session["worlds"]:
                 sio_session["worlds"].remove(world.id)
 
-    def on[**P, T](
+    def on[**P, T: EventHandlerReturnType](
         self,
         message: str,
         handler: AsyncCallable[Concatenate[Self, str, P], T],
-        namespace=None,
+        namespace: str | None = None,
         *,
         with_header_check: bool = False,
     ) -> None:
         @functools.wraps(handler)
-        async def _handler(sid: str, *args: P.args, **kwargs: P.kwargs) -> dict | dict[Literal["result"], T]:
+        async def _handler(sid: str, *args: P.args, **kwargs: P.kwargs) -> dict | dict[str, T]:
             # setattr(flask.request, "message", message)
 
             if len(args) == 1 and isinstance(args, tuple) and isinstance(args[0], list):
-                args = args[0]  # ???
+                args = args[0] # type: ignore[assignment] # ???
             self.logger.debug("Starting call with args %s", args)
 
             with sentry_sdk.start_transaction(op="message", name=message) as span:
@@ -181,7 +183,7 @@ class ServerApp:
                 try:
                     span.set_tag("message.error", 0)
                     return {
-                        "result": await handler(self, sid, *args),
+                        "result": await handler(self, sid, *args, **kwargs),
                     }
 
                 except error.BaseNetworkError as err:
@@ -195,10 +197,11 @@ class ServerApp:
                     )
                     return error.ServerError().as_json
 
+        typed_handler = cast("AsyncCallable[Concatenate[str, P], dict | dict[str, T]]", _handler)
         # metric_wrapper = self.metrics.summary(f"socket_{message}", f"Socket.io messages of type {message}")
         # return self.get_server().on(message, namespace)(metric_wrapper(_handler))
 
-        self.sio.on(message, namespace)(_handler)
+        self.sio.on(message, namespace=namespace)(typed_handler)
 
     def on_with_wrapper(self, message: str, handler: AsyncCallable[[ServerApp, str, T], R]) -> None:
         types = typing.get_type_hints(handler)
@@ -215,13 +218,16 @@ class ServerApp:
     def current_client_ip(self, sid: str) -> str:
         try:
             environ = self.sio.get_environ(sid)
+            assert environ is not None
             forwarded_for = environ.get("HTTP_X_FORWARDED_FOR")
             return f"{environ['REMOTE_ADDR']} ({forwarded_for})"
         except KeyError as e:
             return f"<unknown sid {e}>"
 
-    def check_client_headers(self, sid: str):
+    def check_client_headers(self, sid: str) -> str | None:
         environ = self.sio.get_environ(sid)
+        assert environ is not None
+        assert self.expected_headers is not None
         return client_check.check_client_headers(
             self.expected_headers,
             environ,
@@ -268,7 +274,7 @@ def get_user(needs_admin: bool) -> AsyncCallable[[ServerAppDep, fastapi.Request]
                 if user is None or (needs_admin and not user.admin):
                     raise fastapi.HTTPException(status_code=403, detail="User not authorized")
             else:
-                user = list(User.select().limit(1))[0]
+                user = User.get()
 
             return user
 

@@ -1,19 +1,23 @@
 from __future__ import annotations
 
+from collections.abc import Sequence
 from contextlib import asynccontextmanager
 from typing import TYPE_CHECKING
 
 from socketio_handler import BaseSocketHandler, SocketManager, register_handler
 
 import randovania
+from randovania.lib.json_lib import JsonObject_RO, JsonType_RO
 from randovania.server import client_check
 
 if TYPE_CHECKING:
-    from randovania.server.server_app import RdvFastAPI, ServerApp
+    from randovania.server.server_app import RdvFastAPI, ServerApp, Lifespan
 
+SioDataType = str | bytes | JsonObject_RO | Sequence[JsonType_RO]
+EventHandlerReturnType = SioDataType | tuple[SioDataType, ...] | None
 
 @asynccontextmanager
-async def fastapi_socketio_lifespan(_app: RdvFastAPI):
+async def fastapi_socketio_lifespan(_app: RdvFastAPI) -> Lifespan[SocketManager]:
     async with SocketManager(socketio_path=None) as manager:
         manager.mount_to_app(_app, _app.sa.configuration["socketio_path"])
         register_handler()(get_socket_handler(_app.sa))
@@ -22,7 +26,7 @@ async def fastapi_socketio_lifespan(_app: RdvFastAPI):
         yield manager
 
 
-def get_socket_handler(sa: ServerApp):
+def get_socket_handler(sa: ServerApp) -> type[BaseSocketHandler]:
     from randovania.server.multiplayer import world_api
 
     version_checking = client_check.ClientVersionCheck(sa.configuration["server_config"]["client_version_checking"])
@@ -69,7 +73,7 @@ def get_socket_handler(sa: ServerApp):
         async def on_disconnect(self, sid: str) -> None:
             sa.logger.info(f"Client at {sa.current_client_ip(sid)} disconnected.")
 
-            session = await sa.get_server().get_session(sid)
+            session = await sa.sio.get_session(sid)
             await world_api.report_disconnect(sa, session, sa.logger)
 
     return RdvSocketHandler

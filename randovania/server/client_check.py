@@ -1,3 +1,4 @@
+from collections.abc import Mapping
 from enum import Enum
 
 import randovania
@@ -23,8 +24,10 @@ def check_client_version(version_checking: ClientVersionCheck, client_version: s
             shorter_server = "{}.{}".format(*server.release[:2])
             return f"Incompatible client version '{shorter_client}', expected '{shorter_server}'"
 
+    return None
 
-def check_client_headers(expected_headers: dict[str, str], environ: dict[str, str]) -> str | None:
+
+def check_client_headers(expected_headers: dict[str, str], environ: Mapping[str, str]) -> str | None:
     wrong_headers = {}
     for name, expected in expected_headers.items():
         value = environ.get("HTTP_{}".format(name.upper().replace("-", "_")))
@@ -38,3 +41,5 @@ def check_client_headers(expected_headers: dict[str, str], environ: dict[str, st
         return (
             f"Incompatible client:\n{message}\n\nServer is version {randovania.VERSION}, please confirm you're updated."
         )
+
+    return None

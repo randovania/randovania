@@ -12,6 +12,7 @@ import zlib
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Self
+
 from uuid import UUID
 
 import cachetools
@@ -43,7 +44,7 @@ if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator, Sequence
 
     from randovania.lib.json_lib import JsonObject
-    from randovania.server.server_app import RdvFastAPI, ServerApp
+    from randovania.server.server_app import RdvFastAPI, ServerApp, Lifespan
 
     class TypedModelSelect[T](typing.Protocol):
         def where(self, *expressions: Any) -> Self: ...
@@ -265,6 +266,8 @@ class MultiplayerSession(BaseModel):
             provider = world_by_id[action.provider_id]
             receiver = world_by_id[action.receiver_id]
 
+            assert provider.order is not None
+
             location_index = PickupIndex(action.location)
             target = description.all_patches[provider.order].pickup_assignment[location_index]
 
@@ -280,7 +283,9 @@ class MultiplayerSession(BaseModel):
             self.id,
             [
                 _describe_action(action)
-                for action in WorldAction.select().where(WorldAction.session == self).order_by(WorldAction.time.asc())
+                for action in WorldAction.select().where(
+                    WorldAction.session == self
+                ).order_by(WorldAction.time.asc()) # type: ignore[attr-defined]
             ],
         )
 
@@ -375,7 +380,7 @@ class World(BaseModel):
     id: int
     session: MultiplayerSession = peewee.ForeignKeyField(MultiplayerSession, backref="worlds")
     session_id: int
-    uuid: uuid.UUID = peewee.UUIDField(default=uuid.uuid4, unique=True)
+    uuid: UUID = peewee.UUIDField(default=uuid.uuid4, unique=True)
 
     name: str = peewee.CharField(max_length=MAX_WORLD_NAME_LENGTH)
     preset: str = peewee.TextField()
@@ -384,7 +389,7 @@ class World(BaseModel):
     associations: list[WorldUserAssociation]
 
     @classmethod
-    def get_by_uuid(cls, uid) -> World:
+    def get_by_uuid(cls, uid: UUID | str) -> World:
         try:
             return cls.get(World.uuid == uid)
         except peewee.DoesNotExist:
@@ -440,7 +445,7 @@ class WorldUserAssociation(BaseModel):
         )
 
     @classmethod
-    def get_by_ids(cls, world_uid: uuid.UUID, user_id: int) -> Self:
+    def get_by_ids(cls, world_uid: UUID, user_id: int) -> Self:
         return (
             cls.select()
             .join(World)
@@ -582,11 +587,11 @@ class AsyncRaceRoom(BaseModel):
             now,
         )
 
-    def create_session_entry(self, sa: ServerApp) -> async_race_room.AsyncRaceRoomEntry:
+    async def create_session_entry(self, sa: ServerApp, sid: str) -> async_race_room.AsyncRaceRoomEntry:
         game_details = self.game_details()
 
         now = lib.datetime_now()
-        for_user = sa.get_current_user()
+        for_user = await sa.get_current_user(sid)
 
         if (entry := AsyncRaceEntry.entry_for(self, for_user)) is not None:
             status = entry.user_status()
@@ -612,7 +617,7 @@ class AsyncRaceRoom(BaseModel):
             presets_raw=[
                 VersionedPreset.with_preset(preset).as_bytes() for preset in self.layout_description.all_presets
             ],
-            is_admin=for_user == self.creator,
+            is_admin=for_user == self.creator, # type: ignore[arg-type]
             self_status=status,
             allow_pause=self.allow_pause,
         )
@@ -685,12 +690,12 @@ class AsyncRaceEntry(BaseModel):
 
     @property
     def join_datetime(self) -> datetime.datetime:
-        return datetime.datetime.fromisoformat(self.join_date)
+        return datetime.datetime.fromisoformat(self.join_date) # type: ignore[arg-type]
 
     @property
     def start_datetime(self) -> datetime.datetime | None:
         if self.start_date is not None:
-            return datetime.datetime.fromisoformat(self.start_date)
+            return datetime.datetime.fromisoformat(self.start_date) # type: ignore[arg-type]
         return None
 
     @start_datetime.setter
@@ -700,7 +705,7 @@ class AsyncRaceEntry(BaseModel):
     @property
     def finish_datetime(self) -> datetime.datetime | None:
         if self.finish_date is not None:
-            return datetime.datetime.fromisoformat(self.finish_date)
+            return datetime.datetime.fromisoformat(self.finish_date) # type: ignore[arg-type]
         return None
 
     @finish_datetime.setter
@@ -715,23 +720,23 @@ class AsyncRaceEntryPause(BaseModel):
 
     @property
     def start_datetime(self) -> datetime.datetime:
-        return datetime.datetime.fromisoformat(self.start)
+        return datetime.datetime.fromisoformat(self.start) # type: ignore[arg-type]
 
     @property
     def end_datetime(self) -> datetime.datetime | None:
         if self.end is not None:
-            return datetime.datetime.fromisoformat(self.end)
+            return datetime.datetime.fromisoformat(self.end) # type: ignore[arg-type]
         return None
 
     @property
     def length(self) -> datetime.timedelta | None:
         if self.end is None:
             return None
-        return self.end_datetime - self.start_datetime
+        return self.end_datetime - self.start_datetime # type: ignore[operator]
 
     @classmethod
     def active_pause(cls, entry: AsyncRaceEntry) -> Self | None:
-        for it in cls.select().where(cls.entry == entry, cls.end.is_null()):
+        for it in cls.select().where(cls.entry == entry, cls.end.is_null()): # type: ignore[attr-defined]
             return it
         return None
 
@@ -769,7 +774,7 @@ all_classes = [
 
 
 @asynccontextmanager
-async def database_lifespan(_app: RdvFastAPI):
+async def database_lifespan(_app: RdvFastAPI) -> Lifespan[MonitoredDb]:
     db_path = _app.sa.configuration["server_config"]["database_path"]
     db_existed = Path(db_path).exists()
 

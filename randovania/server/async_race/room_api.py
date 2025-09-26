@@ -1,3 +1,4 @@
+from collections.abc import Sequence
 import datetime
 import json
 import math
@@ -9,7 +10,7 @@ from retro_data_structures.json_util import JsonArray
 from randovania.game.game_enum import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.lib.json_lib import JsonObject, JsonType
+from randovania.lib.json_lib import JsonObject, JsonObject_RO, JsonType
 from randovania.network_common import error
 from randovania.network_common.async_race_room import (
     AsyncRaceEntryData,
@@ -73,7 +74,7 @@ def _fast_get_games_list_from_raw_layout(layout_description_json: bytes) -> list
     return [g for g in RandovaniaGame.sorted_all_games() if g.value in present_games]
 
 
-async def list_rooms(sa: ServerApp, sid: str, limit: int | None) -> JsonType:
+async def list_rooms(sa: ServerApp, sid: str, limit: int | None) -> Sequence[JsonObject_RO]:
     now = lib.datetime_now()
 
     def construct_helper(**args: typing.Any) -> AsyncRaceRoomListEntry:
@@ -140,7 +141,7 @@ async def create_room(sa: ServerApp, sid: str, layout_bin: bytes, settings_json:
             allow_pause=settings.allow_pause,
         ).id
 
-    return AsyncRaceRoom.get_by_id(new_room_id).create_session_entry(sa).as_json
+    return (await AsyncRaceRoom.get_by_id(new_room_id).create_session_entry(sa, sid)).as_json
 
 
 async def change_room_settings(sa: ServerApp, sid: str, room_id: int, settings_json: JsonObject) -> JsonObject:
@@ -178,10 +179,10 @@ async def change_room_settings(sa: ServerApp, sid: str, room_id: int, settings_j
     room.save()
 
     # TODO: Reusing the `room` after we set start_datetime/end_datetime breaks create_session_entry
-    return AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa).as_json
+    return (await AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa, sid)).as_json
 
 
-async def get_room(sa: ServerApp, sid: str, room_id: int, password: str | None) -> JsonType:
+async def get_room(sa: ServerApp, sid: str, room_id: int, password: str | None) -> JsonObject_RO:
     """
     Gets details about the given room id
     :param sa:
@@ -192,10 +193,10 @@ async def get_room(sa: ServerApp, sid: str, room_id: int, password: str | None) 
     room = AsyncRaceRoom.get_by_id(room_id)
     if room.password != password:
         raise error.WrongPasswordError
-    return room.create_session_entry(sa).as_json
+    return (await room.create_session_entry(sa, sid)).as_json
 
 
-async def refresh_room(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> JsonType:
+async def refresh_room(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> JsonObject_RO:
     """
     Gets details about the given room id
     :param sa:
@@ -205,10 +206,10 @@ async def refresh_room(sa: ServerApp, sid: str, room_id: int, auth_token: str) -
     """
     room = AsyncRaceRoom.get_by_id(room_id)
     await _verify_authorization(sa, sid, room, auth_token)
-    return room.create_session_entry(sa).as_json
+    return (await room.create_session_entry(sa, sid)).as_json
 
 
-async def get_leaderboard(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> JsonType:
+async def get_leaderboard(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> JsonObject_RO:
     """
     Gets the race results. Only accessible after the end time is reached.
     :param sa:
@@ -283,7 +284,7 @@ async def get_audit_log(sa: ServerApp, sid: str, room_id: int, auth_token: str) 
     return [log.as_entry().as_json for log in room.audit_log]
 
 
-async def admin_get_admin_data(sa: ServerApp, sid: str, room_id: int) -> JsonType:
+async def admin_get_admin_data(sa: ServerApp, sid: str, room_id: int) -> JsonObject_RO:
     """
     Gets the all details of every user who has joined the room. Only accessible by admins.
     :param sa:
@@ -341,7 +342,7 @@ async def admin_update_entries(sa: ServerApp, sid: str, room_id: int, raw_new_en
             message=f"Modified entries for {[', '.join(mod.user.name for mod in new_entries)]}.",
         )
 
-    return AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa).as_json
+    return (await AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa, sid)).as_json
 
 
 async def join_and_export(sa: ServerApp, sid: str, room_id: int, auth_token: str, cosmetic_json: JsonObject) -> JsonObject:
@@ -386,7 +387,7 @@ async def join_and_export(sa: ServerApp, sid: str, room_id: int, auth_token: str
         raise error.InvalidActionError(f"Unable to export game: {e}")
 
 
-async def change_state(sa: ServerApp, sid: str, room_id: int, new_state: str) -> JsonType:
+async def change_state(sa: ServerApp, sid: str, room_id: int, new_state: str) -> JsonObject_RO:
     """
     Adjusts the start date, finish date or forfeit flag of the user's entry based on the requested state.
     :param sa:
@@ -458,7 +459,7 @@ async def change_state(sa: ServerApp, sid: str, room_id: int, new_state: str) ->
         for it in things_to_save:
             it.save()
 
-    return room.create_session_entry(sa).as_json
+    return (await room.create_session_entry(sa, sid)).as_json
 
 
 async def get_own_proof(sa: ServerApp, sid: str, room_id: int) -> tuple[str, str]:
