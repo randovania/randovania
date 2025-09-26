@@ -5,11 +5,13 @@ import functools
 import inspect
 import json
 import logging
+import time
 import typing
 from collections.abc import AsyncGenerator, Coroutine
 from contextlib import asynccontextmanager
+from contextvars import ContextVar
 from pathlib import Path
-from typing import TYPE_CHECKING, Annotated, Concatenate, Self, TypeVar, cast
+from typing import TYPE_CHECKING, Annotated, Any, Concatenate, Self, TypeVar, cast
 
 import fastapi
 import fastapi_discord
@@ -21,6 +23,7 @@ from cryptography.fernet import Fernet
 # import flask_discord
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
+from uvicorn.logging import ColourizedFormatter
 
 # from prometheus_flask_exporter import PrometheusMetrics
 import randovania
@@ -46,9 +49,27 @@ R = TypeVar("R")
 type Lifespan[T] = AsyncGenerator[T, None, None]
 type AsyncCallable[**P, T] = Callable[P, Coroutine[None, None, T]]
 
+type MiddlewareNext[T] = AsyncCallable[[fastapi.Request], T]
+
 
 class RdvFastAPI(fastapi.FastAPI):
     sa: ServerApp
+
+
+ctx_who: ContextVar[str | None] = ContextVar("who", default=None)
+ctx_where: ContextVar[str | None] = ContextVar("where", default=None)
+ctx_context: ContextVar[str] = ContextVar("context", default="Free")
+
+
+class ServerLoggingFormatter(ColourizedFormatter):
+    converter = time.gmtime
+
+    def formatMessage(self, record: logging.LogRecord) -> str:
+        record.who = ctx_who.get()
+        record.where = ctx_where.get()
+        record.context = ctx_context.get()
+
+        return super().formatMessage(record)
 
 
 class ServerApp:
@@ -75,6 +96,16 @@ class ServerApp:
         self.app = RdvFastAPI(lifespan=self._lifespan)
         self.app.add_middleware(SessionMiddleware, secret_key=configuration["server_config"]["secret_key"])
         self.app.state.session_requests = {}
+
+        @self.app.middleware("http")
+        async def request_ctx(request: fastapi.Request, call_next: MiddlewareNext) -> Any:
+            if request.client is None:
+                ctx_who.set(None)
+            else:
+                ctx_who.set(f"{request.client.host}:{request.client.port}")
+            ctx_where.set(str(request.url))
+            ctx_context.set("FastAPI")
+            return await call_next(request)
 
         self.templates = Jinja2Templates(directory=Path(__file__).parent.joinpath("templates"))
 
@@ -153,7 +184,9 @@ class ServerApp:
     ) -> None:
         @functools.wraps(handler)
         async def _handler(sid: str, *args: P.args, **kwargs: P.kwargs) -> dict | dict[str, T]:
-            # setattr(flask.request, "message", message)
+            ctx_where.set(message)
+            ctx_who.set(self.current_client_ip(sid))
+            ctx_context.set("SocketIO")
 
             if len(args) == 1 and isinstance(args, tuple) and isinstance(args[0], list):
                 args = args[0]  # type: ignore[assignment] # ???
@@ -162,7 +195,7 @@ class ServerApp:
             with sentry_sdk.start_transaction(op="message", name=message) as span:
                 try:
                     user = await self.get_current_user(sid)
-                    # flask.request.current_user = user
+                    ctx_who.set(user.name)
                     sentry_sdk.set_user(
                         {
                             "id": user.discord_id,
@@ -171,7 +204,6 @@ class ServerApp:
                         }
                     )
                 except (error.NotLoggedInError, error.InvalidSessionError):
-                    # flask.request.current_user = None
                     sentry_sdk.set_user(None)
 
                 if with_header_check:

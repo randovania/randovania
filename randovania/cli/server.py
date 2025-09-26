@@ -27,8 +27,28 @@ def flask_command_logic(args: Namespace) -> None:
         host = "0.0.0.0"
 
     import uvicorn
+    import uvicorn.config
 
-    uvicorn.run(server_app.app, host=host, port=5000)
+    log_config = uvicorn.config.LOGGING_CONFIG
+
+    # # Enable peewee logging to see the queries being made
+    # log_config["loggers"]["peewee"] = {
+    #     'level': 'DEBUG',
+    #     'handlers': ['default'],
+    # }
+
+    # the info-level logs are more like debug-level
+    log_config["loggers"]["socketio_handler.app"] = {"level": "WARN"}
+
+    log_config["formatters"]["default"]["fmt"] = (
+        "[%(asctime)s] %(levelprefix)s %(context)s [%(who)s] in %(where)s: %(message)s"
+    )
+    log_config["formatters"]["default"]["()"] = "randovania.server.server_app.ServerLoggingFormatter"
+    log_config["formatters"]["access"]["fmt"] = (
+        "[%(asctime)s] %(levelprefix)s Uvicorn [%(client_addr)s] in %(request_line)s: %(status_code)s"
+    )
+
+    uvicorn.run(server_app.app, host=host, port=5000, log_config=log_config)
 
 
 def add_flask_command(sub_parsers: _SubParsersAction) -> None:
