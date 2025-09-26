@@ -71,7 +71,7 @@ async def create_session(sa: ServerApp, sid: str, session_name: str) -> dict:
             admin=True,
         )
 
-    session_common.join_room(sa, new_session)
+    await session_common.join_room(sa, sid, new_session)
     return new_session.create_session_entry().as_json
 
 
@@ -87,8 +87,8 @@ async def join_session(sa: ServerApp, sid: str, session_id: int, password: str |
             raise error.WrongPasswordError
 
     MultiplayerMembership.get_or_create(user=user, session=session)
-    session_common.join_room(sa, session)
-    session_common.emit_session_meta_update(sa, session)
+    await session_common.join_room(sa, sid, session)
+    await session_common.emit_session_meta_update(sa, session)
 
     return session.create_session_entry().as_json
 
@@ -96,19 +96,19 @@ async def join_session(sa: ServerApp, sid: str, session_id: int, password: str |
 async def listen_to_session(sa: ServerApp, sid: str, session_id: int, listen: bool) -> None:
     if listen:
         membership = await session_common.get_membership_for(sa, session_id, sid)
-        session_common.join_room(sa, membership.session)
+        await session_common.join_room(sa, sid, membership.session)
     else:
-        session_common.leave_room(sa, session_id)
+        await session_common.leave_room(sa, sid, session_id)
 
 
 async def request_session_update(sa: ServerApp, sid: str, session_id: int) -> None:
     session = MultiplayerSession.get_by_id(session_id)
 
-    session_common.emit_session_meta_update(sa, session)
+    await session_common.emit_session_meta_update(sa, session)
     if session.has_layout_description():
-        session_common.emit_session_actions_update(sa, session)
+        await session_common.emit_session_actions_update(sa, session)
 
-    session_common.emit_session_audit_update(sa, session)
+    await session_common.emit_session_audit_update(sa, session)
 
 
 def setup_app(sa: ServerApp) -> None:

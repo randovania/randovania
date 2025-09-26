@@ -343,10 +343,10 @@ async def world_sync(sa: ServerApp, sid: str, request: ServerSyncRequest) -> Ser
         sessions_to_update_actions.add(world.session.id)
 
     for session_id in sessions_to_update_meta:
-        session_common.emit_session_meta_update(sa, MultiplayerSession.get_by_id(session_id))
+        await session_common.emit_session_meta_update(sa, MultiplayerSession.get_by_id(session_id))
 
     for session_id in sessions_to_update_actions:
-        session_common.emit_session_actions_update(sa, MultiplayerSession.get_by_id(session_id))
+        await session_common.emit_session_actions_update(sa, MultiplayerSession.get_by_id(session_id))
 
     return ServerSyncResponse(
         worlds=frozendict(world_details),
@@ -411,7 +411,7 @@ async def emit_world_pickups_update(sa: ServerApp, world: World) -> None:
     await sa.sio.emit(signals.WORLD_PICKUPS_UPDATE, data, room=_get_world_room(world))
 
 
-def report_disconnect(sa: ServerApp, session_dict: dict, log: logging.Logger) -> None:
+async def report_disconnect(sa: ServerApp, session_dict: dict, log: logging.Logger) -> None:
     user_id: int | None = session_dict.get("user-id")
     if user_id is None:
         return
@@ -435,7 +435,7 @@ def report_disconnect(sa: ServerApp, session_dict: dict, log: logging.Logger) ->
         association.save()
 
     for session in sessions_to_update.values():
-        session_common.emit_session_meta_update(sa, session)
+        await session_common.emit_session_meta_update(sa, session)
 
 
 def setup_app(sa: ServerApp) -> None:

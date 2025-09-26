@@ -128,7 +128,7 @@ async def _create_world(
     sa.logger.info(f"{session_common.describe_session(session)}: Creating world {name}.")
 
     world = World.create_for(session=session, name=name, preset=preset)
-    session_common.add_audit_entry(sa, session, f"Created new world {world.name}")
+    await session_common.add_audit_entry(sa, sid, session, f"Created new world {world.name}")
     return world
 
 
@@ -151,7 +151,7 @@ async def _change_world(
             world.preset = json.dumps(preset.as_json)
             sa.logger.info(f"{session_common.describe_session(session)}: Changing world {world_uid}.")
             world.save()
-            session_common.add_audit_entry(sa, session, f"Changing world {world.name}")
+            await session_common.add_audit_entry(sa, sid, session, f"Changing world {world.name}")
 
     except peewee.DoesNotExist:
         raise error.InvalidActionError(f"invalid world: {world_uid}")
@@ -174,7 +174,7 @@ async def _rename_world(
         sa.logger.info(
             f"{session_common.describe_session(session)}: Renaming {world.name} ({world_uid}) to {new_name}."
         )
-        session_common.add_audit_entry(sa, session, f"Renaming world {world.name} to {new_name}")
+        await session_common.add_audit_entry(sa, sid, session, f"Renaming world {world.name} to {new_name}")
         world.name = new_name
         world.save()
 
@@ -190,7 +190,7 @@ async def _delete_world(sa: ServerApp, sid: str, session: MultiplayerSession, wo
     world = World.get_by_uuid(world_uid)
     with database.db.atomic():
         sa.logger.info(f"{session_common.describe_session(session)}: Deleting {world.name} ({world_uid}).")
-        session_common.add_audit_entry(sa, session, f"Deleting world {world.name}")
+        await session_common.add_audit_entry(sa, sid, session, f"Deleting world {world.name}")
         WorldUserAssociation.delete().where(WorldUserAssociation.world == world.id).execute()
         world.delete_instance()
 
@@ -286,9 +286,10 @@ async def _change_layout_description(
         session.layout_description = description
         session.save()
 
-        session_common.emit_session_actions_update(sa, session)
-        session_common.add_audit_entry(
+        await session_common.emit_session_actions_update(sa, session)
+        await session_common.add_audit_entry(
             sa,
+            sid,
             session,
             "Removed generated game" if description is None else f"Set game to {description.shareable_word_hash}",
         )
@@ -304,7 +305,7 @@ async def _download_layout_description(sa: ServerApp, sid: str, session: Multipl
     if not session.game_details().spoiler:  # type: ignore[union-attr]
         raise error.InvalidActionError("Session does not contain a spoiler")
 
-    session_common.add_audit_entry(sa, session, "Requested the spoiler log")
+    await session_common.add_audit_entry(sa, sid, session, "Requested the spoiler log")
     return session.get_layout_description_as_binary()  # type: ignore[return-value]
 
 
@@ -315,7 +316,7 @@ async def _change_visibility(sa: ServerApp, sid: str, session: MultiplayerSessio
     session.visibility = new_visibility_
     sa.logger.info("%s: Changing visibility to %s.", session_common.describe_session(session), new_visibility_)
     session.save()
-    session_common.add_audit_entry(sa, session, f"Changed visibility to {new_visibility_.user_friendly_name}")
+    await session_common.add_audit_entry(sa, sid, session, f"Changed visibility to {new_visibility_.user_friendly_name}")
 
 
 async def _change_password(sa: ServerApp, sid: str, session: MultiplayerSession, password: str) -> None:
@@ -324,7 +325,7 @@ async def _change_password(sa: ServerApp, sid: str, session: MultiplayerSession,
     session.password = session_common.hash_password(password)
     sa.logger.info(f"{session_common.describe_session(session)}: Changing password.")
     session.save()
-    session_common.add_audit_entry(sa, session, "Changed password")
+    await session_common.add_audit_entry(sa, sid, session, "Changed password")
 
 
 async def _change_title(sa: ServerApp, sid: str, session: MultiplayerSession, title: str) -> None:
@@ -337,7 +338,7 @@ async def _change_title(sa: ServerApp, sid: str, session: MultiplayerSession, ti
     session.name = title
     sa.logger.info(f"{session_common.describe_session(session)}: Changed name from {old_name}.")
     session.save()
-    session_common.add_audit_entry(sa, session, f"Changed name from {old_name} to {title}")
+    await session_common.add_audit_entry(sa, sid, session, f"Changed name from {old_name} to {title}")
 
 
 async def _duplicate_session(sa: ServerApp, sid: str, session: MultiplayerSession, new_title: str) -> None:
@@ -347,7 +348,7 @@ async def _duplicate_session(sa: ServerApp, sid: str, session: MultiplayerSessio
         raise error.InvalidActionError("Invalid session name length")
 
     current_user = await sa.get_current_user(sid)
-    session_common.add_audit_entry(sa, session, f"Duplicated session as {new_title}")
+    await session_common.add_audit_entry(sa, sid, session, f"Duplicated session as {new_title}")
 
     with database.db.atomic():
         new_session: MultiplayerSession = MultiplayerSession.create(
@@ -387,7 +388,7 @@ async def _get_permalink(sa: ServerApp, sid: str, session: MultiplayerSession) -
         raise error.InvalidActionError("Session does not contain a game")
     assert session.layout_description is not None
 
-    session_common.add_audit_entry(sa, session, "Requested permalink")
+    await session_common.add_audit_entry(sa, sid, session, "Requested permalink")
     return session.layout_description.permalink.as_base64_str
 
 
@@ -446,14 +447,15 @@ async def admin_session(sa: ServerApp, sid: str, session_id: int, action: str, *
     elif action_ == SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM:
         await _set_allow_everyone_claim(sa, sid, session, *args)
 
-    session_common.emit_session_meta_update(sa, session)
+    await session_common.emit_session_meta_update(sa, session)
 
 
 async def _kick_user(
     sa: ServerApp, sid: str, session: MultiplayerSession, membership: MultiplayerMembership, user_id: int
 ) -> None:
-    session_common.add_audit_entry(
+    await session_common.add_audit_entry(
         sa,
+        sid,
         session,
         f"Kicked {membership.effective_name}"
         if membership.user != (await sa.get_current_user(sid))
@@ -492,7 +494,7 @@ async def _create_world_for(
             world=new_world,
             user=membership.user,
         )
-        session_common.add_audit_entry(sa, session, f"Associated new world {new_world.name} for {membership.user.name}")
+        await session_common.add_audit_entry(sa, sid, session, f"Associated new world {new_world.name} for {membership.user.name}")
 
 
 async def _claim_world(
@@ -511,8 +513,8 @@ async def _claim_world(
         world=world,
         user=user_id,
     )
-    session_common.add_audit_entry(
-        sa, session, f"Associated world {world.name} for {database.User.get_by_id(user_id).name}"
+    await session_common.add_audit_entry(
+        sa, sid, session, f"Associated world {world.name} for {database.User.get_by_id(user_id).name}"
     )
 
 
@@ -531,7 +533,7 @@ async def _unclaim_world(
         raise error.InvalidActionError(f"User {world.name} does not claim world {world.name}")
 
     association.delete_instance()
-    session_common.add_audit_entry(sa, session, f"Unassociated world {world.name} from {user.name}")
+    await session_common.add_audit_entry(sa, sid, session, f"Unassociated world {world.name} from {user.name}")
 
 
 async def _switch_admin(
@@ -551,8 +553,8 @@ async def _switch_admin(
         raise error.InvalidActionError("can't demote the only admin")
 
     membership.admin = not membership.admin
-    session_common.add_audit_entry(
-        sa, session, f"Made {membership.effective_name} {'' if membership.admin else 'not '}an admin"
+    await session_common.add_audit_entry(
+        sa, sid, session, f"Made {membership.effective_name} {'' if membership.admin else 'not '}an admin"
     )
     sa.logger.info(
         f"{session_common.describe_session(session)}, User {membership.user.id}. Performing admin switch, "
@@ -576,7 +578,7 @@ async def _set_allow_everyone_claim(sa: ServerApp, sid: str, session: Multiplaye
     with database.db.atomic():
         session.allow_everyone_claim_world = new_state
         new_operation = "Allowing" if session.allow_everyone_claim_world else "Disallowing"
-        session_common.add_audit_entry(sa, session, f"{new_operation} everyone to claim worlds.")
+        await session_common.add_audit_entry(sa, sid, session, f"{new_operation} everyone to claim worlds.")
         session.save()
 
 
@@ -594,7 +596,7 @@ async def _set_allow_coop(sa: ServerApp, sid: str, session: MultiplayerSession, 
     with database.db.atomic():
         session.allow_coop = new_state
         new_operation = "Allowing" if session.allow_coop else "Disallowing"
-        session_common.add_audit_entry(sa, session, f"{new_operation} coop for the session.")
+        await session_common.add_audit_entry(sa, sid, session, f"{new_operation} coop for the session.")
         session.save()
 
 
@@ -629,8 +631,8 @@ async def _create_patcher_file(
     preset = layout_description.get_preset(players_config.player_index)
     cosmetic_patches = preset.game.data.layout.cosmetic_patches.from_json(cosmetic_json)
 
-    session_common.add_audit_entry(
-        sa, session, f"Exporting game named {players_config.player_names[players_config.player_index]}"
+    await session_common.add_audit_entry(
+        sa, sid, session, f"Exporting game named {players_config.player_names[players_config.player_index]}"
     )
 
     data_factory = preset.game.patch_data_factory(layout_description, players_config, cosmetic_patches)
@@ -672,7 +674,7 @@ async def admin_player(sa: ServerApp, sid: str, session_id: int, user_id: int, a
         # FIXME
         raise error.InvalidActionError("Abandon is NYI")
 
-    session_common.emit_session_meta_update(sa, session)
+    await session_common.emit_session_meta_update(sa, session)
 
 
 def setup_app(sa: ServerApp) -> None:

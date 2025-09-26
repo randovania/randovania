@@ -1,3 +1,4 @@
+from collections.abc import Sequence
 import hashlib
 
 # import flask_socketio
@@ -5,6 +6,7 @@ import peewee
 import sentry_sdk
 
 from randovania.bitpacking import construct_pack
+from randovania.lib.json_lib import JsonObject_RO, JsonType_RO
 from randovania.network_common import error, signals
 from randovania.server import database
 from randovania.server.database import MultiplayerAuditEntry, MultiplayerSession, World
@@ -16,8 +18,8 @@ def room_name_for(session_id: int) -> str:
     return f"multiplayer-session-{session_id}"
 
 
-def emit_session_global_event(session: MultiplayerSession, name: str, data):
-    flask_socketio.emit(name, data, room=room_name_for(session.id), namespace="/")
+async def emit_session_global_event(sa: ServerApp, session: MultiplayerSession, name: str, data: str | bytes | Sequence[JsonType_RO] | JsonObject_RO) -> None:
+    await sa.sio.emit(name, data, room=room_name_for(session.id), namespace="/")
 
 
 async def get_membership_for(
@@ -25,7 +27,7 @@ async def get_membership_for(
 ) -> database.MultiplayerMembership:
     if isinstance(sio_or_user, ServerApp):
         assert sid is not None
-        user = await sio_or_user.get_current_user(sid)
+        user: database.User | int = await sio_or_user.get_current_user(sid)
     else:
         user = sio_or_user
 
@@ -42,15 +44,15 @@ def describe_session(session: MultiplayerSession, world: World | None = None) ->
         return f"Session {session.id} ({session.name})"
 
 
-def emit_session_meta_update(sa: ServerApp, session: MultiplayerSession):
+async def emit_session_meta_update(sa: ServerApp, session: MultiplayerSession) -> None:
     with sentry_sdk.start_span(op="emit", description="session_meta_update") as span:
         span.set_data("session.id", session.id)
         span.set_data("session.name", session.name)
         sa.logger.debug("multiplayer_session_meta_update for session %d (%s)", session.id, session.name)
-        emit_session_global_event(session, signals.SESSION_META_UPDATE, session.create_session_entry().as_json)
+        await emit_session_global_event(sa, session, signals.SESSION_META_UPDATE, session.create_session_entry().as_json)
 
 
-def emit_session_actions_update(sa: ServerApp, session: MultiplayerSession):
+async def emit_session_actions_update(sa: ServerApp, session: MultiplayerSession) -> None:
     with sentry_sdk.start_span(op="emit", description="session_actions_update") as span:
         sa.logger.debug("multiplayer_session_actions_update for session %d (%s)", session.id, session.name)
         actions = session.describe_actions()
@@ -58,10 +60,10 @@ def emit_session_actions_update(sa: ServerApp, session: MultiplayerSession):
         span.set_data("session.id", session.id)
         span.set_data("session.name", session.name)
         span.set_data("session.actions", len(actions.actions))
-        emit_session_global_event(session, signals.SESSION_ACTIONS_UPDATE, construct_pack.encode(actions))
+        await emit_session_global_event(sa, session, signals.SESSION_ACTIONS_UPDATE, construct_pack.encode(actions))
 
 
-def emit_session_audit_update(sa: ServerApp, session: MultiplayerSession):
+async def emit_session_audit_update(sa: ServerApp, session: MultiplayerSession) -> None:
     with sentry_sdk.start_span(op="emit", description="session_audit_update") as span:
         sa.logger.debug("multiplayer_session_audit_update for session %d (%s)", session.id, session.name)
         log = session.get_audit_log()
@@ -69,23 +71,24 @@ def emit_session_audit_update(sa: ServerApp, session: MultiplayerSession):
         span.set_data("session.id", session.id)
         span.set_data("session.name", session.name)
         span.set_data("session.audit", len(log.entries))
-        emit_session_global_event(session, signals.SESSION_AUDIT_UPDATE, construct_pack.encode(log))
+        await emit_session_global_event(sa, session, signals.SESSION_AUDIT_UPDATE, construct_pack.encode(log))
 
 
-def add_audit_entry(sa: ServerApp, session: MultiplayerSession, message: str):
-    MultiplayerAuditEntry.create(session=session, user=sa.get_current_user(), message=message)
-    emit_session_audit_update(session)
+async def add_audit_entry(sa: ServerApp, sid: str, session: MultiplayerSession, message: str) -> None:
+    user = await sa.get_current_user(sid)
+    MultiplayerAuditEntry.create(session=session, user=user, message=message)
+    await emit_session_audit_update(sa, session)
 
 
 def hash_password(password: str) -> str:
     return hashlib.blake2s(password.encode("utf-8")).hexdigest()
 
 
-def join_room(sa: ServerApp, session: MultiplayerSession):
+async def join_room(sa: ServerApp, sid: str, session: MultiplayerSession) -> None:
     room_name = room_name_for(session.id)
-    flask_socketio.join_room(room_name)
+    await sa.sio.enter_room(sid, room_name)
 
-    with sa.sio.session() as sio_session:
+    async with sa.sio.session(sid) as sio_session:
         if "multiplayer_sessions" not in sio_session:
             sio_session["multiplayer_sessions"] = []
 
@@ -93,18 +96,18 @@ def join_room(sa: ServerApp, session: MultiplayerSession):
             sio_session["multiplayer_sessions"].append(session.id)
 
 
-def leave_room(sa: ServerApp, session_id: int):
-    flask_socketio.leave_room(room_name_for(session_id))
+async def leave_room(sa: ServerApp, sid: str, session_id: int) -> None:
+    await sa.sio.leave_room(sid, room_name_for(session_id))
 
-    with sa.sio.session() as sio_session:
+    async with sa.sio.session(sid) as sio_session:
         if "multiplayer_sessions" in sio_session:
             if session_id in sio_session["multiplayer_sessions"]:
                 sio_session["multiplayer_sessions"].remove(session_id)
 
 
-def leave_all_rooms(sa: ServerApp):
-    with sa.sio.session() as sio_session:
+async def leave_all_rooms(sa: ServerApp, sid: str) -> None:
+    async with sa.sio.session(sid) as sio_session:
         multiplayer_sessions: list[int] = sio_session.pop("multiplayer_sessions", [])
 
     for session_id in multiplayer_sessions:
-        flask_socketio.leave_room(room_name_for(session_id))
+        await sa.sio.leave_room(sid, room_name_for(session_id))

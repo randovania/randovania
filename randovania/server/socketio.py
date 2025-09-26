@@ -70,6 +70,6 @@ def get_socket_handler(sa: ServerApp):
             sa.logger.info(f"Client at {sa.current_client_ip(sid)} disconnected.")
 
             session = await sa.get_server().get_session(sid)
-            world_api.report_disconnect(sa, session, sa.logger)
+            await world_api.report_disconnect(sa, session, sa.logger)
 
     return RdvSocketHandler

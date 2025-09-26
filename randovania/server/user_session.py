@@ -194,8 +194,8 @@ async def restore_user_session(sa: ServerApp, sid: str, encrypted_session: bytes
 
 
 async def logout(sa: ServerApp, sid: str) -> None:
-    session_common.leave_all_rooms(sa)
-    # flask.session.pop("DISCORD_OAUTH2_TOKEN", None) # TODO?
+    await session_common.leave_all_rooms(sa, sid)
+    sa.session_requests[sid].session.pop("discord_oauth_token")
     async with sa.sio.session(sid) as session:
         session.pop("discord-access-token", None)
         session.pop("user-id", None)
