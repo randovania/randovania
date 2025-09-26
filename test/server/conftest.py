@@ -1,14 +1,19 @@
 from __future__ import annotations
 
-from unittest.mock import MagicMock
+from typing import TYPE_CHECKING
 
 import cryptography.fernet
-import flask
 import pytest
+from fastapi.testclient import TestClient
 from peewee import SqliteDatabase
 
 from randovania.game.game_enum import RandovaniaGame
+from randovania.network_common.configuration import NetworkConfiguration
 from randovania.server import database
+from randovania.server.configuration import ServerConfiguration
+
+if TYPE_CHECKING:
+    from collections.abc import Generator
 
 
 @pytest.fixture
@@ -31,15 +36,6 @@ def clean_database(empty_database):
 
 
 @pytest.fixture
-def flask_app():
-    app = flask.Flask("test_app")
-    app.config["TESTING"] = True
-    app.config["SECRET_KEY"] = "secret"
-    with app.app_context():
-        yield app
-
-
-@pytest.fixture
 def fernet():
     return cryptography.fernet.Fernet(b"s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=")
 
@@ -50,18 +46,27 @@ def default_game_list(is_dev_version):
 
 
 @pytest.fixture(name="server_app")
-def server_app_fixture(flask_app):
+def server_app_fixture():
     pytest.importorskip("engineio.async_drivers.threading")
     from randovania.server.server_app import ServerApp
 
-    flask_app.config["SECRET_KEY"] = "key"
-    flask_app.config["DISCORD_CLIENT_ID"] = 1234
-    flask_app.config["DISCORD_CLIENT_SECRET"] = 5678
-    flask_app.config["DISCORD_REDIRECT_URI"] = "http://127.0.0.1:5000/callback/"
-    flask_app.config["FERNET_KEY"] = b"s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A="
-    flask_app.config["GUEST_KEY"] = b"s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A="
-    flask_app.config["ENFORCE_ROLE"] = None
-    server = ServerApp(flask_app)
-    server.metrics.summary = MagicMock()
-    server.metrics.summary.return_value.side_effect = lambda x: x
+    server_config = ServerConfiguration(
+        secret_key="key", discord_client_secret="5678", fernet_key="s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A="
+    )
+    configuration = NetworkConfiguration(
+        server_address="http://127.0.0.1:5000",
+        socketio_path="/socket.io",
+        guest_secret="s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=",
+        server_config=server_config,
+    )
+
+    server = ServerApp(configuration)
+    # server.metrics.summary = MagicMock()
+    # server.metrics.summary.return_value.side_effect = lambda x: x
     return server
+
+
+@pytest.fixture(name="test_client")
+def test_client_fixture(server_app) -> Generator[TestClient, None, None]:
+    with TestClient(server_app.app) as client:
+        yield client

@@ -27,10 +27,11 @@ from randovania.server.server_app import ServerApp
 
 if TYPE_CHECKING:
     import pytest_mock
+    from pytest_mock import MockerFixture
 
 
 @pytest.mark.usefixtures("_mock_seed_hash")
-def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_audit):
+def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker: MockerFixture, mock_audit):
     mock_emit = mocker.patch("flask_socketio.emit")
 
     user = database.User.get_by_id(1234)
