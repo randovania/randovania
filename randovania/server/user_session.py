@@ -13,7 +13,7 @@ import cryptography.fernet
 import fastapi_discord
 import oauthlib
 import peewee
-from fastapi import Form, Request, Response
+from fastapi import APIRouter, Form, Request, Response
 from fastapi.responses import HTMLResponse, RedirectResponse
 from oauthlib.oauth2.rfc6749.errors import InvalidTokenError, raise_from_error
 
@@ -24,6 +24,9 @@ from randovania.server.server_app import ServerAppDep, UserDep
 
 if typing.TYPE_CHECKING:
     from randovania.server.server_app import ServerApp
+
+
+router = APIRouter()
 
 
 def _encrypt_session_for_user(sa: ServerApp, session: dict) -> bytes:
@@ -208,7 +211,7 @@ def unable_to_login(sa: ServerApp, request: Request, error_message: str, status_
         status_code=status_code,
     )
 
-
+@router.get("/login")
 async def browser_login_with_discord(sa: ServerAppDep, request: Request, sid: str | None = None) -> Response:
     request.state.sid = sid
 
@@ -223,6 +226,7 @@ async def browser_login_with_discord(sa: ServerAppDep, request: Request, sid: st
     return RedirectResponse(sa.discord.get_oauth_login_url())
 
 
+@router.get("/login_callback")
 async def browser_discord_login_callback(
     sa: ServerAppDep,
     request: Request,
@@ -293,6 +297,46 @@ async def browser_discord_login_callback(
 
     return unable_to_login(sa, request, error_message, status_code)
 
+@router.get("/me", response_class=HTMLResponse)
+async def browser_me(request: Request, user: UserDep) -> str:
+    result = f"Hello {user.name}. Admin? {user.admin}<br />Access Tokens:<ul>\n"
+
+    for token in user.access_tokens:
+        delete = f' <a href="{request.url_for("delete_token")}?token={token.name}">Delete</a>'
+        result += (
+            f"<li>{token.name} created at {token.creation_date}. Last used at {token.last_used}. {delete}</li>"
+        )
+
+    result += f'<li><form class="form-inline" method="POST" action="{request.url_for("create_token")}">'
+    result += '<input id="name" placeholder="Access token name" name="name">'
+    result += '<button type="submit">Create new</button></li></ul>'
+
+    return result
+
+
+@router.post("/create_token", response_class=HTMLResponse)
+async def create_token(sa: ServerAppDep, request: Request, user: UserDep, name: typing.Annotated[str, Form()]) -> str:
+    go_back = f'<a href="{request.url_for("browser_me")}">Go back</a>'
+
+    try:
+        token = UserAccessToken.create(
+            user=user,
+            name=name,
+        )
+        session = _create_session_with_access_token(sa, token).decode("ascii")
+        return f"Token: <pre>{session}</pre><br />{go_back}"
+
+    except peewee.IntegrityError as e:
+        return f"Unable to create token: {e}<br />{go_back}"
+
+@router.get("/delete_token")
+async def delete_token(request: Request, user: UserDep, token: str) -> RedirectResponse:
+    UserAccessToken.get(
+        user=user,
+        name=token,
+    ).delete_instance()
+    return RedirectResponse(request.url_for("browser_me"))
+
 
 def setup_app(sa: ServerApp) -> None:
     sa.on("start_discord_login_flow", start_discord_login_flow)
@@ -300,44 +344,4 @@ def setup_app(sa: ServerApp) -> None:
     sa.on("restore_user_session", restore_user_session)
     sa.on("logout", logout)
 
-    sa.app.get("/login")(browser_login_with_discord)
-    sa.app.get("/login_callback")(browser_discord_login_callback)
-
-    @sa.app.get("/me", response_class=HTMLResponse)
-    async def browser_me(request: Request, user: UserDep) -> str:
-        result = f"Hello {user.name}. Admin? {user.admin}<br />Access Tokens:<ul>\n"
-
-        for token in user.access_tokens:
-            delete = f' <a href="{request.url_for("delete_token")}?token={token.name}">Delete</a>'
-            result += (
-                f"<li>{token.name} created at {token.creation_date}. Last used at {token.last_used}. {delete}</li>"
-            )
-
-        result += f'<li><form class="form-inline" method="POST" action="{request.url_for("create_token")}">'
-        result += '<input id="name" placeholder="Access token name" name="name">'
-        result += '<button type="submit">Create new</button></li></ul>'
-
-        return result
-
-    @sa.app.post("/create_token", response_class=HTMLResponse)
-    async def create_token(request: Request, user: UserDep, name: typing.Annotated[str, Form()]) -> str:
-        go_back = f'<a href="{request.url_for("browser_me")}">Go back</a>'
-
-        try:
-            token = UserAccessToken.create(
-                user=user,
-                name=name,
-            )
-            session = _create_session_with_access_token(sa, token).decode("ascii")
-            return f"Token: <pre>{session}</pre><br />{go_back}"
-
-        except peewee.IntegrityError as e:
-            return f"Unable to create token: {e}<br />{go_back}"
-
-    @sa.app.get("/delete_token")
-    async def delete_token(request: Request, user: UserDep, token: str) -> RedirectResponse:
-        UserAccessToken.get(
-            user=user,
-            name=token,
-        ).delete_instance()
-        return RedirectResponse(request.url_for("browser_me"))
+    sa.app.include_router(router)
