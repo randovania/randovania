@@ -6,10 +6,10 @@ import inspect
 import json
 import logging
 import typing
-from collections.abc import AsyncGenerator, Coroutine, Sequence
+from collections.abc import AsyncGenerator, Coroutine
 from contextlib import asynccontextmanager
 from pathlib import Path
-from typing import TYPE_CHECKING, Annotated, Concatenate, Literal, Self, TypeVar, cast
+from typing import TYPE_CHECKING, Annotated, Concatenate, Self, TypeVar, cast
 
 import fastapi
 import fastapi_discord
@@ -25,12 +25,11 @@ from starlette.middleware.sessions import SessionMiddleware
 # from prometheus_flask_exporter import PrometheusMetrics
 import randovania
 from randovania.bitpacking import construct_pack
-from randovania.lib.json_lib import JsonObject_RO, JsonType_RO
 from randovania.network_common import connection_headers, error
 from randovania.server import client_check
 from randovania.server.database import MonitoredDb, User, World, database_lifespan
 from randovania.server.discord_auth import EnforceDiscordRole, discord_oauth_lifespan
-from randovania.server.socketio import EventHandlerReturnType, SioDataType, fastapi_socketio_lifespan
+from randovania.server.socketio import EventHandlerReturnType, fastapi_socketio_lifespan
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -157,7 +156,7 @@ class ServerApp:
             # setattr(flask.request, "message", message)
 
             if len(args) == 1 and isinstance(args, tuple) and isinstance(args[0], list):
-                args = args[0] # type: ignore[assignment] # ???
+                args = args[0]  # type: ignore[assignment] # ???
             self.logger.debug("Starting call with args %s", args)
 
             with sentry_sdk.start_transaction(op="message", name=message) as span:
@@ -213,7 +212,6 @@ class ServerApp:
             return construct_pack.encode(await handler(sa, sid, decoded_arg), types["return"])
 
         self.on(message, _handler, with_header_check=True)
-
 
     def current_client_ip(self, sid: str) -> str:
         try:
@@ -283,9 +281,9 @@ def get_user(needs_admin: bool) -> AsyncCallable[[ServerAppDep, fastapi.Request]
 
     return handler
 
+
 RequireUser = fastapi.Depends(get_user(needs_admin=False))
 RequireAdminUser = fastapi.Depends(get_user(needs_admin=True))
 
 UserDep = Annotated[User, RequireUser]
 AdminDep = Annotated[User, RequireAdminUser]
-

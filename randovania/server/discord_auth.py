@@ -4,12 +4,13 @@ from contextlib import asynccontextmanager
 from typing import TYPE_CHECKING, Self, TypedDict
 
 import aiohttp
-from fastapi import Request
 from fastapi_discord import DiscordOAuthClient, Unauthorized
 
 import randovania
 
 if TYPE_CHECKING:
+    from fastapi import Request
+
     from randovania.server.server_app import Lifespan, RdvFastAPI, ServerApp
 
 
@@ -77,12 +78,9 @@ async def discord_oauth_lifespan(_app: RdvFastAPI) -> Lifespan[CustomDiscordOAut
     discord = CustomDiscordOAuthClient(client_id, client_secret, redirect_uri, scopes)
 
     await discord.init()
-    # _app.sa.discord = discord
 
     yield discord
 
     if discord.client_session is not None:
         await discord.client_session.close()
         discord.client_session = None
-
-    # del _app.sa.discord

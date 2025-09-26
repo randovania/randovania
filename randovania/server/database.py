@@ -12,7 +12,6 @@ import zlib
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Self
-
 from uuid import UUID
 
 import cachetools
@@ -44,7 +43,7 @@ if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator, Sequence
 
     from randovania.lib.json_lib import JsonObject
-    from randovania.server.server_app import RdvFastAPI, ServerApp, Lifespan
+    from randovania.server.server_app import Lifespan, RdvFastAPI, ServerApp
 
     class TypedModelSelect[T](typing.Protocol):
         def where(self, *expressions: Any) -> Self: ...
@@ -283,9 +282,7 @@ class MultiplayerSession(BaseModel):
             self.id,
             [
                 _describe_action(action)
-                for action in WorldAction.select().where(
-                    WorldAction.session == self
-                ).order_by(WorldAction.time.asc()) # type: ignore[attr-defined]
+                for action in WorldAction.select().where(WorldAction.session == self).order_by(WorldAction.time.asc())  # type: ignore[attr-defined]
             ],
         )
 
@@ -617,7 +614,7 @@ class AsyncRaceRoom(BaseModel):
             presets_raw=[
                 VersionedPreset.with_preset(preset).as_bytes() for preset in self.layout_description.all_presets
             ],
-            is_admin=for_user == self.creator, # type: ignore[arg-type]
+            is_admin=for_user == self.creator,  # type: ignore[arg-type]
             self_status=status,
             allow_pause=self.allow_pause,
         )
@@ -690,12 +687,12 @@ class AsyncRaceEntry(BaseModel):
 
     @property
     def join_datetime(self) -> datetime.datetime:
-        return datetime.datetime.fromisoformat(self.join_date) # type: ignore[arg-type]
+        return datetime.datetime.fromisoformat(self.join_date)  # type: ignore[arg-type]
 
     @property
     def start_datetime(self) -> datetime.datetime | None:
         if self.start_date is not None:
-            return datetime.datetime.fromisoformat(self.start_date) # type: ignore[arg-type]
+            return datetime.datetime.fromisoformat(self.start_date)  # type: ignore[arg-type]
         return None
 
     @start_datetime.setter
@@ -705,7 +702,7 @@ class AsyncRaceEntry(BaseModel):
     @property
     def finish_datetime(self) -> datetime.datetime | None:
         if self.finish_date is not None:
-            return datetime.datetime.fromisoformat(self.finish_date) # type: ignore[arg-type]
+            return datetime.datetime.fromisoformat(self.finish_date)  # type: ignore[arg-type]
         return None
 
     @finish_datetime.setter
@@ -720,23 +717,23 @@ class AsyncRaceEntryPause(BaseModel):
 
     @property
     def start_datetime(self) -> datetime.datetime:
-        return datetime.datetime.fromisoformat(self.start) # type: ignore[arg-type]
+        return datetime.datetime.fromisoformat(self.start)  # type: ignore[arg-type]
 
     @property
     def end_datetime(self) -> datetime.datetime | None:
         if self.end is not None:
-            return datetime.datetime.fromisoformat(self.end) # type: ignore[arg-type]
+            return datetime.datetime.fromisoformat(self.end)  # type: ignore[arg-type]
         return None
 
     @property
     def length(self) -> datetime.timedelta | None:
         if self.end is None:
             return None
-        return self.end_datetime - self.start_datetime # type: ignore[operator]
+        return self.end_datetime - self.start_datetime  # type: ignore[operator]
 
     @classmethod
     def active_pause(cls, entry: AsyncRaceEntry) -> Self | None:
-        for it in cls.select().where(cls.entry == entry, cls.end.is_null()): # type: ignore[attr-defined]
+        for it in cls.select().where(cls.entry == entry, cls.end.is_null()):  # type: ignore[attr-defined]
             return it
         return None
 

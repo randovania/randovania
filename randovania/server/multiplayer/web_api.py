@@ -5,22 +5,21 @@ from typing import Annotated
 
 import construct
 from fastapi import APIRouter, HTTPException, Query, Request, Response
-from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.responses import HTMLResponse
 
 from randovania.game_description import default_database
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import json_lib
 from randovania.network_common import remote_inventory
-from randovania.server.database import MultiplayerMembership, MultiplayerSession, User, World, WorldUserAssociation
+from randovania.server.database import MultiplayerMembership, MultiplayerSession, World, WorldUserAssociation
 from randovania.server.server_app import AdminDep, RequireAdminUser, ServerApp
-
 
 router = APIRouter()
 
+
 def RdvFileResponse(data: str, filename: str) -> Response:
-    return Response(data, headers={
-        "Content-Disposition": f"attachment; filename={filename}"
-    })
+    return Response(data, headers={"Content-Disposition": f"attachment; filename={filename}"})
+
 
 @router.get("/sessions", response_class=HTMLResponse)
 def admin_sessions(user: AdminDep, request: Request, page: Annotated[int, Query(ge=1)] = 1) -> str:
@@ -28,7 +27,7 @@ def admin_sessions(user: AdminDep, request: Request, page: Annotated[int, Query(
     if page > page_count:
         raise HTTPException(status_code=404, detail="Page not found")
 
-    order = MultiplayerSession.creation_date.desc() # type: ignore[attr-defined]
+    order = MultiplayerSession.creation_date.desc()  # type: ignore[attr-defined]
     paginated_query = MultiplayerSession.select().order_by(order).paginate(page, 20)
 
     lines = []
@@ -148,6 +147,7 @@ def admin_session(user: AdminDep, request: Request, session_id: int) -> str:
 
     return "\n".join(entries)
 
+
 @router.get("/session/{session_id}/rdvgame")
 def download_session_spoiler(user: AdminDep, session_id: int) -> Response:
     try:
@@ -160,6 +160,7 @@ def download_session_spoiler(user: AdminDep, session_id: int) -> Response:
         raise HTTPException(status_code=404, detail="Session has no layout description")
 
     return RdvFileResponse(json_lib.encode(layout), f"{session.name}.rdvgame")
+
 
 @router.get("/world/{world_id}/rdvpreset")
 def download_world_preset(user: AdminDep, world_id: int) -> Response:
@@ -175,9 +176,11 @@ def download_world_preset(user: AdminDep, world_id: int) -> Response:
 
     return RdvFileResponse(world.preset, f"{session.name} - {world.name}.rdvpreset")
 
+
 @router.get("/session/{session_id}/delete", dependencies=[RequireAdminUser], response_class=HTMLResponse)
 def get_delete_session(session_id: int) -> str:
     return '<form method="POST"><input type="submit" value="Confirm delete"></form>'
+
 
 @router.post("/session/{session_id}/delete", dependencies=[RequireAdminUser], response_class=HTMLResponse)
 def delete_session(request: Request, session_id: int) -> str:

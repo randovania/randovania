@@ -1,8 +1,8 @@
-from collections.abc import Sequence
 import datetime
 import json
 import math
 import typing
+from collections.abc import Sequence
 
 from peewee import Case
 from retro_data_structures.json_util import JsonArray
@@ -10,7 +10,7 @@ from retro_data_structures.json_util import JsonArray
 from randovania.game.game_enum import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.lib.json_lib import JsonObject, JsonObject_RO, JsonType
+from randovania.lib.json_lib import JsonObject, JsonObject_RO
 from randovania.network_common import error
 from randovania.network_common.async_race_room import (
     AsyncRaceEntryData,
@@ -98,16 +98,16 @@ async def list_rooms(sa: ServerApp, sid: str, limit: int | None) -> Sequence[Jso
             AsyncRaceRoom.id,
             AsyncRaceRoom.name,
             AsyncRaceRoom.layout_description_json,
-            Case(None, ((AsyncRaceRoom.password.is_null(), False),), True).alias("has_password"), # type: ignore[union-attr]
+            Case(None, ((AsyncRaceRoom.password.is_null(), False),), True).alias("has_password"),  # type: ignore[union-attr]
             AsyncRaceRoom.visibility,
-            User.name.alias("creator"), # type: ignore[attr-defined]
-            AsyncRaceRoom.start_date.alias("start_date"), # type: ignore[attr-defined]
-            AsyncRaceRoom.end_date.alias("end_date"), # type: ignore[attr-defined]
-            AsyncRaceRoom.creation_date.alias("creation_date"), # type: ignore[attr-defined]
+            User.name.alias("creator"),  # type: ignore[attr-defined]
+            AsyncRaceRoom.start_date.alias("start_date"),  # type: ignore[attr-defined]
+            AsyncRaceRoom.end_date.alias("end_date"),  # type: ignore[attr-defined]
+            AsyncRaceRoom.creation_date.alias("creation_date"),  # type: ignore[attr-defined]
         )
         .join(User, on=AsyncRaceRoom.creator)
         .group_by(AsyncRaceRoom.id)
-        .order_by(AsyncRaceRoom.id.desc()) # type: ignore[attr-defined]
+        .order_by(AsyncRaceRoom.id.desc())  # type: ignore[attr-defined]
         .limit(limit)
         .objects(construct_helper)
     )
@@ -345,7 +345,9 @@ async def admin_update_entries(sa: ServerApp, sid: str, room_id: int, raw_new_en
     return (await AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa, sid)).as_json
 
 
-async def join_and_export(sa: ServerApp, sid: str, room_id: int, auth_token: str, cosmetic_json: JsonObject) -> JsonObject:
+async def join_and_export(
+    sa: ServerApp, sid: str, room_id: int, auth_token: str, cosmetic_json: JsonObject
+) -> JsonObject:
     """
 
     :param sa:
@@ -475,9 +477,7 @@ async def get_own_proof(sa: ServerApp, sid: str, room_id: int) -> tuple[str, str
     if entry.user_status() != AsyncRaceRoomUserStatus.FINISHED:
         raise error.InvalidActionError("Only possible to submit proof after finishing")
 
-    database.AsyncRaceAuditEntry.create(
-        room=room, user=user, message="Requested own submission notes and proof."
-    )
+    database.AsyncRaceAuditEntry.create(room=room, user=user, message="Requested own submission notes and proof.")
 
     return entry.submission_notes, entry.proof_url
 
@@ -495,9 +495,7 @@ async def submit_proof(sa: ServerApp, sid: str, room_id: int, submission_notes: 
     if entry.user_status() != AsyncRaceRoomUserStatus.FINISHED:
         raise error.InvalidActionError("Only possible to submit proof after finishing")
 
-    database.AsyncRaceAuditEntry.create(
-        room=room, user=user, message="Updated submission notes and proof."
-    )
+    database.AsyncRaceAuditEntry.create(room=room, user=user, message="Updated submission notes and proof.")
 
     entry.submission_notes = submission_notes
     entry.proof_url = proof_url

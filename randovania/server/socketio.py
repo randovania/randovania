@@ -11,10 +11,11 @@ from randovania.lib.json_lib import JsonObject_RO, JsonType_RO
 from randovania.server import client_check
 
 if TYPE_CHECKING:
-    from randovania.server.server_app import RdvFastAPI, ServerApp, Lifespan
+    from randovania.server.server_app import Lifespan, RdvFastAPI, ServerApp
 
 SioDataType = str | bytes | JsonObject_RO | Sequence[JsonType_RO]
 EventHandlerReturnType = SioDataType | tuple[SioDataType, ...] | None
+
 
 @asynccontextmanager
 async def fastapi_socketio_lifespan(_app: RdvFastAPI) -> Lifespan[SocketManager]:

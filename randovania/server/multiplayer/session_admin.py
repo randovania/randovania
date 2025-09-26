@@ -316,7 +316,9 @@ async def _change_visibility(sa: ServerApp, sid: str, session: MultiplayerSessio
     session.visibility = new_visibility_
     sa.logger.info("%s: Changing visibility to %s.", session_common.describe_session(session), new_visibility_)
     session.save()
-    await session_common.add_audit_entry(sa, sid, session, f"Changed visibility to {new_visibility_.user_friendly_name}")
+    await session_common.add_audit_entry(
+        sa, sid, session, f"Changed visibility to {new_visibility_.user_friendly_name}"
+    )
 
 
 async def _change_password(sa: ServerApp, sid: str, session: MultiplayerSession, password: str) -> None:
@@ -494,7 +496,9 @@ async def _create_world_for(
             world=new_world,
             user=membership.user,
         )
-        await session_common.add_audit_entry(sa, sid, session, f"Associated new world {new_world.name} for {membership.user.name}")
+        await session_common.add_audit_entry(
+            sa, sid, session, f"Associated new world {new_world.name} for {membership.user.name}"
+        )
 
 
 async def _claim_world(

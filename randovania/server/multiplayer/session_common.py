@@ -1,5 +1,5 @@
-from collections.abc import Sequence
 import hashlib
+from collections.abc import Sequence
 
 # import flask_socketio
 import peewee
@@ -18,12 +18,19 @@ def room_name_for(session_id: int) -> str:
     return f"multiplayer-session-{session_id}"
 
 
-async def emit_session_global_event(sa: ServerApp, session: MultiplayerSession, name: str, data: str | bytes | Sequence[JsonType_RO] | JsonObject_RO) -> None:
+async def emit_session_global_event(
+    sa: ServerApp,
+    session: MultiplayerSession,
+    name: str,
+    data: str | bytes | Sequence[JsonType_RO] | JsonObject_RO,
+) -> None:
     await sa.sio.emit(name, data, room=room_name_for(session.id), namespace="/")
 
 
 async def get_membership_for(
-    sio_or_user: ServerApp | database.User | int, session: int | database.MultiplayerSession, sid: str | None = None
+    sio_or_user: ServerApp | database.User | int,
+    session: int | database.MultiplayerSession,
+    sid: str | None = None,
 ) -> database.MultiplayerMembership:
     if isinstance(sio_or_user, ServerApp):
         assert sid is not None
@@ -49,7 +56,9 @@ async def emit_session_meta_update(sa: ServerApp, session: MultiplayerSession) -
         span.set_data("session.id", session.id)
         span.set_data("session.name", session.name)
         sa.logger.debug("multiplayer_session_meta_update for session %d (%s)", session.id, session.name)
-        await emit_session_global_event(sa, session, signals.SESSION_META_UPDATE, session.create_session_entry().as_json)
+        await emit_session_global_event(
+            sa, session, signals.SESSION_META_UPDATE, session.create_session_entry().as_json
+        )
 
 
 async def emit_session_actions_update(sa: ServerApp, session: MultiplayerSession) -> None:
