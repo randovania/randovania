@@ -114,19 +114,26 @@ gui = [
 ]
 
 server = [
+    "fastapi", # REST server
+    "jinja2", # templating
+    "uvicorn[standard]", # server runner
+    "itsdangerous", # for starlette SessionMiddleware
+
+    "fastapi-socketio-handler>=0.4.0", # socketio server
+
+    # monitoring
     "sentry-sdk[fastapi]>=2.35.0",
-    "fastapi-discord>=0.2.7",
-    "fastapi-socketio-handler>=0.4.0",
     "prometheus-fastapi-instrumentator",
-    "fastapi",
-    "uvicorn[standard]",
-    "jinja2",
-    "itsdangerous",
-    "eventlet",
-    "peewee",
+    
+    # discord auth
+    "fastapi-discord>=0.2.7",
     "requests-oauthlib",
+    
+    # database
+    "peewee",
     "cachetools",  # for TTLCache
 
+    # discord bot
     "py-cord>=2.3.1",  # for randovania/discord_bot; 2.3.1+ is needed for Python 3.11
     "audioop-lts; python_version>='3.13'",  # for py-cord
     "Pillow>=9.0.0",  # for randovania/discord_bot/database_command
