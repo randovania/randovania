@@ -60,8 +60,10 @@ class UncollectedState(NamedTuple):
         """Creates an UncollectedState reflecting only the safe uncollected resources in the reach."""
 
         return cls(
-            _filter_not_in_dict(reach.state.collected_pickup_indices, reach.state.patches.pickup_assignment),
-            _filter_not_in_dict(reach.state.collected_hints, reach.state.patches.hints),
+            _filter_not_in_dict(
+                reach.state.collected_pickup_indices(reach.game), reach.state.patches.pickup_assignment
+            ),
+            _filter_not_in_dict(reach.state.collected_hints(reach.game), reach.state.patches.hints),
             set(reach.state.collected_events),
             {node.node_index for node in reach.nodes if reach.is_reachable_node(node)},
         )

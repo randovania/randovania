@@ -420,7 +420,7 @@ def _assign_pickup_somewhere(
         increment_index_age(all_locations, action.generator_params.index_age_impact)
         all_locations.remove(index_owner_state, pickup_index)
 
-        if pickup_index in index_owner_state.reach.state.collected_pickup_indices:
+        if pickup_index in index_owner_state.reach.state.collected_pickup_indices(index_owner_state.reach.game):
             current_player.reach.advance_to(current_player.reach.state.assign_pickup_resources(action))
         else:
             # FIXME: isn't that condition always true?

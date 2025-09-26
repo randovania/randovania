@@ -6,7 +6,7 @@ from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.pickup.pickup_entry import PickupEntry, ResourceLock
 from randovania.game_description.resources.resource_collection import ResourceCollection
-from randovania.resolver import state
+from randovania.graph import state
 from randovania.resolver.no_op_damage_state import NoOpDamageState
 
 
@@ -42,7 +42,7 @@ def test_collected_pickup_indices(state_game_data, empty_patches):
     )
 
     # Run
-    indices = list(s.collected_pickup_indices)
+    indices = list(s.collected_pickup_indices(empty_patches.game))
 
     # Assert
     assert indices == [pickup_nodes[0].pickup_index, pickup_nodes[1].pickup_index]
