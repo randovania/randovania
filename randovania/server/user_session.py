@@ -211,6 +211,7 @@ def unable_to_login(sa: ServerApp, request: Request, error_message: str, status_
         status_code=status_code,
     )
 
+
 @router.get("/login")
 async def browser_login_with_discord(sa: ServerAppDep, request: Request, sid: str | None = None) -> Response:
     request.state.sid = sid
@@ -297,15 +298,14 @@ async def browser_discord_login_callback(
 
     return unable_to_login(sa, request, error_message, status_code)
 
+
 @router.get("/me", response_class=HTMLResponse)
 async def browser_me(request: Request, user: UserDep) -> str:
     result = f"Hello {user.name}. Admin? {user.admin}<br />Access Tokens:<ul>\n"
 
     for token in user.access_tokens:
         delete = f' <a href="{request.url_for("delete_token")}?token={token.name}">Delete</a>'
-        result += (
-            f"<li>{token.name} created at {token.creation_date}. Last used at {token.last_used}. {delete}</li>"
-        )
+        result += f"<li>{token.name} created at {token.creation_date}. Last used at {token.last_used}. {delete}</li>"
 
     result += f'<li><form class="form-inline" method="POST" action="{request.url_for("create_token")}">'
     result += '<input id="name" placeholder="Access token name" name="name">'
@@ -328,6 +328,7 @@ async def create_token(sa: ServerAppDep, request: Request, user: UserDep, name: 
 
     except peewee.IntegrityError as e:
         return f"Unable to create token: {e}<br />{go_back}"
+
 
 @router.get("/delete_token")
 async def delete_token(request: Request, user: UserDep, token: str) -> RedirectResponse:
