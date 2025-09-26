@@ -56,6 +56,8 @@ if TYPE_CHECKING:
 
         def __iter__(self) -> Iterator[T]: ...
 
+        def paginate(self, page_number: int, items_per_page: int) -> Self: ...
+
 
 class MonitoredDb(peewee.SqliteDatabase):
     def execute_sql(self, sql, params=None, commit=peewee.SENTINEL):  # type: ignore[no-untyped-def]

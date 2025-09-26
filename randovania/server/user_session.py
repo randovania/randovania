@@ -15,9 +15,9 @@ import oauthlib
 import peewee
 from fastapi import Form, Request, Response
 from fastapi.responses import HTMLResponse, RedirectResponse
-from oauthlib.oauth2.rfc6749.errors import InvalidTokenError
+from oauthlib.oauth2.rfc6749.errors import InvalidTokenError, raise_from_error
 
-from randovania.network_common import error
+from randovania.network_common import error as network_error
 from randovania.server.database import User, UserAccessToken
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerAppDep, UserDep
@@ -89,7 +89,7 @@ async def _create_session_with_discord_token(sa: ServerApp, sid: str | None, req
     if sa.enforce_role is not None:
         if not sa.enforce_role.verify_user(discord_user.id):
             sa.logger.info("User %s is not authorized for connecting to the server", discord_user.name)
-            raise error.UserNotAuthorizedToUseServerError(discord_user.name)
+            raise network_error.UserNotAuthorizedToUseServerError(discord_user.name)
 
     sa.logger.info(f"{discord_user.id} ({type(discord_user.id)})")
     user = _create_user_from_discord(discord_user)
@@ -117,22 +117,22 @@ def _get_now() -> datetime.datetime:
 
 async def login_with_guest(sa: ServerApp, sid: str, encrypted_login_request: bytes) -> dict:
     if sa.guest_encrypt is None:
-        raise error.NotAuthorizedForActionError
+        raise network_error.NotAuthorizedForActionError
 
     try:
         login_request_bytes = sa.guest_encrypt.decrypt(encrypted_login_request)
     except cryptography.fernet.InvalidToken:
-        raise error.NotAuthorizedForActionError
+        raise network_error.NotAuthorizedForActionError
 
     try:
         login_request = json.loads(login_request_bytes.decode("utf-8"))
         name = login_request["name"]
         date = datetime.datetime.fromisoformat(login_request["date"])
     except (UnicodeDecodeError, json.JSONDecodeError, KeyError, ValueError) as e:
-        raise error.InvalidActionError(str(e))
+        raise network_error.InvalidActionError(str(e))
 
     if _get_now() - date > datetime.timedelta(days=1):
-        raise error.NotAuthorizedForActionError
+        raise network_error.NotAuthorizedForActionError
 
     user: User = User.create(name=f"Guest: {name}")
 
@@ -172,7 +172,7 @@ async def restore_user_session(sa: ServerApp, sid: str, encrypted_session: bytes
 
         return result
 
-    except error.UserNotAuthorizedToUseServerError:
+    except network_error.UserNotAuthorizedToUseServerError:
         await sa.sio.save_session(sid, {})
         raise
 
@@ -182,12 +182,12 @@ async def restore_user_session(sa: ServerApp, sid: str, encrypted_session: bytes
         sa.logger.info(
             "Client at %s was unable to restore session: (%s) %s", sa.current_client_ip(sid), str(type(e)), str(e)
         )
-        raise error.InvalidSessionError
+        raise network_error.InvalidSessionError
 
     except Exception:
         await sa.sio.save_session(sid, {})
         sa.logger.exception("Error decoding user session")
-        raise error.InvalidSessionError
+        raise network_error.InvalidSessionError
 
 
 async def logout(sa: ServerApp, sid: str) -> None:
@@ -226,11 +226,21 @@ async def browser_login_with_discord(sa: ServerAppDep, request: Request, sid: st
 async def browser_discord_login_callback(
     sa: ServerAppDep,
     request: Request,
-    code: str,
+    code: str | None = None,
+    error: str | None = None,
+    error_description: str | None = None,
 ) -> Response:
     sid: str | None = request.session.get("sid")
 
     try:
+        if error is not None:
+            params = {}
+            if error_description is not None:
+                params["error_description"] = error_description
+            raise_from_error(error, params)
+
+        assert code is not None
+
         token, refresh_token = await sa.discord.get_access_token(code)
         request.headers
         request.session["discord_oauth_token"] = token
@@ -261,7 +271,7 @@ async def browser_discord_login_callback(
         error_message = "Discord login was cancelled. Please try again!"
         status_code = 401
 
-    except error.UserNotAuthorizedToUseServerError as unauthorized_error:
+    except network_error.UserNotAuthorizedToUseServerError as unauthorized_error:
         error_message = (
             f"You ({unauthorized_error.unauthorized_user}) are not authorized to use this build.\n"
             f"Please check #dev-builds for more details."
@@ -293,25 +303,25 @@ def setup_app(sa: ServerApp) -> None:
     sa.app.get("/login")(browser_login_with_discord)
     sa.app.get("/login_callback")(browser_discord_login_callback)
 
-    @sa.app.get("/me", response_model=HTMLResponse)
-    def browser_me(request: Request, user: UserDep) -> str:
+    @sa.app.get("/me", response_class=HTMLResponse)
+    async def browser_me(request: Request, user: UserDep) -> str:
         result = f"Hello {user.name}. Admin? {user.admin}<br />Access Tokens:<ul>\n"
 
         for token in user.access_tokens:
-            delete = f' <a href="{request.url_for("/delete_token", token=token.name)}">Delete</a>'
+            delete = f' <a href="{request.url_for("delete_token")}?token={token.name}">Delete</a>'
             result += (
                 f"<li>{token.name} created at {token.creation_date}. Last used at {token.last_used}. {delete}</li>"
             )
 
-        result += f'<li><form class="form-inline" method="POST" action="{request.url_for("/create_token")}">'
+        result += f'<li><form class="form-inline" method="POST" action="{request.url_for("create_token")}">'
         result += '<input id="name" placeholder="Access token name" name="name">'
         result += '<button type="submit">Create new</button></li></ul>'
 
         return result
 
-    @sa.app.post("/create_token", response_model=HTMLResponse)
-    def create_token(request: Request, user: UserDep, name: typing.Annotated[str, Form()]) -> str:
-        go_back = f'<a href="{request.url_for("/me")}">Go back</a>'
+    @sa.app.post("/create_token", response_class=HTMLResponse)
+    async def create_token(request: Request, user: UserDep, name: typing.Annotated[str, Form()]) -> str:
+        go_back = f'<a href="{request.url_for("browser_me")}">Go back</a>'
 
         try:
             token = UserAccessToken.create(
@@ -324,10 +334,10 @@ def setup_app(sa: ServerApp) -> None:
         except peewee.IntegrityError as e:
             return f"Unable to create token: {e}<br />{go_back}"
 
-    @sa.route_with_user("/delete_token")
-    def delete_token(request: Request, user: UserDep, token: str) -> RedirectResponse:
+    @sa.app.get("/delete_token")
+    async def delete_token(request: Request, user: UserDep, token: str) -> RedirectResponse:
         UserAccessToken.get(
             user=user,
             name=token,
         ).delete_instance()
-        return RedirectResponse(request.url_for("/me"))
+        return RedirectResponse(request.url_for("browser_me"))

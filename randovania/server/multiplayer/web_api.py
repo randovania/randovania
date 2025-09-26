@@ -1,36 +1,47 @@
 import html
 import json
+from math import ceil
+from typing import Annotated
 
 import construct
+from fastapi import APIRouter, HTTPException, Query, Request, Response
+from fastapi.responses import FileResponse, HTMLResponse
 
-# import flask
-# from flask.typing import ResponseReturnValue
-# from playhouse import flask_utils
 from randovania.game_description import default_database
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import json_lib
 from randovania.network_common import remote_inventory
 from randovania.server.database import MultiplayerMembership, MultiplayerSession, User, World, WorldUserAssociation
-from randovania.server.server_app import ServerApp
+from randovania.server.server_app import AdminDep, RequireAdminUser, ServerApp
 
 
-def admin_sessions(user: User) -> "ResponseReturnValue":
-    paginated_query = flask_utils.PaginatedQuery(
-        MultiplayerSession.select().order_by(MultiplayerSession.creation_date.desc()),
-        paginate_by=20,
-        check_bounds=True,
-    )
+router = APIRouter()
+
+def RdvFileResponse(data: str, filename: str) -> Response:
+    return Response(data, headers={
+        "Content-Disposition": f"attachment; filename={filename}"
+    })
+
+@router.get("/sessions", response_class=HTMLResponse)
+def admin_sessions(user: AdminDep, request: Request, page: Annotated[int, Query(ge=1)] = 1) -> str:
+    page_count = ceil(MultiplayerMembership.select().count() / 20)
+    if page > page_count:
+        raise HTTPException(status_code=404, detail="Page not found")
+
+    order = MultiplayerSession.creation_date.desc() # type: ignore[attr-defined]
+    paginated_query = MultiplayerSession.select().order_by(order).paginate(page, 20)
 
     lines = []
-    for session in paginated_query.get_object_list():
+    for session in paginated_query:
         assert isinstance(session, MultiplayerSession)
         lines.append(
             "<tr>{}</tr>".format(
                 "".join(
                     f"<td>{col}</td>"
                     for col in [
-                        "<a href='{}'>{}</a>".format(
-                            flask.url_for("admin_session", session_id=session.id),
+                        "<a href='{}?session_id={}'>{}</a>".format(
+                            request.url_for("admin_session"),
+                            session.id,
                             html.escape(session.name),
                         ),
                         html.escape(session.creator.name),
@@ -43,14 +54,13 @@ def admin_sessions(user: User) -> "ResponseReturnValue":
             )
         )
 
-    page = paginated_query.get_page()
     previous = "Previous"
     if page > 1:
-        previous = "<a href='{}'>Previous</a>".format(flask.url_for(".admin_sessions", page=page - 1))
+        previous = "<a href='{}?page={}'>Previous</a>".format(request.url_for(".admin_sessions"), page - 1)
 
     next_link = "Next"
-    if page < paginated_query.get_page_count():
-        next_link = "<a href='{}'>Next</a>".format(flask.url_for(".admin_sessions", page=page + 1))
+    if page < page_count:
+        next_link = "<a href='{}?page={}'>Next</a>".format(request.url_for(".admin_sessions"), page + 1)
 
     header = ["Name", "Creator", "Creation Date", "Num Users", "Num Worlds", "Has Password?"]
     return (
@@ -59,17 +69,18 @@ def admin_sessions(user: User) -> "ResponseReturnValue":
         header="".join(f"<th>{it}</th>" for it in header),
         content="".join(lines),
         page=page,
-        num_pages=paginated_query.get_page_count(),
+        num_pages=page_count,
         previous=previous,
         next=next_link,
     )
 
 
-def admin_session(user: User, session_id: int) -> "ResponseReturnValue":
+@router.get("/session/{session_id}", response_class=HTMLResponse)
+def admin_session(user: AdminDep, request: Request, session_id: int) -> str:
     try:
         session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
     except MultiplayerSession.DoesNotExist:
-        return "Session not found", 404
+        raise HTTPException(status_code=404, detail="Session not found")
 
     rows = []
 
@@ -106,8 +117,8 @@ def admin_session(user: User, session_id: int) -> "ResponseReturnValue":
                 association.connection_state.pretty_text,
                 ", ".join(inventory),
                 MultiplayerMembership.get_by_ids(association.user_id, session_id).admin,
-                "<a href='{link}'>Download</a>".format(
-                    link=flask.url_for("download_world_preset", world_id=association.world_id)
+                "<a href='{link}?world_id={world_id}'>Download</a>".format(
+                    link=request.url_for("download_world_preset"), world_id=association.world_id
                 ),
             ]
         )
@@ -124,69 +135,63 @@ def admin_session(user: User, session_id: int) -> "ResponseReturnValue":
         f"<p>Session is password protected, password is <code>{html.escape(session.password)}</code></p>"
         if session.password is not None
         else "Session is not password protected",
-        "<p><a href='{link}'>Download rdvgame</a></p>".format(
-            link=flask.url_for("download_session_spoiler", session_id=session_id)
+        "<p><a href='{link}?session_id={session_id}'>Download rdvgame</a></p>".format(
+            link=request.url_for("download_session_spoiler"), session_id=session_id
         )
         if session.has_layout_description()
         else "<p>No rdvgame attached</p>",
-        "<p><a href='{link}'>Delete session</a></p>".format(
-            link=flask.url_for("delete_session", session_id=session_id)
+        "<p><a href='{link}?session_id={session_id}'>".format(
+            link=request.url_for("delete_session"), session_id=session_id
         ),
         table,
     ]
 
     return "\n".join(entries)
 
-
-def download_session_spoiler(user: User, session_id: int) -> "ResponseReturnValue":
+@router.get("/session/{session_id}/rdvgame")
+def download_session_spoiler(user: AdminDep, session_id: int) -> Response:
     try:
         session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
     except MultiplayerSession.DoesNotExist:
-        return "Session not found", 404
+        raise HTTPException(status_code=404, detail="Session not found")
 
     layout = session.get_layout_description_as_json()
     if layout is None:
-        return flask.abort(404)
+        raise HTTPException(status_code=404, detail="Session has no layout description")
 
-    response = flask.make_response(json_lib.encode(layout))
-    response.headers["Content-Disposition"] = f"attachment; filename={session.name}.rdvgame"
-    return response
+    return RdvFileResponse(json_lib.encode(layout), f"{session.name}.rdvgame")
 
-
-def download_world_preset(user: User, world_id: int) -> "ResponseReturnValue":
+@router.get("/world/{world_id}/rdvpreset")
+def download_world_preset(user: AdminDep, world_id: int) -> Response:
     try:
         world = World.get_by_id(world_id)
     except World.DoesNotExist:
-        return "World not found", 404
+        raise HTTPException(status_code=404, detail="World not found")
 
     try:
         session: MultiplayerSession = MultiplayerSession.get_by_id(world.session_id)
     except MultiplayerSession.DoesNotExist:
-        return "Session not found", 404
+        raise HTTPException(status_code=404, detail="Session not found")
 
-    response = flask.make_response(world.preset)
-    response.headers["Content-Disposition"] = f"attachment; filename={session.name} - {world.name}.rdvpreset"
-    return response
+    return RdvFileResponse(world.preset, f"{session.name} - {world.name}.rdvpreset")
 
+@router.get("/session/{session_id}/delete", dependencies=[RequireAdminUser], response_class=HTMLResponse)
+def get_delete_session(session_id: int) -> str:
+    return '<form method="POST"><input type="submit" value="Confirm delete"></form>'
 
-def delete_session(user: User, session_id: int) -> "ResponseReturnValue":
-    if flask.request.method == "GET":
-        return '<form method="POST"><input type="submit" value="Confirm delete"></form>'
-
+@router.post("/session/{session_id}/delete", dependencies=[RequireAdminUser], response_class=HTMLResponse)
+def delete_session(request: Request, session_id: int) -> str:
     try:
         session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
     except MultiplayerSession.DoesNotExist:
-        return "Session not found", 404
+        raise HTTPException(status_code=404, detail="Session not found")
+
     session.delete_instance(recursive=True)
 
     return "Session deleted. <a href='{to_list}'>Return to list</a>".format(
-        to_list=flask.url_for("admin_sessions"),
+        to_list=request.url_for("admin_sessions"),
     )
 
 
-def setup_app(sa: ServerApp):
-    sa.route_with_user("/sessions", need_admin=True)(admin_sessions)
-    sa.route_with_user("/session/<session_id>", need_admin=True)(admin_session)
-    sa.route_with_user("/session/<session_id>/rdvgame", need_admin=True)(download_session_spoiler)
-    sa.route_with_user("/session/<session_id>/delete", methods=["GET", "POST"], need_admin=True)(delete_session)
-    sa.route_with_user("/world/<world_id>/rdvpreset", need_admin=True)(download_world_preset)
+def setup_app(sa: ServerApp) -> None:
+    sa.app.include_router(router)

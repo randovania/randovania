@@ -212,33 +212,6 @@ class ServerApp:
         self.on(message, _handler, with_header_check=True)
 
 
-    def route_path(self, route: str, target):
-        return self.app.get(route, name=target.__name__)(functools.partial(target, self))
-        # return self.app.add_url_rule(route, target.__name__, functools.partial(target, self))
-
-    def route_with_user(self, route: str, *, need_admin: bool = False, **kwargs):
-        def decorator(handler):
-            @self.app.route(route, **kwargs)
-            @functools.wraps(handler)
-            def _handler(**kwargs):
-                try:
-                    user: User
-                    if not self.app.debug:
-                        user = User.get(discord_id=self.discord.fetch_user().id)
-                        if user is None or (need_admin and not user.admin):
-                            return "User not authorized", 403
-                    else:
-                        user = list(User.select().limit(1))[0]
-
-                    return handler(user, **kwargs)
-
-                except fastapi_discord.exceptions.Unauthorized:
-                    return "Unknown user", 404
-
-            return _handler
-
-        return decorator
-
     def current_client_ip(self, sid: str) -> str:
         try:
             environ = self.sio.get_environ(sid)
@@ -285,7 +258,7 @@ async def server_app(request: fastapi.Request) -> ServerApp:
 ServerAppDep = Annotated[ServerApp, fastapi.Depends(server_app)]
 
 
-async def get_user(needs_admin: bool) -> AsyncCallable[[ServerAppDep, fastapi.Request], User]:
+def get_user(needs_admin: bool) -> AsyncCallable[[ServerAppDep, fastapi.Request], User]:
     async def handler(sa: ServerAppDep, request: fastapi.Request) -> User:
         try:
             user: User
@@ -304,5 +277,9 @@ async def get_user(needs_admin: bool) -> AsyncCallable[[ServerAppDep, fastapi.Re
 
     return handler
 
-UserDep = Annotated[User, fastapi.Depends(get_user(needs_admin=False))]
-AdminDep = Annotated[User, fastapi.Depends(get_user(needs_admin=True))]
+RequireUser = fastapi.Depends(get_user(needs_admin=False))
+RequireAdminUser = fastapi.Depends(get_user(needs_admin=True))
+
+UserDep = Annotated[User, RequireUser]
+AdminDep = Annotated[User, RequireAdminUser]
+
