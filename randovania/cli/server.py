@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import logging
+import os
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -15,16 +17,14 @@ def flask_command_logic(args: Namespace) -> None:
 
     randovania.monitoring.server_init(sampling_rate=sampling_rate)
 
-    from randovania.server.server_app import ServerApp
-
-    server_app = ServerApp(randovania.get_configuration())
+    host = "0.0.0.0"
+    reload_ = False
 
     if args.mode == "dev":
-        host = "127.0.0.1"
-    else:
-        if args.mode != "prod":
-            server_app.logger.warning(f"Unknown server mode '{args.mode}'. Running in prod mode.")
-        host = "0.0.0.0"
+        reload_ = True
+        os.environ["FASTAPI_DEBUG"] = "True"
+    elif args.mode != "prod":
+        logging.warning(f"Unknown server mode '{args.mode}'. Running in prod mode.")
 
     import uvicorn
     import uvicorn.config
@@ -39,6 +39,7 @@ def flask_command_logic(args: Namespace) -> None:
 
     # the info-level logs are more like debug-level
     log_config["loggers"]["socketio_handler.app"] = {"level": "WARN"}
+    log_config["loggers"]["watchfiles.main"] = {"level": "WARN"}
 
     log_config["formatters"]["default"]["fmt"] = (
         "[%(asctime)s] %(levelprefix)s %(context)s [%(who)s] in %(where)s: %(message)s"
@@ -48,7 +49,14 @@ def flask_command_logic(args: Namespace) -> None:
         "[%(asctime)s] %(levelprefix)s Uvicorn [%(client_addr)s] in %(request_line)s: %(status_code)s"
     )
 
-    uvicorn.run(server_app.app, host=host, port=5000, log_config=log_config)
+    uvicorn.run(
+        "randovania.server.app_module:app",
+        host=host,
+        port=5000,
+        log_config=log_config,
+        reload=reload_,
+        reload_excludes=["randovania/cli/server.py"],
+    )
 
 
 def add_flask_command(sub_parsers: _SubParsersAction) -> None:

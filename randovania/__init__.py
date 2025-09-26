@@ -75,6 +75,12 @@ def _get_default_configuration_path() -> Path:
 
 def get_configuration() -> NetworkConfiguration:
     file_path = CONFIGURATION_FILE_PATH
+
+    if file_path is None:
+        file_path = os.environ.get("RANDOVANIA_CONFIGURATION_PATH")
+        if file_path is not None:
+            file_path = Path(file_path).absolute()
+
     if file_path is None:
         file_path = _get_default_configuration_path()
 

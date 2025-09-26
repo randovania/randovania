@@ -5,6 +5,7 @@ import functools
 import inspect
 import json
 import logging
+import os
 import time
 import typing
 from collections.abc import AsyncGenerator, Coroutine
@@ -93,7 +94,9 @@ class ServerApp:
         self.expected_headers = connection_headers()
         self.expected_headers.pop("X-Randovania-Version")
 
-        self.app = RdvFastAPI(lifespan=self._lifespan)
+        debug = "FASTAPI_DEBUG" in os.environ
+        self.logger.warn(f"Debug = {debug}")
+        self.app = RdvFastAPI(lifespan=self._lifespan, debug=debug)
         self.app.add_middleware(SessionMiddleware, secret_key=configuration["server_config"]["secret_key"])
         self.app.state.session_requests = {}
 
