@@ -14,16 +14,9 @@ from randovania.server.server_app import ServerApp
 from randovania.server.socketio import fastapi_socketio_lifespan
 
 if TYPE_CHECKING:
-    from pathlib import Path
-
     import pytest_mock
 
     from randovania.network_common.configuration import NetworkConfiguration
-
-
-@pytest.fixture(name="db_path")
-def db_path_fixture(tmp_path: Path):
-    return tmp_path.joinpath("database.db")
 
 
 @pytest.fixture(name="config")

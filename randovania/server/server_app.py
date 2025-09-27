@@ -12,7 +12,7 @@ from collections.abc import AsyncGenerator, Coroutine
 from contextlib import asynccontextmanager
 from contextvars import ContextVar
 from pathlib import Path
-from typing import TYPE_CHECKING, Annotated, Any, Concatenate, Self, TypeVar, cast
+from typing import TYPE_CHECKING, Annotated, Any, Concatenate, Self, cast
 
 import fastapi
 import fastapi_discord
@@ -44,9 +44,6 @@ if TYPE_CHECKING:
 
     from randovania.network_common.configuration import NetworkConfiguration
     from randovania.server.discord_auth import CustomDiscordOAuthClient
-
-T = TypeVar("T")
-R = TypeVar("R")
 
 type Lifespan[T] = AsyncGenerator[T, None, None]
 type AsyncCallable[**P, T] = Callable[P, Coroutine[None, None, T]]
@@ -184,7 +181,7 @@ class ServerApp:
         namespace: str | None = None,
         *,
         with_header_check: bool = False,
-    ) -> None:
+    ) -> AsyncCallable[Concatenate[str, P], dict | dict[str, T]]:
         @functools.wraps(handler)
         async def _handler(sid: str, *args: P.args, **kwargs: P.kwargs) -> dict | dict[str, T]:
             ctx_where.set(message)
@@ -235,9 +232,11 @@ class ServerApp:
         # metric_wrapper = self.metrics.summary(f"socket_{message}", f"Socket.io messages of type {message}")
         # return self.get_server().on(message, namespace)(metric_wrapper(_handler))
 
-        self.sio.on(message, namespace=namespace)(typed_handler)
+        return self.sio.on(message, namespace=namespace)(typed_handler)
 
-    def on_with_wrapper(self, message: str, handler: AsyncCallable[[ServerApp, str, T], R]) -> None:
+    def on_with_wrapper[**P, T](
+        self, message: str, handler: AsyncCallable[Concatenate[Self, str, P], T]
+    ) -> AsyncCallable[Concatenate[str, P], dict | dict[str, T]]:
         types = typing.get_type_hints(handler)
         arg_spec = inspect.getfullargspec(handler)
 
@@ -246,7 +245,7 @@ class ServerApp:
             decoded_arg = construct_pack.decode(arg, types[arg_spec.args[2]])
             return construct_pack.encode(await handler(sa, sid, decoded_arg), types["return"])
 
-        self.on(message, _handler, with_header_check=True)
+        return self.on(message, _handler, with_header_check=True)
 
     def current_client_ip(self, sid: str) -> str:
         try:

@@ -14,6 +14,9 @@ from randovania.server.configuration import ServerConfiguration
 
 if TYPE_CHECKING:
     from collections.abc import Generator
+    from pathlib import Path
+
+    from randovania.server.server_app import RdvFastAPI
 
 
 @pytest.fixture
@@ -30,7 +33,7 @@ def empty_database():
 
 
 @pytest.fixture
-def clean_database(empty_database):
+def clean_database(empty_database) -> SqliteDatabase:
     empty_database.create_tables(database.all_classes)
     return empty_database
 
@@ -45,19 +48,29 @@ def default_game_list(is_dev_version):
     return [g.value for g in RandovaniaGame.sorted_all_games() if g.data.defaults_available_in_game_sessions]
 
 
+@pytest.fixture(name="db_path")
+def db_path_fixture(tmp_path: Path):
+    return tmp_path.joinpath("database.db")
+
+
 @pytest.fixture(name="server_app")
-def server_app_fixture():
+def server_app_fixture(db_path):
     pytest.importorskip("engineio.async_drivers.threading")
     from randovania.server.server_app import ServerApp
 
     server_config = ServerConfiguration(
-        secret_key="key", discord_client_secret="5678", fernet_key="s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A="
+        secret_key="key",
+        discord_client_secret="5678",
+        fernet_key="s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=",
+        client_version_checking="ignore",
+        database_path=str(db_path),
     )
     configuration = NetworkConfiguration(
         server_address="http://127.0.0.1:5000",
         socketio_path="/socket.io",
         guest_secret="s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=",
         server_config=server_config,
+        discord_client_id=1234,
     )
 
     server = ServerApp(configuration)
@@ -66,7 +79,13 @@ def server_app_fixture():
     return server
 
 
+class RdvTestClient(TestClient):
+    def __init__(self, app: RdvFastAPI, *args) -> None:
+        self.sa = app.sa
+        super().__init__(app, *args)
+
+
 @pytest.fixture(name="test_client")
-def test_client_fixture(server_app) -> Generator[TestClient, None, None]:
-    with TestClient(server_app.app) as client:
+def test_client_fixture(server_app) -> Generator[RdvTestClient, None, None]:
+    with RdvTestClient(server_app.app) as client:
         yield client
