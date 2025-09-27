@@ -6,8 +6,6 @@ from typing import TYPE_CHECKING, Self, TypedDict
 import aiohttp
 from fastapi_discord import DiscordOAuthClient, Unauthorized
 
-import randovania
-
 if TYPE_CHECKING:
     from fastapi import Request
 
@@ -67,7 +65,7 @@ class EnforceDiscordRole:
 
 @asynccontextmanager
 async def discord_oauth_lifespan(_app: RdvFastAPI) -> Lifespan[CustomDiscordOAuthClient]:
-    config = randovania.get_configuration()
+    config = _app.sa.configuration
 
     client_id = config["discord_client_id"]
     client_secret = config["server_config"]["discord_client_secret"]

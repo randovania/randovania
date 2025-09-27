@@ -19,6 +19,7 @@ import fastapi_discord
 import peewee
 import sentry_sdk
 from cryptography.fernet import Fernet
+from fastapi.responses import PlainTextResponse
 
 # import flask
 # import flask_discord
@@ -95,8 +96,9 @@ class ServerApp:
         self.expected_headers.pop("X-Randovania-Version")
 
         debug = "FASTAPI_DEBUG" in os.environ
-        self.logger.warn(f"Debug = {debug}")
         self.app = RdvFastAPI(lifespan=self._lifespan, debug=debug)
+        self.app.sa = self
+
         self.app.add_middleware(SessionMiddleware, secret_key=configuration["server_config"]["secret_key"])
         self.app.state.session_requests = {}
 
@@ -121,7 +123,6 @@ class ServerApp:
     @asynccontextmanager
     async def _lifespan(self, _app: RdvFastAPI) -> Lifespan[None]:
         self.logger.info("Lifespan start")
-        _app.sa = self
 
         async with (
             discord_oauth_lifespan(_app) as self.discord,
@@ -133,7 +134,6 @@ class ServerApp:
             yield
 
         self.logger.info("Lifespan end")
-        del _app.sa
 
     @property
     def sio(self) -> AsyncServer:
@@ -146,7 +146,7 @@ class ServerApp:
         async_race.setup_app(self)
         user_session.setup_app(self)
 
-        @self.app.get("/")
+        @self.app.get("/", response_class=PlainTextResponse)
         def index(request: fastapi.Request) -> str:
             host = request.client.host if request.client is not None else None
             self.logger.info(
