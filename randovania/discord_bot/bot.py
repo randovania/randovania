@@ -1,4 +1,5 @@
 import logging
+from typing import Required, TypedDict
 
 import discord
 
@@ -17,8 +18,14 @@ async def application_command_error(ctx: discord.ApplicationContext, error: disc
     await ctx.respond("Sorry, an error has occurred processing the request.", ephemeral=True)
 
 
+class BotConfiguration(TypedDict, total=False):
+    token: Required[str]
+    debug_guild: int
+    command_prefix: str
+
+
 class RandovaniaBot(discord.Bot):
-    def __init__(self, configuration: dict):
+    def __init__(self, configuration: BotConfiguration):
         debug_guilds = []
         if configuration.get("debug_guild"):
             debug_guilds.append(configuration["debug_guild"])

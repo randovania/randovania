@@ -1,6 +1,6 @@
 import discord
 
-from randovania.discord_bot.bot import RandovaniaBot
+from randovania.discord_bot.bot import BotConfiguration, RandovaniaBot
 from randovania.discord_bot.randovania_cog import RandovaniaCog
 from randovania.game.game_enum import RandovaniaGame
 from randovania.lib import enum_lib
@@ -59,7 +59,7 @@ class GameFaqMessage:
 
 
 class FaqCommandCog(RandovaniaCog):
-    def __init__(self, configuration: dict, bot: RandovaniaBot):
+    def __init__(self, configuration: BotConfiguration, bot: RandovaniaBot):
         self.configuration = configuration
         self.bot = bot
 

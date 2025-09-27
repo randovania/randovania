@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from randovania.server.server_app import ServerApp
 
 
-def setup_app(sa: ServerApp):
+def setup_app(sa: ServerApp) -> None:
     session_api.setup_app(sa)
     session_admin.setup_app(sa)
     web_api.setup_app(sa)

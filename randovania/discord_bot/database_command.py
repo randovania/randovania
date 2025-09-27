@@ -13,7 +13,7 @@ from discord import Embed
 from discord.ext.commands import Context, Converter
 from PIL import ImageDraw
 
-from randovania.discord_bot.bot import RandovaniaBot
+from randovania.discord_bot.bot import BotConfiguration, RandovaniaBot
 from randovania.discord_bot.randovania_cog import RandovaniaCog
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database, pretty_print
@@ -411,7 +411,7 @@ class DatabaseCommandCog(RandovaniaCog):
     _split_regions: dict[RandovaniaGame, list[SplitRegion]]
     _select_split_region_view: dict[RandovaniaGame, discord.ui.View]
 
-    def __init__(self, configuration: dict, bot: RandovaniaBot):
+    def __init__(self, configuration: BotConfiguration, bot: RandovaniaBot):
         self.configuration = configuration
         self.bot = bot
         self._split_regions = {}

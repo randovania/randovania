@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import logging
+import os
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -15,14 +17,57 @@ def flask_command_logic(args: Namespace) -> None:
 
     randovania.monitoring.server_init(sampling_rate=sampling_rate)
 
-    from randovania.server import app
+    host = "0.0.0.0"
+    reload_ = False
 
-    server_app = app.create_app()
-    server_app.sa.sio.run(server_app, host="0.0.0.0")
+    if args.mode == "dev":
+        reload_ = True
+        os.environ["FASTAPI_DEBUG"] = "True"
+    elif args.mode != "prod":
+        logging.warning(f"Unknown server mode '{args.mode}'. Running in prod mode.")
+
+    import uvicorn
+    import uvicorn.config
+
+    log_config = uvicorn.config.LOGGING_CONFIG
+
+    # # Enable peewee logging to see the queries being made
+    # log_config["loggers"]["peewee"] = {
+    #     'level': 'DEBUG',
+    #     'handlers': ['default'],
+    # }
+
+    # the info-level logs are more like debug-level
+    log_config["loggers"]["socketio_handler.app"] = {"level": "WARN"}
+    log_config["loggers"]["watchfiles.main"] = {"level": "WARN"}
+
+    log_config["formatters"]["default"]["fmt"] = (
+        "[%(asctime)s] %(levelprefix)s %(context)s [%(who)s] in %(where)s: %(message)s"
+    )
+    log_config["formatters"]["default"]["()"] = "randovania.server.server_app.ServerLoggingFormatter"
+    log_config["formatters"]["access"]["fmt"] = (
+        "[%(asctime)s] %(levelprefix)s Uvicorn [%(client_addr)s] in %(request_line)s: %(status_code)s"
+    )
+
+    uvicorn.run(
+        "randovania.server.app_module:app",
+        host=host,
+        port=5000,
+        log_config=log_config,
+        reload=reload_,
+        reload_excludes=["randovania/cli/server.py"],
+    )
 
 
 def add_flask_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser("flask", help="Hosts the flask server.")
+    parser.add_argument(
+        "--mode",
+        type=str,
+        choices=["dev", "prod"],
+        default="prod",
+        help="Whether to run in development or production mode.",
+    )
     parser.set_defaults(func=flask_command_logic)
 
 

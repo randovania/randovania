@@ -62,6 +62,7 @@ if TYPE_CHECKING:
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
     from randovania.layout.layout_description import LayoutDescription
     from randovania.lib.json_lib import JsonType
+    from randovania.network_common.configuration import NetworkConfiguration
 
 
 class ConnectionState(Enum):
@@ -145,7 +146,7 @@ class NetworkClient:
     _tracking_worlds: set[tuple[uuid.UUID, int]]
     _allow_reporting_username: bool = False
 
-    def __init__(self, user_data_dir: Path, configuration: dict):
+    def __init__(self, user_data_dir: Path, configuration: NetworkConfiguration):
         self.logger = logging.getLogger("NetworkClient")
 
         old_connect = aiohttp.ClientSession.ws_connect

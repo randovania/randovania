@@ -121,14 +121,6 @@ jobs:
 
     name: ${{ matrix.os.name }}
 
-    env:
-      # Due to https://github.com/eventlet/eventlet/issues/670, merely importing eventlet during a test running with
-      # pytest-async causes an error. Settings EVENTLET_IMPORT_VERSION_ONLY allows us to avoid that error, but this
-      # instead causes the flask_socketio to fail importing. Setting FLASK_RUN_FROM_CLI causes it to default to the
-      # threading async method instead, avoiding the issue
-      EVENTLET_IMPORT_VERSION_ONLY: ${{ matrix.os.image == 'macos-13' && '1' || '0' }}
-      FLASK_RUN_FROM_CLI: ${{ matrix.os.image == 'macos-13' && '1' || '0' }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -197,14 +189,6 @@ jobs:
     timeout-minutes: 30
 
     name: ${{ matrix.os.name }} Executable
-
-    env:
-      # Due to https://github.com/eventlet/eventlet/issues/670, merely importing eventlet during a test running with
-      # pytest-async causes an error. Settings EVENTLET_IMPORT_VERSION_ONLY allows us to avoid that error, but this
-      # instead causes the flask_socketio to fail importing. Setting FLASK_RUN_FROM_CLI causes it to default to the
-      # threading async method instead, avoiding the issue
-      EVENTLET_IMPORT_VERSION_ONLY: ${{ matrix.os.image == 'macos-13' && '1' || '0' }}
-      FLASK_RUN_FROM_CLI: ${{ matrix.os.image == 'macos-13' && '1' || '0' }}
 
     steps:
       - name: Checkout

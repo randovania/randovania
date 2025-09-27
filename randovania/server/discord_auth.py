@@ -1,0 +1,84 @@
+from __future__ import annotations
+
+from contextlib import asynccontextmanager
+from typing import TYPE_CHECKING, Self, TypedDict
+
+import aiohttp
+from fastapi_discord import DiscordOAuthClient, Unauthorized
+
+if TYPE_CHECKING:
+    from fastapi import Request
+
+    from randovania.server.server_app import Lifespan, RdvFastAPI, ServerApp
+
+
+class CustomDiscordOAuthClient(DiscordOAuthClient):
+    def get_token(self, request: Request) -> str:
+        if "discord_oauth_token" not in request.session:
+            raise Unauthorized
+        return request.session["discord_oauth_token"]
+
+
+class EnforceRoleConfiguration(TypedDict, total=True):
+    guild_id: int
+    role_id: int | str
+    token: str
+
+
+class EnforceDiscordRole:
+    guild_id: int
+    role_id: str
+    sa: ServerApp
+    session: aiohttp.ClientSession
+
+    @classmethod
+    @asynccontextmanager
+    async def lifespan(cls, _app: RdvFastAPI) -> Lifespan[Self | None]:
+        config = _app.sa.configuration["server_config"].get("enforce_role")
+        if config is None:
+            yield None
+            return
+
+        self = cls()
+        self.sa = _app.sa
+        self.guild_id = config["guild_id"]
+        self.role_id = str(config["role_id"])
+        async with aiohttp.ClientSession() as self.session:
+            self.session.headers["Authorization"] = "Bot {}".format(config["token"])
+            yield self
+
+    async def verify_user(self, user_id: int) -> bool:
+        url = f"https://discordapp.com/api/guilds/{self.guild_id}/members/{user_id}"
+        async with self.session.get(url) as r:
+            try:
+                result = await r.json()
+                if r.ok:
+                    return self.role_id in result["roles"]
+                else:
+                    self.sa.logger.warning("Unable to verify user %s: %s", user_id, await r.text())
+                    return False
+
+            except aiohttp.ClientError as e:
+                self.sa.logger.warning("Unable to verify user %s: %s / %s", user_id, await r.text(), str(e))
+                return True
+
+
+@asynccontextmanager
+async def discord_oauth_lifespan(_app: RdvFastAPI) -> Lifespan[CustomDiscordOAuthClient]:
+    config = _app.sa.configuration
+
+    client_id = config["discord_client_id"]
+    client_secret = config["server_config"]["discord_client_secret"]
+    redirect_uri = f"{config['server_address']}/login_callback"
+
+    scopes = ("identify",)
+
+    discord = CustomDiscordOAuthClient(client_id, client_secret, redirect_uri, scopes)
+
+    await discord.init()
+
+    yield discord
+
+    if discord.client_session is not None:
+        await discord.client_session.close()
+        discord.client_session = None

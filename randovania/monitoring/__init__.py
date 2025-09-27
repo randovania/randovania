@@ -83,7 +83,12 @@ def before_send(event: sentry_sdk.types.Event, hint: sentry_sdk.types.Hint) -> s
     return event
 
 
-def _init(include_flask: bool, url_key: str, sampling_rate: float = 1.0, exclude_server_name: bool = False) -> None:
+type SentryUrlKeys = typing.Literal["client", "server", "bot"]
+
+
+def _init(
+    include_flask: bool, url_key: SentryUrlKeys, sampling_rate: float = 1.0, exclude_server_name: bool = False
+) -> None:
     if randovania.is_dirty():
         return
 
