@@ -213,15 +213,14 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
                 False,
             )
 
-        hints: list = []
+        hints: dict = {}
 
         hint_nodes = sorted(self.game.region_list.iterate_nodes_of_type(HintNode))
 
+        # Hints are assigned to four lore scans in pairs: (1,2), (3,4), (5,6), (7,8)
         i = 1
         for node in hint_nodes:
-            hint_dict = {}
             string_id = node.extra["entity_type_data"]["string_id"]
-            hint_dict["string_id"] = string_id
 
             scan_title = f"{_STRING_ID_TO_SCAN_TITLE[string_id]}\\"
             scan_text = " ".join(
@@ -237,16 +236,11 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
 
             if octoliths_precision != SpecificPickupHintMode.DISABLED:
                 if scan_text == "":
-                    hint_dict["text"] = scan_title + self.rng.choice(useless_hints).lower()
+                    hints[string_id] = scan_title + self.rng.choice(useless_hints)
                 else:
-                    hint_dict["text"] = scan_title + scan_text
-
-                if not self.configuration.octoliths.placed_octoliths:
-                    hint_dict["text"] = "the OCTOLITHS have already been found. there is no need to locate them."
+                    hints[string_id] = scan_title + scan_text
             else:
-                hint_dict["text"] = scan_title + self.rng.choice(useless_hints).lower()
-
-            hints.append(hint_dict)
+                hints[string_id] = scan_title + self.rng.choice(useless_hints)
 
             i += 2
 
