@@ -87,7 +87,7 @@ exporters = [
     "open-dread-rando>=2.17.0",
 
     # Metroid fusion
-    "mars-patcher>=0.7.1",
+    "mars-patcher>=0.8.2",
 
     # Metroid Planets
     "planets-yapr>=1.0.0",
@@ -190,7 +190,7 @@ include = ["randovania*"]
 local_scheme = "no-local-version"
 version_file = "randovania/version.py"
 version_scheme = "randovania_scm_version_schema:version_scheme"
-git_describe_command = [
+scm.git.describe_command = [
     "git",
     "describe",
     "--dirty",

@@ -38,7 +38,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
         with:
-          version: "0.8.19"
+          version: "0.8.22"
           enable-cache: true
 
       - name: Set up Python
@@ -71,7 +71,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
         with:
-          version: "0.8.19"
+          version: "0.8.22"
           enable-cache: true
 
       - name: Set up Python
@@ -81,7 +81,7 @@ jobs:
         run: sudo apt-get -q update && sudo apt-get -y install $(cat .github/linux_apt_dependencies.txt)
 
       - name: Install Python packages
-        run: uv sync --frozen --extra gui --extra exporters --extra test
+        run: uv sync --locked --extra gui --extra exporters --extra test
 
       - name: run pytest
         run: uv run pytest --cov randovania --cov-append --cov-report=xml --durations=100 -n auto --skip-gui-tests test/resolver/test_resolver.py test/generator/test_generator_reach.py
@@ -138,7 +138,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
         with:
-          version: "0.8.19"
+          version: "0.8.22"
           enable-cache: true
 
       - name: Set up Python
@@ -149,7 +149,7 @@ jobs:
         if: matrix.os.image == 'ubuntu-latest'
 
       - name: Install Python packages
-        run: uv sync --frozen --all-extras
+        run: uv sync --locked --all-extras
 
       - name: create test game
         run: uv run coverage run -m randovania development add-new-game --enum-name TEST_GAME --enum-value test_game --short-name TG --long-name "Test Game"
@@ -215,7 +215,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
         with:
-          version: "0.8.19"
+          version: "0.8.22"
           enable-cache: true
 
       - name: Set up Python
@@ -226,7 +226,7 @@ jobs:
         if: matrix.os.image == 'ubuntu-latest'
 
       - name: Install Python packages
-        run: uv sync --frozen --extra gui --extra exporters --extra test --group installer
+        run: uv sync --locked --extra gui --extra exporters --extra test --group installer
 
       - name: create executable
         run: uv run tools/create_release.py
@@ -371,7 +371,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
         with:
-          version: "0.8.19"
+          version: "0.8.22"
           enable-cache: true
 
       - name: Set up Python
@@ -503,7 +503,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
         with:
-          version: "0.8.19"
+          version: "0.8.22"
           enable-cache: true
 
       - name: Set up Python

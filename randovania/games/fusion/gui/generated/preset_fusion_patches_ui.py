@@ -37,7 +37,7 @@ class Ui_PresetFusionPatches(object):
         self.scroll_area.setWidgetResizable(True)
         self.scroll_contents = QWidget()
         self.scroll_contents.setObjectName(u"scroll_contents")
-        self.scroll_contents.setGeometry(QRect(0, 0, 725, 408))
+        self.scroll_contents.setGeometry(QRect(0, 0, 709, 418))
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -129,6 +129,16 @@ class Ui_PresetFusionPatches(object):
 
         self.instant_transitions_layout.addWidget(self.short_intro_text_label)
 
+        self.instant_morph_check = QCheckBox(self.gameplay_group)
+        self.instant_morph_check.setObjectName(u"instant_morph_check")
+
+        self.instant_transitions_layout.addWidget(self.instant_morph_check)
+
+        self.instant_morph_label = QLabel(self.gameplay_group)
+        self.instant_morph_label.setObjectName(u"instant_morph_label")
+
+        self.instant_transitions_layout.addWidget(self.instant_morph_label)
+
 
         self.scroll_layout.addWidget(self.gameplay_group)
 
@@ -158,5 +168,7 @@ class Ui_PresetFusionPatches(object):
         self.instant_transitions_label.setText(QCoreApplication.translate("PresetFusionPatches", u"<html><head/><body><p>Enabling this will skip the transition animation for hatches.</p></body></html>", None))
         self.short_intro_text_check.setText(QCoreApplication.translate("PresetFusionPatches", u"Enable Short Intro Text", None))
         self.short_intro_text_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Enabling this considerably shortens Adam's intro text. This setting is only recommended to players familiar with the randomizer and its settings.", None))
+        self.instant_morph_check.setText(QCoreApplication.translate("PresetFusionPatches", u"Enable Instant Morph Button", None))
+        self.instant_morph_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Enabling this allows you to instantly morph and unmorph by using the SELECT button.", None))
     # retranslateUi
 

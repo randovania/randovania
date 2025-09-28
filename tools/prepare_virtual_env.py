@@ -24,12 +24,8 @@ Please follow the instructions in the README:
 
 try:
     subprocess.run(
-        [
-            "uv",
-            "sync",
-            "--frozen",
-            *extra,
-        ],
+        # Using frozen instead of locked to not fail for more casual users and to not modify the uv.lock for them too
+        ["uv", "sync", "--frozen", *extra],
         check=True,
     )
 

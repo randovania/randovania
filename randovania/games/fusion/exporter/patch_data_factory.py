@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+import textwrap
 import typing
 from collections import defaultdict
 from typing import TYPE_CHECKING, override
@@ -22,7 +23,7 @@ from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.lib import json_lib
 
 if TYPE_CHECKING:
-    from mars_patcher.auto_generated_types import MarsschemaStartingitems
+    from mars_patcher.mf.auto_generated_types import MarsschemamfStartingitems
 
     from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
@@ -129,8 +130,8 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         }
         return starting_location_dict
 
-    def _create_starting_items(self) -> MarsschemaStartingitems:
-        starting_dict: MarsschemaStartingitems = {
+    def _create_starting_items(self) -> MarsschemamfStartingitems:
+        starting_dict: MarsschemamfStartingitems = {
             "Energy": self.configuration.energy_per_tank - 1,
             "Abilities": [],
             "SecurityLevels": [],
@@ -389,6 +390,10 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 )
         return elements
 
+    @staticmethod
+    def _wrap_text_for_credits(text: str) -> list[str]:
+        return textwrap.wrap(text, width=30)
+
     def _create_credits_text(self) -> list:
         credits_array = []
         spoiler_dict = self._credits_elements()
@@ -401,13 +406,29 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         def sort_pickup(p: str) -> tuple[int | float, str]:
             return major_pickup_name_order.get(p, math.inf), p
 
+        credits_array.append({"LineType": "White2", "Text": "Item Locations", "BlankLines": 2})
+
         for pickup in sorted(spoiler_dict.keys(), key=sort_pickup):
             credits_array.append({"LineType": "Red", "Text": pickup, "BlankLines": 1})
             for location in spoiler_dict[pickup]:
-                if location["World"] is not None:
-                    credits_array.append({"LineType": "Blue", "Text": location["World"], "BlankLines": 0})
-                credits_array.append({"LineType": "White1", "Text": location["Region"], "BlankLines": 0})
-                credits_array.append({"LineType": "White1", "Text": location["Area"], "BlankLines": 1})
+                region_lines = self._wrap_text_for_credits(location["Region"])
+                area_lines = self._wrap_text_for_credits(location["Area"])
+                world_name = location["World"] if location["World"] else ""
+                world_lines = self._wrap_text_for_credits(world_name)
+                for line in world_lines:
+                    credits_array.append({"LineType": "Blue", "Text": line, "BlankLines": 0})
+                for line in region_lines:
+                    credits_array.append({"LineType": "White1", "Text": line, "BlankLines": 0})
+                for line in area_lines:
+                    credits_array.append({"LineType": "White1", "Text": line, "BlankLines": 0})
+                credits_array.append({"LineType": "White1", "Text": "", "BlankLines": 0})
+
+        # Have last item give more space
+        credits_array[-1]["BlankLines"] = 3
+
+        # Self plug, for streaming/showcasing.
+        credits_array.append({"LineType": "Blue", "Text": "Play this Randomizer at", "BlankLines": 0})
+        credits_array.append({"LineType": "White1", "Text": "randovania.org", "BlankLines": 3})
 
         return credits_array
 
@@ -498,6 +519,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "AccessibilityPatches": True,
             "PowerBombsWithoutBombs": True,
             "SkipDoorTransitions": self.configuration.instant_transitions,
+            "InstantUnmorph": self.configuration.instant_morph,
             "UnexploredMap": self.cosmetic_patches.starting_map,
             "RevealHiddenTiles": self.cosmetic_patches.reveal_blocks,
             "StereoDefault": self.cosmetic_patches.stereo_default,
