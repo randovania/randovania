@@ -373,7 +373,7 @@ class PermalinkLookupCog(RandovaniaCog):
         # Support for disabling the bot from replying by just disallowing it from sending messages.
         permissions = message.channel.permissions_for(message.guild.me)
         if not permissions.send_messages:
-            logging.info("Bot not allowed to send messages at #%s", message.channel.name)
+            logging.info("Bot not allowed to send messages at %s's #%s", message.guild.name, message.channel.name)
             return
 
         async for preset in _get_presets_from_message(message):
