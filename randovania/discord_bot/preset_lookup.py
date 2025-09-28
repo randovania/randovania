@@ -248,7 +248,15 @@ async def _try_get[T](
         return decoder(json.loads(data.decode("utf-8")))
     except Exception as e:
         if not isinstance(e, UnsupportedVersion):
-            logging.exception(f"Unable to process {attachment.filename} from {message}")
+            logging.exception(
+                "Unable to process %s from %s",
+                attachment.filename,
+                message.content,
+                extra={
+                    "message_id": message.id,
+                    "guild_id": message.guild.id,
+                },
+            )
 
         await message.reply(
             embed=discord.Embed(
@@ -373,7 +381,15 @@ class PermalinkLookupCog(RandovaniaCog):
         # Support for disabling the bot from replying by just disallowing it from sending messages.
         permissions = message.channel.permissions_for(message.guild.me)
         if not permissions.send_messages:
-            logging.info("Bot not allowed to send messages at %s's #%s", message.guild.name, message.channel.name)
+            logging.info(
+                "Bot not allowed to send messages at %s's #%s",
+                message.guild.name,
+                message.channel.name,
+                extra={
+                    "message_id": message.id,
+                    "guild_id": message.guild.id,
+                },
+            )
             return
 
         async for preset in _get_presets_from_message(message):
