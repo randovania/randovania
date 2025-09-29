@@ -9,7 +9,7 @@ import re
 import subprocess
 import time
 import typing
-from collections.abc import Callable
+from collections.abc import AsyncGenerator, Callable
 
 import discord
 from discord.ui import Button
@@ -19,6 +19,7 @@ from randovania.discord_bot.bot import RandovaniaBot
 from randovania.discord_bot.randovania_cog import RandovaniaCog
 from randovania.generator import generator
 from randovania.layout import layout_description, preset_describer
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink, UnsupportedPermalink
@@ -149,13 +150,7 @@ async def look_for_permalinks(message: discord.Message):
             await message.reply(content=content, embed=embed, mention_author=False)
 
 
-async def reply_for_preset(message: discord.Message, versioned_preset: VersionedPreset):
-    try:
-        preset = versioned_preset.get_preset()
-    except ValueError as e:
-        logging.info(f"Invalid preset '{versioned_preset.name}' from {message.author.display_name}: {e}")
-        return
-
+async def reply_for_preset(message: discord.Message, preset: Preset[BaseConfiguration]) -> None:
     embed = discord.Embed(title=preset.name, description=f"{preset.game.long_name}\n{preset.description}")
     _add_preset_description_to_embed(embed, preset)
 
@@ -254,7 +249,7 @@ async def _try_get[T](
                 message.content,
                 extra={
                     "message_id": message.id,
-                    "guild_id": message.guild.id,
+                    "guild_id": message.guild.id if message.guild else None,
                 },
             )
 
@@ -268,16 +263,16 @@ async def _try_get[T](
         return None
 
 
-async def _get_presets_from_message(message: discord.Message):
+async def _get_presets_from_message(message: discord.Message) -> AsyncGenerator[Preset[BaseConfiguration]]:
     for attachment in message.attachments:
         filename: str = attachment.filename
         if filename.endswith(VersionedPreset.file_extension()):
-            result = await _try_get(message, attachment, VersionedPreset)
+            result = await _try_get(message, attachment, lambda d: VersionedPreset(d).get_preset())
             if result is not None:
                 yield result
 
 
-async def _get_layouts_from_message(message: discord.Message):
+async def _get_layouts_from_message(message: discord.Message) -> AsyncGenerator[LayoutDescription]:
     for attachment in message.attachments:
         filename: str = attachment.filename
         if filename.endswith(LayoutDescription.file_extension()):
@@ -378,19 +373,20 @@ class PermalinkLookupCog(RandovaniaCog):
         if message.author == self.bot.user:
             return
 
-        # Support for disabling the bot from replying by just disallowing it from sending messages.
-        permissions = message.channel.permissions_for(message.guild.me)
-        if not permissions.send_messages:
-            logging.info(
-                "Bot not allowed to send messages at %s's #%s",
-                message.guild.name,
-                message.channel.name,
-                extra={
-                    "message_id": message.id,
-                    "guild_id": message.guild.id,
-                },
-            )
-            return
+        if message.guild is not None:
+            # Support for disabling the bot from replying by just disallowing it from sending messages.
+            permissions = message.channel.permissions_for(message.guild.me)
+            if not permissions.send_messages:
+                logging.info(
+                    "Bot not allowed to send messages at %s's #%s",
+                    message.guild.name,
+                    message.channel.name,
+                    extra={
+                        "message_id": message.id,
+                        "guild_id": message.guild.id,
+                    },
+                )
+                return
 
         async for preset in _get_presets_from_message(message):
             await reply_for_preset(message, preset)
