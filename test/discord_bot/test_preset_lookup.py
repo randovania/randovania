@@ -168,8 +168,7 @@ async def test_reply_for_preset(mocker):
         ],
     )
     message = AsyncMock()
-    versioned_preset = MagicMock()
-    preset = versioned_preset.get_preset.return_value
+    preset = MagicMock()
     embed = MagicMock()
 
     mock_embed: MagicMock = mocker.patch("discord.Embed", side_effect=[embed])
@@ -177,7 +176,7 @@ async def test_reply_for_preset(mocker):
     # Run
     from randovania.discord_bot import preset_lookup
 
-    await preset_lookup.reply_for_preset(message, versioned_preset)
+    await preset_lookup.reply_for_preset(message, preset)
 
     # Assert
     mock_embed.assert_called_once_with(title=preset.name, description=f"{preset.game.long_name}\n{preset.description}")
