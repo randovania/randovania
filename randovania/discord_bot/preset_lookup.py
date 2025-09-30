@@ -264,10 +264,13 @@ async def _try_get[T](
 
 
 async def _get_presets_from_message(message: discord.Message) -> AsyncGenerator[Preset[BaseConfiguration]]:
+    def _get_preset(d: dict) -> Preset[BaseConfiguration]:
+        return VersionedPreset(d).get_preset()
+
     for attachment in message.attachments:
         filename: str = attachment.filename
         if filename.endswith(VersionedPreset.file_extension()):
-            result = await _try_get(message, attachment, lambda d: VersionedPreset(d).get_preset())
+            result = await _try_get(message, attachment, _get_preset)
             if result is not None:
                 yield result
 
@@ -297,7 +300,7 @@ class PermalinkLookupCog(RandovaniaCog):
     )
     async def generate_game(self, context: discord.ApplicationContext, message: discord.Message):
         """Generates a game with all presets in the given message."""
-        presets = [preset.get_preset() async for preset in _get_presets_from_message(message)]
+        presets = [preset async for preset in _get_presets_from_message(message)]
         if not presets:
             return await context.respond(content="No presets found in message.", ephemeral=True)
 
@@ -373,7 +376,7 @@ class PermalinkLookupCog(RandovaniaCog):
         if message.author == self.bot.user:
             return
 
-        if message.guild is not None:
+        if message.guild is not None and isinstance(message.channel, discord.TextChannel | discord.Thread):
             # Support for disabling the bot from replying by just disallowing it from sending messages.
             permissions = message.channel.permissions_for(message.guild.me)
             if not permissions.send_messages:
