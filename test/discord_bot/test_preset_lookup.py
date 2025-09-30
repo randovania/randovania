@@ -51,7 +51,8 @@ async def test_get_presets_from_message(mocker: pytest_mock.MockerFixture) -> No
     mock_get_preset.assert_called_once_with()
 
 
-async def test_on_message_from_bot(mocker):
+@pytest.mark.parametrize("reason", ["from_bot", "no_permission", "ok"])
+async def test_on_message(mocker, reason: str):
     mock_look_for: AsyncMock = mocker.patch(
         "randovania.discord_bot.preset_lookup.look_for_permalinks", new_callable=AsyncMock
     )
@@ -62,13 +63,20 @@ async def test_on_message_from_bot(mocker):
     cog = preset_lookup.PermalinkLookupCog(None, client)
 
     message = MagicMock()
-    message.author = client.user
+    message.channel = MagicMock(spec=discord.TextChannel)
+    message.channel.permissions_for.return_value.send_messages = reason != "no_permission"
+
+    if reason == "from_bot":
+        message.author = client.user
 
     # Run
     await cog.on_message(message)
 
     # Assert
-    mock_look_for.assert_not_awaited()
+    if reason != "ok":
+        mock_look_for.assert_not_awaited()
+    else:
+        mock_look_for.assert_awaited_once_with(message)
 
 
 @pytest.mark.parametrize(
