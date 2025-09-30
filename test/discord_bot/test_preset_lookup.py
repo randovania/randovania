@@ -1,12 +1,54 @@
 from __future__ import annotations
 
 import subprocess
+from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock, call
 
+import discord
 import pytest
 
 import randovania
 from randovania.game.game_enum import RandovaniaGame
+
+if TYPE_CHECKING:
+    import pytest_mock
+
+
+async def test_get_presets_from_message(mocker: pytest_mock.MockerFixture) -> None:
+    a1 = MagicMock(spec=discord.Attachment)
+    a1.filename = "thing.json"
+    a2 = MagicMock(spec=discord.Attachment)
+    a2.filename = "p1.rdvpreset"
+    a2.read = AsyncMock(return_value=b"")
+    a3 = MagicMock(spec=discord.Attachment)
+    a3.filename = "p2.rdvpreset"
+    a3.read = AsyncMock(return_value=b"2")
+
+    message = MagicMock()
+    message.reply = AsyncMock()
+    message.attachments = [
+        a1,
+        a2,
+        a3,
+    ]
+
+    mock_embed = mocker.patch("discord.Embed")
+    mock_get_preset = mocker.patch("randovania.layout.versioned_preset.VersionedPreset.get_preset")
+
+    from randovania.discord_bot import preset_lookup
+
+    results = [t async for t in preset_lookup._get_presets_from_message(message)]
+
+    assert results == [mock_get_preset.return_value]
+    mock_embed.assert_called_once_with(
+        title="Unable to process `p1.rdvpreset`",
+        description="Expecting value: line 1 column 1 (char 0)",
+    )
+    message.reply.assert_awaited_once_with(
+        embed=mock_embed.return_value,
+        mention_author=False,
+    )
+    mock_get_preset.assert_called_once_with()
 
 
 async def test_on_message_from_bot(mocker):
