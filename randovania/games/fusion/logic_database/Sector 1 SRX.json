@@ -7108,6 +7108,7 @@
                         "area": 1,
                         "room": 27,
                         "source": "Ridley",
+                        "boss_hint_name": "Neo-Ridley",
                         "infant_weight": 3.5
                     },
                     "valid_starting_location": false,
@@ -7178,6 +7179,45 @@
                                                         "name": "SpaceJump",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "WallJump BombJump: https://youtu.be/3rfQghnP54o",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "JBJ",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "JumpExtends",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -11102,7 +11142,6 @@
         "Charge Core Arena": {
             "default_node": null,
             "hint_features": [
-                "boss",
                 "multiple-pickups"
             ],
             "extra": {
@@ -11476,13 +11515,16 @@
                         "area": 1,
                         "room": 40,
                         "source": "ChargeCoreX",
+                        "boss_hint_name": "Charge Core-X",
                         "infant_weight": 3.5
                     },
                     "valid_starting_location": false,
                     "pickup_index": 114,
                     "location_category": "major",
                     "custom_index_group": null,
-                    "hint_features": [],
+                    "hint_features": [
+                        "boss"
+                    ],
                     "connections": {
                         "Arena": {
                             "type": "and",

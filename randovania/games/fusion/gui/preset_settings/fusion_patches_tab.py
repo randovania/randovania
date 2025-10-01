@@ -19,6 +19,7 @@ if typing.TYPE_CHECKING:
 _FIELDS = [
     "instant_transitions",
     "short_intro_text",
+    "instant_morph",
 ]
 
 

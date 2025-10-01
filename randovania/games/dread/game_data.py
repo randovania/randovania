@@ -86,8 +86,8 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     long_name="Metroid Dread",
     development_state=randovania.game.development_state.DevelopmentState.STABLE,
     presets=[
-        {"path": "starter_preset.rdvpreset"},
-        {"path": "april_fools_2023.rdvpreset"},
+        "starter_preset.rdvpreset",
+        "april_fools_2023.rdvpreset",
     ],
     faq=[
         (

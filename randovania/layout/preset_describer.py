@@ -224,21 +224,25 @@ class GamePresetDescriber:
         return ()
 
 
-def _require_majors_check(ammo_configuration: AmmoPickupConfiguration, ammo_names: list[str]) -> list[bool]:
+def _require_majors_check(
+    ammo_configuration: AmmoPickupConfiguration, ammo_names: list[str], mains_are_default_required: bool
+) -> list[bool]:
     result = [False] * len(ammo_names)
 
     name_index_mapping = {name: i for i, name in enumerate(ammo_names)}
 
     for ammo, state in ammo_configuration.pickups_state.items():
         if ammo.name in name_index_mapping:
-            result[name_index_mapping[ammo.name]] = state.requires_main_item
+            result[name_index_mapping[ammo.name]] = state.requires_main_item != mains_are_default_required
 
     return result
 
 
-def message_for_required_mains(ammo_configuration: AmmoPickupConfiguration, message_to_item: dict[str, str]) -> dict:
+def message_for_required_mains(
+    ammo_configuration: AmmoPickupConfiguration, message_to_item: dict[str, str], mains_are_default_required: bool
+) -> dict:
     item_names = list(message_to_item.values())
-    main_required = _require_majors_check(ammo_configuration, item_names)
+    main_required = _require_majors_check(ammo_configuration, item_names, mains_are_default_required)
     return dict(zip(message_to_item.keys(), main_required))
 
 

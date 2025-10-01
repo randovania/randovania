@@ -1,15 +1,58 @@
 from __future__ import annotations
 
 import subprocess
+from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock, call
 
+import discord
 import pytest
 
 import randovania
 from randovania.game.game_enum import RandovaniaGame
 
+if TYPE_CHECKING:
+    import pytest_mock
 
-async def test_on_message_from_bot(mocker):
+
+async def test_get_presets_from_message(mocker: pytest_mock.MockerFixture) -> None:
+    a1 = MagicMock(spec=discord.Attachment)
+    a1.filename = "thing.json"
+    a2 = MagicMock(spec=discord.Attachment)
+    a2.filename = "p1.rdvpreset"
+    a2.read = AsyncMock(return_value=b"")
+    a3 = MagicMock(spec=discord.Attachment)
+    a3.filename = "p2.rdvpreset"
+    a3.read = AsyncMock(return_value=b"2")
+
+    message = MagicMock()
+    message.reply = AsyncMock()
+    message.attachments = [
+        a1,
+        a2,
+        a3,
+    ]
+
+    mock_embed = mocker.patch("discord.Embed")
+    mock_get_preset = mocker.patch("randovania.layout.versioned_preset.VersionedPreset.get_preset")
+
+    from randovania.discord_bot import preset_lookup
+
+    results = [t async for t in preset_lookup._get_presets_from_message(message)]
+
+    assert results == [mock_get_preset.return_value]
+    mock_embed.assert_called_once_with(
+        title="Unable to process `p1.rdvpreset`",
+        description="Expecting value: line 1 column 1 (char 0)",
+    )
+    message.reply.assert_awaited_once_with(
+        embed=mock_embed.return_value,
+        mention_author=False,
+    )
+    mock_get_preset.assert_called_once_with()
+
+
+@pytest.mark.parametrize("reason", ["from_bot", "no_permission", "ok"])
+async def test_on_message(mocker, reason: str):
     mock_look_for: AsyncMock = mocker.patch(
         "randovania.discord_bot.preset_lookup.look_for_permalinks", new_callable=AsyncMock
     )
@@ -20,13 +63,20 @@ async def test_on_message_from_bot(mocker):
     cog = preset_lookup.PermalinkLookupCog(None, client)
 
     message = MagicMock()
-    message.author = client.user
+    message.channel = MagicMock(spec=discord.TextChannel)
+    message.channel.permissions_for.return_value.send_messages = reason != "no_permission"
+
+    if reason == "from_bot":
+        message.author = client.user
 
     # Run
     await cog.on_message(message)
 
     # Assert
-    mock_look_for.assert_not_awaited()
+    if reason != "ok":
+        mock_look_for.assert_not_awaited()
+    else:
+        mock_look_for.assert_awaited_once_with(message)
 
 
 @pytest.mark.parametrize(
@@ -168,8 +218,7 @@ async def test_reply_for_preset(mocker):
         ],
     )
     message = AsyncMock()
-    versioned_preset = MagicMock()
-    preset = versioned_preset.get_preset.return_value
+    preset = MagicMock()
     embed = MagicMock()
 
     mock_embed: MagicMock = mocker.patch("discord.Embed", side_effect=[embed])
@@ -177,7 +226,7 @@ async def test_reply_for_preset(mocker):
     # Run
     from randovania.discord_bot import preset_lookup
 
-    await preset_lookup.reply_for_preset(message, versioned_preset)
+    await preset_lookup.reply_for_preset(message, preset)
 
     # Assert
     mock_embed.assert_called_once_with(title=preset.name, description=f"{preset.game.long_name}\n{preset.description}")

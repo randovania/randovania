@@ -82,7 +82,9 @@ def main():
     subprocess.run(
         [
             sys.executable,
-            os.fspath(this_dir.joinpath("log_analyzer.py")),
+            "-m",
+            "randovania",
+            "analyze",
             rdvgame_path,
             report_path,
         ],
@@ -90,7 +92,7 @@ def main():
     )
 
     # Pack everything
-    with tarfile.TarFile("games.tar.gz", "w") as games_tar:
+    with tarfile.open("games.tar.gz", "w:gz") as games_tar:
         games_tar.add(rdvgame_path, arcname=rdvgame_path.relative_to(output_path))
         games_tar.add(report_path, arcname=report_path.relative_to(output_path))
         games_tar.addfile(

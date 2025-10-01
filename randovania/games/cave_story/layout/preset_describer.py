@@ -33,7 +33,9 @@ class CSPresetDescriber(GamePresetDescriber):
             ],
             "Game Changes": [
                 message_for_required_mains(
-                    configuration.ammo_pickup_configuration, {"Missiles need main Launcher": "Missile Expansion"}
+                    configuration.ammo_pickup_configuration,
+                    {"Missiles need main Launcher": "Missile Expansion"},
+                    mains_are_default_required=False,
                 ),
                 {"No falling blocks in B2": configuration.no_blocks},
             ],

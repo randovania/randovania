@@ -38,11 +38,11 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
         with:
-          version: "0.8.11"
+          version: "0.8.22"
           enable-cache: true
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
 
       - name: build sdist and wheel
         run: uv build
@@ -71,17 +71,17 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
         with:
-          version: "0.8.11"
+          version: "0.8.22"
           enable-cache: true
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
 
       - name: Apt
         run: sudo apt-get -q update && sudo apt-get -y install $(cat .github/linux_apt_dependencies.txt)
 
       - name: Install Python packages
-        run: uv sync --frozen --extra gui --extra exporters --extra test
+        run: uv sync --locked --extra gui --extra exporters --extra test
 
       - name: run pytest
         run: uv run pytest --cov randovania --cov-append --cov-report=xml --durations=100 -n auto --skip-gui-tests test/resolver/test_resolver.py test/generator/test_generator_reach.py
@@ -138,18 +138,18 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
         with:
-          version: "0.8.11"
+          version: "0.8.22"
           enable-cache: true
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
 
       - name: Apt
         run: sudo apt-get -q update && sudo apt-get -y install xvfb xserver-xephyr tigervnc-standalone-server $(cat .github/linux_apt_dependencies.txt)
         if: matrix.os.image == 'ubuntu-latest'
 
       - name: Install Python packages
-        run: uv sync --frozen --all-extras
+        run: uv sync --locked --all-extras
 
       - name: create test game
         run: uv run coverage run -m randovania development add-new-game --enum-name TEST_GAME --enum-value test_game --short-name TG --long-name "Test Game"
@@ -215,18 +215,18 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
         with:
-          version: "0.8.11"
+          version: "0.8.22"
           enable-cache: true
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
 
       - name: Apt
         run: sudo apt-get -q update && sudo apt-get -y install xvfb xserver-xephyr tigervnc-standalone-server x11-utils gnumeric libxcb-cursor0 libxkbcommon-x11-0
         if: matrix.os.image == 'ubuntu-latest'
 
       - name: Install Python packages
-        run: uv sync --frozen --extra gui --extra exporters --extra test --group installer
+        run: uv sync --locked --extra gui --extra exporters --extra test --group installer
 
       - name: create executable
         run: uv run tools/create_release.py
@@ -371,11 +371,11 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
         with:
-          version: "0.8.11"
+          version: "0.8.22"
           enable-cache: true
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
 
       - name: Download the executable
         uses: actions/download-artifact@v5
@@ -503,11 +503,11 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
         with:
-          version: "0.8.11"
+          version: "0.8.22"
           enable-cache: true
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
 
       - name: Download the executables
         uses: actions/download-artifact@v5.0.0

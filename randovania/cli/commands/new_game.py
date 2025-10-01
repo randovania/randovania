@@ -318,7 +318,7 @@ def load_presets(template: RandovaniaGame) -> dict[str, VersionedPreset]:
         v.get_preset()
         return v
 
-    return {preset_config["path"]: get(preset_config["path"]) for preset_config in template.data.presets}
+    return {preset_path: get(preset_path) for preset_path in template.data.presets}
 
 
 def copy_presets(old_presets: dict[str, VersionedPreset], gd: GameDescription, pickup_db: PickupDatabase) -> None:

@@ -101,8 +101,8 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     long_name="Metroid Prime 2: Echoes",
     development_state=randovania.game.development_state.DevelopmentState.STABLE,
     presets=[
-        {"path": "starter_preset.rdvpreset"},
-        {"path": "darkszero_deluxe.rdvpreset"},
+        "starter_preset.rdvpreset",
+        "darkszero_deluxe.rdvpreset",
     ],
     faq=[
         (
