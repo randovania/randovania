@@ -3,7 +3,8 @@ from __future__ import annotations
 import datetime
 import json
 import uuid
-from unittest.mock import MagicMock
+from typing import TYPE_CHECKING
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
@@ -14,51 +15,70 @@ from randovania.network_common.game_details import GameDetails
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.server import database
 
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
 
 @pytest.fixture
-def mock_emit_session_update(mocker) -> MagicMock:
+def mock_emit_session_update(mocker) -> AsyncMock:
     return mocker.patch("randovania.server.multiplayer.session_common.emit_session_meta_update", autospec=True)
 
 
 @pytest.fixture
-def mock_audit(mocker) -> MagicMock:
+def mock_audit(mocker) -> AsyncMock:
     return mocker.patch("randovania.server.multiplayer.session_common.add_audit_entry", autospec=True)
 
 
+@pytest.fixture(name="solo_two_world_session_setup")
+def solo_two_world_session_setup_fixture(test_files_dir) -> Callable[[], database.MultiplayerSession]:
+    def setup() -> database.MultiplayerSession:
+        description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "prime1_and_2_multi.rdvgame"))
+        preset_0 = VersionedPreset.with_preset(description.get_preset(0))
+        preset_1 = VersionedPreset.with_preset(description.get_preset(1))
+
+        user1 = database.User.create(id=1234, name="The Name")
+
+        session = database.MultiplayerSession.create(
+            id=1,
+            name="Debug",
+            state=MultiplayerSessionVisibility.VISIBLE,
+            creator=user1,
+            creation_date=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.UTC),
+        )
+        session.layout_description = description
+        session.save()
+        w1 = database.World.create_for(
+            session=session,
+            name="World 1",
+            preset=preset_0,
+            order=0,
+            uid=uuid.UUID("1179c986-758a-4170-9b07-fe4541d78db0"),
+        )
+        w2 = database.World.create_for(
+            session=session,
+            name="World 2",
+            preset=preset_1,
+            order=1,
+            uid=uuid.UUID("6b5ac1a1-d250-4f05-a5fb-ae37e8a92165"),
+        )
+
+        database.MultiplayerMembership.create(user=user1, session=session, admin=False)
+        database.WorldUserAssociation.create(
+            world=w1, user=user1, last_activity=datetime.datetime(2021, 9, 1, 10, 20, tzinfo=datetime.UTC)
+        )
+        database.WorldUserAssociation.create(
+            world=w2, user=user1, last_activity=datetime.datetime(2022, 5, 6, 12, 0, tzinfo=datetime.UTC)
+        )
+        database.WorldAction.create(provider=w2, location=0, receiver=w1, session=session)
+
+        return session
+
+    return setup
+
+
 @pytest.fixture
-def solo_two_world_session(test_files_dir):
-    description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "prime1_and_2_multi.rdvgame"))
-    preset_0 = VersionedPreset.with_preset(description.get_preset(0))
-    preset_1 = VersionedPreset.with_preset(description.get_preset(1))
-
-    user1 = database.User.create(id=1234, name="The Name")
-
-    session = database.MultiplayerSession.create(
-        id=1,
-        name="Debug",
-        state=MultiplayerSessionVisibility.VISIBLE,
-        creator=user1,
-        creation_date=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.UTC),
-    )
-    session.layout_description = description
-    session.save()
-    w1 = database.World.create_for(
-        session=session, name="World 1", preset=preset_0, order=0, uid=uuid.UUID("1179c986-758a-4170-9b07-fe4541d78db0")
-    )
-    w2 = database.World.create_for(
-        session=session, name="World 2", preset=preset_1, order=1, uid=uuid.UUID("6b5ac1a1-d250-4f05-a5fb-ae37e8a92165")
-    )
-
-    database.MultiplayerMembership.create(user=user1, session=session, admin=False)
-    database.WorldUserAssociation.create(
-        world=w1, user=user1, last_activity=datetime.datetime(2021, 9, 1, 10, 20, tzinfo=datetime.UTC)
-    )
-    database.WorldUserAssociation.create(
-        world=w2, user=user1, last_activity=datetime.datetime(2022, 5, 6, 12, 0, tzinfo=datetime.UTC)
-    )
-    database.WorldAction.create(provider=w2, location=0, receiver=w1, session=session)
-
-    return session
+def solo_two_world_session(clean_database, solo_two_world_session_setup) -> database.MultiplayerSession:
+    return solo_two_world_session_setup()
 
 
 @pytest.fixture
