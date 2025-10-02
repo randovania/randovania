@@ -6,10 +6,6 @@ import json
 import typing
 
 import cryptography.fernet
-
-# import flask
-# import flask_discord.models
-# import flask_socketio
 import fastapi_discord
 import jwt
 import oauthlib

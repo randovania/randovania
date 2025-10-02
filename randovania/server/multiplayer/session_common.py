@@ -1,7 +1,6 @@
 import hashlib
 from collections.abc import Sequence
 
-# import flask_socketio
 import peewee
 import sentry_sdk
 

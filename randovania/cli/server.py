@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from argparse import ArgumentParser, Namespace, _SubParsersAction
 
 
-def flask_command_logic(args: Namespace) -> None:
+def run_command_logic(args: Namespace) -> None:
     import randovania
 
     sampling_rate = randovania.get_configuration().get("sentry_sampling_rate", 1.0)
@@ -64,8 +64,8 @@ def flask_command_logic(args: Namespace) -> None:
     )
 
 
-def add_flask_command(sub_parsers: _SubParsersAction) -> None:
-    parser: ArgumentParser = sub_parsers.add_parser("flask", help="Hosts the flask server.")
+def add_run_command(sub_parsers: _SubParsersAction) -> None:
+    parser: ArgumentParser = sub_parsers.add_parser("run", help="Hosts the FastAPI server.")
     parser.add_argument(
         "--mode",
         type=str,
@@ -73,7 +73,7 @@ def add_flask_command(sub_parsers: _SubParsersAction) -> None:
         default="prod",
         help="Whether to run in development or production mode.",
     )
-    parser.set_defaults(func=flask_command_logic)
+    parser.set_defaults(func=run_command_logic)
 
 
 def migrate_database_command_logic(args: Namespace) -> None:
@@ -105,7 +105,7 @@ def add_bot_command(sub_parsers: _SubParsersAction) -> None:
 def create_subparsers(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser("server", help="CLI tools for the server tools")
     sub_parsers = parser.add_subparsers(dest="command")
-    add_flask_command(sub_parsers)
+    add_run_command(sub_parsers)
     add_migrate_database_command(sub_parsers)
     add_bot_command(sub_parsers)
 

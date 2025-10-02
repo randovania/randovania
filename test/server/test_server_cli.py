@@ -29,7 +29,7 @@ def test_server_command_logic(mocker: pytest_mock.MockerFixture, mode: str):
     args.mode = mode
 
     # Run
-    server.flask_command_logic(args)
+    server.run_command_logic(args)
 
     # Assert
     mock_configuration.return_value.get.assert_called_once_with("sentry_sampling_rate", 1.0)

@@ -20,16 +20,12 @@ import peewee
 import sentry_sdk
 from cryptography.fernet import Fernet
 from fastapi.responses import PlainTextResponse
-
-# import flask
-# import flask_discord
 from fastapi.templating import Jinja2Templates
 from prometheus_client import Summary
 from prometheus_fastapi_instrumentator import Instrumentator
 from starlette.middleware.sessions import SessionMiddleware
 from uvicorn.logging import ColourizedFormatter
 
-# from prometheus_flask_exporter import PrometheusMetrics
 import randovania
 from randovania.bitpacking import construct_pack
 from randovania.network_common import connection_headers, error
