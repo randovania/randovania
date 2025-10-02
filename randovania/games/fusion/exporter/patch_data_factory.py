@@ -421,7 +421,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     credits_array.append({"LineType": "White1", "Text": line, "BlankLines": 0})
                 for line in area_lines:
                     credits_array.append({"LineType": "White1", "Text": line, "BlankLines": 0})
-                credits_array.append({"LineType": "White1", "Text": "", "BlankLines": 0})
+                credits_array[-1]["BlankLines"] = 1
 
         # Have last item give more space
         credits_array[-1]["BlankLines"] = 3
