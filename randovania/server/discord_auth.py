@@ -55,8 +55,8 @@ class EnforceDiscordRole:
         url = f"https://discordapp.com/api/guilds/{self.guild_id}/members/{user_id}"
         async with self.session.get(url) as r:
             try:
-                result = await r.json()
                 if r.ok:
+                    result = await r.json()
                     return self.role_id in result["roles"]
                 else:
                     self.sa.logger.warning("Unable to verify user %s: %s", user_id, await r.text())

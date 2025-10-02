@@ -219,9 +219,10 @@ class MultiplayerSession(BaseModel):
         return None
 
     def get_layout_description_as_binary(self) -> bytes | None:
-        if self.layout_description is not None:
+        layout = self.layout_description
+        if layout is not None:
             # TODO: just return layout_description_json directly!
-            return self.layout_description.as_binary(include_presets=False, force_spoiler=True)
+            return layout.as_binary(include_presets=False, force_spoiler=True)
         else:
             return None
 
