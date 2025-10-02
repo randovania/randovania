@@ -55,7 +55,6 @@ def solo_two_world_session(clean_database, test_files_dir):
         preset=preset_1,
         order=1,
         uid=uuid.UUID("6b5ac1a1-d250-4f05-a5fb-ae37e8a92165"),
-        beaten=True,
     )
 
     database.MultiplayerMembership.create(user=user1, session=session, admin=False)
