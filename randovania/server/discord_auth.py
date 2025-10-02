@@ -12,10 +12,10 @@ if TYPE_CHECKING:
 
 class CustomDiscordOAuthClient(DiscordOAuthClient):
     async def user(self, token: str | None) -> User:
-        return await super().user(token)  # type: ignore[misc]
+        return await super().user(token)
 
     async def guilds(self, token: str | None) -> list[Guild]:
-        return await super().guilds(token)  # type: ignore[misc]
+        return await super().guilds(token)
 
     def get_token(self, token: str | None) -> str:
         if token is None:

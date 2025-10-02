@@ -229,18 +229,20 @@ class ServerApp:
 
         return self.sio.on(message, namespace=namespace)(typed_handler)
 
-    def on_with_wrapper[**P, T](
-        self, message: str, handler: AsyncCallable[Concatenate[Self, str, P], T]
-    ) -> AsyncCallable[Concatenate[str, P], dict | dict[str, T]]:
+    def on_with_wrapper[T, R](
+        self, message: str, handler: AsyncCallable[[Self, str, T], R]
+    ) -> AsyncCallable[[str, T], dict | dict[str, R]]:
         types = typing.get_type_hints(handler)
         arg_spec = inspect.getfullargspec(handler)
 
         @functools.wraps(handler)
-        async def _handler(sa: ServerApp, sid: str, arg: bytes) -> bytes:
+        async def _handler(sa: Self, sid: str, arg: bytes) -> bytes:
             decoded_arg = construct_pack.decode(arg, types[arg_spec.args[2]])
             return construct_pack.encode(await handler(sa, sid, decoded_arg), types["return"])
 
-        return self.on(message, _handler, with_header_check=True)
+        typed_handler = cast("AsyncCallable[[Self, str, T], bytes]", _handler)
+
+        return self.on(message, typed_handler, with_header_check=True)
 
     def current_client_ip(self, sid: str) -> str:
         try:
