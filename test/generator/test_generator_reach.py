@@ -300,7 +300,6 @@ def test_basic_search_with_translator_gate(
         assert set(reach.safe_nodes) == {node_a, node_b}
 
 
-@pytest.mark.benchmark
 def test_reach_size_from_start_echoes(
     small_echoes_game_description, default_echoes_configuration, mocker, default_filler_config
 ):

@@ -9,7 +9,7 @@ import re
 import subprocess
 import time
 import typing
-from collections.abc import Callable
+from collections.abc import AsyncGenerator, Callable
 
 import discord
 from discord.ui import Button
@@ -19,6 +19,7 @@ from randovania.discord_bot.bot import BotConfiguration, RandovaniaBot
 from randovania.discord_bot.randovania_cog import RandovaniaCog
 from randovania.generator import generator
 from randovania.layout import layout_description, preset_describer
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink, UnsupportedPermalink
@@ -149,13 +150,7 @@ async def look_for_permalinks(message: discord.Message):
             await message.reply(content=content, embed=embed, mention_author=False)
 
 
-async def reply_for_preset(message: discord.Message, versioned_preset: VersionedPreset):
-    try:
-        preset = versioned_preset.get_preset()
-    except ValueError as e:
-        logging.info(f"Invalid preset '{versioned_preset.name}' from {message.author.display_name}: {e}")
-        return
-
+async def reply_for_preset(message: discord.Message, preset: Preset[BaseConfiguration]) -> None:
     embed = discord.Embed(title=preset.name, description=f"{preset.game.long_name}\n{preset.description}")
     _add_preset_description_to_embed(embed, preset)
 
@@ -248,7 +243,15 @@ async def _try_get[T](
         return decoder(json.loads(data.decode("utf-8")))
     except Exception as e:
         if not isinstance(e, UnsupportedVersion):
-            logging.exception(f"Unable to process {attachment.filename} from {message}")
+            logging.exception(
+                "Unable to process %s from %s",
+                attachment.filename,
+                message.content,
+                extra={
+                    "message_id": message.id,
+                    "guild_id": message.guild.id if message.guild else None,
+                },
+            )
 
         await message.reply(
             embed=discord.Embed(
@@ -260,16 +263,19 @@ async def _try_get[T](
         return None
 
 
-async def _get_presets_from_message(message: discord.Message):
+async def _get_presets_from_message(message: discord.Message) -> AsyncGenerator[Preset[BaseConfiguration]]:
+    def _get_preset(d: dict) -> Preset[BaseConfiguration]:
+        return VersionedPreset(d).get_preset()
+
     for attachment in message.attachments:
         filename: str = attachment.filename
         if filename.endswith(VersionedPreset.file_extension()):
-            result = await _try_get(message, attachment, VersionedPreset)
+            result = await _try_get(message, attachment, _get_preset)
             if result is not None:
                 yield result
 
 
-async def _get_layouts_from_message(message: discord.Message):
+async def _get_layouts_from_message(message: discord.Message) -> AsyncGenerator[LayoutDescription]:
     for attachment in message.attachments:
         filename: str = attachment.filename
         if filename.endswith(LayoutDescription.file_extension()):
@@ -294,7 +300,7 @@ class PermalinkLookupCog(RandovaniaCog):
     )
     async def generate_game(self, context: discord.ApplicationContext, message: discord.Message):
         """Generates a game with all presets in the given message."""
-        presets = [preset.get_preset() async for preset in _get_presets_from_message(message)]
+        presets = [preset async for preset in _get_presets_from_message(message)]
         if not presets:
             return await context.respond(content="No presets found in message.", ephemeral=True)
 
@@ -369,6 +375,21 @@ class PermalinkLookupCog(RandovaniaCog):
     async def on_message(self, message: discord.Message):
         if message.author == self.bot.user:
             return
+
+        if message.guild is not None and isinstance(message.channel, discord.TextChannel | discord.Thread):
+            # Support for disabling the bot from replying by just disallowing it from sending messages.
+            permissions = message.channel.permissions_for(message.guild.me)
+            if not permissions.send_messages:
+                logging.info(
+                    "Bot not allowed to send messages at %s's #%s",
+                    message.guild.name,
+                    message.channel.name,
+                    extra={
+                        "message_id": message.id,
+                        "guild_id": message.guild.id,
+                    },
+                )
+                return
 
         async for preset in _get_presets_from_message(message):
             await reply_for_preset(message, preset)
