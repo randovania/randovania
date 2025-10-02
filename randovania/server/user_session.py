@@ -97,7 +97,6 @@ async def _create_session_with_discord_token(sa: ServerApp, sid: str | None, tok
             sa.logger.info("User %s is not authorized for connecting to the server", discord_user.name)
             raise network_error.UserNotAuthorizedToUseServerError(discord_user.name)
 
-    sa.logger.info(f"{discord_user.id} ({type(discord_user.id)})")
     user = _create_user_from_discord(discord_user)
 
     if sid is None:

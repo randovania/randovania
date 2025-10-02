@@ -26,7 +26,7 @@ def mock_audit(mocker) -> MagicMock:
 
 
 @pytest.fixture
-def solo_two_world_session(clean_database, test_files_dir):
+def solo_two_world_session(test_files_dir):
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "prime1_and_2_multi.rdvgame"))
     preset_0 = VersionedPreset.with_preset(description.get_preset(0))
     preset_1 = VersionedPreset.with_preset(description.get_preset(1))

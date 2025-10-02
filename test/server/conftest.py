@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from typing import TYPE_CHECKING
 from unittest.mock import NonCallableMagicMock
 
@@ -77,6 +78,7 @@ def server_app_fixture(db_path):
         discord_client_id=1234,
     )
 
+    os.environ["FASTAPI_DEBUG"] = "True"
     server = ServerApp(configuration)
     # server.metrics.summary = MagicMock()
     # server.metrics.summary.return_value.side_effect = lambda x: x

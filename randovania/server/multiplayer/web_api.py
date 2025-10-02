@@ -24,6 +24,10 @@ def RdvFileResponse(data: str, filename: str) -> Response:
 @router.get("/sessions", response_class=HTMLResponse)
 def admin_sessions(user: AdminDep, request: Request, page: Annotated[int, Query(ge=1)] = 1) -> str:
     page_count = ceil(MultiplayerMembership.select().count() / 20)
+
+    if not page_count:
+        return "<p>No sessions.</p>"
+
     if page > page_count:
         raise HTTPException(status_code=404, detail="Page not found")
 
@@ -38,9 +42,8 @@ def admin_sessions(user: AdminDep, request: Request, page: Annotated[int, Query(
                 "".join(
                     f"<td>{col}</td>"
                     for col in [
-                        "<a href='{}?session_id={}'>{}</a>".format(
-                            request.url_for("admin_session"),
-                            session.id,
+                        "<a href='{}'>{}</a>".format(
+                            request.url_for("admin_session", session_id=session.id),
                             html.escape(session.name),
                         ),
                         html.escape(session.creator.name),
@@ -116,8 +119,8 @@ def admin_session(user: AdminDep, request: Request, session_id: int) -> str:
                 association.connection_state.pretty_text,
                 ", ".join(inventory),
                 MultiplayerMembership.get_by_ids(association.user_id, session_id).admin,
-                "<a href='{link}?world_id={world_id}'>Download</a>".format(
-                    link=request.url_for("download_world_preset"), world_id=association.world_id
+                "<a href='{}'>Download</a>".format(
+                    request.url_for("download_world_preset", world_id=association.world_id)
                 ),
             ]
         )
@@ -134,14 +137,12 @@ def admin_session(user: AdminDep, request: Request, session_id: int) -> str:
         f"<p>Session is password protected, password is <code>{html.escape(session.password)}</code></p>"
         if session.password is not None
         else "Session is not password protected",
-        "<p><a href='{link}?session_id={session_id}'>Download rdvgame</a></p>".format(
-            link=request.url_for("download_session_spoiler"), session_id=session_id
+        "<p><a href='{}'>Download rdvgame</a></p>".format(
+            request.url_for("download_session_spoiler", session_id=session_id)
         )
         if session.has_layout_description()
         else "<p>No rdvgame attached</p>",
-        "<p><a href='{link}?session_id={session_id}'>".format(
-            link=request.url_for("delete_session"), session_id=session_id
-        ),
+        "<p><a href='{}'>Delete session</a></p>".format(request.url_for("delete_session", session_id=session_id)),
         table,
     ]
 

@@ -296,7 +296,8 @@ def get_user(needs_admin: bool) -> AsyncCallable[[ServerAppDep, fastapi.Request]
         try:
             user: User
             if not sa.app.debug:
-                discord_user = await sa.discord.user(request)
+                token = request.session.get("discord_oauth_token")
+                discord_user = await sa.discord.user(token)
                 user = User.get(discord_id=int(discord_user.id))
                 if user is None or (needs_admin and not user.admin):
                     raise fastapi.HTTPException(status_code=403, detail="User not authorized")
