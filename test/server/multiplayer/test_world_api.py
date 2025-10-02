@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import uuid
 from typing import TYPE_CHECKING
-from unittest.mock import MagicMock, PropertyMock, call
+from unittest.mock import AsyncMock, MagicMock, PropertyMock, call
 
 import peewee
 import pytest
@@ -57,8 +57,8 @@ if TYPE_CHECKING:
         ),
     ],
 )
-def test_emit_world_pickups_update_one_action(
-    flask_app,
+async def test_emit_world_pickups_update_one_action(
+    mock_sa,
     two_player_session,
     generic_pickup_category,
     default_generator_params,
@@ -69,7 +69,7 @@ def test_emit_world_pickups_update_one_action(
     result,
 ):
     # Setup
-    mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
+    mock_emit = mock_sa.sio.emit
 
     mock_session_description: PropertyMock = mocker.patch(
         "randovania.server.database.MultiplayerSession.layout_description", new_callable=PropertyMock
@@ -81,8 +81,7 @@ def test_emit_world_pickups_update_one_action(
         "randovania.server.multiplayer.world_api._get_pickup_target", autospec=True
     )
 
-    sa = MagicMock()
-    sa.get_current_user.return_value = database.User.get_by_id(1234)
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
 
     w1 = database.World.get_by_id(1)
 
@@ -100,7 +99,7 @@ def test_emit_world_pickups_update_one_action(
     mock_get_resource_database.return_value = echoes_resource_database
 
     # Run
-    world_api.emit_world_pickups_update(sa, w1)
+    await world_api.emit_world_pickups_update(mock_sa, w1)
 
     # # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason
     # from randovania.server.multiplayer.world_api import _base64_encode_pickup
@@ -110,7 +109,7 @@ def test_emit_world_pickups_update_one_action(
     # Assert
     mock_get_resource_database.assert_called_once_with(mock_session_description.return_value, 0)
     mock_get_pickup_target.assert_called_once_with(mock_session_description.return_value, 1, 0)
-    mock_emit.assert_called_once_with(
+    mock_emit.assert_awaited_once_with(
         "world_pickups_update",
         {
             "game": "prime2",
@@ -143,14 +142,21 @@ def test_add_pickup_to_inventory_bad(dread_spider_pickup):
     assert new_inventory == inventory
 
 
-def test_game_session_collect_pickup_for_self(
-    flask_app, two_player_session, generic_pickup_category, default_generator_params, echoes_resource_database, mocker
+@pytest.mark.parametrize("has_pickup", [True, False])
+async def test_game_session_collect_pickup_for_self(
+    has_pickup: bool,
+    mock_sa,
+    two_player_session,
+    generic_pickup_category,
+    default_generator_params,
+    echoes_resource_database,
+    mocker,
 ):
     # Setup
-    sa = MagicMock()
-    sa.get_current_user.return_value = database.User.get_by_id(1234)
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
 
-    mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
+    mock_sa.sio.emit = AsyncMock()
+
     mock_session_description: PropertyMock = mocker.patch(
         "randovania.server.database.MultiplayerSession.layout_description", new_callable=PropertyMock
     )
@@ -163,51 +169,26 @@ def test_game_session_collect_pickup_for_self(
 
     w1 = database.World.get_by_id(1)
 
-    pickup = PickupEntry(
-        "A",
-        1,
-        generic_pickup_category,
-        frozenset((generic_pickup_category,)),
-        progression=((echoes_resource_database.item[0], 1),),
-        generator_params=default_generator_params,
-    )
-    mock_get_resource_database.return_value = echoes_resource_database
-    mock_get_pickup_target.return_value = PickupTarget(pickup, 0)
+    if has_pickup:
+        pickup = PickupEntry(
+            "A",
+            1,
+            generic_pickup_category,
+            frozenset((generic_pickup_category,)),
+            progression=((echoes_resource_database.item[0], 1),),
+            generator_params=default_generator_params,
+        )
+        mock_get_resource_database.return_value = echoes_resource_database
+        mock_get_pickup_target.return_value = PickupTarget(pickup, 0)
+    else:
+        mock_get_pickup_target.return_value = None
 
     # Run
-    with flask_app.test_request_context():
-        result = world_api.collect_locations(sa, w1, (0,))
+    result = await world_api.collect_locations(mock_sa, w1, (0,))
 
     # Assert
     assert result == set()
-    mock_emit.assert_not_called()
-    mock_get_pickup_target.assert_called_once_with(mock_session_description.return_value, 0, 0)
-    with pytest.raises(peewee.DoesNotExist):
-        database.WorldAction.get(provider=w1, location=0)
-
-
-def test_game_session_collect_pickup_etm(flask_app, two_player_session, echoes_resource_database, mocker):
-    sa = MagicMock()
-    sa.get_current_user.return_value = database.User.get_by_id(1234)
-
-    mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
-    mock_session_description: PropertyMock = mocker.patch(
-        "randovania.server.database.MultiplayerSession.layout_description", new_callable=PropertyMock
-    )
-    mock_get_pickup_target: MagicMock = mocker.patch(
-        "randovania.server.multiplayer.world_api._get_pickup_target", autospec=True
-    )
-
-    mock_get_pickup_target.return_value = None
-    w1 = database.World.get_by_id(1)
-
-    # Run
-    with flask_app.test_request_context():
-        result = world_api.collect_locations(sa, w1, (0,))
-
-    # Assert
-    assert result == set()
-    mock_emit.assert_not_called()
+    mock_sa.sio.emit.assert_not_awaited()
     mock_get_pickup_target.assert_called_once_with(mock_session_description.return_value, 0, 0)
     with pytest.raises(peewee.DoesNotExist):
         database.WorldAction.get(provider=w1, location=0)
@@ -223,8 +204,8 @@ def test_game_session_collect_pickup_etm(flask_app, two_player_session, echoes_r
         ((0, 1), (0, 1)),
     ],
 )
-def test_collect_locations_other(
-    flask_app,
+async def test_collect_locations_other(
+    mock_sa,
     two_player_session,
     echoes_resource_database,
     locations_to_collect: tuple[int, ...],
@@ -242,8 +223,7 @@ def test_collect_locations_other(
         "randovania.server.multiplayer.session_common.emit_session_actions_update", autospec=True
     )
 
-    sa = MagicMock()
-    sa.get_current_user.return_value = database.User.get_by_id(1234)
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
     mock_get_pickup_target.return_value = PickupTarget(MagicMock(), 1)
 
     w1 = database.World.get_by_id(1)
@@ -261,8 +241,7 @@ def test_collect_locations_other(
         )
 
     # Run
-    with flask_app.test_request_context():
-        result = world_api.collect_locations(sa, w1, locations_to_collect)
+    result = await world_api.collect_locations(mock_sa, w1, locations_to_collect)
 
     # Assert
     mock_get_pickup_target.assert_has_calls(
@@ -289,16 +268,15 @@ def test_collect_locations_other(
         assert result == {w2}
 
 
-def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mock_emit_session_update):
-    mock_leave_room = mocker.patch("flask_socketio.leave_room")
-    mock_emit = mocker.patch("flask_socketio.emit")
+async def test_world_sync(mock_sa, solo_two_world_session, mocker: MockerFixture, mock_emit_session_update):
+    mock_leave_room = mock_sa.sio.leave_room
+    mock_emit = mock_sa.sio.emit
     mock_emit_pickups = mocker.patch("randovania.server.multiplayer.world_api.emit_world_pickups_update")
     mock_emit_actions = mocker.patch("randovania.server.multiplayer.session_common.emit_session_actions_update")
     mock_emit_inventory = mocker.patch("randovania.server.multiplayer.world_api.emit_inventory_update")
 
-    sa = MagicMock()
     user = database.User.get_by_id(1234)
-    sa.get_current_user.return_value = user
+    mock_sa.get_current_user.return_value = user
 
     w1 = database.World.get_by_id(1)
     w2 = database.World.get_by_id(2)
@@ -330,8 +308,7 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
     )
 
     # Run
-    with flask_app.test_request_context():
-        result = world_api.world_sync(sa, request)
+    result = await world_api.world_sync(mock_sa, "TheSid", request)
 
     # Assert
     assert result == ServerSyncResponse(
@@ -358,46 +335,43 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
     assert a2.connection_state == GameConnectionStatus.Disconnected
     assert a2.inventory is None
 
-    sa.store_world_in_session.assert_called_once_with(w1)
-    sa.ensure_in_room.assert_called_once_with("world-1179c986-758a-4170-9b07-fe4541d78db0")
-    mock_leave_room.assert_called_once_with("world-6b5ac1a1-d250-4f05-a5fb-ae37e8a92165")
-    mock_emit_pickups.assert_has_calls([call(sa, w1), call(sa, w2)], any_order=True)
-    mock_emit_session_update.assert_called_once_with(session)
-    mock_emit_actions.assert_called_once_with(session)
-    mock_emit_inventory.assert_called_once_with(sa, w1, 1234, b"foo")
+    mock_sa.store_world_in_session.assert_awaited_once_with("TheSid", w1)
+    mock_sa.ensure_in_room.assert_awaited_once_with("TheSid", "world-1179c986-758a-4170-9b07-fe4541d78db0")
+    mock_leave_room.assert_awaited_once_with("TheSid", "world-6b5ac1a1-d250-4f05-a5fb-ae37e8a92165")
+    mock_emit_pickups.assert_has_awaits([call(mock_sa, w1), call(mock_sa, w2)], any_order=True)
+    mock_emit_session_update.assert_awaited_once_with(mock_sa, session)
+    mock_emit_actions.assert_awaited_once_with(mock_sa, session)
+    mock_emit_inventory.assert_awaited_once_with(mock_sa, w1, 1234, b"foo")
     mock_emit.assert_not_called()
 
 
-def test_report_disconnect(mock_emit_session_update, solo_two_world_session):
-    log = MagicMock()
+async def test_report_disconnect(mock_sa, mock_emit_session_update, solo_two_world_session):
     session_dict = {"user-id": 1234, "worlds": [1]}
     a1 = database.WorldUserAssociation.get_by_instances(world=1, user=1234)
     a1.connection_state = GameConnectionStatus.InGame
     a1.save()
 
     # Run
-    world_api.report_disconnect(MagicMock(), session_dict, log)
+    await world_api.report_disconnect(mock_sa, session_dict)
 
     # Assert
     a1 = database.WorldUserAssociation.get_by_instances(world=1, user=1234)
     assert a1.connection_state == GameConnectionStatus.Disconnected
-    mock_emit_session_update.assert_called_once_with(database.MultiplayerSession.get_by_id(1))
+    mock_emit_session_update.assert_awaited_once_with(mock_sa, database.MultiplayerSession.get_by_id(1))
 
 
-def test_emit_inventory_room(solo_two_world_session):
-    sa = MagicMock()
-    sa.is_room_not_empty.return_value = True
+async def test_emit_inventory_room(mock_sa, solo_two_world_session):
+    mock_sa.is_room_not_empty.return_value = True
 
     world = database.World.get_by_id(1)
 
     # Run
-    world_api.emit_inventory_update(sa, world, 1234, b"foo")
+    await world_api.emit_inventory_update(mock_sa, world, 1234, b"foo")
 
     # Assert
-    sa.sio.emit.assert_called_once_with(
+    mock_sa.sio.emit.assert_awaited_once_with(
         signals.WORLD_BINARY_INVENTORY,
         (str(world.uuid), 1234, b"foo"),
-        to=f"multiplayer-{world.uuid}-1234-inventory",
         namespace="/",
-        include_self=True,
+        to=f"multiplayer-{world.uuid}-1234-inventory",
     )

@@ -1,6 +1,5 @@
 import base64
 import datetime
-import logging
 import uuid
 
 import construct
@@ -411,14 +410,14 @@ async def emit_world_pickups_update(sa: ServerApp, world: World) -> None:
     await sa.sio.emit(signals.WORLD_PICKUPS_UPDATE, data, room=_get_world_room(world))
 
 
-async def report_disconnect(sa: ServerApp, session_dict: dict, log: logging.Logger) -> None:
+async def report_disconnect(sa: ServerApp, session_dict: dict) -> None:
     user_id: int | None = session_dict.get("user-id")
     if user_id is None:
         return
 
     world_ids: list[int] = session_dict.get("worlds", [])
 
-    log.info(f"User {user_id} is disconnected, disconnecting from sessions: {world_ids}")
+    sa.logger.info(f"User {user_id} is disconnected, disconnecting from sessions: {world_ids}")
     sessions_to_update = {}
 
     for world_id in world_ids:
