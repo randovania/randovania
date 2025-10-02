@@ -70,6 +70,8 @@ class ServerLoggingFormatter(ColourizedFormatter):
 
 
 class ServerApp:
+    """The main class handling server functionality."""
+
     socket_manager: SocketManager
     discord: CustomDiscordOAuthClient
     db: peewee.SqliteDatabase
@@ -98,6 +100,8 @@ class ServerApp:
 
         @self.app.middleware("http")
         async def request_ctx(request: fastapi.Request, call_next: MiddlewareNext) -> Any:
+            """Updates the logger's contextvars for each request."""
+
             if request.client is None:
                 ctx_who.set(None)
             else:
@@ -113,6 +117,11 @@ class ServerApp:
 
     @asynccontextmanager
     async def _lifespan(self, _app: RdvFastAPI) -> Lifespan[None]:
+        """
+        Handles necessary setup before running the server, and
+        teardown after closing the server.
+        """
+
         self.logger.info("Lifespan start")
 
         async with (
@@ -152,6 +161,8 @@ class ServerApp:
             return randovania.VERSION
 
     async def get_current_user(self, sid: str) -> User:
+        """Returns the User associated with this sid."""
+
         try:
             return User.get_by_id((await self.sio.get_session(sid))["user-id"])
         except KeyError:
@@ -160,6 +171,8 @@ class ServerApp:
             raise error.InvalidSessionError
 
     async def store_world_in_session(self, sid: str, world: World) -> None:
+        """Stores the world in the session associated with this sid."""
+
         async with self.sio.session(sid) as sio_session:
             if "worlds" not in sio_session:
                 sio_session["worlds"] = []
@@ -168,6 +181,8 @@ class ServerApp:
                 sio_session["worlds"].append(world.id)
 
     async def remove_world_from_session(self, sid: str, world: World) -> None:
+        """Removes the world from the session associated with this sid."""
+
         async with self.sio.session(sid) as sio_session:
             if "worlds" in sio_session and world.id in sio_session["worlds"]:
                 sio_session["worlds"].remove(world.id)
@@ -180,6 +195,17 @@ class ServerApp:
         *,
         with_header_check: bool = False,
     ) -> AsyncCallable[Concatenate[str, P], dict | dict[str, T]]:
+        """
+        Registers a socket.io event handler.
+
+        :param message: The event name.
+        :param handler: The event handler to register. Must be a coroutine (`async def`)
+            with at least two arguments, a `ServerApp` and a `str` (the sid).+
+        :param namespace: The event namespace. Default: `None`
+        :param with_header_check: Whether to check the client headers before
+            running the event handler. Default: `False`
+        """
+
         @functools.wraps(handler)
         async def _handler(sid: str, *args: P.args, **kwargs: P.kwargs) -> dict | dict[str, T]:
             ctx_where.set(message)
@@ -240,6 +266,15 @@ class ServerApp:
     def on_with_wrapper[T, R](
         self, message: str, handler: AsyncCallable[[Self, str, T], R]
     ) -> AsyncCallable[[str, T], dict | dict[str, R]]:
+        """
+        Registers a socket.io event handler, encoding and decoding the data via construct.
+
+        :param message: The event name.
+        :param handler: The event handler to register. Must be a coroutine (`async def`)
+            with exactly three arguments: a `ServerApp`, a `str` (the sid), and
+            a construct-encodable type.
+        """
+
         types = typing.get_type_hints(handler)
         arg_spec = inspect.getfullargspec(handler)
 
@@ -253,6 +288,7 @@ class ServerApp:
         return self.on(message, typed_handler, with_header_check=True)
 
     def current_client_ip(self, sid: str) -> str:
+        """Returns the IP address of the client with this sid."""
         try:
             environ = self.sio.get_environ(sid)
             assert environ is not None
@@ -262,6 +298,13 @@ class ServerApp:
             return f"<unknown sid {e}>"
 
     def check_client_headers(self, sid: str) -> str | None:
+        """
+        Checks the client's headers match the expectation.
+
+        :param sid: The sid associated with the client.
+        :return: `None` if the check is good, or a `str` explaining why the check failed.
+        """
+
         environ = self.sio.get_environ(sid)
         assert environ is not None
         assert self.expected_headers is not None
@@ -274,6 +317,7 @@ class ServerApp:
         """
         Ensures the client is connected to the given room, and returns if we had to join.
         """
+
         all_rooms = self.sio.rooms(sid, namespace="/")
         await self.sio.enter_room(sid, room_name, namespace="/")
         return room_name not in all_rooms
@@ -294,14 +338,22 @@ class ServerApp:
 
 
 async def server_app(request: fastapi.Request) -> ServerApp:
+    """Returns the request's ServerApp. Used for dependency injection ."""
+
     app = cast("RdvFastAPI", request.app)
     return app.sa
 
 
 ServerAppDep = Annotated[ServerApp, fastapi.Depends(server_app)]
+"""The `ServerApp` handling this request."""
 
 
 def get_user(needs_admin: bool) -> AsyncCallable[[ServerAppDep, fastapi.Request], User]:
+    """
+    Gets the User associated with the Request, and optionally checks admin permissions.
+    Used for dependency injection.
+    """
+
     async def handler(sa: ServerAppDep, request: fastapi.Request) -> User:
         try:
             user: User
@@ -323,7 +375,11 @@ def get_user(needs_admin: bool) -> AsyncCallable[[ServerAppDep, fastapi.Request]
 
 
 RequireUser = fastapi.Depends(get_user(needs_admin=False))
+"""Ensure that there is a User associated with the request before handling it."""
 RequireAdminUser = fastapi.Depends(get_user(needs_admin=True))
+"""Ensure that there is an admin User associated with the request before handling it."""
 
 UserDep = Annotated[User, RequireUser]
+"""The User associated with the request."""
 AdminDep = Annotated[User, RequireAdminUser]
+"""The admin User associated with the request."""
