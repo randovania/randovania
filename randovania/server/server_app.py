@@ -24,6 +24,8 @@ from fastapi.responses import PlainTextResponse
 # import flask
 # import flask_discord
 from fastapi.templating import Jinja2Templates
+from prometheus_client import Summary
+from prometheus_fastapi_instrumentator import Instrumentator
 from starlette.middleware.sessions import SessionMiddleware
 from uvicorn.logging import ColourizedFormatter
 
@@ -75,7 +77,7 @@ class ServerApp:
     socket_manager: SocketManager
     discord: CustomDiscordOAuthClient
     db: peewee.SqliteDatabase
-    # metrics: PrometheusMetrics
+    metrics: Instrumentator
     fernet_encrypt: Fernet
     guest_encrypt: Fernet | None = None
     enforce_role: EnforceDiscordRole | None = None
@@ -110,7 +112,8 @@ class ServerApp:
 
         self.templates = Jinja2Templates(directory=Path(__file__).parent.joinpath("templates"))
 
-        # self.metrics = PrometheusMetrics(app)
+        self.metrics = Instrumentator()
+        self.metrics.instrument(self.app)
 
     @asynccontextmanager
     async def _lifespan(self, _app: RdvFastAPI) -> Lifespan[None]:
@@ -123,6 +126,7 @@ class ServerApp:
             database_lifespan(_app) as self.db,
         ):
             await self._setup_routing()
+            await self._setup_metrics()
             yield
 
         self.logger.info("Lifespan end")
@@ -130,6 +134,9 @@ class ServerApp:
     @property
     def sio(self) -> AsyncServer:
         return self.socket_manager.sio
+
+    async def _setup_metrics(self) -> None:
+        self.metrics.expose(self.app)
 
     async def _setup_routing(self) -> None:
         from randovania.server import async_race, multiplayer, user_session
@@ -223,9 +230,14 @@ class ServerApp:
                     )
                     return error.ServerError().as_json
 
-        typed_handler = cast("AsyncCallable[Concatenate[str, P], dict | dict[str, T]]", _handler)
-        # metric_wrapper = self.metrics.summary(f"socket_{message}", f"Socket.io messages of type {message}")
-        # return self.get_server().on(message, namespace)(metric_wrapper(_handler))
+        metric = Summary(f"socket_{message}", f"Socket.io messages of type {message}")
+
+        @functools.wraps(_handler)
+        async def metric_wrapper(sid: str, *args: P.args, **kwargs: P.kwargs) -> dict | dict[str, T]:
+            with metric.time():
+                return await _handler(sid, *args, **kwargs)
+
+        typed_handler = cast("AsyncCallable[Concatenate[str, P], dict | dict[str, T]]", metric_wrapper)
 
         return self.sio.on(message, namespace=namespace)(typed_handler)
 

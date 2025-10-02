@@ -21,6 +21,8 @@ if TYPE_CHECKING:
     from collections.abc import Generator
     from pathlib import Path
 
+    from pytest_mock import MockerFixture
+
     from randovania.server.server_app import RdvFastAPI
 
 
@@ -59,7 +61,7 @@ def db_path_fixture(tmp_path: Path):
 
 
 @pytest.fixture(name="server_app")
-def server_app_fixture(db_path):
+def server_app_fixture(db_path, mocker: MockerFixture):
     pytest.importorskip("engineio.async_drivers.threading")
     from randovania.server.server_app import ServerApp
 
@@ -80,8 +82,10 @@ def server_app_fixture(db_path):
 
     os.environ["FASTAPI_DEBUG"] = "True"
     server = ServerApp(configuration)
-    # server.metrics.summary = MagicMock()
-    # server.metrics.summary.return_value.side_effect = lambda x: x
+
+    mocker.patch("randovania.server.socketio.Gauge")
+    mocker.patch("randovania.server.server_app.Summary")
+
     return server
 
 

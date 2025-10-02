@@ -4,6 +4,7 @@ from collections.abc import Sequence
 from contextlib import asynccontextmanager
 from typing import TYPE_CHECKING
 
+from prometheus_client import Gauge
 from socketio_handler import BaseSocketHandler, SocketManager, register_handler
 
 import randovania
@@ -32,7 +33,7 @@ def get_socket_handler(sa: ServerApp) -> type[BaseSocketHandler]:
 
     version_checking = client_check.ClientVersionCheck(sa.configuration["server_config"]["client_version_checking"])
 
-    # connected_clients # TODO
+    connected_clients = Gauge("connected_clients", "How many clients are connected right now.")
 
     class RdvSocketHandler(BaseSocketHandler):
         def on_connect(self, sid: str, environ: dict) -> None:
@@ -56,7 +57,7 @@ def get_socket_handler(sa: ServerApp) -> type[BaseSocketHandler]:
                     )
                     raise ConnectionRefusedError(error_message)
 
-                # connected_clients.inc()
+                connected_clients.inc()
 
                 sa.logger.info(
                     f"Client {sid} at {environ['REMOTE_ADDR']} ({forwarded_for}) with "
@@ -73,6 +74,7 @@ def get_socket_handler(sa: ServerApp) -> type[BaseSocketHandler]:
 
         async def on_disconnect(self, sid: str) -> None:
             sa.logger.info(f"Client at {sa.current_client_ip(sid)} disconnected.")
+            connected_clients.dec()
 
             session = await sa.sio.get_session(sid)
             await world_api.report_disconnect(sa, session)
