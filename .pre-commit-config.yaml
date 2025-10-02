@@ -26,3 +26,9 @@ repos:
         files: .*\.ui$
         stages: [pre-commit, manual]
         require_serial: true
+
+-   repo: https://github.com/renovatebot/pre-commit-hooks
+    rev: 41.132.5
+    hooks:
+      - id: renovate-config-validator
+        args: [--strict]
