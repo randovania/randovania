@@ -151,10 +151,10 @@ def session_update(clean_database, mocker):
         user=user2, session=session, row=1, admin=False, ready=True, connection_state="Game"
     )
     w1 = database.World.create(
-        session=session, name="World1", uuid=uuid.UUID("67d75d0e-da8d-4a90-b29e-cae83bcf9519"), preset="{}"
+        session=session, name="World1", uuid=uuid.UUID("67d75d0e-da8d-4a90-b29e-cae83bcf9519"), preset="{}", order=0
     )
     w2 = database.World.create(
-        session=session, name="World2", uuid=uuid.UUID("d0f7ed70-66b0-413c-bc13-f9f7fb018726"), preset="{}"
+        session=session, name="World2", uuid=uuid.UUID("d0f7ed70-66b0-413c-bc13-f9f7fb018726"), preset="{}", order=1
     )
 
     database.WorldAction.create(provider=w1, location=0, session=session, receiver=w2, time=time)
