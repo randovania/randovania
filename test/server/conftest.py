@@ -1,16 +1,20 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
+from unittest.mock import NonCallableMagicMock
 
 import cryptography.fernet
 import pytest
 from fastapi.testclient import TestClient
 from peewee import SqliteDatabase
+from socketio import AsyncServer
+from socketio_handler import SocketManager
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.network_common.configuration import NetworkConfiguration
 from randovania.server import database
 from randovania.server.configuration import ServerConfiguration
+from randovania.server.discord_auth import CustomDiscordOAuthClient
 
 if TYPE_CHECKING:
     from collections.abc import Generator
@@ -89,3 +93,14 @@ class RdvTestClient(TestClient):
 def test_client_fixture(server_app) -> Generator[RdvTestClient, None, None]:
     with RdvTestClient(server_app.app) as client:
         yield client
+
+
+@pytest.fixture(name="mock_sa")
+def mock_sa_fixture(clean_database, server_app) -> NonCallableMagicMock:
+    mock_sa = NonCallableMagicMock(spec=server_app)
+    mock_sa.discord = NonCallableMagicMock(spec=CustomDiscordOAuthClient)
+    mock_sa.socket_manager = NonCallableMagicMock(spec=SocketManager)
+    mock_sa.sio = NonCallableMagicMock(spec=AsyncServer)
+    mock_sa.db = NonCallableMagicMock(spec=SqliteDatabase)
+
+    return mock_sa

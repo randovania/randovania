@@ -55,7 +55,12 @@ def flask_command_logic(args: Namespace) -> None:
         port=5000,
         log_config=log_config,
         reload=reload_,
-        reload_excludes=["randovania/cli/server.py"],
+        reload_excludes=[
+            "randovania/cli/server.py",
+            "randovania/version_hash.py",
+            "randovania/version.py",
+            ".venv/Lib/site-packages/__editable___randovania_*_finder.py",
+        ],
     )
 
 

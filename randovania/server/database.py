@@ -753,7 +753,7 @@ class PerformedDatabaseMigrations(BaseModel):
     migration = EnumField(DatabaseMigrations, unique=True)
 
 
-all_classes = [
+all_classes: list[type[BaseModel]] = [
     User,
     UserAccessToken,
     MultiplayerSession,

@@ -4,19 +4,23 @@ from contextlib import asynccontextmanager
 from typing import TYPE_CHECKING, Self, TypedDict
 
 import aiohttp
-from fastapi_discord import DiscordOAuthClient, Unauthorized
+from fastapi_discord import DiscordOAuthClient, Guild, Unauthorized, User
 
 if TYPE_CHECKING:
-    from fastapi import Request
-
     from randovania.server.server_app import Lifespan, RdvFastAPI, ServerApp
 
 
 class CustomDiscordOAuthClient(DiscordOAuthClient):
-    def get_token(self, request: Request) -> str:
-        if "discord_oauth_token" not in request.session:
+    async def user(self, token: str) -> User:
+        return await super().user(token)  # type: ignore[misc]
+
+    async def guilds(self, token: str) -> list[Guild]:
+        return await super().guilds(token)  # type: ignore[misc]
+
+    def get_token(self, token: str | None) -> str:
+        if token is None:
             raise Unauthorized
-        return request.session["discord_oauth_token"]
+        return token
 
 
 class EnforceRoleConfiguration(TypedDict, total=True):

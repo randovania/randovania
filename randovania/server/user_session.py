@@ -11,10 +11,12 @@ import cryptography.fernet
 # import flask_discord.models
 # import flask_socketio
 import fastapi_discord
+import jwt
 import oauthlib
 import peewee
 from fastapi import APIRouter, Form, Request, Response
 from fastapi.responses import HTMLResponse, RedirectResponse
+from oauthlib.common import generate_token
 from oauthlib.oauth2.rfc6749.errors import InvalidTokenError, raise_from_error
 
 from randovania.network_common import error as network_error
@@ -68,7 +70,8 @@ def _create_user_from_discord(discord_user: fastapi_discord.User) -> User:
     if discord_name is None:
         discord_name = discord_user.username
 
-    user: User = User.get_or_create(discord_id=int(discord_user.id), defaults={"name": discord_name})[0]
+    user, created = User.get_or_create(discord_id=int(discord_user.id), defaults={"name": discord_name})
+
     if user.name != discord_name:
         user.name = discord_name
         user.save()
@@ -86,8 +89,8 @@ def _create_session_with_access_token(sa: ServerApp, token: UserAccessToken) -> 
     )
 
 
-async def _create_session_with_discord_token(sa: ServerApp, sid: str | None, request: Request) -> User:
-    discord_user = await sa.discord.user(request)
+async def _create_session_with_discord_token(sa: ServerApp, sid: str | None, token: str) -> User:
+    discord_user = await sa.discord.user(token)
 
     if sa.enforce_role is not None:
         if not sa.enforce_role.verify_user(discord_user.id):
@@ -102,9 +105,7 @@ async def _create_session_with_discord_token(sa: ServerApp, sid: str | None, req
 
     async with sa.sio.session(sid=sid) as session:
         session["user-id"] = user.id
-        session["discord-access-token"] = request.session["discord_oauth_token"]
-
-    sa.app.state.session_requests[sid] = request
+        session["discord-access-token"] = token
 
     return user
 
@@ -152,9 +153,7 @@ async def restore_user_session(sa: ServerApp, sid: str, encrypted_session: bytes
         session = json.loads(decrypted_session.decode("utf-8"))
 
         if "discord-access-token" in session:
-            request = sa.session_requests[sid]
-            request.session["discord_oauth_token"] = session["discord-access-token"]
-            user = await _create_session_with_discord_token(sa, sid, request)
+            user = await _create_session_with_discord_token(sa, sid, session["discord-access-token"])
             result = await _create_client_side_session(sa, sid, user)
         else:
             user = User.get_by_id(session["user-id"])
@@ -195,7 +194,6 @@ async def restore_user_session(sa: ServerApp, sid: str, encrypted_session: bytes
 
 async def logout(sa: ServerApp, sid: str) -> None:
     await session_common.leave_all_rooms(sa, sid)
-    sa.session_requests[sid].session.pop("discord_oauth_token")
     async with sa.sio.session(sid) as session:
         session.pop("discord-access-token", None)
         session.pop("user-id", None)
@@ -216,6 +214,13 @@ def unable_to_login(sa: ServerApp, request: Request, error_message: str, status_
 async def browser_login_with_discord(sa: ServerAppDep, request: Request, sid: str | None = None) -> Response:
     request.state.sid = sid
 
+    state = jwt.encode(
+        {"__state_secret": generate_token()},
+        sa.configuration["server_config"]["secret_key"],
+        algorithm="HS256",
+    )
+    request.session["discord_oauth_state"] = state
+
     if sid is not None:
         if not sa.sio.rooms(sid):
             return unable_to_login(sa, request, "Invalid sid received from Randovania!", 400)
@@ -224,7 +229,7 @@ async def browser_login_with_discord(sa: ServerAppDep, request: Request, sid: st
     else:
         request.session.pop("sid", None)
 
-    return RedirectResponse(sa.discord.get_oauth_login_url())
+    return RedirectResponse(sa.discord.get_oauth_login_url(state))
 
 
 @router.get("/login_callback")
@@ -232,6 +237,7 @@ async def browser_discord_login_callback(
     sa: ServerAppDep,
     request: Request,
     code: str | None = None,
+    state: str | None = None,
     error: str | None = None,
     error_description: str | None = None,
 ) -> Response:
@@ -244,14 +250,18 @@ async def browser_discord_login_callback(
                 params["error_description"] = error_description
             raise_from_error(error, params)
 
+        # code and state are only None when there's an error
         assert code is not None
+        assert state is not None
+
+        if state != request.session.get("discord_oauth_state", ""):
+            raise oauthlib.oauth2.rfc6749.errors.MismatchingStateError
 
         token, refresh_token = await sa.discord.get_access_token(code)
-        request.headers
         request.session["discord_oauth_token"] = token
         request.session["discord_oauth_refresh_token"] = refresh_token
 
-        user = await _create_session_with_discord_token(sa, sid, request)
+        user = await _create_session_with_discord_token(sa, sid, token)
 
         if sid is None:
             return RedirectResponse(request.url_for("/me"))
@@ -288,6 +298,7 @@ async def browser_discord_login_callback(
         status_code = 401
 
     except oauthlib.oauth2.rfc6749.errors.OAuth2Error as err:
+        print(err)
         if isinstance(err, oauthlib.oauth2.rfc6749.errors.InvalidGrantError):
             sa.logger.info("Invalid grant when finishing Discord login")
         else:

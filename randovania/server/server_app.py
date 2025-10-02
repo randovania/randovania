@@ -32,7 +32,7 @@ import randovania
 from randovania.bitpacking import construct_pack
 from randovania.network_common import connection_headers, error
 from randovania.server import client_check
-from randovania.server.database import MonitoredDb, User, World, database_lifespan
+from randovania.server.database import User, World, database_lifespan
 from randovania.server.discord_auth import EnforceDiscordRole, discord_oauth_lifespan
 from randovania.server.socketio import EventHandlerReturnType, fastapi_socketio_lifespan
 
@@ -74,7 +74,7 @@ class ServerLoggingFormatter(ColourizedFormatter):
 class ServerApp:
     socket_manager: SocketManager
     discord: CustomDiscordOAuthClient
-    db: MonitoredDb
+    db: peewee.SqliteDatabase
     # metrics: PrometheusMetrics
     fernet_encrypt: Fernet
     guest_encrypt: Fernet | None = None
@@ -97,7 +97,6 @@ class ServerApp:
         self.app.sa = self
 
         self.app.add_middleware(SessionMiddleware, secret_key=configuration["server_config"]["secret_key"])
-        self.app.state.session_requests = {}
 
         @self.app.middleware("http")
         async def request_ctx(request: fastapi.Request, call_next: MiddlewareNext) -> Any:
@@ -112,10 +111,6 @@ class ServerApp:
         self.templates = Jinja2Templates(directory=Path(__file__).parent.joinpath("templates"))
 
         # self.metrics = PrometheusMetrics(app)
-
-    @property
-    def session_requests(self) -> dict[str, fastapi.Request]:
-        return self.app.state.session_requests
 
     @asynccontextmanager
     async def _lifespan(self, _app: RdvFastAPI) -> Lifespan[None]:
