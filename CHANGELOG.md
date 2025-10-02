@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.2.0] - 2025-10-??
+## [10.3.0] - 2025-11-??
+
+- To be filled.
+
+## [10.2.0] - 2025-10-02
 
 - Added: A warning when trying to generate a Multiworld game if a preset requires all Pickups to be obtainable.
 - Added: Command line arguments for gathering statistics about a collection of generated games. These commands are intended for advanced uses only.
@@ -20,26 +24,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The preset summary now lists when Flash Shift can be used without Main Flash Shift when having Flash Shift Upgrades.
 - Added: The preset summary now lists when Power Bombs can be used without the Main Power Bomb when having Power Bomb Tanks.
 - Changed: The preset summary lists when Power Bomb limitations is disabled instead of when it's enabled.
+- Fixed: 2 Typos in the transporters preset page.
 
 #### Logic Database
 
 - Changed: Reworked Central Unit combat logic to reflect the increasing difficulty of later areas.
--
+
 ##### Elun
 
 - Changed: Minor adjustment aimed at releasing the X parasites safer for the generator, no changes to requirements in practice.
 
 ### Metroid Fusion
 
+- Added: Option that allows quick-morphing via the SELECT button.
 - Added: 5 more joke hints.
 - Added: A reference on where to play the randomizer in the credits.
 - Changed: Infant Metroid hints have been reformatted for easier readability.
+- Changed: Fixed formatting of locations in the credits that were incorrectly displayed if too long
 - Changed: "guarded by a boss" feature hint has been reworked to "on a Core-x Parasite" for more clarity.
 - Changed: Adjusted Credits to have the patching, Randovania and original team separated more clearly.
 - Changed: B.O.X has been moved slightly to the left to avoid bumping immediately into him in a future setting.
 - Changed: Main Deck Central Reactor Core: Moved the Door leading to Silo Tunnel back by a tile to prevent getting stuck in a future setting.
 - Changed: Sector 1 Charge Core Upper Access: Moved the Door leading to Crab Rave back by a tile to prevent getting stuck in a future setting.
-- Changed: Sectpr 1 Tourian Eastern Hub: Removed the shot blocks and remodelled the space leading to Animorphs to prevent getting stuck in a future setting.
+- Changed: Sector 1 Tourian Eastern Hub: Removed the shot blocks and remodelled the space leading to Animorphs to prevent getting stuck in a future setting.
 - Changed: Sector 1 Twin Junctions Save Room: Moved the Door leading to Walljump Tutorial back by a tile to prevent getting stuck in a future setting.
 - Changed: Sector 3 Security Access: Moved the Door leading to the Security Room back by a tile to prevent getting stuck in a future setting.
 - Changed: Sector 4 Pump Control Save Room: Moved the Door leading to Breeding Tank Acecss back by a tile to prevent getting stuck in a future setting.
@@ -90,19 +97,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Fixed: Crash when entering Metroid Prime Lair while in Scan Visor
-- Fixed: Rare crash that can happen in any room
-- Fixed: Sheegoth intro cutscene not repositioning the player at the end if cutscene was not skipped in Chapel of the Elders
-- Fixed: Artifact Temple totem hitbox persisting after Meta Ridley death cutscene
-- Fixed: Sun Tower Access boxes being reloaded after performing Early Wild (inconsistent with vanilla)
-- Fixed: Incorrect Energy Core platform behavior if cutscene skipped on wrong frame
-- Fixed: Chozo music stopping upon entering Training Chamber
-- Fixed: Appearance of "Remove Bars in Great Tree Hall" patch
-- Changed: Charge and Charge Combo projectiles reflected from DLR doors no longer hurt the player
-- Changed: Adjusted timing of the jingle and text after acquiring the item at each of the 4 vanilla Power Bomb Expansion locations
-- Changed: Adjusted fit of main menu text to accommodate larger seed hashes
-- Changed: Adjusted fit of DLR Blast Shields over doors
-- Changed: Research Core cutscene camera angle will now be consistent regardless of the height of the placed pickup
+- Changed: Improved chance of successfully generating a game when shuffling everything on One-Way Anywhere elevator randomization.
+- Changed: Disallowed shuffling the Essence Dead cutscene elevator on One-Way with Cycles and with Replacement, unless Skip Final Bosses is enabled, as otherwise that would leave no path to the Credits.
 
 #### Logic Database
 

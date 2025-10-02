@@ -13,10 +13,12 @@ import pytest
 from PySide6 import QtCore, QtWidgets
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_connection.game_connection import GameConnection
+from randovania.game_connection.game_connection import ConnectedGameState, GameConnection
 from randovania.gui.lib import model_lib
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
+from randovania.gui.multiworld_client import MultiworldClient
+from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset
@@ -43,7 +45,9 @@ if TYPE_CHECKING:
     from pytestqt.qtbot import QtBot
 
     from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
+    from randovania.interface_common.options import Options
     from randovania.interface_common.preset_manager import PresetManager
+    from randovania.interface_common.world_database import WorldDatabase
 
 
 @pytest.fixture
@@ -1156,3 +1160,50 @@ async def test_clear_generated_game(
         window.game_session_api.clear_generated_game.assert_awaited_once_with()
     else:
         window.game_session_api.clear_generated_game.assert_not_awaited()
+
+
+@pytest.mark.parametrize("source_event", ["SyncFailure", "WorldDataUpdate", "GameStateUpdated"])
+async def test_update_multiworld_client_status(
+    skip_qtbot: QtBot,
+    options: Options,
+    world_database: WorldDatabase,
+    source_event: str,
+) -> None:
+    multiworld_client = MultiworldClient(MagicMock(), GameConnection(options, world_database), world_database)
+    window_manager = MagicMock()
+    window_manager.multiworld_client = multiworld_client
+
+    window = MultiplayerSessionWindow(MagicMock(), window_manager, options)
+    skip_qtbot.addWidget(window)
+
+    # Don't use threads during tests
+    def _start_thread_for_effect(target):
+        target()
+
+    window._start_thread_for = MagicMock(side_effect=_start_thread_for_effect)
+    window._session = MagicMock()
+    window.connect_to_events()
+
+    # Change text, so we know it was updated
+    window.multiworld_client_status_label.setText("SOMETHING ELSE")
+
+    # TODO: add data to make the status label not empty!
+
+    # Run
+    if source_event == "SyncFailure":
+        multiworld_client.SyncFailure.emit()
+    elif source_event == "WorldDataUpdate":
+        multiworld_client.database.WorldDataUpdate.emit()
+    elif source_event == "GameStateUpdated":
+        multiworld_client.game_connection.GameStateUpdated.emit(
+            ConnectedGameState(
+                id=INVALID_UUID,
+                source=MagicMock(),
+                status=GameConnectionStatus.InGame,
+            )
+        )
+    else:
+        raise ValueError(f"unknown source {source_event}")
+
+    # Assert
+    assert window.multiworld_client_status_label.text() == ""

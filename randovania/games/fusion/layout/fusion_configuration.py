@@ -22,6 +22,7 @@ class FusionConfiguration(BaseConfiguration):
     open_save_recharge_hatches: bool
     unlock_sector_hub: bool
     short_intro_text: bool
+    instant_morph: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

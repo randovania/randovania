@@ -287,7 +287,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
         self._multiworld_client.SyncFailure.connect(self.update_multiworld_client_status)
         self._multiworld_client.database.WorldDataUpdate.connect(self.update_multiworld_client_status)
-        self._multiworld_client.game_connection.GameStateUpdated.connect(self.update_multiworld_client_status)
+        self._multiworld_client.game_connection.GameStateUpdated.connect(
+            lambda _: self.update_multiworld_client_status()
+        )
         self.not_connected_warning_label.linkActivated.connect(self._window_manager.open_game_connection_window)
 
     def _get_world_order(self) -> list[uuid.UUID]:
