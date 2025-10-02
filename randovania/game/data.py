@@ -32,10 +32,11 @@ class GameData:
     development_state: DevelopmentState
     """Controls how mature the game is considered to be. Various part of the UI display different games depending on
     the development state.
-    Games start in DEVELOPMENT, change to EXPERIMENTAL when somewhat usable and move to STABLE when given approval."""
+    Games start in SOURCE_ONLY, change to STAGING when somewhat usable and move to STABLE when given approval."""
 
-    presets: Iterable[dict[str, str]]
-    """List of at least one dict mapping the key "path" to a path to the given preset."""
+    presets: Iterable[str]
+    """List of preset filenames that should be included by default for this game.
+    The file must exist in the "presets" subdirectory of the game."""
 
     faq: Iterable[tuple[str, str]]
     """List of question to markdown-formatted response of FAQ entries."""

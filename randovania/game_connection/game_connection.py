@@ -6,11 +6,10 @@ import functools
 import logging
 from typing import TYPE_CHECKING
 
-from PySide6.QtCore import QObject, Signal
-
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
 from randovania.game_description.resources.inventory import Inventory
 from randovania.lib.infinite_timer import InfiniteTimer
+from randovania.lib.signal import RdvSignal
 from randovania.network_common.game_connection_status import GameConnectionStatus
 
 if TYPE_CHECKING:
@@ -36,10 +35,10 @@ class ConnectedGameState:
     has_been_beaten: bool = False
 
 
-class GameConnection(QObject):
-    BuildersChanged = Signal()
-    BuildersUpdated = Signal()
-    GameStateUpdated = Signal(ConnectedGameState)
+class GameConnection:
+    BuildersChanged = RdvSignal()
+    BuildersUpdated = RdvSignal()
+    GameStateUpdated = RdvSignal[[ConnectedGameState]]()
 
     connection_builders: list[ConnectorBuilder]
     remote_connectors: dict[ConnectorBuilder, RemoteConnector]
@@ -121,7 +120,7 @@ class GameConnection(QObject):
             ]
         self.BuildersChanged.emit()
 
-    def _on_builder_status_update(self) -> None:
+    def _on_builder_status_update(self, status_message: str) -> None:
         self.BuildersUpdated.emit()
 
     def _handle_new_connector(self, connector: RemoteConnector) -> None:

@@ -549,6 +549,13 @@ def options(tmp_path):
     return Options(tmp_path)
 
 
+@pytest.fixture
+def world_database(tmp_path: Path):
+    from randovania.interface_common.world_database import WorldDatabase
+
+    return WorldDatabase(tmp_path.joinpath("world_database"))
+
+
 def pytest_addoption(parser: pytest.Parser) -> None:
     parser.addoption(
         "--skip-generation-tests",

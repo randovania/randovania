@@ -8,11 +8,10 @@ import typing
 import uuid
 from typing import TYPE_CHECKING, Self
 
-from PySide6.QtCore import QObject, Signal
-
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.lib import json_lib, migration_lib
+from randovania.lib.signal import RdvSignal
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.world_sync import ServerWorldSync
 
@@ -69,11 +68,11 @@ class WorldData(JsonDataclass):
         return dataclasses.replace(self, was_game_beaten_uploaded=True)
 
 
-class WorldDatabase(QObject):
+class WorldDatabase:
     _all_data: dict[uuid.UUID, WorldData]
     _persist_path: Path
 
-    WorldDataUpdate = Signal()
+    WorldDataUpdate = RdvSignal()
 
     def __init__(self, persist_path: Path):
         super().__init__()

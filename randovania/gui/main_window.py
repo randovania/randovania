@@ -143,7 +143,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.progress_bar.setVisible(False)
         self.stop_background_process_button.setVisible(False)
 
-        self.status_bar.addWidget(self.progress_label)
+        self.status_bar.addWidget(self.progress_label, 2)
         self.status_bar.addPermanentWidget(self.progress_bar)
         self.status_bar.addPermanentWidget(self.stop_background_process_button)
 

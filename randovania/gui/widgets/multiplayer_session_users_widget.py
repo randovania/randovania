@@ -111,6 +111,10 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
     def __init__(self, options: Options, window_manager: WindowManager, session_api: MultiplayerSessionApi):
         super().__init__()
+        self.setContentsMargins(0, 0, 0, 0)
+        self.setFrameShape(QtWidgets.QFrame.Shape.Panel)
+        self.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Preferred)
+
         self.header().setStretchLastSection(False)
         self.headerItem().setText(0, "Name")
         self.headerItem().setText(1, "")

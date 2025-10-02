@@ -104,8 +104,8 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     long_name="Metroid: Samus Returns",
     development_state=randovania.game.development_state.DevelopmentState.STABLE,
     presets=[
-        {"path": "starter_preset.rdvpreset"},
-        {"path": "multiworld-starter-preset.rdvpreset"},
+        "starter_preset.rdvpreset",
+        "multiworld-starter-preset.rdvpreset",
     ],
     faq=[
         (

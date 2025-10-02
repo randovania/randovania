@@ -116,7 +116,14 @@ def _collect_location(
 
     def log(msg: str, *args):
         logger().info(
-            "%s found item at %d. " + msg, session_common.describe_session(session, world), pickup_location, *args
+            "%s found item at %d. " + msg,
+            session_common.describe_session(session, world),
+            pickup_location,
+            *args,
+            extra={
+                "session_id": session.id,
+                "world_uuid": str(world.uuid),
+            },
         )
 
     if pickup_target is None:
@@ -244,6 +251,10 @@ def sync_one_world(
             world.session_id,
             world.name,
             world_request.status.pretty_text,
+            extra={
+                "session_id": world.session_id,
+                "world_uuid": str(world.uuid),
+            },
         )
 
     # Update association inventory
@@ -255,6 +266,10 @@ def sync_one_world(
             "Session %d, World %s has new inventory",
             world.session_id,
             world.name,
+            extra={
+                "session_id": world.session_id,
+                "world_uuid": str(world.uuid),
+            },
         )
 
     if world_request.request_details:
@@ -309,11 +324,29 @@ def world_sync(sa: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse:
             worlds_to_emit_update.update(new_worlds_to_emit_update)
 
         except error.BaseNetworkError as e:
-            logger().info("[%s] Refused sync for %s: %s", user.name, uid, e)
+            logger().info(
+                "[%s] Refused sync for %s: %s",
+                user.name,
+                uid,
+                e,
+                extra={
+                    "user_id": user.id,
+                    "world_uuid": str(uid),
+                },
+            )
             failed_syncs[uid] = e
 
         except Exception as e:
-            logger().exception("[%s] Failed sync for %s: %s", user.name, uid, e)
+            logger().exception(
+                "[%s] Failed sync for %s: %s",
+                user.name,
+                uid,
+                e,
+                extra={
+                    "user_id": user.id,
+                    "world_uuid": str(uid),
+                },
+            )
             failed_syncs[uid] = error.ServerError()
 
     for world in worlds_to_emit_update:
@@ -371,6 +404,10 @@ def emit_world_pickups_update(sa: ServerApp, world: World):
         session_common.describe_session(session, world),
         resource_database.game_enum.value,
         len(result),
+        extra={
+            "session_id": world.session_id,
+            "world_uuid": str(world.uuid),
+        },
     )
 
     data = {
