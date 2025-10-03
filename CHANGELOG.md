@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+##### Chozo Ruins
+
+- Fixed: Ruined Shrine: Removed unnecessary dangerous requirements.
+
 ##### Phendrana Drifts
 
 - Fixed: Chozo Ice Temple: Removed unnecessary dangerous requirements.
