@@ -15,6 +15,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: In Screw Attack Room: Using a Shinespark to reach from the door to Transport to Burenia to Start Point 2 was missing a requirement on having activated the Rotatable.
 
+### Metroid Prime
+
+#### Logic Database
+
+##### Chozo Ruins
+
+- Fixed: Ruined Shrine: Removed unnecessary dangerous requirements.
+
+##### Phendrana Drifts
+
+- Added: Chozo Ice Temple: Documentation for reaching the Chozo Statue NSJ.
+- Fixed: Chozo Ice Temple: Removed unnecessary dangerous requirements.
+- Fixed: Control Tower: Removed unnecessary dangerous requirements.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Expansions with negative value now properly remove items in-game.
+
+
 ## [10.2.0] - 2025-10-02
 
 - Added: A warning when trying to generate a Multiworld game if a preset requires all Pickups to be obtainable.
