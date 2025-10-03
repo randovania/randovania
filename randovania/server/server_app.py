@@ -20,6 +20,7 @@ import peewee
 import sentry_sdk
 from cryptography.fernet import Fernet
 from fastapi.responses import PlainTextResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from prometheus_client import Summary
 from prometheus_fastapi_instrumentator import Instrumentator
@@ -110,7 +111,9 @@ class ServerApp:
             ctx_context.set("FastAPI")
             return await call_next(request)
 
-        self.templates = Jinja2Templates(directory=Path(__file__).parent.joinpath("templates"))
+        server_path = Path(__file__).parent
+        self.templates = Jinja2Templates(directory=server_path.joinpath("templates"))
+        self.app.mount("/static", StaticFiles(directory=server_path.joinpath("static")), name="static")
 
         self.metrics = Instrumentator()
         self.metrics.instrument(self.app)

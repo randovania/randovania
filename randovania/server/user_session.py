@@ -197,7 +197,7 @@ async def logout(sa: ServerApp, sid: str) -> None:
 def unable_to_login(sa: ServerApp, request: Request, error_message: str, status_code: int) -> HTMLResponse:
     return sa.templates.TemplateResponse(
         request=request,
-        name="unable_to_login.html",
+        name="unable_to_login.html.jinja",
         context={
             "error_message": error_message,
         },
@@ -271,7 +271,7 @@ async def browser_discord_login_callback(
 
             return sa.templates.TemplateResponse(
                 request,
-                "return_to_randovania.html",
+                "return_to_randovania.html.jinja",
                 context={
                     "user": user,
                 },
@@ -288,7 +288,10 @@ async def browser_discord_login_callback(
         )
         status_code = 403
 
-    except oauthlib.oauth2.rfc6749.errors.MismatchingStateError:
+    except (
+        oauthlib.oauth2.rfc6749.errors.MismatchingStateError,
+        fastapi_discord.exceptions.InvalidToken,
+    ):
         error_message = "You must finish the login with the same browser that you started it with."
         status_code = 401
 
