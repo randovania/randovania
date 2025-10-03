@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.3.0] - 2025-11-??
 
-- To be filled.
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Fixed: In Screw Attack Room: Using a Shinespark to reach from the door to Transport to Burenia to Start Point 2 was missing a requirement on having activated the Rotatable.
 
 ## [10.2.0] - 2025-10-02
 
