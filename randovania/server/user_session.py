@@ -259,7 +259,7 @@ async def browser_discord_login_callback(
         user = await _create_session_with_discord_token(sa, sid, token)
 
         if sid is None:
-            return RedirectResponse(request.url_for("/me"))
+            return RedirectResponse(request.url_for("browser_me"))
         else:
             try:
                 session = await sa.sio.get_session(sid=sid)

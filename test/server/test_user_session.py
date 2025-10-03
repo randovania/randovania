@@ -2,12 +2,14 @@ from __future__ import annotations
 
 import datetime
 import json
+import urllib.parse
 from typing import TYPE_CHECKING
 from unittest.mock import ANY, AsyncMock, MagicMock
 
 import fastapi_discord
 import pytest
 from fastapi import Request  # noqa: TC002
+from fastapi.responses import RedirectResponse
 
 from randovania.network_common import error
 from randovania.network_common.error import InvalidSessionError
@@ -75,7 +77,8 @@ async def test_browser_login_with_discord(has_sio, mock_sa, mock_request, mocker
 
 @pytest.mark.parametrize("has_global_name", [False, True])
 @pytest.mark.parametrize("existing", [False, True])
-async def test_browser_discord_login_callback_with_sid(mock_sa, mock_request, existing, has_global_name):
+@pytest.mark.parametrize("has_sid", [False, True])
+async def test_browser_discord_login_callback_success(mock_sa, mock_request, existing, has_global_name, has_sid):
     # Setup
     session = {}
     mock_sa.sio.session.return_value.__aenter__.return_value = session
@@ -96,26 +99,42 @@ async def test_browser_discord_login_callback_with_sid(mock_sa, mock_request, ex
     if existing:
         User.create(discord_id=int(discord_user.id), name="Someone else")
 
+    if not has_sid:
+        del mock_request.session["sid"]
+
     # Run
     result = await user_session.browser_discord_login_callback(mock_sa, mock_request, code="code", state="state")
 
     # Assert
     user = User.get(User.discord_id == 1234)
-
-    mock_sa.sio.emit.assert_awaited_once_with(
-        "user_session_update",
-        {"encoded_session_b85": b"Wo~0~d2n=PWB", "user": {"discord_id": 1234, "id": 1, "name": expected_name}},
-        to="TheSid",
-        namespace="/",
-    )
-    mock_sa.templates.TemplateResponse.assert_called_once_with(
-        ANY,  # Request
-        "return_to_randovania.html",
-        context={"user": user},
-    )
     assert user.name == expected_name
-    assert session == {"discord-access-token": "The_Token", "user-id": 1}
-    assert result == mock_sa.templates.TemplateResponse.return_value
+
+    if has_sid:
+        mock_sa.sio.emit.assert_awaited_once_with(
+            "user_session_update",
+            {"encoded_session_b85": b"Wo~0~d2n=PWB", "user": {"discord_id": 1234, "id": 1, "name": expected_name}},
+            to="TheSid",
+            namespace="/",
+        )
+        mock_sa.templates.TemplateResponse.assert_called_once_with(
+            ANY,  # Request
+            "return_to_randovania.html",
+            context={"user": user},
+        )
+        assert result == mock_sa.templates.TemplateResponse.return_value
+        assert session == {"discord-access-token": "The_Token", "user-id": 1}
+    else:
+        mock_sa.sio.emit.assert_not_called()
+        mock_sa.templates.TemplateResponse.assert_not_called()
+        assert session == {}
+        assert isinstance(result, RedirectResponse)
+
+        # FIXME: because we're not using the test client here,
+        # we can't ensure that url is being routed correctly during this test
+        assert result.headers["location"] == urllib.parse.quote(
+            str(mock_request.url_for.return_value),
+            safe=":/%#?=@[]!$&'()*+,;",
+        )
 
 
 async def test_browser_discord_login_callback_not_authorized(mock_sa, mock_request, mocker: pytest_mock.MockerFixture):
