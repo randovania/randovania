@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.3.0] - 2025-11-??
 
-- To be filled.
+### Metroid Prime
+
+#### Logic Database
+
+##### Phendrana Drifts
+
+- Fixed: Chozo Ice Temple: Removed unnecessary dangerous requirements.
+- Fixed: Control Tower: Removed unnecessary dangerous requirements.
 
 ## [10.2.0] - 2025-10-02
 
