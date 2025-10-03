@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+import datetime
 import json
 from typing import TYPE_CHECKING
 
@@ -10,6 +11,7 @@ from playhouse.shortcuts import dict_to_model, model_to_dict
 
 from randovania.bitpacking import construct_pack
 from randovania.network_common.remote_inventory import RemoteInventory
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.server import database
 
 if TYPE_CHECKING:
@@ -38,6 +40,34 @@ def test_admin_sessions(test_client, solo_two_world_session_setup) -> None:
     # Assert
     entry = "<td>The Name</td><td>2020-05-02 10:20:00+00:00</td><td>1</td><td>2</td><td>False</td></tr>"
     assert entry in result.text
+
+
+def test_admin_sessions_paginated(test_client) -> None:
+    # Setup
+    def setup() -> database.MultiplayerSession:
+        user = database.User.create(id=1234, name="The Name")
+        for i in range(50):
+            session = database.MultiplayerSession.create(
+                name=f"Debug{i}",
+                state=MultiplayerSessionVisibility.VISIBLE,
+                creator=user,
+                creation_date=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.UTC),
+            )
+        return session
+
+    _handle_db_nonsense(test_client, setup)
+
+    # Run
+    test_client.post("/setup-db")
+    result = test_client.get("/sessions?page=2")
+
+    # Assert
+    prev_link = "<a href='http://testserver/sessions?page=1'>Previous</a>"
+    next_link = "<a href='http://testserver/sessions?page=3'>Next</a>"
+    assert prev_link in result.text
+    assert next_link in result.text
+
+    assert "Page 2 of 3." in result.text
 
 
 def test_admin_session_missing(test_client, solo_two_world_session_setup) -> None:
