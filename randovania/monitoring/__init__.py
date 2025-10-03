@@ -83,7 +83,12 @@ def before_send(event: sentry_sdk.types.Event, hint: sentry_sdk.types.Hint) -> s
     return event
 
 
-def _init(include_flask: bool, url_key: str, sampling_rate: float = 1.0, exclude_server_name: bool = False) -> None:
+type SentryUrlKeys = typing.Literal["client", "server", "bot"]
+
+
+def _init(
+    include_server: bool, url_key: SentryUrlKeys, sampling_rate: float = 1.0, exclude_server_name: bool = False
+) -> None:
     if randovania.is_dirty():
         return
 
@@ -96,25 +101,22 @@ def _init(include_flask: bool, url_key: str, sampling_rate: float = 1.0, exclude
         return
 
     from sentry_sdk.integrations.aiohttp import AioHttpIntegration
+    from sentry_sdk.integrations.asyncio import AsyncioIntegration
     from sentry_sdk.integrations.logging import LoggingIntegration
 
     integrations = [
         AioHttpIntegration(),
+        AsyncioIntegration(),
         LoggingIntegration(),
     ]
 
     profiles_sample_rate = sampling_rate
-    if include_flask:
-        from sentry_sdk.integrations.flask import FlaskIntegration
+    if include_server:
+        from sentry_sdk.integrations.fastapi import FastApiIntegration
 
-        integrations.append(FlaskIntegration())
+        integrations.append(FastApiIntegration())
     else:
         profiles_sample_rate = 0.5 if randovania.is_dev_version() else 0.0
-
-        # We use asyncio for clients and bot, but not server.
-        from sentry_sdk.integrations.asyncio import AsyncioIntegration
-
-        integrations.append(AsyncioIntegration())
 
     server_name = None
     if exclude_server_name:
@@ -136,7 +138,7 @@ def _init(include_flask: bool, url_key: str, sampling_rate: float = 1.0, exclude
         traces_sampler=traces_sampler,
         profiles_sample_rate=profiles_sample_rate,
         server_name=server_name,
-        auto_session_tracking=include_flask,
+        auto_session_tracking=include_server,
         event_scrubber=HomeEventScrubber(),
         before_breadcrumb=before_breadcrumb,
         before_send=before_send,

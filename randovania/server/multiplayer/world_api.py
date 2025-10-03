@@ -1,11 +1,8 @@
 import base64
 import datetime
-import logging
 import uuid
-from typing import TYPE_CHECKING
 
 import construct
-import flask_socketio
 import peewee
 import sentry_sdk
 from frozendict import frozendict
@@ -29,31 +26,26 @@ from randovania.network_common.world_sync import (
     ServerWorldSync,
 )
 from randovania.server.database import MultiplayerSession, User, World, WorldAction, WorldUserAssociation
-from randovania.server.lib import logger
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp
 
-if TYPE_CHECKING:
-    from collections.abc import Iterable
 
-
-def _get_world_room(world: World):
+def _get_world_room(world: World) -> str:
     return f"world-{world.uuid}"
 
 
-def get_inventory_room_name_raw(world_uuid: uuid.UUID, user_id: int):
+def get_inventory_room_name_raw(world_uuid: uuid.UUID, user_id: int) -> str:
     return f"multiplayer-{world_uuid}-{user_id}-inventory"
 
 
-def emit_inventory_update(sa: ServerApp, world: World, user_id: int, inventory: bytes):
+async def emit_inventory_update(sa: ServerApp, world: World, user_id: int, inventory: bytes) -> None:
     room_name = get_inventory_room_name_raw(world.uuid, user_id)
 
-    sa.sio.emit(
+    await sa.sio.emit(
         signals.WORLD_BINARY_INVENTORY,
         (str(world.uuid), user_id, inventory),
         namespace="/",
         to=room_name,
-        include_self=True,
     )
     # try:
     #     inventory: RemoteInventory = construct_pack.decode(association.inventory, RemoteInventory)
@@ -67,7 +59,7 @@ def emit_inventory_update(sa: ServerApp, world: World, user_id: int, inventory: 
     #         namespace="/"
     #     )
     # except construct.ConstructError as e:
-    #     logger().warning("Unable to encode inventory for world %s, user %d: %s",
+    #     sa.logger.warning("Unable to encode inventory for world %s, user %d: %s",
     #                      association.world.uuid, association.user.id, str(e))
 
 
@@ -101,7 +93,7 @@ def _add_pickup_to_inventory(inventory: bytes, pickup: PickupEntry, game: Randov
 
 
 @sentry_sdk.trace
-def _collect_location(
+async def _collect_location(
     sa: ServerApp, session: MultiplayerSession, world: World, description: LayoutDescription, pickup_location: int
 ) -> World | None:
     """
@@ -112,10 +104,11 @@ def _collect_location(
     :param pickup_location:
     :return: The rewarded player if some player must be updated of the fact.
     """
+    assert world.order is not None
     pickup_target = _get_pickup_target(description, world.order, pickup_location)
 
-    def log(msg: str, *args):
-        logger().info(
+    def log(msg: str, *args: object) -> None:
+        sa.logger.info(
             "%s found item at %d. " + msg,
             session_common.describe_session(session, world),
             pickup_location,
@@ -148,61 +141,65 @@ def _collect_location(
         log("It's a %s for %s, but it was already collected.", pickup_target.pickup.name, target_world.name)
         return None
 
+    assert target_world.order is not None
     target_game = description.get_preset(target_world.order).game
-    associations: Iterable[WorldUserAssociation] = WorldUserAssociation.select().where(
+    associations = WorldUserAssociation.select().where(
         WorldUserAssociation.world == target_world,
         WorldUserAssociation.connection_state == GameConnectionStatus.Disconnected,
-        WorldUserAssociation.inventory.is_null(False),
+        WorldUserAssociation.inventory.is_null(False),  # type: ignore[attr-defined]
     )
     for assoc in associations:
         new_inventory = _add_pickup_to_inventory(assoc.inventory, pickup_target.pickup, target_game)
         if assoc.inventory != new_inventory:
             assoc.inventory = new_inventory
             assoc.save()
-            emit_inventory_update(sa, target_world, assoc.user_id, new_inventory)
+            await emit_inventory_update(sa, target_world, assoc.user_id, new_inventory)
 
     log("It's a %s for %s.", pickup_target.pickup.name, target_world.name)
     return target_world
 
 
 @sentry_sdk.trace
-def collect_locations(
+async def collect_locations(
     sa: ServerApp,
     source_world: World,
     pickup_locations: tuple[int, ...],
 ) -> set[World]:
     session = source_world.session
 
-    logger().info(f"{session_common.describe_session(session, source_world)} found items {pickup_locations}")
+    sa.logger.info(f"{session_common.describe_session(session, source_world)} found items {pickup_locations}")
     description = session.layout_description
+    assert description is not None
 
     receiver_worlds = set()
     for location in pickup_locations:
-        target_world = _collect_location(sa, session, source_world, description, location)
+        target_world = await _collect_location(sa, session, source_world, description, location)
         if target_world is not None:
             receiver_worlds.add(target_world)
 
     return receiver_worlds
 
 
-def watch_inventory(sa: ServerApp, world_uid: uuid.UUID, user_id: int, watch: bool, binary: bool):
-    logger().debug("Watching inventory of %s/%d: %s", world_uid, user_id, watch)
+async def watch_inventory(
+    sa: ServerApp, sid: str, world_uid: uuid.UUID, user_id: int, watch: bool, binary: bool
+) -> None:
+    sa.logger.debug("Watching inventory of %s/%d: %s", world_uid, user_id, watch)
     room_name = get_inventory_room_name_raw(world_uid, user_id)
 
     if watch:
         world = World.get_by_uuid(world_uid)
-        session_common.get_membership_for(sa, world.session)
+        await session_common.get_membership_for(sa, world.session, sid)
         try:
             association = WorldUserAssociation.get_by_instances(world=world, user=user_id)
         except peewee.DoesNotExist:
             raise error.WorldNotAssociatedError
 
-        flask_socketio.join_room(room_name)
+        await sa.sio.enter_room(sid, room_name)
         if association.inventory is not None:
-            emit_inventory_update(sa, world, user_id, association.inventory)
+            await emit_inventory_update(sa, world, user_id, association.inventory)
     else:
         # Allow one to stop listening even if you're not allowed to start listening
-        flask_socketio.leave_room(room_name)
+        await sa.sio.leave_room(sid, room_name)
 
 
 def _check_user_is_associated(user: User, world: World) -> WorldUserAssociation:
@@ -216,8 +213,9 @@ def _check_user_is_associated(user: User, world: World) -> WorldUserAssociation:
 
 
 @sentry_sdk.trace
-def sync_one_world(
+async def sync_one_world(
     sa: ServerApp,
+    sid: str,
     user: User,
     uid: uuid.UUID,
     world_request: ServerWorldSync,
@@ -234,18 +232,18 @@ def sync_one_world(
 
     # Join/leave room based on status
     if world_request.status == GameConnectionStatus.Disconnected:
-        flask_socketio.leave_room(_get_world_room(world))
+        await sa.sio.leave_room(sid, _get_world_room(world))
     else:
-        if sa.ensure_in_room(_get_world_room(world)):
+        if await sa.ensure_in_room(sid, _get_world_room(world)):
             worlds_to_update.add(world)
-            sa.store_world_in_session(world)
+            await sa.store_world_in_session(sid, world)
 
     # Update association connection state
     if world_request.status != association.connection_state:
         association.connection_state = world_request.status
         should_update_activity = True
         session_id_to_return = world.session_id
-        logger().info(
+        sa.logger.info(
             "Session %d, World %s has new connection state: %s",
             world.session_id,
             world.name,
@@ -260,8 +258,8 @@ def sync_one_world(
     if world_request.inventory is not None and world_request.inventory != association.inventory:
         association.inventory = world_request.inventory
         should_update_activity = True
-        emit_inventory_update(sa, world, user.id, world_request.inventory)
-        logger().info(
+        await emit_inventory_update(sa, world, user.id, world_request.inventory)
+        sa.logger.info(
             "Session %d, World %s has new inventory",
             world.session_id,
             world.name,
@@ -280,7 +278,7 @@ def sync_one_world(
 
     # Do this last, as it fails if session is in setup
     if world_request.collected_locations:
-        worlds_to_update.update(collect_locations(sa, world, world_request.collected_locations))
+        worlds_to_update.update(await collect_locations(sa, world, world_request.collected_locations))
         should_update_activity = True
 
     # User did something, so update activity
@@ -291,8 +289,8 @@ def sync_one_world(
     return response, session_id_to_return, worlds_to_update
 
 
-def world_sync(sa: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse:
-    user = sa.get_current_user()
+async def world_sync(sa: ServerApp, sid: str, request: ServerSyncRequest) -> ServerSyncResponse:
+    user = await sa.get_current_user(sid)
 
     world_details = {}
     failed_syncs = {}
@@ -303,7 +301,7 @@ def world_sync(sa: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse:
 
     for uid, world_request in request.worlds.items():
         try:
-            response, session_id, new_worlds_to_update = sync_one_world(sa, user, uid, world_request)
+            response, session_id, new_worlds_to_update = await sync_one_world(sa, sid, user, uid, world_request)
 
             if response is not None:
                 world_details[uid] = response
@@ -314,7 +312,7 @@ def world_sync(sa: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse:
             worlds_to_update.update(new_worlds_to_update)
 
         except error.BaseNetworkError as e:
-            logger().info(
+            sa.logger.info(
                 "[%s] Refused sync for %s: %s",
                 user.name,
                 uid,
@@ -327,7 +325,7 @@ def world_sync(sa: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse:
             failed_syncs[uid] = e
 
         except Exception as e:
-            logger().exception(
+            sa.logger.exception(
                 "[%s] Failed sync for %s: %s",
                 user.name,
                 uid,
@@ -340,14 +338,14 @@ def world_sync(sa: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse:
             failed_syncs[uid] = error.ServerError()
 
     for world in worlds_to_update:
-        emit_world_pickups_update(sa, world)
+        await emit_world_pickups_update(sa, world)
         sessions_to_update_actions.add(world.session.id)
 
     for session_id in sessions_to_update_meta:
-        session_common.emit_session_meta_update(MultiplayerSession.get_by_id(session_id))
+        await session_common.emit_session_meta_update(sa, MultiplayerSession.get_by_id(session_id))
 
     for session_id in sessions_to_update_actions:
-        session_common.emit_session_actions_update(MultiplayerSession.get_by_id(session_id))
+        await session_common.emit_session_actions_update(sa, MultiplayerSession.get_by_id(session_id))
 
     return ServerSyncResponse(
         worlds=frozendict(world_details),
@@ -356,13 +354,16 @@ def world_sync(sa: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse:
 
 
 @sentry_sdk.trace
-def emit_world_pickups_update(sa: ServerApp, world: World):
+async def emit_world_pickups_update(sa: ServerApp, world: World) -> None:
     session = world.session
 
+    assert session.layout_description is not None
     description = session.layout_description
+
+    assert world.order is not None
     resource_database = _get_resource_database(description, world.order)
 
-    result = []
+    result: list[dict | None] = []
     actions: list[WorldAction] = (
         WorldAction.select(
             WorldAction.location,
@@ -372,10 +373,11 @@ def emit_world_pickups_update(sa: ServerApp, world: World):
         )
         .join(World, on=WorldAction.provider)
         .where(WorldAction.receiver == world)
-        .order_by(WorldAction.time.asc())
+        .order_by(WorldAction.time.asc())  # type: ignore[attr-defined]
     )
 
     for action in actions:
+        assert action.provider.order is not None
         pickup_target = _get_pickup_target(description, action.provider.order, action.location)
 
         if pickup_target is None:
@@ -389,7 +391,7 @@ def emit_world_pickups_update(sa: ServerApp, world: World):
                 }
             )
 
-    logger().info(
+    sa.logger.info(
         "%s notifying %s of %s pickups.",
         session_common.describe_session(session, world),
         resource_database.game_enum.value,
@@ -405,17 +407,17 @@ def emit_world_pickups_update(sa: ServerApp, world: World):
         "game": resource_database.game_enum.value,
         "pickups": result,
     }
-    flask_socketio.emit(signals.WORLD_PICKUPS_UPDATE, data, room=_get_world_room(world))
+    await sa.sio.emit(signals.WORLD_PICKUPS_UPDATE, data, room=_get_world_room(world))
 
 
-def report_disconnect(sa: ServerApp, session_dict: dict, log: logging.Logger):
+async def report_disconnect(sa: ServerApp, session_dict: dict) -> None:
     user_id: int | None = session_dict.get("user-id")
     if user_id is None:
         return
 
     world_ids: list[int] = session_dict.get("worlds", [])
 
-    log.info(f"User {user_id} is disconnected, disconnecting from sessions: {world_ids}")
+    sa.logger.info(f"User {user_id} is disconnected, disconnecting from sessions: {world_ids}")
     sessions_to_update = {}
 
     for world_id in world_ids:
@@ -432,9 +434,9 @@ def report_disconnect(sa: ServerApp, session_dict: dict, log: logging.Logger):
         association.save()
 
     for session in sessions_to_update.values():
-        session_common.emit_session_meta_update(session)
+        await session_common.emit_session_meta_update(sa, session)
 
 
-def setup_app(sa: ServerApp):
+def setup_app(sa: ServerApp) -> None:
     sa.on("multiplayer_watch_inventory", watch_inventory)
     sa.on_with_wrapper("multiplayer_world_sync", world_sync)

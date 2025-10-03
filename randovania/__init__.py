@@ -5,9 +5,13 @@ import os
 import platform
 import sys
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from . import version as _version
 from . import version_hash
+
+if TYPE_CHECKING:
+    from randovania.network_common.configuration import NetworkConfiguration
 
 CONFIGURATION_FILE_PATH: Path | None = None
 
@@ -69,8 +73,14 @@ def _get_default_configuration_path() -> Path:
     return get_data_path().joinpath("configuration.json")
 
 
-def get_configuration() -> dict:
+def get_configuration() -> NetworkConfiguration:
     file_path = CONFIGURATION_FILE_PATH
+
+    if file_path is None:
+        file_path = os.environ.get("RANDOVANIA_CONFIGURATION_PATH")
+        if file_path is not None:
+            file_path = Path(file_path).absolute()
+
     if file_path is None:
         file_path = _get_default_configuration_path()
 

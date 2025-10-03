@@ -31,42 +31,30 @@ dynamic = ["version"]
 dependencies = [
     # server communication, binary version of logic db
     "construct",
-
     # Default name for exporting presets
     "python-slugify",
-
     # permalinks
     "bitstruct",
-
     # obfuscator, guest login, server code
     "cryptography",
-
     # Generator
     "networkx",
     "tenacity>=7.0.0",
-
     # server communication
     "python-socketio[asyncio_client]",
     "aiohttp>=3.9.3",
-
     # nonblocking file IO
     "aiofiles",
-
     # Immutable dicts, used in many places
     "frozendict",
-
     # Versioning presets
     "dulwich>=0.20",
-
     # error reports
     "sentry-sdk",
-
     # Patch GamesPatches JSON from rdvgame
     "json-delta",
-
     # For the Version class
     "packaging",
-
     # For TypeVar default
     "typing-extensions>=4.4.0",
 ]
@@ -126,15 +114,28 @@ gui = [
 ]
 
 server = [
-    "sentry-sdk[flask]>=2.35.0",
-    "flask-discord",
-    "flask-socketio",
-    "prometheus-flask-exporter",
-    "eventlet",
-    "peewee",
+    "fastapi", # REST server
+    "jinja2", # templating
+    "uvicorn[standard]", # server runner
+    "itsdangerous", # for starlette SessionMiddleware
+    "python-multipart", # for Form data
+
+    "fastapi-socketio-handler>=0.4.0", # socketio server
+
+    # monitoring
+    "sentry-sdk[fastapi]>=2.35.0",
+    "prometheus-fastapi-instrumentator",
+    
+    # discord auth
+    "fastapi-discord>=0.2.7",
     "requests-oauthlib",
+    "pyjwt",
+    
+    # database
+    "peewee",
     "cachetools",  # for TTLCache
 
+    # discord bot
     "py-cord>=2.3.1",  # for randovania/discord_bot; 2.3.1+ is needed for Python 3.11
     "audioop-lts; python_version>='3.13'",  # for py-cord
     "Pillow>=9.0.0",  # for randovania/discord_bot/database_command
@@ -150,6 +151,7 @@ test = [
     "pytest-localftpserver",
     "pytest-xdist[psutil]",
     "pytest-codspeed",
+    "httpx", # for server testing
 ]
 
 website = [
@@ -168,6 +170,9 @@ typing = [
     "types-aiofiles",
     "types-peewee",
     "types-qrcode>=8.0.0.20241004",
+    "python-socketio-stubs",
+    "types-oauthlib",
+    "types-cachetools",
 ]
 
 [project.readme]
@@ -253,6 +258,18 @@ runtime-evaluated-base-classes = [
     "randovania.exporter.game_exporter.GameExportParams",
     "randovania.game_description.pickup.pickup_definition.base_pickup.BasePickupDefinition",
 ]
+runtime-evaluated-decorators = [
+    "fastapi.FastAPI.get",
+    "fastapi.FastAPI.post",
+    "fastapi.FastAPI.put",
+    "fastapi.FastAPI.patch",
+    "fastapi.FastAPI.delete",
+    "fastapi.APIRouter.get",
+    "fastapi.APIRouter.post",
+    "fastapi.APIRouter.put",
+    "fastapi.APIRouter.patch",
+    "fastapi.APIRouter.delete",
+]
 
 [tool.mypy]
 files = [
@@ -303,6 +320,7 @@ files = [
     "randovania/gui/widgets/node_selector_widget.py",
     "randovania/layout/",
     "randovania/lib/",
+    "randovania/server/",
     "test/bitpacking/",
     "test/game_connection",
     "test/game_description/",
@@ -356,6 +374,8 @@ module = [
     "pytestqt.*",
     "qasync.*",
     "ruamel.*",
+    "fastapi_discord.*",
+    "socketio_handler.*",
 ]
 ignore_missing_imports = true
 

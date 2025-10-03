@@ -1,14 +1,29 @@
 from __future__ import annotations
 
-from unittest.mock import MagicMock
+import os
+from typing import TYPE_CHECKING
+from unittest.mock import NonCallableMagicMock
 
 import cryptography.fernet
-import flask
 import pytest
+from fastapi.testclient import TestClient
 from peewee import SqliteDatabase
+from socketio import AsyncServer
+from socketio_handler import SocketManager
 
 from randovania.game.game_enum import RandovaniaGame
+from randovania.network_common.configuration import NetworkConfiguration
 from randovania.server import database
+from randovania.server.configuration import ServerConfiguration
+from randovania.server.discord_auth import CustomDiscordOAuthClient
+
+if TYPE_CHECKING:
+    from collections.abc import Generator
+    from pathlib import Path
+
+    from pytest_mock import MockerFixture
+
+    from randovania.server.server_app import RdvFastAPI
 
 
 @pytest.fixture
@@ -25,18 +40,9 @@ def empty_database():
 
 
 @pytest.fixture
-def clean_database(empty_database):
+def clean_database(empty_database) -> SqliteDatabase:
     empty_database.create_tables(database.all_classes)
     return empty_database
-
-
-@pytest.fixture
-def flask_app():
-    app = flask.Flask("test_app")
-    app.config["TESTING"] = True
-    app.config["SECRET_KEY"] = "secret"
-    with app.app_context():
-        yield app
 
 
 @pytest.fixture
@@ -49,19 +55,58 @@ def default_game_list(is_dev_version):
     return [g.value for g in RandovaniaGame.sorted_all_games() if g.data.defaults_available_in_game_sessions]
 
 
+@pytest.fixture(name="db_path")
+def db_path_fixture(tmp_path: Path):
+    return tmp_path.joinpath("database.db")
+
+
 @pytest.fixture(name="server_app")
-def server_app_fixture(flask_app):
+def server_app_fixture(db_path, mocker: MockerFixture):
     pytest.importorskip("engineio.async_drivers.threading")
     from randovania.server.server_app import ServerApp
 
-    flask_app.config["SECRET_KEY"] = "key"
-    flask_app.config["DISCORD_CLIENT_ID"] = 1234
-    flask_app.config["DISCORD_CLIENT_SECRET"] = 5678
-    flask_app.config["DISCORD_REDIRECT_URI"] = "http://127.0.0.1:5000/callback/"
-    flask_app.config["FERNET_KEY"] = b"s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A="
-    flask_app.config["GUEST_KEY"] = b"s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A="
-    flask_app.config["ENFORCE_ROLE"] = None
-    server = ServerApp(flask_app)
-    server.metrics.summary = MagicMock()
-    server.metrics.summary.return_value.side_effect = lambda x: x
+    server_config = ServerConfiguration(
+        secret_key="key",
+        discord_client_secret="5678",
+        fernet_key="s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=",
+        client_version_checking="ignore",
+        database_path=str(db_path),
+    )
+    configuration = NetworkConfiguration(
+        server_address="http://127.0.0.1:5000",
+        socketio_path="/socket.io",
+        guest_secret="s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=",
+        server_config=server_config,
+        discord_client_id=1234,
+    )
+
+    os.environ["FASTAPI_DEBUG"] = "True"
+    server = ServerApp(configuration)
+
+    mocker.patch("randovania.server.socketio.Gauge")
+    mocker.patch("randovania.server.server_app.Summary")
+
     return server
+
+
+class RdvTestClient(TestClient):
+    def __init__(self, app: RdvFastAPI, *args) -> None:
+        self.sa = app.sa
+        super().__init__(app, *args)
+
+
+@pytest.fixture(name="test_client")
+def test_client_fixture(server_app) -> Generator[RdvTestClient, None, None]:
+    with RdvTestClient(server_app.app) as client:
+        yield client
+
+
+@pytest.fixture(name="mock_sa")
+def mock_sa_fixture(clean_database, server_app) -> NonCallableMagicMock:
+    mock_sa = NonCallableMagicMock(spec=server_app)
+    mock_sa.discord = NonCallableMagicMock(spec=CustomDiscordOAuthClient)
+    mock_sa.socket_manager = NonCallableMagicMock(spec=SocketManager)
+    mock_sa.sio = NonCallableMagicMock(spec=AsyncServer)
+    mock_sa.db = NonCallableMagicMock(spec=SqliteDatabase)
+
+    return mock_sa
