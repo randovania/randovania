@@ -195,7 +195,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
 
         return level_data
 
-    def _encode_hints(self) -> list[dict]:
+    def _encode_hints(self) -> dict[str, str]:
         exporter = self.get_hint_exporter(
             self.description.all_patches, self.players_config, self.rng, GENERIC_JOKE_HINTS
         )
