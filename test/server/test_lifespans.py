@@ -22,7 +22,7 @@ if TYPE_CHECKING:
 @pytest.fixture(name="config")
 def config_fixture(db_path) -> NetworkConfiguration:
     return {
-        "socketio_path": "/somewhere_evil",
+        "socketio_path": "/prefix/somewhere_evil",
         "discord_client_id": 1234,
         "server_address": "https://somewhere.nice",
         "guest_secret": "s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=",
@@ -32,6 +32,7 @@ def config_fixture(db_path) -> NetworkConfiguration:
             "fernet_key": "s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=",
             "database_path": str(db_path),
             "client_version_checking": "strict",
+            "socketio_path": "/somewhere_evil",
         },
     }
 
