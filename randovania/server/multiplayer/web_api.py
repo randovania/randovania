@@ -23,7 +23,7 @@ def RdvFileResponse(data: str, filename: str) -> Response:
 
 @router.get("/sessions", response_class=HTMLResponse)
 def admin_sessions(user: AdminDep, request: Request, page: Annotated[int, Query(ge=1)] = 1) -> str:
-    page_count = ceil(MultiplayerMembership.select().count() / 20)
+    page_count = ceil(MultiplayerSession.select().count() / 20)
 
     if not page_count:
         return "<p>No sessions.</p>"
@@ -58,11 +58,11 @@ def admin_sessions(user: AdminDep, request: Request, page: Annotated[int, Query(
 
     previous = "Previous"
     if page > 1:
-        previous = "<a href='{}?page={}'>Previous</a>".format(request.url_for(".admin_sessions"), page - 1)
+        previous = "<a href='{}?page={}'>Previous</a>".format(request.url_for("admin_sessions"), page - 1)
 
     next_link = "Next"
     if page < page_count:
-        next_link = "<a href='{}?page={}'>Next</a>".format(request.url_for(".admin_sessions"), page + 1)
+        next_link = "<a href='{}?page={}'>Next</a>".format(request.url_for("admin_sessions"), page + 1)
 
     header = ["Name", "Creator", "Creation Date", "Num Users", "Num Worlds", "Has Password?"]
     return (
