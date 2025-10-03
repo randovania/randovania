@@ -14,3 +14,4 @@ class ServerConfiguration(TypedDict, total=True):
     enforce_role: NotRequired[EnforceRoleConfiguration]
     client_version_checking: ClientVersionCheck
     database_path: str
+    socketio_path: NotRequired[str]

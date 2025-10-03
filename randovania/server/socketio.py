@@ -21,7 +21,7 @@ EventHandlerReturnType = SioDataType | tuple[SioDataType, ...] | None
 @asynccontextmanager
 async def fastapi_socketio_lifespan(_app: RdvFastAPI) -> Lifespan[SocketManager]:
     async with SocketManager(socketio_path=None) as manager:
-        manager.mount_to_app(_app, _app.sa.configuration["socketio_path"])
+        manager.mount_to_app(_app, _app.sa.configuration["server_config"].get("socketio_path", "/socket.io/"))
         register_handler()(get_socket_handler(_app.sa))
         manager.register_handlers()
 
