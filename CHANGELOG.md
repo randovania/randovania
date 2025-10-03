@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - To be filled.
 
+### Metroid Prime 2: Echoes
+
+- Fixed: Expansions with negative value now properly remove items in-game.
+
+
 ## [10.2.0] - 2025-10-02
 
 - Added: A warning when trying to generate a Multiworld game if a preset requires all Pickups to be obtainable.
@@ -117,6 +122,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Tallon Overworld
 
 - Changed: Life Grove Tunnel: The Complex Bomb Jump to escape the half-pipe without Boost Ball is now Expert instead of Ludicrous.
+
 
 ## [10.1.0] - 2025-09-02
 
