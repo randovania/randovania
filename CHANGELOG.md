@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.3.0] - 2025-11-??
 
+### Factorio
+
+- Fixed: A typo on the "Changes" preset page.
+
 ### Metroid Prime
 
 #### Logic Database
