@@ -25,6 +25,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Expansions with negative value now properly remove items in-game.
 
+#### Logic Database
+
+##### Agon Wastes
+
+- Fixed: Security Station B: Removed unnecessary dangerous requirements.
+
+##### Dark Agon Wastes
+
+- Fixed: Portal Site: Removed unnecessary dangerous requirements.
+
+##### Temple Grounds
+
+- Fixed: GFMC: Removed unnecessary dangerous requirements.
+
+##### Torvus Bog
+
+- Fixed: Torvus Temple: Removed unnecessary dangerous requirements.
+- Fixed: Training Chamber: Removed unnecessary dangerous requirements.
+
 
 ## [10.2.0] - 2025-10-02
 
