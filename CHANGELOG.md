@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.3.0] - 2025-11-??
 
+- Changed: Centered the text at the top of the Hints preset settings.
 - Changed: Cleaned up how Specific Pickup Hints are shown in the preset settings.
+- Changed: Places that describe a preset with Specific Pickup Hints have slightly better grammar in some cases.
 
 ### Factorio
 

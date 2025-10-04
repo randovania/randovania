@@ -38,7 +38,7 @@ class Ui_PresetHints(object):
         self.scroll_area.setWidgetResizable(True)
         self.scroll_area_contents = QWidget()
         self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, -104, 567, 670))
+        self.scroll_area_contents.setGeometry(QRect(0, 0, 567, 670))
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -51,6 +51,7 @@ class Ui_PresetHints(object):
         self.scroll_area_layout.setContentsMargins(6, 6, 6, 6)
         self.hint_system_description = QLabel(self.scroll_area_contents)
         self.hint_system_description.setObjectName(u"hint_system_description")
+        self.hint_system_description.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.hint_system_description.setWordWrap(True)
 
         self.scroll_area_layout.addWidget(self.hint_system_description)
