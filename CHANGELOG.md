@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Cleaned up how Specific Pickup Hints are shown in the preset settings.
 
+### Factorio
+
+- Fixed: A typo on the "Changes" preset page.
+
 ### Metroid Prime
 
 #### Logic Database
