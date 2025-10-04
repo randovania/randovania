@@ -10,10 +10,11 @@ import fastapi_discord
 import jwt
 import oauthlib
 import peewee
-from fastapi import APIRouter, Form, Request, Response
+from fastapi import APIRouter, Form, Query, Request, Response
 from fastapi.responses import HTMLResponse, RedirectResponse
 from oauthlib.common import generate_token
 from oauthlib.oauth2.rfc6749.errors import InvalidTokenError, raise_from_error
+from pydantic import BaseModel, model_validator
 
 from randovania.network_common import error as network_error
 from randovania.server.database import User, UserAccessToken
@@ -227,15 +228,34 @@ async def browser_login_with_discord(sa: ServerAppDep, request: Request, sid: st
     return RedirectResponse(sa.discord.get_oauth_login_url(state))
 
 
+class DiscordLoginCallbackParams(BaseModel):
+    code: str | None = None
+    state: str | None = None
+    error: str | None = None
+    error_description: str | None = None
+
+    @model_validator(mode="after")
+    def check_all_provided(self) -> typing.Self:
+        if self.error is None:
+            if self.code is None:
+                raise ValueError("'code' param must be provided")
+            if self.state is None:
+                raise ValueError("'state' param must be provided")
+
+        return self
+
+
 @router.get("/login_callback")
 async def browser_discord_login_callback(
     sa: ServerAppDep,
     request: Request,
-    code: str | None = None,
-    state: str | None = None,
-    error: str | None = None,
-    error_description: str | None = None,
+    params: typing.Annotated[DiscordLoginCallbackParams, Query()],
 ) -> Response:
+    code = params.code
+    state = params.state
+    error = params.error
+    error_description = params.error_description
+
     sid: str | None = request.session.get("sid")
 
     try:

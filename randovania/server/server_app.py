@@ -11,6 +11,7 @@ import typing
 from collections.abc import AsyncGenerator, Coroutine
 from contextlib import asynccontextmanager
 from contextvars import ContextVar
+from http.client import responses as HTTP_RESPONSES
 from pathlib import Path
 from typing import TYPE_CHECKING, Annotated, Any, Concatenate, Self, cast
 
@@ -18,7 +19,10 @@ import fastapi
 import fastapi_discord
 import peewee
 import sentry_sdk
+import starlette
+import starlette.exceptions
 from cryptography.fernet import Fernet
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -111,6 +115,8 @@ class ServerApp:
             ctx_context.set("FastAPI")
             return await call_next(request)
 
+        self._setup_exception_handlers()
+
         server_path = Path(__file__).parent
         self.templates = Jinja2Templates(directory=server_path.joinpath("templates"))
         self.app.mount("/static", StaticFiles(directory=server_path.joinpath("static")), name="static")
@@ -162,6 +168,41 @@ class ServerApp:
                 request.headers.get("X-Forwarded-For"),
             )
             return randovania.VERSION
+
+    def _setup_exception_handlers(self) -> None:
+        def status_message(status_code: int) -> str:
+            return f"{status_code} {HTTP_RESPONSES[status_code]}"
+
+        @self.app.exception_handler(starlette.exceptions.HTTPException)
+        async def http_exception_handler(request: fastapi.Request, exc: fastapi.HTTPException):
+            return self.templates.TemplateResponse(
+                request,
+                "http_error.html.jinja",
+                {
+                    "status_message": status_message(exc.status_code),
+                    "detail": exc.detail,
+                },
+                status_code=exc.status_code,
+            )
+
+        @self.app.exception_handler(RequestValidationError)
+        async def validation_exception_handler(request: fastapi.Request, exc: RequestValidationError):
+            status_code = 422
+
+            if exc.args:
+                errors = exc.args[0]
+            else:
+                errors = [{"type": "error", "loc": ("query",), "msg": "Unknown error"}]
+
+            return self.templates.TemplateResponse(
+                request,
+                "validation_error.html.jinja",
+                {
+                    "status_message": status_message(status_code),
+                    "errors": errors,
+                },
+                status_code=status_code,
+            )
 
     async def get_current_user(self, sid: str) -> User:
         """Returns the User associated with this sid."""
