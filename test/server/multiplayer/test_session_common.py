@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import datetime
 import uuid
-from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
@@ -15,12 +14,9 @@ from randovania.network_common.session_visibility import MultiplayerSessionVisib
 from randovania.server import database
 from randovania.server.multiplayer import session_common
 
-if TYPE_CHECKING:
-    from pytest_mock import MockerFixture
 
-
-def test_emit_session_meta_update(session_update, flask_app, mocker, default_game_list):
-    mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
+async def test_emit_session_meta_update(session_update, mock_sa, default_game_list):
+    mock_emit = mock_sa.sio.emit
 
     session_json = {
         "id": 1,
@@ -68,11 +64,10 @@ def test_emit_session_meta_update(session_update, flask_app, mocker, default_gam
     }
 
     # Run
-    with flask_app.test_request_context():
-        session_common.emit_session_meta_update(session_update)
+    await session_common.emit_session_meta_update(mock_sa, session_update)
 
     # Assert
-    mock_emit.assert_called_once_with(
+    mock_emit.assert_awaited_once_with(
         "multiplayer_session_meta_update",
         session_json,
         room=f"multiplayer-session-{session_update.id}",
@@ -80,8 +75,8 @@ def test_emit_session_meta_update(session_update, flask_app, mocker, default_gam
     )
 
 
-def test_emit_session_actions_update(session_update, flask_app, mocker):
-    mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
+async def test_emit_session_actions_update(session_update, mock_sa):
+    mock_emit = mock_sa.sio.emit
 
     actions = multiplayer_session.MultiplayerSessionActions(
         session_id=1,
@@ -97,11 +92,10 @@ def test_emit_session_actions_update(session_update, flask_app, mocker):
     )
 
     # Run
-    with flask_app.test_request_context():
-        session_common.emit_session_actions_update(session_update)
+    await session_common.emit_session_actions_update(mock_sa, session_update)
 
     # Assert
-    mock_emit.assert_called_once_with(
+    mock_emit.assert_awaited_once_with(
         "multiplayer_session_actions_update",
         construct_pack.encode(actions),
         room=f"multiplayer-session-{session_update.id}",
@@ -109,8 +103,8 @@ def test_emit_session_actions_update(session_update, flask_app, mocker):
     )
 
 
-def test_emit_session_audit_update(session_update, flask_app, mocker):
-    mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
+async def test_emit_session_audit_update(session_update, mock_sa):
+    mock_emit = mock_sa.sio.emit
 
     database.MultiplayerAuditEntry.create(
         session=session_update,
@@ -142,11 +136,10 @@ def test_emit_session_audit_update(session_update, flask_app, mocker):
     )
 
     # Run
-    with flask_app.test_request_context():
-        session_common.emit_session_audit_update(session_update)
+    await session_common.emit_session_audit_update(mock_sa, session_update)
 
     # Assert
-    mock_emit.assert_called_once_with(
+    mock_emit.assert_awaited_once_with(
         "multiplayer_session_audit_update",
         construct_pack.encode(audit_log),
         room=f"multiplayer-session-{session_update.id}",
@@ -154,66 +147,61 @@ def test_emit_session_audit_update(session_update, flask_app, mocker):
     )
 
 
-def test_join_room(mocker: MockerFixture):
-    mock_join_room = mocker.patch("flask_socketio.join_room")
+async def test_join_room(mock_sa):
+    mock_join_room = mock_sa.sio.enter_room
     multi_session = MagicMock()
     multi_session.id = 1234
 
     session = {}
-    sa = MagicMock()
-    sa.session.return_value.__enter__.return_value = session
+    mock_sa.sio.session.return_value.__aenter__.return_value = session
 
     # Run
-    session_common.join_room(sa, multi_session)
+    await session_common.join_room(mock_sa, "TheSid", multi_session)
 
     # Assert
-    mock_join_room.assert_called_once_with("multiplayer-session-1234")
+    mock_join_room.assert_awaited_once_with("TheSid", "multiplayer-session-1234")
     assert session == {
         "multiplayer_sessions": [1234],
     }
 
 
 @pytest.mark.parametrize("had_session", [False, True])
-def test_leave_room(mocker: MockerFixture, had_session):
+async def test_leave_room(mock_sa, had_session):
     # Setup
-    mock_leave_room: MagicMock = mocker.patch("flask_socketio.leave_room")
+    mock_leave_room = mock_sa.sio.leave_room
 
     multi_session = MagicMock()
     multi_session.id = 7890
 
-    sa = MagicMock()
-
     session = {"multiplayer_sessions": [7890] if had_session else []}
-    sa.session = MagicMock()
-    sa.session.return_value.__enter__.return_value = session
+    mock_sa.sio.session.return_value.__aenter__.return_value = session
 
     # Run
-    session_common.leave_room(sa, multi_session.id)
+    await session_common.leave_room(mock_sa, "TheSid", multi_session.id)
 
     # Assert
-    mock_leave_room.assert_called_once_with("multiplayer-session-7890")
+    mock_leave_room.assert_awaited_once_with("TheSid", "multiplayer-session-7890")
     assert session == {"multiplayer_sessions": []}
 
 
 @pytest.mark.parametrize("had_session", [False, True])
-def test_leave_all_rooms(mocker: MockerFixture, had_session):
+async def test_leave_all_rooms(mock_sa, had_session):
     # Setup
-    mock_leave_room: MagicMock = mocker.patch("flask_socketio.leave_room")
+    mock_leave_room = mock_sa.sio.leave_room
 
     if had_session:
         session = {"multiplayer_sessions": [5678]}
     else:
         session = {}
-    sa = MagicMock()
-    sa.session = MagicMock()
-    sa.session.return_value.__enter__.return_value = session
+
+    mock_sa.sio.session.return_value.__aenter__.return_value = session
 
     # Run
-    session_common.leave_all_rooms(sa)
+    await session_common.leave_all_rooms(mock_sa, "TheSid")
 
     # Assert
     if had_session:
-        mock_leave_room.assert_called_once_with("multiplayer-session-5678")
+        mock_leave_room.assert_awaited_once_with("TheSid", "multiplayer-session-5678")
     else:
         mock_leave_room.assert_not_called()
     assert session == {}

@@ -976,7 +976,7 @@ def _create_pickup_resources_for(resources: ResourceGain) -> list[dict[str, int]
     return [
         {"index": resource.extra["item_id"], "amount": quantity}
         for resource, quantity in resources
-        if quantity > 0 and resource.resource_type == ResourceType.ITEM
+        if quantity != 0 and resource.resource_type == ResourceType.ITEM
     ]
 
 

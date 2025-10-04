@@ -21,7 +21,7 @@ services:
     secrets:
       - configuration
 
-    command: --configuration "/run/secrets/configuration" server flask
+    command: --configuration "/run/secrets/configuration" server run
 
     hostname: "{{.Node.Hostname}}"
 

@@ -43,7 +43,7 @@ _migrations = {
 }
 
 
-def apply_migrations():
+def apply_migrations() -> None:
     migrator = playhouse.migrate.SqliteMigrator(database.db)
 
     all_performed = {performed.migration for performed in database.PerformedDatabaseMigrations.select()}
