@@ -77,7 +77,7 @@ def _hints() -> randovania.game.hints.GameHints:
                 description="This controls how precise the Metroid DNA hints for the DNA Chozo Seals are.",
             ),
             "final_boss_item": randovania.game.hints.SpecificHintDetails(
-                long_name="Final Boss Item",
+                long_name="Final Boss Item Hint",
                 description=(
                     "After collecting all Metroid DNA, a message appears that says that "
                     "the final boss can be fought and where to find them. "
