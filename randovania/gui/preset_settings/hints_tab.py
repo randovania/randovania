@@ -74,7 +74,7 @@ class PresetHints(PresetTab, Ui_PresetHints):
             for hint, details in game_description.game.hints.specific_pickup_hints.items():
                 self.create_specific_hint_group(hint, details)
         else:
-            self.specific_pickup_hints_box.setVisible(False)
+            self.specific_pickup_hints_widget.setVisible(False)
 
     @classmethod
     def tab_title(cls) -> str:
@@ -137,7 +137,7 @@ class PresetHints(PresetTab, Ui_PresetHints):
     def create_specific_hint_group(self, hint: str, details: SpecificHintDetails) -> None:
         """Create the widget for editing this specific pickup hint, and connect its signal."""
 
-        hint_group = QtWidgets.QGroupBox(self.specific_pickup_hints_box)
+        hint_group = QtWidgets.QGroupBox(self.specific_pickup_hints_widget)
         hint_group.setObjectName(f"hint_{hint}_group")
         hint_group.setTitle(details.long_name)
         vertical_layout = QtWidgets.QVBoxLayout(hint_group)

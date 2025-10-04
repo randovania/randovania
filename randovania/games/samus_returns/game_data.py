@@ -73,7 +73,7 @@ def _hints() -> randovania.game.hints.GameHints:
         hint_distributor=MSRHintDistributor(),
         specific_pickup_hints={
             "artifacts": randovania.game.hints.SpecificHintDetails(
-                long_name="Metroid DNA",
+                long_name="Metroid DNA Hints",
                 description="This controls how precise the Metroid DNA hints for the DNA Chozo Seals are.",
             ),
             "final_boss_item": randovania.game.hints.SpecificHintDetails(

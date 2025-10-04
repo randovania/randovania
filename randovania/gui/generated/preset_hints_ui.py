@@ -38,7 +38,7 @@ class Ui_PresetHints(object):
         self.scroll_area.setWidgetResizable(True)
         self.scroll_area_contents = QWidget()
         self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, 0, 567, 604))
+        self.scroll_area_contents.setGeometry(QRect(0, -104, 567, 670))
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -198,14 +198,15 @@ class Ui_PresetHints(object):
 
         self.scroll_area_layout.addWidget(self.specific_location_hints_box)
 
-        self.specific_pickup_hints_box = QGroupBox(self.scroll_area_contents)
-        self.specific_pickup_hints_box.setObjectName(u"specific_pickup_hints_box")
-        self.verticalLayout = QVBoxLayout(self.specific_pickup_hints_box)
+        self.specific_pickup_hints_widget = QWidget(self.scroll_area_contents)
+        self.specific_pickup_hints_widget.setObjectName(u"specific_pickup_hints_widget")
+        self.verticalLayout = QVBoxLayout(self.specific_pickup_hints_widget)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
 
-        self.scroll_area_layout.addWidget(self.specific_pickup_hints_box)
+        self.scroll_area_layout.addWidget(self.specific_pickup_hints_widget)
 
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -237,6 +238,5 @@ class Ui_PresetHints(object):
         self.specific_location_hints_box.setTitle(QCoreApplication.translate("PresetHints", u"Specific Location Hints", None))
         self.enable_specific_location_hints_check.setText(QCoreApplication.translate("PresetHints", u"Enable specific location hints", None))
         self.enable_specific_location_hints_description.setText(QCoreApplication.translate("PresetHints", u"Specific location hints are hints that are always in the same hint location, and always provide you with information about the pickup in the specific pickup location associated with that hint. If disabled, all specific location hints will be replaced with jokes.", None))
-        self.specific_pickup_hints_box.setTitle(QCoreApplication.translate("PresetHints", u"Specific Pickup Hints", None))
     # retranslateUi
 

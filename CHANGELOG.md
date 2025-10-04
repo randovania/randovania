@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.3.0] - 2025-11-??
 
+- Changed: Cleaned up how Specific Pickup Hints are shown in the preset settings.
+
 ### Metroid Prime
 
 #### Logic Database
