@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.3.0] - 2025-11-??
 
+- Changed: Centered the text at the top of the Hints preset settings.
+- Changed: Cleaned up how Specific Pickup Hints are shown in the preset settings.
+- Changed: Places that describe a preset with Specific Pickup Hints have slightly better grammar in some cases.
+
+### Factorio
+
+- Fixed: A typo on the "Changes" preset page.
+
 ### Metroid Dread
 
 #### Logic Database
@@ -22,6 +30,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Chozo Ruins
 
 - Fixed: Ruined Shrine: Removed unnecessary dangerous requirements.
+
+##### Phazon Mines
+
+- Fixed: Metroid Quarantine A: Now correctly checks for the barrier to be lowered when going from Quarantine Access A to Front of Spider Track (Bridge).
+- Fixed: Metroid Quarantine A: Now correctly checks for the Enabled Backwards Lower Mines going from Front of Spider Track (Wall) to Quarantine Access A.
 
 ##### Phendrana Drifts
 
