@@ -20,8 +20,8 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
     QLabel, QPushButton, QScrollArea, QSizePolicy,
     QSlider, QSpacerItem, QVBoxLayout, QWidget)
 
-from randovania.gui.lib.foldable import Foldable
-from randovania.gui.lib.scroll_protected import ScrollProtectedSlider
+from randovania.gui.lib.custom_ui_widgets.foldable import Foldable
+from randovania.gui.lib.custom_ui_widgets.scroll_protected import ScrollProtectedSlider
 
 class Ui_EchoesCosmeticPatchesDialog(object):
     def setupUi(self, EchoesCosmeticPatchesDialog):

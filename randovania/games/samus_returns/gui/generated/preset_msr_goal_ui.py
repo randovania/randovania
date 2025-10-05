@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QGroupBox,
     QScrollArea, QSizePolicy, QSlider, QSpacerItem,
     QVBoxLayout, QWidget)
 
-from randovania.gui.lib.scroll_protected import ScrollProtectedSlider
+from randovania.gui.lib.custom_ui_widgets.scroll_protected import ScrollProtectedSlider
 
 class Ui_PresetMSRGoal(object):
     def setupUi(self, PresetMSRGoal):

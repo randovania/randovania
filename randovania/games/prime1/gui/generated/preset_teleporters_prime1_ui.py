@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QGridLayout,
     QGroupBox, QLabel, QMainWindow, QScrollArea,
     QSizePolicy, QVBoxLayout, QWidget)
 
-from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox
+from randovania.gui.lib.custom_ui_widgets.scroll_protected import ScrollProtectedComboBox
 
 class Ui_PresetTeleportersPrime1(object):
     def setupUi(self, PresetTeleportersPrime1):
