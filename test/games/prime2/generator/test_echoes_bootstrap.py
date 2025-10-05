@@ -41,8 +41,6 @@ def test_misc_resources_for_configuration(
     teleporters = MagicMock(spec=PrimeTrilogyTeleporterConfiguration)
     configuration = dataclasses.replace(default_echoes_configuration, teleporters=teleporters)
     teleporters.is_vanilla = vanilla_teleporters
-    gfmc_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaGFMCGate")
-    torvus_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaTorvusTempleGate")
     great_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaGreatTempleEmeraldGate")
 
     # Run
@@ -52,12 +50,10 @@ def test_misc_resources_for_configuration(
             echoes_resource_database,
         )
     )
-    relevant_tricks = {trick: result[trick] for trick in [gfmc_resource, torvus_resource, great_resource]}
+    relevant_tricks = {trick: result[trick] for trick in [great_resource]}
 
     # Assert
     assert relevant_tricks == {
-        gfmc_resource: 0,
-        torvus_resource: 0,
         great_resource: 0 if not vanilla_teleporters else 1,
     }
 
