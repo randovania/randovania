@@ -11,7 +11,7 @@ from randovania.games.prime1.layout.prime_configuration import PrimeConfiguratio
 from randovania.gui.dialog.trick_details_popup import BaseResourceDetailsPopup, ResourceDetailsPopup, TrickDetailsPopup
 from randovania.gui.generated.preset_trick_level_ui import Ui_PresetTrickLevel
 from randovania.gui.lib import signal_handling
-from randovania.gui.lib.scroll_protected import ScrollProtectedSlider
+from randovania.gui.lib.custom_ui_widgets.scroll_protected import ScrollProtectedSlider
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.lib import trick_lib

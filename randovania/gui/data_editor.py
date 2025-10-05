@@ -44,7 +44,7 @@ from randovania.gui.docks.resource_database_editor import ResourceDatabaseEditor
 from randovania.gui.generated.data_editor_ui import Ui_DataEditorWindow
 from randovania.gui.lib import async_dialog, signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
-from randovania.gui.lib.connections_visualizer import create_tree_items_for_requirement
+from randovania.gui.lib.custom_ui_widgets.connections_visualizer import create_tree_items_for_requirement
 from randovania.gui.lib.scroll_message_box import ScrollMessageBox
 from randovania.lib import json_lib
 

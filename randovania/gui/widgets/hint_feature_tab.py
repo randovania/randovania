@@ -8,11 +8,11 @@ from PySide6.QtWidgets import QLabel, QSizePolicy, QSpacerItem, QVBoxLayout, QWi
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
 from randovania.gui.generated.hint_feature_tab_ui import Ui_HintFeatureTab
+from randovania.gui.lib.custom_ui_widgets.foldable import Foldable
 from randovania.gui.lib.data_editor_links import (
     data_editor_href,
     on_click_data_editor_link,
 )
-from randovania.gui.lib.foldable import Foldable
 
 if TYPE_CHECKING:
     from collections.abc import Iterable

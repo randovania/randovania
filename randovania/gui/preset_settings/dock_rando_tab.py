@@ -10,7 +10,7 @@ from PySide6 import QtWidgets
 
 from randovania.gui.generated.preset_dock_rando_ui import Ui_PresetDockRando
 from randovania.gui.lib import signal_handling
-from randovania.gui.lib.foldable import Foldable
+from randovania.gui.lib.custom_ui_widgets.foldable import Foldable
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
 

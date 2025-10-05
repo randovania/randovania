@@ -8,19 +8,14 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QAbstractScrollArea, QApplication, QComboBox,
-    QGridLayout, QHeaderView, QLabel, QPushButton,
-    QScrollArea, QSizePolicy, QTableView, QVBoxLayout,
-    QWidget)
+from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect,
+                            Qt)
+from PySide6.QtWidgets import (QAbstractItemView, QAbstractScrollArea, QComboBox,
+                               QGridLayout, QLabel, QPushButton,
+                               QScrollArea, QTableView, QVBoxLayout,
+                               QWidget)
 
-from randovania.gui.lib.foldable import Foldable
+from randovania.gui.lib.custom_ui_widgets.foldable import Foldable
 
 class Ui_PickupDetailsTab(object):
     def setupUi(self, PickupDetailsTab):

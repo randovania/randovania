@@ -8,7 +8,7 @@ from qasync import asyncSlot
 
 from randovania.gui.lib import async_dialog, file_prompts, signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
-from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox
+from randovania.gui.lib.custom_ui_widgets.scroll_protected import ScrollProtectedComboBox
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import enum_lib

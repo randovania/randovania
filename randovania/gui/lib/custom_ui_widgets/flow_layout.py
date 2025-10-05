@@ -48,6 +48,10 @@ from PySide6.QtWidgets import QLayout, QSizePolicy, QWidgetItem
 
 
 class FlowLayout(QLayout):
+    """
+    A custom layout that adjusts the position of widgets within depending on the width of the application window.
+    """
+
     def __init__(self, parent=None, center=False):
         super().__init__(parent)
 

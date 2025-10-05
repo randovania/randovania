@@ -12,7 +12,7 @@ from PySide6.QtWidgets import QFrame, QGraphicsOpacityEffect, QSizePolicy, QSpac
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.gui.generated.preset_location_pool_ui import Ui_PresetLocationPool
-from randovania.gui.lib.foldable import Foldable
+from randovania.gui.lib.custom_ui_widgets.foldable import Foldable
 from randovania.gui.lib.node_list_helper import NodeListHelper
 from randovania.gui.preset_settings.location_pool_row_widget import LocationPoolRowWidget
 from randovania.gui.preset_settings.preset_tab import PresetTab

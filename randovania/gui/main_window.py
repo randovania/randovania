@@ -194,8 +194,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.game_menus = []
         self.menu_action_edits = []
 
-        from randovania.gui.lib.clickable_label import ClickableLabel
-        from randovania.gui.lib.flow_layout import FlowLayout
+        from randovania.gui.lib.custom_ui_widgets.clickable_label import ClickableLabel
+        from randovania.gui.lib.custom_ui_widgets.flow_layout import FlowLayout
 
         self.play_flow_layout = FlowLayout(self.game_list_contents, True)
         self.play_flow_layout.setSpacing(15)

@@ -9,6 +9,10 @@ if TYPE_CHECKING:
 
 
 class TrackerItemImage(QLabel):
+    """
+    A widget meant to be used to display Items in an Item-Tracker.
+    """
+
     is_checked: bool
 
     def __init__(self, parent: QWidget, transparent_pixmap: QPixmap, opaque_pixmap: QPixmap):
