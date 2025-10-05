@@ -19,6 +19,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Ruined Shrine: Removed unnecessary dangerous requirements.
 
+##### Phazon Mines
+
+- Fixed: Metroid Quarantine A: Now correctly checks for the barrier to be lowered when going from Quarantine Access A to Front of Spider Track (Bridge).
+- Fixed: Metroid Quarantine A: Now correctly checks for the Enabled Backwards Lower Mines going from Front of Spider Track (Wall) to Quarantine Access A.
+
 ##### Phendrana Drifts
 
 - Added: Chozo Ice Temple: Documentation for reaching the Chozo Statue NSJ.
