@@ -13,7 +13,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.pickup_pool import pool_creator
-from randovania.gui.generated.preset_item_pool_ui import Ui_PresetItemPool
+from randovania.gui.generated.preset_pickup_pool_ui import Ui_PresetPickupPool
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.foldable import Foldable
 from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox, ScrollProtectedSpinBox
@@ -80,7 +80,7 @@ def _format_expected_counts(
         return str(invalid_config)
 
 
-class PresetPickupPool(PresetTab, Ui_PresetItemPool):
+class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
     game: RandovaniaGame
     _boxes_for_category: dict[
         str, tuple[QtWidgets.QGroupBox, QtWidgets.QGridLayout, dict[StandardPickupDefinition, StandardPickupWidget]]
@@ -192,7 +192,7 @@ class PresetPickupPool(PresetTab, Ui_PresetItemPool):
             per_category_pool = pool_creator.calculate_pool_pickup_count(layout)
             pool_items, maximum_size = pool_creator.get_total_pickup_count(per_category_pool)
             message = f"Items in pool: {pool_items}/{maximum_size}"
-            common_qt_lib.set_error_border_stylesheet(self.item_pool_count_label, pool_items > maximum_size)
+            common_qt_lib.set_error_border_stylesheet(self.pickup_pool_count_label, pool_items > maximum_size)
 
             if layout.available_locations.randomization_mode is not RandomizationMode.FULL:
                 parts = []
@@ -206,15 +206,15 @@ class PresetPickupPool(PresetTab, Ui_PresetItemPool):
                 message += "<br />"
                 message += " - ".join(parts)
 
-            self.item_pool_count_label.setText(message)
-            self.item_pool_description_label.setText(
-                f"If there are fewer than {maximum_size} items, the rest of the "
-                f"item locations will contain 'Nothing' items."
+            self.pickup_pool_count_label.setText(message)
+            self.pickup_pool_description_label.setText(
+                f"If there are fewer than {maximum_size} pickups, the rest of the "
+                f"pickup locations will contain 'Nothing' pickups."
             )
 
         except InvalidConfiguration as invalid_config:
-            self.item_pool_count_label.setText(f"Invalid Configuration: {invalid_config}")
-            common_qt_lib.set_error_border_stylesheet(self.item_pool_count_label, True)
+            self.pickup_pool_count_label.setText(f"Invalid Configuration: {invalid_config}")
+            common_qt_lib.set_error_border_stylesheet(self.pickup_pool_count_label, True)
 
     # Random Starting
     def _register_random_starting_events(self):

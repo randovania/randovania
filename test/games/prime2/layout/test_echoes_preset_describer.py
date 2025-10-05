@@ -160,7 +160,7 @@ def test_echoes_format_params2(default_echoes_configuration):
             "Major/minor split",
             "Major: 57/58",
             "Minor: 61/61",
-            "1 to 2 random starting items",
+            "1 to 2 random starting pickups",
             "Excludes Scan Visor",
             "Split beam ammo",
             "Sky Temple Keys at all bosses",
