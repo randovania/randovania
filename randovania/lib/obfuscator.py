@@ -8,7 +8,7 @@ from cryptography.fernet import Fernet
 try:
     from randovania.lib.obfuscator_secret import secret as _secret  # type: ignore[import-not-found]
 except ImportError:
-    _secret = None
+    _secret: None | bytes = None  # type: ignore[no-redef]
 
 _encrypt: Fernet | None = None
 

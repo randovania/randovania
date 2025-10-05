@@ -108,7 +108,7 @@ def write_obfuscator_secret(path: Path, secret: bytes):
     numbers = str(list(secret))
     path.write_text(
         f"""# Generated file
-secret = b"".join(
+secret: None | bytes = b"".join(
     bytes([x]) for x in
     {numbers}
 )
