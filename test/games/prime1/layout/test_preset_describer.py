@@ -50,9 +50,9 @@ def test_prime_format_params(use_enemy_attribute_randomizer, pre_place_artifacts
     result = RandovaniaGame.METROID_PRIME.data.layout.preset_describer.format_params(configuration)
     expected = {
         "Logic Settings": ["All tricks disabled"],
-        "Item Pool": [
+        "Pickup Pool": [
             "Size: 95 of 100",
-            "Vanilla starting items",
+            "Unmodified starting pickup",
             "Shuffles 2x Charge Beam",
             "6 Artifacts, 6 min actions",
         ],
@@ -82,9 +82,9 @@ def test_prime_format_params(use_enemy_attribute_randomizer, pre_place_artifacts
         expected["Game Changes"].insert(2, "Random Boss Sizes")
 
     if configuration.pre_place_artifact:
-        expected["Item Pool"].append("Pre-place Artifacts")
+        expected["Pickup Pool"].append("Pre-place Artifacts")
     if configuration.pre_place_phazon:
-        expected["Item Pool"].append("Pre-place Phazon Suit")
+        expected["Pickup Pool"].append("Pre-place Phazon Suit")
 
     # clean changes in order should trip tests
     expected["Game Changes"].sort()

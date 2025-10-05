@@ -43,7 +43,7 @@ def test_fusion_format_params(artifacts):
             else ["Kill the SA-X"]
         ),
         "Hints": ["Infant Metroids Hint: Region and area", "Charge Beam Hint: Region only"],
-        "Item Pool": [
+        "Pickup Pool": [
             f"Size: {121 + artifacts.placed_artifacts} of 127",
             "1 random starting items",
             "Starts with Energy Tank",

@@ -96,7 +96,7 @@ class GamePresetDescriber:
         if starting_list:
             result.append("Starts with " + ", ".join(starting_list))
         elif is_vanilla_starting:
-            result.append("Vanilla starting items")
+            result.append("Unmodified starting pickup")
 
         if excluded_list:
             result.append("Excludes " + ", ".join(excluded_list))
@@ -170,25 +170,25 @@ class GamePresetDescriber:
             template_strings["Logic Settings"].append(f"{excluded_locations_count} locations excluded")
 
         if randomization_mode != RandomizationMode.default():
-            template_strings["Item Pool"].append(randomization_mode.description)
+            template_strings["Pickup Pool"].append(randomization_mode.description)
 
-        # Item Pool
+        # Pickup Pool
         per_category_pool = pool_creator.calculate_pool_pickup_count(configuration)
         if configuration.available_locations.randomization_mode is RandomizationMode.FULL:
             pool_items, maximum_size = pool_creator.get_total_pickup_count(per_category_pool)
-            template_strings["Item Pool"].append(f"Size: {pool_items} of {maximum_size}")
+            template_strings["Pickup Pool"].append(f"Size: {pool_items} of {maximum_size}")
         else:
             for category, (count, num_nodes) in per_category_pool.items():
                 if isinstance(category, LocationCategory):
-                    template_strings["Item Pool"].append(f"{category.long_name}: {count}/{num_nodes}")
+                    template_strings["Pickup Pool"].append(f"{category.long_name}: {count}/{num_nodes}")
 
         if random_starting_pickups != "0":
-            template_strings["Item Pool"].append(f"{random_starting_pickups} random starting items")
+            template_strings["Pickup Pool"].append(f"{random_starting_pickups} random starting pickups")
 
-        template_strings["Item Pool"].extend(self._calculate_pickup_pool(configuration))
+        template_strings["Pickup Pool"].extend(self._calculate_pickup_pool(configuration))
 
         if configuration.logical_pickup_placement is not LogicalPickupPlacementConfiguration.MINIMAL:
-            template_strings["Item Pool"].append(f"All {configuration.logical_pickup_placement.value} obtainable")
+            template_strings["Pickup Pool"].append(f"All {configuration.logical_pickup_placement.value} obtainable")
 
         # Difficulty
         if configuration.damage_strictness != LayoutDamageStrictness.MEDIUM:

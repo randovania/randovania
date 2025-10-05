@@ -8,7 +8,7 @@ import pytest
 
 from randovania.game_description import default_database
 from randovania.gui.lib.signal_handling import set_combo_with_value
-from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
+from randovania.gui.preset_settings.pickup_pool_tab import PresetPickupPool
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.standard_pickup_state import StandardPickupState
@@ -22,7 +22,7 @@ def test_on_default_item_updated(skip_qtbot, echoes_game_description, preset_man
     options = MagicMock()
 
     editor = PresetEditor(preset, options)
-    window = PresetItemPool(editor, echoes_game_description, MagicMock())
+    window = PresetPickupPool(editor, echoes_game_description, MagicMock())
 
     pickup_database = default_database.pickup_database_for_game(window.game)
     item = pickup_database.standard_pickups["Dark Beam"]
@@ -61,7 +61,7 @@ def test_item_pool_count_label(
     )
     options = MagicMock()
     editor = PresetEditor(preset, options)
-    window = PresetItemPool(editor, blank_game_description, MagicMock())
+    window = PresetPickupPool(editor, blank_game_description, MagicMock())
 
     # Run
     window.on_preset_changed(preset)

@@ -80,7 +80,7 @@ def _format_expected_counts(
         return str(invalid_config)
 
 
-class PresetItemPool(PresetTab, Ui_PresetItemPool):
+class PresetPickupPool(PresetTab, Ui_PresetItemPool):
     game: RandovaniaGame
     _boxes_for_category: dict[
         str, tuple[QtWidgets.QGroupBox, QtWidgets.QGridLayout, dict[StandardPickupDefinition, StandardPickupWidget]]
@@ -113,7 +113,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
     @classmethod
     def tab_title(cls) -> str:
-        return "Item Pool"
+        return "Pickup Pool"
 
     @classmethod
     def header_name(cls) -> str | None:
