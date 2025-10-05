@@ -23,7 +23,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFrame,
     QSizePolicy, QTabWidget, QTreeWidget, QTreeWidgetItem,
     QVBoxLayout, QWidget)
 
-from randovania.gui.lib.data_editor_canvas import DataEditorCanvas
+from randovania.gui.lib.custom_ui_widgets.data_editor_canvas import DataEditorCanvas
 
 class Ui_TrackerWindow(object):
     def setupUi(self, TrackerWindow):

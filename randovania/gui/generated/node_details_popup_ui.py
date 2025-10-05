@@ -22,7 +22,7 @@ from PySide6.QtWidgets import (QAbstractButton, QApplication, QCheckBox, QComboB
     QSpinBox, QTabWidget, QTextEdit, QVBoxLayout,
     QWidget)
 
-from randovania.gui.lib.editable_list_view import EditableListView
+from randovania.gui.lib.custom_ui_widgets.editable_list_view import EditableListView
 from randovania.gui.lib.hint_feature_list_view import HintFeatureListView
 
 class Ui_NodeDetailsPopup(object):
