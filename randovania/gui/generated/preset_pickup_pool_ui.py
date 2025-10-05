@@ -133,8 +133,8 @@ class Ui_PresetPickupPool(object):
     # setupUi
 
     def retranslateUi(self, PresetPickupPool):
-        PresetPickupPool.setWindowTitle(QCoreApplication.translate("PresetPickupPool", u"Item Pool", None))
-        self.pickup_pool_count_label.setText(QCoreApplication.translate("PresetPickupPool", u"Items in pool: #/119", None))
+        PresetPickupPool.setWindowTitle(QCoreApplication.translate("PresetPickupPool", u"Pickup Pool", None))
+        self.pickup_pool_count_label.setText(QCoreApplication.translate("PresetPickupPool", u"Pickups in pool: To be updated by code", None))
         self.pickup_pool_description_label.setText(QCoreApplication.translate("PresetPickupPool", u"<html><head/><body><p>This label's text is changed from code.</p></body></html>", None))
         self.random_starting_box.setTitle(QCoreApplication.translate("PresetPickupPool", u"Random Starting Pickups", None))
         self.minimum_starting_label.setText(QCoreApplication.translate("PresetPickupPool", u"Start with at least this many pickups:", None))
