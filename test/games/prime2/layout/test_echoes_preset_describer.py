@@ -75,7 +75,7 @@ def test_echoes_format_params(
         expected_hints.append("Random hints disabled")
     if not enable_specific_location_hints:
         expected_hints.append("Specific location hints disabled")
-    expected_hints.append(f"Sky Temple Keys Hint: {stk_hint_mode.long_name}")
+    expected_hints.append(f"Sky Temple Key Hints: {stk_hint_mode.long_name}")
 
     # Run
     result = RandovaniaGame.METROID_PRIME_ECHOES.data.layout.preset_describer.format_params(layout_configuration)
@@ -165,5 +165,5 @@ def test_echoes_format_params2(default_echoes_configuration):
             "Split beam ammo",
             "Sky Temple Keys at all bosses",
         ],
-        "Hints": ["Sky Temple Keys Hint: Region and area"],
+        "Hints": ["Sky Temple Key Hints: Region and area"],
     }

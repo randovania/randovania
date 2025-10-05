@@ -57,11 +57,11 @@ def _hints() -> randovania.game.hints.GameHints:
         hint_distributor=AM2RHintDistributor(),
         specific_pickup_hints={
             "artifacts": randovania.game.hints.SpecificHintDetails(
-                long_name="DNA",
+                long_name="DNA Hints",
                 description="This controls how precise the DNA hints for the Wisdom Septoggs are.",
             ),
             "ice_beam": randovania.game.hints.SpecificHintDetails(
-                long_name="Ice Beam",
+                long_name="Ice Beam Hint",
                 description="This controls how precise the hint for Ice Beam in Genetics Laboratory is.",
             ),
         },

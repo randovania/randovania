@@ -58,7 +58,7 @@ def test_prime_format_params(use_enemy_attribute_randomizer, pre_place_artifacts
         ],
         "Gameplay": ["Starts at Tallon Overworld - Landing Site"],
         "Hints": [
-            "Chozo Artifacts Hint: Region and area",
+            "Chozo Artifact Hints: Region and area",
             "Phazon Suit Hint: Region only",
         ],
         "Difficulty": [],

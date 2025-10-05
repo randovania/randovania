@@ -125,7 +125,7 @@ class GamePresetDescriber:
 
         for hint, mode in configuration.hints.specific_pickup_hints.items():
             details = configuration.game.hints.specific_pickup_hints[hint]
-            strings.append(f"{details.long_name} Hint: {mode.long_name}")
+            strings.append(f"{details.long_name}: {mode.long_name}")
 
         return strings
 

@@ -44,7 +44,7 @@
          <x>0</x>
          <y>0</y>
          <width>567</width>
-         <height>604</height>
+         <height>670</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -73,6 +73,9 @@
          <widget class="QLabel" name="hint_system_description">
           <property name="text">
            <string>For more information about Randovania's hint system, please refer to the various hint-related tabs on this game's page.</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -105,7 +108,7 @@
            <item>
             <widget class="Line" name="resolver_hints_line">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Orientation::Horizontal</enum>
              </property>
             </widget>
            </item>
@@ -129,7 +132,7 @@
            <item>
             <widget class="Line" name="minimum_available_locations_line">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Orientation::Horizontal</enum>
              </property>
             </widget>
            </item>
@@ -164,7 +167,7 @@
               <item>
                <spacer name="minimum_available_locations_spacer">
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -206,7 +209,7 @@
            <item>
             <widget class="Line" name="minimum_weight_line">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Orientation::Horizontal</enum>
              </property>
             </widget>
            </item>
@@ -235,7 +238,7 @@
               <item>
                <spacer name="minimum_weight_spacer">
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -307,17 +310,27 @@
          </widget>
         </item>
         <item>
-         <widget class="QGroupBox" name="specific_pickup_hints_box">
-          <property name="title">
-           <string>Specific Pickup Hints</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout"/>
+         <widget class="QWidget" name="specific_pickup_hints_widget" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+          </layout>
          </widget>
         </item>
         <item>
          <spacer name="verticalSpacer">
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Orientation::Vertical</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
