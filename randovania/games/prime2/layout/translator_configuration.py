@@ -86,8 +86,6 @@ def _get_vanilla_colors_translator_configurations() -> dict[NodeIdentifier, Layo
 @dataclasses.dataclass(frozen=True)
 class TranslatorConfiguration(BitPackValue):
     translator_requirement: dict[NodeIdentifier, LayoutTranslatorRequirement]
-    fixed_gfmc_compound: bool = True
-    fixed_torvus_temple: bool = True
     fixed_great_temple: bool = True
 
     def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
