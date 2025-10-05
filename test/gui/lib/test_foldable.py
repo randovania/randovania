@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from randovania.gui.lib.foldable import Foldable
+from randovania.gui.lib.custom_ui_widgets.foldable import Foldable
 
 
 def test_foldable_initial_state(skip_qtbot):
