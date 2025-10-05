@@ -78,7 +78,7 @@ class Ui_PickupStyleWidget(object):
     def retranslateUi(self, PickupStyleWidget):
         PickupStyleWidget.setWindowTitle(QCoreApplication.translate("PickupStyleWidget", u"Item Configuration", None))
         self.pickup_style_box.setTitle(QCoreApplication.translate("PickupStyleWidget", u"Pickup style", None))
-        self.pickup_model_combo.setItemText(0, QCoreApplication.translate("PickupStyleWidget", u"Use correct item model, scan and name", None))
+        self.pickup_model_combo.setItemText(0, QCoreApplication.translate("PickupStyleWidget", u"Use correct model, scan and name", None))
         self.pickup_model_combo.setItemText(1, QCoreApplication.translate("PickupStyleWidget", u"Use correct scan and name, hide the model", None))
         self.pickup_model_combo.setItemText(2, QCoreApplication.translate("PickupStyleWidget", u"Use correct name, hide the model and scan", None))
         self.pickup_model_combo.setItemText(3, QCoreApplication.translate("PickupStyleWidget", u"Hide the model, scan and name", None))

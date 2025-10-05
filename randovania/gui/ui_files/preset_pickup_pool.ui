@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PresetItemPool</class>
- <widget class="QMainWindow" name="PresetItemPool">
+ <class>PresetPickupPool</class>
+ <widget class="QMainWindow" name="PresetPickupPool">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Item Pool</string>
+   <string>Pickup Pool</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="maximumSize">
@@ -40,7 +40,7 @@
      <number>5</number>
     </property>
     <item>
-     <widget class="QLabel" name="item_pool_count_label">
+     <widget class="QLabel" name="pickup_pool_count_label">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
         <horstretch>0</horstretch>
@@ -53,20 +53,20 @@
        </font>
       </property>
       <property name="text">
-       <string>Items in pool: #/119</string>
+       <string>Pickups in pool: To be updated by code</string>
       </property>
       <property name="alignment">
-       <set>Qt::AlignCenter</set>
+       <set>Qt::AlignmentFlag::AlignCenter</set>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="item_pool_description_label">
+     <widget class="QLabel" name="pickup_pool_description_label">
       <property name="text">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This label's text is changed from code.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
-       <set>Qt::AlignCenter</set>
+       <set>Qt::AlignmentFlag::AlignCenter</set>
       </property>
       <property name="wordWrap">
        <bool>true</bool>
@@ -74,12 +74,12 @@
      </widget>
     </item>
     <item>
-     <spacer name="verticalSpacer">
+     <spacer name="vertical_spacer">
       <property name="orientation">
-       <enum>Qt::Vertical</enum>
+       <enum>Qt::Orientation::Vertical</enum>
       </property>
       <property name="sizeType">
-       <enum>QSizePolicy::Minimum</enum>
+       <enum>QSizePolicy::Policy::Minimum</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
@@ -92,22 +92,22 @@
     <item>
      <widget class="QScrollArea" name="scroll_area">
       <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
+       <enum>QFrame::Shape::NoFrame</enum>
       </property>
       <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
+       <enum>QFrame::Shadow::Plain</enum>
       </property>
       <property name="lineWidth">
        <number>0</number>
       </property>
       <property name="horizontalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOff</enum>
+       <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
       </property>
       <property name="widgetResizable">
        <bool>true</bool>
       </property>
       <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
       </property>
       <widget class="QWidget" name="scroll_area_contents">
        <property name="geometry">
@@ -115,7 +115,7 @@
          <x>0</x>
          <y>0</y>
          <width>556</width>
-         <height>183</height>
+         <height>164</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="item_pool_layout">
@@ -140,7 +140,7 @@
            </sizepolicy>
           </property>
           <property name="title">
-           <string>Random Starting Items</string>
+           <string>Random Starting Pickups</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_2">
            <item row="1" column="1">
@@ -153,23 +153,23 @@
            <item row="1" column="0">
             <widget class="QLabel" name="minimum_starting_label">
              <property name="text">
-              <string>Start with at least this many items:</string>
+              <string>Start with at least this many pickups:</string>
              </property>
              <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
              </property>
             </widget>
            </item>
            <item row="0" column="0" colspan="2">
             <widget class="QLabel" name="random_starting_label">
              <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
+              <enum>QFrame::Shape::NoFrame</enum>
              </property>
              <property name="frameShadow">
-              <enum>QFrame::Plain</enum>
+              <enum>QFrame::Shadow::Plain</enum>
              </property>
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania will add additional starting items if necessary to make the seed possible.&lt;br/&gt;The first value controls how many items are always added.&lt;br/&gt;The second value controls how many items the seed can have before it fails to generate.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania will add additional starting pickups if necessary to make the game possible.&lt;br/&gt;The first value controls how many pickups are always added.&lt;br/&gt;The second value controls how many pickups the can be given before it fails to generate.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -186,7 +186,7 @@
            <item row="2" column="0">
             <widget class="QLabel" name="maximum_starting_label">
              <property name="text">
-              <string>Start with at most this many items:</string>
+              <string>Start with at most this many pickups:</string>
              </property>
             </widget>
            </item>

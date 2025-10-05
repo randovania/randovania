@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'preset_item_pool.ui'
+## Form generated from reading UI file 'preset_pickup_pool.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.1
 ##
@@ -21,13 +21,13 @@ from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QGroupBox,
 
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
 
-class Ui_PresetItemPool(object):
-    def setupUi(self, PresetItemPool):
-        if not PresetItemPool.objectName():
-            PresetItemPool.setObjectName(u"PresetItemPool")
-        PresetItemPool.resize(566, 227)
-        PresetItemPool.setMaximumSize(QSize(16777215, 16777215))
-        self.centralWidget = QWidget(PresetItemPool)
+class Ui_PresetPickupPool(object):
+    def setupUi(self, PresetPickupPool):
+        if not PresetPickupPool.objectName():
+            PresetPickupPool.setObjectName(u"PresetPickupPool")
+        PresetPickupPool.resize(566, 227)
+        PresetPickupPool.setMaximumSize(QSize(16777215, 16777215))
+        self.centralWidget = QWidget(PresetPickupPool)
         self.centralWidget.setObjectName(u"centralWidget")
         self.centralWidget.setMaximumSize(QSize(16777215, 16777215))
         self.verticalLayout = QVBoxLayout(self.centralWidget)
@@ -35,42 +35,42 @@ class Ui_PresetItemPool(object):
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(5, 5, 5, 5)
-        self.item_pool_count_label = QLabel(self.centralWidget)
-        self.item_pool_count_label.setObjectName(u"item_pool_count_label")
+        self.pickup_pool_count_label = QLabel(self.centralWidget)
+        self.pickup_pool_count_label.setObjectName(u"pickup_pool_count_label")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.item_pool_count_label.sizePolicy().hasHeightForWidth())
-        self.item_pool_count_label.setSizePolicy(sizePolicy)
+        sizePolicy.setHeightForWidth(self.pickup_pool_count_label.sizePolicy().hasHeightForWidth())
+        self.pickup_pool_count_label.setSizePolicy(sizePolicy)
         font = QFont()
         font.setPointSize(12)
-        self.item_pool_count_label.setFont(font)
-        self.item_pool_count_label.setAlignment(Qt.AlignCenter)
+        self.pickup_pool_count_label.setFont(font)
+        self.pickup_pool_count_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.verticalLayout.addWidget(self.item_pool_count_label)
+        self.verticalLayout.addWidget(self.pickup_pool_count_label)
 
-        self.item_pool_description_label = QLabel(self.centralWidget)
-        self.item_pool_description_label.setObjectName(u"item_pool_description_label")
-        self.item_pool_description_label.setAlignment(Qt.AlignCenter)
-        self.item_pool_description_label.setWordWrap(True)
+        self.pickup_pool_description_label = QLabel(self.centralWidget)
+        self.pickup_pool_description_label.setObjectName(u"pickup_pool_description_label")
+        self.pickup_pool_description_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.pickup_pool_description_label.setWordWrap(True)
 
-        self.verticalLayout.addWidget(self.item_pool_description_label)
+        self.verticalLayout.addWidget(self.pickup_pool_description_label)
 
-        self.verticalSpacer = QSpacerItem(20, 3, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
+        self.vertical_spacer = QSpacerItem(20, 3, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
 
-        self.verticalLayout.addItem(self.verticalSpacer)
+        self.verticalLayout.addItem(self.vertical_spacer)
 
         self.scroll_area = QScrollArea(self.centralWidget)
         self.scroll_area.setObjectName(u"scroll_area")
-        self.scroll_area.setFrameShape(QFrame.NoFrame)
-        self.scroll_area.setFrameShadow(QFrame.Plain)
+        self.scroll_area.setFrameShape(QFrame.Shape.NoFrame)
+        self.scroll_area.setFrameShadow(QFrame.Shadow.Plain)
         self.scroll_area.setLineWidth(0)
-        self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scroll_area.setWidgetResizable(True)
-        self.scroll_area.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+        self.scroll_area.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
         self.scroll_area_contents = QWidget()
         self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, 0, 556, 183))
+        self.scroll_area_contents.setGeometry(QRect(0, 0, 556, 164))
         self.item_pool_layout = QVBoxLayout(self.scroll_area_contents)
         self.item_pool_layout.setSpacing(6)
         self.item_pool_layout.setContentsMargins(11, 11, 11, 11)
@@ -95,14 +95,14 @@ class Ui_PresetItemPool(object):
 
         self.minimum_starting_label = QLabel(self.random_starting_box)
         self.minimum_starting_label.setObjectName(u"minimum_starting_label")
-        self.minimum_starting_label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.minimum_starting_label.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter)
 
         self.gridLayout_2.addWidget(self.minimum_starting_label, 1, 0, 1, 1)
 
         self.random_starting_label = QLabel(self.random_starting_box)
         self.random_starting_label.setObjectName(u"random_starting_label")
-        self.random_starting_label.setFrameShape(QFrame.NoFrame)
-        self.random_starting_label.setFrameShadow(QFrame.Plain)
+        self.random_starting_label.setFrameShape(QFrame.Shape.NoFrame)
+        self.random_starting_label.setFrameShadow(QFrame.Shadow.Plain)
         self.random_starting_label.setWordWrap(True)
 
         self.gridLayout_2.addWidget(self.random_starting_label, 0, 0, 1, 2)
@@ -125,20 +125,20 @@ class Ui_PresetItemPool(object):
 
         self.verticalLayout.addWidget(self.scroll_area)
 
-        PresetItemPool.setCentralWidget(self.centralWidget)
+        PresetPickupPool.setCentralWidget(self.centralWidget)
 
-        self.retranslateUi(PresetItemPool)
+        self.retranslateUi(PresetPickupPool)
 
-        QMetaObject.connectSlotsByName(PresetItemPool)
+        QMetaObject.connectSlotsByName(PresetPickupPool)
     # setupUi
 
-    def retranslateUi(self, PresetItemPool):
-        PresetItemPool.setWindowTitle(QCoreApplication.translate("PresetItemPool", u"Item Pool", None))
-        self.item_pool_count_label.setText(QCoreApplication.translate("PresetItemPool", u"Items in pool: #/119", None))
-        self.item_pool_description_label.setText(QCoreApplication.translate("PresetItemPool", u"<html><head/><body><p>This label's text is changed from code.</p></body></html>", None))
-        self.random_starting_box.setTitle(QCoreApplication.translate("PresetItemPool", u"Random Starting Items", None))
-        self.minimum_starting_label.setText(QCoreApplication.translate("PresetItemPool", u"Start with at least this many items:", None))
-        self.random_starting_label.setText(QCoreApplication.translate("PresetItemPool", u"<html><head/><body><p>Randovania will add additional starting items if necessary to make the seed possible.<br/>The first value controls how many items are always added.<br/>The second value controls how many items the seed can have before it fails to generate.</p></body></html>", None))
-        self.maximum_starting_label.setText(QCoreApplication.translate("PresetItemPool", u"Start with at most this many items:", None))
+    def retranslateUi(self, PresetPickupPool):
+        PresetPickupPool.setWindowTitle(QCoreApplication.translate("PresetPickupPool", u"Pickup Pool", None))
+        self.pickup_pool_count_label.setText(QCoreApplication.translate("PresetPickupPool", u"Pickups in pool: To be updated by code", None))
+        self.pickup_pool_description_label.setText(QCoreApplication.translate("PresetPickupPool", u"<html><head/><body><p>This label's text is changed from code.</p></body></html>", None))
+        self.random_starting_box.setTitle(QCoreApplication.translate("PresetPickupPool", u"Random Starting Pickups", None))
+        self.minimum_starting_label.setText(QCoreApplication.translate("PresetPickupPool", u"Start with at least this many pickups:", None))
+        self.random_starting_label.setText(QCoreApplication.translate("PresetPickupPool", u"<html><head/><body><p>Randovania will add additional starting pickups if necessary to make the game possible.<br/>The first value controls how many pickups are always added.<br/>The second value controls how many pickups the can be given before it fails to generate.</p></body></html>", None))
+        self.maximum_starting_label.setText(QCoreApplication.translate("PresetPickupPool", u"Start with at most this many pickups:", None))
     # retranslateUi
 

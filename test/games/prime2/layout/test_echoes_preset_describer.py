@@ -94,9 +94,9 @@ def test_echoes_format_params(
         "Logic Settings": [
             "All tricks disabled",
         ],
-        "Item Pool": [
+        "Pickup Pool": [
             "Size: 118 of 119",
-            "Vanilla starting items",
+            "Unmodified starting pickup",
             "Progressive Suit",
             "Split beam ammo",
             "Sky Temple Keys at all bosses",
@@ -156,11 +156,11 @@ def test_echoes_format_params2(default_echoes_configuration):
         "Logic Settings": [
             "All tricks disabled",
         ],
-        "Item Pool": [
+        "Pickup Pool": [
             "Major/minor split",
             "Major: 57/58",
             "Minor: 61/61",
-            "1 to 2 random starting items",
+            "1 to 2 random starting pickups",
             "Excludes Scan Visor",
             "Split beam ammo",
             "Sky Temple Keys at all bosses",

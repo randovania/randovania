@@ -17,7 +17,7 @@ class FactorioPresetDescriber(GamePresetDescriber):
         template_strings.pop("Gameplay")
 
         if configuration.full_tech_tree:
-            template_strings["Item Pool"].insert(0, "Uses Full Tech Tree")
+            template_strings["Pickup Pool"].insert(0, "Uses Full Tech Tree")
 
         extra_message_tree = {
             "Gameplay": [{"Strict Multiplayer Freebies": configuration.strict_multiplayer_freebie}],

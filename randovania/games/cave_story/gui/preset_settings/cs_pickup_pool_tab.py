@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
-from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
+from randovania.gui.preset_settings.pickup_pool_tab import PresetPickupPool
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 if TYPE_CHECKING:
@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-class CSPresetItemPool(PresetItemPool):
+class CSPresetPickupPool(PresetPickupPool):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
         self.previousObj = CSObjective.NORMAL_ENDING

@@ -55,7 +55,7 @@ def test_msr_format_params(artifacts) -> None:
     # Assert
     assert dict(result) == {
         "Logic Settings": ["All tricks disabled"],
-        "Item Pool": [
+        "Pickup Pool": [
             f"Size: {174 + artifacts.placed_artifacts} of 211",
             "Starts with Scan Pulse",
             "Progressive Jump",
