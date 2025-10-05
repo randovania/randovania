@@ -8,11 +8,17 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize)
-from PySide6.QtWidgets import (QGroupBox, QLabel,
-                               QSizePolicy, QVBoxLayout)
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QDialog, QGroupBox, QLabel,
+    QSizePolicy, QVBoxLayout, QWidget)
 
-from randovania.gui.lib.custom_ui_widgets.scroll_protected import ScrollProtectedComboBox
+from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox
 
 class Ui_PickupStyleWidget(object):
     def setupUi(self, PickupStyleWidget):
