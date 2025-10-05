@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import typing
+from typing import override
 
 from PySide6 import QtGui, QtWidgets
 from PySide6.QtCore import Qt
@@ -382,6 +383,40 @@ class NodeRequirementEditor(BaseEditor):
         return NodeRequirement
 
 
+class StaticRequirementEditor(BaseEditor):
+    def __init__(
+        self,
+        parent: QtWidgets.QWidget,
+        layout: QtWidgets.QHBoxLayout,
+        item: Requirement,
+        message: str,
+    ):
+        self.parent = parent
+        self.layout = layout
+        self.item = item
+        self.label = QtWidgets.QLabel(message, parent)
+        self.layout.addWidget(self.label)
+
+    @override
+    def delete_later(self) -> None:
+        self.label.deleteLater()
+
+    @override
+    @property
+    def current_requirement(self) -> Requirement:
+        return self.item
+
+    @override
+    def requirement_type(self) -> type[Requirement]:
+        return type(self.item)
+
+
+CUSTOM_MAPPING = {
+    Requirement.trivial(): object(),
+    Requirement.impossible(): object(),
+}
+
+
 class RequirementEditor:
     remove_button: QtWidgets.QToolButton | None
     _editor: BaseEditor | None
@@ -426,22 +461,43 @@ class RequirementEditor:
         self.requirement_type_combo.addItem("Resource", ResourceRequirement)
         self.requirement_type_combo.addItem("Or", RequirementOr)
         self.requirement_type_combo.addItem("And", RequirementAnd)
+        self.requirement_type_combo.addItem("Trivial", CUSTOM_MAPPING[Requirement.trivial()])
+        self.requirement_type_combo.addItem("Impossible", CUSTOM_MAPPING[Requirement.impossible()])
         self.requirement_type_combo.addItem("Node", NodeRequirement)
         if resource_database.requirement_template:
             self.requirement_type_combo.addItem("Template", RequirementTemplate)
-        self.requirement_type_combo.setMaximumWidth(75)
+        self.requirement_type_combo.setMaximumWidth(80)
         self.requirement_type_combo.activated.connect(self._on_change_requirement_type)
         self.line_layout.addWidget(self.requirement_type_combo)
 
     def create_specialized_editor(self, requirement: Requirement) -> None:
-        requirement_type: type[Requirement]
-        if isinstance(requirement, ResourceRequirement):
+        requirement_type: object
+        if requirement in CUSTOM_MAPPING:
+            requirement_type = CUSTOM_MAPPING[requirement]
+        elif isinstance(requirement, ResourceRequirement):
             requirement_type = ResourceRequirement
         else:
             requirement_type = type(requirement)
         signal_handling.set_combo_with_value(self.requirement_type_combo, requirement_type)
+        self._create_editor(requirement)
 
-        if isinstance(requirement, ResourceRequirement):
+    def _create_editor(self, requirement: Requirement) -> None:
+        current_data = self.requirement_type_combo.currentData()
+
+        if current_data == CUSTOM_MAPPING[Requirement.trivial()]:
+            self._editor = StaticRequirementEditor(
+                self.parent, self.line_layout, Requirement.trivial(), "A trivial requirement is always satisfied."
+            )
+
+        elif current_data == CUSTOM_MAPPING[Requirement.impossible()]:
+            self._editor = StaticRequirementEditor(
+                self.parent,
+                self.line_layout,
+                Requirement.impossible(),
+                "An impossible requirement can never be satisfied.",
+            )
+
+        elif isinstance(requirement, ResourceRequirement):
             self._editor = ResourceRequirementEditor(self.parent, self.line_layout, self.resource_database, requirement)
 
         elif isinstance(requirement, RequirementArrayBase):
@@ -467,8 +523,9 @@ class RequirementEditor:
             self._last_resource = current_requirement
 
         elif isinstance(current_requirement, RequirementArrayBase):
-            self._last_items = current_requirement.items
-            self._last_comment = current_requirement.comment
+            if current_requirement not in {Requirement.trivial(), Requirement.impossible()}:
+                self._last_items = current_requirement.items
+                self._last_comment = current_requirement.comment
 
         elif isinstance(current_requirement, RequirementTemplate):
             pass
@@ -481,8 +538,12 @@ class RequirementEditor:
 
         new_requirement: Requirement
         new_class = self.requirement_type_combo.currentData()
+        inverted_mapping = {value: key for key, value in CUSTOM_MAPPING.items()}
 
-        if new_class == ResourceRequirement:
+        if new_class in inverted_mapping:
+            new_requirement = inverted_mapping[new_class]
+
+        elif new_class == ResourceRequirement:
             if self._last_resource is None:
                 new_requirement = _create_default_resource_requirement(self.resource_database)
             else:
@@ -496,7 +557,7 @@ class RequirementEditor:
         else:
             new_requirement = new_class(self._last_items, self._last_comment)
 
-        self.create_specialized_editor(new_requirement)
+        self._create_editor(new_requirement)
 
     def delete_later(self) -> None:
         if self.remove_button is not None:
