@@ -161,6 +161,15 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Sanctuary Entrance Reloaded": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "SancEntranceFight",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -220,6 +229,27 @@
                             }
                         },
                         "Door to Sanctuary Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Sanctuary Entrance Reloaded": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "SancEntranceReload",
+                    "connections": {
+                        "Door to Transport to Temple Grounds": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -755,8 +785,24 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "SancEntranceReload",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
+                            }
+                        },
+                        "Event - Sanctuary Entrance Fight": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1096,6 +1142,27 @@
                             }
                         }
                     }
+                },
+                "Event - Sanctuary Entrance Fight": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "SancEntranceFight",
+                    "connections": {
+                        "Door to Power Junction": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1137,6 +1204,15 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Sancturay Entrance Reloaded": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "SancEntranceFight",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -1164,6 +1240,27 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
+                    "connections": {
+                        "Door to Reactor Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Sancturay Entrance Reloaded": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "SancEntranceReload",
                     "connections": {
                         "Door to Reactor Access": {
                             "type": "and",

@@ -40,6 +40,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Expansions with negative value now properly remove items in-game.
 
+#### Logic Database
+
+- Fixed: Using the Turret in Sanctuary Entrance now accounts for being able to reload the room.
 
 ## [10.2.0] - 2025-10-02
 
