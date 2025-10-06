@@ -18,7 +18,7 @@ jobs:
     runs-on: ${{ inputs.image }}
     timeout-minutes: 30
 
-    name: pytest
+    name: pytest (${{ inputs.image }})
 
     steps:
       - name: Checkout
@@ -56,7 +56,7 @@ jobs:
     runs-on: ${{ inputs.image }}
     timeout-minutes: 30
 
-    name: executable
+    name: executable (${{ inputs.image }})
 
     steps:
       - name: Checkout
@@ -116,6 +116,6 @@ jobs:
         with:
           webhook: ${{ secrets.GENERAL_TALK_WEBHOOK }}
           nodetail: true
-          title: CI failed!
+          title: ARM build for ${{ inputs.image }} failed!
           description: |
             [CI failed for `${{ github.ref_name }}`](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
