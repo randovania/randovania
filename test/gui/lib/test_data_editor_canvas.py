@@ -4,10 +4,10 @@ from unittest.mock import ANY, MagicMock, call
 
 import pytest
 from PySide6.QtCore import QPoint
+from randovania.gui.lib.custom_ui_widgets.data_editor_canvas import DataEditorCanvas
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
-from randovania.gui.lib.custom_ui_widgets.data_editor_canvas import DataEditorCanvas
 
 
 @pytest.fixture
