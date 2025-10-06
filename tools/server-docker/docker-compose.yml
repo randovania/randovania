@@ -85,6 +85,9 @@ services:
     secrets:
       - configuration
 
+    environment:
+      - OBFUSCATOR_SECRET=${OBFUSCATOR_SECRET:-}
+
     command: --configuration "/run/secrets/configuration" server bot
 
     hostname: "{{.Node.Hostname}}"
