@@ -216,7 +216,7 @@ async def test_interact_with_game(
     if 0 < depth:
         assert connector._last_emitted_region is not None
         if is_at_end_of_game and (failure_at is None or failure_at > 1):
-            game_has_been_beaten_mock.assert_called()
+            game_has_been_beaten_mock.assert_called_once_with()
         else:
             game_has_been_beaten_mock.assert_not_called()
     else:
