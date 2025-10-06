@@ -27,6 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Changed: The Elite Pirate in Dynamo Access will now first on the first pass rather than only after Plasma Beam has been obtained. This makes the behaviour easier to understand and fixes cases where a game becomes logically impossible.
+
 #### Logic Database
 
 ##### Chozo Ruins

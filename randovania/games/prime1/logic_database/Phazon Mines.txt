@@ -1347,10 +1347,8 @@ Extra - aabb: [57.918835, -49.629333, -88.16487, 129.05498, -6.0125637, -65.8200
   * Extra - nonstandard: False
   * Extra - world_position: (129.04474, -14.07471, -83.17842)
   * Extra - world_rotation: (0.0, -0.0, 0.0)
-  > Door to Omega Research
-      No Plasma Beam or After Elite Pirate Fight (Dynamo Access)
-  > Event - Elite Pirate Fight
-      Plasma Beam
+  > Fight Arena
+      Trivial
 
 > Door to Omega Research; Heals? False
   * Layers: default
@@ -1359,23 +1357,34 @@ Extra - aabb: [57.918835, -49.629333, -88.16487, 129.05498, -6.0125637, -65.8200
   * Extra - nonstandard: False
   * Extra - world_position: (70.1183, -39.56736, -77.58645)
   * Extra - world_rotation: (0.0, -0.0, 0.0)
-  > Door to Central Dynamo
-      No Plasma Beam or After Elite Pirate Fight (Dynamo Access)
-  > Event - Elite Pirate Fight
-      Plasma Beam
+  > Fight Arena
+      Trivial
 
 > Event - Elite Pirate Fight; Heals? False
   * Layers: default
   * Event Elite Pirate Fight (Dynamo Access)
   * Extra - world_position: (91.228378, -23.425991, -82.599899)
-  > Door to Omega Research
-      # https://youtu.be/20peXRPG-e0
-      Charge Beam or Combat (Beginner) or Normal Damage ≥ 200
+  > Fight Arena
+      Trivial
 
 > Pickup (Items Every Room); Heals? False
   * Layers: items_every_room
   * Pickup 215; Category? Minor
   * Extra - position_required: True
+
+> Fight Arena; Heals? False
+  * Layers: default
+  > Door to Central Dynamo
+      After Elite Pirate Fight (Dynamo Access)
+  > Door to Omega Research
+      After Elite Pirate Fight (Dynamo Access)
+  > Event - Elite Pirate Fight
+      Any of the following:
+          All of the following:
+              Shoot Plasma Beam
+              Charge Beam or Normal Damage ≥ 200
+          # https://youtu.be/20peXRPG-e0
+          Combat (Beginner) and Shoot Any Beam
 
 ----------------
 Transport to Magmoor Caverns South

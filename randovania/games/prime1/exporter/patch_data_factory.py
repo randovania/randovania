@@ -698,6 +698,20 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                     "doors": {},
                 }
 
+        # Change Dynamo Access so that the Elite Pirate already spawns on first pass.
+        dynamo_access = level_data["Phazon Mines"]["rooms"]["Dynamo Access"]
+        dynamo_access["deleteIds"] = [0x001801A9]  # Plasma Beam Inventory Activator
+        dynamo_access["triggers"] = [
+            {
+                "id": 0x00180138,  # Trigger for Elite Pirate near Omega Research
+                "active": True,
+            },
+            {
+                "id": 0x00180139,  # Trigger for Elite Pirate near Central Dynamo
+                "active": True,
+            },
+        ]
+
         # serialize elevator modifications
         for region in regions:
             for area in region.areas:
