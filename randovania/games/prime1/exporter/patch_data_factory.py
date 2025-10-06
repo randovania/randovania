@@ -703,8 +703,6 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         dynamo_access["deleteIds"] = [
             0x001801A9,  # Plasma Beam Inventory Activator
             0x001801A8,  # Please Beam Inventory Activator Timer
-            0x00180174,  # Trigger Timer 1
-            0x00180175,  # Trigger Timer 2
         ]
         dynamo_access["triggers"] = [
             {
