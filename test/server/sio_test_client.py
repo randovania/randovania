@@ -2,6 +2,7 @@ import uuid
 
 from socketio import AsyncServer, packet
 from socketio.async_pubsub_manager import AsyncPubSubManager
+from socketio.exceptions import ConnectionRefusedError
 
 
 class SocketIOTestClient:
@@ -41,8 +42,10 @@ class SocketIOTestClient:
                     client.queue.append({"name": pkt.data[0], "args": pkt.data[1:], "namespace": pkt.namespace or "/"})
             elif pkt.packet_type == packet.ACK or pkt.packet_type == packet.BINARY_ACK:
                 client.acks = {"args": pkt.data, "namespace": pkt.namespace or "/"}
-            elif pkt.packet_type in [packet.DISCONNECT, packet.CONNECT_ERROR]:
+            elif pkt.packet_type == packet.DISCONNECT:
                 client.connected[pkt.namespace or "/"] = False
+            elif pkt.packet_type == packet.CONNECT_ERROR:
+                raise ConnectionRefusedError(pkt.data["message"])
 
         _current_packet = None
 
