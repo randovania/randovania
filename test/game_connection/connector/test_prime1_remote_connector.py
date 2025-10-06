@@ -162,7 +162,7 @@ async def test_interact_with_game(
     connector.message_cooldown = 0.0
     connector.executor.is_connected.return_value = True
     connector.executor.disconnect = MagicMock()
-    game_has_been_beaten_mock = mocker.patch("randovania.lib.signal.RdvSignalInstance.emit")
+    game_has_been_beaten_mock = mocker.patch.object(connector.GameHasBeenBeaten, "emit")
 
     connector.get_inventory = AsyncMock()
     region = None
@@ -215,8 +215,10 @@ async def test_interact_with_game(
 
     if 0 < depth:
         assert connector._last_emitted_region is not None
-        if is_at_end_of_game:
+        if is_at_end_of_game and (failure_at is None or failure_at > 1):
             game_has_been_beaten_mock.assert_called()
+        else:
+            game_has_been_beaten_mock.assert_not_called()
     else:
         assert connector._last_emitted_region is None
 
