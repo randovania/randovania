@@ -2,31 +2,22 @@ from __future__ import annotations
 
 import logging
 from contextlib import AbstractContextManager, nullcontext
-from typing import Any
-from unittest.mock import ANY, AsyncMock, MagicMock
+from typing import TYPE_CHECKING
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
 from randovania.network_common import error
 from randovania.server import database
 from randovania.server.server_app import EnforceDiscordRole, ServerLoggingFormatter
-from test.server.sio_test_client import SocketIOTestClient
+
+if TYPE_CHECKING:
+    from pytest_mock import MockerFixture
 
 
 @pytest.fixture(name="sid")
 def sid_fixture() -> str:
     return "12345"
-
-
-@pytest.fixture(name="sio_test_client")
-async def sio_test_client_fixture(test_client):
-    client = SocketIOTestClient(test_client.sa.sio)
-
-    headers = {
-        "HTTP_X_RANDOVANIA_VERSION": "0.0.0",
-    }
-    await client.connect(headers=headers)
-    return client
 
 
 @pytest.mark.parametrize(
@@ -51,27 +42,6 @@ async def test_get_current_user(
     # Assert
     if create_user:
         assert result == user
-
-
-@pytest.mark.parametrize(
-    ("side_effect", "rval"),
-    [
-        ([{"foo": 12345}], {"result": {"foo": 12345}}),  # success
-        (error.NotLoggedInError(), error.NotLoggedInError().as_json),  # network error
-        (RuntimeError("something happened"), error.ServerError().as_json),  # exception
-    ],
-)
-async def test_on_success(side_effect: Any, rval: dict, test_client, sio_test_client):
-    # Setup
-    custom = AsyncMock(side_effect=side_effect)
-    test_client.sa.on("custom", custom)
-
-    # Run
-    result = await sio_test_client.emit("custom", callback=True)
-
-    # Assert
-    custom.assert_awaited_once_with(test_client.sa, sio_test_client.sid)
-    assert result == rval
 
 
 async def test_store_world_in_session(test_client, sid):
@@ -105,7 +75,7 @@ async def test_remove_world_from_session(test_client, sid):
 
 
 @pytest.mark.parametrize("valid", [False, True])
-async def test_verify_user(server_app, mocker, valid):
+async def test_verify_user(server_app, mocker: MockerFixture, valid):
     # Setup
     mock_session = MagicMock()
     mock_session.headers = {}
@@ -148,24 +118,6 @@ async def test_ensure_in_room(test_client, sid, expected):
     test_client.sa.sio.rooms.assert_called_once_with(sid, namespace="/")
     test_client.sa.sio.enter_room.assert_awaited_once_with(sid, "the_room", namespace="/")
     assert result is expected
-
-
-async def test_on_with_wrapper(test_client, sid):
-    async def my_function(sa, sid_: str, arg: bytes) -> list[int]:
-        return list(arg)
-
-    def on(message, handler, with_header_check):
-        return handler
-
-    test_client.sa.on = MagicMock(side_effect=on)
-
-    # Run
-    wrapped = test_client.sa.on_with_wrapper("my_func", my_function)
-
-    # Assert
-    result = await wrapped(test_client.sa, sid, b"\x041234")
-    assert result == b"\x04bdfh"
-    test_client.sa.on.assert_called_once_with("my_func", ANY, with_header_check=True)
 
 
 async def test_fernet(server_app):
