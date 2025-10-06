@@ -46,6 +46,9 @@ class RemoteConnector:
     PickupIndexCollected = RdvSignal[[PickupIndex]]()
     InventoryUpdated = RdvSignal[[Inventory]]()
 
+    GameHasBeenBeaten = RdvSignal()
+    """Signal that gets fired when a game has been beaten."""
+
     @property
     def game_enum(self) -> RandovaniaGame:
         raise NotImplementedError

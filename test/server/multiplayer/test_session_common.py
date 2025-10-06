@@ -39,8 +39,18 @@ async def test_emit_session_meta_update(session_update, mock_sa, default_game_li
             },
         ],
         "worlds": [
-            {"id": "67d75d0e-da8d-4a90-b29e-cae83bcf9519", "name": "World1", "preset_raw": "{}"},
-            {"id": "d0f7ed70-66b0-413c-bc13-f9f7fb018726", "name": "World2", "preset_raw": "{}"},
+            {
+                "id": "67d75d0e-da8d-4a90-b29e-cae83bcf9519",
+                "name": "World1",
+                "preset_raw": "{}",
+                "has_been_beaten": False,
+            },
+            {
+                "id": "d0f7ed70-66b0-413c-bc13-f9f7fb018726",
+                "name": "World2",
+                "preset_raw": "{}",
+                "has_been_beaten": False,
+            },
         ],
         "game_details": {
             "spoiler": True,

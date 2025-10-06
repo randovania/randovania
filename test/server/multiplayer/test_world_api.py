@@ -274,6 +274,9 @@ async def test_world_sync(mock_sa, solo_two_world_session, mocker: MockerFixture
     mock_emit_pickups = mocker.patch("randovania.server.multiplayer.world_api.emit_world_pickups_update")
     mock_emit_actions = mocker.patch("randovania.server.multiplayer.session_common.emit_session_actions_update")
     mock_emit_inventory = mocker.patch("randovania.server.multiplayer.world_api.emit_inventory_update")
+    mock_emit_session_audit_update = mocker.patch(
+        "randovania.server.multiplayer.session_common.emit_session_audit_update"
+    )
 
     user = database.User.get_by_id(1234)
     mock_sa.get_current_user.return_value = user
@@ -290,18 +293,21 @@ async def test_world_sync(mock_sa, solo_two_world_session, mocker: MockerFixture
                     collected_locations=(5,),
                     inventory=b"foo",
                     request_details=True,
+                    has_been_beaten=True,
                 ),
                 w2.uuid: ServerWorldSync(
                     status=GameConnectionStatus.Disconnected,
                     collected_locations=(15,),
                     inventory=None,
                     request_details=False,
+                    has_been_beaten=False,
                 ),
                 uuid.UUID("a0cf12f7-8a0e-47ed-9a82-cabfc8b912c2"): ServerWorldSync(
                     status=GameConnectionStatus.TitleScreen,
                     collected_locations=(60,),
                     inventory=None,
                     request_details=False,
+                    has_been_beaten=False,
                 ),
             }
         )
@@ -335,6 +341,13 @@ async def test_world_sync(mock_sa, solo_two_world_session, mocker: MockerFixture
     assert a2.connection_state == GameConnectionStatus.Disconnected
     assert a2.inventory is None
 
+    finished_w1 = database.World.get_by_id(1)  # w1: not beaten -> beaten
+    assert not w1.beaten
+    assert finished_w1.beaten
+    finished_w2 = database.World.get_by_id(2)  # w2: not beaten -> not beaten
+    assert not w2.beaten
+    assert not finished_w2.beaten
+
     mock_sa.store_world_in_session.assert_awaited_once_with("TheSid", w1)
     mock_sa.ensure_in_room.assert_awaited_once_with("TheSid", "world-1179c986-758a-4170-9b07-fe4541d78db0")
     mock_leave_room.assert_awaited_once_with("TheSid", "world-6b5ac1a1-d250-4f05-a5fb-ae37e8a92165")
@@ -342,6 +355,72 @@ async def test_world_sync(mock_sa, solo_two_world_session, mocker: MockerFixture
     mock_emit_session_update.assert_awaited_once_with(mock_sa, session)
     mock_emit_actions.assert_awaited_once_with(mock_sa, session)
     mock_emit_inventory.assert_awaited_once_with(mock_sa, w1, 1234, b"foo")
+    mock_emit_session_audit_update.assert_awaited_once_with(mock_sa, session)
+    mock_emit.assert_not_called()
+
+
+@pytest.mark.parametrize("has_been_beaten", [True, False])
+async def test_dont_change_has_beaten(
+    mock_sa, solo_two_world_session, mocker: MockerFixture, mock_emit_session_update, has_been_beaten
+):
+    mock_emit = mock_sa.sio.emit
+    mock_emit_pickups = mocker.patch("randovania.server.multiplayer.world_api.emit_world_pickups_update")
+    mock_emit_actions = mocker.patch("randovania.server.multiplayer.session_common.emit_session_actions_update")
+    mock_emit_inventory = mocker.patch("randovania.server.multiplayer.world_api.emit_inventory_update")
+    mock_emit_session_audit_update = mocker.patch(
+        "randovania.server.multiplayer.session_common.emit_session_audit_update"
+    )
+
+    user = database.User.get_by_id(1234)
+    mock_sa.get_current_user.return_value = user
+
+    w1 = database.World.get_by_id(1)
+    w1.beaten = True
+    w1.save()
+    session = database.MultiplayerSession.get_by_id(solo_two_world_session.id)
+
+    request = ServerSyncRequest(
+        worlds=frozendict(
+            {
+                w1.uuid: ServerWorldSync(
+                    status=GameConnectionStatus.InGame,
+                    collected_locations=(5,),
+                    inventory=b"foo",
+                    request_details=True,
+                    has_been_beaten=has_been_beaten,
+                )
+            }
+        )
+    )
+
+    # Run
+    result = await world_api.world_sync(mock_sa, "TheSid", request)
+
+    # Assert
+    assert result == ServerSyncResponse(
+        worlds=frozendict(
+            {
+                w1.uuid: ServerWorldResponse(
+                    world_name=w1.name,
+                    session_id=session.id,
+                    session_name=session.name,
+                ),
+            }
+        ),
+        errors=frozendict(),
+    )
+
+    finished_w1 = database.World.get_by_id(1)  # w1: beaten status should not change
+    assert w1.beaten
+    assert finished_w1.beaten
+
+    mock_sa.store_world_in_session.assert_awaited_once_with("TheSid", w1)
+    mock_sa.ensure_in_room.assert_awaited_once_with("TheSid", "world-1179c986-758a-4170-9b07-fe4541d78db0")
+    mock_emit_pickups.assert_has_awaits([call(mock_sa, w1)], any_order=True)
+    mock_emit_session_update.assert_awaited_once_with(mock_sa, session)
+    mock_emit_actions.assert_awaited_once_with(mock_sa, session)
+    mock_emit_inventory.assert_awaited_once_with(mock_sa, w1, 1234, b"foo")
+    mock_emit_session_audit_update.assert_not_awaited()
     mock_emit.assert_not_called()
 
 

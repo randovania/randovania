@@ -223,10 +223,11 @@ async def sync_one_world(
     sentry_sdk.set_tag("world_uuid", str(uid))
     world = World.get_by_uuid(uid)
     sentry_sdk.set_tag("session_id", world.session_id)
+    session = MultiplayerSession.get_by_id(world.session_id)
 
     association = _check_user_is_associated(user, world)
     should_update_activity = False
-    worlds_to_update = set()
+    worlds_to_emit_update = set()
     session_id_to_return = None
     response = None
 
@@ -235,7 +236,7 @@ async def sync_one_world(
         await sa.sio.leave_room(sid, _get_world_room(world))
     else:
         if await sa.ensure_in_room(sid, _get_world_room(world)):
-            worlds_to_update.add(world)
+            worlds_to_emit_update.add(world)
             await sa.store_world_in_session(sid, world)
 
     # Update association connection state
@@ -278,7 +279,16 @@ async def sync_one_world(
 
     # Do this last, as it fails if session is in setup
     if world_request.collected_locations:
-        worlds_to_update.update(await collect_locations(sa, world, world_request.collected_locations))
+        worlds_to_emit_update.update(await collect_locations(sa, world, world_request.collected_locations))
+        should_update_activity = True
+
+    # User has beaten game, so toggle it. The Beat-Game status can not be disabled.
+    if world_request.has_been_beaten and not world.beaten:
+        sa.logger.info("Session %d, World %s has been beaten", world.session_id, world.name)
+        world.beaten = True
+        world.save()
+        await session_common.add_audit_entry(sa, sid, session, f"World {world.name} has been beaten.")
+        worlds_to_emit_update.add(world)
         should_update_activity = True
 
     # User did something, so update activity
@@ -286,7 +296,7 @@ async def sync_one_world(
         association.last_activity = datetime.datetime.now(datetime.UTC)
         association.save()
 
-    return response, session_id_to_return, worlds_to_update
+    return response, session_id_to_return, worlds_to_emit_update
 
 
 async def world_sync(sa: ServerApp, sid: str, request: ServerSyncRequest) -> ServerSyncResponse:
@@ -295,13 +305,13 @@ async def world_sync(sa: ServerApp, sid: str, request: ServerSyncRequest) -> Ser
     world_details = {}
     failed_syncs = {}
 
-    worlds_to_update = set()
+    worlds_to_emit_update = set()
     sessions_to_update_actions = set()
     sessions_to_update_meta = set()
 
     for uid, world_request in request.worlds.items():
         try:
-            response, session_id, new_worlds_to_update = await sync_one_world(sa, sid, user, uid, world_request)
+            response, session_id, new_worlds_to_emit_update = await sync_one_world(sa, sid, user, uid, world_request)
 
             if response is not None:
                 world_details[uid] = response
@@ -309,7 +319,7 @@ async def world_sync(sa: ServerApp, sid: str, request: ServerSyncRequest) -> Ser
             if session_id is not None:
                 sessions_to_update_meta.add(session_id)
 
-            worlds_to_update.update(new_worlds_to_update)
+            worlds_to_emit_update.update(new_worlds_to_emit_update)
 
         except error.BaseNetworkError as e:
             sa.logger.info(
@@ -337,7 +347,7 @@ async def world_sync(sa: ServerApp, sid: str, request: ServerSyncRequest) -> Ser
             )
             failed_syncs[uid] = error.ServerError()
 
-    for world in worlds_to_update:
+    for world in worlds_to_emit_update:
         await emit_world_pickups_update(sa, world)
         sessions_to_update_actions.add(world.session.id)
 

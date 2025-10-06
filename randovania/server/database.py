@@ -298,6 +298,7 @@ class MultiplayerSession(BaseModel):
                 id=world.uuid,
                 name=world.name,
                 preset_raw=world.preset,
+                has_been_beaten=world.beaten,
             )
             for world in self.worlds
         }
@@ -383,6 +384,7 @@ class World(BaseModel):
     name: str = peewee.CharField(max_length=MAX_WORLD_NAME_LENGTH)
     preset: str = peewee.TextField()
     order: int | None = peewee.IntegerField(null=True, default=None)
+    beaten: bool = peewee.BooleanField(default=False)
 
     associations: list[WorldUserAssociation]
 
@@ -409,6 +411,7 @@ class World(BaseModel):
         *,
         uid: UUID | None = None,
         order: int | None = None,
+        beaten: bool = False,
     ) -> Self:
         if uid is None:
             uid = uuid.uuid4()
@@ -418,6 +421,7 @@ class World(BaseModel):
             name=name,
             preset=json.dumps(preset.as_json, separators=(",", ":")),
             order=order,
+            beaten=beaten,
         )
 
 
@@ -748,6 +752,7 @@ class AsyncRaceEntryPause(BaseModel):
 class DatabaseMigrations(enum.Enum):
     ADD_READY_TO_MEMBERSHIP = "ready_membership"
     SESSION_STATE_TO_VISIBILITY = "session_state_to_visibility"
+    ADD_GAME_BEATEN = "game_beaten"
 
 
 class PerformedDatabaseMigrations(BaseModel):
