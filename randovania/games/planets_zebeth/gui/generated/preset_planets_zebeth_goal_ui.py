@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QGroupBox, QHBoxLayout,
     QLabel, QMainWindow, QSizePolicy, QSlider,
     QSpacerItem, QVBoxLayout, QWidget)
 
-from randovania.gui.lib.custom_ui_widgets.scroll_protected import ScrollProtectedSlider
+from randovania.gui.widgets.scroll_protected import ScrollProtectedSlider
 
 class Ui_PresetPlanetsZebethGoal(object):
     def setupUi(self, PresetPlanetsZebethGoal):

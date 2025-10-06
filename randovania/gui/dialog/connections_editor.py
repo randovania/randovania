@@ -18,8 +18,8 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.generated.connections_editor_ui import Ui_ConnectionEditor
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
-from randovania.gui.lib.custom_ui_widgets.scroll_protected import ScrollProtectedComboBox
 from randovania.gui.widgets.node_selector_widget import NodeSelectorWidget
+from randovania.gui.widgets.scroll_protected import ScrollProtectedComboBox
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.lib.enum_lib import iterate_enum
 

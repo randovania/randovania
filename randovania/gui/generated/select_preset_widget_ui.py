@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QAbstractItemView, QApplication, QGridLayout, QHe
     QLabel, QScrollArea, QSizePolicy, QTreeWidgetItem,
     QVBoxLayout, QWidget)
 
-from randovania.gui.lib.custom_ui_widgets.preset_tree_widget import PresetTreeWidget
+from randovania.gui.widgets.preset_tree_widget import PresetTreeWidget
 
 class Ui_SelectPresetWidget(object):
     def setupUi(self, SelectPresetWidget):

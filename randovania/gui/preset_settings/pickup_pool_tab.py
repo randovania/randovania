@@ -15,12 +15,12 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.pickup_pool import pool_creator
 from randovania.gui.generated.preset_pickup_pool_ui import Ui_PresetPickupPool
 from randovania.gui.lib import common_qt_lib
-from randovania.gui.lib.custom_ui_widgets.foldable import Foldable
-from randovania.gui.lib.custom_ui_widgets.scroll_protected import ScrollProtectedComboBox, ScrollProtectedSpinBox
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
 from randovania.gui.preset_settings.split_ammo_widget import AmmoPickupWidgets
 from randovania.gui.preset_settings.standard_pickup_widget import StandardPickupWidget
+from randovania.gui.widgets.foldable import Foldable
+from randovania.gui.widgets.scroll_protected import ScrollProtectedComboBox, ScrollProtectedSpinBox
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.exceptions import InvalidConfiguration

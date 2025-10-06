@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
     QLabel, QPushButton, QRadioButton, QScrollArea,
     QSizePolicy, QVBoxLayout, QWidget)
 
-from randovania.gui.lib.custom_ui_widgets.scroll_protected import ScrollProtectedSlider
+from randovania.gui.widgets.scroll_protected import ScrollProtectedSlider
 
 class Ui_MSRCosmeticPatchesDialog(object):
     def setupUi(self, MSRCosmeticPatchesDialog):

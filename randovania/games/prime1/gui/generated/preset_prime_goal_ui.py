@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QMainWindow,
     QSizePolicy, QSlider, QVBoxLayout, QWidget)
 
-from randovania.gui.lib.custom_ui_widgets.scroll_protected import ScrollProtectedSlider
+from randovania.gui.widgets.scroll_protected import ScrollProtectedSlider
 
 class Ui_PresetPrimeGoal(object):
     def setupUi(self, PresetPrimeGoal):

@@ -3,7 +3,7 @@ from typing import override
 from PySide6 import QtWidgets
 
 from randovania.game_description.hint_features import HintFeature
-from randovania.gui.lib.custom_ui_widgets.editable_list_view import EditableListModel, EditableListView
+from randovania.gui.widgets.editable_list_view import EditableListModel, EditableListView
 
 
 class HintFeatureListModel(EditableListModel[HintFeature]):
