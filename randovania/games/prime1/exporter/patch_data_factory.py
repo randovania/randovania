@@ -700,7 +700,12 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
 
         # Change Dynamo Access so that the Elite Pirate already spawns on first pass.
         dynamo_access = level_data["Phazon Mines"]["rooms"]["Dynamo Access"]
-        dynamo_access["deleteIds"] = [0x001801A9]  # Plasma Beam Inventory Activator
+        dynamo_access["deleteIds"] = [
+            0x001801A9,  # Plasma Beam Inventory Activator
+            0x001801A8,  # Please Beam Inventory Activator Timer
+            0x00180174,  # Trigger Timer 1
+            0x00180175,  # Trigger Timer 2
+        ]
         dynamo_access["triggers"] = [
             {
                 "id": 0x00180138,  # Trigger for Elite Pirate near Omega Research
