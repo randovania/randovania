@@ -10,11 +10,12 @@
 
 {% block content %}
 	<table class="main-content__body" data-lead-id="main-content-body">
-		<tr>
-			<th>Type</th>
-			<th>Location</th>
-			<th>Message</th>
-		</tr>
+		<thead>
+			<td>Type</td>
+			<td>Location</td>
+			<td>Message</td>
+		</thead>
+		<tbody>
 		{% for err in errors %}
 			<tr>
 				<td>{{ err.type }}</td>
@@ -22,5 +23,6 @@
 				<td>{{ err.msg }}</td>
 			</tr>
 		{% endfor %}
+		</tbody>
 	</table>
 {% endblock content %}

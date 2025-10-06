@@ -412,8 +412,11 @@ def get_user(needs_admin: bool) -> AsyncCallable[[ServerAppDep, fastapi.Request]
 
             return user
 
-        except fastapi_discord.exceptions.Unauthorized:
-            raise fastapi.HTTPException(status_code=404, detail="Unknown user")
+        except (
+            fastapi_discord.exceptions.Unauthorized,
+            User.DoesNotExist,
+        ):
+            raise fastapi.HTTPException(status_code=401, detail="Unknown user")
 
     return handler
 

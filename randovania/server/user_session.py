@@ -329,34 +329,43 @@ async def browser_discord_login_callback(
 
 
 @router.get("/me", response_class=HTMLResponse)
-async def browser_me(request: Request, user: UserDep) -> str:
-    result = f"Hello {user.name}. Admin? {user.admin}<br />Access Tokens:<ul>\n"
-
-    for token in user.access_tokens:
-        delete = f' <a href="{request.url_for("delete_token")}?token={token.name}">Delete</a>'
-        result += f"<li>{token.name} created at {token.creation_date}. Last used at {token.last_used}. {delete}</li>"
-
-    result += f'<li><form class="form-inline" method="POST" action="{request.url_for("create_token")}">'
-    result += '<input id="name" placeholder="Access token name" name="name">'
-    result += '<button type="submit">Create new</button></li></ul>'
-
-    return result
+async def browser_me(sa: ServerAppDep, request: Request, user: UserDep) -> str:
+    return sa.templates.TemplateResponse(
+        request,
+        "me.html.jinja",
+        context={
+            "user": user,
+        },
+    )
 
 
 @router.post("/create_token", response_class=HTMLResponse)
 async def create_token(sa: ServerAppDep, request: Request, user: UserDep, name: typing.Annotated[str, Form()]) -> str:
-    go_back = f'<a href="{request.url_for("browser_me")}">Go back</a>'
-
     try:
         token = UserAccessToken.create(
             user=user,
             name=name,
         )
         session = _create_session_with_access_token(sa, token).decode("ascii")
-        return f"Token: <pre>{session}</pre><br />{go_back}"
+        context = {
+            "created": True,
+            "token": session,
+        }
+        status_code = 200
 
     except peewee.IntegrityError as e:
-        return f"Unable to create token: {e}<br />{go_back}"
+        context = {
+            "created": False,
+            "error": str(e),
+        }
+        status_code = 500
+
+    return sa.templates.TemplateResponse(
+        request=request,
+        name="token_created.html.jinja",
+        context=context,
+        status_code=status_code,
+    )
 
 
 @router.get("/delete_token")
