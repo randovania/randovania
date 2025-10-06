@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 from typing import TYPE_CHECKING
 
 from prometheus_client import Gauge
+from socketio.exceptions import ConnectionRefusedError
 from socketio_handler import BaseSocketHandler, SocketManager, register_handler
 
 import randovania
