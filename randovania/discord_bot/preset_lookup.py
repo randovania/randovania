@@ -171,12 +171,11 @@ async def reply_for_layout_description(message: discord.Message, description: La
         title=f"Spoiler file (Generated with {description.randovania_version_text})",
     )
 
+    lines = []
+
     if description.world_count == 1:
         preset = description.get_preset(0)
-        embed.description = (
-            f"{preset.game.long_name}, with preset {preset.name}.\n"
-            f"Seed Hash for {randovania.VERSION}: {description.shareable_word_hash}"
-        )
+        lines.append(f"{preset.game.long_name}, with preset {preset.name}.")
         _add_preset_description_to_embed(embed, preset)
     else:
         games = {preset.game.long_name for preset in description.all_presets}
@@ -188,11 +187,13 @@ async def reply_for_layout_description(message: discord.Message, description: La
             games_text += " and "
         games_text += last_game
 
-        embed.description = (
-            f"{description.world_count} player multiworld for {games_text}.\n"
-            f"Seed Hash for {randovania.VERSION}: {description.shareable_word_hash}"
-        )
+        lines.append(f"{description.world_count} player multiworld for {games_text}.")
 
+    if not description.has_spoiler:
+        lines.append("**For Races** (No Spoiler available).")
+    lines.append(f"Seed Hash for {randovania.VERSION}: {description.shareable_word_hash}")
+
+    embed.description = "\n".join(lines)
     await message.reply(embed=embed, mention_author=False)
 
 
