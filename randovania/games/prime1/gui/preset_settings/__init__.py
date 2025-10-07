@@ -18,7 +18,7 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> l
     from randovania.games.prime1.gui.preset_settings.prime_teleporters_tab import PresetTeleportersPrime1
     from randovania.gui.preset_settings.hints_tab import PresetHints
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
-    from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
+    from randovania.gui.preset_settings.metroid_pickup_pool_tab import MetroidPresetPickupPool
     from randovania.gui.preset_settings.patcher_energy_tab import PresetPatcherEnergy
     from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
@@ -29,7 +29,7 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> l
         PresetPrimeGoal,
         PresetHints,
         PresetLocationPool,
-        MetroidPresetItemPool,
+        MetroidPresetPickupPool,
         PresetPatcherEnergy,
         PresetTeleportersPrime1,
         PresetMetroidStartingArea,

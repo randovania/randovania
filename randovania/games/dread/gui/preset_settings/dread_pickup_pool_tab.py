@@ -8,7 +8,7 @@ from PySide6 import QtWidgets
 
 from randovania.game_description import default_database
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
-from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
+from randovania.gui.preset_settings.pickup_pool_tab import PresetPickupPool
 from randovania.gui.preset_settings.pickup_style_widget import PickupStyleWidget
 from randovania.layout.base.standard_pickup_state import DEFAULT_MAXIMUM_SHUFFLED
 
@@ -20,7 +20,7 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-class DreadPresetItemPool(PresetItemPool):
+class DreadPresetPickupPool(PresetPickupPool):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
         pickup_database = default_database.pickup_database_for_game(self.game)

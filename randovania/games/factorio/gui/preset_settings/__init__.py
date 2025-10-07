@@ -10,11 +10,11 @@ if TYPE_CHECKING:
 
 def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
     from randovania.games.factorio.gui.preset_settings.factorio_patches_tab import PresetFactorioPatches
-    from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
+    from randovania.gui.preset_settings.pickup_pool_tab import PresetPickupPool
 
     return [
-        PresetItemPool,
+        PresetPickupPool,
         PresetLocationPool,
         PresetFactorioPatches,
     ]

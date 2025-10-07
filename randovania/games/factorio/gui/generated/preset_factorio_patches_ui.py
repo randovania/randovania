@@ -142,7 +142,7 @@ class Ui_PresetFactorioPatches(object):
 "Recommended, as Solar can be your only source of Electricity and scaling it in early game is very expensive.", None))
         self.freebies_group.setTitle(QCoreApplication.translate("PresetFactorioPatches", u"Freebies", None))
         self.strict_multiplayer_freebie_check.setText(QCoreApplication.translate("PresetFactorioPatches", u"Strict Freebies in Multiplayer", None))
-        self.strict_multiplayer_freebie_label.setText(QCoreApplication.translate("PresetFactorioPatches", u"When enabled, guarantee that the total amount of items distributed is not more than in singleplayer, even if it  means some players get nothing.\n"
+        self.strict_multiplayer_freebie_label.setText(QCoreApplication.translate("PresetFactorioPatches", u"When enabled, guarantee that the total amount of items distributed is not more than in singleplayer, even if it means some players get nothing.\n"
 "\n"
 "When disabled, every player is guaranteed at least one, even if you were offline. This includes vehicles and armors.", None))
     # retranslateUi

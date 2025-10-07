@@ -6,7 +6,7 @@ from PySide6 import QtWidgets
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
-from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
+from randovania.gui.preset_settings.metroid_pickup_pool_tab import MetroidPresetPickupPool
 from randovania.gui.preset_settings.split_ammo_widget import SplitAmmoWidget
 
 if TYPE_CHECKING:
@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-class EchoesPresetItemPool(MetroidPresetItemPool):
+class EchoesPresetItemPool(MetroidPresetPickupPool):
     _split_ammo_widgets: list[SplitAmmoWidget]
 
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):

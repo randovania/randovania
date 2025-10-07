@@ -50,7 +50,7 @@ def test_dread_format_params(has_artifacts: bool, rb_damage_mode: DreadRavenBeak
         ],
         "Gameplay": ["Starts at Artaria - Intro Room"],
         "Goal": ["3 Metroid DNA", "Prefers E.M.M.I."] if has_artifacts else ["Reach Itorash"],
-        "Item Pool": [
+        "Pickup Pool": [
             "Size: 148 of 149" if has_artifacts else "Size: 145 of 149",
             "Starts with Pulse Radar",
             "Progressive Charge Beam, Progressive Suit, Progressive Bomb, Progressive Spin",

@@ -41,7 +41,7 @@ class HuntersPresetDescriber(GamePresetDescriber):
         extra_message_tree = {
             "Logic Settings": [],
             "Difficulty": [],
-            "Item Pool": [],
+            "Pickup Pool": [],
             "Gameplay": [
                 {f"Force Fields: {configuration.force_field_configuration.description()}": True},
                 {

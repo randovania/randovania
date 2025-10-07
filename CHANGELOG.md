@@ -7,7 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.3.0] - 2025-11-??
 
-- To be filled.
+- Changed: Centered the text at the top of the Hints preset settings.
+- Changed: Cleaned up how Specific Pickup Hints are shown in the preset settings.
+- Changed: Places that describe a preset with Specific Pickup Hints have slightly better grammar in some cases.
+- Changed: The "Item Pool" tab is now called "Pickup Pool".
+- Changed: Random starting items is now Random starting pickups.
+
+### Factorio
+
+- Fixed: A typo on the "Changes" preset page.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Fixed: Screw Attack Room: Using a Shinespark to reach Start Point 2 from the door to Transport to Burenia was missing a requirement on having activated the Rotatable.
+
+### Metroid Prime
+
+- Changed: The Elite Pirate in Dynamo Access will now appear on the first pass rather than only after Plasma Beam has been obtained. This makes the behaviour easier to understand and fixes cases where a game becomes logically impossible.
+
+#### Logic Database
+
+##### Chozo Ruins
+
+- Fixed: Ruined Shrine: Removed unnecessary dangerous requirements.
+
+##### Phazon Mines
+
+- Changed: Fighting an Elite Pirate/Phazon Elite now has consistent requirements in Dynamo Access, Elite Control and Elite Research.
+- Changed: Adjusted the Requirements to fight and Elite Pirate/Phazon Elite to be more accurate.
+- Fixed: Metroid Quarantine A: Now correctly checks for the barrier to be lowered when going from Quarantine Access A to Front of Spider Track (Bridge).
+- Fixed: Metroid Quarantine A: Now correctly checks for the Enabled Backwards Lower Mines going from Front of Spider Track (Wall) to Quarantine Access A.
+
+##### Phendrana Drifts
+
+- Added: Chozo Ice Temple: Documentation for reaching the Chozo Statue NSJ.
+- Fixed: Chozo Ice Temple: Removed unnecessary dangerous requirements.
+- Fixed: Control Tower: Removed unnecessary dangerous requirements.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Expansions with negative value now properly remove items in-game.
+
+#### Logic Database
+
+- Fixed: Using the Turret in Sanctuary Entrance now accounts for being able to reload the room.
 
 ## [10.2.0] - 2025-10-02
 

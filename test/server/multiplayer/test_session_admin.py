@@ -106,8 +106,18 @@ async def test_admin_player_kick_member(two_player_session, mock_sa, mocker, moc
                 }
             ],
             "worlds": [
-                {"id": "1179c986-758a-4170-9b07-fe4541d78db0", "name": "World 1", "preset_raw": "{}"},
-                {"id": "6b5ac1a1-d250-4f05-a5fb-ae37e8a92165", "name": "World 2", "preset_raw": "{}"},
+                {
+                    "id": "1179c986-758a-4170-9b07-fe4541d78db0",
+                    "name": "World 1",
+                    "preset_raw": "{}",
+                    "has_been_beaten": False,
+                },
+                {
+                    "id": "6b5ac1a1-d250-4f05-a5fb-ae37e8a92165",
+                    "name": "World 2",
+                    "preset_raw": "{}",
+                    "has_been_beaten": False,
+                },
             ],
             "game_details": None,
             "generation_in_progress": None,
