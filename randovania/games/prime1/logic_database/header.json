@@ -1435,17 +1435,102 @@
                                     "comment": null,
                                     "items": [
                                         {
-                                            "type": "and",
+                                            "type": "or",
                                             "data": {
                                                 "comment": "Circle around Pirate: https://youtu.be/20peXRPG-e0",
                                                 "items": [
                                                     {
-                                                        "type": "resource",
+                                                        "type": "and",
                                                         "data": {
-                                                            "type": "tricks",
-                                                            "name": "Combat",
-                                                            "amount": 2,
-                                                            "negate": false
+                                                            "comment": "Beam only",
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "Combat",
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "and",
+                                                        "data": {
+                                                            "comment": "Missile-spam strat",
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "Combat",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "or",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "and",
+                                                                                "data": {
+                                                                                    "comment": null,
+                                                                                    "items": [
+                                                                                        {
+                                                                                            "type": "resource",
+                                                                                            "data": {
+                                                                                                "type": "items",
+                                                                                                "name": "Missile",
+                                                                                                "amount": 10,
+                                                                                                "negate": false
+                                                                                            }
+                                                                                        },
+                                                                                        {
+                                                                                            "type": "resource",
+                                                                                            "data": {
+                                                                                                "type": "misc",
+                                                                                                "name": "hard_mode",
+                                                                                                "amount": 1,
+                                                                                                "negate": true
+                                                                                            }
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "and",
+                                                                                "data": {
+                                                                                    "comment": null,
+                                                                                    "items": [
+                                                                                        {
+                                                                                            "type": "resource",
+                                                                                            "data": {
+                                                                                                "type": "items",
+                                                                                                "name": "Power",
+                                                                                                "amount": 20,
+                                                                                                "negate": false
+                                                                                            }
+                                                                                        },
+                                                                                        {
+                                                                                            "type": "resource",
+                                                                                            "data": {
+                                                                                                "type": "misc",
+                                                                                                "name": "hard_mode",
+                                                                                                "amount": 1,
+                                                                                                "negate": false
+                                                                                            }
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     }
                                                 ]
