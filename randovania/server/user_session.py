@@ -335,6 +335,7 @@ async def browser_me(sa: ServerAppDep, request: Request, user: UserDep) -> str:
         "user_session/me.html.jinja",
         context={
             "user": user,
+            "is_admin": user.admin or sa.app.debug,
         },
     )
 
