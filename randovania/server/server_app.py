@@ -174,7 +174,7 @@ class ServerApp:
             return f"{status_code} {HTTP_RESPONSES[status_code]}"
 
         @self.app.exception_handler(starlette.exceptions.HTTPException)
-        async def http_exception_handler(request: fastapi.Request, exc: fastapi.HTTPException):
+        async def http_exception_handler(request: fastapi.Request, exc: fastapi.HTTPException) -> fastapi.Response:
             return self.templates.TemplateResponse(
                 request,
                 "errors/http_error.html.jinja",
@@ -186,7 +186,9 @@ class ServerApp:
             )
 
         @self.app.exception_handler(RequestValidationError)
-        async def validation_exception_handler(request: fastapi.Request, exc: RequestValidationError):
+        async def validation_exception_handler(
+            request: fastapi.Request, exc: RequestValidationError
+        ) -> fastapi.Response:
             status_code = 422
 
             if exc.args:

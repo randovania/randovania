@@ -103,7 +103,11 @@ async def test_browser_discord_login_callback_success(mock_sa, mock_request, exi
         del mock_request.session["sid"]
 
     # Run
-    result = await user_session.browser_discord_login_callback(mock_sa, mock_request, code="code", state="state")
+    result = await user_session.browser_discord_login_callback(
+        mock_sa,
+        mock_request,
+        user_session.DiscordLoginCallbackParams(code="code", state="state"),
+    )
 
     # Assert
     user = User.get(User.discord_id == 1234)
@@ -118,7 +122,7 @@ async def test_browser_discord_login_callback_success(mock_sa, mock_request, exi
         )
         mock_sa.templates.TemplateResponse.assert_called_once_with(
             ANY,  # Request
-            "return_to_randovania.html",
+            "user_session/return_to_randovania.html.jinja",
             context={"user": user},
         )
         assert result == mock_sa.templates.TemplateResponse.return_value
@@ -147,7 +151,11 @@ async def test_browser_discord_login_callback_not_authorized(mock_sa, mock_reque
     mock_sa.discord.get_access_token.return_value = ("The_Token", "Refresh_Token")
 
     # Run
-    result = await user_session.browser_discord_login_callback(mock_sa, mock_request, code="code", state="state")
+    result = await user_session.browser_discord_login_callback(
+        mock_sa,
+        mock_request,
+        user_session.DiscordLoginCallbackParams(code="code", state="state"),
+    )
 
     # Assert
     mock_create.assert_awaited_once_with(mock_sa, "TheSid", "The_Token")
@@ -168,7 +176,11 @@ async def test_browser_discord_login_callback_mismatching_state(
     mock_render = mocker.patch("randovania.server.user_session.unable_to_login")
 
     # Run
-    result = await user_session.browser_discord_login_callback(mock_sa, mock_request, code="code", state="WrongState")
+    result = await user_session.browser_discord_login_callback(
+        mock_sa,
+        mock_request,
+        user_session.DiscordLoginCallbackParams(code="code", state="WrongState"),
+    )
 
     # Assert
     mock_sa.discord.get_access_token.assert_not_called()
@@ -185,7 +197,11 @@ async def test_browser_discord_login_callback_oauth_error(mock_sa, mock_request,
     mock_render = mocker.patch("randovania.server.user_session.unable_to_login")
 
     # Run
-    result = await user_session.browser_discord_login_callback(mock_sa, mock_request, error="invalid_grant")
+    result = await user_session.browser_discord_login_callback(
+        mock_sa,
+        mock_request,
+        user_session.DiscordLoginCallbackParams(error="invalid_grant"),
+    )
 
     # Assert
     mock_sa.logger.info.assert_called_once_with("Invalid grant when finishing Discord login")
@@ -206,7 +222,11 @@ async def test_browser_discord_login_callback_cancelled(mock_sa, mock_request, m
     mock_sa.discord.user.side_effect = fastapi_discord.exceptions.Unauthorized()
 
     # Run
-    result = await user_session.browser_discord_login_callback(mock_sa, mock_request, code="code", state="state")
+    result = await user_session.browser_discord_login_callback(
+        mock_sa,
+        mock_request,
+        user_session.DiscordLoginCallbackParams(code="code", state="state"),
+    )
 
     # Assert
     assert result == mock_render.return_value
@@ -226,7 +246,11 @@ async def test_browser_discord_login_callback_invalid_sid(mock_sa, mock_request,
     mock_sa.discord.get_access_token.return_value = ("The_Token", "Refresh_Token")
 
     # Run
-    result = await user_session.browser_discord_login_callback(mock_sa, mock_request, code="code", state="state")
+    result = await user_session.browser_discord_login_callback(
+        mock_sa,
+        mock_request,
+        user_session.DiscordLoginCallbackParams(code="code", state="state"),
+    )
 
     # Assert
     mock_create.assert_called_once_with(mock_sa, "TheSid", "The_Token")

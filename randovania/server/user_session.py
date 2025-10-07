@@ -260,10 +260,10 @@ async def browser_discord_login_callback(
 
     try:
         if error is not None:
-            params = {}
+            error_params = {}
             if error_description is not None:
-                params["error_description"] = error_description
-            raise_from_error(error, params)
+                error_params["error_description"] = error_description
+            raise_from_error(error, error_params)
 
         # code and state are only None when there's an error
         assert code is not None
@@ -329,7 +329,7 @@ async def browser_discord_login_callback(
 
 
 @router.get("/me", response_class=HTMLResponse)
-async def browser_me(sa: ServerAppDep, request: Request, user: UserDep) -> str:
+async def browser_me(sa: ServerAppDep, request: Request, user: UserDep) -> HTMLResponse:
     return sa.templates.TemplateResponse(
         request,
         "user_session/me.html.jinja",
@@ -341,7 +341,9 @@ async def browser_me(sa: ServerAppDep, request: Request, user: UserDep) -> str:
 
 
 @router.post("/create_token", response_class=HTMLResponse)
-async def create_token(sa: ServerAppDep, request: Request, user: UserDep, name: typing.Annotated[str, Form()]) -> str:
+async def create_token(
+    sa: ServerAppDep, request: Request, user: UserDep, name: typing.Annotated[str, Form()]
+) -> HTMLResponse:
     try:
         token = UserAccessToken.create(
             user=user,

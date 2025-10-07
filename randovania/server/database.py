@@ -147,11 +147,11 @@ class UserAccessToken(BaseModel):
 
     @property
     def creation_datetime(self) -> datetime.datetime:
-        return datetime.datetime.fromisoformat(self.creation_date)
+        return datetime.datetime.fromisoformat(self.creation_date)  # type: ignore[arg-type]
 
     @property
     def last_used_datetime(self) -> datetime.datetime:
-        return datetime.datetime.fromisoformat(self.creation_date)
+        return datetime.datetime.fromisoformat(self.creation_date)  # type: ignore[arg-type]
 
 
 @cachetools.cached(cache=cachetools.TTLCache(maxsize=64, ttl=600))
