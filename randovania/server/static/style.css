@@ -71,10 +71,23 @@ a:active {
     margin: auto;
 }
 
+@media only screen and (min-width: 40em) {
+    .site-header {
+        padding-top: 60px;
+    }
+    .site-header__title {
+        font-size: 3.25rem;
+    }
+    .main-content__body {
+        font-size: 1.25rem;
+    }
+}
+
 table {
 	border-collapse: collapse;
     font-family: 'Akkurat-Regular', sans-serif;
-    overflow: hidden;
+    overflow-x: auto;
+    display: block;
 }
 table td {
 	padding: 15px;
@@ -95,19 +108,6 @@ table tbody tr {
 }
 table tbody tr:nth-child(odd) {
 	background-color: white;
-}
-
-
-@media only screen and (min-width: 40em) {
-.site-header {
-    padding-top: 150px;
-}
-.site-header__title {
-    font-size: 3.25rem;
-}
-.main-content__body {
-    font-size: 1.25rem;
-}
 }
 
 pre {
