@@ -1,15 +1,15 @@
-{% extends "page.html.jinja" %}
+{% extends "layout.html.jinja" %}
 
 {% block title %}
-	Login Successful
+	{{ status_message }}
 {% endblock %}
 
 {% block header %}
-	Welcome {{ user.name }}
+	{{ status_message }}
 {% endblock header %}
 
 {% block content %}
 	<p class="main-content__body" data-lead-id="main-content-body">
-		Please switch back to Randovania to continue.
+		{{ detail }}
 	</p>
 {% endblock content %}

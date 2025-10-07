@@ -198,7 +198,7 @@ async def logout(sa: ServerApp, sid: str) -> None:
 def unable_to_login(sa: ServerApp, request: Request, error_message: str, status_code: int) -> HTMLResponse:
     return sa.templates.TemplateResponse(
         request=request,
-        name="unable_to_login.html.jinja",
+        name="user_session/unable_to_login.html.jinja",
         context={
             "error_message": error_message,
         },
@@ -291,7 +291,7 @@ async def browser_discord_login_callback(
 
             return sa.templates.TemplateResponse(
                 request,
-                "return_to_randovania.html.jinja",
+                "user_session/return_to_randovania.html.jinja",
                 context={
                     "user": user,
                 },
@@ -332,7 +332,7 @@ async def browser_discord_login_callback(
 async def browser_me(sa: ServerAppDep, request: Request, user: UserDep) -> str:
     return sa.templates.TemplateResponse(
         request,
-        "me.html.jinja",
+        "user_session/me.html.jinja",
         context={
             "user": user,
         },
@@ -362,7 +362,7 @@ async def create_token(sa: ServerAppDep, request: Request, user: UserDep, name: 
 
     return sa.templates.TemplateResponse(
         request=request,
-        name="token_created.html.jinja",
+        name="user_session/token_created.html.jinja",
         context=context,
         status_code=status_code,
     )

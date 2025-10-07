@@ -177,7 +177,7 @@ class ServerApp:
         async def http_exception_handler(request: fastapi.Request, exc: fastapi.HTTPException):
             return self.templates.TemplateResponse(
                 request,
-                "http_error.html.jinja",
+                "errors/http_error.html.jinja",
                 {
                     "status_message": status_message(exc.status_code),
                     "detail": exc.detail,
@@ -196,7 +196,7 @@ class ServerApp:
 
             return self.templates.TemplateResponse(
                 request,
-                "validation_error.html.jinja",
+                "errors/validation_error.html.jinja",
                 {
                     "status_message": status_message(status_code),
                     "errors": errors,
