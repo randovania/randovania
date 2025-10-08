@@ -1,0 +1,131 @@
+.cf:before,
+.cf:after {
+    content: " ";
+    display: table;
+}
+.cf:after {
+    clear: both;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    background-color: #fffffe;
+}
+body {
+    padding: 0 20px;
+    min-width: 300px;
+    font-family: 'Akkurat-Regular', sans-serif;
+    background-color: #fffffe;
+    color: #1a1a1a;
+    text-align: center;
+    word-wrap: break-word;
+    -webkit-font-smoothing: antialiased
+}
+a:link,
+a:visited {
+    color: #00c2a8;
+}
+a:hover,
+a:active {
+    color: #03a994;
+}
+
+.site-header {
+    margin: 0 auto;
+    padding: 30px 0 0;
+    max-width: 820px;
+}
+.site-header__title {
+    margin: 0;
+    font-family: Montserrat, sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    text-transform: uppercase;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+}
+
+.main-content {
+    margin: 0 auto;
+    max-width: 820px;
+}
+.extrawide-content {
+    margin: 0 auto;
+    max-width: 85%;
+}
+.main-content__body {
+    margin: 20px 0 0;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+.left {
+    text-align: left;
+    display: block;
+    margin: auto;
+}
+
+@media only screen and (min-width: 40em) {
+    .site-header {
+        padding-top: 60px;
+    }
+    .site-header__title {
+        font-size: 3.25rem;
+    }
+    .main-content__body {
+        font-size: 1.25rem;
+    }
+}
+
+table {
+	border-collapse: collapse;
+    font-family: 'Akkurat-Regular', sans-serif;
+    overflow-x: auto;
+    display: block;
+}
+table td {
+	padding: 15px;
+}
+table thead td {
+	background-color: #333;
+	color: #ffffff;
+	font-weight: bold;
+	border: 1px solid #54585d;
+    text-align: center;
+}
+table tbody td {
+	color: #333;
+	border: 1px solid #dddfe1;
+}
+table tbody tr {
+	background-color: #f9fafb;
+}
+table tbody tr:nth-child(odd) {
+	background-color: white;
+}
+
+pre {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    font-family: monospace;
+    font-size: 1rem;
+    text-align: left;
+    max-width: 80ch;
+    margin: auto;
+    
+    background-color: whitesmoke;
+    border: 1px solid gray;
+    border-radius: 3px;
+    padding: 1ch;
+    display: block;
+}
+
+.form_inline {
+    display: inline;
+}

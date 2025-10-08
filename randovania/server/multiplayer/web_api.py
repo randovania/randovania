@@ -1,4 +1,3 @@
-import html
 import json
 from math import ceil
 from typing import Annotated
@@ -12,7 +11,7 @@ from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import json_lib
 from randovania.network_common import remote_inventory
 from randovania.server.database import MultiplayerMembership, MultiplayerSession, World, WorldUserAssociation
-from randovania.server.server_app import AdminDep, RequireAdminUser, ServerApp
+from randovania.server.server_app import AdminDep, RequireAdminUser, ServerApp, ServerAppDep
 
 router = APIRouter()
 
@@ -22,69 +21,45 @@ def RdvFileResponse(data: str, filename: str) -> Response:
 
 
 @router.get("/sessions", response_class=HTMLResponse)
-def admin_sessions(user: AdminDep, request: Request, page: Annotated[int, Query(ge=1)] = 1) -> str:
+def admin_sessions(
+    sa: ServerAppDep, user: AdminDep, request: Request, page: Annotated[int, Query(ge=1)] = 1
+) -> HTMLResponse:
     page_count = ceil(MultiplayerSession.select().count() / 20)
 
     if not page_count:
-        return "<p>No sessions.</p>"
+        return sa.templates.TemplateResponse(
+            request,
+            "basic_page.html.jinja",
+            context={
+                "title": "Sessions",
+                "header": "Sessions",
+                "content": "<p>No sessions.</p>",
+            },
+        )
 
     if page > page_count:
-        raise HTTPException(status_code=404, detail="Page not found")
+        raise HTTPException(status_code=404, detail="Session page not found")
 
     order = MultiplayerSession.creation_date.desc()  # type: ignore[attr-defined]
     paginated_query = MultiplayerSession.select().order_by(order).paginate(page, 20)
 
-    lines = []
-    for session in paginated_query:
-        assert isinstance(session, MultiplayerSession)
-        lines.append(
-            "<tr>{}</tr>".format(
-                "".join(
-                    f"<td>{col}</td>"
-                    for col in [
-                        "<a href='{}'>{}</a>".format(
-                            request.url_for("admin_session", session_id=session.id),
-                            html.escape(session.name),
-                        ),
-                        html.escape(session.creator.name),
-                        session.creation_date,
-                        len(session.members),
-                        len(session.worlds),
-                        session.password is not None,
-                    ]
-                )
-            )
-        )
-
-    previous = "Previous"
-    if page > 1:
-        previous = "<a href='{}?page={}'>Previous</a>".format(request.url_for("admin_sessions"), page - 1)
-
-    next_link = "Next"
-    if page < page_count:
-        next_link = "<a href='{}?page={}'>Next</a>".format(request.url_for("admin_sessions"), page + 1)
-
-    header = ["Name", "Creator", "Creation Date", "Num Users", "Num Worlds", "Has Password?"]
-    return (
-        "<table border='1'><tr>{header}</tr>{content}</table>Page {page} of {num_pages}. {previous} / {next}."
-    ).format(
-        header="".join(f"<th>{it}</th>" for it in header),
-        content="".join(lines),
-        page=page,
-        num_pages=page_count,
-        previous=previous,
-        next=next_link,
+    return sa.templates.TemplateResponse(
+        request,
+        "web_api/session_list.html.jinja",
+        context={
+            "page": page,
+            "page_count": page_count,
+            "sessions": list(paginated_query),
+        },
     )
 
 
 @router.get("/session/{session_id}", response_class=HTMLResponse)
-def admin_session(user: AdminDep, request: Request, session_id: int) -> str:
+def admin_session(sa: ServerAppDep, user: AdminDep, request: Request, session_id: int) -> HTMLResponse:
     try:
         session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
     except MultiplayerSession.DoesNotExist:
         raise HTTPException(status_code=404, detail="Session not found")
-
-    rows = []
 
     associations: list[WorldUserAssociation] = list(
         WorldUserAssociation.select()
@@ -93,6 +68,8 @@ def admin_session(user: AdminDep, request: Request, session_id: int) -> str:
             World.session == session,
         )
     )
+
+    assoc_contexts = []
 
     for association in associations:
         inventory = []
@@ -111,42 +88,26 @@ def admin_session(user: AdminDep, request: Request, session_id: int) -> str:
         else:
             inventory.append("Missing")
 
-        rows.append(
-            [
-                html.escape(association.user.name),
-                html.escape(association.world.name),
-                json.loads(association.world.preset)["game"],
-                association.connection_state.pretty_text,
-                ", ".join(inventory),
-                MultiplayerMembership.get_by_ids(association.user_id, session_id).admin,
-                "<a href='{}'>Download</a>".format(
-                    request.url_for("download_world_preset", world_id=association.world_id)
-                ),
-            ]
+        assoc_contexts.append(
+            {
+                "user": association.user,
+                "world": association.world,
+                "game": json.loads(association.world.preset)["game"],
+                "connection_state": association.connection_state,
+                "inventory": ", ".join(inventory),
+                "is_admin": MultiplayerMembership.get_by_ids(association.user_id, session_id).admin,
+                "world_id": association.world_id,
+            }
         )
 
-    header = ["User", "World", "Game", "Connection State", "Inventory", "Is Admin?", "Preset"]
-    table = "<table border='1'><tr>{}</tr>{}</table>".format(
-        "".join(f"<th>{h}</th>" for h in header),
-        "".join("<tr>{}</tr>".format("".join(f"<td>{h}</td>" for h in r)) for r in rows),
+    return sa.templates.TemplateResponse(
+        request,
+        "web_api/session.html.jinja",
+        context={
+            "session": session,
+            "assocations": assoc_contexts,
+        },
     )
-
-    entries = [
-        f"<p>Session: {html.escape(session.name)}</p>",
-        f"<p>Created by {html.escape(session.creator.name)} at {session.creation_datetime}</p>",
-        f"<p>Session is password protected, password is <code>{html.escape(session.password)}</code></p>"
-        if session.password is not None
-        else "Session is not password protected",
-        "<p><a href='{}'>Download rdvgame</a></p>".format(
-            request.url_for("download_session_spoiler", session_id=session_id)
-        )
-        if session.has_layout_description()
-        else "<p>No rdvgame attached</p>",
-        "<p><a href='{}'>Delete session</a></p>".format(request.url_for("delete_session", session_id=session_id)),
-        table,
-    ]
-
-    return "\n".join(entries)
 
 
 @router.get("/session/{session_id}/rdvgame")
@@ -179,12 +140,23 @@ def download_world_preset(user: AdminDep, world_id: int) -> Response:
 
 
 @router.get("/session/{session_id}/delete", dependencies=[RequireAdminUser], response_class=HTMLResponse)
-def get_delete_session(session_id: int) -> str:
-    return '<form method="POST"><input type="submit" value="Confirm delete"></form>'
+def get_delete_session(sa: ServerAppDep, request: Request, session_id: int) -> HTMLResponse:
+    try:
+        session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
+    except MultiplayerSession.DoesNotExist:
+        raise HTTPException(status_code=404, detail="Session not found")
+
+    return sa.templates.TemplateResponse(
+        request,
+        "web_api/delete_session.html.jinja",
+        context={
+            "session": session,
+        },
+    )
 
 
 @router.post("/session/{session_id}/delete", dependencies=[RequireAdminUser], response_class=HTMLResponse)
-def delete_session(request: Request, session_id: int) -> str:
+def delete_session(sa: ServerAppDep, request: Request, session_id: int) -> HTMLResponse:
     try:
         session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
     except MultiplayerSession.DoesNotExist:
@@ -192,8 +164,17 @@ def delete_session(request: Request, session_id: int) -> str:
 
     session.delete_instance(recursive=True)
 
-    return "Session deleted. <a href='{to_list}'>Return to list</a>".format(
+    content = "Session deleted. <a href='{to_list}'>Return to list</a>".format(
         to_list=request.url_for("admin_sessions"),
+    )
+    return sa.templates.TemplateResponse(
+        request,
+        "basic_page.html.jinja",
+        context={
+            "title": "Delete Session",
+            "header": "Delete Session",
+            "content": content,
+        },
     )
 
 
