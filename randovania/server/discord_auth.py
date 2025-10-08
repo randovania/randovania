@@ -7,6 +7,8 @@ import aiohttp
 from fastapi_discord import DiscordOAuthClient, Guild, Unauthorized, User
 
 if TYPE_CHECKING:
+    from fastapi import Request
+
     from randovania.server.server_app import Lifespan, RdvFastAPI, ServerApp
 
 
@@ -21,6 +23,10 @@ class CustomDiscordOAuthClient(DiscordOAuthClient):
         if token is None:
             raise Unauthorized
         return token
+
+    def get_oauth_login_url(self, request: Request, state: str | None = None):
+        self.redirect_uri = request.url_for("browser_discord_login_callback")
+        return super().get_oauth_login_url(state)
 
 
 class EnforceRoleConfiguration(TypedDict, total=True):
@@ -73,7 +79,7 @@ async def discord_oauth_lifespan(_app: RdvFastAPI) -> Lifespan[CustomDiscordOAut
 
     client_id = config["discord_client_id"]
     client_secret = config["server_config"]["discord_client_secret"]
-    redirect_uri = f"{config['server_address']}/login_callback"
+    redirect_uri = ""  # let the server route the redirect
 
     scopes = ("identify",)
 
