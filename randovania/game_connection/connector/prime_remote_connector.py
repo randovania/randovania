@@ -330,6 +330,11 @@ class PrimeRemoteConnector(RemoteConnector):
 
             if region is not None:
                 await self.update_current_inventory()
+
+                if self.at_end_of_game():
+                    self.GameHasBeenBeaten.emit()
+                    self.logger.debug("The game has been beaten")
+
                 if not has_pending_op:
                     self.message_cooldown = max(self.message_cooldown - self._dt, 0.0)
                     has_pending_op = await self._multiworld_interaction()
@@ -360,6 +365,10 @@ class PrimeRemoteConnector(RemoteConnector):
             return True
         else:
             return await self.receive_remote_pickups(self.last_inventory, self.remote_pickups)
+
+    def at_end_of_game(self) -> bool:
+        """Returns true if the player is at the end of the game / credits."""
+        return False
 
     async def _send_next_pending_message(self) -> bool:
         if not self.pending_messages or self.message_cooldown > 0.0:
