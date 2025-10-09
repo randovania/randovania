@@ -16,10 +16,8 @@ if TYPE_CHECKING:
     import uuid
 
     from randovania.game_connection.builder.connector_builder import ConnectorBuilder
-    from randovania.game_connection.connector.remote_connector import RemoteConnector
+    from randovania.game_connection.connector.remote_connector import PlayerLocationEvent, RemoteConnector
     from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
-    from randovania.game_description.db.area import Area
-    from randovania.game_description.db.region import Region
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.interface_common.options import Options
     from randovania.interface_common.world_database import WorldDatabase
@@ -143,12 +141,10 @@ class GameConnection:
             )
         return self.connected_states[connector]
 
-    def _on_player_location_changed(
-        self, connector: RemoteConnector, location: tuple[Region | None, Area | None]
-    ) -> None:
+    def _on_player_location_changed(self, connector: RemoteConnector, location: PlayerLocationEvent) -> None:
         connected_state = self._ensure_connected_state_exists(connector)
-        world, area = location
-        if world is None:
+        region, area = location
+        if region is None:
             connected_state.status = GameConnectionStatus.TitleScreen
         else:
             connected_state.status = GameConnectionStatus.InGame
