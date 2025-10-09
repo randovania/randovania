@@ -14,7 +14,7 @@ from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.gui.lib.pixmap_lib import paint_with_opacity
-from randovania.gui.lib.tracker_item_image import TrackerItemImage
+from randovania.gui.widgets.tracker_item_image import TrackerItemImage
 
 if TYPE_CHECKING:
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo

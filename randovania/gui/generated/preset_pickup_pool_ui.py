@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QGroupBox,
     QLabel, QMainWindow, QScrollArea, QSizePolicy,
     QSpacerItem, QVBoxLayout, QWidget)
 
-from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
+from randovania.gui.widgets.scroll_protected import ScrollProtectedSpinBox
 
 class Ui_PresetPickupPool(object):
     def setupUi(self, PresetPickupPool):

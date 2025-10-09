@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QGroupBox, QHBoxLayout,
     QLabel, QMainWindow, QSizePolicy, QSlider,
     QSpacerItem, QVBoxLayout, QWidget)
 
-from randovania.gui.lib.scroll_protected import ScrollProtectedSlider
+from randovania.gui.widgets.scroll_protected import ScrollProtectedSlider
 
 class Ui_PresetDreadGoal(object):
     def setupUi(self, PresetDreadGoal):

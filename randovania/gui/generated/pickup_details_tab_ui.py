@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (QAbstractItemView, QAbstractScrollArea, QApplicat
     QScrollArea, QSizePolicy, QTableView, QVBoxLayout,
     QWidget)
 
-from randovania.gui.lib.foldable import Foldable
+from randovania.gui.widgets.foldable import Foldable
 
 class Ui_PickupDetailsTab(object):
     def setupUi(self, PickupDetailsTab):

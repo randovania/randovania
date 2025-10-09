@@ -5,6 +5,10 @@ from PySide6.QtCore import Property, Qt, Signal
 
 
 class Foldable(QtWidgets.QWidget):
+    """
+    A custom widget that holds content that can be folded/collapsed.
+    """
+
     _main_layout: QtWidgets.QGridLayout
     _toggle_button: QtWidgets.QToolButton
     _header_line: QtWidgets.QFrame

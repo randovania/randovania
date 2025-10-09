@@ -5,6 +5,10 @@ from PySide6.QtCore import QEvent, Signal
 
 
 class ClickableLabel(QtWidgets.QLabel):
+    """
+    A widget that's meant to be used in place of a button, when needing to know when the widget is being entered/left.
+    """
+
     clicked = Signal()
     entered = Signal()
     left = Signal()

@@ -21,7 +21,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
     QSlider, QSpacerItem, QSpinBox, QVBoxLayout,
     QWidget)
 
-from randovania.gui.lib.scroll_protected import ScrollProtectedSlider
+from randovania.gui.widgets.scroll_protected import ScrollProtectedSlider
 
 class Ui_PrimeCosmeticPatchesDialog(object):
     def setupUi(self, PrimeCosmeticPatchesDialog):

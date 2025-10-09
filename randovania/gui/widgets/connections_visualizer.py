@@ -66,6 +66,10 @@ def create_tree_items_for_requirement(
 
 
 class ConnectionsVisualizer:
+    """
+    A widget that's meant for showing a human-readable form of a Connection/Requirement.
+    """
+
     parent: QWidget
     grid_layout: QGridLayout
 

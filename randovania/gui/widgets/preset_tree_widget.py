@@ -18,6 +18,10 @@ if TYPE_CHECKING:
 
 
 class PresetTreeWidget(QtWidgets.QTreeWidget):
+    """
+    A tree widget meant for displaying presets.
+    """
+
     game: RandovaniaGame
     preset_manager: PresetManager
     options: Options
