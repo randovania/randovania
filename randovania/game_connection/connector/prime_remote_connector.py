@@ -164,8 +164,14 @@ class PrimeRemoteConnector(RemoteConnector):
 
         Every item in the Prime games has both an `amount` and a `capacity`. The former stores how much you have of that
         item, while the latter stores how much in total you can carry. For example, 5 / 10 Missiles.
-        Randovania will store which location was last collected in the magic item's amount, and how many pickups have
-        been received in the item's capacity.
+
+        The game will increment the magic item's `amount` and `capacity` by `pickup_index+1` for a collected
+        location. Whether this is done for every location, or only locations containing off-world items is
+        up to each game implementation and can be seen in its PatchDataFactory. If the connector detects that `amount`
+        is bigger than zero, it will decrement both by `pickup_index+1` to detect the collected location.
+
+        Additionally, the connector will also store the number of remote items sent to the game in the
+        magic item's `capacity`. It will however only be read if `amount` is zero.
         """
         raise NotImplementedError
 
