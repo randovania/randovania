@@ -121,7 +121,9 @@ class ServerApp:
 
             prefix = request.headers.get("x-forwarded-prefix")
             if prefix:
-                request.scope["root_path"] = prefix
+                # StaticFiles does some weird magic with the root_path
+                if not request.scope["path"].startswith("/static"):
+                    request.scope["root_path"] = prefix
 
             return await call_next(request)
 
