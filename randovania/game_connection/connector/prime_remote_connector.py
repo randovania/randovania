@@ -210,7 +210,7 @@ class PrimeRemoteConnector(RemoteConnector):
             # Amount is bigger than 0, so we have collected an item.
             # The PDF added pickup_index+1 to both the amount and capacity, so subtract 1 back from the amount
             # to get the pickup index and emit it.
-            # Afterward, subtract the amount from both the magic item's amount and capacity.
+            # Afterward, tell the game to decrement the amount from both the magic item's amount and capacity.
             self.logger.info(f"magic item was at {magic_inv.amount}/{magic_inv.capacity}")
             self.PickupIndexCollected.emit(PickupIndex(magic_inv.amount - 1))
             patches = [
@@ -235,16 +235,19 @@ class PrimeRemoteConnector(RemoteConnector):
         remote_pickups: tuple[RemotePickup, ...],
     ) -> bool:
         """
-        Checks via the multiworld magic item whether a new pickup from the server needs to be sent to the game.
+        Checks via the multiworld magic item whether the server has a new pickup which we need to give the game by
+        sending it code to execute.
         :return: Returns True if a new pickup to the game was sent, False otherwise.
         """
 
         in_cooldown = self.message_cooldown > 0.0
         multiworld_magic_item = self.multiworld_magic_item
         magic_inv = inventory.get(multiworld_magic_item)
-        # Skip sending if game has collected a location that we didn't check yet,
-        # the game has received more pickups than we know of, or
-        # the game is in cooldown.
+        # Skip sending if game:
+        # - has collected a location that we didn't check yet as then we can't reliably get how many pickups the game
+        #   has received
+        # - has received more pickups than we know of as we can't then give the next pickup in the collected chain
+        # - the game is in cooldown as then we can't send the hud-message simultaneously to the game receiving items
         if magic_inv.amount > 0 or magic_inv.capacity >= len(remote_pickups) or in_cooldown:
             return False
 
