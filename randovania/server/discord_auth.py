@@ -24,7 +24,7 @@ class CustomDiscordOAuthClient(DiscordOAuthClient):
             raise Unauthorized
         return token
 
-    def get_oauth_login_url(self, request: Request, state: str | None = None):
+    def get_oauth_login_url(self, request: Request, state: str | None = None) -> str:
         self.redirect_uri = request.url_for("browser_discord_login_callback")
         return super().get_oauth_login_url(state)
 
