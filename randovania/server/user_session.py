@@ -225,7 +225,7 @@ async def browser_login_with_discord(sa: ServerAppDep, request: Request, sid: st
     else:
         request.session.pop("sid", None)
 
-    return RedirectResponse(sa.discord.get_oauth_login_url(state))
+    return RedirectResponse(sa.discord.get_oauth_login_url(request, state))
 
 
 class DiscordLoginCallbackParams(BaseModel):

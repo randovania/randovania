@@ -13,7 +13,7 @@ from contextlib import asynccontextmanager
 from contextvars import ContextVar
 from http.client import responses as HTTP_RESPONSES
 from pathlib import Path
-from typing import TYPE_CHECKING, Annotated, Any, Concatenate, Self, cast
+from typing import TYPE_CHECKING, Annotated, Concatenate, Self, cast
 
 import fastapi
 import fastapi_discord
@@ -104,7 +104,7 @@ class ServerApp:
         self.app.add_middleware(SessionMiddleware, secret_key=configuration["server_config"]["secret_key"])
 
         @self.app.middleware("http")
-        async def request_ctx(request: fastapi.Request, call_next: MiddlewareNext) -> Any:
+        async def request_ctx[T](request: fastapi.Request, call_next: MiddlewareNext[T]) -> T:
             """Updates the logger's contextvars for each request."""
 
             if request.client is None:
@@ -113,6 +113,18 @@ class ServerApp:
                 ctx_who.set(f"{request.client.host}:{request.client.port}")
             ctx_where.set(str(request.url))
             ctx_context.set("FastAPI")
+            return await call_next(request)
+
+        @self.app.middleware("http")
+        async def set_root_path_for_api_gateway[T](request: fastapi.Request, call_next: MiddlewareNext[T]) -> T:
+            """Handles stripped prefixes from the proxy."""
+
+            prefix = request.headers.get("x-forwarded-prefix")
+            if prefix:
+                # StaticFiles does some weird magic with the root_path
+                if not request.scope["path"].startswith("/static"):
+                    request.scope["root_path"] = prefix
+
             return await call_next(request)
 
         self._setup_exception_handlers()
