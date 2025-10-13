@@ -161,6 +161,12 @@ def _generator_parameters_to_games(parameters: Sequence[GeneratorParameters]) ->
 
 
 def _extract_generator_params_bytes(link: str) -> bytes:
+    """
+    Gets the raw bytes for the GeneratorParameters from the given permalink string, while avoiding the expensive
+    decoding operation.
+    :param link:
+    :return:
+    """
     encoded_param = link.encode("utf-8")
     encoded_param += b"=" * ((4 - len(encoded_param)) % 4)
 
@@ -170,6 +176,11 @@ def _extract_generator_params_bytes(link: str) -> bytes:
 
 
 def _extract_game_from_generator_params_bytes(generator_bytes: bytes) -> RandovaniaGame:
+    """
+    Gets the game used by the given GeneratorParameters in bytes form, avoiding needing to decode it fully.
+    :param generator_bytes:
+    :return:
+    """
     games = decode_game_list(BitPackDecoder(generator_bytes))
     assert len(games) == 1
     return games[0]
@@ -258,6 +269,10 @@ def compare_logic(args: Namespace) -> None:
     reference_data = read_file(args.reference_file)
     new_data = read_file(args.new_file)
 
+    # Since Permalinks include version information, they can be different but still contain the same GeneratorParams.
+    # So in order to properly verify two permalinks are equivalent one should compare that object.
+    # However, decoding a Permalink properly is a very slow operation especially if done 1000+ times at once so since
+    # the actual contents is not necessary, just comparing the bytes representation is all we need.
     results = {
         _extract_generator_params_bytes(link_str): (link_str, link_data) for link_str, link_data in new_data.items()
     }
@@ -268,6 +283,8 @@ def compare_logic(args: Namespace) -> None:
 
     for link_str, reference_time in reference_data.items():
         param_bytes = _extract_generator_params_bytes(link_str)
+        # Except we want to know the game the permalink is for. Thankfully that's the first thing stored in
+        # a GeneratorParams so it's easy to get it without properly parsing.
         games.append(_extract_game_from_generator_params_bytes(param_bytes))
 
         reference_times.append(reference_time)
@@ -302,7 +319,7 @@ def add_commands(sub_parsers: typing.Any) -> None:
     repeat_parser.add_argument("input_file", type=Path, help="The session to repeat.")
     repeat_parser.set_defaults(func=repeat_logic)
 
-    print_parse: ArgumentParser = sub_parsers.add_parser("print", help="Print a report files")
+    print_parse: ArgumentParser = sub_parsers.add_parser("print", help="Print a report file")
     print_parse.add_argument("file", type=Path, help="The session to print.")
     print_parse.set_defaults(func=print_logic)
 

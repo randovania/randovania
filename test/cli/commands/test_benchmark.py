@@ -56,10 +56,7 @@ def test_generate_list_of_permalinks(mocker: pytest_mock.MockerFixture) -> None:
 
 
 def test_compare_reports() -> None:
-    mock = MagicMock()
-    mock.get_preset.return_value.game = RandovaniaGame.BLANK
-
-    parameters = [mock] * 6
+    games = [RandovaniaGame.BLANK] * 6
     reference = [
         1,
         2,
@@ -77,7 +74,7 @@ def test_compare_reports() -> None:
         None,
     ]
 
-    benchmark.compare_reports(parameters, reference, results)
+    benchmark.compare_reports(games, reference, results)
 
 
 @pytest.mark.parametrize("no_data", [False, True])
