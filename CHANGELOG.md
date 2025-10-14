@@ -44,6 +44,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Changed: Going through Open Passages doesn't require to shoot a beam anymore.
+
 ##### Chozo Ruins
 
 - Fixed: Ruined Shrine: Removed unnecessary dangerous requirements.
