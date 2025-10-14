@@ -212,7 +212,8 @@ class GameDatabaseView(ABC):
     @final
     def find_area_by_identifier(self, identifier: AreaIdentifier) -> tuple[Region, Area]:
         """
-        Searches an Area by the given identifier, using `node_iterator`.
+        Searches for an Area with the given identifier, using `node_iterator`. Slow operation.
+        Raises KeyError if no area could be found.
         """
         identifier_tuple = identifier.as_tuple
         for region, area, _ in self.node_iterator():
