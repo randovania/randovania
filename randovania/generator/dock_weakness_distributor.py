@@ -33,8 +33,8 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.generator.filler.filler_configuration import FillerResults
+    from randovania.graph.state import State
     from randovania.layout.base.base_configuration import BaseConfiguration
-    from randovania.resolver.state import State
 
 
 def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePatches:
@@ -369,7 +369,7 @@ async def distribute_post_fill_weaknesses(
 
     path_to_area = {
         player: distances_to_node(
-            state.region_list,
+            state._node_provider,
             state.node,
             [],
             patches=new_patches[player],
