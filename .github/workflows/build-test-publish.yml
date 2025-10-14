@@ -103,7 +103,7 @@ jobs:
       matrix:
         os:
           - { name: "Linux", image: ubuntu-latest }
-          - { name: "macOS", image: macos-15-intel }
+          - { name: "macOS", image: macos-latest }
           - { name: "Windows", image: windows-latest }
         is_merge_queue:
           - ${{ github.event_name == 'merge_queue' }}
@@ -114,7 +114,7 @@ jobs:
           - is_merge_queue: true
             os: { name: "Linux", image: ubuntu-latest }
           - is_merge_queue: true
-            os: { name: "macOS", image: macos-15-intel }
+            os: { name: "macOS", image: macos-latest }
 
     runs-on: ${{ matrix.os.image }}
     timeout-minutes: 30
