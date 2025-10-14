@@ -109,13 +109,13 @@ async def test_admin_player_kick_member(two_player_session, mock_sa, mocker, moc
                 {
                     "id": "1179c986-758a-4170-9b07-fe4541d78db0",
                     "name": "World 1",
-                    "preset_raw": "{}",
+                    "preset_raw": ANY,
                     "has_been_beaten": False,
                 },
                 {
                     "id": "6b5ac1a1-d250-4f05-a5fb-ae37e8a92165",
                     "name": "World 2",
-                    "preset_raw": "{}",
+                    "preset_raw": ANY,
                     "has_been_beaten": False,
                 },
             ],
@@ -223,9 +223,7 @@ async def test_admin_session_patcher_file(mock_sa, mock_audit, mocker, two_playe
     mock_sa.get_current_user.return_value = database.User.get_by_id(1235)
     w2 = database.World.get_by_id(2)
 
-    mock_layout_description: PropertyMock = mocker.patch(
-        "randovania.server.database.MultiplayerSession.layout_description", new_callable=PropertyMock
-    )
+    mock_layout_description = mocker.patch("randovania.server.database.MultiplayerSession.get_layout_description")
     game = mock_layout_description.return_value.get_preset.return_value.game
     game.data.layout.cosmetic_patches = EchoesCosmeticPatches
 
@@ -596,8 +594,8 @@ async def test_admin_session_change_layout_description(
     session = database.MultiplayerSession.create(
         id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE, creator=user1, generation_in_progress=user1
     )
-    database.World.create_for(session=session, name="W1", preset=preset, order=0)
-    database.World.create_for(session=session, name="W2", preset=preset, order=1)
+    database.World.create_for(session=session, name="W1", preset_bytes=preset.as_bytes(), order=0)
+    database.World.create_for(session=session, name="W2", preset_bytes=preset.as_bytes(), order=1)
     database.MultiplayerMembership.create(user=user1, session=session, row=None, admin=True)
 
     new_preset = preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).get_preset()
@@ -747,8 +745,8 @@ async def test_admin_session_download_layout_description(
 async def test_admin_session_download_layout_description_no_spoiler(
     clean_database, mock_emit_session_update, mock_sa, mocker
 ):
-    mock_layout_description: PropertyMock = mocker.patch(
-        "randovania.server.database.MultiplayerSession.layout_description", new_callable=PropertyMock
+    mock_layout_description = mocker.patch(
+        "randovania.server.database.MultiplayerSession.get_layout_description",
     )
     user1 = database.User.create(id=1234, name="The Name")
     session = database.MultiplayerSession.create(

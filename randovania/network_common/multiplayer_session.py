@@ -63,12 +63,12 @@ class MultiplayerUser(RandovaniaUser):
 class MultiplayerWorld(JsonDataclass):
     id: uuid.UUID
     name: str
-    preset_raw: str
+    preset_raw: bytes
     has_been_beaten: bool
 
     @cached_property
     def preset(self) -> VersionedPreset:
-        return VersionedPreset.from_str(self.preset_raw)
+        return VersionedPreset.from_bytes(self.preset_raw)
 
 
 @dataclasses.dataclass(frozen=True)

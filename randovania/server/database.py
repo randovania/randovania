@@ -5,6 +5,7 @@ from __future__ import annotations
 import collections
 import datetime
 import enum
+import hashlib
 import json
 import typing
 import uuid
@@ -20,6 +21,7 @@ from sentry_sdk.tracing_utils import record_sql_queries
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import async_race_room, error, multiplayer_session
@@ -154,9 +156,63 @@ class UserAccessToken(BaseModel):
         return datetime.datetime.fromisoformat(self.creation_date)  # type: ignore[arg-type]
 
 
+class PresetData(BaseModel):
+    sha256: bytes = peewee.BlobField(primary_key=True)
+    content: bytes = peewee.BlobField()
+    schema_version: int = peewee.IntegerField()
+    game: str = peewee.CharField()
+
+    def get_preset(self) -> VersionedPreset[BaseConfiguration]:
+        return VersionedPreset[BaseConfiguration].from_bytes(self.content)
+
+    @classmethod
+    def create_for_preset(cls, preset: VersionedPreset[BaseConfiguration], preset_bytes: bytes | None = None) -> Self:
+        """
+        Creates a PresetData from the given preset.
+
+        :param preset: The preset to use.
+        :param preset_bytes: The preset's as_bytes, if you already have it.
+        :return: Reuses any existing instance with the same hash.
+        """
+        if preset_bytes is None:
+            preset_bytes = preset.as_bytes()
+        preset_hash = hashlib.sha256(preset_bytes).digest()
+
+        try:
+            game_str = preset.game.value
+        except ValueError:
+            # Unknown game
+            game_str = preset.data["game"]
+
+        return cls.get_or_create(
+            sha256=preset_hash,
+            content=preset_bytes,
+            schema_version=preset.schema_version,
+            game=game_str,
+        )[0]
+
+    @classmethod
+    def create_for_bytes(cls, preset_bytes: bytes) -> Self:
+        """
+        Creates a PresetData from a preset decoded from the given bytes.
+        Reuses any existing instance with the same hash.
+        """
+        preset = VersionedPreset[BaseConfiguration].from_bytes(preset_bytes)
+        return cls.create_for_preset(preset, preset_bytes)
+
+    @classmethod
+    def create_for_json(cls, preset_json: JsonObject) -> Self:
+        """
+        Creates a PresetData from a preset json object.
+        Reuses any existing instance with the same hash.
+        """
+        preset = VersionedPreset[BaseConfiguration](preset_json)
+        return cls.create_for_preset(preset)
+
+
 @cachetools.cached(cache=cachetools.TTLCache(maxsize=64, ttl=600))
-def _decode_layout_description(layout: bytes, presets: tuple[str, ...]) -> LayoutDescription:
-    preset_list: list[VersionedPreset] = [VersionedPreset.from_str(preset) for preset in presets]
+def _decode_layout_description(layout: bytes, presets: tuple[bytes, ...]) -> LayoutDescription:
+    preset_list: list[VersionedPreset] = [VersionedPreset.from_bytes(preset) for preset in presets]
     if layout.startswith(b"RDVG"):
         return LayoutDescription.from_bytes(layout, presets=preset_list)
     else:
@@ -190,19 +246,7 @@ class MultiplayerSession(BaseModel):
     def has_layout_description(self) -> bool:
         return self.layout_description_json is not None
 
-    def _get_layout_description(self, ordered_worlds: list[World]) -> LayoutDescription:
-        assert self.layout_description_json is not None
-        return _decode_layout_description(self.layout_description_json, tuple(world.preset for world in ordered_worlds))
-
-    @property
-    def layout_description(self) -> LayoutDescription | None:
-        if self.layout_description_json is not None:
-            return self._get_layout_description(self.get_ordered_worlds())
-        else:
-            return None
-
-    @layout_description.setter
-    def layout_description(self, description: LayoutDescription | None) -> None:
+    def set_layout_description(self, description: LayoutDescription | None) -> None:
         if description is not None:
             encoded = description.as_binary(force_spoiler=True, include_presets=False)
             self.layout_description_json = encoded
@@ -217,6 +261,17 @@ class MultiplayerSession(BaseModel):
             self.layout_description_json = None
             self.game_details_json = None
 
+    def get_layout_description(self, ordered_worlds: list[World] | None = None) -> LayoutDescription | None:
+        if self.layout_description_json is not None:
+            if ordered_worlds is None:
+                ordered_worlds = self.get_ordered_worlds()
+
+            return _decode_layout_description(
+                self.layout_description_json, tuple(world.preset_data.content for world in ordered_worlds)
+            )
+        else:
+            return None
+
     def get_layout_description_as_json(self) -> dict | None:
         """Get the stored LayoutDescription as a JSON object"""
         if self.layout_description_json is not None:
@@ -227,12 +282,9 @@ class MultiplayerSession(BaseModel):
         return None
 
     def get_layout_description_as_binary(self) -> bytes | None:
-        layout = self.layout_description
-        if layout is not None:
-            # TODO: just return layout_description_json directly!
-            return layout.as_binary(include_presets=False, force_spoiler=True)
-        else:
-            return None
+        # Technically it should be the following. But trusting the db is correct is a lot faster!
+        # self.get_layout_description().as_binary(include_presets=False, force_spoiler=True)
+        return self.layout_description_json
 
     def game_details(self) -> GameDetails | None:
         if self.game_details_json is not None:
@@ -260,14 +312,27 @@ class MultiplayerSession(BaseModel):
         ]
 
     def get_ordered_worlds(self) -> list[World]:
-        return list(World.select().where(World.session == self).order_by(World.order.asc()))  # type: ignore[union-attr]
+        return list(
+            World.select(
+                World.id,
+                World.order,
+                World.uuid,
+                World.name,
+                World.beaten,
+                World.preset_data,
+                PresetData.content,
+            )
+            .join(PresetData, on=World.preset_data)
+            .where(World.session == self)
+            .order_by(World.order.asc())  # type: ignore[union-attr]
+        )
 
     def describe_actions(self) -> multiplayer_session.MultiplayerSessionActions:
         if not self.has_layout_description():
             return multiplayer_session.MultiplayerSessionActions(self.id, [])
 
         worlds = self.get_ordered_worlds()
-        description: LayoutDescription = self._get_layout_description(worlds)
+        description: LayoutDescription = self.get_layout_description(worlds)
         world_by_id = {world.get_id(): world for world in worlds}
 
         def _describe_action(action: WorldAction) -> multiplayer_session.MultiplayerSessionAction:
@@ -291,7 +356,8 @@ class MultiplayerSession(BaseModel):
             self.id,
             [
                 _describe_action(action)
-                for action in WorldAction.select().where(WorldAction.session == self).order_by(WorldAction.time.asc())  # type: ignore[attr-defined]
+                for action in WorldAction.select().where(WorldAction.session == self).order_by(WorldAction.time.asc())
+                # type: ignore[attr-defined]
             ],
         )
 
@@ -305,10 +371,10 @@ class MultiplayerSession(BaseModel):
             world.id: MultiplayerWorld(
                 id=world.uuid,
                 name=world.name,
-                preset_raw=world.preset,
+                preset_raw=world.preset_data.content,
                 has_been_beaten=world.beaten,
             )
-            for world in self.worlds
+            for world in self.get_ordered_worlds()
         }
 
         # Fetch the members, with a Join to also fetch the member name
@@ -393,6 +459,7 @@ class World(BaseModel):
     preset: str = peewee.TextField()
     order: int | None = peewee.IntegerField(null=True, default=None)
     beaten: bool = peewee.BooleanField(default=False)
+    preset_data: PresetData | None = peewee.ForeignKeyField(PresetData, null=True)
 
     associations: list[WorldUserAssociation]
 
@@ -415,7 +482,7 @@ class World(BaseModel):
         cls,
         session: MultiplayerSession,
         name: str,
-        preset: VersionedPreset,
+        preset_bytes: bytes,
         *,
         uid: UUID | None = None,
         order: int | None = None,
@@ -423,11 +490,13 @@ class World(BaseModel):
     ) -> Self:
         if uid is None:
             uid = uuid.uuid4()
+
         return cls().create(
             session=session,
             uuid=uid,
             name=name,
-            preset=json.dumps(preset.as_json, separators=(",", ":")),
+            preset="",
+            preset_data=PresetData.create_for_bytes(preset_bytes),
             order=order,
             beaten=beaten,
         )
@@ -761,6 +830,8 @@ class DatabaseMigrations(enum.Enum):
     ADD_READY_TO_MEMBERSHIP = "ready_membership"
     SESSION_STATE_TO_VISIBILITY = "session_state_to_visibility"
     ADD_GAME_BEATEN = "game_beaten"
+    ADD_WORLD_PRESET_SHA256 = "add_world_preset_sha256"
+    MIGRATE_WORLD_PRESET = "migrate_world_preset"
 
 
 class PerformedDatabaseMigrations(BaseModel):
@@ -771,6 +842,7 @@ all_classes: list[type[BaseModel]] = [
     User,
     UserAccessToken,
     MultiplayerSession,
+    PresetData,
     World,
     WorldUserAssociation,
     MultiplayerMembership,

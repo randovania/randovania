@@ -78,23 +78,19 @@ def sample_session(preset_manager: PresetManager) -> MultiplayerSessionEntry:
             MultiplayerWorld(
                 name="W1",
                 id=u1,
-                preset_raw=json.dumps(
-                    preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
-                ),
+                preset_raw=preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_bytes(),
                 has_been_beaten=False,
             ),
             MultiplayerWorld(
                 name="W2",
                 id=u2,
-                preset_raw=json.dumps(preset_manager.default_preset.as_json),
+                preset_raw=preset_manager.default_preset.as_bytes(),
                 has_been_beaten=False,
             ),
             MultiplayerWorld(
                 name="W3",
                 id=u3,
-                preset_raw=json.dumps(
-                    preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
-                ),
+                preset_raw=preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_bytes(),
                 has_been_beaten=False,
             ),
         ],
@@ -206,9 +202,7 @@ async def test_on_session_meta_update(
             MultiplayerWorld(
                 name="W1",
                 id=u1,
-                preset_raw=json.dumps(
-                    preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
-                ),
+                preset_raw=preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_bytes(),
                 has_been_beaten=False,
             ),
         ],
@@ -531,13 +525,13 @@ async def test_generate_game(
         MultiplayerWorld(
             id=uuid.uuid4(),
             name="W1",
-            preset_raw=json.dumps(preset_manager.default_preset.as_json),
+            preset_raw=preset_manager.default_preset.as_bytes(),
             has_been_beaten=False,
         ),
         MultiplayerWorld(
             id=uuid.uuid4(),
             name="W2",
-            preset_raw=json.dumps(preset_manager.default_preset.as_json),
+            preset_raw=preset_manager.default_preset.as_bytes(),
             has_been_beaten=False,
         ),
     ]
@@ -980,7 +974,7 @@ async def test_game_export_listener(
         new_callable=AsyncMock,
         return_value=QtWidgets.QDialog.DialogCode.Accepted,
     )
-    mock_preset_from = mocker.patch("randovania.layout.versioned_preset.VersionedPreset.from_str")
+    mock_preset_from = mocker.patch("randovania.layout.versioned_preset.VersionedPreset.from_bytes")
 
     game = mock_preset_from.return_value.game
     window._session = MagicMock()
@@ -988,7 +982,7 @@ async def test_game_export_listener(
     world = MultiplayerWorld(
         id=uuid.uuid4(),
         name="W1",
-        preset_raw=json.dumps(preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json),
+        preset_raw=preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_bytes(),
         has_been_beaten=False,
     )
     window._session.get_world.return_value = world

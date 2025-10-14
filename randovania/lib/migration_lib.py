@@ -24,10 +24,14 @@ Migrations = typing.Sequence[Migration | None]
 GameMigrations = typing.Sequence[GameMigration | None]
 
 
+def get_schema_version(data: dict) -> int:
+    return typing.cast("int", data.get("schema_version", 1))
+
+
 def apply_migrations(
     data: dict, migrations: Migrations, *, copy_before_migrating: bool = False, version_name: str = "version"
 ) -> dict:
-    schema_version = typing.cast("int", data.get("schema_version", 1))
+    schema_version = get_schema_version(data)
     version = get_version(migrations)
 
     while schema_version < version:

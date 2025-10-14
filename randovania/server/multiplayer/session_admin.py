@@ -127,7 +127,7 @@ async def _create_world(
 
     sa.logger.info(f"{session_common.describe_session(session)}: Creating world {name}.")
 
-    world = World.create_for(session=session, name=name, preset=preset)
+    world = World.create_for(session=session, name=name, preset_bytes=preset_bytes)
     await session_common.add_audit_entry(sa, sid, session, f"Created new world {world.name}")
     return world
 
@@ -266,7 +266,7 @@ async def _change_layout_description(
 
         try:
             description = LayoutDescription.from_bytes(
-                description_bytes, presets=[VersionedPreset.from_str(world.preset) for world in worlds]
+                description_bytes, presets=[world.preset_data.get_preset() for world in worlds]
             )
         except InvalidLayoutDescription as e:
             raise error.InvalidActionError(f"Invalid layout: {e}") from e
@@ -283,7 +283,7 @@ async def _change_layout_description(
             world.save()
 
         session.generation_in_progress = None
-        session.layout_description = description
+        session.set_layout_description(description)
         session.save()
 
         await session_common.emit_session_actions_update(sa, session)
@@ -388,10 +388,12 @@ async def _get_permalink(sa: ServerApp, sid: str, session: MultiplayerSession) -
 
     if not session.has_layout_description():
         raise error.InvalidActionError("Session does not contain a game")
-    assert session.layout_description is not None
+
+    layout_description = session.get_layout_description()
+    assert layout_description is not None
 
     await session_common.add_audit_entry(sa, sid, session, "Requested permalink")
-    return session.layout_description.permalink.as_base64_str
+    return layout_description.permalink.as_base64_str
 
 
 async def admin_session(sa: ServerApp, sid: str, session_id: int, action: str, *args: typing.Any) -> typing.Any:
@@ -623,7 +625,7 @@ async def _create_patcher_file(
     if player_index is None:
         raise error.InvalidActionError("Unknown world uid for exporting")
 
-    layout_description = session.layout_description
+    layout_description = session.get_layout_description()
     assert layout_description is not None
     players_config = PlayersConfiguration(
         player_index=player_index,
