@@ -4,6 +4,7 @@ import contextlib
 import functools
 import logging
 import typing
+from typing import Any
 
 from PySide6 import QtCore, QtWidgets
 
@@ -14,6 +15,7 @@ from randovania.network_common import admin_actions, error
 
 if typing.TYPE_CHECKING:
     import uuid
+    from collections.abc import Callable, Coroutine
 
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     from randovania.layout.versioned_preset import VersionedPreset
@@ -26,11 +28,11 @@ RetType = typing.TypeVar("RetType")
 OriginalFunc = typing.Callable[Param, RetType]
 
 
-def handle_network_errors[**Param, RetType](
-    fn: typing.Callable[typing.Concatenate[MultiplayerSessionApi, Param], RetType],
-) -> typing.Callable[Param, RetType]:
+def handle_network_errors[T, **P](
+    fn: Callable[P, Coroutine[Any, Any, T]],
+) -> Callable[P, Coroutine[Any, Any, T | None]]:
     @functools.wraps(fn)
-    async def wrapper(self: MultiplayerSessionApi, *args: typing.Any, **kwargs: typing.Any) -> RetType | None:
+    async def wrapper(self: MultiplayerSessionApi, *args: P.args, **kwargs: P.kwargs) -> T | None:
         parent = self.widget_root
         try:
             return await fn(self, *args, **kwargs)
