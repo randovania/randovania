@@ -698,6 +698,23 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                     "doors": {},
                 }
 
+        # Change Dynamo Access so that the Elite Pirate already spawns on first pass.
+        dynamo_access = level_data["Phazon Mines"]["rooms"]["Dynamo Access"]
+        dynamo_access["deleteIds"] = [
+            0x001801A9,  # Plasma Beam Inventory Activator
+            0x001801A8,  # Please Beam Inventory Activator Timer
+        ]
+        dynamo_access["triggers"] = [
+            {
+                "id": 0x00180138,  # Trigger for Elite Pirate near Omega Research
+                "active": True,
+            },
+            {
+                "id": 0x00180139,  # Trigger for Elite Pirate near Central Dynamo
+                "active": True,
+            },
+        ]
+
         # serialize elevator modifications
         for region in regions:
             for area in region.areas:
@@ -752,12 +769,17 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
 
         # Remove Bars in Great Tree Hall
         if self.configuration.remove_bars_great_tree_hall:
-            level_data["Tallon Overworld"]["rooms"]["Great Tree Hall"]["deleteIds"] = [
-                2359733,  # 0x002401B5 - bar
-                2359744,  # 0x002401C0 - spinner auto-enable timer
-                2359830,  # 0x00240216 - scan front
-                2359829,  # 0x00240215 - scan back
-            ]
+            room: dict = level_data["Tallon Overworld"]["rooms"]["Great Tree Hall"]
+            room.setdefault("setMemoryRelays", []).append(2360008)  # 0x2402c8: Memory Relay - keep POIs deactive
+            room.setdefault("layers", {})["2"] = False  # Layer 2: Gate Unsolved
+            room.setdefault("addConnections", []).append(
+                {
+                    "senderId": 2360008,  # 0x2402c8: Memory Relay - keep POIs deactive
+                    "state": "ACTIVE",
+                    "targetId": 2359798,  # 0x2401f6: Platform - Bars Solved
+                    "message": "ACTIVATE",
+                }
+            )
 
         # serialize room modifications
         if self.configuration.superheated_probability != 0:

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [10.3.0] - 2025-11-??
 
 - Added: The Multiworld Session will now display when a world has been beaten. This is supported for the following games:
+  - Another Metroid 2 Remake
   - Metroid Prime
 - Changed: Centered the text at the top of the Hints preset settings.
 - Changed: Cleaned up how Specific Pickup Hints are shown in the preset settings.
@@ -29,6 +30,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Fixed: Crash when entering Metroid Prime Lair while in Scan Visor
+- Fixed: Rare crash that can happen in any room
+- Fixed: Sheegoth intro cutscene not repositioning the player at the end if cutscene was not skipped in Chapel of the Elders
+- Fixed: Artifact Temple totem hitbox persisting after Meta Ridley death cutscene
+- Fixed: Sun Tower Access boxes being reloaded after performing Early Wild (inconsistent with vanilla)
+- Fixed: Incorrect Energy Core platform behavior if cutscene skipped on wrong frame
+- Fixed: Chozo music stopping upon entering Training Chamber
+- Fixed: Appearance of "Remove Bars in Great Tree Hall" patch
+- Changed: Charge and Charge Combo projectiles reflected from DLR doors no longer hurt the player
+- Changed: Adjusted timing of the jingle and text after acquiring the item at each of the 4 vanilla Power Bomb Expansion locations
+- Changed: Adjusted fit of main menu text to accommodate larger seed hashes
+- Changed: Adjusted fit of DLR Blast Shields over doors
+- Changed: Research Core cutscene camera angle will now be consistent regardless of the height of the placed pickup
+- Changed: The Elite Pirate in Dynamo Access will now appear on the first pass rather than only after Plasma Beam has been obtained. This makes the behaviour easier to understand and fixes cases where a game becomes logically impossible.
+
 #### Logic Database
 
 ##### Chozo Ruins
@@ -37,6 +53,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Phazon Mines
 
+- Changed: Fighting an Elite Pirate/Phazon Elite now has consistent requirements in Dynamo Access, Elite Control and Elite Research.
+- Changed: Adjusted the Requirements to fight and Elite Pirate/Phazon Elite to be more accurate.
 - Fixed: Metroid Quarantine A: Now correctly checks for the barrier to be lowered when going from Quarantine Access A to Front of Spider Track (Bridge).
 - Fixed: Metroid Quarantine A: Now correctly checks for the Enabled Backwards Lower Mines going from Front of Spider Track (Wall) to Quarantine Access A.
 

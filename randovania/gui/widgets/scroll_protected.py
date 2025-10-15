@@ -5,6 +5,10 @@ from PySide6.QtCore import QEvent, Qt
 
 
 class ScrollProtectedSlider(QtWidgets.QSlider):
+    """
+    A custom Slider that will not be affected by Mouse Wheel scrolling unless it is focused.
+    """
+
     def __init__(self, orientation: Qt.Orientation, parent: QtWidgets.QWidget | None = None):
         super().__init__(orientation, parent)
         self.installEventFilter(self)
@@ -28,6 +32,10 @@ class ScrollProtectedSlider(QtWidgets.QSlider):
 
 
 class ScrollProtectedSpinBox(QtWidgets.QSpinBox):
+    """
+    A custom SpinBox that will not be affected by Mouse Wheel scrolling unless it is focused.
+    """
+
     def __init__(self, parent):
         super().__init__(parent)
         self.installEventFilter(self)

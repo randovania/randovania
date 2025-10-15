@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QDialog, QGroupBox, QLabel,
     QSizePolicy, QVBoxLayout, QWidget)
 
-from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox
+from randovania.gui.widgets.scroll_protected import ScrollProtectedComboBox
 
 class Ui_PickupStyleWidget(object):
     def setupUi(self, PickupStyleWidget):

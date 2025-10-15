@@ -36,9 +36,9 @@ jobs:
           fetch-depth: 0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
-          version: "0.8.23"
+          version: "0.9.3"
           enable-cache: true
 
       - name: Set up Python
@@ -69,9 +69,9 @@ jobs:
           fetch-depth: 0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
-          version: "0.8.23"
+          version: "0.9.3"
           enable-cache: true
 
       - name: Set up Python
@@ -103,7 +103,7 @@ jobs:
       matrix:
         os:
           - { name: "Linux", image: ubuntu-latest }
-          - { name: "macOS", image: macos-15-intel }
+          - { name: "macOS", image: macos-latest }
           - { name: "Windows", image: windows-latest }
         is_merge_queue:
           - ${{ github.event_name == 'merge_queue' }}
@@ -114,7 +114,7 @@ jobs:
           - is_merge_queue: true
             os: { name: "Linux", image: ubuntu-latest }
           - is_merge_queue: true
-            os: { name: "macOS", image: macos-15-intel }
+            os: { name: "macOS", image: macos-latest }
 
     runs-on: ${{ matrix.os.image }}
     timeout-minutes: 30
@@ -128,9 +128,9 @@ jobs:
           fetch-depth: 0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
-          version: "0.8.23"
+          version: "0.9.3"
           enable-cache: true
 
       - name: Set up Python
@@ -197,9 +197,9 @@ jobs:
           fetch-depth: 0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
-          version: "0.8.23"
+          version: "0.9.3"
           enable-cache: true
 
       - name: Set up Python
@@ -353,9 +353,9 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
-          version: "0.8.23"
+          version: "0.9.3"
           enable-cache: true
 
       - name: Set up Python
@@ -485,9 +485,9 @@ jobs:
           fetch-depth: 0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
-          version: "0.8.23"
+          version: "0.9.3"
           enable-cache: true
 
       - name: Set up Python

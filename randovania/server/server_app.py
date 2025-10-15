@@ -11,15 +11,20 @@ import typing
 from collections.abc import AsyncGenerator, Coroutine
 from contextlib import asynccontextmanager
 from contextvars import ContextVar
+from http.client import responses as HTTP_RESPONSES
 from pathlib import Path
-from typing import TYPE_CHECKING, Annotated, Any, Concatenate, Self, cast
+from typing import TYPE_CHECKING, Annotated, Concatenate, Self, cast
 
 import fastapi
 import fastapi_discord
 import peewee
 import sentry_sdk
+import starlette
+import starlette.exceptions
 from cryptography.fernet import Fernet
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import PlainTextResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from prometheus_client import Summary
 from prometheus_fastapi_instrumentator import Instrumentator
@@ -99,7 +104,7 @@ class ServerApp:
         self.app.add_middleware(SessionMiddleware, secret_key=configuration["server_config"]["secret_key"])
 
         @self.app.middleware("http")
-        async def request_ctx(request: fastapi.Request, call_next: MiddlewareNext) -> Any:
+        async def request_ctx[T](request: fastapi.Request, call_next: MiddlewareNext[T]) -> T:
             """Updates the logger's contextvars for each request."""
 
             if request.client is None:
@@ -110,7 +115,23 @@ class ServerApp:
             ctx_context.set("FastAPI")
             return await call_next(request)
 
-        self.templates = Jinja2Templates(directory=Path(__file__).parent.joinpath("templates"))
+        @self.app.middleware("http")
+        async def set_root_path_for_api_gateway[T](request: fastapi.Request, call_next: MiddlewareNext[T]) -> T:
+            """Handles stripped prefixes from the proxy."""
+
+            prefix = request.headers.get("x-forwarded-prefix")
+            if prefix:
+                # StaticFiles does some weird magic with the root_path
+                if not request.scope["path"].startswith("/static"):
+                    request.scope["root_path"] = prefix
+
+            return await call_next(request)
+
+        self._setup_exception_handlers()
+
+        server_path = Path(__file__).parent
+        self.templates = Jinja2Templates(directory=server_path.joinpath("templates"))
+        self.app.mount("/static", StaticFiles(directory=server_path.joinpath("static")), name="static")
 
         self.metrics = Instrumentator()
         self.metrics.instrument(self.app)
@@ -159,6 +180,43 @@ class ServerApp:
                 request.headers.get("X-Forwarded-For"),
             )
             return randovania.VERSION
+
+    def _setup_exception_handlers(self) -> None:
+        def status_message(status_code: int) -> str:
+            return f"{status_code} {HTTP_RESPONSES[status_code]}"
+
+        @self.app.exception_handler(starlette.exceptions.HTTPException)
+        async def http_exception_handler(request: fastapi.Request, exc: fastapi.HTTPException) -> fastapi.Response:
+            return self.templates.TemplateResponse(
+                request,
+                "errors/http_error.html.jinja",
+                {
+                    "status_message": status_message(exc.status_code),
+                    "detail": exc.detail,
+                },
+                status_code=exc.status_code,
+            )
+
+        @self.app.exception_handler(RequestValidationError)
+        async def validation_exception_handler(
+            request: fastapi.Request, exc: RequestValidationError
+        ) -> fastapi.Response:
+            status_code = 422
+
+            if exc.args:
+                errors = exc.args[0]
+            else:
+                errors = [{"type": "error", "loc": ("query",), "msg": "Unknown error"}]
+
+            return self.templates.TemplateResponse(
+                request,
+                "errors/validation_error.html.jinja",
+                {
+                    "status_message": status_message(status_code),
+                    "errors": errors,
+                },
+                status_code=status_code,
+            )
 
     async def get_current_user(self, sid: str) -> User:
         """Returns the User associated with this sid."""
@@ -368,8 +426,11 @@ def get_user(needs_admin: bool) -> AsyncCallable[[ServerAppDep, fastapi.Request]
 
             return user
 
-        except fastapi_discord.exceptions.Unauthorized:
-            raise fastapi.HTTPException(status_code=404, detail="Unknown user")
+        except (
+            fastapi_discord.exceptions.Unauthorized,
+            User.DoesNotExist,
+        ):
+            raise fastapi.HTTPException(status_code=401, detail="Unknown user")
 
     return handler
 

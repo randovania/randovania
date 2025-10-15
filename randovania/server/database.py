@@ -145,6 +145,14 @@ class UserAccessToken(BaseModel):
     class Meta:
         primary_key = peewee.CompositeKey("user", "name")
 
+    @property
+    def creation_datetime(self) -> datetime.datetime:
+        return datetime.datetime.fromisoformat(self.creation_date)  # type: ignore[arg-type]
+
+    @property
+    def last_used_datetime(self) -> datetime.datetime:
+        return datetime.datetime.fromisoformat(self.creation_date)  # type: ignore[arg-type]
+
 
 @cachetools.cached(cache=cachetools.TTLCache(maxsize=64, ttl=600))
 def _decode_layout_description(layout: bytes, presets: tuple[str, ...]) -> LayoutDescription:

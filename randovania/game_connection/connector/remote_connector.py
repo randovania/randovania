@@ -18,7 +18,7 @@ if typing.TYPE_CHECKING:
 
 
 class PlayerLocationEvent(typing.NamedTuple):
-    world: Region | None
+    region: Region | None
     area: Area | None
 
 
@@ -43,8 +43,19 @@ enum_lib.add_long_name(
 class RemoteConnector:
     _layout_uuid: uuid.UUID
     PlayerLocationChanged = RdvSignal[[PlayerLocationEvent]]()
+    """
+    Signal that gets fired when the player changes its location in the game. Argument is a PlayerLocationEvent
+    indicating the new Region and Area.
+
+    Tracking whether the player is in-game (e.g. region is not None) is the bare minimum. However if possible, tracking
+    the region accurately is recommended. Tracking the Area is entirely optional.
+    """
+
     PickupIndexCollected = RdvSignal[[PickupIndex]]()
+    """Signal that gets fired when the player collects a Pickup. Argument is the collected PickupIndex."""
+
     InventoryUpdated = RdvSignal[[Inventory]]()
+    """Signal that gets fired when a player's inventory changed. Argument is the new inventory."""
 
     GameHasBeenBeaten = RdvSignal()
     """Signal that gets fired when a game has been beaten."""

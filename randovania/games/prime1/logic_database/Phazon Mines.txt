@@ -731,9 +731,29 @@ Extra - aabb: [-86.10738, 118.43238, 15.926657, 29.835865, 233.99252, 83.92861]
   * Extra - world_rotation: (-179.50708, -0.0, 0.0)
   > Pickup (Artifact of Warrior)
       All of the following:
-          Can Use Power Bombs and Shoot Any Beam
+          Can Use Power Bombs
           After Invisible Drone or Enabled Phazon Elite without Dynamo
-          Charge Beam or Combat (Beginner)
+          All of the following:
+              # Kill Phazon Elite (slightly different than the Elite Pirate Template)
+              Shoot Any Beam
+              Any of the following:
+                  Any of the following:
+                      # Circle around Pirate
+                      # Beam only
+                      Combat (Intermediate)
+                      All of the following:
+                          # Missile-spam strat
+                          Combat (Beginner)
+                          Any of the following:
+                              Missile ≥ 25 and Disabled Hard Mode
+                              Power Beam ≥ 50 and Enabled Hard Mode
+                  All of the following:
+                      # Normal Fight
+                      Normal Damage ≥ 200
+                      # Weaponry
+                      Charge Beam or Combat (Beginner) or Shoot Plasma Beam
+                      # Dodging
+                      Space Jump Boots or Combat (Beginner)
   > Top Floor
       All of the following:
           Normal Damage ≥ 200 or Shoot Any Beam
@@ -971,8 +991,8 @@ Extra - aabb: [-18.74421, 79.04062, -74.48461, 91.819305, 157.94768, -0.48807144
               # https://youtu.be/VOesQWYfL-4
               Standable Terrain (Intermediate)
   > Event - Elite Pirate Defeated
-      # https://youtu.be/mx0rQa9ZAY4
-      Charge Beam or Combat (Beginner) or Normal Damage ≥ 200
+      # Combat trick to circle around Pirate: https://youtu.be/mx0rQa9ZAY4
+      Kill Elite Pirate
 
 > Pickup (Items Every Room); Heals? False
   * Layers: items_every_room
@@ -1347,10 +1367,8 @@ Extra - aabb: [57.918835, -49.629333, -88.16487, 129.05498, -6.0125637, -65.8200
   * Extra - nonstandard: False
   * Extra - world_position: (129.04474, -14.07471, -83.17842)
   * Extra - world_rotation: (0.0, -0.0, 0.0)
-  > Door to Omega Research
-      No Plasma Beam or After Elite Pirate Fight (Dynamo Access)
-  > Event - Elite Pirate Fight
-      Plasma Beam
+  > Fight Arena
+      Trivial
 
 > Door to Omega Research; Heals? False
   * Layers: default
@@ -1359,23 +1377,30 @@ Extra - aabb: [57.918835, -49.629333, -88.16487, 129.05498, -6.0125637, -65.8200
   * Extra - nonstandard: False
   * Extra - world_position: (70.1183, -39.56736, -77.58645)
   * Extra - world_rotation: (0.0, -0.0, 0.0)
-  > Door to Central Dynamo
-      No Plasma Beam or After Elite Pirate Fight (Dynamo Access)
-  > Event - Elite Pirate Fight
-      Plasma Beam
+  > Fight Arena
+      Trivial
 
 > Event - Elite Pirate Fight; Heals? False
   * Layers: default
   * Event Elite Pirate Fight (Dynamo Access)
   * Extra - world_position: (91.228378, -23.425991, -82.599899)
-  > Door to Omega Research
-      # https://youtu.be/20peXRPG-e0
-      Charge Beam or Combat (Beginner) or Normal Damage ≥ 200
+  > Fight Arena
+      Trivial
 
 > Pickup (Items Every Room); Heals? False
   * Layers: items_every_room
   * Pickup 215; Category? Minor
   * Extra - position_required: True
+
+> Fight Arena; Heals? False
+  * Layers: default
+  > Door to Central Dynamo
+      After Elite Pirate Fight (Dynamo Access)
+  > Door to Omega Research
+      After Elite Pirate Fight (Dynamo Access)
+  > Event - Elite Pirate Fight
+      # Combat trick to circle around pirate: https://youtu.be/20peXRPG-e0
+      Kill Elite Pirate
 
 ----------------
 Transport to Magmoor Caverns South
