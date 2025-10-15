@@ -21,7 +21,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDockWidget,
     QSizePolicy, QSlider, QTreeWidget, QTreeWidgetItem,
     QVBoxLayout, QWidget)
 
-from randovania.gui.lib.data_editor_canvas import DataEditorCanvas
+from randovania.gui.widgets.data_editor_canvas import DataEditorCanvas
 
 class Ui_DataEditorWindow(object):
     def setupUi(self, DataEditorWindow):

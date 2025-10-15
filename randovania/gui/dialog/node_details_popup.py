@@ -26,8 +26,8 @@ from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.node_details_popup_ui import Ui_NodeDetailsPopup
 from randovania.gui.lib import async_dialog, common_qt_lib, signal_handling
 from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
-from randovania.gui.lib.editable_list_view import EditableListModel
 from randovania.gui.lib.signal_handling import set_combo_with_value
+from randovania.gui.widgets.editable_list_view import EditableListModel
 from randovania.lib import enum_lib, frozen_lib
 
 if TYPE_CHECKING:

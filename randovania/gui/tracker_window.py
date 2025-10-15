@@ -29,7 +29,7 @@ from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
-from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
+from randovania.gui.widgets.scroll_protected import ScrollProtectedSpinBox
 from randovania.layout import filtered_database
 from randovania.layout.lib.teleporters import TeleporterConfiguration, TeleporterShuffleMode
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset

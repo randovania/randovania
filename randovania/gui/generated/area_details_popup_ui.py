@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialog, QDialogBu
     QHBoxLayout, QLabel, QLineEdit, QPlainTextEdit,
     QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 
-from randovania.gui.lib.hint_feature_list_view import HintFeatureListView
+from randovania.gui.widgets.hint_feature_list_view import HintFeatureListView
 
 class Ui_AreaDetailsPopup(object):
     def setupUi(self, AreaDetailsPopup):

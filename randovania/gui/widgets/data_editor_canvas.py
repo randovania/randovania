@@ -56,6 +56,10 @@ def centered_text(painter: QtGui.QPainter, pos: QPointF, text: str) -> None:
 
 
 class DataEditorCanvas(QtWidgets.QWidget):
+    """
+    A widget that's meant to visualize a game's logic graph.
+    """
+
     game: RandovaniaGame | None = None
     region: Region | None = None
     area: Area | None = None

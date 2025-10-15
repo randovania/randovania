@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QGroupBox,
     QSizePolicy, QSlider, QSpacerItem, QVBoxLayout,
     QWidget)
 
-from randovania.gui.lib.scroll_protected import ScrollProtectedSlider
+from randovania.gui.widgets.scroll_protected import ScrollProtectedSlider
 
 class Ui_PresetPrimeChaos(object):
     def setupUi(self, PresetPrimeChaos):

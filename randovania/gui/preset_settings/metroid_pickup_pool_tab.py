@@ -6,9 +6,9 @@ from typing import TYPE_CHECKING
 from PySide6 import QtWidgets
 
 from randovania.game_description import default_database
-from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
 from randovania.gui.preset_settings.pickup_pool_tab import PresetPickupPool
 from randovania.gui.preset_settings.pickup_style_widget import PickupStyleWidget
+from randovania.gui.widgets.scroll_protected import ScrollProtectedSpinBox
 from randovania.layout.base.standard_pickup_state import DEFAULT_MAXIMUM_SHUFFLED
 
 if TYPE_CHECKING:
