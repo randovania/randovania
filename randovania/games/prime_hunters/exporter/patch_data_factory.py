@@ -195,7 +195,11 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
 
         return level_data
 
-    def _encode_hints(self) -> dict[str, str]:
+    def _update_string_tables(self) -> dict:
+        string_tables: dict = {
+            "scan_log": {},
+        }
+
         exporter = self.get_hint_exporter(
             self.description.all_patches, self.players_config, self.rng, GENERIC_JOKE_HINTS
         )
@@ -212,8 +216,6 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
                 octoliths,
                 False,
             )
-
-        hints: dict = {}
 
         hint_nodes = sorted(self.game.region_list.iterate_nodes_of_type(HintNode))
 
@@ -236,15 +238,15 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
 
             if octoliths_precision != SpecificPickupHintMode.DISABLED:
                 if scan_text == "":
-                    hints[string_id] = scan_title + self.rng.choice(useless_hints)
+                    string_tables["scan_log"][string_id] = scan_title + self.rng.choice(useless_hints)
                 else:
-                    hints[string_id] = scan_title + scan_text
+                    string_tables["scan_log"][string_id] = scan_title + scan_text
             else:
-                hints[string_id] = scan_title + self.rng.choice(useless_hints)
+                string_tables["scan_log"][string_id] = scan_title + self.rng.choice(useless_hints)
 
             i += 2
 
-        return hints
+        return string_tables
 
     def create_visual_nothing(self) -> PickupEntry:
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
@@ -256,7 +258,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
             "configuration_id": self.description.get_seed_for_world(self.players_config.player_index),
             "starting_items": starting_items,
             "areas": self._entity_patching_per_area(),
-            "hints": self._encode_hints(),
+            "string_tables": self._update_string_tables(),
         }
 
     @override
