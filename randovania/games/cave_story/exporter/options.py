@@ -1,16 +1,25 @@
 from __future__ import annotations
 
 import dataclasses
+import enum
 from pathlib import Path
 from typing import TYPE_CHECKING, Self, override
 
 if TYPE_CHECKING:
     from randovania.lib.json_lib import JsonObject
 
-from caver.patcher import CSPlatform
-
 from randovania.game.game_enum import RandovaniaGame
 from randovania.interface_common.options import PerGameOptions, decode_if_not_none
+
+
+class CSPlatform(enum.Enum):
+    """
+    This enum duplicates `caver.patcher.CSPlatform` in order to avoid always importing `caver` during startup.
+    There's a test ensuring they are identical.
+    """
+
+    FREEWARE = "freeware"
+    TWEAKED = "tweaked"
 
 
 @dataclasses.dataclass(frozen=True)
