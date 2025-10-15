@@ -50,7 +50,7 @@ dependencies = [
     # Versioning presets
     "dulwich>=0.20",
     # error reports
-    "sentry-sdk",
+    "sentry-sdk<2.41.0",
     # Patch GamesPatches JSON from rdvgame
     "json-delta",
     # For the Version class
@@ -97,7 +97,7 @@ exporters = [
 ]
 
 gui = [
-    "PySide6-Essentials>=6.5",
+    "PySide6-Essentials==6.9.1",
     "pyqtdarktheme-fork>=2.3.0",
     "markdown",
     "qasync",
@@ -125,12 +125,12 @@ server = [
     # monitoring
     "sentry-sdk[fastapi]>=2.35.0",
     "prometheus-fastapi-instrumentator",
-    
+
     # discord auth
     "fastapi-discord>=0.2.7",
     "requests-oauthlib",
     "pyjwt",
-    
+
     # database
     "peewee",
     "cachetools",  # for TTLCache
@@ -237,7 +237,7 @@ extend-ignore = [
     "PLW0603",  # we use some globals here and there
     "PLW2901",  # TODO: should actually fix these
     "PLC0415",  # we explicitly use the import within a function to postpone the loading of a module
-    
+
 ]
 
 [tool.ruff.lint.isort]
