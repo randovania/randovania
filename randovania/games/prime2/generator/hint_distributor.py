@@ -91,7 +91,7 @@ class EchoesHintDistributor(HintDistributor):
         game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
         keybearer = game.hint_feature_database["specific_hint_keybearer"]
 
-        precision = PrecisionPair(keybearer, SpecificHintPrecision(0.4), include_owner=True)
+        precision = PrecisionPair(keybearer, SpecificHintPrecision(0.5), include_owner=True)
 
         c = NodeIdentifier.create
         keybearers = [
