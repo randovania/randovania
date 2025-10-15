@@ -48,7 +48,7 @@ dependencies = [
     # Immutable dicts, used in many places
     "frozendict",
     # Versioning presets
-    "dulwich>=0.20",
+    "dulwich>=0.20,<0.23.0",   # Causes a crash with pyinstaller on windows when using ProcessPoolExecutor
     # error reports
     "sentry-sdk<2.41.0",
     # Patch GamesPatches JSON from rdvgame
