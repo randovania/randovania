@@ -63,7 +63,10 @@ async def test_new_player_location(connector: AM2RRemoteConnector):
     location_changed.assert_called_once_with(PlayerLocationEvent(None, None))
 
 
-async def test_new_inventory_received(connector: AM2RRemoteConnector):
+@pytest.mark.parametrize("contain_credits", [True, False])
+async def test_new_inventory_received(mocker, connector: AM2RRemoteConnector, contain_credits: bool):
+    game_has_been_beaten_mock = mocker.patch.object(connector.GameHasBeenBeaten, "emit")
+
     inventory_updated = MagicMock()
     connector.logger = MagicMock()
     connector.InventoryUpdated.connect(inventory_updated)
@@ -80,10 +83,13 @@ async def test_new_inventory_received(connector: AM2RRemoteConnector):
     inventory_updated.assert_called_once_with(Inventory(raw={}))
 
     inventory_updated.reset_mock()
-    connector.new_inventory_received(
+    inventory_response = (
         "items:Missiles|5,Missile Tank|20,Missile Expansion|30,Progressive Jump|1,Progressive Jump|1,"
         "Speed Booster|1,Missile Launcher|1,Missiles|5,Progressive Suit|5,"
     )
+    if contain_credits:
+        inventory_response += "Credits|1,"
+    connector.new_inventory_received(inventory_response)
     inventory_updated.assert_called_once()
 
     connector.logger.warning.assert_not_called()
@@ -105,6 +111,12 @@ async def test_new_inventory_received(connector: AM2RRemoteConnector):
     # Check Missile Launcher
     missile_launcher = connector.game.resource_database.get_item_by_display_name("Missile Launcher")
     assert connector.last_inventory[missile_launcher].capacity == 1
+
+    # Credits emitted
+    if contain_credits:
+        game_has_been_beaten_mock.assert_called_once()
+    else:
+        game_has_been_beaten_mock.assert_not_called()
 
 
 async def test_new_received_pickups_received(connector: AM2RRemoteConnector):
