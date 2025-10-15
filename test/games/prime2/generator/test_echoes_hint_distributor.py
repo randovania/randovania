@@ -59,7 +59,7 @@ async def test_add_default_hints_to_patches(echoes_game_description, echoes_game
 
     def _keybearer_hint(number: int):
         return LocationHint(
-            PrecisionPair(precision("specific_hint_keybearer"), SpecificHintPrecision(0.4), include_owner=True),
+            PrecisionPair(precision("specific_hint_keybearer"), SpecificHintPrecision(0.5), include_owner=True),
             PickupIndex(number),
         )
 
@@ -155,7 +155,13 @@ async def test_keybearer_hint_precisions(
     hint = LocationHint(keybearer_precision, PickupIndex(0))
 
     categories = echoes_pickup_database.pickup_categories
-    broad_categories = {categories["chozo"], categories["luminoth"], categories["key"], categories["cheat"]}
+    broad_categories = {
+        categories["chassis"],
+        categories["ordnance"],
+        categories["targeting"],
+        categories["key"],
+        categories["cheat"],
+    }
 
     pickup_results: dict[str, HintFeature] = {}
     expected_results: dict[str, HintFeature] = {}
