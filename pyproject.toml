@@ -48,9 +48,9 @@ dependencies = [
     # Immutable dicts, used in many places
     "frozendict",
     # Versioning presets
-    "dulwich>=0.20",
+    "dulwich>=0.20,<0.23.0",   # Causes a crash with pyinstaller on windows when using ProcessPoolExecutor
     # error reports
-    "sentry-sdk",
+    "sentry-sdk<2.41.0",  # Needs code fixes to update. Some import got renamed?
     # Patch GamesPatches JSON from rdvgame
     "json-delta",
     # For the Version class
@@ -97,7 +97,7 @@ exporters = [
 ]
 
 gui = [
-    "PySide6-Essentials>=6.5",
+    "PySide6-Essentials==6.9.1",
     "pyqtdarktheme-fork>=2.3.0",
     "markdown",
     "qasync",
@@ -125,12 +125,12 @@ server = [
     # monitoring
     "sentry-sdk[fastapi]>=2.35.0",
     "prometheus-fastapi-instrumentator",
-    
+
     # discord auth
     "fastapi-discord>=0.2.7",
     "requests-oauthlib",
     "pyjwt",
-    
+
     # database
     "peewee",
     "cachetools",  # for TTLCache
@@ -146,7 +146,7 @@ test = [
     "pytest",
     "pytest-cov",
     "pytest-qt",
-    "pytest-asyncio",
+    "pytest-asyncio<1.0.0",  # Breaks our tests somehow
     "pytest-mock",
     "pytest-localftpserver",
     "pytest-xdist[psutil]",
@@ -166,7 +166,7 @@ installer = [
 ]
 
 typing = [
-    "mypy",
+    "mypy<1.16.0",  # anything newer needs code changes
     "types-aiofiles",
     "types-peewee",
     "types-qrcode>=8.0.0.20241004",
@@ -237,7 +237,7 @@ extend-ignore = [
     "PLW0603",  # we use some globals here and there
     "PLW2901",  # TODO: should actually fix these
     "PLC0415",  # we explicitly use the import within a function to postpone the loading of a module
-    
+
 ]
 
 [tool.ruff.lint.isort]
