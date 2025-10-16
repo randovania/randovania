@@ -1,4 +1,3 @@
-import json
 from math import ceil
 from typing import Annotated
 
@@ -6,8 +5,8 @@ import construct
 from fastapi import APIRouter, HTTPException, Query, Request, Response
 from fastapi.responses import HTMLResponse
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
-from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import json_lib
 from randovania.network_common import remote_inventory
 from randovania.server.database import MultiplayerMembership, MultiplayerSession, World, WorldUserAssociation
@@ -80,11 +79,17 @@ def admin_session(sa: ServerAppDep, user: AdminDep, request: Request, session_id
             if isinstance(parsed_inventory, construct.ConstructError):
                 inventory.append(f"Error parsing: {parsed_inventory}")
             else:
-                game = VersionedPreset.from_str(association.world.preset).game
-                db = default_database.resource_database_for(game)
-                for item_name, item in parsed_inventory.items():
-                    if item > 0:
-                        inventory.append(f"{db.get_item(item_name).long_name} x{item}")
+                try:
+                    game = RandovaniaGame(association.world.preset_data.game)
+                except ValueError as e:
+                    inventory.append(f"Unknown game: {e}")
+                    game = None
+
+                if game is not None:
+                    db = default_database.resource_database_for(game)
+                    for item_name, item in parsed_inventory.items():
+                        if item > 0:
+                            inventory.append(f"{db.get_item(item_name).long_name} x{item}")
         else:
             inventory.append("Missing")
 
@@ -92,7 +97,7 @@ def admin_session(sa: ServerAppDep, user: AdminDep, request: Request, session_id
             {
                 "user": association.user,
                 "world": association.world,
-                "game": json.loads(association.world.preset)["game"],
+                "game": association.world.preset_data.game,
                 "connection_state": association.connection_state,
                 "inventory": ", ".join(inventory),
                 "is_admin": MultiplayerMembership.get_by_ids(association.user_id, session_id).admin,

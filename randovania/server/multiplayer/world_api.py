@@ -168,7 +168,7 @@ async def collect_locations(
     session = source_world.session
 
     sa.logger.info(f"{session_common.describe_session(session, source_world)} found items {pickup_locations}")
-    description = session.layout_description
+    description = session.get_layout_description()
     assert description is not None
 
     receiver_worlds = set()
@@ -367,8 +367,8 @@ async def world_sync(sa: ServerApp, sid: str, request: ServerSyncRequest) -> Ser
 async def emit_world_pickups_update(sa: ServerApp, world: World) -> None:
     session = world.session
 
-    assert session.layout_description is not None
-    description = session.layout_description
+    description = session.get_layout_description()
+    assert description is not None
 
     assert world.order is not None
     resource_database = _get_resource_database(description, world.order)

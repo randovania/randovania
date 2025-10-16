@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import uuid
 from typing import TYPE_CHECKING
-from unittest.mock import AsyncMock, MagicMock, PropertyMock, call
+from unittest.mock import AsyncMock, MagicMock, call
 
 import peewee
 import pytest
@@ -71,8 +71,8 @@ async def test_emit_world_pickups_update_one_action(
     # Setup
     mock_emit = mock_sa.sio.emit
 
-    mock_session_description: PropertyMock = mocker.patch(
-        "randovania.server.database.MultiplayerSession.layout_description", new_callable=PropertyMock
+    mock_session_description = mocker.patch(
+        "randovania.server.database.MultiplayerSession.get_layout_description",
     )
     mock_get_resource_database: MagicMock = mocker.patch(
         "randovania.server.multiplayer.world_api._get_resource_database", autospec=True
@@ -157,9 +157,7 @@ async def test_game_session_collect_pickup_for_self(
 
     mock_sa.sio.emit = AsyncMock()
 
-    mock_session_description: PropertyMock = mocker.patch(
-        "randovania.server.database.MultiplayerSession.layout_description", new_callable=PropertyMock
-    )
+    mock_session_description = mocker.patch("randovania.server.database.MultiplayerSession.get_layout_description")
     mock_get_resource_database: MagicMock = mocker.patch(
         "randovania.server.multiplayer.world_api._get_resource_database", autospec=True
     )
@@ -216,9 +214,7 @@ async def test_collect_locations_other(
     mock_add_pickup_to_inventory = mocker.patch(
         "randovania.server.multiplayer.world_api._add_pickup_to_inventory", autospec=True, return_value=b"bar"
     )
-    mock_session_description: PropertyMock = mocker.patch(
-        "randovania.server.database.MultiplayerSession.layout_description", new_callable=PropertyMock
-    )
+    mock_session_description = mocker.patch("randovania.server.database.MultiplayerSession.get_layout_description")
     mock_emit_session_update = mocker.patch(
         "randovania.server.multiplayer.session_common.emit_session_actions_update", autospec=True
     )

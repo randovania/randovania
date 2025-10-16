@@ -34,6 +34,8 @@ def test_migrations(empty_database):
         ' "migration" VARCHAR(255) NOT NULL)',
         'CREATE UNIQUE INDEX "performed_database_migrations_migration"'
         ' ON "performed_database_migrations" ("migration")',
+        'CREATE TABLE IF NOT EXISTS "preset_data" ("sha256" BLOB NOT NULL PRIMARY KEY, "content" BLOB NOT NULL,'
+        '"schema_version" INTEGER NOT NULL, "game" VARCHAR(255) NOT NULL)',
         'CREATE TABLE "user_access_token" ("user_id" INTEGER NOT NULL, "name" VARCHAR(255) NOT NULL,'
         ' "creation_date" DATETIME NOT NULL, "last_used" DATETIME NOT NULL, PRIMARY KEY ("user_id", "name"),'
         ' FOREIGN KEY ("user_id") REFERENCES "user" ("id"))',

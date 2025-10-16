@@ -36,6 +36,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.layout.versioned_preset import VersionedPreset
 
 
 class TestFilesDir:
@@ -78,8 +79,13 @@ def blank_available_in_multi(request: pytest.FixtureRequest) -> bool:
 
 
 @pytest.fixture(scope="session")
-def default_preset() -> Preset:
-    return PresetManager(None).default_preset.get_preset()
+def default_versioned_preset() -> VersionedPreset:
+    return PresetManager(None).default_preset
+
+
+@pytest.fixture(scope="session")
+def default_preset(default_versioned_preset) -> Preset:
+    return default_versioned_preset.get_preset()
 
 
 @pytest.fixture(scope="session")

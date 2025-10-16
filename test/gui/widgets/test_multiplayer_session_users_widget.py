@@ -1,5 +1,4 @@
 import datetime
-import json
 import uuid
 from unittest.mock import MagicMock
 
@@ -28,23 +27,19 @@ def test_widgets_in_normal_session(skip_qtbot, preset_manager):
             MultiplayerWorld(
                 name="W1",
                 id=u1,
-                preset_raw=json.dumps(
-                    preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
-                ),
+                preset_raw=preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_bytes(),
                 has_been_beaten=True,
             ),
             MultiplayerWorld(
                 name="W2",
                 id=u2,
-                preset_raw=json.dumps(preset_manager.default_preset.as_json),
+                preset_raw=preset_manager.default_preset.as_bytes(),
                 has_been_beaten=False,
             ),
             MultiplayerWorld(
                 name="W3",
                 id=u3,
-                preset_raw=json.dumps(
-                    preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
-                ),
+                preset_raw=preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_bytes(),
                 has_been_beaten=False,
             ),
         ],
@@ -147,23 +142,19 @@ def test_widgets_in_coop_session(skip_qtbot, preset_manager):
             MultiplayerWorld(
                 name="W1",
                 id=u1,
-                preset_raw=json.dumps(
-                    preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
-                ),
+                preset_raw=preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_bytes(),
                 has_been_beaten=True,
             ),
             MultiplayerWorld(
                 name="W2",
                 id=u2,
-                preset_raw=json.dumps(preset_manager.default_preset.as_json),
+                preset_raw=preset_manager.default_preset.as_bytes(),
                 has_been_beaten=False,
             ),
             MultiplayerWorld(
                 name="W3",
                 id=u3,
-                preset_raw=json.dumps(
-                    preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
-                ),
+                preset_raw=preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_bytes(),
                 has_been_beaten=False,
             ),
         ],

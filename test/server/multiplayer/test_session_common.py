@@ -15,7 +15,7 @@ from randovania.server import database
 from randovania.server.multiplayer import session_common
 
 
-async def test_emit_session_meta_update(session_update, mock_sa, default_game_list):
+async def test_emit_session_meta_update(session_update, mock_sa, default_versioned_preset, default_game_list):
     mock_emit = mock_sa.sio.emit
 
     session_json = {
@@ -42,13 +42,13 @@ async def test_emit_session_meta_update(session_update, mock_sa, default_game_li
             {
                 "id": "67d75d0e-da8d-4a90-b29e-cae83bcf9519",
                 "name": "World1",
-                "preset_raw": "{}",
+                "preset_raw": default_versioned_preset.as_bytes(),
                 "has_been_beaten": False,
             },
             {
                 "id": "d0f7ed70-66b0-413c-bc13-f9f7fb018726",
                 "name": "World2",
-                "preset_raw": "{}",
+                "preset_raw": default_versioned_preset.as_bytes(),
                 "has_been_beaten": False,
             },
         ],

@@ -729,7 +729,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             GeneratorParameters(
                 seed_number=random.randint(0, 2**31),
                 spoiler=spoiler,
-                presets=[VersionedPreset.from_str(world.preset_raw).get_preset() for world in self._session.worlds],
+                presets=[world.preset.get_preset() for world in self._session.worlds],
             )
         )
         return await self.generate_game_with_permalink(permalink, retries=retries)

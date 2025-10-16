@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 from typing import TYPE_CHECKING, Self
 from uuid import UUID
@@ -13,7 +14,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.layout import preset_migration
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset import Preset
-from randovania.lib import json_lib
+from randovania.lib import json_lib, migration_lib
 from randovania.lib.construct_lib import CompressedJsonValue, NullTerminatedCompressedJsonValue
 
 if TYPE_CHECKING:
@@ -71,12 +72,20 @@ class VersionedPreset[BaseConfigurationT: BaseConfiguration]:
             return self.data["name"]
 
     @property
+    def schema_version(self) -> int:
+        if self._preset is not None:
+            return preset_migration.CURRENT_VERSION
+        else:
+            assert self.data is not None
+            return migration_lib.get_schema_version(self.data)
+
+    @property
     def game(self) -> RandovaniaGame:
         if self._preset is not None:
             return self._preset.configuration.game
 
         assert self.data is not None
-        if self.data["schema_version"] < 6:
+        if self.schema_version < 6:
             return RandovaniaGame.METROID_PRIME_ECHOES
 
         return RandovaniaGame(self.data["game"])
@@ -177,6 +186,9 @@ class VersionedPreset[BaseConfigurationT: BaseConfiguration]:
                 "data": self.as_json,
             }
         )
+
+    def calculate_sha256(self) -> bytes:
+        return hashlib.sha256(self.as_bytes()).digest()
 
     def recover_old_base_uuid(self) -> UUID | None:
         """Returns the base preset uuid that existed in old versions.

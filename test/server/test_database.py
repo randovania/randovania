@@ -39,24 +39,32 @@ def test_multiplayer_session_create_session_entry(clean_database, has_descriptio
     worlds = []
     actions = []
     if has_description:
+        preset0 = VersionedPreset.with_preset(description.get_preset(0))
+        preset1 = VersionedPreset.with_preset(description.get_preset(1))
+
         dt = datetime.datetime(2023, 6, 10, 23, 27, 25, 357120, tzinfo=datetime.UTC)
-        w1 = database.World.create_for(
-            session=s, name="Prime 1", order=0, preset=VersionedPreset.with_preset(description.get_preset(0))
-        )
+        w1 = database.World.create_for(session=s, name="Prime 1", order=0, preset_bytes=preset0.as_bytes())
         w2 = database.World.create_for(
-            session=s, name="Prime 2", order=1, preset=VersionedPreset.with_preset(description.get_preset(1))
+            session=s,
+            name="Prime 2",
+            order=1,
+            preset_bytes=preset1.as_bytes(),
         )
         database.WorldAction.create(provider=w1, location=34, session=s, receiver=w2, time=dt)
 
-        s.layout_description = description
+        s.set_layout_description(description)
         s.save()
         game_details = GameDetails(
             seed_hash="XXXXXXXX",
             spoiler=True,
             word_hash="Some Words",
         )
-        worlds.append(MultiplayerWorld(id=w1.uuid, name="Prime 1", preset_raw=w1.preset, has_been_beaten=False))
-        worlds.append(MultiplayerWorld(id=w2.uuid, name="Prime 2", preset_raw=w2.preset, has_been_beaten=False))
+        worlds.append(
+            MultiplayerWorld(id=w1.uuid, name="Prime 1", preset_raw=preset0.as_bytes(), has_been_beaten=False)
+        )
+        worlds.append(
+            MultiplayerWorld(id=w2.uuid, name="Prime 2", preset_raw=preset1.as_bytes(), has_been_beaten=False)
+        )
         actions.append(
             MultiplayerSessionAction(
                 provider=w1.uuid, receiver=w2.uuid, pickup="Power Bomb Expansion", location=34, time=dt

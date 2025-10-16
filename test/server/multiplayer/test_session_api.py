@@ -139,7 +139,12 @@ async def test_create_session(clean_database, preset_manager, default_game_list,
 
 
 async def test_join_session(
-    mock_emit_session_update, mock_sa, clean_database, default_game_list, mocker: MockerFixture
+    mock_emit_session_update,
+    mock_sa,
+    clean_database,
+    default_game_list,
+    default_versioned_preset,
+    mocker: MockerFixture,
 ):
     # Setup
     user1 = database.User.create(id=1234, name="The Name")
@@ -150,8 +155,11 @@ async def test_join_session(
     mock_join_multiplayer_session = mocker.patch("randovania.server.multiplayer.session_common.join_room")
 
     session = database.MultiplayerSession.create(name="The Session", password=None, creator=user1)
-    database.World.create(
-        session=session, name="World 1", preset="{}", uuid=uuid.UUID("bc82b6cf-df76-4c3d-9ea0-0695c2f7e719")
+    database.World.create_for(
+        session=session,
+        name="World 1",
+        preset_bytes=default_versioned_preset.as_bytes(),
+        uid=uuid.UUID("bc82b6cf-df76-4c3d-9ea0-0695c2f7e719"),
     )
     database.MultiplayerMembership.create(
         user=user2, session=session, row=0, admin=True, connection_state="Online, Badass"
@@ -174,7 +182,7 @@ async def test_join_session(
             {
                 "id": "bc82b6cf-df76-4c3d-9ea0-0695c2f7e719",
                 "name": "World 1",
-                "preset_raw": "{}",
+                "preset_raw": default_versioned_preset.as_bytes(),
                 "has_been_beaten": False,
             }
         ],

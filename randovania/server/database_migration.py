@@ -1,3 +1,6 @@
+import json
+import logging
+
 import peewee
 import playhouse.migrate
 
@@ -36,10 +39,34 @@ def add_game_beaten_field(migrator: playhouse.migrate.SqliteMigrator) -> None:
         )
 
 
+def add_world_preset_sha256_field(migrator: playhouse.migrate.SqliteMigrator) -> None:
+    with database.db.atomic():
+        playhouse.migrate.migrate(
+            migrator.alter_add_column(
+                database.World._meta.table_name,  # type: ignore[attr-defined]
+                database.World.preset_data.column_name,  # type: ignore[attr-defined]
+                database.World.preset_data,
+            )
+        )
+
+
+def migrate_world_preset(migrator: playhouse.migrate.SqliteMigrator) -> None:
+    query = database.World.select()
+    world_count = query.count()
+
+    for i, world in enumerate(query):
+        if i % 50 == 0:
+            logging.warning("Converting World.preset to PresetData. At %s of %s.", i + 1, world_count)
+        world.preset_data = database.PresetData.create_for_json(json.loads(world.preset))
+        world.save()
+
+
 _migrations = {
     database.DatabaseMigrations.ADD_READY_TO_MEMBERSHIP: add_ready_field,
     database.DatabaseMigrations.SESSION_STATE_TO_VISIBILITY: rename_state_to_visibility,
     database.DatabaseMigrations.ADD_GAME_BEATEN: add_game_beaten_field,
+    database.DatabaseMigrations.ADD_WORLD_PRESET_SHA256: add_world_preset_sha256_field,
+    database.DatabaseMigrations.MIGRATE_WORLD_PRESET: migrate_world_preset,
 }
 
 
