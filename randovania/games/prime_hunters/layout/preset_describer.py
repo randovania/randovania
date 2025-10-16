@@ -52,7 +52,6 @@ class HuntersPresetDescriber(GamePresetDescriber):
             ],
             "Goal": describe_objective(configuration.octoliths),
             "Game Changes": [],
-            "Hints": [],
         }
         fill_template_strings_from_tree(template_strings, extra_message_tree)
 
