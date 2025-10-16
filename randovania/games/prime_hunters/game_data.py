@@ -58,7 +58,7 @@ def _hints() -> randovania.game.hints.GameHints:
         hint_distributor=generator.HuntersHintDistributor(),
         specific_pickup_hints={
             "octoliths": randovania.game.hints.SpecificHintDetails(
-                long_name="Octoliths",
+                long_name="Octolith Hints",
                 description="This controls how precise the Octolith hints in Alimbic Cannon Control Room are.",
             ),
         },
