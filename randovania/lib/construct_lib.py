@@ -154,17 +154,17 @@ class DefaultsAdapter(construct.Adapter):
 
 
 class CompressedZSTD(construct.Tunnel):
-    def __init__(self, subcon, level: int = 3):
+    def __init__(self, subcon: construct.Construct, level: int = 3):
         super().__init__(subcon)
         import zstandard
 
         self.lib = zstandard
         self.level = level
 
-    def _decode(self, data, context, path):
+    def _decode(self, data: bytes, context: construct.Container, path: str) -> bytes:
         return self.lib.decompress(data)
 
-    def _encode(self, data, context, path):
+    def _encode(self, data: bytes, context: construct.Container, path: str) -> bytes:
         return self.lib.compress(data, self.level)
 
 
