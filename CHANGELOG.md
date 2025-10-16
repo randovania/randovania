@@ -64,6 +64,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Fixed: Expansions with negative value now properly remove items in-game.
+- Changed: Keybearer hints now use different, less broad categories than before.
 
 #### Logic Database
 
