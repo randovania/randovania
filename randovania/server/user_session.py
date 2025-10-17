@@ -90,7 +90,7 @@ async def _create_session_with_discord_token(sa: ServerApp, sid: str | None, tok
     discord_user = await sa.discord.user(token)
 
     if sa.enforce_role is not None:
-        if not sa.enforce_role.verify_user(discord_user.id):
+        if not await sa.enforce_role.verify_user(discord_user.id):
             sa.logger.info("User %s is not authorized for connecting to the server", discord_user.name)
             raise network_error.UserNotAuthorizedToUseServerError(discord_user.name)
 

@@ -57,7 +57,7 @@ class EnforceDiscordRole:
             self.session.headers["Authorization"] = "Bot {}".format(config["token"])
             yield self
 
-    async def verify_user(self, user_id: int) -> bool:
+    async def verify_user(self, user_id: str) -> bool:
         url = f"https://discordapp.com/api/guilds/{self.guild_id}/members/{user_id}"
         async with self.session.get(url) as r:
             try:
