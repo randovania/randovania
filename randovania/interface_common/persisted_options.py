@@ -169,7 +169,7 @@ def _msr_citra_to_azahar(options: dict) -> None:
         if tab_options:
             tab_options["azahar"] = {}
             tab_options.pop("citra", None)
-        options["game_samus_returns"]["output_preference"] = json_lib.dumps_small(as_dict)
+        options["game_samus_returns"]["output_preference"] = json.dumps(obj, separators=(",", ":"))
 
 
 _CONVERTER_FOR_VERSION = [
