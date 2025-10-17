@@ -376,8 +376,7 @@ class PrimeRemoteConnector(RemoteConnector):
         # Safety/debugging check to see what causes magic item randomly increases by 2 instead of 1.
         magic_inv = self.last_inventory.get(self.multiworld_magic_item)
         expected_capacity = self._debug_expected_capacity
-        if magic_inv.amount > 0:
-            expected_capacity += magic_inv.amount
+        expected_capacity += magic_inv.amount
         if magic_inv.capacity != expected_capacity:
             self.logger.warning(
                 f"Magic capacity was not {expected_capacity}! "
