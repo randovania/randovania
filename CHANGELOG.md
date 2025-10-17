@@ -72,6 +72,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Using the Turret in Sanctuary Entrance now accounts for being able to reload the room.
 
+### Metroid: Samus Returns
+
+- Added: Support for .cci rom files to use the same file for exporting and playing via Azahar.
+- Changed: Dropped support for Citra and switched to Azahar.
+
 ## [10.2.0] - 2025-10-02
 
 - Added: A warning when trying to generate a Multiworld game if a preset requires all Pickups to be obtainable.
