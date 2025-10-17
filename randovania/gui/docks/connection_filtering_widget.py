@@ -7,7 +7,6 @@ from PySide6.QtCore import Signal
 from qasync import asyncSlot
 
 from randovania.gui.lib import async_dialog, file_prompts, signal_handling
-from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.widgets.scroll_protected import ScrollProtectedComboBox
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.versioned_preset import VersionedPreset
@@ -24,7 +23,6 @@ class ConnectionFilteringWidget(QtWidgets.QDockWidget):
 
     def __init__(self, parent: QtWidgets.QWidget, game: GameDescription):
         super().__init__(parent)
-        set_default_window_icon(self)
         self.setWindowTitle("Connection Filtering")
 
         self.root_widget = QtWidgets.QScrollArea()
