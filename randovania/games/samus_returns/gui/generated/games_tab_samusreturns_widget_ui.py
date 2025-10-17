@@ -22,7 +22,7 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QGridLayout, Q
     QVBoxLayout, QWidget)
 
 from randovania.gui.widgets.generate_game_widget import GenerateGameWidget
-from randovania.gui.widgets.hint_feature_tab import PickupHintFeatureTab
+from randovania.gui.widgets.hint_feature_tab import (LocationHintFeatureTab, PickupHintFeatureTab)
 
 class Ui_SamusReturnsGameTabWidget(object):
     def setupUi(self, SamusReturnsGameTabWidget):
@@ -91,7 +91,7 @@ class Ui_SamusReturnsGameTabWidget(object):
         self.faq_scroll_area.setWidgetResizable(True)
         self.faq_scroll_area_contents = QWidget()
         self.faq_scroll_area_contents.setObjectName(u"faq_scroll_area_contents")
-        self.faq_scroll_area_contents.setGeometry(QRect(0, 0, 669, 645))
+        self.faq_scroll_area_contents.setGeometry(QRect(0, 0, 669, 648))
         self.gridLayout_8 = QGridLayout(self.faq_scroll_area_contents)
         self.gridLayout_8.setSpacing(6)
         self.gridLayout_8.setContentsMargins(11, 11, 11, 11)
@@ -113,7 +113,7 @@ class Ui_SamusReturnsGameTabWidget(object):
         self.differences_tab.setWidgetResizable(True)
         self.differences_contents = QWidget()
         self.differences_contents.setObjectName(u"differences_contents")
-        self.differences_contents.setGeometry(QRect(0, 0, 655, 1390))
+        self.differences_contents.setGeometry(QRect(0, 0, 655, 1168))
         self.verticalLayout = QVBoxLayout(self.differences_contents)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
@@ -139,7 +139,7 @@ class Ui_SamusReturnsGameTabWidget(object):
         self.hints_scroll_area.setWidgetResizable(True)
         self.hints_scroll_area_contents = QWidget()
         self.hints_scroll_area_contents.setObjectName(u"hints_scroll_area_contents")
-        self.hints_scroll_area_contents.setGeometry(QRect(0, 0, 655, 957))
+        self.hints_scroll_area_contents.setGeometry(QRect(0, 0, 655, 924))
         self.verticalLayout_2 = QVBoxLayout(self.hints_scroll_area_contents)
         self.verticalLayout_2.setSpacing(6)
         self.verticalLayout_2.setContentsMargins(11, 11, 11, 11)
@@ -306,6 +306,9 @@ class Ui_SamusReturnsGameTabWidget(object):
         self.hint_item_names_layout.setObjectName(u"hint_item_names_layout")
         self.hint_item_names_layout.setContentsMargins(0, 0, 0, 0)
         SamusReturnsGameTabWidget.addTab(self.pickup_hint_features_tab, "")
+        self.location_hint_features_tab = LocationHintFeatureTab()
+        self.location_hint_features_tab.setObjectName(u"location_hint_features_tab")
+        SamusReturnsGameTabWidget.addTab(self.location_hint_features_tab, "")
 
         self.retranslateUi(SamusReturnsGameTabWidget)
 
@@ -413,6 +416,7 @@ class Ui_SamusReturnsGameTabWidget(object):
 "<hr><html><head/><body><p>In a Multiworld session, all hints will also describe the player which has the item.</p></body></html>", None))
         SamusReturnsGameTabWidget.setTabText(SamusReturnsGameTabWidget.indexOf(self.hints_tab), QCoreApplication.translate("SamusReturnsGameTabWidget", u"Hints", None))
         SamusReturnsGameTabWidget.setTabText(SamusReturnsGameTabWidget.indexOf(self.pickup_hint_features_tab), QCoreApplication.translate("SamusReturnsGameTabWidget", u"Pickup Hint Features", None))
+        SamusReturnsGameTabWidget.setTabText(SamusReturnsGameTabWidget.indexOf(self.location_hint_features_tab), QCoreApplication.translate("SamusReturnsGameTabWidget", u"Location Hint Features", None))
         pass
     # retranslateUi
 
