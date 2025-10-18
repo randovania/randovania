@@ -1,10 +1,14 @@
 function RL.GetGameStateAndSend()
     local current_state = Game.GetCurrentGameModeID()
+    local current_scenario = ""
+    local has_beaten = Init.bBeatenSinceLastReboot
     if current_state == 'INGAME' then
-        RL.SendNewGameState(Game.GetScenarioID())
+        current_scenario = Game.GetScenarioID()
     else
-        RL.SendNewGameState(current_state)
+        current_scenario = current_state
     end
+
+    RL.SendNewGameState(current_scenario .. ";" .. tostring(has_beaten))
 end
 
 function RL.UpdateRDVClient(new_scenario)
