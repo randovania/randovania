@@ -199,14 +199,8 @@ class PrimeRemoteConnector(RemoteConnector):
         :return: True, if a new location was found and remote patches were executed. False otherwise.
         """
 
-        # Unnecessary read? We already fetched the inventory prior to this.
         multiworld_magic_item = self.multiworld_magic_item
-
-        memory_ops = await self._memory_op_for_items([multiworld_magic_item])
-        op_result = await self.executor.perform_single_memory_operation(*memory_ops)
-        assert op_result is not None
-
-        magic_inv = InventoryItem(*struct.unpack(">II", op_result))
+        magic_inv = self.last_inventory.get(multiworld_magic_item)
         if magic_inv.amount > 0:
             # Amount is bigger than 0, so we have collected an item.
             # The PDF added pickup_index+1 to both the amount and capacity, so subtract 1 back from the amount
