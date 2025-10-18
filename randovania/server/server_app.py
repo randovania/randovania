@@ -64,7 +64,8 @@ ctx_context: ContextVar[str] = ContextVar("context", default="Free")
 
 
 class ServerLoggingFormatter(ColourizedFormatter):
-    converter = time.gmtime
+    converter = time.gmtime  # type: ignore[assignment]
+    # `time.gmtime` is actually `Callable[[float | None], struct_time]`, mypy seems just wrong
 
     def formatMessage(self, record: logging.LogRecord) -> str:
         record.who = ctx_who.get()
