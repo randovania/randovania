@@ -77,7 +77,8 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         pending_op_byte = results[memory_ops[1]]
 
         has_pending_op = pending_op_byte != b"\x00"
-        return has_pending_op, self._current_status_world(results.get(memory_ops[0]), results.get(memory_ops[2]))
+        current_world = self._current_status_world(results.get(memory_ops[0]), results.get(memory_ops[2]))
+        return has_pending_op, current_world
 
     async def _memory_op_for_items(
         self,
@@ -148,3 +149,6 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
 
     def _write_string_to_game_buffer(self, message: str) -> MemoryOperation:
         return super()._write_string_to_game_buffer("&just=center;" + message)
+
+    def at_end_of_game(self) -> bool:
+        return self._last_emitted_region is not None and self._last_emitted_region.name == "End of Game"
