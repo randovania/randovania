@@ -13,7 +13,7 @@ import peewee
 from fastapi import APIRouter, Form, Query, Request, Response
 from fastapi.responses import HTMLResponse, RedirectResponse
 from oauthlib.common import generate_token
-from oauthlib.oauth2.rfc6749.errors import InvalidTokenError, raise_from_error
+from oauthlib.oauth2.rfc6749.errors import raise_from_error
 from pydantic import BaseModel, model_validator
 
 from randovania.network_common import error as network_error
@@ -90,7 +90,7 @@ async def _create_session_with_discord_token(sa: ServerApp, sid: str | None, tok
     discord_user = await sa.discord.user(token)
 
     if sa.enforce_role is not None:
-        if not sa.enforce_role.verify_user(discord_user.id):
+        if not await sa.enforce_role.verify_user(discord_user.id):
             sa.logger.info("User %s is not authorized for connecting to the server", discord_user.name)
             raise network_error.UserNotAuthorizedToUseServerError(discord_user.name)
 
@@ -174,8 +174,8 @@ async def restore_user_session(sa: ServerApp, sid: str, encrypted_session: bytes
         await sa.sio.save_session(sid, {})
         raise
 
-    except (KeyError, peewee.DoesNotExist, json.JSONDecodeError, InvalidTokenError) as e:
-        # InvalidTokenError: discord token expired and couldn't renew
+    except (KeyError, peewee.DoesNotExist, json.JSONDecodeError, fastapi_discord.exceptions.Unauthorized) as e:
+        # Unauthorized: bad discord access token. Expired?
         await sa.sio.save_session(sid, {})
         sa.logger.info(
             "Client at %s was unable to restore session: (%s) %s", sa.current_client_ip(sid), str(type(e)), str(e)

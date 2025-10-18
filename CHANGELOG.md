@@ -28,6 +28,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Screw Attack Room: Using a Shinespark to reach Start Point 2 from the door to Transport to Burenia was missing a requirement on having activated the Rotatable.
 
+### Metroid Fusion
+
+- Added: 3 new hint location features: guarded by a Tank-Mimic, near a Geron and in a room with extreme temperatures.
+
 ### Metroid Prime
 
 - Fixed: Crash when entering Metroid Prime Lair while in Scan Visor
@@ -67,10 +71,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Fixed: Expansions with negative value now properly remove items in-game.
+- Changed: Keybearer hints now use different, less broad categories than before.
 
 #### Logic Database
 
 - Fixed: Using the Turret in Sanctuary Entrance now accounts for being able to reload the room.
+
+### Metroid: Samus Returns
+
+- Added: Support for .cci rom files to use the same file for exporting and playing via Azahar.
+- Changed: Dropped support for Citra and switched to Azahar.
 
 ## [10.2.0] - 2025-10-02
 

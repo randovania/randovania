@@ -32,6 +32,7 @@ def _update_committed(data_path: Path, cosmetic_path: Path, data: dict, cosmetic
     raise NotImplementedError("This function should not be called in normal execution.")
 
 
+@pytest.mark.benchmark
 @pytest.mark.usefixtures("_mock_seed_hash")
 def test_layout_patch_data_export(
     monkeypatch: pytest.MonkeyPatch,

@@ -171,7 +171,9 @@ async def test_check_for_collected_location_found(
         "open_prime_rando.dol_patching.all_prime_dol_patches.adjust_item_amount_and_capacity_patch"
     )
 
-    connector.executor.perform_single_memory_operation.return_value = struct.pack(">II", 10, 10 + capacity)
+    inventory_mock = MagicMock(spec=Inventory)
+    inventory_mock.get = MagicMock(return_value=InventoryItem(10, 10 + capacity))
+    connector.last_inventory = inventory_mock
     connector.execute_remote_patches = AsyncMock()
     collected = MagicMock()
     connector.PickupIndexCollected.connect(collected)

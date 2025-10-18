@@ -48,7 +48,7 @@ dependencies = [
     # Immutable dicts, used in many places
     "frozendict",
     # Versioning presets
-    "dulwich>=0.20",
+    "dulwich>=0.20,<0.23.0",   # Causes a crash with pyinstaller on windows when using ProcessPoolExecutor
     # error reports
     "sentry-sdk",
     # Patch GamesPatches JSON from rdvgame
@@ -57,6 +57,8 @@ dependencies = [
     "packaging",
     # For TypeVar default
     "typing-extensions>=4.4.0",
+    # For compressing preset/rdvgames
+    "zstandard",
 ]
 
 [project.optional-dependencies]
@@ -93,11 +95,11 @@ exporters = [
     "mp2hudcolor>=1.0.10",
 
     # Metroid: Samus Returns
-    "open-samus-returns-rando>=3.2.1",
+    "open-samus-returns-rando>=3.3.0",
 ]
 
 gui = [
-    "PySide6-Essentials>=6.5",
+    "PySide6-Essentials==6.10.0",
     "pyqtdarktheme-fork>=2.3.0",
     "markdown",
     "qasync",
@@ -125,12 +127,12 @@ server = [
     # monitoring
     "sentry-sdk[fastapi]>=2.35.0",
     "prometheus-fastapi-instrumentator",
-    
+
     # discord auth
     "fastapi-discord>=0.2.7",
-    "requests-oauthlib",
+    "oauthlib",
     "pyjwt",
-    
+
     # database
     "peewee",
     "cachetools",  # for TTLCache
@@ -146,7 +148,7 @@ test = [
     "pytest",
     "pytest-cov",
     "pytest-qt",
-    "pytest-asyncio",
+    "pytest-asyncio<1.0.0",  # Breaks our tests somehow
     "pytest-mock",
     "pytest-localftpserver",
     "pytest-xdist[psutil]",
@@ -166,7 +168,7 @@ installer = [
 ]
 
 typing = [
-    "mypy",
+    "mypy<1.18.3",
     "types-aiofiles",
     "types-peewee",
     "types-qrcode>=8.0.0.20241004",
@@ -237,7 +239,7 @@ extend-ignore = [
     "PLW0603",  # we use some globals here and there
     "PLW2901",  # TODO: should actually fix these
     "PLC0415",  # we explicitly use the import within a function to postpone the loading of a module
-    
+
 ]
 
 [tool.ruff.lint.isort]

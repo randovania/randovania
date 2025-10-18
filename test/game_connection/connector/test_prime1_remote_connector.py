@@ -164,7 +164,10 @@ async def test_interact_with_game(
     connector.executor.disconnect = MagicMock()
     game_has_been_beaten_mock = mocker.patch.object(connector.GameHasBeenBeaten, "emit")
 
-    connector.get_inventory = AsyncMock()
+    inventory_mock = MagicMock(spec=Inventory)
+    inventory_mock.get = MagicMock(return_value=MagicMock(spec=InventoryItem))
+    connector.get_inventory = AsyncMock(return_value=inventory_mock)
+
     region = None
     if depth > 0:
         region = MagicMock()
