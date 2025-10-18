@@ -61,7 +61,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Chozo Ice Temple: Documentation for reaching the Chozo Statue NSJ.
 - Fixed: Chozo Ice Temple: Removed unnecessary dangerous requirements.
 - Fixed: Control Tower: Removed unnecessary dangerous requirements.
-- Fixed: Research Entrance: ???
 
 ### Metroid Prime 2: Echoes
 
