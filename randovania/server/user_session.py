@@ -6,7 +6,6 @@ import json
 import typing
 
 import cryptography.fernet
-import fastapi_discord
 import jwt
 import oauthlib
 import peewee
@@ -17,11 +16,13 @@ from oauthlib.oauth2.rfc6749.errors import raise_from_error
 from pydantic import BaseModel, model_validator
 
 from randovania.network_common import error as network_error
+from randovania.server import fastapi_discord
 from randovania.server.database import User, UserAccessToken
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerAppDep, UserDep
 
 if typing.TYPE_CHECKING:
+    from randovania.server.fastapi_discord import DiscordUser
     from randovania.server.server_app import ServerApp
 
 
@@ -61,7 +62,7 @@ async def _create_client_side_session(sa: ServerApp, sid: str, user: User | None
     return result
 
 
-def _create_user_from_discord(discord_user: fastapi_discord.User) -> User:
+def _create_user_from_discord(discord_user: DiscordUser) -> User:
     discord_name = discord_user.global_name
 
     if discord_name is None:
@@ -91,8 +92,8 @@ async def _create_session_with_discord_token(sa: ServerApp, sid: str | None, tok
 
     if sa.enforce_role is not None:
         if not await sa.enforce_role.verify_user(discord_user.id):
-            sa.logger.info("User %s is not authorized for connecting to the server", discord_user.name)
-            raise network_error.UserNotAuthorizedToUseServerError(discord_user.name)
+            sa.logger.info("User %s is not authorized for connecting to the server", discord_user.username)
+            raise network_error.UserNotAuthorizedToUseServerError(discord_user.username)
 
     user = _create_user_from_discord(discord_user)
 

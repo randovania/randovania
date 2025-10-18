@@ -682,19 +682,6 @@ wheels = [
 ]
 
 [[package]]
-name = "fastapi-discord"
-version = "0.2.7"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "aiocache" },
-    { name = "aiohttp" },
-    { name = "fastapi" },
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/d8/d7/68b9a5cacc1002037503c5ffaf1a3b34b2f0c4803d80e2aafdf4ec2412a4/fastapi_discord-0.2.7-py3-none-any.whl", hash = "sha256:92fa5d12cc60b0eba8fbbd7d52d987f1a3fd088f6057ada9c6a4f93eb0f079b4", size = 7631, upload-time = "2024-11-19T21:35:20.152Z" },
-]
-
-[[package]]
 name = "fastapi-socketio-handler"
 version = "0.4.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2517,10 +2504,10 @@ gui = [
     { name = "qrcode", extra = ["pil"] },
 ]
 server = [
+    { name = "aiocache" },
     { name = "audioop-lts", marker = "python_full_version >= '3.13'" },
     { name = "cachetools" },
     { name = "fastapi" },
-    { name = "fastapi-discord" },
     { name = "fastapi-socketio-handler" },
     { name = "graphviz" },
     { name = "itsdangerous" },
@@ -2568,6 +2555,7 @@ typing = [
 
 [package.metadata]
 requires-dist = [
+    { name = "aiocache", marker = "extra == 'server'" },
     { name = "aiofiles" },
     { name = "aiohttp", specifier = ">=3.9.3" },
     { name = "am2r-yams", marker = "extra == 'exporters'", specifier = ">=2.8.3" },
@@ -2583,7 +2571,6 @@ requires-dist = [
     { name = "dulwich", specifier = ">=0.20,<0.23.0" },
     { name = "factorio-randovania-mod", marker = "extra == 'exporters'", specifier = ">=0.8.0" },
     { name = "fastapi", marker = "extra == 'server'" },
-    { name = "fastapi-discord", marker = "extra == 'server'", specifier = ">=0.2.7" },
     { name = "fastapi-socketio-handler", marker = "extra == 'server'", specifier = ">=0.4.0" },
     { name = "frozendict" },
     { name = "graphviz", marker = "extra == 'server'" },
