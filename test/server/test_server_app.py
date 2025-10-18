@@ -93,6 +93,7 @@ async def test_verify_user(server_app, mocker: MockerFixture, valid):
 
     # Run
     async with EnforceDiscordRole.lifespan(server_app.app) as enforce:
+        assert enforce is not None
         result = await enforce.verify_user("2345")
 
     # Assert

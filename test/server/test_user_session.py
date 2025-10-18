@@ -81,6 +81,7 @@ async def test_browser_login_with_discord(has_sio, mock_sa, mock_request, mocker
 async def test_browser_discord_login_callback_success(mock_sa, mock_request, existing, has_global_name, has_sid):
     # Setup
     session = {}
+    mock_sa.enforce_role.verify_user = AsyncMock()
     mock_sa.sio.session.return_value.__aenter__.return_value = session
     mock_sa.sio.get_session.return_value = session
 
@@ -112,6 +113,8 @@ async def test_browser_discord_login_callback_success(mock_sa, mock_request, exi
     # Assert
     user = User.get(User.discord_id == 1234)
     assert user.name == expected_name
+
+    mock_sa.enforce_role.verify_user.assert_called_once_with("1234")
 
     if has_sid:
         mock_sa.sio.emit.assert_awaited_once_with(
