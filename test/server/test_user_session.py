@@ -6,7 +6,6 @@ import urllib.parse
 from typing import TYPE_CHECKING
 from unittest.mock import ANY, AsyncMock, MagicMock
 
-import fastapi_discord
 import pytest
 from fastapi import Request  # noqa: TC002
 from fastapi.responses import RedirectResponse
@@ -15,6 +14,7 @@ from randovania.network_common import error
 from randovania.network_common.error import InvalidSessionError
 from randovania.server import user_session
 from randovania.server.database import User
+from randovania.server.fastapi_discord import exceptions as fd_exceptions
 from randovania.server.server_app import ServerAppDep  # noqa: TC001
 
 if TYPE_CHECKING:
@@ -222,7 +222,7 @@ async def test_browser_discord_login_callback_cancelled(mock_sa, mock_request, m
     mock_render = mocker.patch("randovania.server.user_session.unable_to_login")
 
     mock_sa.discord.get_access_token.return_value = ("The_Token", "Refresh_Token")
-    mock_sa.discord.user.side_effect = fastapi_discord.exceptions.Unauthorized()
+    mock_sa.discord.user.side_effect = fd_exceptions.Unauthorized()
 
     # Run
     result = await user_session.browser_discord_login_callback(

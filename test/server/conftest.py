@@ -15,7 +15,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.network_common.configuration import NetworkConfiguration
 from randovania.server import database
 from randovania.server.configuration import ServerConfiguration
-from randovania.server.discord_auth import CustomDiscordOAuthClient
+from randovania.server.fastapi_discord import DiscordOAuthClient
 
 if TYPE_CHECKING:
     from collections.abc import Generator
@@ -104,7 +104,7 @@ def test_client_fixture(server_app) -> Generator[RdvTestClient, None, None]:
 @pytest.fixture(name="mock_sa")
 def mock_sa_fixture(clean_database, server_app) -> NonCallableMagicMock:
     mock_sa = NonCallableMagicMock(spec=server_app)
-    mock_sa.discord = NonCallableMagicMock(spec=CustomDiscordOAuthClient)
+    mock_sa.discord = NonCallableMagicMock(spec=DiscordOAuthClient)
     mock_sa.socket_manager = NonCallableMagicMock(spec=SocketManager)
     mock_sa.sio = NonCallableMagicMock(spec=AsyncServer)
     mock_sa.db = NonCallableMagicMock(spec=SqliteDatabase)

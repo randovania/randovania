@@ -53,14 +53,14 @@ async def test_discord_auth_lifespan(
     mock_discord.client_session.close = mock_client_session_close
 
     mock_discord_oauth = mocker.patch(
-        "randovania.server.discord_auth.CustomDiscordOAuthClient",
+        "randovania.server.discord_auth.DiscordOAuthClient",
         return_value=mock_discord,
     )
 
     async with discord_oauth_lifespan(lifespan_sa.app) as discord:
         assert discord == mock_discord
         mock_discord_oauth.assert_called_once_with(
-            1234,
+            "1234",
             "5678",
             "",
             ("identify",),
