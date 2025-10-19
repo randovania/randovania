@@ -510,7 +510,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         return text
 
     def _credits_spoiler(self) -> dict[str, str]:
-        return credits_spoiler.generic_credits(
+        return credits_spoiler.generic_string_credits(
             self.configuration.standard_pickup_configuration,
             self.description.all_patches,
             self.players_config,
