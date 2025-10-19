@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import asyncio
+import concurrent.futures
 import functools
 import math
+import pickle
 import time
 import typing
-from concurrent.futures import CancelledError, Future, ProcessPoolExecutor
+from concurrent.futures import CancelledError, Future
 from pathlib import Path
 
 from randovania.cli import cli_lib
@@ -18,10 +20,16 @@ if typing.TYPE_CHECKING:
     from randovania.layout.generator_parameters import GeneratorParameters
 
 
-def get_generator_params(base_params: GeneratorParameters, seed_number: int) -> GeneratorParameters:
+def get_interpreter_pool(use_subinterpreter: bool, max_workers: int) -> concurrent.futures.Executor:
+    if use_subinterpreter:
+        return concurrent.futures.InterpreterPoolExecutor(max_workers=max_workers)  # type: ignore[attr-defined]
+    return concurrent.futures.ProcessPoolExecutor(max_workers=max_workers)
+
+
+def get_generator_params(base_params_bytes: bytes, seed_number: int) -> GeneratorParameters:
     from randovania.layout.permalink import GeneratorParameters
 
-    assert isinstance(base_params, GeneratorParameters)
+    base_params = pickle.loads(base_params_bytes)
 
     return GeneratorParameters(
         seed_number=seed_number,
@@ -32,7 +40,7 @@ def get_generator_params(base_params: GeneratorParameters, seed_number: int) -> 
 
 
 def batch_distribute_helper(
-    base_params: GeneratorParameters,
+    base_params_bytes: bytes,
     seed_number: int,
     timeout: int,
     validate: bool,
@@ -40,7 +48,7 @@ def batch_distribute_helper(
 ) -> float:
     from randovania.generator import generator
 
-    permalink = get_generator_params(base_params, seed_number)
+    permalink = get_generator_params(base_params_bytes, seed_number)
 
     start_time = time.perf_counter()
     description = asyncio.run(
@@ -66,6 +74,7 @@ def batch_distribute_command_logic(args: Namespace) -> None:
     impossible_seeds = []
     failure_count = 0
     failure_seeds = []
+    start_time = time.time()
 
     timeout: int = args.timeout
     validate: bool = args.validate
@@ -78,9 +87,10 @@ def batch_distribute_command_logic(args: Namespace) -> None:
     number_format = "[{0:" + str(num_digits) + "d}/{1}] "
     base_permalink = Permalink.from_str(args.permalink)
     base_params = base_permalink.parameters
+    base_params_bytes = pickle.dumps(base_params)
 
     def get_permalink_text(seed: int) -> str:
-        return Permalink.from_parameters(get_generator_params(base_params, seed)).as_base64_str
+        return Permalink.from_parameters(get_generator_params(base_params_bytes, seed)).as_base64_str
 
     def report_update(seed: int, msg: str) -> None:
         nonlocal finished_count
@@ -117,11 +127,11 @@ def batch_distribute_command_logic(args: Namespace) -> None:
 
     try:
         with sleep_inhibitor.get_inhibitor():
-            with ProcessPoolExecutor(max_workers=args.process_count) as pool:
+            with get_interpreter_pool(args.use_subinterpreter, max_workers=args.process_count) as pool:
                 for seed_number in range(base_params.seed_number, base_params.seed_number + args.seed_count):
                     result = pool.submit(
                         batch_distribute_helper,
-                        base_params,
+                        base_params_bytes,
                         seed_number,
                         timeout,
                         validate,
@@ -133,12 +143,20 @@ def batch_distribute_command_logic(args: Namespace) -> None:
     except KeyboardInterrupt:
         pass
 
+    end_time = time.time()
     print("Generation Failed: " + str(failure_count) + " " + str(failure_seeds))
     print("Impossible for Solver: " + str(impossible_count) + " " + str(impossible_seeds))
+    print(f"Total time: {end_time - start_time}")
 
 
 def add_batch_distribute_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser("batch-distribute", help="Generate multiple layouts in parallel")
+    parser.add_argument(
+        "--use-subinterpreter",
+        action="store_true",
+        default=False,
+        help="Use subinterpreters instead of multiple processes. Requires Python 3.14+",
+    )
 
     parser.add_argument("permalink", type=str, help="The permalink to use")
     parser.add_argument("--process-count", type=int, help="How many processes to use. Defaults to CPU count.")
