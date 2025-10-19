@@ -18,6 +18,7 @@ from randovania.layout import filtered_database
 if TYPE_CHECKING:
     from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.game.game_enum import RandovaniaGame
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_database import PickupDatabase
@@ -161,10 +162,22 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
         players_config: PlayersConfiguration,
         rng: Random,
         base_joke_hints: list[str],
+        game_view: GameDatabaseView,
     ) -> HintExporter:
         """Return an instance of this game's HintExporter."""
         return cls.hint_exporter_type()(
             cls.get_hint_namer(all_patches, players_config),
             rng,
             base_joke_hints,
+            game_view,
+        )
+
+    def create_hint_exporter(self, base_joke_hints: list[str]) -> HintExporter:
+        """Return an instance of this game's HintExporter with this PDF's specific fields."""
+        return self.get_hint_exporter(
+            all_patches=self.description.all_patches,
+            players_config=self.players_config,
+            rng=self.rng,
+            base_joke_hints=base_joke_hints,
+            game_view=self.game,
         )
