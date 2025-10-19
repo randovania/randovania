@@ -86,13 +86,7 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
             "in_race_setting": not self.description.has_spoiler,
         }
 
-    def create_data(self, custom_metadata: PatcherDataMeta | None = None) -> dict:
-        """
-        Creates the patcher specific data. Applies custom patcher data on top if they exist.
-        :param custom_metadata: If provided, will be used over the default randovania metadata.
-        :return: The patcher data, with the randovania metadata included, as a dict.
-        """
-
+    def _attach_to_sentry(self) -> None:
         with sentry_sdk.isolation_scope() as scope:
             scope.add_attachment(
                 json.dumps(self.description.as_json(force_spoiler=True)).encode("utf-8"),
@@ -101,6 +95,13 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
                 add_to_transactions=True,
             )
 
+    def create_data(self, custom_metadata: PatcherDataMeta | None = None) -> dict:
+        """
+        Creates the patcher specific data. Applies custom patcher data on top if they exist.
+        :param custom_metadata: If provided, will be used over the default randovania metadata.
+        :return: The patcher data, with the randovania metadata included, as a dict.
+        """
+        self._attach_to_sentry()
         randovania_meta = custom_metadata or self.create_default_patcher_data_meta()
 
         game_data = self.create_game_specific_data(randovania_meta)
