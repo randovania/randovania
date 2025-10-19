@@ -250,6 +250,7 @@ async def _change_layout_description(
         description = None
         for world in session.worlds:
             world.uuid = uuid.uuid4()
+            world.beaten = False
             worlds_to_update.append(world)
 
     else:
