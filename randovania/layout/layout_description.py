@@ -20,6 +20,7 @@ from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib import construct_lib, json_lib, obfuscator
 
 if typing.TYPE_CHECKING:
+    from collections.abc import Sequence
     from pathlib import Path
 
     from randovania.game_description.game_patches import GamePatches
@@ -41,7 +42,7 @@ def shareable_hash(hash_bytes: bytes) -> str:
     return base64.b32encode(hash_bytes).decode()
 
 
-def shareable_word_hash(hash_bytes: bytes, all_games: list[RandovaniaGame]) -> str:
+def shareable_word_hash(hash_bytes: bytes, all_games: Sequence[RandovaniaGame]) -> str:
     rng = Random(sum(hash_byte * (2**8) ** i for i, hash_byte in enumerate(hash_bytes)))
 
     games_left: list[RandovaniaGame] = []
