@@ -22,6 +22,7 @@ if TYPE_CHECKING:
 def test_do_export_broken_internal_copy(tmp_path: Path):
     patch_data = {
         "menu_mod": False,
+        "new_patcher_only": False,
     }
 
     export_params = EchoesGameExportParams(
@@ -96,6 +97,7 @@ def test_do_export_game(
 
     if use_new_patcher:
         patch_data["new_patcher"] = new_patcher_data
+    patch_data["new_patcher_only"] = False
 
     export_params = EchoesGameExportParams(
         input_path=input_path,

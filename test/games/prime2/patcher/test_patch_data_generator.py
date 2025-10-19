@@ -19,6 +19,7 @@ from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.exporter import patch_data_factory
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, EchoesNewPatcher
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator, pool_creator
@@ -650,7 +651,7 @@ def test_create_string_patches(
     # Run
     result = patch_data_factory._create_string_patches(
         hint_config,
-        False,
+        EchoesNewPatcher.DISABLED,
         game,
         all_patches,
         namer,
@@ -684,15 +685,20 @@ def test_create_string_patches(
 @pytest.mark.parametrize(
     ("rdvgame_filename", "expected_results_filename", "use_new_patcher"),
     [
-        ("seed_a.rdvgame", "seed_a_old_patcher.json", False),
-        ("seed_a.rdvgame", "seed_a_new_patcher.json", True),
-        ("prime2_no_pbs.rdvgame", "prime2_no_pbs_old_patcher.json", False),
-        ("prime2_no_pbs.rdvgame", "prime2_no_pbs_new_patcher.json", True),
+        ("seed_a.rdvgame", "seed_a_old_patcher.json", EchoesNewPatcher.DISABLED),
+        ("seed_a.rdvgame", "seed_a_new_patcher.json", EchoesNewPatcher.BOTH),
+        ("prime2_no_pbs.rdvgame", "prime2_no_pbs_old_patcher.json", EchoesNewPatcher.DISABLED),
+        ("prime2_no_pbs.rdvgame", "prime2_no_pbs_new_patcher.json", EchoesNewPatcher.BOTH),
+        ("prime2_no_pbs.rdvgame", "prime2_no_pbs_only_new_patcher.json", EchoesNewPatcher.ONLY),
     ],
 )
 def test_generate_patcher_data(
-    test_files_dir, rdvgame_filename, expected_results_filename, use_new_patcher, monkeypatch, mocker
-):
+    test_files_dir,
+    rdvgame_filename: str,
+    expected_results_filename: str,
+    use_new_patcher: EchoesNewPatcher,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", rdvgame_filename))
     player_index = 0

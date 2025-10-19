@@ -9,7 +9,10 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.damage_reduction import DamageReduction
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
+from randovania.games.prime2.layout.echoes_configuration import (
+    EchoesConfiguration,
+    LayoutSkyTempleKeyMode,
+)
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.resolver.bootstrap import Bootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
@@ -55,7 +58,7 @@ class EchoesBootstrap(Bootstrap[EchoesConfiguration]):
         yield resource_database.get_event("Event71"), 1  # Landing Site Webs
         yield resource_database.get_event("Event78"), 1  # Hive Chamber A Gates
 
-        if configuration.use_new_patcher:
+        if configuration.use_new_patcher.is_enabled():
             yield resource_database.get_event("Event73"), 1  # Dynamo Chamber Gates
             yield resource_database.get_event("Event75"), 1  # Trooper Security Station Gate
             yield resource_database.get_event("Event20"), 1  # Security Station B DS Appearance
