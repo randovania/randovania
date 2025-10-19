@@ -395,7 +395,9 @@ async def _get_permalink(sa: ServerApp, sid: str, session: MultiplayerSession) -
     return session.layout_description.permalink.as_base64_str
 
 
-async def admin_session(sa: ServerApp, sid: str, session_id: int, action: str, *args: typing.Any) -> typing.Any:
+async def admin_session(
+    sa: ServerApp, sid: str, session_id: int, action: str, emit_event: bool, *args: typing.Any
+) -> typing.Any:
     monitoring.set_tag("action", action)
 
     action_ = SessionAdminGlobalAction(action)
@@ -450,7 +452,10 @@ async def admin_session(sa: ServerApp, sid: str, session_id: int, action: str, *
     elif action_ == SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM:
         await _set_allow_everyone_claim(sa, sid, session, *args)
 
-    await session_common.emit_session_meta_update(sa, session)
+    if emit_event:
+        await session_common.emit_session_meta_update(sa, session)
+    else:
+        sa.logger.info("Asked to not emit a session event")
 
 
 async def _kick_user(

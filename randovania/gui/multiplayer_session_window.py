@@ -826,13 +826,14 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         all_names = {world.name for world in self._session.worlds}
         for i in range(len(self._session.worlds), parameters.world_count):
             name = f"World {i + 1}"
+            is_last_world = True if i == (parameters.world_count - 1) else False
             for suffix in itertools.count():
                 if name not in all_names:
                     break
                 name = f"World {i + 1} ({suffix + 1})"
 
             await self.game_session_api.create_unclaimed_world(
-                name, VersionedPreset.with_preset(parameters.get_preset(i))
+                name, VersionedPreset.with_preset(parameters.get_preset(i)), is_last_world
             )
 
         if parameters.world_count != len(self._session.worlds):

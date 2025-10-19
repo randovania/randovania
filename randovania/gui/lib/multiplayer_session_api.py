@@ -128,14 +128,14 @@ class MultiplayerSessionApi(QtCore.QObject):
         self.logger = SessionIdLoggerAdapter(_base_logger, self)
 
     async def _session_admin_global(
-        self, action: admin_actions.SessionAdminGlobalAction, *args: JsonType | bytes
+        self, action: admin_actions.SessionAdminGlobalAction, *args: JsonType | bytes, emit_event: bool = True
     ) -> JsonType | None:
         assert self.widget_root is not None
         try:
             self.widget_root.setEnabled(False)
             return await self.network_client.server_call(
                 "multiplayer_admin_session",
-                [self.current_session_id, action.value, *args],
+                [self.current_session_id, action.value, emit_event, *args],
             )
         finally:
             self.widget_root.setEnabled(True)
@@ -267,12 +267,13 @@ class MultiplayerSessionApi(QtCore.QObject):
         )
 
     @handle_network_errors
-    async def create_unclaimed_world(self, name: str, preset: VersionedPreset) -> None:
+    async def create_unclaimed_world(self, name: str, preset: VersionedPreset, emit_event: bool) -> None:
         self.logger.info("Creating unclaimed world named '%s' with %s", name, preset.name)
         await self._session_admin_global(
             admin_actions.SessionAdminGlobalAction.CREATE_WORLD,
             name,
             preset.as_bytes(),
+            emit_event=emit_event,
         )
 
     @handle_network_errors
