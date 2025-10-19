@@ -381,7 +381,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             for location in locations:
                 # Special case for special messages
                 if isinstance(location, str):
-                    elements[pickup.name].append({"World": "", "Region": "", "Area": location})
+                    elements[pickup.name].append({"World": None, "Region": "", "Area": location})
                     continue
 
                 region_list = default_database.game_description_for(location.location.game).region_list
