@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Random starting items is now Random starting pickups.
 - Changed: Minor pickups will not show in the credits anymore if you randomly started with them.
 
+### Another Metroid 2 Remake
+
+- Changed: When using Door Lock Rando with the Types mode, both sides will now always have the same door type.
+
 ### Factorio
 
 - Fixed: A typo on the "Changes" preset page.
