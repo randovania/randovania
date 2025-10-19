@@ -82,6 +82,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid: Samus Returns
 
 - Added: Support for .cci rom files to use the same file for exporting and playing via Azahar.
+- Added: Featural hint support, where hints may refer to various Features of a pickup or of a location. Read the Hints section for more details.
 - Changed: Dropped support for Citra and switched to Azahar.
 
 ## [10.2.0] - 2025-10-02
