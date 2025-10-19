@@ -21,7 +21,7 @@
     </size>
    </property>
    <property name="layoutDirection">
-    <enum>Qt::LeftToRight</enum>
+    <enum>Qt::LayoutDirection::LeftToRight</enum>
    </property>
    <layout class="QGridLayout" name="grid_layout">
     <item row="1" column="1">
@@ -48,7 +48,7 @@
     <item row="0" column="2" rowspan="4" colspan="2">
      <widget class="QListView" name="messages_list">
       <property name="editTriggers">
-       <set>QAbstractItemView::NoEditTriggers</set>
+       <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
       </property>
      </widget>
     </item>
@@ -78,6 +78,13 @@
       </attribute>
      </widget>
     </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="beat_game_button">
+      <property name="text">
+       <string>Beat Game</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -86,7 +93,7 @@
      <x>0</x>
      <y>0</y>
      <width>697</width>
-     <height>17</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>
