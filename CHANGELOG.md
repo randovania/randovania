@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Artaria
 
+- Added: Extra requirements to break the blobs in Arbitrary Enky Room, to improve the quality of generated games.
 - Fixed: Screw Attack Room: Using a Shinespark to reach Start Point 2 from the door to Transport to Burenia was missing a requirement on having activated the Rotatable.
 
 ### Metroid Fusion
