@@ -55,10 +55,12 @@ def starting_pickups_with_count(patches: GamePatches) -> dict[PickupEntry, int]:
         return {}
 
     for pickup in patches.starting_equipment:
-        result[pickup] += 1
+        if pickup.show_in_credits_spoiler:
+            result[pickup] += 1
 
     for pickup in pool_creator.calculate_pool_results(patches.configuration, patches.game).starting:
-        result[pickup] -= 1
+        if pickup.show_in_credits_spoiler:
+            result[pickup] -= 1
 
     return result
 
