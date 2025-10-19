@@ -373,12 +373,17 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
 
     def _credits_elements(self) -> defaultdict[str, list[dict]]:
         elements = defaultdict(list)
-        majors = credits_spoiler.get_locations_for_major_pickups_and_keys(
-            self.description.all_patches, self.players_config
+        majors = credits_spoiler.generic_credits(
+            self.configuration.standard_pickup_configuration, self.description.all_patches, self.players_config
         )
 
         for pickup, locations in majors.items():
             for location in locations:
+                # Special case for special messages
+                if isinstance(location, str):
+                    elements[pickup.name].append({"World": "", "Region": "", "Area": location})
+                    continue
+
                 region_list = default_database.game_description_for(location.location.game).region_list
                 pickup_node = region_list.node_from_pickup_index(location.location.location)
                 elements[pickup.name].append(
