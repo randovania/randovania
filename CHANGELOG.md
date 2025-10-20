@@ -334,6 +334,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Extra requirements to break the blobs in Arbitrary Enky Room, to improve the quality of generated games.
 - Fixed: Screw Attack Room: Using a Shinespark to reach Start Point 2 from the door to Transport to Burenia was missing a requirement on having activated the Rotatable.
 
+##### Burenia
+
+- Added: Underneath Drogyga: Cross the grapple blocks with a horizontal bomb jump (Expert Diagonal Bomb Jump)
+- Added: Underneath Drogyga: Climb out of the water after drogyga using single-wall wall jump with a water bomb jump
+
 ### Metroid Fusion
 
 - Added: 4 new hint location features: guarded by a Tank-Mimic, near a Geron, in a room with extreme temperatures, and activating a B.S.L. Systems Console.
@@ -484,11 +489,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Changed: Reworked Central Unit combat logic to reflect the increasing difficulty of later areas.
--
-
-##### Burenia
-
-- Added: Underneath Drogyga: Cross the grapple blocks with a horizontal bomb jump (Ludicrous Diagonal Bomb Jump)
 
 ##### Elun
 
