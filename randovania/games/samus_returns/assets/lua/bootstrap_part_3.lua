@@ -1,14 +1,11 @@
 function RL.GetGameStateAndSend()
     local current_state = Game.GetCurrentGameModeID()
     local current_scenario = ""
-    local has_beaten = false
-    local test = ""
+    local has_beaten = Init.bBeatenSinceLastReboot
     if current_state == 'INGAME' then
         current_scenario = Game.GetScenarioID()
-        has_beaten = Blackboard.GetProp("GAME", "HasBeatenGame")
     else
         current_scenario = current_state
-        has_beaten = Init.bBeatenSinceLastReboot
     end
 
     RL.SendNewGameState(current_scenario .. ";" .. tostring(has_beaten))
