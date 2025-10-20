@@ -13,5 +13,5 @@ def connection_headers():
         "X-Randovania-API-Version": str(SERVER_API_VERSION),
         "X-Randovania-Preset-Version": str(preset_migration.CURRENT_VERSION),
         "X-Randovania-Permalink-Version": str(permalink.Permalink.current_schema_version()),
-        "X-Randovania-Description-Version": str(description_migration.CURRENT_VERSION - 1),
+        "X-Randovania-Description-Version": str(description_migration.CURRENT_VERSION),
     }
