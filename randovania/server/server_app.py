@@ -16,7 +16,6 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Annotated, Concatenate, Self, cast
 
 import fastapi
-import fastapi_discord
 import peewee
 import sentry_sdk
 import starlette
@@ -34,7 +33,7 @@ from uvicorn.logging import ColourizedFormatter
 import randovania
 from randovania.bitpacking import construct_pack
 from randovania.network_common import connection_headers, error
-from randovania.server import client_check
+from randovania.server import client_check, fastapi_discord
 from randovania.server.database import User, World, database_lifespan
 from randovania.server.discord_auth import EnforceDiscordRole, discord_oauth_lifespan
 from randovania.server.socketio import EventHandlerReturnType, fastapi_socketio_lifespan
@@ -46,7 +45,7 @@ if TYPE_CHECKING:
     from socketio_handler import SocketManager
 
     from randovania.network_common.configuration import NetworkConfiguration
-    from randovania.server.discord_auth import CustomDiscordOAuthClient
+    from randovania.server.fastapi_discord import DiscordOAuthClient
 
 type Lifespan[T] = AsyncGenerator[T, None, None]
 type AsyncCallable[**P, T] = Callable[P, Coroutine[None, None, T]]
@@ -64,7 +63,8 @@ ctx_context: ContextVar[str] = ContextVar("context", default="Free")
 
 
 class ServerLoggingFormatter(ColourizedFormatter):
-    converter = time.gmtime
+    converter = time.gmtime  # type: ignore[assignment]
+    # `time.gmtime` is actually `Callable[[float | None], struct_time]`, mypy seems just wrong
 
     def formatMessage(self, record: logging.LogRecord) -> str:
         record.who = ctx_who.get()
@@ -78,7 +78,7 @@ class ServerApp:
     """The main class handling server functionality."""
 
     socket_manager: SocketManager
-    discord: CustomDiscordOAuthClient
+    discord: DiscordOAuthClient
     db: peewee.SqliteDatabase
     metrics: Instrumentator
     fernet_encrypt: Fernet

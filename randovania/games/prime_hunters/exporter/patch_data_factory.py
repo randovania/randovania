@@ -200,9 +200,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
             "scan_log": {},
         }
 
-        exporter = self.get_hint_exporter(
-            self.description.all_patches, self.players_config, self.rng, GENERIC_JOKE_HINTS
-        )
+        exporter = self.create_hint_exporter(GENERIC_JOKE_HINTS)
 
         octoliths = [self.game.resource_database.get_item(f"Octolith{i + 1}") for i in range(8)]
         octoliths_precision = self.configuration.hints.specific_pickup_hints["octoliths"]

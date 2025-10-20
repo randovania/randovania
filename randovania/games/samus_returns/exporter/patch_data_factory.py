@@ -323,7 +323,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         return details
 
     def _encode_hints(self, rng: Random) -> list[dict]:
-        exporter = self.get_hint_exporter(self.description.all_patches, self.players_config, rng, MSR_JOKE_HINTS)
+        exporter = self.create_hint_exporter(MSR_JOKE_HINTS)
 
         hints = [
             {

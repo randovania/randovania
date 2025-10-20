@@ -50,7 +50,7 @@ dependencies = [
     # Versioning presets
     "dulwich>=0.20,<0.23.0",   # Causes a crash with pyinstaller on windows when using ProcessPoolExecutor
     # error reports
-    "sentry-sdk<2.41.0",  # Needs code fixes to update. Some import got renamed?
+    "sentry-sdk",
     # Patch GamesPatches JSON from rdvgame
     "json-delta",
     # For the Version class
@@ -129,7 +129,7 @@ server = [
     "prometheus-fastapi-instrumentator",
 
     # discord auth
-    "fastapi-discord>=0.2.7",
+    "aiocache",  # for fastapi_discord copy
     "oauthlib",
     "pyjwt",
 
@@ -168,7 +168,7 @@ installer = [
 ]
 
 typing = [
-    "mypy<1.16.0",  # anything newer needs code changes
+    "mypy<1.18.3",
     "types-aiofiles",
     "types-peewee",
     "types-qrcode>=8.0.0.20241004",
@@ -234,7 +234,7 @@ select = [
     "PLW",
     "SIM101",
 ]
-extend-ignore = [
+ignore = [
     "ISC001",  # may cause conflicts with formatter
     "PLW0603",  # we use some globals here and there
     "PLW2901",  # TODO: should actually fix these
@@ -277,6 +277,7 @@ runtime-evaluated-decorators = [
 files = [
     "randovania/bitpacking/",
     "randovania/cli/",
+    "randovania/discord_bot/preset_lookup.py",
     "randovania/exporter/",
     "randovania/game/",
     "randovania/game_connection/",
@@ -376,7 +377,7 @@ module = [
     "pytestqt.*",
     "qasync.*",
     "ruamel.*",
-    "fastapi_discord.*",
+    "aiocache.*",
     "socketio_handler.*",
 ]
 ignore_missing_imports = true

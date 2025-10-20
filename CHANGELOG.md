@@ -9,11 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: The Multiworld Session will now display when a world has been beaten. This is supported for the following games:
   - Another Metroid 2 Remake
+  - Metroid Prime
 - Changed: Centered the text at the top of the Hints preset settings.
 - Changed: Cleaned up how Specific Pickup Hints are shown in the preset settings.
 - Changed: Places that describe a preset with Specific Pickup Hints have slightly better grammar in some cases.
 - Changed: The "Item Pool" tab is now called "Pickup Pool".
 - Changed: Random starting items is now Random starting pickups.
+- Changed: Minor pickups will not show in the credits anymore if you randomly started with them.
+
+### Another Metroid 2 Remake
+
+- Changed: When using Door Lock Rando with the Types mode, both sides will now always have the same door type.
 
 ### Factorio
 
@@ -50,6 +56,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Changed: Going through Open Passages doesn't require to shoot a beam anymore.
+
 ##### Chozo Ruins
 
 - Fixed: Ruined Shrine: Removed unnecessary dangerous requirements.
@@ -79,7 +87,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid: Samus Returns
 
 - Added: Support for .cci rom files to use the same file for exporting and playing via Azahar.
+- Added: Featural hint support, where hints may refer to various Features of a pickup or of a location. Read the Hints section for more details.
 - Changed: Dropped support for Citra and switched to Azahar.
+- Removed: Redundant Pickup Hint Features.
 
 ## [10.2.0] - 2025-10-02
 
