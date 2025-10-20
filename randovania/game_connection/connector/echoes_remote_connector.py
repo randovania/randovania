@@ -72,7 +72,7 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
 
         memory_ops = [
             MemoryOperation(self.version.game_state_pointer, offset=mlvl_offset, read_byte_count=asset_id_size),
-            MemoryOperation(cstate_manager_global + 0x2, read_byte_count=1),
+            MemoryOperation(cstate_manager_global + self._pending_op_offset, read_byte_count=1),
             MemoryOperation(cstate_manager_global + cplayer_offset, offset=0, read_byte_count=4),
         ]
         results = await self.executor.perform_memory_operations(memory_ops)

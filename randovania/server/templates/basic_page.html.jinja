@@ -1,0 +1,15 @@
+{% extends "layout.html.jinja" %}
+
+{% block title %}
+	{{ title }}
+{% endblock %}
+
+{% block header %}
+	{{ header }}
+{% endblock header %}
+
+{% block content %}
+	<div class="main-content__body" data-lead-id="main-content-body">
+		{{ content | safe }}
+	</div>
+{% endblock content %}

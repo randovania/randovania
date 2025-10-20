@@ -7,22 +7,20 @@ on:
       - main
 
 jobs:
-  benchmark:
+  walltime:
     runs-on: 'ubuntu-latest'
-    name: Benchmark
+    name: Walltime Benchmark
 
     timeout-minutes: 30
 
     steps:
       - name: Checkout
         uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
-          version: "0.8.22"
+          version: "0.9.4"
           enable-cache: true
 
       - name: Set up Python
@@ -37,6 +35,6 @@ jobs:
       - name: run pytest (benchmark)
         uses: CodSpeedHQ/action@v4
         with:
-          run: uv run pytest -n auto --codspeed --codspeed-max-rounds=1 --skip-gui-tests
+          run: uv run pytest --codspeed --codspeed-max-rounds=2 --skip-gui-tests
           mode: walltime
           token: ${{ secrets.CODSPEED_TOKEN }}

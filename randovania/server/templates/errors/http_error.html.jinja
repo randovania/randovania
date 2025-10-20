@@ -1,0 +1,15 @@
+{% extends "layout.html.jinja" %}
+
+{% block title %}
+	{{ status_message }}
+{% endblock %}
+
+{% block header %}
+	{{ status_message }}
+{% endblock header %}
+
+{% block content %}
+	<p class="main-content__body" data-lead-id="main-content-body">
+		{{ detail }}
+	</p>
+{% endblock content %}

@@ -12,6 +12,7 @@ from randovania.lib import json_lib
 
 if typing.TYPE_CHECKING:
     import _pytest.python
+    import pytest_mock
     from conftest import TestFilesDir
 
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
@@ -32,15 +33,18 @@ def _update_committed(data_path: Path, cosmetic_path: Path, data: dict, cosmetic
     raise NotImplementedError("This function should not be called in normal execution.")
 
 
+@pytest.mark.benchmark
 @pytest.mark.usefixtures("_mock_seed_hash")
 def test_layout_patch_data_export(
     monkeypatch: pytest.MonkeyPatch,
+    mocker: pytest_mock.MockerFixture,
     test_files_dir: TestFilesDir,
     layout_name: str,
     world_index: int,
     is_coop: bool,
 ) -> None:
     monkeypatch.setattr(randovania, "VERSION", "1.2.3")
+    mock_attach = mocker.patch("randovania.exporter.patch_data_factory.PatchDataFactory._attach_to_sentry")
 
     layout = LayoutDescription.from_file(test_files_dir.joinpath("log_files", layout_name))
     game_enum = layout.get_preset(world_index).game
@@ -68,6 +72,7 @@ def test_layout_patch_data_export(
     )
 
     data = factory.create_data()
+    mock_attach.assert_called_once_with()
 
     # _update_committed(data_path, cosmetic_path, data, cosmetic_patches)
 
@@ -134,6 +139,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         # Prime 2
         "prime2/starts_with_cannon_ball.rdvgame",
         "prime2/door_lock_rando.rdvgame",
+        "prime2/launcher_and_negative_expansions.rdvgame",
         # Samus Returns
         "samus_returns/arachnus_boss_start_inventory.rdvgame",  # arachnus final boss + starting inventory + export ids
         "samus_returns/diggernaut_boss_free_placement_dna.rdvgame",  # diggernaut final boss + 7/15 dna anywhere

@@ -1,3 +1,5 @@
+# mypy: disable-error-code="assignment"
+
 from __future__ import annotations
 
 import collections
@@ -7,6 +9,8 @@ import json
 import typing
 import uuid
 import zlib
+from contextlib import asynccontextmanager
+from pathlib import Path
 from typing import TYPE_CHECKING, Any, Self
 from uuid import UUID
 
@@ -39,11 +43,9 @@ if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator, Sequence
 
     from randovania.lib.json_lib import JsonObject
-    from randovania.server.server_app import ServerApp
+    from randovania.server.server_app import Lifespan, RdvFastAPI, ServerApp
 
-    T = typing.TypeVar("T")
-
-    class TypedModelSelect(typing.Protocol[T]):
+    class TypedModelSelect[T](typing.Protocol):
         def where(self, *expressions: Any) -> Self: ...
 
         def order_by(self, *values: Any) -> Self: ...
@@ -54,9 +56,11 @@ if TYPE_CHECKING:
 
         def __iter__(self) -> Iterator[T]: ...
 
+        def paginate(self, page_number: int, items_per_page: int) -> Self: ...
+
 
 class MonitoredDb(peewee.SqliteDatabase):
-    def execute_sql(self, sql, params=None, commit=peewee.SENTINEL):
+    def execute_sql(self, sql, params=None, commit=peewee.SENTINEL):  # type: ignore[no-untyped-def]
         with record_sql_queries(self.cursor, sql, params, paramstyle="format", executemany=False):
             return super().execute_sql(sql, params, commit)
 
@@ -64,7 +68,7 @@ class MonitoredDb(peewee.SqliteDatabase):
 db = MonitoredDb(None, pragmas={"foreign_keys": 1})
 
 
-def is_boolean(field: Any, value: bool):
+def is_boolean(field: Any, value: bool) -> bool:
     return field == value
 
 
@@ -118,6 +122,7 @@ class User(BaseModel):
     discord_id: int | None = peewee.IntegerField(index=True, null=True)
     name: str = peewee.CharField()
     admin: bool = peewee.BooleanField(default=False)
+    access_tokens: Iterable[UserAccessToken]
 
     @property
     def as_json(self) -> JsonObject:
@@ -135,15 +140,23 @@ class UserAccessToken(BaseModel):
     user = peewee.ForeignKeyField(User, backref="access_tokens")
     name = peewee.CharField()
     creation_date = peewee.DateTimeField(default=lib.datetime_now)
-    last_used = peewee.DateTimeField(default=lib.datetime_now)
+    last_used: datetime.datetime = peewee.DateTimeField(default=lib.datetime_now)
 
     class Meta:
         primary_key = peewee.CompositeKey("user", "name")
 
+    @property
+    def creation_datetime(self) -> datetime.datetime:
+        return datetime.datetime.fromisoformat(self.creation_date)  # type: ignore[arg-type]
+
+    @property
+    def last_used_datetime(self) -> datetime.datetime:
+        return datetime.datetime.fromisoformat(self.creation_date)  # type: ignore[arg-type]
+
 
 @cachetools.cached(cache=cachetools.TTLCache(maxsize=64, ttl=600))
 def _decode_layout_description(layout: bytes, presets: tuple[str, ...]) -> LayoutDescription:
-    preset_list = [VersionedPreset.from_str(preset) for preset in presets]
+    preset_list: list[VersionedPreset] = [VersionedPreset.from_str(preset) for preset in presets]
     if layout.startswith(b"RDVG"):
         return LayoutDescription.from_bytes(layout, presets=preset_list)
     else:
@@ -178,6 +191,7 @@ class MultiplayerSession(BaseModel):
         return self.layout_description_json is not None
 
     def _get_layout_description(self, ordered_worlds: list[World]) -> LayoutDescription:
+        assert self.layout_description_json is not None
         return _decode_layout_description(self.layout_description_json, tuple(world.preset for world in ordered_worlds))
 
     @property
@@ -188,7 +202,7 @@ class MultiplayerSession(BaseModel):
             return None
 
     @layout_description.setter
-    def layout_description(self, description: LayoutDescription | None):
+    def layout_description(self, description: LayoutDescription | None) -> None:
         if description is not None:
             encoded = description.as_binary(force_spoiler=True, include_presets=False)
             self.layout_description_json = encoded
@@ -213,9 +227,10 @@ class MultiplayerSession(BaseModel):
         return None
 
     def get_layout_description_as_binary(self) -> bytes | None:
-        if self.layout_description_json is not None:
+        layout = self.layout_description
+        if layout is not None:
             # TODO: just return layout_description_json directly!
-            return self.layout_description.as_binary(include_presets=False, force_spoiler=True)
+            return layout.as_binary(include_presets=False, force_spoiler=True)
         else:
             return None
 
@@ -228,7 +243,7 @@ class MultiplayerSession(BaseModel):
     def creation_datetime(self) -> datetime.datetime:
         return datetime.datetime.fromisoformat(self.creation_date)
 
-    def is_user_in_session(self, user: User):
+    def is_user_in_session(self, user: User) -> bool:
         try:
             MultiplayerMembership.get_by_ids(user, self.id)
         except peewee.DoesNotExist:
@@ -245,9 +260,9 @@ class MultiplayerSession(BaseModel):
         ]
 
     def get_ordered_worlds(self) -> list[World]:
-        return list(World.select().where(World.session == self).order_by(World.order.asc()))
+        return list(World.select().where(World.session == self).order_by(World.order.asc()))  # type: ignore[union-attr]
 
-    def describe_actions(self):
+    def describe_actions(self) -> multiplayer_session.MultiplayerSessionActions:
         if not self.has_layout_description():
             return multiplayer_session.MultiplayerSessionActions(self.id, [])
 
@@ -258,6 +273,8 @@ class MultiplayerSession(BaseModel):
         def _describe_action(action: WorldAction) -> multiplayer_session.MultiplayerSessionAction:
             provider = world_by_id[action.provider_id]
             receiver = world_by_id[action.receiver_id]
+
+            assert provider.order is not None
 
             location_index = PickupIndex(action.location)
             target = description.all_patches[provider.order].pickup_assignment[location_index]
@@ -274,7 +291,7 @@ class MultiplayerSession(BaseModel):
             self.id,
             [
                 _describe_action(action)
-                for action in WorldAction.select().where(WorldAction.session == self).order_by(WorldAction.time.asc())
+                for action in WorldAction.select().where(WorldAction.session == self).order_by(WorldAction.time.asc())  # type: ignore[attr-defined]
             ],
         )
 
@@ -289,6 +306,7 @@ class MultiplayerSession(BaseModel):
                 id=world.uuid,
                 name=world.name,
                 preset_raw=world.preset,
+                has_been_beaten=world.beaten,
             )
             for world in self.worlds
         }
@@ -369,16 +387,17 @@ class World(BaseModel):
     id: int
     session: MultiplayerSession = peewee.ForeignKeyField(MultiplayerSession, backref="worlds")
     session_id: int
-    uuid: uuid.UUID = peewee.UUIDField(default=uuid.uuid4, unique=True)
+    uuid: UUID = peewee.UUIDField(default=uuid.uuid4, unique=True)
 
     name: str = peewee.CharField(max_length=MAX_WORLD_NAME_LENGTH)
     preset: str = peewee.TextField()
     order: int | None = peewee.IntegerField(null=True, default=None)
+    beaten: bool = peewee.BooleanField(default=False)
 
     associations: list[WorldUserAssociation]
 
     @classmethod
-    def get_by_uuid(cls, uid) -> World:
+    def get_by_uuid(cls, uid: UUID | str) -> World:
         try:
             return cls.get(World.uuid == uid)
         except peewee.DoesNotExist:
@@ -400,6 +419,7 @@ class World(BaseModel):
         *,
         uid: UUID | None = None,
         order: int | None = None,
+        beaten: bool = False,
     ) -> Self:
         if uid is None:
             uid = uuid.uuid4()
@@ -409,6 +429,7 @@ class World(BaseModel):
             name=name,
             preset=json.dumps(preset.as_json, separators=(",", ":")),
             order=order,
+            beaten=beaten,
         )
 
 
@@ -424,7 +445,7 @@ class WorldUserAssociation(BaseModel):
         choices=GameConnectionStatus, default=GameConnectionStatus.Disconnected
     )
     last_activity: datetime.datetime = peewee.DateTimeField(default=lib.datetime_now)
-    inventory = peewee.BlobField(null=True)
+    inventory: bytes = peewee.BlobField(null=True)
 
     @classmethod
     def get_by_instances(cls, *, world: World | int, user: User | int) -> Self:
@@ -434,7 +455,7 @@ class WorldUserAssociation(BaseModel):
         )
 
     @classmethod
-    def get_by_ids(cls, world_uid: uuid.UUID, user_id: int) -> Self:
+    def get_by_ids(cls, world_uid: UUID, user_id: int) -> Self:
         return (
             cls.select()
             .join(World)
@@ -576,11 +597,11 @@ class AsyncRaceRoom(BaseModel):
             now,
         )
 
-    def create_session_entry(self, sa: ServerApp) -> async_race_room.AsyncRaceRoomEntry:
+    async def create_session_entry(self, sa: ServerApp, sid: str) -> async_race_room.AsyncRaceRoomEntry:
         game_details = self.game_details()
 
         now = lib.datetime_now()
-        for_user = sa.get_current_user()
+        for_user = await sa.get_current_user(sid)
 
         if (entry := AsyncRaceEntry.entry_for(self, for_user)) is not None:
             status = entry.user_status()
@@ -606,7 +627,7 @@ class AsyncRaceRoom(BaseModel):
             presets_raw=[
                 VersionedPreset.with_preset(preset).as_bytes() for preset in self.layout_description.all_presets
             ],
-            is_admin=for_user == self.creator,
+            is_admin=for_user == self.creator,  # type: ignore[arg-type]
             self_status=status,
             allow_pause=self.allow_pause,
         )
@@ -679,12 +700,12 @@ class AsyncRaceEntry(BaseModel):
 
     @property
     def join_datetime(self) -> datetime.datetime:
-        return datetime.datetime.fromisoformat(self.join_date)
+        return datetime.datetime.fromisoformat(self.join_date)  # type: ignore[arg-type]
 
     @property
     def start_datetime(self) -> datetime.datetime | None:
         if self.start_date is not None:
-            return datetime.datetime.fromisoformat(self.start_date)
+            return datetime.datetime.fromisoformat(self.start_date)  # type: ignore[arg-type]
         return None
 
     @start_datetime.setter
@@ -694,7 +715,7 @@ class AsyncRaceEntry(BaseModel):
     @property
     def finish_datetime(self) -> datetime.datetime | None:
         if self.finish_date is not None:
-            return datetime.datetime.fromisoformat(self.finish_date)
+            return datetime.datetime.fromisoformat(self.finish_date)  # type: ignore[arg-type]
         return None
 
     @finish_datetime.setter
@@ -704,28 +725,28 @@ class AsyncRaceEntry(BaseModel):
 
 class AsyncRaceEntryPause(BaseModel):
     entry: AsyncRaceEntry = peewee.ForeignKeyField(AsyncRaceEntry, backref="pauses")
-    start = peewee.DateTimeField(default=lib.datetime_now)
-    end = peewee.DateTimeField(null=True)
+    start: datetime.datetime = peewee.DateTimeField(default=lib.datetime_now)
+    end: datetime.datetime = peewee.DateTimeField(null=True)
 
     @property
     def start_datetime(self) -> datetime.datetime:
-        return datetime.datetime.fromisoformat(self.start)
+        return datetime.datetime.fromisoformat(self.start)  # type: ignore[arg-type]
 
     @property
     def end_datetime(self) -> datetime.datetime | None:
         if self.end is not None:
-            return datetime.datetime.fromisoformat(self.end)
+            return datetime.datetime.fromisoformat(self.end)  # type: ignore[arg-type]
         return None
 
     @property
     def length(self) -> datetime.timedelta | None:
         if self.end is None:
             return None
-        return self.end_datetime - self.start_datetime
+        return self.end_datetime - self.start_datetime  # type: ignore[operator]
 
     @classmethod
     def active_pause(cls, entry: AsyncRaceEntry) -> Self | None:
-        for it in cls.select().where(cls.entry == entry, cls.end.is_null()):
+        for it in cls.select().where(cls.entry == entry, cls.end.is_null()):  # type: ignore[attr-defined]
             return it
         return None
 
@@ -739,13 +760,14 @@ class AsyncRaceEntryPause(BaseModel):
 class DatabaseMigrations(enum.Enum):
     ADD_READY_TO_MEMBERSHIP = "ready_membership"
     SESSION_STATE_TO_VISIBILITY = "session_state_to_visibility"
+    ADD_GAME_BEATEN = "game_beaten"
 
 
 class PerformedDatabaseMigrations(BaseModel):
     migration = EnumField(DatabaseMigrations, unique=True)
 
 
-all_classes = [
+all_classes: list[type[BaseModel]] = [
     User,
     UserAccessToken,
     MultiplayerSession,
@@ -760,3 +782,25 @@ all_classes = [
     AsyncRaceAuditEntry,
     PerformedDatabaseMigrations,
 ]
+
+
+@asynccontextmanager
+async def database_lifespan(_app: RdvFastAPI) -> Lifespan[MonitoredDb]:
+    db_path = _app.sa.configuration["server_config"]["database_path"]
+    db_existed = Path(db_path).exists()
+
+    db.init(db_path)
+    db.connect(reuse_if_open=True)
+    db.create_tables(all_classes)
+
+    if not db_existed:
+        for entry in DatabaseMigrations:
+            PerformedDatabaseMigrations.create(migration=entry)
+
+    from randovania.server import database_migration
+
+    database_migration.apply_migrations()
+
+    yield db
+
+    db.close()

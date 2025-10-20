@@ -67,10 +67,10 @@ def test_am2r_format_params(artifacts: AM2RArtifactConfig, darkness_chance: int)
             if artifacts.required_artifacts
             else [dna_where]
         ),
-        "Hints": ["DNA Hint: Region and area", "Ice Beam Hint: Region only"],
-        "Item Pool": [
+        "Hints": ["DNA Hints: Region and area", "Ice Beam Hint: Region only"],
+        "Pickup Pool": [
             f"Size: {118 + artifacts.placed_artifacts} of 134",
-            "Vanilla starting items",
+            "Unmodified starting pickup",
             "Excludes Varia Suit, Space Jump, Hi-Jump Boots, Gravity Suit",
             "Shuffles 2x Progressive Jump, 2x Progressive Suit",
         ],

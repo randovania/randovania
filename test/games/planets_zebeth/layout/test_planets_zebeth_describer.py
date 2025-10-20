@@ -36,6 +36,6 @@ def test_planets_zebeth_format_params(preset_name):
         "Game Changes": [],
         "Gameplay": ["Starts at Brinstar - Maru Mari Hall"],
         "Goal": [dna_where],
-        "Item Pool": ["Size: 42 of 42", "Vanilla starting items"],
+        "Pickup Pool": ["Size: 42 of 42", "Unmodified starting pickup"],
         "Logic Settings": ["All tricks disabled"],
     }

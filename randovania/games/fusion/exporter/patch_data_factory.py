@@ -8,7 +8,6 @@ from typing import TYPE_CHECKING, override
 
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
-from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
@@ -217,10 +216,9 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         return palette_dict
 
     def _create_nav_text(self) -> dict:
-        nav_text_json = {}
-        namer = FusionHintNamer(self.description.all_patches, self.players_config)
-        exporter = HintExporter(namer, self.rng, FUSION_JOKE_HINTS)
+        exporter = self.create_hint_exporter(FUSION_JOKE_HINTS)
 
+        nav_text_json = {}
         artifacts = [self.game.resource_database.get_item(f"Infant Metroid {i + 1}") for i in range(20)]
 
         metroid_precision = self.configuration.hints.specific_pickup_hints["artifacts"]
@@ -230,7 +228,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             metroid_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
-                namer,
+                exporter.namer,
                 True if metroid_precision == SpecificPickupHintMode.HIDE_AREA else False,
                 artifacts,
                 True,
@@ -239,7 +237,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             charge_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
-                namer,
+                exporter.namer,
                 True if charge_precision == SpecificPickupHintMode.HIDE_AREA else False,
                 [self.game.resource_database.get_item("ChargeBeam")],
                 True,
@@ -421,7 +419,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     credits_array.append({"LineType": "White1", "Text": line, "BlankLines": 0})
                 for line in area_lines:
                     credits_array.append({"LineType": "White1", "Text": line, "BlankLines": 0})
-                credits_array.append({"LineType": "White1", "Text": "", "BlankLines": 0})
+                credits_array[-1]["BlankLines"] = 1
 
         # Have last item give more space
         credits_array[-1]["BlankLines"] = 3

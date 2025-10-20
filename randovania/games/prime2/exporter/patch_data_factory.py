@@ -21,6 +21,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.common import elevators
 from randovania.games.prime2.exporter import hints
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
+from randovania.games.prime2.exporter.joke_hints import ECHOES_JOKE_HINTS
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
@@ -34,6 +35,7 @@ from randovania.lib import json_lib, string_lib
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterator
 
+    from randovania.exporter.hints.hint_exporter import HintExporter
     from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.game_description.db.area import Area
@@ -491,10 +493,9 @@ def _create_string_patches(
     use_new_patcher: bool,
     game: GameDescription,
     all_patches: dict[int, GamePatches],
-    namer: EchoesHintNamer,
     players_config: PlayersConfiguration,
-    rng: Random,
     elevator_dock_type: DockType,
+    exporter: HintExporter,
 ) -> list:
     """
 
@@ -504,24 +505,25 @@ def _create_string_patches(
     :return:
     """
     patches = all_patches[players_config.player_index]
+
     string_patches = []
 
-    string_patches.extend(_akul_testament_string_patch(namer))
+    string_patches.extend(_akul_testament_string_patch(exporter.namer))
 
     # Location Hints
-    string_patches.extend(hints.create_patches_hints(all_patches, players_config, game.region_list, namer, rng))
+    string_patches.extend(hints.create_patches_hints(all_patches, players_config, exporter))
 
     # Sky Temple Keys
     stk_mode = hint_config.specific_pickup_hints["sky_temple_keys"]
     if stk_mode == SpecificPickupHintMode.DISABLED:
-        string_patches.extend(randovania.games.prime2.exporter.hints.hide_stk_hints(namer))
+        string_patches.extend(randovania.games.prime2.exporter.hints.hide_stk_hints(exporter.namer))
     else:
         string_patches.extend(
             randovania.games.prime2.exporter.hints.create_stk_hints(
                 all_patches,
                 players_config,
                 game.resource_database,
-                namer,
+                exporter.namer,
                 stk_mode == SpecificPickupHintMode.HIDE_AREA,
             )
         )
@@ -709,10 +711,9 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
             self.configuration.use_new_patcher,
             self.game,
             self.description.all_patches,
-            self.namer,
             self.players_config,
-            self.rng,
             self.elevator_dock_type(),
+            self.create_hint_exporter(ECHOES_JOKE_HINTS),
         )
 
         # TODO: if we're starting at ship, needs to collect 9 sky temple keys and want item loss,
@@ -976,7 +977,7 @@ def _create_pickup_resources_for(resources: ResourceGain) -> list[dict[str, int]
     return [
         {"index": resource.extra["item_id"], "amount": quantity}
         for resource, quantity in resources
-        if quantity > 0 and resource.resource_type == ResourceType.ITEM
+        if quantity != 0 and resource.resource_type == ResourceType.ITEM
     ]
 
 

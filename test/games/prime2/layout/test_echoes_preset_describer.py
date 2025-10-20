@@ -75,7 +75,7 @@ def test_echoes_format_params(
         expected_hints.append("Random hints disabled")
     if not enable_specific_location_hints:
         expected_hints.append("Specific location hints disabled")
-    expected_hints.append(f"Sky Temple Keys Hint: {stk_hint_mode.long_name}")
+    expected_hints.append(f"Sky Temple Key Hints: {stk_hint_mode.long_name}")
 
     # Run
     result = RandovaniaGame.METROID_PRIME_ECHOES.data.layout.preset_describer.format_params(layout_configuration)
@@ -94,9 +94,9 @@ def test_echoes_format_params(
         "Logic Settings": [
             "All tricks disabled",
         ],
-        "Item Pool": [
+        "Pickup Pool": [
             "Size: 118 of 119",
-            "Vanilla starting items",
+            "Unmodified starting pickup",
             "Progressive Suit",
             "Split beam ammo",
             "Sky Temple Keys at all bosses",
@@ -156,14 +156,14 @@ def test_echoes_format_params2(default_echoes_configuration):
         "Logic Settings": [
             "All tricks disabled",
         ],
-        "Item Pool": [
+        "Pickup Pool": [
             "Major/minor split",
             "Major: 57/58",
             "Minor: 61/61",
-            "1 to 2 random starting items",
+            "1 to 2 random starting pickups",
             "Excludes Scan Visor",
             "Split beam ammo",
             "Sky Temple Keys at all bosses",
         ],
-        "Hints": ["Sky Temple Keys Hint: Region and area"],
+        "Hints": ["Sky Temple Key Hints: Region and area"],
     }

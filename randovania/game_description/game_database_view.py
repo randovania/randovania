@@ -8,6 +8,7 @@ if TYPE_CHECKING:
     from collections.abc import Iterator, Sequence
 
     from randovania.game_description.db.area import Area
+    from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.db.dock import DockType, DockWeakness
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
@@ -207,6 +208,18 @@ class GameDatabaseView(ABC):
         if isinstance(result, t):
             return result
         raise KeyError(f"Node at {i} is an {type(result)}, not {t}")
+
+    @final
+    def find_area_by_identifier(self, identifier: AreaIdentifier) -> tuple[Region, Area]:
+        """
+        Searches for an Area with the given identifier, using `node_iterator`. Slow operation.
+        Raises KeyError if no area could be found.
+        """
+        identifier_tuple = identifier.as_tuple
+        for region, area, _ in self.node_iterator():
+            if (region.name, area.name) == identifier_tuple:
+                return region, area
+        raise KeyError(f"Unknown identifier {identifier}")
 
     @abc.abstractmethod
     def assert_pickup_index_exists(self, index: PickupIndex) -> None:

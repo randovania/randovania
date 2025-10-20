@@ -9,13 +9,14 @@ import re
 import subprocess
 import time
 import typing
-from collections.abc import AsyncGenerator, Callable
+from collections.abc import AsyncGenerator, Callable, Sequence
 
 import discord
+from discord import TextChannel
 from discord.ui import Button
 
 import randovania
-from randovania.discord_bot.bot import RandovaniaBot
+from randovania.discord_bot.bot import BotConfiguration, RandovaniaBot
 from randovania.discord_bot.randovania_cog import RandovaniaCog
 from randovania.generator import generator
 from randovania.layout import layout_description, preset_describer
@@ -28,11 +29,14 @@ from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib.migration_lib import UnsupportedVersion
 from randovania.resolver.exceptions import GenerationFailure
 
+if typing.TYPE_CHECKING:
+    from randovania.game.game_enum import RandovaniaGame
+
 possible_links_re = re.compile(r"([A-Za-z0-9-_]{8,})")
 _MAXIMUM_PRESETS_FOR_GENERATION = 4
 
 
-def _add_preset_description_to_embed(embed: discord.Embed, preset: Preset):
+def _add_preset_description_to_embed(embed: discord.Embed, preset: Preset) -> None:
     for category, items in preset_describer.describe(preset):
         embed.add_field(name=category, value="\n".join(items), inline=True)
 
@@ -78,10 +82,11 @@ def get_version(original_permalink: str, randovania_version: bytes) -> str | Non
     return version
 
 
-async def look_for_permalinks(message: discord.Message):
-    embed = None
+async def look_for_permalinks(message: discord.Message) -> None:
+    embed: discord.Embed | None = None
     multiple_permalinks = False
     view = None
+    games: Sequence[RandovaniaGame]
 
     for word in possible_links_re.finditer(message.content):
         try:
@@ -94,7 +99,7 @@ async def look_for_permalinks(message: discord.Message):
         except UnsupportedPermalink as e:
             permalink = None
             randovania_version = e.randovania_version
-            games = e.games
+            games = e.games or []
             seed_hash = e.seed_hash
             error_message = f"\n\nPermalink incompatible with Randovania {randovania.VERSION}"
             if e.__cause__ is not None:
@@ -122,6 +127,7 @@ async def look_for_permalinks(message: discord.Message):
 
         player_count = len(games)
         embed = discord.Embed(title=f"`{word.group(1)}`", description=f"{player_count} player multiworld permalink")
+        assert embed.description is not None
 
         if player_count == 1:
             embed.description = f"{games[0].long_name} permalink"
@@ -133,6 +139,7 @@ async def look_for_permalinks(message: discord.Message):
         if permalink is not None:
             view = RequestPresetsView()
         else:
+            assert error_message is not None
             embed.description += error_message
 
     if embed is not None:
@@ -146,6 +153,7 @@ async def look_for_permalinks(message: discord.Message):
             logging.exception("Unable to describe a preset. Embed: %s", str(embed.to_dict()))
 
             embed.clear_fields()
+            content = content or ""
             content += "\nUnable to include a description."
             await message.reply(content=content, embed=embed, mention_author=False)
 
@@ -166,17 +174,16 @@ async def reply_for_preset(message: discord.Message, preset: Preset[BaseConfigur
             await message.reply(content="Unable to include a description", embed=embed, mention_author=False)
 
 
-async def reply_for_layout_description(message: discord.Message, description: LayoutDescription):
+async def reply_for_layout_description(message: discord.Message, description: LayoutDescription) -> None:
     embed = discord.Embed(
         title=f"Spoiler file (Generated with {description.randovania_version_text})",
     )
 
+    lines = []
+
     if description.world_count == 1:
         preset = description.get_preset(0)
-        embed.description = (
-            f"{preset.game.long_name}, with preset {preset.name}.\n"
-            f"Seed Hash for {randovania.VERSION}: {description.shareable_word_hash}"
-        )
+        lines.append(f"{preset.game.long_name}, with preset {preset.name}.")
         _add_preset_description_to_embed(embed, preset)
     else:
         games = {preset.game.long_name for preset in description.all_presets}
@@ -188,16 +195,18 @@ async def reply_for_layout_description(message: discord.Message, description: La
             games_text += " and "
         games_text += last_game
 
-        embed.description = (
-            f"{description.world_count} player multiworld for {games_text}.\n"
-            f"Seed Hash for {randovania.VERSION}: {description.shareable_word_hash}"
-        )
+        lines.append(f"{description.world_count} player multiworld for {games_text}.")
 
+    if not description.has_spoiler:
+        lines.append("**For Races** (No Spoiler available).")
+    lines.append(f"Seed Hash for {randovania.VERSION}: {description.shareable_word_hash}")
+
+    embed.description = "\n".join(lines)
     await message.reply(embed=embed, mention_author=False)
 
 
 class RequestPresetsView(discord.ui.View):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(timeout=None)
 
     @discord.ui.button(
@@ -205,9 +214,11 @@ class RequestPresetsView(discord.ui.View):
         style=discord.ButtonStyle.secondary,
         custom_id="attach_presets_of_permalink",
     )
-    async def button_callback(self, button: Button, interaction: discord.Interaction):
+    async def button_callback(self, button: Button, interaction: discord.Interaction) -> None:
         try:
             title = (await interaction.original_response()).embeds[0].title
+            if not isinstance(title, str):
+                raise ValueError("no title in embed")
             # Trim leading and trailing `s
             permalink = Permalink.from_str(title[1:-1])
 
@@ -285,11 +296,11 @@ async def _get_layouts_from_message(message: discord.Message) -> AsyncGenerator[
 
 
 class PermalinkLookupCog(RandovaniaCog):
-    def __init__(self, configuration: dict, bot: RandovaniaBot):
+    def __init__(self, configuration: BotConfiguration, bot: RandovaniaBot):
         self.configuration = configuration
         self.bot = bot
 
-    async def add_commands(self):
+    async def add_commands(self) -> None:
         self.bot.add_view(RequestPresetsView())
 
     @discord.commands.message_command(
@@ -298,7 +309,9 @@ class PermalinkLookupCog(RandovaniaCog):
             administrator=True,
         ),
     )
-    async def generate_game(self, context: discord.ApplicationContext, message: discord.Message):
+    async def generate_game(
+        self, context: discord.ApplicationContext, message: discord.Message
+    ) -> discord.Interaction | discord.WebhookMessage | discord.Message:
         """Generates a game with all presets in the given message."""
         presets = [preset async for preset in _get_presets_from_message(message)]
         if not presets:
@@ -310,9 +323,10 @@ class PermalinkLookupCog(RandovaniaCog):
                 ephemeral=True,
             )
 
-        response: discord.Interaction = await context.respond(
+        response: discord.Interaction | discord.WebhookMessage = await context.respond(
             content=f"Generating game with {len(presets)} players...", ephemeral=True
         )
+        assert isinstance(response, discord.Interaction)
 
         content = ""
         files = []
@@ -362,7 +376,7 @@ class PermalinkLookupCog(RandovaniaCog):
             content += f"Took {delta_str}"
 
         try:
-            await message.reply(
+            return await message.reply(
                 content=f"{content}\nRequested by {context.user.display_name}.",
                 files=files,
                 embeds=embeds,
@@ -372,11 +386,11 @@ class PermalinkLookupCog(RandovaniaCog):
             return await response.edit_original_response(content=content, files=files, embeds=embeds)
 
     @discord.Cog.listener()
-    async def on_message(self, message: discord.Message):
+    async def on_message(self, message: discord.Message) -> None:
         if message.author == self.bot.user:
             return
 
-        if message.guild is not None and isinstance(message.channel, discord.TextChannel | discord.Thread):
+        if message.guild is not None and isinstance(message.channel, TextChannel | discord.Thread):
             # Support for disabling the bot from replying by just disallowing it from sending messages.
             permissions = message.channel.permissions_for(message.guild.me)
             if not permissions.send_messages:
@@ -400,5 +414,5 @@ class PermalinkLookupCog(RandovaniaCog):
         await look_for_permalinks(message)
 
 
-def setup(bot: RandovaniaBot):
+def setup(bot: RandovaniaBot) -> None:
     bot.add_cog(PermalinkLookupCog(bot.configuration, bot))

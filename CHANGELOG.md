@@ -5,7 +5,92 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.2.0] - 2025-10-??
+## [10.3.0] - 2025-11-??
+
+- Added: The Multiworld Session will now display when a world has been beaten. This is supported for the following games:
+  - Another Metroid 2 Remake
+  - Metroid Prime
+- Changed: Centered the text at the top of the Hints preset settings.
+- Changed: Cleaned up how Specific Pickup Hints are shown in the preset settings.
+- Changed: Places that describe a preset with Specific Pickup Hints have slightly better grammar in some cases.
+- Changed: The "Item Pool" tab is now called "Pickup Pool".
+- Changed: Random starting items is now Random starting pickups.
+- Changed: Minor pickups will not show in the credits anymore if you randomly started with them.
+
+### Another Metroid 2 Remake
+
+- Changed: When using Door Lock Rando with the Types mode, both sides will now always have the same door type.
+
+### Factorio
+
+- Fixed: A typo on the "Changes" preset page.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Fixed: Screw Attack Room: Using a Shinespark to reach Start Point 2 from the door to Transport to Burenia was missing a requirement on having activated the Rotatable.
+
+### Metroid Fusion
+
+- Added: 3 new hint location features: guarded by a Tank-Mimic, near a Geron and in a room with extreme temperatures.
+
+### Metroid Prime
+
+- Fixed: Crash when entering Metroid Prime Lair while in Scan Visor
+- Fixed: Rare crash that can happen in any room
+- Fixed: Sheegoth intro cutscene not repositioning the player at the end if cutscene was not skipped in Chapel of the Elders
+- Fixed: Artifact Temple totem hitbox persisting after Meta Ridley death cutscene
+- Fixed: Sun Tower Access boxes being reloaded after performing Early Wild (inconsistent with vanilla)
+- Fixed: Incorrect Energy Core platform behavior if cutscene skipped on wrong frame
+- Fixed: Chozo music stopping upon entering Training Chamber
+- Fixed: Appearance of "Remove Bars in Great Tree Hall" patch
+- Changed: Charge and Charge Combo projectiles reflected from DLR doors no longer hurt the player
+- Changed: Adjusted timing of the jingle and text after acquiring the item at each of the 4 vanilla Power Bomb Expansion locations
+- Changed: Adjusted fit of main menu text to accommodate larger seed hashes
+- Changed: Adjusted fit of DLR Blast Shields over doors
+- Changed: Research Core cutscene camera angle will now be consistent regardless of the height of the placed pickup
+- Changed: The Elite Pirate in Dynamo Access will now appear on the first pass rather than only after Plasma Beam has been obtained. This makes the behaviour easier to understand and fixes cases where a game becomes logically impossible.
+
+#### Logic Database
+
+- Changed: Going through Open Passages doesn't require to shoot a beam anymore.
+
+##### Chozo Ruins
+
+- Fixed: Ruined Shrine: Removed unnecessary dangerous requirements.
+
+##### Phazon Mines
+
+- Changed: Fighting an Elite Pirate/Phazon Elite now has consistent requirements in Dynamo Access, Elite Control and Elite Research.
+- Changed: Adjusted the Requirements to fight and Elite Pirate/Phazon Elite to be more accurate.
+- Fixed: Metroid Quarantine A: Now correctly checks for the barrier to be lowered when going from Quarantine Access A to Front of Spider Track (Bridge).
+- Fixed: Metroid Quarantine A: Now correctly checks for the Enabled Backwards Lower Mines going from Front of Spider Track (Wall) to Quarantine Access A.
+
+##### Phendrana Drifts
+
+- Added: Chozo Ice Temple: Documentation for reaching the Chozo Statue NSJ.
+- Fixed: Chozo Ice Temple: Removed unnecessary dangerous requirements.
+- Fixed: Control Tower: Removed unnecessary dangerous requirements.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Expansions with negative value now properly remove items in-game.
+- Changed: Keybearer hints now use different, less broad categories than before.
+
+#### Logic Database
+
+- Fixed: Using the Turret in Sanctuary Entrance now accounts for being able to reload the room.
+
+### Metroid: Samus Returns
+
+- Added: Support for .cci rom files to use the same file for exporting and playing via Azahar.
+- Added: Featural hint support, where hints may refer to various Features of a pickup or of a location. Read the Hints section for more details.
+- Changed: Dropped support for Citra and switched to Azahar.
+
+## [10.2.0] - 2025-10-02
 
 - Added: A warning when trying to generate a Multiworld game if a preset requires all Pickups to be obtainable.
 - Added: Command line arguments for gathering statistics about a collection of generated games. These commands are intended for advanced uses only.
@@ -93,19 +178,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Fixed: Crash when entering Metroid Prime Lair while in Scan Visor
-- Fixed: Rare crash that can happen in any room
-- Fixed: Sheegoth intro cutscene not repositioning the player at the end if cutscene was not skipped in Chapel of the Elders
-- Fixed: Artifact Temple totem hitbox persisting after Meta Ridley death cutscene
-- Fixed: Sun Tower Access boxes being reloaded after performing Early Wild (inconsistent with vanilla)
-- Fixed: Incorrect Energy Core platform behavior if cutscene skipped on wrong frame
-- Fixed: Chozo music stopping upon entering Training Chamber
-- Fixed: Appearance of "Remove Bars in Great Tree Hall" patch
-- Changed: Charge and Charge Combo projectiles reflected from DLR doors no longer hurt the player
-- Changed: Adjusted timing of the jingle and text after acquiring the item at each of the 4 vanilla Power Bomb Expansion locations
-- Changed: Adjusted fit of main menu text to accommodate larger seed hashes
-- Changed: Adjusted fit of DLR Blast Shields over doors
-- Changed: Research Core cutscene camera angle will now be consistent regardless of the height of the placed pickup
 - Changed: Improved chance of successfully generating a game when shuffling everything on One-Way Anywhere elevator randomization.
 - Changed: Disallowed shuffling the Essence Dead cutscene elevator on One-Way with Cycles and with Replacement, unless Skip Final Bosses is enabled, as otherwise that would leave no path to the Credits.
 

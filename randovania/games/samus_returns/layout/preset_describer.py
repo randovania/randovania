@@ -112,7 +112,7 @@ class MSRPresetDescriber(GamePresetDescriber):
                     or configuration.super_missile_tank_size != 10
                 },
             ],
-            "Item Pool": [
+            "Pickup Pool": [
                 {
                     "Energy Reserve Tank": has_shuffled_item(standard_pickups, "Energy Reserve Tank"),
                     "Aeion Reserve Tank": has_shuffled_item(standard_pickups, "Aeion Reserve Tank"),

@@ -263,12 +263,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
         return details
 
     def _encode_hints(self) -> list[dict]:
-        exporter = self.get_hint_exporter(
-            self.description.all_patches,
-            self.players_config,
-            self.rng,
-            GENERIC_JOKE_HINTS,
-        )
+        exporter = self.create_hint_exporter(GENERIC_JOKE_HINTS)
 
         return [
             {

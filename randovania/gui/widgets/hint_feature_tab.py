@@ -12,7 +12,7 @@ from randovania.gui.lib.data_editor_links import (
     data_editor_href,
     on_click_data_editor_link,
 )
-from randovania.gui.lib.foldable import Foldable
+from randovania.gui.widgets.foldable import Foldable
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
