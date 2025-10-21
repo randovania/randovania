@@ -29,7 +29,7 @@ def get_locations_for_major_pickups_and_keys(
     all_patches: dict[int, GamePatches],
     players_config: PlayersConfiguration,
 ) -> dict[PickupEntry, list[OwnedPickupLocation | str]]:  # Technically inaccurate return type, but makes typing easier.
-    results: dict[PickupEntry, list[OwnedPickupLocation]] = collections.defaultdict(list)
+    results: dict[PickupEntry, list[OwnedPickupLocation | str]] = collections.defaultdict(list)
 
     for player_index, patches in all_patches.items():
         for pickup_index, target in patches.pickup_assignment.items():
@@ -129,7 +129,7 @@ def generic_string_credits(
         for pickup, entries in details
     }
 
-    return {pickup_name_format.format(pickup.name): "\n".join(pickup_to_strings[pickup]) for pickup in details.keys()}
+    return {pickup_name_format.format(pickup.name): "\n".join(text) for pickup, text in pickup_to_strings.items()}
 
 
 def prime_trilogy_credits(
