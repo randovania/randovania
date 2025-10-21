@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING, Self, TypedDict
 
 import aiohttp
 
+from randovania.lib import http_lib
 from randovania.server.fastapi_discord import DiscordOAuthClient
 
 if TYPE_CHECKING:
@@ -35,7 +36,7 @@ class EnforceDiscordRole:
         self.sa = _app.sa
         self.guild_id = config["guild_id"]
         self.role_id = str(config["role_id"])
-        async with aiohttp.ClientSession() as self.session:
+        async with http_lib.http_session() as self.session:
             self.session.headers["Authorization"] = "Bot {}".format(config["token"])
             yield self
 
