@@ -216,14 +216,14 @@ jobs:
           $EXTRA_ARG: "${{ matrix.os.image == 'macos-latest' && '--python-platform x86_64-apple-darwin' || '' }}"
 
       - name: create executable
-        run: $PREFIX uv run tools/create_release.py
+        run: $PREFIX tools/create_release.py
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OBFUSCATOR_SECRET: ${{ secrets.OBFUSCATOR_SECRET }}
           SENTRY_CLIENT_URL: ${{ secrets.SENTRY_CLIENT_URL }}
           PRODUCTION: ${{ matrix.is_stable }}
-          PREFIX: "${{ matrix.os.image == 'macos-latest' && 'arch -x86_64' || '' }}"
+          PREFIX: "${{ matrix.os.image == 'macos-latest' && 'arch -x86_64 .venv/bin/python' || 'uv run' }}"
 
       - name: executable check
         run: dist/randovania/randovania --version
