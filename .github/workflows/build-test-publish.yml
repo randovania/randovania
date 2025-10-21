@@ -171,7 +171,7 @@ jobs:
       matrix:
         os:
           - { name: "Linux", image: ubuntu-latest }
-          - { name: "macOS", image: macos-intel }
+          - { name: "macOS", image: macos-latest }
           - { name: "Windows", image: windows-latest }
 
         is_merge_queue:
@@ -183,7 +183,7 @@ jobs:
           - is_merge_queue: true
             os: { name: "Linux", image: ubuntu-latest }
           - is_merge_queue: true
-            os: { name: "macOS", image: macos-intel }
+            os: { name: "macOS", image: macos-latest }
 
     runs-on: ${{ matrix.os.image }}
     timeout-minutes: 30
@@ -211,11 +211,13 @@ jobs:
 
       - name: Install Python packages
         run: $PREFIX uv sync --locked --extra gui --extra exporters --extra test --group installer
+        shell: bash
         env:
           PREFIX: "${{ matrix.os.image == 'macos-latest' && 'arch -x86_64' || '' }}"
 
       - name: create executable
         run: $PREFIX uv run tools/create_release.py
+        shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OBFUSCATOR_SECRET: ${{ secrets.OBFUSCATOR_SECRET }}
