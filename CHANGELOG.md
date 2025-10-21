@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Another Metroid 2 Remake
 
 - Changed: When using Door Lock Rando with the Types mode, both sides will now always have the same door type.
-- Changed: Renamed the "a beam category" pickup category to "a beam".
+- Changed: Renamed the "a beam upgrade" pickup category to "a beam".
 
 ### Factorio
 
