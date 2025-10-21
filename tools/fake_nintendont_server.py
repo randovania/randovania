@@ -25,7 +25,13 @@ async def client_handler(reader: asyncio.StreamReader, writer: asyncio.StreamWri
     print(f"[{client_id: 3}] Client connected")
     while True:
         command = await reader.read(1024)
-        command_id, num_ops, num_addresses, keep_alive = struct.unpack_from(">BBBB", command)
+        command_as_str = command.hex()
+        try:
+            command_id, num_ops, num_addresses, keep_alive = struct.unpack_from(">BBBB", command)
+        except:
+            print(f"Cannot parse following command: {command_as_str}")
+            raise
+
         print(f"[{client_id: 3}] Received request", command_id, num_ops, num_addresses, keep_alive)
 
         await asyncio.sleep(1)
@@ -35,13 +41,16 @@ async def client_handler(reader: asyncio.StreamReader, writer: asyncio.StreamWri
             if command in _hard_coded_reads:
                 writer.write(_hard_coded_reads[command])
             else:
-                print(f"[{client_id: 3}] Received command: {command}")
+                print(f"[{client_id: 3}] Received command: {command_as_str}")
                 writer.write(b"\x00\x00")
 
         await writer.drain()
         if not bool(keep_alive):
             writer.close()
+            print("Not meant to keep alive, exiting")
             break
+        else:
+            print("Keeping alive")
 
 
 async def main():

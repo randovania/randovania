@@ -67,6 +67,7 @@ class PrimeRemoteConnector(RemoteConnector):
     """Offset compared to CStateManager where we store whether we still have pending write operations going on."""
     pending_messages: list[str]
     """A list of HUD messages we still want the game to display."""
+    _debug_expected_capacity: int = 0  # used to track what magic item capacity we *should* be getting.
 
     def __init__(self, version: all_prime_dol_patches.BasePrimeDolVersion, executor: MemoryOperationExecutor):
         super().__init__()
@@ -198,14 +199,8 @@ class PrimeRemoteConnector(RemoteConnector):
         :return: True, if a new location was found and remote patches were executed. False otherwise.
         """
 
-        # Unnecessary read? We already fetched the inventory prior to this.
         multiworld_magic_item = self.multiworld_magic_item
-
-        memory_ops = await self._memory_op_for_items([multiworld_magic_item])
-        op_result = await self.executor.perform_single_memory_operation(*memory_ops)
-        assert op_result is not None
-
-        magic_inv = InventoryItem(*struct.unpack(">II", op_result))
+        magic_inv = self.last_inventory.get(multiworld_magic_item)
         if magic_inv.amount > 0:
             # Amount is bigger than 0, so we have collected an item.
             # The PDF added pickup_index+1 to both the amount and capacity, so subtract 1 back from the amount
@@ -270,6 +265,9 @@ class PrimeRemoteConnector(RemoteConnector):
         patches.append(self._dol_patch_for_hud_message(message))
 
         await self.execute_remote_patches(patches)
+
+        self._debug_expected_capacity = magic_inv.capacity + 1
+
         self.message_cooldown = 4.0
         return True
 
@@ -368,6 +366,17 @@ class PrimeRemoteConnector(RemoteConnector):
             all_prime_dol_patches.call_display_hud_patch(self.version.string_display),
         )
 
+    def _check_magic_capacity(self) -> None:
+        # Safety/debugging check to see what causes magic item randomly increases by 2 instead of 1.
+        magic_inv = self.last_inventory.get(self.multiworld_magic_item)
+        expected_capacity = self._debug_expected_capacity
+        expected_capacity += magic_inv.amount
+        if magic_inv.capacity != expected_capacity:
+            self.logger.warning(
+                f"Magic capacity was not {expected_capacity}! "
+                f"Instead Magic was {magic_inv.amount}/{magic_inv.capacity}."
+            )
+
     async def update(self) -> None:
         """
         Main logic function.
@@ -395,7 +404,14 @@ class PrimeRemoteConnector(RemoteConnector):
 
             if region is not None:
                 await self.update_current_inventory()
+
+                if self.at_end_of_game():
+                    self.GameHasBeenBeaten.emit()
+                    self.logger.debug("The game has been beaten")
+
                 if not has_pending_op:
+                    self._check_magic_capacity()
+
                     self.message_cooldown = max(self.message_cooldown - self._dt, 0.0)
                     has_pending_op = await self._multiworld_interaction()
                     if not has_pending_op:
@@ -429,6 +445,10 @@ class PrimeRemoteConnector(RemoteConnector):
             return True
         else:
             return await self.receive_remote_pickups(self.last_inventory, self.remote_pickups)
+
+    def at_end_of_game(self) -> bool:
+        """Returns true if the player is at the end of the game / credits."""
+        return False
 
     async def _send_next_pending_message(self) -> bool:
         if not self.pending_messages or self.message_cooldown > 0.0:

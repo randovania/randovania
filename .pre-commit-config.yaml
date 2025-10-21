@@ -6,7 +6,7 @@ ci:
 repos:
 -   repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
-    rev: v0.14.0
+    rev: v0.14.1
     hooks:
       - id: ruff-check
         args: [ --fix, --exit-non-zero-on-fix ]
@@ -26,3 +26,10 @@ repos:
         files: .*\.ui$
         stages: [pre-commit, manual]
         require_serial: true
+
+# Ideally we'd have this, but it's bigger than pre-commit.ci likes
+#-   repo: https://github.com/renovatebot/pre-commit-hooks
+#    rev: 41.132.5
+#    hooks:
+#      - id: renovate-config-validator
+#        args: [--strict]

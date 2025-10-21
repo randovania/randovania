@@ -6,7 +6,6 @@ import urllib.parse
 from typing import TYPE_CHECKING
 from unittest.mock import ANY, AsyncMock, MagicMock
 
-import fastapi_discord
 import pytest
 from fastapi import Request  # noqa: TC002
 from fastapi.responses import RedirectResponse
@@ -15,6 +14,7 @@ from randovania.network_common import error
 from randovania.network_common.error import InvalidSessionError
 from randovania.server import user_session
 from randovania.server.database import User
+from randovania.server.fastapi_discord import exceptions as fd_exceptions
 from randovania.server.server_app import ServerAppDep  # noqa: TC001
 
 if TYPE_CHECKING:
@@ -81,6 +81,7 @@ async def test_browser_login_with_discord(has_sio, mock_sa, mock_request, mocker
 async def test_browser_discord_login_callback_success(mock_sa, mock_request, existing, has_global_name, has_sid):
     # Setup
     session = {}
+    mock_sa.enforce_role.verify_user = AsyncMock()
     mock_sa.sio.session.return_value.__aenter__.return_value = session
     mock_sa.sio.get_session.return_value = session
 
@@ -112,6 +113,8 @@ async def test_browser_discord_login_callback_success(mock_sa, mock_request, exi
     # Assert
     user = User.get(User.discord_id == 1234)
     assert user.name == expected_name
+
+    mock_sa.enforce_role.verify_user.assert_called_once_with("1234")
 
     if has_sid:
         mock_sa.sio.emit.assert_awaited_once_with(
@@ -219,7 +222,7 @@ async def test_browser_discord_login_callback_cancelled(mock_sa, mock_request, m
     mock_render = mocker.patch("randovania.server.user_session.unable_to_login")
 
     mock_sa.discord.get_access_token.return_value = ("The_Token", "Refresh_Token")
-    mock_sa.discord.user.side_effect = fastapi_discord.exceptions.Unauthorized()
+    mock_sa.discord.user.side_effect = fd_exceptions.Unauthorized()
 
     # Run
     result = await user_session.browser_discord_login_callback(

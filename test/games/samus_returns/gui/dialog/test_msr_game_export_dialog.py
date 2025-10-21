@@ -158,16 +158,16 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker, msr_configuration, o
 
     mock_prompt.assert_has_calls(
         [
-            call(window, ["3ds", "cia", "cxi", "app"], existing_file=None),
-            call(window, ["3ds", "cia", "cxi", "app"], existing_file=tmp_path),
-            call(window, ["3ds", "cia", "cxi", "app"], existing_file=tmp_path.joinpath("existing.iso")),
+            call(window, ["3ds", "cci", "cia", "cxi", "app"], existing_file=None),
+            call(window, ["3ds", "cci", "cia", "cxi", "app"], existing_file=tmp_path),
+            call(window, ["3ds", "cci", "cia", "cxi", "app"], existing_file=tmp_path.joinpath("existing.iso")),
         ]
     )
 
 
 def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, msr_configuration, options):
     # Setup
-    mocker.patch("randovania.games.samus_returns.gui.dialog.game_export_dialog.get_path_to_citra")
+    mocker.patch("randovania.games.samus_returns.gui.dialog.game_export_dialog.get_path_to_azahar")
     mocker.patch("platform.system", return_value="Windows")
 
     mocker.patch(
@@ -215,12 +215,12 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, msr_config
     )
 
 
-def test_get_game_export_params_citra(skip_qtbot, tmp_path, mocker, msr_configuration, options):
+def test_get_game_export_params_azahar(skip_qtbot, tmp_path, mocker, msr_configuration, options):
     # Setup
     mocker.patch("platform.system", return_value="Windows")
-    citra_path = tmp_path.joinpath("citra_mod")
+    azahar_path = tmp_path.joinpath("azahar_mod")
     mocker.patch(
-        "randovania.games.samus_returns.gui.dialog.game_export_dialog.get_path_to_citra", return_value=citra_path
+        "randovania.games.samus_returns.gui.dialog.game_export_dialog.get_path_to_azahar", return_value=azahar_path
     )
 
     with options:
@@ -229,8 +229,8 @@ def test_get_game_export_params_citra(skip_qtbot, tmp_path, mocker, msr_configur
             MSRPerGameOptions(
                 cosmetic_patches=MSRCosmeticPatches.default(),
                 input_file=tmp_path.joinpath("input_file.3ds"),
-                target_platform=MSRModPlatform.CITRA,
-                output_preference=json.dumps({"selected_tab": "citra", "tab_options": {}}),
+                target_platform=MSRModPlatform.AZAHAR,
+                output_preference=json.dumps({"selected_tab": "azahar", "tab_options": {}}),
             )
         )
     window = MSRGameExportDialog(options, msr_configuration, "MyHash", True, [])
@@ -240,10 +240,10 @@ def test_get_game_export_params_citra(skip_qtbot, tmp_path, mocker, msr_configur
 
     # Assert
     assert result == MSRGameExportParams(
-        spoiler_output=citra_path.joinpath("spoiler.rdvgame"),
+        spoiler_output=azahar_path.joinpath("spoiler.rdvgame"),
         input_file=tmp_path.joinpath("input_file.3ds"),
-        output_path=citra_path,
-        target_platform=MSRModPlatform.CITRA,
+        output_path=azahar_path,
+        target_platform=MSRModPlatform.AZAHAR,
         clean_output_path=False,
         post_export=None,
     )
@@ -328,7 +328,7 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path, msr_configuration, 
         spoiler_output=tmp_path.joinpath("output", "spoiler.rdvgame"),
         input_file=tmp_path.joinpath("input_file.3ds"),
         output_path=tmp_path.joinpath("output"),
-        target_platform=MSRModPlatform.CITRA,
+        target_platform=MSRModPlatform.AZAHAR,
         clean_output_path=False,
         post_export=None,
     )
@@ -337,9 +337,9 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path, msr_configuration, 
 def test_export_button(skip_qtbot, tmp_path, mocker, msr_configuration, options):
     # Setup
     mocker.patch("platform.system", return_value="Windows")
-    citra_path = tmp_path.joinpath("citra_mod")
+    azahar_path = tmp_path.joinpath("azahar_mod")
     mocker.patch(
-        "randovania.games.samus_returns.gui.dialog.game_export_dialog.get_path_to_citra", return_value=citra_path
+        "randovania.games.samus_returns.gui.dialog.game_export_dialog.get_path_to_azahar", return_value=azahar_path
     )
 
     with options:
