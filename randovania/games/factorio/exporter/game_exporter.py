@@ -5,9 +5,8 @@ import dataclasses
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-import aiohttp
-
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
+from randovania.lib import http_lib
 
 if TYPE_CHECKING:
     from randovania.exporter.patch_data_factory import PatcherDataMeta
@@ -20,7 +19,7 @@ class FactorioGameExportParams(GameExportParams):
 
 
 async def download_file(url: str, path: Path) -> None:
-    async with aiohttp.ClientSession() as session:
+    async with http_lib.http_session() as session:
         async with session.get(url) as resp:
             resp.raise_for_status()
             with path.open("wb") as fd:
