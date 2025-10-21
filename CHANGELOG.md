@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The "Item Pool" tab is now called "Pickup Pool".
 - Changed: Random starting items is now Random starting pickups.
 - Changed: Minor pickups will not show in the credits anymore if you randomly started with them.
+- Fixed: Admins can now abort a Multiworld generation again
+- Fixed: You can now abort a Multiworld generation again should you have been disconnected during the generation process.
 
 ### Another Metroid 2 Remake
 
