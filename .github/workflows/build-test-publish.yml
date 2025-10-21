@@ -210,10 +210,10 @@ jobs:
         if: matrix.os.image == 'ubuntu-latest'
 
       - name: Install Python packages
-        run: $PREFIX uv sync --locked --extra gui --extra exporters --extra test --group installer
+        run: uv sync --locked --extra gui --extra exporters --extra test --group installer $EXTRA_ARG
         shell: bash
         env:
-          PREFIX: "${{ matrix.os.image == 'macos-latest' && 'arch -x86_64' || '' }}"
+          $EXTRA_ARG: "${{ matrix.os.image == 'macos-latest' && '--python-platform x86_64-apple-darwin' || '' }}"
 
       - name: create executable
         run: $PREFIX uv run tools/create_release.py
