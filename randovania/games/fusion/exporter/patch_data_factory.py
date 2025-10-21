@@ -375,7 +375,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             self.configuration.standard_pickup_configuration, self.description.all_patches, self.players_config
         )
 
-        for pickup, locations in majors.items():
+        for pickup, locations in majors:
             for location in locations:
                 # Special case for special messages
                 if isinstance(location, str):

@@ -28,7 +28,7 @@ class OwnedPickupLocation(NamedTuple):
 def get_locations_for_major_pickups_and_keys(
     all_patches: dict[int, GamePatches],
     players_config: PlayersConfiguration,
-) -> dict[PickupEntry, list[OwnedPickupLocation]]:
+) -> dict[PickupEntry, list[OwnedPickupLocation | str]]:  # Technically inaccurate return type, but makes typing easier.
     results: dict[PickupEntry, list[OwnedPickupLocation]] = collections.defaultdict(list)
 
     for player_index, patches in all_patches.items():
@@ -69,11 +69,12 @@ def generic_credits(
     standard_pickup_configuration: StandardPickupConfiguration,
     all_patches: dict[int, GamePatches],
     players_config: PlayersConfiguration,
-) -> dict[PickupEntry, list[OwnedPickupLocation | str]]:
+) -> list[tuple[PickupEntry, list[OwnedPickupLocation | str]]]:
     """
-    Returns the credits in the form of dictionary that can be used to create your own formatting.
-    The key will be a PickupEntry, and the value a list of location entries. An entry is either an OwnedPickupLocation
-    if the pickup is located somewhere, or a string which is used for special cases (such as starting with the pickup).
+    Returns the credits in the form of a list of tuples that can be used to create your own formatting.
+    The first tuple element will be a PickupEntry, and the second tuple element a list of location entries.
+    An entry is either an OwnedPickupLocation if the pickup is located somewhere, or a string which
+    is used for special cases (such as starting with the pickup).
     """
     major_pickup_name_order = {
         pickup.name: index for index, pickup in enumerate(standard_pickup_configuration.pickups_state.keys())
@@ -102,7 +103,7 @@ def generic_credits(
         if not entries:
             entries.append("Nowhere")
 
-    return dict(sorted(details.items(), key=sort_pickup))
+    return sorted(details.items(), key=sort_pickup)
 
 
 def generic_string_credits(
@@ -125,7 +126,7 @@ def generic_string_credits(
             entry.export(namer, use_player_color) if isinstance(entry, OwnedPickupLocation) else entry
             for entry in entries
         ]
-        for pickup, entries in details.items()
+        for pickup, entries in details
     }
 
     return {pickup_name_format.format(pickup.name): "\n".join(pickup_to_strings[pickup]) for pickup in details.keys()}
