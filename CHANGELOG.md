@@ -68,6 +68,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Fighting an Elite Pirate/Phazon Elite now has consistent requirements in Dynamo Access, Elite Control and Elite Research.
 - Changed: Adjusted the Requirements to fight and Elite Pirate/Phazon Elite to be more accurate.
+- Fixed: Metroid Quarantine A: Jumping to the Spider Track Bridge from the Door to Quarantine Access A now requires you to be able to shoot Ice Beam in order to freeze Metroids as opposed to just having it in your inventory.
 - Fixed: Metroid Quarantine A: Now correctly checks for the barrier to be lowered when going from Quarantine Access A to Front of Spider Track (Bridge).
 - Fixed: Metroid Quarantine A: Now correctly checks for the Enabled Backwards Lower Mines going from Front of Spider Track (Wall) to Quarantine Access A.
 
