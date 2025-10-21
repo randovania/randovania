@@ -171,7 +171,7 @@ jobs:
       matrix:
         os:
           - { name: "Linux", image: ubuntu-latest }
-          - { name: "macOS", image: macos-15-intel }
+          - { name: "macOS", image: macos-intel }
           - { name: "Windows", image: windows-latest }
 
         is_merge_queue:
@@ -183,7 +183,7 @@ jobs:
           - is_merge_queue: true
             os: { name: "Linux", image: ubuntu-latest }
           - is_merge_queue: true
-            os: { name: "macOS", image: macos-15-intel }
+            os: { name: "macOS", image: macos-intel }
 
     runs-on: ${{ matrix.os.image }}
     timeout-minutes: 30
@@ -210,15 +210,18 @@ jobs:
         if: matrix.os.image == 'ubuntu-latest'
 
       - name: Install Python packages
-        run: uv sync --locked --extra gui --extra exporters --extra test --group installer
+        run: $PREFIX uv sync --locked --extra gui --extra exporters --extra test --group installer
+        env:
+          PREFIX: "${{ matrix.os.image == 'macos-latest' && 'arch -x86_64' || '' }}"
 
       - name: create executable
-        run: uv run tools/create_release.py
+        run: $PREFIX uv run tools/create_release.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OBFUSCATOR_SECRET: ${{ secrets.OBFUSCATOR_SECRET }}
           SENTRY_CLIENT_URL: ${{ secrets.SENTRY_CLIENT_URL }}
           PRODUCTION: ${{ matrix.is_stable }}
+          PREFIX: "${{ matrix.os.image == 'macos-latest' && 'arch -x86_64' || '' }}"
 
       - name: executable check
         run: dist/randovania/randovania --version
