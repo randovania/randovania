@@ -15,6 +15,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Places that describe a preset with Specific Pickup Hints have slightly better grammar in some cases.
 - Changed: The "Item Pool" tab is now called "Pickup Pool".
 - Changed: Random starting items is now Random starting pickups.
+- Changed: Minor pickups will not show in the credits anymore if you randomly started with them.
+- Fixed: Admins can now abort a Multiworld generation again
+- Fixed: You can now abort a Multiworld generation again should you have been disconnected during the generation process.
+
+### Another Metroid 2 Remake
+
+- Changed: When using Door Lock Rando with the Types mode, both sides will now always have the same door type.
+- Changed: Renamed the "a beam upgrade" pickup category to "a beam".
 
 ### Factorio
 
@@ -61,6 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Fighting an Elite Pirate/Phazon Elite now has consistent requirements in Dynamo Access, Elite Control and Elite Research.
 - Changed: Adjusted the Requirements to fight and Elite Pirate/Phazon Elite to be more accurate.
+- Fixed: Metroid Quarantine A: Jumping to the Spider Track Bridge from the Door to Quarantine Access A now requires you to be able to shoot Ice Beam in order to freeze Metroids as opposed to just having it in your inventory.
 - Fixed: Metroid Quarantine A: Now correctly checks for the barrier to be lowered when going from Quarantine Access A to Front of Spider Track (Bridge).
 - Fixed: Metroid Quarantine A: Now correctly checks for the Enabled Backwards Lower Mines going from Front of Spider Track (Wall) to Quarantine Access A.
 
@@ -84,6 +93,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Support for .cci rom files to use the same file for exporting and playing via Azahar.
 - Added: Featural hint support, where hints may refer to various Features of a pickup or of a location. Read the Hints section for more details.
 - Changed: Dropped support for Citra and switched to Azahar.
+- Fixed: Reserve Tanks won't be hinted anymore.
+- Removed: Redundant Pickup Hint Features.
 
 ## [10.2.0] - 2025-10-02
 

@@ -85,6 +85,7 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
 
         self.inventory_item_model.itemChanged.connect(self._on_item_changed)
         self.reset_button.clicked.connect(self.finish)
+        self.beat_game_button.clicked.connect(self.on_beat_game_clicked)
 
         self.collect_location_combo.setVisible(False)
         self.collect_location_button.clicked.connect(self._emit_collection)
@@ -152,6 +153,9 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
     async def finish(self):
         await self.connector.force_finish()
         self.window.close()
+
+    def on_beat_game_clicked(self):
+        self.connector.GameHasBeenBeaten.emit()
 
     def update_message_list(self):
         self.messages_item_model.setRowCount(len(self.connector.messages))

@@ -633,8 +633,9 @@ async def test_admin_session_change_layout_description(
     assert session_mod.game_details_json == '{"seed_hash": "ASDF", "word_hash": "Hash Words", "spoiler": true}'
 
 
+@pytest.mark.parametrize("beaten", [True, False])
 async def test_admin_session_remove_layout_description(
-    mock_emit_session_update: MagicMock, clean_database, mock_sa, mock_audit, mocker: pytest_mock.MockerFixture
+    mock_emit_session_update: MagicMock, clean_database, mock_sa, mock_audit, mocker: pytest_mock.MockerFixture, beaten
 ):
     mock_emit_session_actions_update = mocker.patch(
         "randovania.server.multiplayer.session_common.emit_session_actions_update", autospec=True
@@ -651,7 +652,7 @@ async def test_admin_session_remove_layout_description(
         layout_description_json="layout_description_json",
     )
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
-    database.World.create(session=session, name="W1", preset="{}", uuid=original_uid)
+    database.World.create(session=session, name="W1", preset="{}", uuid=original_uid, beaten=beaten)
     mock_sa.get_current_user.return_value = user1
 
     # Run
@@ -666,6 +667,7 @@ async def test_admin_session_remove_layout_description(
     assert database.MultiplayerSession.get_by_id(1).layout_description_json is None
     assert database.MultiplayerSession.get_by_id(1).generation_in_progress is None
     assert database.World.get_by_id(1).uuid != original_uid
+    assert not database.World.get_by_id(1).beaten
 
 
 @pytest.mark.parametrize("other_user", [False, True])
