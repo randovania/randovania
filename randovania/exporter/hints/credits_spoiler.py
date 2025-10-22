@@ -99,6 +99,7 @@ def generic_credits(
             msg += f" ({count} copies)"
         details[pickup].append(msg)
 
+    # FIXME: should get triggered on excluded pickups, but doesn't right now
     for pickup, entries in details.items():
         if not entries:
             entries.append("Nowhere")
