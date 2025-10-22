@@ -84,7 +84,7 @@ def generic_credits(
         p = tup[0]
         return major_pickup_name_order.get(p.name, math.inf), p.name
 
-    details: dict[PickupEntry, list] = get_locations_for_major_pickups_and_keys(all_patches, players_config)
+    details = get_locations_for_major_pickups_and_keys(all_patches, players_config)
 
     starting_pickups = starting_pickups_with_count(all_patches[players_config.player_index])
     for pickup, count in starting_pickups.items():
