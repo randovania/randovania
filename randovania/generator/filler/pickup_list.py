@@ -174,16 +174,16 @@ def get_pickups_that_solves_unreachable(
 
     all_lists = _requirement_lists_without_satisfied_resources(state, possible_sets, uncollected_resources)
 
-    result = []
+    # Hacky way to get rid of duplicates. Can't use a set as a set's order is not deterministic.
+    result = {}
     for requirement_list in sorted(all_lists, key=lambda it: it.as_stable_sort_tuple):
         pickups = pickups_to_solve_list(pickups_left, requirement_list, state)
         if pickups is not None and pickups:
-            # FIXME: avoid duplicates in result
-            result.append(tuple(pickups))
+            result[tuple(pickups)] = ""
 
     if debug.debug_level() > 2:
         print(">> All pickup combinations alternatives:")
-        for items in sorted(result):
+        for items in sorted(result.keys()):
             print("* {}".format(", ".join(p.name for p in items)))
 
-    return tuple(result)
+    return tuple(result.keys())
