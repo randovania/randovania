@@ -48,7 +48,7 @@ dependencies = [
     # Immutable dicts, used in many places
     "frozendict",
     # Versioning presets
-    "dulwich>=0.24.6",   # Older versions have an issue on windows when using ProcessPoolExecutor
+    "dulwich>=0.24.6", # Older versions have an issue on windows when using ProcessPoolExecutor
     # error reports
     "sentry-sdk",
     # Patch GamesPatches JSON from rdvgame
@@ -155,6 +155,7 @@ test = [
     "pytest-localftpserver",
     "pytest-xdist[psutil]",
     "pytest-codspeed",
+    "pytest-test-groups>=1.2.1",
     "httpx", # for server testing
 ]
 
