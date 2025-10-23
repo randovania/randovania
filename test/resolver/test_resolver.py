@@ -3,10 +3,10 @@ from __future__ import annotations
 import typing
 
 import pytest
-from conftest import SOLO_RDVGAMES
 
 from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug, resolver
+from test.conftest import SOLO_RDVGAMES
 
 if typing.TYPE_CHECKING:
     import _pytest.python

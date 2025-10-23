@@ -4,12 +4,12 @@ import typing
 from pathlib import Path
 
 import pytest
-from conftest import COOP_RDVGAMES, SOLO_RDVGAMES, TestFilesDir
 
 import randovania
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import json_lib
+from test.conftest import COOP_RDVGAMES, SOLO_RDVGAMES, TestFilesDir
 
 if typing.TYPE_CHECKING:
     import _pytest.python
