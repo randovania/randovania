@@ -2246,6 +2246,18 @@ wheels = [
 ]
 
 [[package]]
+name = "pytest-test-groups"
+version = "1.2.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pytest" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/9f/5a/c7874fe15e03d86a1109a3274b57a2473edb8a1dda4a4d27f25d848b6ff5/pytest_test_groups-1.2.1.tar.gz", hash = "sha256:67576b295522fc144b3a42fa1801f50ae962389e984b48bab4336686d09032f1", size = 8137, upload-time = "2025-05-08T16:28:19.627Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/31/ff/7ff0ca5e8051931bf7fb65e31f085f7c0577615bf3a4776fb583cb471800/pytest_test_groups-1.2.1-py3-none-any.whl", hash = "sha256:8c7a016448f9ad347fb69a62f417f0a2358ecbf129fe44bc44ee991918a0bb73", size = 5278, upload-time = "2025-05-08T16:28:18.077Z" },
+]
+
+[[package]]
 name = "pytest-xdist"
 version = "3.8.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2534,6 +2546,7 @@ test = [
     { name = "pytest-localftpserver" },
     { name = "pytest-mock" },
     { name = "pytest-qt" },
+    { name = "pytest-test-groups" },
     { name = "pytest-xdist", extra = ["psutil"] },
 ]
 website = [
@@ -2614,6 +2627,7 @@ requires-dist = [
     { name = "pytest-localftpserver", marker = "extra == 'test'" },
     { name = "pytest-mock", marker = "extra == 'test'" },
     { name = "pytest-qt", marker = "extra == 'test'" },
+    { name = "pytest-test-groups", marker = "extra == 'test'", specifier = ">=1.2.1" },
     { name = "pytest-xdist", extras = ["psutil"], marker = "extra == 'test'" },
     { name = "python-multipart", marker = "extra == 'server'" },
     { name = "python-slugify" },
