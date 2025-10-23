@@ -382,7 +382,11 @@ async def _inner_advance_depth(
 
         additional_requirements = additional_requirements.union(additional)
 
-    resources = [x for x, _ in state.node.resource_gain_on_collect(state.node_context())]
+    resources = (
+        [x for x, _ in state.node.resource_gain_on_collect(state.node_context())]
+        if isinstance(state.node, ResourceNode | WorldGraphNode)
+        else []
+    )
 
     progressive_chain_info = _progressive_chain_info(state.database_node, state.node_context())
 
