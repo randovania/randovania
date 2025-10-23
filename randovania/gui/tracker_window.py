@@ -455,7 +455,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                         node_item.setDisabled(
                             not (
                                 resource_node.should_collect(context)
-                                and resource_node.requirement_to_collect().satisfied(
+                                and resource_node.requirement_to_collect.satisfied(
                                     context, state.health_for_damage_requirements
                                 )
                             )

@@ -19,6 +19,7 @@ class ResourceNode(Node):
     def resource(self, context: NodeContext) -> ResourceInfo:
         raise NotImplementedError
 
+    @property
     def requirement_to_collect(self) -> Requirement:
         raise NotImplementedError
 

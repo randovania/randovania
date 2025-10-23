@@ -39,7 +39,7 @@ if typing.TYPE_CHECKING:
     )
 
 
-class NodeConnection(typing.NamedTuple):
+class WorldGraphNodeConnection(typing.NamedTuple):
     target: WorldGraphNode
     requirement: Requirement
     requirement_without_leaving: Requirement
@@ -62,7 +62,7 @@ class WorldGraphNode:
     Which nodes can be reached from this one and the requirements for so.
     Includes in-area connections, Dock connections, TeleporterNetwork connections and requirement_to_leave.
     """
-    connections: list[NodeConnection]
+    connections: list[WorldGraphNodeConnection]
 
     """
     All the resources provided by collecting this node.
@@ -178,7 +178,7 @@ def _get_dock_lock_requirement(node: DockNode, weakness: DockWeakness) -> Requir
 
 def _add_dock_connections(
     node: WorldGraphNode, original_to_node: dict[int, WorldGraphNode], patches: GamePatches, context: NodeContext
-) -> NodeConnection:
+) -> WorldGraphNodeConnection:
     assert isinstance(node.original_node, DockNode)
     target_node = original_to_node[patches.get_dock_connection_for(node.original_node).node_index]
     forward_weakness = patches.get_dock_weakness_for(node.original_node)
@@ -235,7 +235,7 @@ def _add_dock_connections(
     final_requirement = RequirementAnd(requirement_parts)
     node.requirement_to_collect = requirement_to_collect
 
-    return NodeConnection(target_node, final_requirement, final_requirement)
+    return WorldGraphNodeConnection(target_node, final_requirement, final_requirement)
 
 
 def _connections_from(
@@ -244,7 +244,7 @@ def _connections_from(
     damage_multiplier: float,
     patches: GamePatches,
     context: NodeContext,
-) -> Iterator[NodeConnection]:
+) -> Iterator[WorldGraphNodeConnection]:
     requirement_to_leave = Requirement.trivial()
 
     if isinstance(node.original_node, ConfigurableNode):
@@ -273,7 +273,7 @@ def _connections_from(
         else:
             requirement_including_leaving = requirement
 
-        yield NodeConnection(
+        yield WorldGraphNodeConnection(
             target=target_node,
             requirement=requirement_including_leaving,
             requirement_without_leaving=requirement,
@@ -306,7 +306,7 @@ def create_node(
     requirement_to_collect = Requirement.trivial()
 
     if isinstance(original_node, ResourceNode):
-        requirement_to_collect = original_node.requirement_to_collect()
+        requirement_to_collect = original_node.requirement_to_collect
 
     if isinstance(original_node, EventNode):
         resource_gain.append((original_node.event, 1))

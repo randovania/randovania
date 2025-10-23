@@ -89,7 +89,7 @@ class UncollectedState(NamedTuple):
             yield from (
                 node
                 for node in all_resource_nodes_of_type(res_type)
-                if node.requirement_to_collect().satisfied(
+                if node.requirement_to_collect.satisfied(
                     context, reach.state.damage_state.health_for_damage_requirements()
                 )
             )

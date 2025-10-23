@@ -43,6 +43,7 @@ class TeleporterNetworkNode(ResourceNode):
     def requirement_to_leave(self, context: NodeContext) -> Requirement:
         return RequirementAnd([self.is_unlocked, ResourceRequirement.simple(self.resource(context))])
 
+    @property
     def requirement_to_collect(self) -> Requirement:
         # Since we can re-collect if already collected, via the weird case of starting in a teleporter network node
         return Requirement.trivial()

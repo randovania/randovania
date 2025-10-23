@@ -238,7 +238,7 @@ class ResolverReach:
                 if not node.is_resource_node:
                     continue
                 node = typing.cast("ResourceNode", node)
-                if node.should_collect(context) and node.requirement_to_collect().satisfied(
+                if node.should_collect(context) and node.requirement_to_collect.satisfied(
                     context, self._game_state_at_node[node.node_index].health_for_damage_requirements()
                 ):
                     yield node

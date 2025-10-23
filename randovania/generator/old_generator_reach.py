@@ -165,7 +165,7 @@ class OldGeneratorReach(GeneratorReach):
             node = self.all_nodes[node_index]
             assert isinstance(node, ResourceNode)
 
-            requirement = node.requirement_to_collect()
+            requirement = node.requirement_to_collect
             if not requirement.satisfied(context, self._state.health_for_damage_requirements):
                 self._uncollectable_nodes[node_index] = requirement.patch_requirements(1.0, context).as_set(context)
 

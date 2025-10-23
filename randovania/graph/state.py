@@ -150,11 +150,11 @@ class State:
         :return:
         """
         context = self.node_context()
-        # if not (
-        #     node.should_collect(context)
-        #     and node.requirement_to_collect.satisfied(context, damage_state.health_for_damage_requirements())
-        # ):
-        #     raise ValueError(f"Trying to collect an uncollectable node'{node}'")
+        if not (
+            node.should_collect(context)
+            and node.requirement_to_collect.satisfied(context, damage_state.health_for_damage_requirements())
+        ):
+            raise ValueError(f"Trying to collect an uncollectable node'{node}'")
 
         new_resources = self.resources.duplicate()
         new_resources.add_resource_gain(node.resource_gain_on_collect(context))

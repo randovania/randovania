@@ -48,6 +48,7 @@ class DockLockNode(ResourceNode):
     def __repr__(self) -> str:
         return f"DockLockNode({self.name!r} -> {self.dock.name})"
 
+    @property
     def requirement_to_collect(self) -> Requirement:
         # The requirement is all in the connection from DockNode to this
         return Requirement.trivial()
