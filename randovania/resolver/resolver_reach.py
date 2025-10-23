@@ -12,7 +12,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.graph.world_graph import WorldGraphNode
 
 if typing.TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Iterator, Sequence
 
     from randovania.game_description.db.node import Node, NodeContext
     from randovania.game_description.db.resource_node import ResourceNode
@@ -24,7 +24,7 @@ if typing.TYPE_CHECKING:
 
 def _build_satisfiable_requirements(
     logic: Logic,
-    all_nodes: list[WorldGraphNode],
+    all_nodes: Sequence[WorldGraphNode] | Sequence[Node],
     context: NodeContext,
     requirements_by_node: dict[int, list[Requirement]],
 ) -> SatisfiableRequirements:
@@ -152,6 +152,7 @@ class ResolverReach:
                 assert isinstance(node, WorldGraphNode)
                 node_connections = node.connections
             else:
+                node = typing.cast("Node", node)
                 node_connections = _combine_leave(
                     logic.game.region_list.potential_nodes_from(node, context), node.requirement_to_leave(context)
                 )
@@ -166,8 +167,8 @@ class ResolverReach:
                     continue
 
                 satisfied = True
-                if logic.graph and node.require_collected_to_leave:
-                    satisfied = node.has_all_resources(context)
+                if logic.graph and typing.cast("WorldGraphNode", node).require_collected_to_leave:
+                    satisfied = typing.cast("WorldGraphNode", node).has_all_resources(context)
 
                 damage_health = game_state.health_for_damage_requirements()
                 # Check if the normal requirements to reach that node is satisfied
@@ -209,7 +210,7 @@ class ResolverReach:
 
         return ResolverReach(reach_nodes, path_to_node, satisfiable_requirements_for_additionals, logic)
 
-    def possible_actions(self, state: State) -> Iterator[tuple[WorldGraphNode, DamageState]]:
+    def possible_actions(self, state: State) -> Iterator[tuple[WorldGraphNode | ResourceNode, DamageState]]:
         ctx = state.node_context()
         for node in self.collectable_resource_nodes(ctx):
             additional_requirements = self._logic.get_additional_requirements(node)
@@ -225,6 +226,7 @@ class ResolverReach:
     def collectable_resource_nodes(self, context: NodeContext) -> Iterator[WorldGraphNode | ResourceNode]:
         if self._logic.graph:
             for node in self.nodes:
+                node = typing.cast("WorldGraphNode", node)
                 if (
                     node.is_resource_node()
                     and node.should_collect(context)
@@ -235,9 +237,9 @@ class ResolverReach:
                     yield node
         else:
             for node in self.nodes:
+                node = typing.cast("ResourceNode", node)
                 if not node.is_resource_node:
                     continue
-                node = typing.cast("ResourceNode", node)
                 if node.should_collect(context) and node.requirement_to_collect.satisfied(
                     context, self._game_state_at_node[node.node_index].health_for_damage_requirements()
                 ):

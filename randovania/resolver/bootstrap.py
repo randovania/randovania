@@ -143,7 +143,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
     def _add_minimal_logic_initial_resources(
         self,
         resources: ResourceCollection,
-        game: GameDatabaseView,
+        game: GameDescription,
         standard_pickups: StandardPickupConfiguration,
     ) -> None:
         resource_database = game.resource_database

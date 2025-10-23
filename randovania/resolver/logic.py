@@ -17,12 +17,12 @@ if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_info import ResourceInfo
-    from randovania.graph.state import State
+    from randovania.graph.state import GraphOrClassicNode, State
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.damage_state import DamageState
 
 
-def n(node: WorldGraphNode | Node) -> str:
+def n(node: GraphOrClassicNode) -> str:
     if isinstance(node, WorldGraphNode):
         node = node.database_node
 
@@ -33,7 +33,7 @@ def energy_string(state: State) -> str:
     return f" [{state.game_state_debug_string()}]" if debug.debug_level() >= 2 else ""
 
 
-def action_string(node: WorldGraphNode | Node, patches: GamePatches) -> str:
+def action_string(node: GraphOrClassicNode, patches: GamePatches) -> str:
     action = ""
 
     if isinstance(node, WorldGraphNode):
@@ -104,10 +104,10 @@ class Logic:
         self.prioritize_hints = prioritize_hints
         self.increment_indent = increment_indent
 
-    def get_additional_requirements(self, node: WorldGraphNode | Node) -> RequirementSet:
+    def get_additional_requirements(self, node: GraphOrClassicNode) -> RequirementSet:
         return self.additional_requirements[node.node_index]
 
-    def set_additional_requirements(self, node: WorldGraphNode | Node, req: RequirementSet) -> None:
+    def set_additional_requirements(self, node: GraphOrClassicNode, req: RequirementSet) -> None:
         self.additional_requirements[node.node_index] = req
 
     def victory_condition(self, state: State) -> Requirement:
@@ -151,7 +151,9 @@ class Logic:
             action_text = action_string(state.node, state.patches)
             debug.print_function(f"{self._indent(1)}> {node_str}{energy_string(state)} for {action_text}{resources}")
 
-    def log_checking_satisfiable_actions(self, state: State, actions: list[tuple[WorldGraphNode, DamageState]]) -> None:
+    def log_checking_satisfiable_actions(
+        self, state: State, actions: list[tuple[WorldGraphNode | ResourceNode, DamageState]]
+    ) -> None:
         if debug.debug_level() > 1:
             if actions:
                 debug.print_function(f"{self._indent()}# Satisfiable Actions")
@@ -188,7 +190,7 @@ class Logic:
 
     def log_skip_action_missing_requirement(
         self,
-        node: WorldGraphNode | Node,
+        node: GraphOrClassicNode,
         patches: GamePatches,
     ) -> None:
         if debug.debug_level() > 1:
