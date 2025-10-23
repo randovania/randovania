@@ -418,7 +418,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             temp.add(state.node)
 
             for node in temp:
-                nodes_in_reach.add(node.original_node if isinstance(node, WorldGraphNode) else node)
+                nodes_in_reach.add(node.database_node if isinstance(node, WorldGraphNode) else node)
 
         return nodes_in_reach
 

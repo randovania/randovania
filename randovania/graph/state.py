@@ -101,7 +101,7 @@ class State:
             if isinstance(resource, NodeResourceInfo) and count > 0:
                 if isinstance(graph, WorldGraph):
                     node_index = resource.resource_index - self.resource_database.first_unused_resource_index()
-                    if isinstance(graph.nodes[node_index].original_node, HintNode):
+                    if isinstance(graph.nodes[node_index].database_node, HintNode):
                         yield resource.node_identifier
                 else:
                     node = graph.node_by_identifier(resource.node_identifier)
@@ -217,7 +217,7 @@ class State:
     @property
     def database_node(self) -> Node:
         if isinstance(self.node, WorldGraphNode):
-            return self.node.original_node
+            return self.node.database_node
         else:
             return self.node
 

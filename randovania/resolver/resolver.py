@@ -196,7 +196,7 @@ class ActionPriority(enum.IntEnum):
 
 
 def _priority_for_resource_action(action: WorldGraphNode | Node, state: State, logic: Logic) -> ActionPriority:
-    original_node = action.original_node if isinstance(action, WorldGraphNode) else action
+    original_node = action.database_node if isinstance(action, WorldGraphNode) else action
 
     if _is_dangerous_event(state, action, logic.dangerous_resources):
         return ActionPriority.DANGEROUS

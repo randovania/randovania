@@ -24,7 +24,7 @@ if TYPE_CHECKING:
 
 def n(node: WorldGraphNode | Node) -> str:
     if isinstance(node, WorldGraphNode):
-        node = node.original_node
+        node = node.database_node
 
     return node.full_name()
 
@@ -37,7 +37,7 @@ def action_string(node: WorldGraphNode | Node, patches: GamePatches) -> str:
     action = ""
 
     if isinstance(node, WorldGraphNode):
-        original_node = node.original_node
+        original_node = node.database_node
     else:
         original_node = node
 

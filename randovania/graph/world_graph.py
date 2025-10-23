@@ -49,47 +49,51 @@ class WorldGraphNodeConnection(typing.NamedTuple):
 class WorldGraphNode:
     """A node of a WorldGraph. Focused on being a very efficient data structures for the resolver and generator."""
 
-    """The index of this node in WorldGraph.nodes, for quick reference. Does not necessarily match Node.node_index"""
     node_index: int
+    """The index of this node in WorldGraph.nodes, for quick reference. Does not necessarily match Node.node_index"""
 
-    """"""
     identifier: NodeIdentifier
+    """The NodeIdentifier of `database_node`."""
 
-    """If passing by this node should fully heal."""
     heal: bool
+    """If passing by this node should fully heal."""
 
-    """
-    Which nodes can be reached from this one and the requirements for so.
-    Includes in-area connections, Dock connections, TeleporterNetwork connections and requirement_to_leave.
-    """
     connections: list[WorldGraphNodeConnection]
+    """
+    Which nodes can be reached from this one and the requirements for so,
+    such as in-area connections, Dock connections, TeleporterNetwork connections and requirement_to_leave.
+    """
 
+    resource_gain: list[ResourceQuantity]
     """
     All the resources provided by collecting this node.
     - EventNode: the event
     - HintNode/PickupNode: the node resource
     - DockLockNode: the dock node resources
     """
-    resource_gain: list[ResourceQuantity]
 
+    requirement_to_collect: Requirement
     """
     A requirement that must be satisfied before being able to collect
     """
-    requirement_to_collect: Requirement
 
-    """When set, leaving this node requires it to have been collected."""
     require_collected_to_leave: bool
+    """When set, leaving this node requires it to have been collected."""
 
-    """The pickup index associated with this node."""
     pickup_index: PickupIndex | None
+    """The pickup index associated with this node."""
 
-    """"""
     pickup_entry: PickupEntry | None
+    """The pickup entry of the GamePatches for this node's pickup_index at the time of creation."""
 
-    """"""
-    original_node: Node
-    original_area: Area
-    original_region: Region
+    database_node: Node
+    """The Node instance used to create this WorldGraphNode."""
+
+    area: Area
+    """The Area that contains `database_node`."""
+
+    region: Region
+    """The Region that contains `area` and `database_node`."""
 
     def is_resource_node(self) -> bool:
         return len(self.resource_gain) > 0
@@ -179,13 +183,13 @@ def _get_dock_lock_requirement(node: DockNode, weakness: DockWeakness) -> Requir
 def _add_dock_connections(
     node: WorldGraphNode, original_to_node: dict[int, WorldGraphNode], patches: GamePatches, context: NodeContext
 ) -> WorldGraphNodeConnection:
-    assert isinstance(node.original_node, DockNode)
-    target_node = original_to_node[patches.get_dock_connection_for(node.original_node).node_index]
-    forward_weakness = patches.get_dock_weakness_for(node.original_node)
+    assert isinstance(node.database_node, DockNode)
+    target_node = original_to_node[patches.get_dock_connection_for(node.database_node).node_index]
+    forward_weakness = patches.get_dock_weakness_for(node.database_node)
 
     back_weakness, back_lock = None, None
-    if isinstance(target_node.original_node, DockNode):
-        back_weakness = patches.get_dock_weakness_for(target_node.original_node)
+    if isinstance(target_node.database_node, DockNode):
+        back_weakness = patches.get_dock_weakness_for(target_node.database_node)
         back_lock = back_weakness.lock
 
     # Requirements needed to break the lock. Both locks if relevant
@@ -193,7 +197,7 @@ def _add_dock_connections(
     requirement_to_collect = Requirement.trivial()
 
     # Requirements needed to open and cross the dock.
-    requirement_parts = [_get_dock_open_requirement(node.original_node, forward_weakness)]
+    requirement_parts = [_get_dock_open_requirement(node.database_node, forward_weakness)]
 
     #
 
@@ -201,7 +205,7 @@ def _add_dock_connections(
         front_lock_resource = NodeResourceInfo.from_node(node, context)
         node.resource_gain.append((front_lock_resource, 1))
         requirement_parts.append(ResourceRequirement.simple(front_lock_resource))
-        requirement_to_collect = _get_dock_lock_requirement(node.original_node, forward_weakness)
+        requirement_to_collect = _get_dock_lock_requirement(node.database_node, forward_weakness)
 
     # Handle the different kinds of ways a dock lock can be opened from behind
 
@@ -218,7 +222,7 @@ def _add_dock_connections(
 
                 if forward_weakness != back_weakness:
                     requirement_to_collect = RequirementAnd(
-                        [requirement_to_collect, _get_dock_lock_requirement(target_node.original_node, back_weakness)]
+                        [requirement_to_collect, _get_dock_lock_requirement(target_node.database_node, back_weakness)]
                     )
 
             case DockLockType.FRONT_BLAST_BACK_IMPOSSIBLE:
@@ -247,16 +251,16 @@ def _connections_from(
 ) -> Iterator[WorldGraphNodeConnection]:
     requirement_to_leave = Requirement.trivial()
 
-    if isinstance(node.original_node, ConfigurableNode):
+    if isinstance(node.database_node, ConfigurableNode):
         raise NotImplementedError
 
-    elif isinstance(node.original_node, HintNode):
-        requirement_to_leave = node.original_node.requirement_to_collect()
+    elif isinstance(node.database_node, HintNode):
+        requirement_to_leave = node.database_node.requirement_to_collect
 
-    elif isinstance(node.original_node, TeleporterNetworkNode):
+    elif isinstance(node.database_node, TeleporterNetworkNode):
         raise NotImplementedError
 
-    for target_original_node, requirement in node.original_area.connections[node.original_node].items():
+    for target_original_node, requirement in node.area.connections[node.database_node].items():
         target_node = original_to_node.get(target_original_node.node_index)
         if target_node is None:
             continue
@@ -279,7 +283,7 @@ def _connections_from(
             requirement_without_leaving=requirement,
         )
 
-    if isinstance(node.original_node, DockNode):
+    if isinstance(node.database_node, DockNode):
         yield _add_dock_connections(node, original_to_node, patches, context)
 
 
@@ -335,9 +339,9 @@ def create_node(
         require_collected_to_leave=isinstance(original_node, EventNode | PickupNode | EventPickupNode),
         pickup_index=pickup_index,
         pickup_entry=pickup_entry,
-        original_node=original_node,
-        original_area=area,
-        original_region=region,
+        database_node=original_node,
+        area=area,
+        region=region,
     )
 
 
@@ -369,13 +373,15 @@ def create_graph(
 
         nodes.append(create_node(len(nodes), patches, original_node, area, region))
 
-    original_to_node = {node.original_node.node_index: node for node in nodes}
+    original_to_node = {node.database_node.node_index: node for node in nodes}
     node_provider = WorldGraphNodeProvider(database_view, original_to_node)
 
     context = NodeContext(patches, resources, database_view.get_resource_database_view(), node_provider)
     for node in nodes:
-        if isinstance(node.original_node, HintNode | PickupNode | EventPickupNode):
+        if isinstance(node.database_node, HintNode | PickupNode | EventPickupNode):
             node.resource_gain.append((node_provider.get_node_resource_info_for(node.identifier, context), 1))
+
+        node.require_collected_to_leave
 
         node.connections.extend(
             _connections_from(
