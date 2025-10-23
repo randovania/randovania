@@ -9,13 +9,14 @@ import randovania
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import json_lib
-from test.conftest import COOP_RDVGAMES, SOLO_RDVGAMES, TestFilesDir
+from test.conftest import COOP_RDVGAMES, SOLO_RDVGAMES
 
 if typing.TYPE_CHECKING:
     import _pytest.python
     import pytest_mock
 
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+    from test.conftest import TestFilesDir
 
 
 def _get_world_count(file_path: Path) -> int:
