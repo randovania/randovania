@@ -39,7 +39,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
-- Added: 3 new hint location features: guarded by a Tank-Mimic, near a Geron and in a room with extreme temperatures.
+- Added: 4 new hint location features: guarded by a Tank-Mimic, near a Geron, in a room with extreme temperatures, and on a B.S.L. Systems Console.
+- Added: 1 new pickup hint feature: Ice Related.
+
+#### Logic Database
+
+##### Sector 5
+
+- Fixed: Room "Security Shaft East" was missing from "Climbable Surface" feature hint.
 
 ### Metroid Prime
 
