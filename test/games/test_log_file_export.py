@@ -89,6 +89,7 @@ def test_layout_patch_data_export(
 def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
     log_dir = Path(__file__).parents[1].joinpath("test_files", "log_files")
 
+    coop_names = {name for name, _ in COOP_RDVGAMES}
     layout_names = SOLO_RDVGAMES + COOP_RDVGAMES
 
     layouts = {layout_name: _get_world_count(log_dir.joinpath(layout_name)) for layout_name, _ in layout_names}
@@ -96,7 +97,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
     metafunc.parametrize(
         ["layout_name", "world_index", "is_coop"],
         [
-            (layout_name, world, layout_name in COOP_RDVGAMES)
+            (layout_name, world, layout_name in coop_names)
             for layout_name, world_count in layouts.items()
             for world in range(world_count)
         ],
