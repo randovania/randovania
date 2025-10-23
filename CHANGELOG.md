@@ -37,6 +37,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: 3 new hint location features: guarded by a Tank-Mimic, near a Geron and in a room with extreme temperatures.
 
+#### Logic Database
+
+##### Main Deck
+
+- Added: Operations Deck morph only Ludicrous jump extend.
+
+##### Sector 2 (TRO)
+
+- Added: Cathedral morph only Ludicrous jump extend.
+- Added: Overgrown Entrance Ludicrous hi-jump J2BJ.
+- Added: Level 1 Security Ludicrous jump extend to SA blocks.
+- Added: Puyo Palace Ludicrous acrobatic JBJ nonsense.
+- Changed: Crumble City upper item requires either morph or Beginner movement.
+
+##### Sector 3 (PYR)
+
+- Added: Alcove bombjump out of right tunnel to do Advanced kicks back and forth to upper door.
+- Added: Alcove Ludicrous morph jump extends for enough height to do same as above.
+- Fixed: Alcove bottom right to center, regular bombs to break block requires Intermediate midair morph or frozen enemy platform.
+- Added: Namihe's Lair Advanced dboost to escape item area.
+- Added: Namihe's Lair Advanced shinespark to item.
+
+##### Sector 4 (AQA)
+
+- Added: Reservoir East Expert dboost for just enough height to kick up to monkey bars and exit.
+- Added: Pump Control Expert J2BJ up into exit tunnel.
+
+##### Sector 5 (ARC)
+
+- Changed: Nightmare Hub, raised JBJ from Intermediate to Advanced.
+- Changed: Gerubus Gully, same as Nightmare Hub.
+- Fixed: Gerubus Gully, added 50/50 Intermediate Movement trick to shinespark and PB methods.
+- Added: Gerubus Gully, added any bombs as alternative to said 50/50 tricks.
+- Changed: Gerubus Gully, raised Shinespark trick level from Beginner to Intermediate.
+
 ### Metroid Prime
 
 - Fixed: Crash when entering Metroid Prime Lair while in Scan Visor
