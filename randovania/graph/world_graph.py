@@ -265,6 +265,7 @@ def _connections_from(
         if target_node is None:
             continue
 
+        # TODO: good spot to add some heuristic for simplifying requirements in general
         requirement_including_leaving = requirement
         requirement = requirement.patch_requirements(damage_multiplier, context).simplify()
 
