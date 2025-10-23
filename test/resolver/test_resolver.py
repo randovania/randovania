@@ -1,28 +1,24 @@
 from __future__ import annotations
 
+import typing
+
 import pytest
+from conftest import SOLO_RDVGAMES
 
 from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug, resolver
 
+if typing.TYPE_CHECKING:
+    import _pytest.python
+
 
 @pytest.mark.benchmark
 @pytest.mark.skip_resolver_tests
-@pytest.mark.parametrize(
-    "seed_name",
-    [
-        "seed_a.rdvgame",
-        "prime1-vanilla.rdvgame",
-        "prime2_seed_b.rdvgame",
-        "blank/issue-3717.rdvgame",
-        "dread/vanilla.rdvgame",
-    ],
-)
-async def test_resolver_with_log_file(test_files_dir, seed_name: str):
+async def test_resolver_with_log_file(test_files_dir, layout_name, is_valid):
     # Setup
     debug.set_level(2)
 
-    description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", seed_name))
+    description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", layout_name))
     configuration = description.get_preset(0).configuration
     patches = description.all_patches[0]
 
@@ -30,4 +26,14 @@ async def test_resolver_with_log_file(test_files_dir, seed_name: str):
     final_state_by_resolve = await resolver.resolve(configuration=configuration, patches=patches)
 
     # Assert
-    assert final_state_by_resolve is not None
+    if is_valid:
+        assert final_state_by_resolve is not None
+    else:
+        assert final_state_by_resolve is None
+
+
+def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
+    metafunc.parametrize(
+        ["layout_name", "is_valid"],
+        [(layout_name, is_valid) for layout_name, is_valid in SOLO_RDVGAMES if is_valid is not None],
+    )
