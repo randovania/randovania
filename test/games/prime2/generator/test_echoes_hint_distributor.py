@@ -3,7 +3,7 @@ from __future__ import annotations
 import copy
 import dataclasses
 from random import Random
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Literal
 from unittest.mock import ANY, MagicMock, call
 
 import pytest
@@ -59,7 +59,7 @@ async def test_add_default_hints_to_patches(echoes_game_description, echoes_game
 
     def _keybearer_hint(number: int):
         return LocationHint(
-            PrecisionPair(precision("specific_hint_keybearer"), SpecificHintPrecision(0.5), include_owner=True),
+            PrecisionPair(precision("specific_hint_keybearer"), SpecificHintPrecision(0.65, 0.1), include_owner=True),
             PickupIndex(number),
         )
 
@@ -155,27 +155,93 @@ async def test_keybearer_hint_precisions(
     hint = LocationHint(keybearer_precision, PickupIndex(0))
 
     categories = echoes_pickup_database.pickup_categories
-    broad_categories = {
-        categories["chassis"],
-        categories["ordnance"],
-        categories["targeting"],
-        categories["key"],
+    # FIXME: temporary. When keybearers have been tested more, we should try to avoid detailed whenever possible
+    # Also not sure if we really need to check all exact features/order now that they use the same as a normal hint,
+    # since that would mean the test fails on each feature-tweak.
+    expected_category_order = [
+        categories["chozo"],
+        categories["visor"],
+        categories["dark"],
+        categories["visor"],
+        categories["dark"],
+        categories["light"],
+        categories["suit"],
+        categories["beam"],
+        categories["beam"],
+        categories["dark"],
+        categories["beam"],
+        categories["dark"],
         categories["cheat"],
-    }
+        categories["cheat"],
+        categories["morph_ball"],
+        categories["chozo"],
+        categories["morph_ball"],
+        categories["morph_ball"],
+        categories["chozo"],
+        categories["cheat"],
+        categories["movement"],
+        categories["movement"],
+        categories["movement"],
+        categories["chozo"],
+        categories["chozo"],
+        categories["chozo"],
+        categories["missile"],
+        categories["cheat"],
+        categories["chozo"],
+        categories["luminoth"],
+        categories["dark"],
+        categories["dark"],
+        categories["translator"],
+        categories["translator"],
+        categories["luminoth"],
+        categories["translator"],
+        HintItemPrecision.DETAILED,
+        categories["chozo"],
+        categories["chozo"],
+        categories["luminoth"],
+        HintItemPrecision.DETAILED,
+        HintItemPrecision.DETAILED,
+        categories["key"],
+        HintItemPrecision.DETAILED,
+        HintItemPrecision.DETAILED,
+        HintItemPrecision.DETAILED,
+        categories["key"],
+        categories["key"],
+        categories["key"],
+        categories["key"],
+        categories["key"],
+        categories["key"],
+        HintItemPrecision.DETAILED,
+        categories["key"],
+        categories["key"],
+        categories["key"],
+        categories["key"],
+        HintItemPrecision.DETAILED,
+        categories["key"],
+        categories["key"],
+        categories["luminoth"],
+        categories["dark"],
+        categories["dark"],
+        HintItemPrecision.DETAILED,
+        categories["key"],
+        categories["key"],
+    ]
 
-    pickup_results: dict[str, HintFeature] = {}
-    expected_results: dict[str, HintFeature] = {}
+    pickup_results: dict[str, HintFeature | Literal[HintItemPrecision.DETAILED]] = {}
+    expected_results: dict[str, HintFeature | Literal[HintItemPrecision.DETAILED]] = {}
 
     # Run
-    for pickup in pool.pickups_in_world:
-        expected_results[pickup.name] = next(ft for ft in pickup.hint_features if ft in broad_categories)
+    for index, pickup in enumerate(pool.pickups_in_world):
+        expected_results[pickup.name] = expected_category_order[index]
 
         patches = echoes_game_patches.assign_own_pickups([(PickupIndex(0), pickup)])
 
         with debug.with_level(1):
             precision = hint_distributor.get_hint_precision(hint_node, hint, rng, patches, player_pools)
 
-        assert isinstance(precision.item, HintFeature)
+        assert isinstance(precision.item, HintFeature) or (
+            isinstance(precision.item, HintItemPrecision) and precision.item == HintItemPrecision.DETAILED
+        )
         pickup_results[pickup.name] = precision.item
 
     # Assert
