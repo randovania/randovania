@@ -4,6 +4,7 @@ import typing
 
 import pytest
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug, resolver
 from test.conftest import SOLO_RDVGAMES
@@ -23,7 +24,16 @@ async def test_resolver_with_log_file(test_files_dir, layout_name, is_valid):
     patches = description.all_patches[0]
 
     # Run
-    final_state_by_resolve = await resolver.resolve(configuration=configuration, patches=patches)
+    final_state_by_resolve = await resolver.resolve(
+        configuration=configuration,
+        patches=patches,
+        use_world_graph=patches.game.game
+        not in {
+            RandovaniaGame.METROID_PRIME_ECHOES,
+            RandovaniaGame.METROID_SAMUS_RETURNS,
+            RandovaniaGame.METROID_PRIME_HUNTERS,
+        },
+    )
 
     # Assert
     if is_valid:
