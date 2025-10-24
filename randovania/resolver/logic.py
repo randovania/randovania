@@ -3,6 +3,7 @@ from __future__ import annotations
 import typing
 from typing import TYPE_CHECKING
 
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
@@ -41,7 +42,7 @@ def action_string(node: GraphOrClassicNode, patches: GamePatches) -> str:
     else:
         original_node = node
 
-    if isinstance(original_node, ResourceNode):
+    if isinstance(original_node, ResourceNode | DockNode):
         action = node.identifier.as_string
 
     if isinstance(original_node, PickupNode):
@@ -172,7 +173,6 @@ class Logic:
         if debug.debug_level() > 0:
             show_reqs = debug.debug_level() > 1 and additional_requirements is not None
             action_text = action_string(state.node, state.patches)
-            debug.print_function(f"{self._indent()}* Rollback {n(state.node)} {action_text}")
             debug.print_function(f"{self._indent()}* Rollback {n(state.node)} {action_text}")
             debug.print_function(
                 "{}Had action? {}; Possible Action? {}{}".format(
