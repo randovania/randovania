@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import asyncio
 import enum
-import itertools
 from typing import TYPE_CHECKING, Any
 
 from randovania.game_description.db.dock_lock_node import DockLockNode
@@ -352,12 +351,14 @@ async def _inner_advance_depth(
 
         actions_by_priority[_priority_for_resource_action(action, state, logic)].append((action, damage_state))
 
-    actions: list[tuple[ResolverAction, DamageState]] = list(
-        itertools.chain.from_iterable(actions_by_priority.values())
-    )
+    actions: list[tuple[ActionPriority, ResolverAction, DamageState]] = [
+        (priority, action, damage_state)
+        for priority, entries in actions_by_priority.items()
+        for action, damage_state in entries
+    ]
     logic.log_checking_satisfiable_actions(state, actions)
     has_action = False
-    for action, damage_state in actions:
+    for _, action, damage_state in actions:
         action_additional_requirements = logic.get_additional_requirements(action)
         if not action_additional_requirements.satisfied(context, damage_state.health_for_damage_requirements()):
             logic.log_skip_action_missing_requirement(action, state.patches)

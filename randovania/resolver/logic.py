@@ -13,6 +13,8 @@ from randovania.resolver import debug
 from randovania.resolver.exceptions import ResolverTimeoutError
 
 if TYPE_CHECKING:
+    from collections.abc import Sequence
+
     from randovania.game_description.db.node import Node
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
@@ -21,6 +23,7 @@ if TYPE_CHECKING:
     from randovania.graph.state import GraphOrClassicNode, State
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.damage_state import DamageState
+    from randovania.resolver.resolver import ActionPriority, ResolverAction
 
 
 def n(node: GraphOrClassicNode) -> str:
@@ -153,13 +156,13 @@ class Logic:
             debug.print_function(f"{self._indent(1)}> {node_str}{energy_string(state)} for {action_text}{resources}")
 
     def log_checking_satisfiable_actions(
-        self, state: State, actions: list[tuple[WorldGraphNode | ResourceNode, DamageState]]
+        self, state: State, actions: Sequence[tuple[ActionPriority, ResolverAction, DamageState]]
     ) -> None:
         if debug.debug_level() > 1:
             if actions:
                 debug.print_function(f"{self._indent()}# Satisfiable Actions")
-                for action, _ in actions:
-                    debug.print_function(f"{self._indent(-1)}= {n(action)}")
+                for priority, action, _ in actions:
+                    debug.print_function(f"{self._indent(-1)}= ({priority.name}) {n(action)}")
             else:
                 debug.print_function(f"{self._indent()}# No Satisfiable Actions")
 
