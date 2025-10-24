@@ -382,8 +382,6 @@ def create_graph(
         if isinstance(node.database_node, HintNode | PickupNode | EventPickupNode):
             node.resource_gain.append((node_provider.get_node_resource_info_for(node.identifier, context), 1))
 
-        node.require_collected_to_leave
-
         node.connections.extend(
             _connections_from(
                 node,
