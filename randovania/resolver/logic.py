@@ -42,7 +42,7 @@ def action_string(node: GraphOrClassicNode, patches: GamePatches) -> str:
         original_node = node
 
     if isinstance(original_node, ResourceNode):
-        action = node.name
+        action = node.identifier.as_string
 
     if isinstance(original_node, PickupNode):
         if isinstance(node, WorldGraphNode):
