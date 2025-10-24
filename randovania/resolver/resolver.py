@@ -196,9 +196,10 @@ def _is_event_node(action: ResolverAction) -> bool:
 
 
 def _is_hint_node(action: ResolverAction) -> bool:
-    target_node = action
     if isinstance(action, WorldGraphNode):
         target_node = action.database_node
+    else:
+        target_node = action
     return isinstance(target_node, HintNode)
 
 
